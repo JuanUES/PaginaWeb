@@ -1,4 +1,4 @@
---- Hacer funcional el proyecto laravel 
+--- Hacer funcionar el proyecto laravel 
     en pc que clono el repositorio de github ---
 
 1. composer install
