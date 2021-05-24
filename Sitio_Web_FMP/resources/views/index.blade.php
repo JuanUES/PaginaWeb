@@ -4,10 +4,13 @@
 <!-- App favicon -->
 <link rel="shortcut icon" href="images/favicon.ico">
 
+<link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
+
 <!-- App css -->
 <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('css/icons.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('css/app.min.css') }}" rel="stylesheet" type="text/css" />
+
 @endsection
 
 @section('container')
@@ -24,37 +27,70 @@
         <div class="row">
             <div class="col-xl-8">
                 <div class="card-box">
-                    <h1 class="header-title mb-3">Facultad Multidisciplinaria Paracentral</h1>
+                    <div class="row py-1">
+                        <div class="col order-first "><h1 class="header-title mb-3">Facultad Multidisciplinaria Paracentral</h1></div>
+                        @auth
+                        <div class="col-lg-3 order-last"><a href="" class="btn btn-block btn-info tex-left" 
+                            data-toggle="modal" data-target=".bs-example-modal-center">Agregar Imagen</a></div>                            
+                        @endauth
+
+                        <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myCenterModalLabel">Zona para subir imagenes</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        
+                                        <form action="{{ route('ImagenFacultad.upload') }}" method="post"
+                                         class="dropzone" id="my-awesome-dropzone">
+                                            {{csrf_field()}}                                            
+                                            <div class="dz-message needsclick">
+                                                <i class="h1 text-muted dripicons-cloud-upload"></i>
+                                                <h3>Suelta los archivos aquí o haz clic para subir.</h3>
+                                            </div>
+                                            <div class="dropzone-previews"></div>
+                                        </form>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+                    </div>
                     <div class="row">
+                        @if (count($imgCarrusel) == '0')
+                            
+                        @else         
                         <div id="carouselExampleCaptions" class="carousel slide rounded" data-ride="carousel">
-                            <ol class="carousel-indicators">
-                              <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-                              <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-                              <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-                              <li data-target="#carouselExampleCaptions" data-slide-to="3"></li>
-                              <li data-target="#carouselExampleCaptions" data-slide-to="4"></li>
+                            <ol class="carousel-indicators">  
+                                @for ($i = 0; $i < count($imgCarrusel); $i++)
+                                    @if ($i == 0 )
+                                        <li data-target="#carouselExampleCaptions" data-slide-to="{{$i}}" class="active"></li>
+                                    @else                                        
+                                        <li data-target="#carouselExampleCaptions" data-slide-to="{{$i}}" ></li>
+                                    @endif
+                                @endfor                               
                             </ol>
                             <div class="carousel-inner text-center">
-                              <div class="carousel-item active">
-                                 <img src="images/carrusel/image-1.jpeg" class="img-fluid">
-                                 
-                              </div>
-                              <div class="carousel-item">
-                                <img src="images/carrusel/image-2.jpeg" class="img-fluid" width="1145">
-                                
-                              </div>  
-                              <div class="carousel-item">
-                                <img src="images/carrusel/image-3.jpeg"  class="img-fluid" width="1145" >
-                                
-                              </div>  
-                              <div class="carousel-item">
-                                <img src="images/carrusel/image-4.jpeg" class="img-fluid" width="1145" height="800">
-                                
-                              </div>                                                     
-                              <div class="carousel-item">
-                                <img src="images/carrusel/image-5.jpeg" class="img-fluid" width="1145" height="800">
-                                
-                              </div>  
+                                @for ($i = 0; $i < count($imgCarrusel); $i++)            
+                                    @if ($i == 0 )
+                                        <div class="carousel-item border active">
+                                            @auth
+                                                <form action="{{ route('') }}" method="POST">
+                                                    <a type="summit" class="btn btn-danger btn-block">Eliminar</a>
+                                                </form>
+                                            @endauth                                              
+                                            <img src="images/carrusel/{{$imgCarrusel[$i]->imagen}}" class="img-fluid">                      
+                                        </div>
+                                    @else                                        
+                                        <div class="carousel-item border-rounded">
+                                            @auth
+                                                <a href="" class="btn btn-danger btn-block">Eliminar</a>
+                                            @endauth  
+                                            <img src="images/carrusel/{{$imgCarrusel[$i]->imagen}}" class="img-fluid img-rounded">                                
+                                        </div> 
+                                    @endif        
+                              @endfor 
                             </div>
                             <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
                               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -65,6 +101,7 @@
                               <span class="sr-only">Siguiente</span>
                             </a>
                         </div>    
+                        @endif
                         <!-- end col -->
                     </div> <!-- end row-->
                 </div>  <!-- end card-box-->
@@ -72,8 +109,8 @@
             
             <div class="col-xl-4">
                 <div class="card-box">
-                    <div class="fb-page" data-href="https://es-la.facebook.com/academicaparacentralues" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
-                    <blockquote cite="https://es-la.facebook.com/academicaparacentralues" class="fb-xfbml-parse-ignore"><a href="https://es-la.facebook.com/academicaparacentralues">Académica Paracentral - UES</a>
+                    <div class="fb-page" data-href="https://www.facebook.com/Facultad-Multidisciplinaria-Paracentral-Decanato-104296228519520/" data-tabs="timeline" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                    <blockquote cite="https://www.facebook.com/Facultad-Multidisciplinaria-Paracentral-Decanato-104296228519520/" class="fb-xfbml-parse-ignore"><a href="https://es-la.facebook.com/academicaparacentralues">Académica Paracentral - UES</a>
                     </blockquote>
                     </div>
                 </div>
@@ -174,4 +211,16 @@
 
 <!-- App js -->
 <script src="{{ asset('js/app.min.js') }}"></script>
+<!-- Plugins js -->
+<script src=" {{ asset('js/dropzone.min.js') }} "></script>
+
+<script>
+   Dropzone.options.myAwesomeDropZone = {
+       paramName = "file",
+       MaxFileSize = 2, 
+       success: function(file,response){
+           console.log(response);
+       }
+   }
+</script>
 @endsection

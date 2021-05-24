@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8" />
         <title>Facultad Multidisciplinaria Paracentral</title><!-- Required meta tags -->
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="UTI" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -142,14 +143,15 @@
                                     </ul>
                                 </li>                                
                                 <li class="has-submenu">
+                                    <a href="#">Investigación <div class="arrow-down"></div></a>
                                     <ul class="submenu">
-                                        <a href="#">Investigación <div class="arrow-down"></div></a>
                                         <li>
+                                            <a href="#">Centro de estudio de Información Publica (CEO)</a>
                                         </li>
-                                        <a href="#">Centro de estudio de Información Publica (CEO)</a>
+                                        
                                         <li>
-                                        </li>                        
-                                        <a href="#">Centro de Investigación Ambiental</a>
+                                            <a href="#">Centro de Investigación Ambiental</a>
+                                        </li>      
                                     </ul>
                                 </li>
                                 <li class="has-submenu">
@@ -198,19 +200,31 @@
                         </li>
 
                         <li class="has-submenu p-1 float-right">
-                            @if (Route::has('login'))
-                                    @auth
-                                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">Dashboard</a>
-                                    @else
-                                        <a href="{{ asset('InicioSesion') }}"  class="rounded btn text-left">
-                                            <i class="mdi mdi-account mdi-24px"></i>
-                                            Iniciar Sesión
-                                        </a>                
-                                        <!-- @if (Route::has('register'))
-                                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
-                                        @endif-->
-                                    @endauth
-                            @endif                            
+                            
+                            @auth
+                                
+                                <a href="#"  class="rounded btn text-left">
+                                    <i class="mdi mdi-account mdi-24px"></i>
+                                    {{ Auth::user()->name }}
+                                    <div class="arrow-down"></div>
+                                </a>  
+                                <ul class="submenu">
+                                    <li>
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <a href="route('logout')" onclick="event.preventDefault();
+                                            this.closest('form').submit();">{{ __('Cerrar sesión') }}</a>
+                                        </form>
+                                    </li>      
+                                </ul>
+                               
+                            @else
+                                <a href="{{ route('login') }}"  class="rounded btn text-left">
+                                    <i class="mdi mdi-account mdi-24px"></i>
+                                    Iniciar Sesión
+                                </a>   
+                            @endauth
+                                                      
                         </li>
                         
                     </ul>

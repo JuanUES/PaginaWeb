@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Pagina\ImagenesCarruselController;
+use App\Http\Controllers\indexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,10 +15,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', [indexController::class, 'index']);
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::post('/', [ImagenesCarruselController::class, 'store'])
+->middleware(['auth'])->name('ImagenFacultad.upload');
+                
+Route::post('/', [ImagenesCarruselController::class, 'destroy'])
+->middleware(['auth'])->name('ImagenFacultad.borrar');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

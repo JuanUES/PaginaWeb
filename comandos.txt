@@ -5,3 +5,9 @@
 2. cp .env.example .env
 3. php artisan key:generate
 4. php artisan serve
+
+--Crear un modelo--
+php artisan make:model <Aqui donde y como se llamara>
+
+--Crear un controlador con el modelo--
+php artisan make:Controller <Nombre de controlador>  --resource --model=<Nombre del Modelo>
