@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Pagina;
 
-use Illuminate\Http\Request;
-
-use App\Models\Pagina\ImagenesCarrusel;
+use App\Http\Controllers\Controller;
 use App\Models\Pagina\Noticia;
+use Illuminate\Http\Request;
+use File;
 
-class indexController extends Controller
+class NoticiaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,13 +16,7 @@ class indexController extends Controller
      */
     public function index()
     {
-        /**Envio imagenes del carrusel a Inicio */
-        $imgCarrusel = ImagenesCarrusel::all();
-
-        /**Envio noticias a Inicio */
-        $noticias = Noticia::all();
-        
-        return view('index',compact('imgCarrusel','noticias'));
+        //
     }
 
     /**
@@ -43,7 +37,22 @@ class indexController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /**Guardo en carpeta Noticia */
+        $file = $request->file('img'); 
+        $path = public_path() . '\images\noticias';
+        $fileName = uniqid();
+        $file->move($path, $fileName);
+        
+        /**Guardo en base de datos */
+        $noticia = new Noticia;
+        $noticia -> titulo    =  $request->titulo;        
+        $noticia -> subtitulo =  $request->subtitulo;        
+        $noticia -> imagen    =  $fileName;        
+        $noticia -> contenido =  $request->contenido;
+        $noticia -> fuente    =  $request->fuente;        
+        $noticia -> urlfuente =  $request->urlfuente;
+        $noticia -> save();
+        return redirect('/');
     }
 
     /**

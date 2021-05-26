@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pagina;
 use App\Http\Controllers\Controller;
 use App\Models\Pagina\ImagenesCarrusel;
 use Illuminate\Http\Request;
+use File;
 
 class ImagenesCarruselController extends Controller
 {
@@ -36,14 +37,18 @@ class ImagenesCarruselController extends Controller
      */
     public function store(Request $request)
     {
+        /**Guardo en la carpeta del servidor */
         $file = $request->file('file'); 
         $path = public_path() . '/images/carrusel';
-        $fileName = uniqid() . $file->getClientOriginalName();
+        //$fileName = uniqid() . $file->getClientOriginalName(); -> Por si deseo hacer un cambio
+        $fileName = uniqid();
         $file->move($path, $fileName);
         
+        /** Guardo en la base de datos */
         $imagenesCarrusel = new ImagenesCarrusel;
         $imagenesCarrusel -> imagen = $fileName;
         $imagenesCarrusel -> save();
+
         return redirect('/');
     }
 
@@ -87,8 +92,14 @@ class ImagenesCarruselController extends Controller
      * @param  \App\Models\Pagina\ImagenesCarrusel  $imagenesCarrusel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ImagenesCarrusel $imagenesCarrusel)
+    public function destroy(ImagenesCarrusel $imagenesCarrusel, $id, $imagen)
     {
-        File::delete($filename);
+        /**Elimino de la carpeta del servidor */
+        File::delete(public_path() . '/images/carrusel/'.$imagen); 
+        
+        /**Elimino de la base de datos */
+        $imgCa = ImagenesCarrusel::find($id);        
+        $imgCa->delete();
+        return redirect('/');
     }
 }

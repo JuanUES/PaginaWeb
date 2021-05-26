@@ -1,9 +1,12 @@
 <?php
-
+/**Importaciones por default */
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\Pagina\ImagenesCarruselController;
 use App\Http\Controllers\indexController;
+
+/**Importaciones para que funcione Index */
+use App\Http\Controllers\Pagina\ImagenesCarruselController;
+use App\Http\Controllers\Pagina\NoticiaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,21 +18,28 @@ use App\Http\Controllers\indexController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/', [indexController::class, 'index']);
 
-Route::post('/', [ImagenesCarruselController::class, 'store'])
-->middleware(['auth'])->name('ImagenFacultad.upload');
-                
-Route::post('/', [ImagenesCarruselController::class, 'destroy'])
+/**Index */
+
+Route::post('/upload', [ImagenesCarruselController::class, 'store'])
+->middleware(['auth'])->name('ImagenFacultad.subir');
+
+Route::post('/borrar/{id}/{imagen}', [ImagenesCarruselController::class, 'destroy'])
 ->middleware(['auth'])->name('ImagenFacultad.borrar');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::post('/noticias', [NoticiaController::class, 'store'])
+->middleware(['auth'])->name('NoticiaFacultad.nueva');
 
+/**----------------------------------------------------------------------- */
+
+/**Debo eliminar esta ruta y sus archivos relacionados */
 Route::get('InicioSesion', function () {
     return view('Sesion.inicioSesion');
 });
+
+/**------------------------------------ */
 
 Route::get('MisionVision', function () {
     return view('Nosotros.misionVision');

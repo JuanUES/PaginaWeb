@@ -30,8 +30,12 @@
                     <div class="row py-1">
                         <div class="col order-first "><h1 class="header-title mb-3">Facultad Multidisciplinaria Paracentral</h1></div>
                         @auth
-                        <div class="col-lg-3 order-last"><a href="" class="btn btn-block btn-info tex-left" 
-                            data-toggle="modal" data-target=".bs-example-modal-center">Agregar Imagen</a></div>                            
+                        <div class="col-lg-3 order-last">
+                            <a href="" class="btn btn-block btn-info tex-left" 
+                            data-toggle="modal" data-target=".bs-example-modal-center">
+                                <div class="mdi mdi-upload mdi-16px text-center"> Agregar Imagen</div>
+                            </a>
+                        </div>                            
                         @endauth
 
                         <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
@@ -43,9 +47,9 @@
                                     </div>
                                     <div class="modal-body">
                                         
-                                        <form action="{{ route('ImagenFacultad.upload') }}" method="post"
+                                        <form action="{{ route('ImagenFacultad.subir') }}" method="post"
                                          class="dropzone" id="my-awesome-dropzone">
-                                            {{csrf_field()}}                                            
+                                            @csrf                                 
                                             <div class="dz-message needsclick">
                                                 <i class="h1 text-muted dripicons-cloud-upload"></i>
                                                 <h3>Suelta los archivos aquí o haz clic para subir.</h3>
@@ -58,8 +62,9 @@
                         </div><!-- /.modal -->
                     </div>
                     <div class="row">
+                        
                         @if (count($imgCarrusel) == '0')
-                            
+                            <p class="text-center">Carrusel vacío, por favor ingrese una imagenes</p>
                         @else         
                         <div id="carouselExampleCaptions" class="carousel slide rounded" data-ride="carousel">
                             <ol class="carousel-indicators">  
@@ -76,8 +81,11 @@
                                     @if ($i == 0 )
                                         <div class="carousel-item border active">
                                             @auth
-                                                <form action="{{ route('') }}" method="POST">
-                                                    <a type="summit" class="btn btn-danger btn-block">Eliminar</a>
+                                                <form method="POST" action="{{ asset('/borrar') }}/{{$imgCarrusel[$i]->id}}/{{$imgCarrusel[$i]->imagen}}" id="{{$imgCarrusel[$i]->id}}">
+                                                    @csrf                                                   
+                                                    <button type="submit" class="btn text-white btn-danger btn-block">
+                                                        <div class=" mdi mdi-delete mdi-16px text-center">Eliminar</div>
+                                                    </button>
                                                 </form>
                                             @endauth                                              
                                             <img src="images/carrusel/{{$imgCarrusel[$i]->imagen}}" class="img-fluid">                      
@@ -85,9 +93,15 @@
                                     @else                                        
                                         <div class="carousel-item border-rounded">
                                             @auth
-                                                <a href="" class="btn btn-danger btn-block">Eliminar</a>
+                                            <form method="POST" 
+                                            action="{{ asset('/borrar') }}/{{$imgCarrusel[$i]->id}}/{{$imgCarrusel[$i]->imagen}}" id="{{$imgCarrusel[$i]->id}}">
+                                                @csrf
+                                                <button type="submit" class="btn text-white btn-danger btn-block">
+                                                    <div class=" mdi mdi-delete mdi-16px text-center">Eliminar</div>
+                                                </button>
+                                            </form>
                                             @endauth  
-                                            <img src="images/carrusel/{{$imgCarrusel[$i]->imagen}}" class="img-fluid img-rounded">                                
+                                            <img src="images/carrusel/{{$imgCarrusel[$i]->imagen}}" class="img-fluid">                                
                                         </div> 
                                     @endif        
                               @endfor 
@@ -121,24 +135,102 @@
         <div class="row">
             <div class="col-xl-8">
                 <div class="card-box"> 
-                    <h1 class="header-title mb-3">Noticias</h1>      
+                    <div class="row">
+                    <div class="col-xl order-first"><h1 class="header-title mb-3">Noticias</h1></div>                     
+                    @auth
+                        <div class="col-lg-3 order-last">
+                            <!-- Button trigger modal noticia-->
+                            <button type="button" class="btn btn-block btn-primary waves-effect waves-light" 
+                            data-toggle="modal" data-target="#myModalNoticia">
+                            <div class=" mdi mdi-bulletin-board mdi-16px"> Nueva Noticia</div>
+                        </button>
+                        </div>  
+                        <!-- noticia modal content -->
+                        <div id="myModalNoticia" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myModalLabel">Nueva Noticia</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form method="POST" 
+                                        action="{{ route('NoticiaFacultad.nueva') }}" 
+                                        class="parsley-examples"
+                                        enctype="multipart/form-data">
+                                            @csrf
+                                            
+                                            <div class="form-group">
+                                                <label>Titulo</label>
+                                                <input type="text" class="form-control" required
+                                                        placeholder="Titulo Noticia (Obligatorio)"
+                                                        name="titulo" id="titulo"/>
+                                            </div>   
+                                            
+                                            <div class="form-group">
+                                                <label>Sub-Titulo</label>
+                                                <input type="text" class="form-control" required
+                                                        placeholder="Sub-Titulo Noticia (Obligatorio)"
+                                                        name="subtitulo" id="subtitulo"/>
+                                            </div>       
+
+                                            <div class="form-group">
+                                                <label>Imagen o Foto </label>
+                                                <input type="file"  class="form-control" name="img" id="img"/>
+                                            </div>                                     
+
+                                            <div class="form-group">
+                                                <label>Fuente</label>
+                                                <input type="text" class="form-control"
+                                                        placeholder="Fuente Noticia (Opcional)"
+                                                        name="fuente" id="fuente"/>
+                                            </div> 
+
+                                            <div class="form-group">
+                                                <label>Url de la fuente</label>
+                                                <div>
+                                                    <input parsley-type="url" type="url" class="form-control"
+                                                             placeholder="URL Fuente (Opcional)"
+                                                             name="urlfuente" id="urlfuente"/>
+                                                </div>
+                                            </div>      
+                                            
+                                            <div class="form-group">
+                                                <label>Contenido</label>
+                                                <div>
+                                                    <textarea required class="form-control" name="contenido"></textarea>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="form-group mb-0">
+                                                <div>
+                                                    <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">
+                                                        Crear Noticia
+                                                    </button>
+                                                    <button type="reset" class="btn btn-light waves-effect">
+                                                        Cancelar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>                                    
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->                          
+                    @endauth     
+                    </div>
+                    @foreach ($noticias as $n)
+                    <div class="border my-1 py-1 rounded p-1 my-1 media">
+                        <img class="mr-3 rounded bx-shadow-lg" src="images/noticias/{{$n->imagen}}"
+                         alt="Generic placeholder image" height="80" width="110">
+                        <div class="media-body">
+                            <h5 class="mt-0">{{$n->titulo}}</h5>
+                            {{$n->contenido}}
+                        </div>
+                        <a href="#" class="btn btn-light mt-3 mx-2">Leer más</a>
+                    </div>  
+                    @endforeach
                     
-                    <div class="border rounded p-2 my-3 media">
-                        <img class="mr-3 rounded bx-shadow-lg" src="images/ues_noticia.jpg" alt="Generic placeholder image" height="80">
-                        <div class="media-body">
-                            <h5 class="mt-0">UES exige traspaso al MINED</h5>
-                            Facultad Multidisciplinaria Paracentral urge legalizar a su nombre un terreno donado por exministro de educación.
-                        </div>
-                        <a href="Noticia.html" class="btn btn-light mt-3">Leer mas...</a>
-                    </div>
-                    <div class="border rounded p-2 my-3 media">
-                        <img class="mr-3 rounded-circle bx-shadow-lg" src="images/ues_noticia.jpg" alt="Generic placeholder image" height="80" width="80">
-                        <div class="media-body">
-                            <h5 class="mt-0">UES exige traspaso al MINED</h5>
-                            Facultad Multidisciplinaria Paracentral urge legalizar a su nombre un terreno donado por exministro de educación.
-                        </div>
-                        <a href="Noticia.html" class="btn btn-light mt-3">Leer mas...</a>
-                    </div>
                 </div> <!-- end card-box -->
             </div><!-- end col -->
 
