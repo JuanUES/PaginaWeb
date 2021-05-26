@@ -227,7 +227,9 @@
                             <h5 class="mt-0">{{$n->titulo}}</h5>
                             {{$n->contenido}}
                         </div>
-                        <a href="#" class="btn btn-light mt-3 mx-2">Leer más</a>
+                        @auth
+                            <a href="{{ asset('/noticia') }}/{{$n->id}}" class="btn btn-light mt-3 mx-2">Editar</a>
+                        @endauth
                     </div>  
                     @endforeach
                     

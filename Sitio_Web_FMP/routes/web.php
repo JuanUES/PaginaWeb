@@ -21,7 +21,7 @@ use App\Http\Controllers\Pagina\NoticiaController;
 
 Route::get('/', [indexController::class, 'index']);
 
-/**Index */
+/**Index ----------------------------------------------------------------*/
 
 Route::post('/upload', [ImagenesCarruselController::class, 'store'])
 ->middleware(['auth'])->name('ImagenFacultad.subir');
@@ -31,6 +31,9 @@ Route::post('/borrar/{id}/{imagen}', [ImagenesCarruselController::class, 'destro
 
 Route::post('/noticias', [NoticiaController::class, 'store'])
 ->middleware(['auth'])->name('NoticiaFacultad.nueva');
+
+Route::get('/noticia/{id}',[NoticiaController::class, 'noticia'])
+->middleware(['auth'])->name('NoticiaFacultad.ver');
 
 /**----------------------------------------------------------------------- */
 

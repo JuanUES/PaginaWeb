@@ -15,7 +15,7 @@ class NoticiaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    { 
         //
     }
 
@@ -25,8 +25,23 @@ class NoticiaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {      
         //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function noticia($id)
+    {
+        if(Noticia::find($id) != null){
+            $noticia = Noticia::find($id);            
+            return view('Inicio.Noticia',compact('noticia'));
+        }else{
+            echo $id;
+        }   
     }
 
     /**
