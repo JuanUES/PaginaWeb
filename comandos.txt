@@ -15,3 +15,7 @@ php artisan make:Controller <Nombre de controlador>  --resource --model=<Nombre 
 --Imprimir en la consola de laravel artisan serve --
 $out = new \Symfony\Component\Console\Output\ConsoleOutput();
 $out->writeln('<Aqui va la variable o cadena a imprimir>');   
+
+--Ejecutar proyecto--
+cd s <Luego de escribir eso presionar la tecla Tab>
+php artisan serve

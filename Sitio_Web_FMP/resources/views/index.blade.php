@@ -167,49 +167,62 @@
                                         class="parsley-examples"
                                         enctype="multipart/form-data">
                                             @csrf
-                                            
-                                            <div class="form-group">
-                                                <label>Titulo</label>
-                                                <input type="text" class="form-control" required
-                                                        placeholder="Titulo Noticia (Obligatorio)"
-                                                        name="titulo" id="titulo"/>
-                                            </div>   
-                                            
-                                            <div class="form-group">
-                                                <label>Sub-Titulo</label>
-                                                <input type="text" class="form-control" required
-                                                        placeholder="Sub-Titulo Noticia (Obligatorio)"
-                                                        name="subtitulo" id="subtitulo"/>
-                                            </div>       
-
-                                            <div class="form-group">
-                                                <label>Imagen o Foto </label>
-                                                <input type="file"  class="form-control" name="img" id="img"/>
-                                            </div>                                     
-
-                                            <div class="form-group">
-                                                <label>Fuente</label>
-                                                <input type="text" class="form-control"
-                                                        placeholder="Fuente Noticia (Opcional)"
-                                                        name="fuente" id="fuente"/>
-                                            </div> 
-
-                                            <div class="form-group">
-                                                <label>Url de la fuente</label>
-                                                <div>
-                                                    <input parsley-type="url" type="url" class="form-control"
-                                                             placeholder="URL Fuente (Opcional)"
-                                                             name="urlfuente" id="urlfuente"/>
+                                            <div class="row">
+                                                <div class="col-xl-6">
+                                                    <div class="form-group">
+                                                        <label>Titulo</label>
+                                                        <input type="text" class="form-control" required
+                                                                placeholder="Titulo Noticia (Obligatorio)"
+                                                                name="titulo" id="titulo"/>
+                                                    </div> 
                                                 </div>
-                                            </div>      
-                                            
-                                            <div class="form-group">
-                                                <label>Contenido</label>
-                                                <div>
-                                                    <textarea required class="form-control" name="contenido"></textarea>
+                                                <div class="col-xl-6">
+                                                    <div class="form-group">
+                                                        <label>Sub-Titulo</label>
+                                                        <input type="text" class="form-control" required
+                                                                placeholder="Sub-Titulo Noticia (Obligatorio)"
+                                                                name="subtitulo" id="subtitulo"/>
+                                                    </div> 
                                                 </div>
                                             </div>
-                                            
+                                            <div class="row">
+                                                <div class="col-xl-6">
+                                                    <div class="form-group">
+                                                        <label>Fuente</label>
+                                                        <input type="text" class="form-control"
+                                                                placeholder="Fuente Noticia (Opcional)"
+                                                                name="fuente" id="fuente"/>
+                                                    </div> 
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <div class="form-group">
+                                                        <label>Url de la fuente</label>
+                                                        <div>
+                                                            <input parsley-type="url" type="url" class="form-control"
+                                                                     placeholder="URL Fuente (Opcional)"
+                                                                     name="urlfuente" id="urlfuente"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-12">
+                                                    <div class="form-group">
+                                                        <label>Imagen o Foto </label>
+                                                        <input type="file"  class="form-control" name="img" id="img"/>
+                                                    </div>
+                                                </div>
+                                            </div>       
+                                            <div class="row">
+                                                <div class="col-xl-12">
+                                                    <div class="form-group">
+                                                        <label>Contenido</label>
+                                                        <div>
+                                                            <textarea required class="form-control" name="contenido"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>         
                                             <div class="form-group mb-0">
                                                 <div>
                                                     <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">
@@ -237,8 +250,13 @@
                            <!-- {!! $n->contenido !!}-->
                         </div>
                         @auth
-                            <a href="{{ asset('/') }}/{{$n->id}}" class="btn btn-light mt-3 mx-2">Editar</a>
+                            <a href="#" class="btn btn-light mt-3 mx-2">Editar</a>
                         @endauth
+
+                        <form action="{{ asset('/noticias/{!! $n->id !!}') }}" method="POST">
+                            @csrf
+                            <a href="#" class="btn btn-light mt-3 mx-2">Leer más</a>
+                        </form>                        
                     </div>  
                     @endforeach
                     

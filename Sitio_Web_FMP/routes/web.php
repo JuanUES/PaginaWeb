@@ -32,7 +32,7 @@ Route::post('/borrar/{id}/{imagen}', [ImagenesCarruselController::class, 'destro
 Route::post('/noticias', [NoticiaController::class, 'store'])
 ->middleware(['auth'])->name('NoticiaFacultad.nueva');
 
-Route::get('/noticia/{id}',[NoticiaController::class, 'noticia'])
+Route::post('/noticia/{id}',[NoticiaController::class, 'noticia'])
 ->name('NoticiaFacultad.ver');
 
 /**----------------------------------------------------------------------- */

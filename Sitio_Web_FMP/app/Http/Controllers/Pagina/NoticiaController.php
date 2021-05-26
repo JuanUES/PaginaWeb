@@ -37,11 +37,17 @@ class NoticiaController extends Controller
     public function noticia($id)
     {
         if(Noticia::find($id) != null){
-            $noticia = Noticia::find($id);            
-            return view('Inicio.Noticia',compact('noticia'));
-        }else{
-            echo $id;
-        }   
+
+            $noticias = Noticia::all();
+            $noticia  = $noticias -> find($id);
+            if($noticia -> tipo){
+                return view('Inicio.Noticia',compact('noticia'));
+            }else{
+                $url = $noticia -> urlfuente;
+                return redirect($url);
+            }
+        }
+        redirect('/');  
     }
 
     /**
@@ -62,7 +68,8 @@ class NoticiaController extends Controller
         $noticia = new Noticia;
         $noticia -> titulo    =  $request->titulo;        
         $noticia -> subtitulo =  $request->subtitulo;        
-        $noticia -> imagen    =  $fileName;        
+        $noticia -> imagen    =  $fileName;
+        $noticia -> tipo      =  'true'; 
         $noticia -> contenido =  nl2br($request->contenido);
         $noticia -> fuente    =  $request->fuente;        
         $noticia -> urlfuente =  $request->urlfuente;
