@@ -11,6 +11,14 @@
 <link href="{{ asset('css/icons.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('css/app.min.css') }}" rel="stylesheet" type="text/css" />
 
+<style>
+    carousel-inner > .item > img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        min-width: 100%;
+    }
+</style>
 @endsection
 
 @section('container')
@@ -65,8 +73,8 @@
                         
                         @if (count($imgCarrusel) == '0')
                             <p class="text-center">Carrusel vacío, por favor ingrese una imagenes</p>
-                        @else         
-                        <div id="carouselExampleCaptions" class="carousel slide rounded" data-ride="carousel">
+                        @else
+                        <div id="carouselExampleCaptions" class="carousel slide rounded col-xl-12" data-ride="carousel">
                             <ol class="carousel-indicators">  
                                 @for ($i = 0; $i < count($imgCarrusel); $i++)
                                     @if ($i == 0 )
@@ -76,10 +84,10 @@
                                     @endif
                                 @endfor                               
                             </ol>
-                            <div class="carousel-inner text-center">
+                            <div class="carousel-inner">
                                 @for ($i = 0; $i < count($imgCarrusel); $i++)            
                                     @if ($i == 0 )
-                                        <div class="carousel-item border active">
+                                        <div class="carousel-item active">
                                             @auth
                                                 <form method="POST" action="{{ asset('/borrar') }}/{{$imgCarrusel[$i]->id}}/{{$imgCarrusel[$i]->imagen}}" id="{{$imgCarrusel[$i]->id}}">
                                                     @csrf                                                   
@@ -88,10 +96,10 @@
                                                     </button>
                                                 </form>
                                             @endauth                                              
-                                            <img src="images/carrusel/{{$imgCarrusel[$i]->imagen}}" class="img-fluid">                      
+                                            <img src="images/carrusel/{{$imgCarrusel[$i]->imagen}}" class="img-fluid" width="100%">                      
                                         </div>
                                     @else                                        
-                                        <div class="carousel-item border-rounded">
+                                        <div class="carousel-item">
                                             @auth
                                             <form method="POST" 
                                             action="{{ asset('/borrar') }}/{{$imgCarrusel[$i]->id}}/{{$imgCarrusel[$i]->imagen}}" id="{{$imgCarrusel[$i]->id}}">
@@ -101,7 +109,7 @@
                                                 </button>
                                             </form>
                                             @endauth  
-                                            <img src="images/carrusel/{{$imgCarrusel[$i]->imagen}}" class="img-fluid">                                
+                                            <img src="images/carrusel/{{$imgCarrusel[$i]->imagen}}" class="img-fluid" width="100%">                                
                                         </div> 
                                     @endif        
                               @endfor 
