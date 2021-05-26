@@ -23,11 +23,18 @@
             .min-width-full-container{
                 min-width: 100vh;
             }
+
             @media screen and (max-width: 992px) {
                 .ocultar-div{
                      display:none;
                 }
             }
+
+            /*@media screen and (min-width: 992px) {
+                .ocultar-div{
+                     display:none;
+                }
+            }*/
 
             .full-height{
                 height:100%;
@@ -69,7 +76,7 @@
             <!-- end Topbar -->          
                 
             <div class="container-fluid">
-                <div class="row align-items-center color-top ocultar-div">
+                <div class="row align-items-center color-top ocultar-div ">
                     <div class="col-2">
                         <div class="col-2 my-1">
                             <a href="{{ asset('/') }}">
@@ -94,16 +101,12 @@
                         <li class="has-submenu p-1">
                             <a href="#" class="rounded btn text-left">
                                  <i class="mdi mdi-account-multiple mdi-24px"></i>Nosotros <div class="arrow-down"></div></a>
-                            <ul class="submenu">
+                            <ul class="submenu">                               
                                 <li>
-                                    <ul>
-                                        <li>
-                                            <a href="{{ asset('MisionVision') }}">Misión y Visión</a>
-                                        </li>                                           
-                                        <li>
-                                            <a href="{{ asset('Directorio') }}">Directorio</a>
-                                        </li>
-                                    </ul>
+                                    <a href="{{ asset('MisionVision') }}">Misión y Visión</a>
+                                </li>                                           
+                                <li>
+                                    <a href="{{ asset('Directorio') }}">Directorio</a>
                                 </li>
                                 <li class="has-submenu">
                                     <a href="{{ asset('EstructuraOrganizativa') }}">Estructura Organizativa&nbsp;</a>                                    
@@ -169,26 +172,22 @@
                         <li class="has-submenu p-1">
                             <a href="#" class="rounded btn text-left">
                                  <i class="mdi mdi-clipboard-text mdi-24px"></i>Administrativo<div class="arrow-down"></div></a>
-                            <ul class="submenu">
+                            <ul class="submenu">                                
                                 <li>
-                                    <ul>
-                                        <li>
-                                            <a href="#">Colecturia</a>
-                                        </li>
-                                        
-                                        <li>
-                                            <a href="#">Unidad de Tegnologia<br>de la Informacion</a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#">Desarrollo Físico</a>
-                                        </li>
-
-                                        <li>
-                                            <a href="#">Universidad en Linea</a>
-                                        </li>
-                                    </ul>
+                                    <a href="#">Colecturia</a>
                                 </li>
+                                
+                                <li>
+                                    <a href="#">Unidad de Tegnologia<br>de la Informacion</a>
+                                </li>
+
+                                <li>
+                                    <a href="#">Desarrollo Físico</a>
+                                </li>
+
+                                <li>
+                                    <a href="#">Universidad en Linea</a>
+                                </li>                                    
                             </ul>
                         </li>     
 
@@ -199,10 +198,9 @@
                             </a>
                         </li>
 
-                        <li class="has-submenu p-1 float-right">
+                        <li class="has-submenu float-right p-1">
                             
-                            @auth
-                                
+                            @auth                                
                                 <a href="#"  class="rounded btn text-left">
                                     <i class="mdi mdi-account mdi-24px"></i>
                                     {{ Auth::user()->name }}

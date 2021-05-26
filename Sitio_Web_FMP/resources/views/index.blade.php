@@ -72,7 +72,7 @@
                     <div class="row">
                         
                         @if (count($imgCarrusel) == '0')
-                            <p class="text-center">Carrusel vacío, por favor ingrese una imagenes</p>
+                            <p class="text-center"> Carrusel vacío, por favor ingrese una imagenes</p>
                         @else
                         <div id="carouselExampleCaptions" class="carousel slide rounded col-xl-12" data-ride="carousel">
                             <ol class="carousel-indicators">  
@@ -233,10 +233,11 @@
                          alt="Generic placeholder image" height="80" width="110">
                         <div class="media-body">
                             <h5 class="mt-0">{{$n->titulo}}</h5>
-                            {{$n->contenido}}
+                            {!!$n->subtitulo!!}
+                           <!-- {!! $n->contenido !!}-->
                         </div>
                         @auth
-                            <a href="{{ asset('/noticia') }}/{{$n->id}}" class="btn btn-light mt-3 mx-2">Editar</a>
+                            <a href="{{ asset('/') }}/{{$n->id}}" class="btn btn-light mt-3 mx-2">Editar</a>
                         @endauth
                     </div>  
                     @endforeach

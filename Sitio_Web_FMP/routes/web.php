@@ -33,7 +33,7 @@ Route::post('/noticias', [NoticiaController::class, 'store'])
 ->middleware(['auth'])->name('NoticiaFacultad.nueva');
 
 Route::get('/noticia/{id}',[NoticiaController::class, 'noticia'])
-->middleware(['auth'])->name('NoticiaFacultad.ver');
+->name('NoticiaFacultad.ver');
 
 /**----------------------------------------------------------------------- */
 

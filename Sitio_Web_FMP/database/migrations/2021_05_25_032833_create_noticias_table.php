@@ -16,11 +16,11 @@ class CreateNoticiasTable extends Migration
         Schema::create('noticias', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
-            $table->string('subtitulo');
-            $table->string('contenido');
-            $table->string('fuente')    -> nullable;            
-            $table->string('urlfuente') -> nullable;
-            $table->string('imagen')    -> nullable;
+            $table->string('subtitulo')   -> nullable;
+            $table->longText('contenido') -> nullable;
+            $table->string('fuente')      -> nullable;            
+            $table->string('urlfuente')   -> nullable;
+            $table->string('imagen')      -> nullable;
             $table->timestamps();
         });
     }

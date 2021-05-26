@@ -63,7 +63,7 @@ class NoticiaController extends Controller
         $noticia -> titulo    =  $request->titulo;        
         $noticia -> subtitulo =  $request->subtitulo;        
         $noticia -> imagen    =  $fileName;        
-        $noticia -> contenido =  $request->contenido;
+        $noticia -> contenido =  nl2br($request->contenido);
         $noticia -> fuente    =  $request->fuente;        
         $noticia -> urlfuente =  $request->urlfuente;
         $noticia -> save();
