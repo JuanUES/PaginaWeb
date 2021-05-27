@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8" />
-        <title>Facultad Multidisciplinaria Paracentral</title><!-- Required meta tags -->
+        <title>Facultad Multidisciplinaria Paracentral</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
@@ -80,7 +80,7 @@
                     <div class="col-2">
                         <div class="col-2 my-1">
                             <a href="{{ asset('/') }}">
-                                <img src="images/ues_logo3.svg" alt="logo" height="">
+                                <img src="{{ asset('/images/ues_logo3.svg') }}" alt="logo" height="">
                             </a>
                         </div>
                     </div>

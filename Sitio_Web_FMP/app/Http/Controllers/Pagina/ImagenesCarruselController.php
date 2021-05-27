@@ -100,6 +100,7 @@ class ImagenesCarruselController extends Controller
         /**Elimino de la base de datos */
         $imgCa = ImagenesCarrusel::find($id);        
         $imgCa->delete();
+        
         return redirect('/');
     }
 }

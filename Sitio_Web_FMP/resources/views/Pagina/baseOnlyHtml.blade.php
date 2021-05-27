@@ -1,7 +1,7 @@
 @extends('Pagina/base')
 @section('appcss')
 <!-- App favicon -->
-<link rel="shortcut icon" href="images/favicon.ico">
+<link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
 <!-- App css -->
 <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('css/icons.min.css') }}" rel="stylesheet" type="text/css" />

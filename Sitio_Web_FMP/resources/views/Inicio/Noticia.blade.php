@@ -16,16 +16,30 @@
             <div class="card-box col-xl-12">
                 <div class="row">
                     <div class="col-xl-12 ">
-                        <h1>Titulo </h1>
-                        <p>Subtitulo</p>
+                        <h1 class="my-3">{!!$noticia->titulo!!} </h1>                                                   
+                        <h3 class="my-2">{!!$noticia->subtitulo!!}</h3>
+                        <p class="p-6">Publicado el {!!date('d M Y', strtotime($noticia->created_at))!!}</p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col order-first">
-                        <img src="/imagen/noticias/{{ $noticia->imagen }}" alt="Imagen Noticia" height="200" width="200">
+                    <div class="col-xl-5 order-first my-2">
+                        <img src=" {{ asset('/images/noticias') }}/{!!$noticia->imagen!!}" 
+                        alt="Imagen Noticia" height="300" class=" rounded bx-shadow-lg img-fluid">
                     </div>
-                    <div class="col order-last">                        
-                        <p>Contenido</p>
+                    <div class="col-xl-7 order-last">                        
+                        <blockquote class="card-bodyquote mx-2"> 
+                            <p class="text-justify ">
+                                {!!$noticia->contenido!!}
+                            </p>
+                            @if ($noticia->fuente!=null and $noticia->urlfuente!=null)
+                            <footer class="blockquote-footer text-muted"> 
+                                Fuente: 
+                                <a href="{!!$noticia->urlfuente!!}">
+                                    {!!$noticia->fuente!!}
+                                </a>
+                            </footer>                                
+                            @endif                            
+                        </blockquote>  
                     </div>
                 </div>
             </div>   

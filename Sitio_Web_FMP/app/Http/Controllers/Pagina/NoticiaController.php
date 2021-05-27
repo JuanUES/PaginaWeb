@@ -14,9 +14,14 @@ class NoticiaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id, $titulo)
     { 
-        //
+        $idNoticia = base64_decode($id);
+        $noticias  = Noticia::all();
+        $noticia   = $noticias -> find($idNoticia);
+        if($noticia != null and $noticia -> tipo){   
+            return view('Inicio.Noticia', compact('noticia'));
+        }
     }
 
     /**
@@ -34,20 +39,9 @@ class NoticiaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function noticia($id)
+    public function noticia()
     {
-        if(Noticia::find($id) != null){
-
-            $noticias = Noticia::all();
-            $noticia  = $noticias -> find($id);
-            if($noticia -> tipo){
-                return view('Inicio.Noticia',compact('noticia'));
-            }else{
-                $url = $noticia -> urlfuente;
-                return redirect($url);
-            }
-        }
-        redirect('/');  
+        
     }
 
     /**
@@ -74,6 +68,27 @@ class NoticiaController extends Controller
         $noticia -> fuente    =  $request->fuente;        
         $noticia -> urlfuente =  $request->urlfuente;
         $noticia -> save();
+
+        return redirect('/');
+    }
+
+    public function storeurl(Request $request)
+    {
+        /**Guardo en carpeta Noticia */
+        $file = $request->file('img'); 
+        $path = public_path() . '\images\noticias';
+        $fileName = uniqid();
+        $file->move($path, $fileName);
+        
+        /**Guardo en base de datos */
+        $noticia = new Noticia;
+        $noticia -> titulo    =  $request->titulo;        
+        $noticia -> subtitulo =  $request->subtitulo;        
+        $noticia -> imagen    =  $fileName;
+        $noticia -> tipo      =  'false';  
+        $noticia -> urlfuente =  $request->urlfuente;
+        $noticia -> save();
+
         return redirect('/');
     }
 
@@ -106,7 +121,7 @@ class NoticiaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
     }

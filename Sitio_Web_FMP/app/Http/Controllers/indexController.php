@@ -16,10 +16,10 @@ class indexController extends Controller
      */
     public function index()
     {
-        /**Envio imagenes del carrusel a Inicio */
+        /** Envio imagenes del carrusel a Inicio */
         $imgCarrusel = ImagenesCarrusel::all();
 
-        /**Envio noticias a Inicio */
+        /** Envio noticias a Inicio */
         $noticias = Noticia::all();
         
         return view('index',compact('imgCarrusel','noticias'));

@@ -56,7 +56,7 @@
                                     <div class="modal-body">
                                         
                                         <form action="{{ route('ImagenFacultad.subir') }}" method="post"
-                                         class="dropzone" id="my-awesome-dropzone">
+                                         class="dropzone" id="dropzone">
                                             @csrf                                 
                                             <div class="dz-message needsclick">
                                                 <i class="h1 text-muted dripicons-cloud-upload"></i>
@@ -69,10 +69,9 @@
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal -->
                     </div>
-                    <div class="row">
-                        
+                    <div class="row">                        
                         @if (count($imgCarrusel) == '0')
-                            <p class="text-center"> Carrusel vacío, por favor ingrese una imagenes</p>
+                            <p class="text-center"> Carrusel vacío, por favor ingrese imagenes o fotos</p>
                         @else
                         <div id="carouselExampleCaptions" class="carousel slide rounded col-xl-12" data-ride="carousel">
                             <ol class="carousel-indicators">  
@@ -89,27 +88,27 @@
                                     @if ($i == 0 )
                                         <div class="carousel-item active">
                                             @auth
-                                                <form method="POST" action="{{ asset('/borrar') }}/{{$imgCarrusel[$i]->id}}/{{$imgCarrusel[$i]->imagen}}" id="{{$imgCarrusel[$i]->id}}">
+                                                <form method="POST" action="{{ asset('/borrar') }}/{{$imgCarrusel[$i]->id}}/{{$imgCarrusel[$i]->imagen}}" id="{{$imgCarrusel[$i]->imagen}}">
                                                     @csrf                                                   
                                                     <button type="submit" class="btn text-white btn-danger btn-block">
                                                         <div class=" mdi mdi-delete mdi-16px text-center">Eliminar</div>
                                                     </button>
                                                 </form>
                                             @endauth                                              
-                                            <img src="images/carrusel/{{$imgCarrusel[$i]->imagen}}" class="img-fluid" width="100%">                      
+                                            <img src="images/carrusel/{{$imgCarrusel[$i]->imagen}}" class="img-fluid" width="100%" alt="{!!$imgCarrusel[$i]->imagen!!}">                      
                                         </div>
                                     @else                                        
                                         <div class="carousel-item">
                                             @auth
                                             <form method="POST" 
-                                            action="{{ asset('/borrar') }}/{{$imgCarrusel[$i]->id}}/{{$imgCarrusel[$i]->imagen}}" id="{{$imgCarrusel[$i]->id}}">
+                                            action="{{ asset('/borrar') }}/{{$imgCarrusel[$i]->id}}/{{$imgCarrusel[$i]->imagen}}" id="{{$imgCarrusel[$i]->imagen}}">
                                                 @csrf
                                                 <button type="submit" class="btn text-white btn-danger btn-block">
                                                     <div class=" mdi mdi-delete mdi-16px text-center">Eliminar</div>
                                                 </button>
                                             </form>
                                             @endauth  
-                                            <img src="images/carrusel/{{$imgCarrusel[$i]->imagen}}" class="img-fluid" width="100%">                                
+                                            <img src="images/carrusel/{{$imgCarrusel[$i]->imagen}}" class="img-fluid" width="100%" alt="{!!$imgCarrusel[$i]->imagen!!}">                                
                                         </div> 
                                     @endif        
                               @endfor 
@@ -158,16 +157,31 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title" id="myModalLabel">Nueva Noticia</h4>
+                                        <ul class="nav nav-tabs nav-bordered">
+                                            <li class="nav-item">
+                                                <a href="#agronomica" data-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                    Nueva Noticia de FMP
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a href="#industrial" data-toggle="tab" aria-expanded="false" class="nav-link">
+                                                    Nueva Noticia Externa
+                                                </a>
+                                            </li>
+                                        </ul>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                     </div>
                                     <div class="modal-body">
-                                        <form method="POST" 
+                                        
+                                        <div class="tab-content">
+                                            <div class="tab-pane show active" id="agronomica" >
+                                                <form method="POST" 
                                         action="{{ route('NoticiaFacultad.nueva') }}" 
                                         class="parsley-examples"
                                         enctype="multipart/form-data">
                                             @csrf
                                             <div class="row">
+                                                
                                                 <div class="col-xl-6">
                                                     <div class="form-group">
                                                         <label>Titulo</label>
@@ -209,7 +223,7 @@
                                                 <div class="col-xl-12">
                                                     <div class="form-group">
                                                         <label>Imagen o Foto </label>
-                                                        <input type="file"  class="form-control" name="img" id="img"/>
+                                                        <input type="file"  accept="image/*" class="form-control" name="img" id="img"/>
                                                     </div>
                                                 </div>
                                             </div>       
@@ -233,7 +247,64 @@
                                                     </button>
                                                 </div>
                                             </div>
-                                        </form>
+                                        </form>                    
+                                            </div>
+                                            <div class="tab-pane" id="industrial">
+                                                <form method="POST" 
+                                        action="{{ route('NoticiaFacultad.nuevaurl') }}" 
+                                        class="parsley-examples"
+                                        enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="row">
+                                                
+                                                <div class="col-xl-6">
+                                                    <div class="form-group">
+                                                        <label>Titulo</label>
+                                                        <input type="text" class="form-control" required
+                                                                placeholder="Titulo Noticia (Obligatorio)"
+                                                                name="titulo" id="titulo"/>
+                                                    </div> 
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <div class="form-group">
+                                                        <label>Sub-Titulo</label>
+                                                        <input type="text" class="form-control" required
+                                                                placeholder="Sub-Titulo Noticia (Obligatorio)"
+                                                                name="subtitulo" id="subtitulo"/>
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-6">
+                                                    <div class="form-group">
+                                                        <label>Imagen o Foto </label>
+                                                        <input type="file"  accept="image/*" class="form-control" name="img" id="img"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <div class="form-group">
+                                                        <label>Url de la fuente</label>
+                                                        <div>
+                                                            <input parsley-type="url" type="url" class="form-control"
+                                                                     placeholder="URL Fuente (Opcional)"
+                                                                     name="urlfuente" id="urlfuente"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>             
+                                            <div class="form-group mb-0">
+                                                <div>
+                                                    <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">
+                                                        Crear Noticia
+                                                    </button>
+                                                    <button type="reset" class="btn btn-light waves-effect">
+                                                        Cancelar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>                
+                                            </div>
+                                        </div>
                                     </div>                                    
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
@@ -250,13 +321,16 @@
                            <!-- {!! $n->contenido !!}-->
                         </div>
                         @auth
-                            <a href="#" class="btn btn-light mt-3 mx-2">Editar</a>
+                            <a href="#" class="btn btn-light mt-3">Editar</a>
                         @endauth
-
-                        <form action="{{ asset('/noticias/{!! $n->id !!}') }}" method="POST">
-                            @csrf
-                            <a href="#" class="btn btn-light mt-3 mx-2">Leer más</a>
-                        </form>                        
+                        @if ($n->tipo)
+                            <a href="{{ asset('/noticias') }}/{!!base64_encode($n->id)!!}/{!!base64_encode($n->titulo)!!}"
+                               class="btn btn-light mt-3 mx-1">Leer más</a>
+                        @else
+                            <a href="{!!$n->urlfuente!!}"
+                                class="btn btn-light mt-3 mx-1">Leer más</a>
+                        @endif
+                        
                     </div>  
                     @endforeach
                     
@@ -336,10 +410,9 @@
 <script src=" {{ asset('js/dropzone.min.js') }} "></script>
 
 <script>
-   Dropzone.options.myAwesomeDropZone = {
-       paramName = "file",
-       MaxFileSize = 2, 
-       success: function(file,response){
+   Dropzone.options.dropzone = {
+       
+       success: function(response){
            console.log(response);
        }
    }

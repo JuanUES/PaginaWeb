@@ -29,12 +29,14 @@ Route::post('/upload', [ImagenesCarruselController::class, 'store'])
 Route::post('/borrar/{id}/{imagen}', [ImagenesCarruselController::class, 'destroy'])
 ->middleware(['auth'])->name('ImagenFacultad.borrar');
 
-Route::post('/noticias', [NoticiaController::class, 'store'])
+Route::post('/noticias/nueva', [NoticiaController::class, 'store'])
 ->middleware(['auth'])->name('NoticiaFacultad.nueva');
 
-Route::post('/noticia/{id}',[NoticiaController::class, 'noticia'])
-->name('NoticiaFacultad.ver');
+Route::post('/noticias/nuevaurl', [NoticiaController::class, 'storeurl'])
+->middleware(['auth'])->name('NoticiaFacultad.nuevaurl');
 
+Route::get('/noticias/{titulo}/{id}',[NoticiaController::class, 'index'])
+->name('NoticiaFacultad.ver');
 /**----------------------------------------------------------------------- */
 
 /**Debo eliminar esta ruta y sus archivos relacionados */
