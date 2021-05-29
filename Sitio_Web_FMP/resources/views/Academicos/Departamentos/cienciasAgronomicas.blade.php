@@ -33,29 +33,38 @@
                     </ul>
                     <div class="tab-content">
                         <div class="tab-pane show active" id="agronomica" >
+                            <div class="row">
+                                <div class="col-xl-8 order-first ">
+                                    <p class="mb-1 font-weight-bold ">Ingeniería Agronómica	I70304 </p>
+                                    <p class="text-muted font-13 text-justify">
+                                        La Carrera de Ingeniería Agronómica tiene como fin contribuir al desarrollo sostenible de El Salvador, atendiendo las demandas de los diferentes sectores poblacionales preferentemente en beneficio de las mayorías; desarrollar las Ciencias Agronómicas, con un enfoque holístico y sistemático con un conocimiento científico de los procesos y fenómenos de la naturaleza y la sociedad; desarrollar tecnologías apropiadas para mejorar los sistemas de producción agropecuarios, la conservación y el aprovechamiento racional de los recursos naturales renovables y, contribuir con un modelo curricular de contenidos ajustados a la realidad del desarrollo agropecuario en El Salvador.
+                                    </p>                   
+            
+                                    <p class="mb-1 font-weight-bold">DESCRIPCIÓN DE LAS AREAS CURRICULARES O DE FORMACIÓN:</p>
+                                    <p class="text-muted font-13 text-justify">
+                                        La estructura de la Carrera de Ingeniería Agronómica comprende tres ejes:
+                                        Teórico, de Investigación y de Proyección Social, los cuales presentan una modalidad integradora de una forma progresiva en el desarrollo del Pensum, de manera que en los primeros años habrá cursos integradores relacionados a la realidad agropecuaria nacional en donde se involucran conocimientos básicos y aspectos socioeconómicos del sector agropecuario, hasta lograr la integración en los últimos años de la Carrera. El Pensum se ha dividido en tres áreas: Un área básica donde conocerán los fundamentos físicos, químicos, matemáticos, biológicos y sociales.
+                                        Un área Tecnológica en donde conocerán los factores productivos del campo agropecuario enfocando principalmente el uso, conservación y manejo de los recursos naturales y el área de Integración en donde se estudiarán los diferentes sistemas de producción agropecuaria en los cuales estarán involucrados los factores que intervienen en la productividad.
+                                        En el desarrollo de las tres áreas van involucrados los ejes de Investigación, y Proyección Social los cuales se desarrollarán en los diferentes ciclos del Pensum mediante la realización de actividades que tengan que ver con los problemas reales del sector agropecuario, así como del conocimiento del estado, uso, manejo y conservación de los recursos naturales.                        
+                                    </p>                   
+            
+                                    <p class="mb-1 font-weight-bold">TIEMPO DE DURACIÓN:</p>
+                                    <p class="text-muted font-13">
+                                        5 años.
+                                    </p>
+            
+                                    <p class="mb-1 font-weight-bold">GRADO Y TÍTULO QUE OTORGA:</p>
+                                    <p class="text-muted font-13">
+                                        INGENIERO (A) AGRÓNOMO.
+                                    </p>
+                                </div>
+                                <div class="col-xl-4 order-last">
+                                    <div class="border mx-6 ">
+                                        <button class="p-1 btn btn-info btn-block ">Descargar Pensum</button>
+                                    </div>
+                                </div>
+                            </div>
                             
-                            <p class="mb-1 font-weight-bold ">Ingeniería Agronómica	I70304 </p>
-                            <p class="text-muted font-13 text-justify">
-                                La Carrera de Ingeniería Agronómica tiene como fin contribuir al desarrollo sostenible de El Salvador, atendiendo las demandas de los diferentes sectores poblacionales preferentemente en beneficio de las mayorías; desarrollar las Ciencias Agronómicas, con un enfoque holístico y sistemático con un conocimiento científico de los procesos y fenómenos de la naturaleza y la sociedad; desarrollar tecnologías apropiadas para mejorar los sistemas de producción agropecuarios, la conservación y el aprovechamiento racional de los recursos naturales renovables y, contribuir con un modelo curricular de contenidos ajustados a la realidad del desarrollo agropecuario en El Salvador.
-                            </p>                   
-    
-                            <p class="mb-1 font-weight-bold">DESCRIPCIÓN DE LAS AREAS CURRICULARES O DE FORMACIÓN:</p>
-                            <p class="text-muted font-13 text-justify">
-                                La estructura de la Carrera de Ingeniería Agronómica comprende tres ejes:
-                                Teórico, de Investigación y de Proyección Social, los cuales presentan una modalidad integradora de una forma progresiva en el desarrollo del Pensum, de manera que en los primeros años habrá cursos integradores relacionados a la realidad agropecuaria nacional en donde se involucran conocimientos básicos y aspectos socioeconómicos del sector agropecuario, hasta lograr la integración en los últimos años de la Carrera. El Pensum se ha dividido en tres áreas: Un área básica donde conocerán los fundamentos físicos, químicos, matemáticos, biológicos y sociales.
-                                Un área Tecnológica en donde conocerán los factores productivos del campo agropecuario enfocando principalmente el uso, conservación y manejo de los recursos naturales y el área de Integración en donde se estudiarán los diferentes sistemas de producción agropecuaria en los cuales estarán involucrados los factores que intervienen en la productividad.
-                                En el desarrollo de las tres áreas van involucrados los ejes de Investigación, y Proyección Social los cuales se desarrollarán en los diferentes ciclos del Pensum mediante la realización de actividades que tengan que ver con los problemas reales del sector agropecuario, así como del conocimiento del estado, uso, manejo y conservación de los recursos naturales.                        
-                            </p>                   
-    
-                            <p class="mb-1 font-weight-bold">TIEMPO DE DURACIÓN:</p>
-                            <p class="text-muted font-13">
-                                5 años.
-                            </p>
-    
-                            <p class="mb-1 font-weight-bold">GRADO Y TÍTULO QUE OTORGA:</p>
-                            <p class="text-muted font-13">
-                                INGENIERO (A) AGRÓNOMO.
-                            </p>
     
                         </div>
                         <div class="tab-pane" id="industrial">

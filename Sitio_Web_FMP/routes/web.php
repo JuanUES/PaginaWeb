@@ -7,6 +7,8 @@ use App\Http\Controllers\indexController;
 /**Importaciones para que funcione Index */
 use App\Http\Controllers\Pagina\ImagenesCarruselController;
 use App\Http\Controllers\Pagina\NoticiaController;
+use App\Http\Controllers\Pagina\PDFController;
+use App\Http\Controllers\Pagina\EstructuraOrganizativaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,14 +39,13 @@ Route::post('/noticias/nuevaurl', [NoticiaController::class, 'storeurl'])
 
 Route::get('/noticias/{titulo}/{id}',[NoticiaController::class, 'index'])
 ->name('NoticiaFacultad.ver');
-/**----------------------------------------------------------------------- */
+/**Nosotros----------------------------------------------------------------------*/
 
-/**Debo eliminar esta ruta y sus archivos relacionados */
-Route::get('InicioSesion', function () {
-    return view('Sesion.inicioSesion');
-});
+Route::post('/nosotros/organigrama/pdf/{localizacion}', [PDFController::class, 'store'])
+->middleware(['auth'])->name('Nosotros.organigrama');
 
-/**------------------------------------ */
+Route::get('EstructuraOrganizativa', [EstructuraOrganizativaController::class, 'index']);
+
 
 Route::get('MisionVision', function () {
     return view('Nosotros.misionVision');
@@ -66,8 +67,6 @@ Route::get('CienciasEducacion', function () {
     return view('Academicos.Departamentos.CienciasEducacion');
 });
 
-Route::get('EstructuraOrganizativa', function () {
-    return view('Nosotros.estructuraOrganizativa');
-});
+
 
 require __DIR__.'/auth.php';

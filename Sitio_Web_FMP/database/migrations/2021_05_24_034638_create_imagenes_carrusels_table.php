@@ -15,8 +15,13 @@ class CreateImagenesCarruselsTable extends Migration
     {
         Schema::create('imagenes_carrusels', function (Blueprint $table) {
             $table->id();
-            $table->string('imagen');
+            $table->string('imagen');            
+            $table->bigInteger('user');
             $table->timestamps();
+            $table->foreign('user')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNoticiasTable extends Migration
+class CreatePDFSTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,13 @@ class CreateNoticiasTable extends Migration
      */
     public function up()
     {
-        Schema::create('noticias', function (Blueprint $table) {
+        Schema::create('p_d_f_s', function (Blueprint $table) {
             $table->id();
-            $table->string('titulo');
-            $table->string('subtitulo')   -> nullable();
-            $table->longText('contenido') -> nullable();
-            $table->string('fuente')      -> nullable();            
-            $table->string('urlfuente')   -> nullable();
-            $table->string('imagen')      -> nullable();
-            $table->boolean('tipo');            
+            $table->string('localizacion');
+            $table->string('file');
             $table->bigInteger('user');
             $table->timestamps();
+
             $table->foreign('user')
                 ->references('id')
                 ->on('users')
@@ -38,6 +34,6 @@ class CreateNoticiasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('noticias');
+        Schema::dropIfExists('p_d_f_s');
     }
 }

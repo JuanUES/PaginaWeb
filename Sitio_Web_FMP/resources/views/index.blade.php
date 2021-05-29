@@ -3,8 +3,9 @@
 @section('appcss')
 <!-- App favicon -->
 <link rel="shortcut icon" href="images/favicon.ico">
-
+@auth
 <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
+@endauth
 
 <!-- App css -->
 <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
@@ -56,7 +57,7 @@
                                     <div class="modal-body">
                                         
                                         <form action="{{ route('ImagenFacultad.subir') }}" method="post"
-                                         class="dropzone" id="dropzone">
+                                         class="dropzone" id="my-awesome-dropzone">
                                             @csrf                                 
                                             <div class="dz-message needsclick">
                                                 <i class="h1 text-muted dripicons-cloud-upload"></i>
@@ -406,15 +407,35 @@
 
 <!-- App js -->
 <script src="{{ asset('js/app.min.js') }}"></script>
+@auth    
 <!-- Plugins js -->
 <script src=" {{ asset('js/dropzone.min.js') }} "></script>
+@endauth
 
 <script>
-   Dropzone.options.dropzone = {
-       
-       success: function(response){
-           console.log(response);
-       }
-   }
+    Dropzone.options.myAwesomeDropzone = {
+        maxFiles: 15,
+        accept: function(file, done) {
+            
+            done();
+        },
+        init: function() {
+            this.on("maxfilesexceeded", function(file){
+                ("No more files please!");
+            });
+        }
+    };
+   /*Dropzone.options.myAwesomeDropzone = {
+        maxFiles: 1,
+        accept: function(file, done) {
+            console.log("uploaded");
+            done();
+        },
+        init: function() {
+            this.on("maxfilesexceeded", function(file){
+                alert("No more files please!");
+            });
+        }
+    };*/
 </script>
 @endsection

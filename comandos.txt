@@ -6,16 +6,27 @@
 3. php artisan key:generate
 4. php artisan serve
 
---Crear un modelo--
+--Codificicacion-------------------------------------------------------
+
+$cod_url = urlencode($cadena);
+$deco_url = urldecode($cod_url);
+
+$codifica1 = base64_encode($cadena);
+$decodifica2 = base64_decode($codifica1);
+
+$codifica3 = convert_uuencode($cadena);
+$decodifica4 = convert_uudecode($codifica3);
+
+--Crear un modelo-------------------------------------------------------
 php artisan make:model <Aqui donde y como se llamara>
 
 --Crear un controlador con el modelo--
 php artisan make:Controller <Nombre de controlador>  --resource --model=<Nombre del Modelo>
 
---Imprimir en la consola de laravel artisan serve --
+--Imprimir en la consola de laravel artisan serve ---------------------
 $out = new \Symfony\Component\Console\Output\ConsoleOutput();
 $out->writeln('<Aqui va la variable o cadena a imprimir>');   
 
---Ejecutar proyecto--
+--Ejecutar proyecto---------------------------------------------------
 cd s <Luego de escribir eso presionar la tecla Tab>
 php artisan serve
