@@ -312,6 +312,7 @@
                         </div><!-- /.modal -->                          
                     @endauth     
                     </div>
+
                     @foreach ($noticias as $n)
                     <div class="border my-1 py-1 rounded p-1 my-1 media">
                         <img class="mr-3 rounded bx-shadow-lg" src="images/noticias/{{$n->imagen}}"
@@ -344,7 +345,7 @@
                     <a href="https://campus.ues.edu.sv/" class="btn btn-danger btn-block mt-3 text-left">Campus Virtual</a>
                     <a href="https://eel.ues.edu.sv/" class="btn btn-danger btn-block mt-3 text-left">Expediente en linea</a>                      
                     <a href="https://correo.ues.edu.sv/" class="btn btn-danger  btn-block mt-3 text-left">Correo institucional</a>                           
-                    <a href="https://www.facebook.com/DistanciaFMP" class="btn btn-danger  btn-block mt-3 text-left">Universidad en linea / Cede Paracentral</a> 
+                    <a href="https://www.facebook.com/DistanciaFMP" class="btn btn-danger  btn-block mt-3 text-left">Universidad en linea / Sede Paracentral</a> 
                     <a href="https://www.facebook.com/celeues" class="btn btn-danger btn-block mt-3 text-left">CELEUES</a>
                 </div> <!-- end card-box-->                        
             </div> <!-- end col-->
@@ -385,7 +386,7 @@
                             <div class="p-1"><a href="http://saa.ues.edu.sv/portal/">Secretaría de Asuntos Académicos</a></div>
                         </div>
                         <div class="col order-last">
-                            <p class="header-title">Instituciones</p>
+                            <p class="header-title">Institución</p>
                             <div class="p-1"><a href="#">Consejo Superior Universitario</a></div>
                             <div class="p-1"><a href="#">Asamblea General Universitaria</a></div>
                         </div>

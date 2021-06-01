@@ -161,7 +161,7 @@
                                     <a href="#">Proyección Social</a>
                                 </li>   
                                 <li class="has-submenu">
-                                    <a href="#">Biblioteca</a>
+                                    <a href="http://biblio.fmp.ues.edu.sv/">Biblioteca</a>
                                 </li> 
                                 <li class="has-submenu">
                                     <a href="#">CELEUES</a>
