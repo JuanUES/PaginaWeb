@@ -65,10 +65,34 @@
                                 PROFESOR (A) EN EDUCACIÓN BÁSICA PARA PRIMERO Y SEGUNDO CICLOS.
                             </p>
                             <p class="mb-1 font-weight-bold">PENSUM:</p>
-                            <a href="#" type="submit" class="btn btn-info"> <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div></a>
+                            <a href="#" type="submit" class="btn btn-outline-danger"> <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div></a>
                         </div>
                         <div class="tab-pane fade" id="v-pills-messages2" role="tabpanel" aria-labelledby="v-pills-messages-tab2">
-                            
+                            <h4 class="header-title">Licenciatura en Trabajo Social</h4>                            
+                            <p class="mb-1 font-weight-bold ">CODIGO:</p>
+                            <p class="text-muted font-13 text-justify">L10439</p>
+                            <p class="mb-1 font-weight-bold">DESCRIPCIÓN:</p>
+                            <p class="text-muted font-13 text-justify">
+                                La Licenciatura en Trabajo Social en la UES nace a iniciativa del personal docente de la Escuela de Trabajo Social y se concretiza por medio de un Convenio entre el Gobierno de la República de El Salvador a través del Ministerio de Educación y la Universidad de El Salvador, firmado el 20 de mayo de 1999.
+                            </p>  
+                            <p class="mb-1 font-weight-bold">OBJETIVO:</p>
+                            <p class="text-muted font-13 text-justify">
+                                Formar profesionales en Trabajo Social, con fundamentación humanista, teórica-técnica-metodológica con un marco axiológico sólido que contribuya al desarrollo de las potencialidades e iniciativas de las personas, grupos y sectores poblacionales que posibiliten la construcción de opciones y alternativas tendientes a la promoción y transformación de la realidad.
+                            </p> 
+                                            
+    
+                            <p class="mb-1 font-weight-bold">TIEMPO DE DURACIÓN:</p>
+                            <p class="text-muted font-13">
+                                5 años (10 ciclos).
+                            </p>
+    
+                            <p class="mb-1 font-weight-bold">GRADO Y TÍTULO QUE OTORGA:</p>
+                            <p class="text-muted font-13">
+                                LICENCIADO (A) EN TRABAJO SOCIAL.
+                            </p>
+                            <p class="mb-1 font-weight-bold">PENSUM:</p>
+                            <a href="#" type="submit" class="btn btn-outline-danger"> <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div></a>
+                        
                         </div>
                         <div class="tab-pane fade" id="v-pills-settings2" role="tabpanel" aria-labelledby="v-pills-settings-tab2">
                         
