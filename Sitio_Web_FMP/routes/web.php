@@ -9,6 +9,7 @@ use App\Http\Controllers\Pagina\ImagenesCarruselController;
 use App\Http\Controllers\Pagina\NoticiaController;
 use App\Http\Controllers\Pagina\PDFController;
 use App\Http\Controllers\Pagina\EstructuraOrganizativaController;
+use App\Http\Controllers\Pagina\JuntaJefaturaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,13 +40,22 @@ Route::post('/noticias/nuevaurl', [NoticiaController::class, 'storeurl'])
 
 Route::get('/noticias/{titulo}/{id}',[NoticiaController::class, 'index'])
 ->name('NoticiaFacultad.ver');
+
 /**Nosotros----------------------------------------------------------------------*/
 
-Route::post('/nosotros/organigrama/pdf/{localizacion}', [PDFController::class, 'store'])
+Route::post('/nosotros/organigrama/image/{localizacion}', [PDFController::class, 'store1'])
 ->middleware(['auth'])->name('Nosotros.organigrama');
 
 Route::get('EstructuraOrganizativa', [EstructuraOrganizativaController::class, 'index']);
 
+Route::post('EstructuraOrganizativa/Junta', [JuntaJefaturaController::class, 'store1'])
+->middleware(['auth'])->name('EstructuraOrganizativa.Junta');
+
+Route::post('EstructuraOrganizativa/Jefatura', [JuntaJefaturaController::class, 'store2'])
+->middleware(['auth'])->name('EstructuraOrganizativa.Jefatura');
+
+Route::post('/EstructuraOrganizativa/JefaturaJunta/{id}/{tipo}', [JuntaJefaturaController::class, 'destroy'])
+->middleware(['auth'])->name('EstructuraOrganizativa.Jefatura.Borrar');
 
 Route::get('MisionVision', function () {
     return view('Nosotros.misionVision');
@@ -54,6 +64,8 @@ Route::get('MisionVision', function () {
 Route::get('Directorio', function () {
     return view('Nosotros.directorio');
 });
+
+/**------------------------------------------------------------------------------------------ */
 
 Route::get('CienciasAgronomicas', function () {
     return view('Academicos.Departamentos.CienciasAgronomicas');

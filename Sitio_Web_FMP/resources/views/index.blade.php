@@ -416,13 +416,20 @@
     Dropzone.options.myAwesomeDropzone = {
         maxFiles: 15,
         accept: function(file, done) {
-            
+            console.log("uploaded");
             done();
         },
         init: function() {
             this.on("maxfilesexceeded", function(file){
-                ("No more files please!");
+                ("No more files please!");                
             });
+
+            this.on("complete", function (file) {
+                if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+                    location.reload();
+                }
+            });
+            
         }
     };
    /*Dropzone.options.myAwesomeDropzone = {

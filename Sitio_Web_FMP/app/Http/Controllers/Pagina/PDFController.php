@@ -53,4 +53,43 @@ class PDFController extends Controller
         }
 
     }
+
+    public function store1(Request $request, $localizacion)
+    {
+        $localizacion = base64_decode($localizacion);
+
+        $pdfs = PDF::where('localizacion', $localizacion)->get();   
+        $file = $request->file('file'); 
+        if(count($pdfs)==0){ 
+            
+            /**Guardo en carpeta Pdfs */
+            $path = public_path() . '/files/image';
+            $fileName = uniqid();
+            $file->move($path, $fileName);
+            
+            /**Guardo en base de datos */
+            $_img = new PDF;
+            $_img -> file         = $fileName;
+            $_img -> localizacion = $localizacion;
+            $_img -> user         = auth()->id();
+            $_img -> save();
+
+        }else{
+            $_img = $pdfs[0];
+            
+            /**Elimino del servidor el pdf */
+            File::delete(public_path() . '/files/image/'.$_img->file); 
+
+            /**Guardo en carpeta Pdfs */
+            $path = public_path() . '/files/image';
+            $fileName = uniqid();
+            $file->move($path, $fileName);
+
+            /**Guardo en la base de datos */
+            $_img -> file   =  $fileName;
+            $_img -> user   =  auth()->id();
+            $_img -> save();         
+        }
+
+    }
 }

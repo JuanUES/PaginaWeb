@@ -67,6 +67,7 @@ class NoticiaController extends Controller
         $noticia -> contenido =  nl2br($request->contenido);
         $noticia -> fuente    =  $request->fuente;        
         $noticia -> urlfuente =  $request->urlfuente;
+        $noticia -> user      =  auth()->id();
         $noticia -> save();
 
         return redirect('/');
@@ -87,6 +88,7 @@ class NoticiaController extends Controller
         $noticia -> imagen    =  $fileName;
         $noticia -> tipo      =  'false';  
         $noticia -> urlfuente =  $request->urlfuente;
+        $noticia -> user      =  auth()->id();
         $noticia -> save();
 
         return redirect('/');

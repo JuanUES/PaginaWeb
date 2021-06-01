@@ -9,25 +9,6 @@ use File;
 
 class ImagenesCarruselController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-                
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -47,6 +28,7 @@ class ImagenesCarruselController extends Controller
         /** Guardo en la base de datos */
         $imagenesCarrusel = new ImagenesCarrusel;
         $imagenesCarrusel -> imagen = $fileName;
+        $imagenesCarrusel -> user   =  auth()->id();
         $imagenesCarrusel -> save();
 
         return redirect('/');
@@ -93,13 +75,13 @@ class ImagenesCarruselController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(ImagenesCarrusel $imagenesCarrusel, $id, $imagen)
-    {
-        /**Elimino de la carpeta del servidor */
-        File::delete(public_path() . '/images/carrusel/'.$imagen); 
-        
+    {       
         /**Elimino de la base de datos */
         $imgCa = ImagenesCarrusel::find($id);        
-        $imgCa->delete();
+        $imgCa -> delete();
+
+        /**Elimino de la carpeta del servidor */
+        File::delete(public_path() . '/images/carrusel/'.$imagen); 
         
         return redirect('/');
     }
