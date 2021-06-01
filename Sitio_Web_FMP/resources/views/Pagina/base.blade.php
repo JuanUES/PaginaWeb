@@ -137,7 +137,7 @@
                                         </li>
                                         
                                         <li>
-                                            <a href="#">Informática</a>
+                                            <a href="{{ asset('Informatica') }}">Informática</a>
                                         </li>     
 
                                         <li>
@@ -267,7 +267,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        {{ date('Y') }} &copy; Facultad Multidisciplinaria Paracentral - <a href="https://www.ues.edu.sv/" class="text-white-50">Universidad de El Salvador</a> 
+                        {{ date('Y') }} &copy; Facultad Multidisciplinaria Paracentral - <a href="https://www.ues.edu.sv/" class="text-white-50">Universidad de El Salvador</a>. Todos los derechos reservados
                     </div>
                 </div>
             </div>

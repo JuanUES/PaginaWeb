@@ -67,6 +67,10 @@ Route::get('Directorio', function () {
 
 /**------------------------------------------------------------------------------------------ */
 
+Route::get('Informatica', function () {
+    return view('Academicos.Departamentos.informatica');
+});
+
 Route::get('CienciasAgronomicas', function () {
     return view('Academicos.Departamentos.CienciasAgronomicas');
 });
