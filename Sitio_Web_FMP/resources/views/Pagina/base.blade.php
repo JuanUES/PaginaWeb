@@ -192,7 +192,7 @@
                         </li>     
 
                         <li class="has-submenu p-1">
-                            <a href="#"  class="rounded btn text-left">
+                            <a href="{{ url('transparencia') }}"  class="rounded btn text-left">
                                 <i class="mdi mdi-file-account mdi-24px"></i>
                                 Transparencia
                             </a>

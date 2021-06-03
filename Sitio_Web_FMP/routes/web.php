@@ -84,5 +84,10 @@ Route::get('CienciasEducacion', function () {
 });
 
 
+/** RUTAS DE TRANSPARENCIA **/
+
+Route::get('transparencia', function () {
+    return view('index-transparencia');
+});
 
 require __DIR__.'/auth.php';
