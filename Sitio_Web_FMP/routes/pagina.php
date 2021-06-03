@@ -5,6 +5,7 @@ use App\Http\Controllers\Pagina\NoticiaController;
 use App\Http\Controllers\Pagina\PDFController;
 use App\Http\Controllers\Pagina\EstructuraOrganizativaController;
 use App\Http\Controllers\Pagina\JuntaJefaturaController;
+use App\Http\Controllers\Pagina\DirectorioController;
 
 
 /**Index ----------------------------------------------------------------*/
@@ -39,6 +40,10 @@ Route::post('EstructuraOrganizativa/Jefatura', [JuntaJefaturaController::class, 
 
 Route::post('/EstructuraOrganizativa/JefaturaJunta/{id}/{tipo}', [JuntaJefaturaController::class, 'destroy'])
 ->middleware(['auth'])->name('EstructuraOrganizativa.Jefatura.Borrar');
+
+Route::post('Directorio', [DirectorioController::class, 'store'])
+->middleware(['auth'])->name('Nosotros.directorio');
+
 
 Route::get('MisionVision', function () {
     return view('Nosotros.misionVision');

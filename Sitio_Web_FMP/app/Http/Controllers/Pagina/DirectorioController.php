@@ -36,6 +36,16 @@ class DirectorioController extends Controller
      */
     public function store(Request $request)
     {
+        $directorio = new Directorio();
+        $directorio->nombre = $request->nombre;
+        $directorio->contacto = $request->contacto;
+        $directorio->user =  auth()->id();
+
+        $directorio->save();
+
+        return redirect('/Directorio');
+
+
         //
     }
 
