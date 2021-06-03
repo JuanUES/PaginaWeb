@@ -15,35 +15,35 @@
                 <div class="col-xl-8 px-3">
                     <div class="tab-content pt-0" id="v-pills-tabContent">
                         <div class="tab-pane fade active show" id="v-pills-social2" role="tabpanel" aria-labelledby="v-pills-social-tab2">
-                            <h4 class="header-title">Licenciatura en Trabajo Social</h4>                            
-                            <p class="mb-1 font-weight-bold ">CODIGO:</p>
+                            <h2 class="header-title py-2">Licenciatura en Trabajo Social</h2>                            
+                            <p class="mb-1 font-weight-bold ">Código:</p>
                             <p class="text-muted font-13 text-justify">L10439</p>
-                            <p class="mb-1 font-weight-bold">DESCRIPCIÓN:</p>
+                            <p class="mb-1 font-weight-bold">Descripción:</p>
                             <p class="text-muted font-13 text-justify">
                                 La Licenciatura en Trabajo Social en la UES nace a iniciativa del personal docente de la Escuela de Trabajo Social y se concretiza por medio de un Convenio entre el Gobierno de la República de El Salvador a través del Ministerio de Educación y la Universidad de El Salvador, firmado el 20 de mayo de 1999.
                             </p>  
-                            <p class="mb-1 font-weight-bold">OBJETIVO:</p>
+                            <p class="mb-1 font-weight-bold">Objetivo:</p>
                             <p class="text-muted font-13 text-justify">
                                 Formar profesionales en Trabajo Social, con fundamentación humanista, teórica-técnica-metodológica con un marco axiológico sólido que contribuya al desarrollo de las potencialidades e iniciativas de las personas, grupos y sectores poblacionales que posibiliten la construcción de opciones y alternativas tendientes a la promoción y transformación de la realidad.
                             </p>                                             
     
-                            <p class="mb-1 font-weight-bold">TIEMPO DE DURACIÓN:</p>
+                            <p class="mb-1 font-weight-bold">Tiempo de duración de la carrera:</p>
                             <p class="text-muted font-13">
-                                5 años.
+                                5 años (10 ciclos).
                             </p>
     
-                            <p class="mb-1 font-weight-bold">GRADO Y TÍTULO QUE OTORGA:</p>
+                            <p class="mb-1 font-weight-bold">Grado y título que otorga:</p>
                             <p class="text-muted font-13">
-                                LICENCIADO (A) EN TRABAJO SOCIAL.
+                                Licenciado (a) en trabajo social.
                             </p>
-                            <p class="mb-1 font-weight-bold">PENSUM:</p>
+                            <p class="mb-1 font-weight-bold">Pénsum:</p>
                             <a href="#" type="submit" class="btn btn-outline-danger"> <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div></a>
                         </div>
                         <div class="tab-pane fade" id="v-pills-profile2" role="tabpanel" aria-labelledby="v-pills-profile-tab2">
-                            <h4 class="header-title">Profesorado en Educación Básica para Primero y Segundo Ciclos</h4>                            
-                            <p class="mb-1 font-weight-bold ">CODIGO:</p>
+                            <h2 class="header-title py-2">Profesorado en Educación Básica para Primero y Segundo Ciclos</h2>                            
+                            <p class="mb-1 font-weight-bold ">Código:</p>
                             <p class="text-muted font-13 text-justify">P70402</p>
-                            <p class="mb-1 font-weight-bold">DESCRIPCIÓN:</p>
+                            <p class="mb-1 font-weight-bold">Descripción:</p>
                             <p class="text-muted font-13 text-justify">
                                 El Profesorado en Educación Básica para Primero y Segundo Ciclos está diseñado para formar maestros/as con capacidad científica, técnica, pedagógica y ética, para el ejercicio profesional de la docencia en el nivel de educación básica para primero y segundo ciclos, los cuales trabajarían con niños y niñas entre 7 y 12 años.
                             </p> 
@@ -54,29 +54,31 @@
                                 El primero de ellos tiene como propósito la formación general, común a todos los profesorados y se tratará en 9 cursos; un segundo componente está referido a la formación especializada, que centra su interés en el dominio de los contenidos curriculares y los conocimientos específicos de estrategias didácticas, necesario para su desempeño docente; este componente se desarrolla en 9 cursos; y un tercer componente que corresponde a la práctica docente, en la que se observará y reflexionará las situaciones reales de enseñanza-aprendizaje del nivel de educación básica para primero y segundo ciclo.
                             </p>
                                             
-                            <p class="mb-1 font-weight-bold">TIEMPO DE DURACIÓN:</p>
+                            <p class="mb-1 font-weight-bold">Tiempo de duración de la carrera:
+
+                            </p>
                             <p class="text-muted font-13">
                                 3 años.
                             </p>
     
-                            <p class="mb-1 font-weight-bold">GRADO Y TÍTULO QUE OTORGA:</p>
+                            <p class="mb-1 font-weight-bold">Grado y título que otorga:</p>
                             <p class="text-muted font-13">
-                                PROFESOR (A) EN EDUCACIÓN BÁSICA PARA PRIMERO Y SEGUNDO CICLOS.
+                                Profesor (a) en educación básica para primero y segundo ciclo.
                             </p>
-                            <p class="mb-1 font-weight-bold">PENSUM:</p>
+                            <p class="mb-1 font-weight-bold">Pénsum:</p>
                             <a href="#" type="submit" class="btn btn-outline-danger"> <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div></a>
                         </div>
                         <div class="tab-pane fade" id="v-pills-messages2" role="tabpanel" aria-labelledby="v-pills-messages-tab2">
-                            <h4 class="header-title">Profesorado en Matemática para Tercer Ciclo de Educación Básica y Educación Media</h4>                            
-                            <p class="mb-1 font-weight-bold ">CODIGO:</p>
+                            <h2 class="header-title py-2">Profesorado en Matemática para Tercer Ciclo de Educación Básica y Educación Media</h2>                            
+                            <p class="mb-1 font-weight-bold ">Código:</p>
                             <p class="text-muted font-13 text-justify">
                                 P70923
                             </p>
-                            <p class="mb-1 font-weight-bold">DESCRIPCIÓN:</p>
+                            <p class="mb-1 font-weight-bold">Descripción:</p>
                             <p class="text-muted font-13 text-justify">
                                 La carrera de Profesorado en Matemática para tercer ciclo de Educación básica y Educación Media, permite capacitar al profesional dentro  la  realidad educativa nacional, para que contribuya a fomentar el aprendizaje de la Matemática como ente renovador en la disciplina,  adquiriendo  una  adecuada  formación  docente  e investigativa, lo que permitirá una mejor comprensión del proceso enseñanza aprendizaje de la Matemática.
                             </p>  
-                            <p class="mb-1 font-weight-bold">OBJETIVO:</p>
+                            <p class="mb-1 font-weight-bold">Objetivos:</p>
                             <p class="text-muted font-13 text-justify">
                                 Los objetivos de la carrera se sintetizan en el rescate del proceso constructivo del aprendizaje de la Matemática para modificar la actual orientación del proceso.
                             </p> 
@@ -85,100 +87,436 @@
                                 Para ello proponemos:
                             </p>
 
-                            <p class="text-muted font-13 text-justify">
-                                1. Formar personal especializado en la ecuación Matemática para el nivel medio, que propicie un  aprendizaje  agradable de  la Matemática; Promover la elaboración de material didáctico en Matemática;
-                            </p>
+                            <ul>
+                                <li>
+                                    <p class="text-muted font-13 text-justify">
+                                        Formar personal especializado en la ecuación Matemática para el nivel medio, que propicie un  aprendizaje  agradable de  la Matemática; Promover la elaboración de material didáctico en Matemática;
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13 text-justify">
+                                        Promover la elaboración de material didáctico en Matemática;
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13 text-justify">
+                                        Impulsar la didáctica de la Matemática;
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13 text-justify">
+                                        Mejorar la relación cuali-cuantitativa del personal docente de dedicado a la Matemática a fin de habilitar el proceso en el seguimiento de estudios posteriores de la especialización.
+                                    </p>
+                                </li>
+                            </ul>
 
-                            <p class="text-muted font-13 text-justify">
-                                2. Promover la elaboración de material didáctico en Matemática;
-                            </p>
+                            <p class="mb-1 font-weight-bold">Tiempo de duración de la carrera:
 
-                            <p class="text-muted font-13 text-justify">
-                                3. Impulsar la didáctica de la Matemática;
                             </p>
-
-                            <p class="text-muted font-13 text-justify">
-                                4. Mejorar la relación cuali-cuantitativa del personal docente de dedicado a la Matemática a fin de habilitar el proceso en el seguimiento de estudios posteriores de la especialización.
-                            </p>
-    
-                            <p class="mb-1 font-weight-bold">TIEMPO DE DURACIÓN:</p>
                             <p class="text-muted font-13">
                                 3 años.
                             </p>
     
-                            <p class="mb-1 font-weight-bold">GRADO Y TÍTULO QUE OTORGA:</p>
+                            <p class="mb-1 font-weight-bold">Grado y título que otorga:</p>
                             <p class="text-muted font-13">
-                                PROFESOR  (A)  EN MATEMÁTICA PARA TERCER CICLO DE EDUCACIÓN BÁSICA Y EDUCACIÓN MEDIA
+                                Profesor  (a)  en matemática para tercer ciclo de educación básica y educación media.
                             </p>
-                            <p class="mb-1 font-weight-bold">PENSUM:</p>
+                            <p class="mb-1 font-weight-bold">Pénsum:</p>
                             <a type="submit" href="#" class="btn btn-outline-danger"> <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div></a>
                         
                         </div>
                         <div class="tab-pane fade" id="v-pills-settings2" role="tabpanel" aria-labelledby="v-pills-settings-tab2">
-                            <h4 class="header-title">Profesorado en Idioma Inglés Para Tercer Ciclo de Educación Básica y Educación Media</h4>                            
-                            <p class="mb-1 font-weight-bold ">CODIGO:</p>
+                            <h2 class="header-title py-2">Profesorado en Idioma Inglés Para Tercer Ciclo de Educación Básica y Educación Media</h2>                            
+                            <p class="mb-1 font-weight-bold ">Código:</p>
                             <p class="text-muted font-13 text-justify">P70430</p>
-                            <p class="mb-1 font-weight-bold">DESCRIPCIÓN:</p>
+                            <p class="mb-1 font-weight-bold">Descripción:</p>
                             <p class="text-muted font-13 text-justify">
                                 Este currículo está estructurado en seis ciclos con un total de 22 asignaturas. Contiene tres áreas: de Formación General Básica, de Formación Especializada y de Práctica Docente e Investigación Educativa.
                             </p>
                                             
-                            <p class="mb-1 font-weight-bold">TIEMPO DE DURACIÓN:</p>
+                            <p class="mb-1 font-weight-bold">Tiempo de duración de la carrera:
+
+                            </p>
                             <p class="text-muted font-13">
                                 3 años.
                             </p>
     
-                            <p class="mb-1 font-weight-bold">GRADO Y TÍTULO QUE OTORGA:</p>
+                            <p class="mb-1 font-weight-bold">Grado y título que otorga:</p>
                             <p class="text-muted font-13">
-                                PROFESOR (A) EN INGLÉS PARA TERCER CICLO DE EDUCACIÓN BÁSICA Y EDUCACIÓN MEDIA.
+                                Profesor (a) en inglés para tercer ciclo de educación básica y educación media.
                             </p>
-                            <p class="mb-1 font-weight-bold">PENSUM:</p>
+                            <p class="mb-1 font-weight-bold">Pénsum:</p>
                             <a href="#" type="submit" class="btn btn-outline-danger"> <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div></a>
                         
                         </div>
                         <div class="tab-pane fade" id="v-pills-biologia2" role="tabpanel" aria-labelledby="v-pills-biologia-tab2">
-                            <h4 class="header-title"></h4>                            
-                            <p class="mb-1 font-weight-bold ">CODIGO:</p>
-                            <p class="text-muted font-13 text-justify"></p>
-                            <p class="mb-1 font-weight-bold">DESCRIPCIÓN:</p>
-                            <p class="text-muted font-13 text-justify">
+                            <h2 class="header-title py-2">
+                                Profesorado en Biología para Tercer Ciclo en Educación Básica y Educación Media  
+                            </h2>       
+                            <p class="mb-1 font-weight-bold">Objetivos:</p>
+                            <ul>
+                                <li>
+                                    <p class="text-muted font-13 text-justify">
+                                        Individualizar y examinar los contenidos teórico conceptuales propios de las disciplinas de Ciencias Naturales. 
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13 text-justify">
+                                        Analizar e interpretar las orientaciones metodológicas que se derivan de cada una de esas disciplinas. 
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13 text-justify">
+                                        Reflexionar sobre las actitudes que deben caracterizar a quienes se desenvuelven en las ciencias naturales, ya sea como docentes o investigadores. 
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13 text-justify">
+                                        Fomentar una comprensión global del quehacer de las ciencias naturales en la sociedad y en la vida cotidiana. 
+                                    </p>
+                                </li>
+                            </ul>
 
-                            </p>
+                            <p class="mb-1 font-weight-bold">Perfil del profesor (a) en biología:</p>
+                            <ul>
+                                <li>
+                                    <p class="text-muted font-13 text-justify">
+                                        Habilidades intelectuales específicas. 
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13 text-justify">
+                                        Dominio de los objetivos y los contenidos de la educación del Tercer Ciclo y del Bachillerato. 
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13 text-justify">
+                                        Competencias didácticas. 
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13 text-justify">
+                                        Identidad profesional y ética. 
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13 text-justify">
+                                        Capacidad de percepción y respuesta a las condiciones sociales del entorno de la institución. 
+                                    </p>
+                                </li>
+                            </ul>
                                             
-                            <p class="mb-1 font-weight-bold">TIEMPO DE DURACIÓN:</p>
+                            <p class="mb-1 font-weight-bold">Tiempo de duración de la carrera:</p>
                             <p class="text-muted font-13">
-
+                                3 años.
                             </p>
     
-                            <p class="mb-1 font-weight-bold">GRADO Y TÍTULO QUE OTORGA:</p>
+                            <p class="mb-1 font-weight-bold">Grado y título que otorga:</p>
                             <p class="text-muted font-13">
-
+                                Profesor o profesora de Biología para Tercer Ciclo de Educación Básica y Educación Media. 
                             </p>
 
-                            <p class="mb-1 font-weight-bold">PENSUM:</p>
+                            <p class="mb-1 font-weight-bold">Pénsum:</p>
                             <a href="#" type="submit" class="btn btn-outline-danger"> <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div></a>
                         
                         </div>
                         <div class="tab-pane fade" id="v-pills-parvularia2" role="tabpanel" aria-labelledby="v-pills-parvularia-tab2">
-                            <h4 class="header-title"></h4>                            
-                            <p class="mb-1 font-weight-bold ">CODIGO:</p>
-                            <p class="text-muted font-13 text-justify"></p>
-                            <p class="mb-1 font-weight-bold">DESCRIPCIÓN:</p>
+                            <h2 class="header-title py-2">Profesorado en Educación Inicial y Parvularia</h2>                            
+                            <p class="mb-1 font-weight-bold ">Código:</p>
+                            <p class="text-muted font-13 text-justify">P70403</p>
+                            <p class="mb-1 font-weight-bold">Descripción:</p>
                             <p class="text-muted font-13 text-justify">
-
+                                Se espera que el estudiantado al finalizar el Profesorado en Educación Inicial y Parvularia logre  las siguientes competencias:
                             </p>
+                            <ul>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Aplicar teorías y enfoques recientes que ayuden a fundamentar las áreas de la formación de inicial y parvularia.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Aplicar la teoría y metodología curricular de la formación inicial y parvularia que orienten acciones educativas de diseño, ejecución y evaluación.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Comprometerse y responsabilizarse con el desarrollo personal y profesional en forma permanente.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Desarrollar habilidades comunicativas como parte integral de la formación personal y profesional.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Aplicar estrategias metodológicas que fortalezcan la inclusión, los derechos de la niñez y la atención a la diversidad.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Orientar y facilitar procesos de cambio en la comunidad con acciones educativas de carácter interdisciplinario.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Aplicar estrategias metodológicas lúdicas y placenteras con enfoque globalizador en educación infantil.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Seleccionar y elaborar recursos educativos utilizando materiales reciclables y del medio ambiente atendiendo a cada etapa evolutiva y a la diversidad socio- cultural.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Desarrollar el pensamiento lógico, crítico y creativo de las niñas y los niños para la resolución de problemas de la vida diaria.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Diseñar, implementar y evaluar procesos de aprendizaje que integren a personas con discapacidad.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Seleccionar, utilizar y evaluar las tecnologías de la comunicación e información como recurso de enseñanza y aprendizaje.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Investigar y generar innovaciones en distintos ámbitos del sistema educativo.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Promover el desarrollo en educación en valores, equidad de género, medio ambiente, formación ciudadana, democracia y cultura de paz.
+                                    </p>
+                                </li>
+
+                            </ul>
+                            <p class="mb-1 font-weight-bold">Objetivos:</p>
+                            <ul>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Analizar la relevancia de la educación en la niñez y el rol de la persona educadora en esta etapa, con el fin de valorar su incidencia en el desarrollo de la personalidad infantil.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Desarrollar actitudes críticas, profesionales, éticas, investigativas y cualidades de personalidad equilibrada, necesarias para orientar el proceso educativo infantil.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Promover y facilitar, desde una perspectiva integradora, estrategias educativas para el trabajo con niñez de 0 a 7 años de edad en sus dimensiones cognitiva, emocional, psicomotora y social.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Identificar la diversidad de modalidades de atención educativa de niñez de 0 a 7 años de edad, para favorecer el desarrollo integral de la niñez.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Propiciar aprendizajes significativos con un enfoque globalizador en ambientes que favorezcan el desarrollo integral del niño y la niña, reconociendo y estimulando las singularidades educativas, la equidad de género y el respeto a los derechos humanos.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Identificar los factores de riesgo que amenazan el desarrollo integral infantil, con el fin de prevenir y reducir estos efectos en la infancia.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Indagar las diversas etapas del desarrollo evolutivo de la niñez de 0 a 7 años, períodos significativos, etapas de aprendizaje y estrategias didácticas, para favorecer la estimulación en cada período de edad de la niñez.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Orientar, mediante un trabajo colaborativo, a familias, centros educativos y comunidad, en los procesos educativos y de desarrollo de la niñez de 0 a 7 años, con el fin de establecer vínculos de cooperación para la mejora de la calidad educativa.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Innovar y mejorar la labor educativa en el nivel de inicial y parvularia de 0 a 7 años, a través de la reflexión-acción de la práctica docente.
+                                    </p>
+                                </li>
+                            </ul>
                                             
-                            <p class="mb-1 font-weight-bold">TIEMPO DE DURACIÓN:</p>
+                            <p class="mb-1 font-weight-bold">Tiempo de duración de la carrera:</p>
                             <p class="text-muted font-13">
                                 3 Años (6 ciclos) , 30 materias, 123 Unidades Valorativas.
                             </p>
     
-                            <p class="mb-1 font-weight-bold">GRADO Y TÍTULO QUE OTORGA:</p>
+                            <p class="mb-1 font-weight-bold">Grado y título que otorga:</p>
                             <p class="text-muted font-13">
-                                PROFESOR (A) EN EDUCACIÓN INICIAL Y PARVULARIA.
+                                Profesor (a) en educación inicial y parvularia.
                             </p>
 
-                            <p class="mb-1 font-weight-bold">PENSUM:</p>
+                            <p class="mb-1 font-weight-bold">Pénsum:</p>
+                            <a href="#" type="submit" class="btn btn-outline-danger"> <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div></a>
+                        
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-parvularia2" role="tabpanel" aria-labelledby="v-pills-parvularia-tab2">
+                            <h2 class="header-title py-2">Profesorado en Educación Inicial y Parvularia</h2>                            
+                            <p class="mb-1 font-weight-bold ">Código:</p>
+                            <p class="text-muted font-13 text-justify">P70403</p>
+                            <p class="mb-1 font-weight-bold">Descripción:</p>
+                            <p class="text-muted font-13 text-justify">
+                                Se espera que el estudiantado al finalizar el Profesorado en Educación Inicial y Parvularia logre  las siguientes competencias:
+                            </p>
+                            <ul>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Aplicar teorías y enfoques recientes que ayuden a fundamentar las áreas de la formación de inicial y parvularia.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Aplicar la teoría y metodología curricular de la formación inicial y parvularia que orienten acciones educativas de diseño, ejecución y evaluación.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Comprometerse y responsabilizarse con el desarrollo personal y profesional en forma permanente.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Desarrollar habilidades comunicativas como parte integral de la formación personal y profesional.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Aplicar estrategias metodológicas que fortalezcan la inclusión, los derechos de la niñez y la atención a la diversidad.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Orientar y facilitar procesos de cambio en la comunidad con acciones educativas de carácter interdisciplinario.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Aplicar estrategias metodológicas lúdicas y placenteras con enfoque globalizador en educación infantil.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Seleccionar y elaborar recursos educativos utilizando materiales reciclables y del medio ambiente atendiendo a cada etapa evolutiva y a la diversidad socio- cultural.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Desarrollar el pensamiento lógico, crítico y creativo de las niñas y los niños para la resolución de problemas de la vida diaria.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Diseñar, implementar y evaluar procesos de aprendizaje que integren a personas con discapacidad.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Seleccionar, utilizar y evaluar las tecnologías de la comunicación e información como recurso de enseñanza y aprendizaje.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Investigar y generar innovaciones en distintos ámbitos del sistema educativo.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Promover el desarrollo en educación en valores, equidad de género, medio ambiente, formación ciudadana, democracia y cultura de paz.
+                                    </p>
+                                </li>
+
+                            </ul>
+                            <p class="mb-1 font-weight-bold">Objetivos:</p>
+                            <ul>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Analizar la relevancia de la educación en la niñez y el rol de la persona educadora en esta etapa, con el fin de valorar su incidencia en el desarrollo de la personalidad infantil.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Desarrollar actitudes críticas, profesionales, éticas, investigativas y cualidades de personalidad equilibrada, necesarias para orientar el proceso educativo infantil.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Promover y facilitar, desde una perspectiva integradora, estrategias educativas para el trabajo con niñez de 0 a 7 años de edad en sus dimensiones cognitiva, emocional, psicomotora y social.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Identificar la diversidad de modalidades de atención educativa de niñez de 0 a 7 años de edad, para favorecer el desarrollo integral de la niñez.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Propiciar aprendizajes significativos con un enfoque globalizador en ambientes que favorezcan el desarrollo integral del niño y la niña, reconociendo y estimulando las singularidades educativas, la equidad de género y el respeto a los derechos humanos.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Identificar los factores de riesgo que amenazan el desarrollo integral infantil, con el fin de prevenir y reducir estos efectos en la infancia.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Indagar las diversas etapas del desarrollo evolutivo de la niñez de 0 a 7 años, períodos significativos, etapas de aprendizaje y estrategias didácticas, para favorecer la estimulación en cada período de edad de la niñez.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Orientar, mediante un trabajo colaborativo, a familias, centros educativos y comunidad, en los procesos educativos y de desarrollo de la niñez de 0 a 7 años, con el fin de establecer vínculos de cooperación para la mejora de la calidad educativa.
+                                    </p>
+                                </li>
+                                <li>
+                                    <p class="text-muted font-13">
+                                        Innovar y mejorar la labor educativa en el nivel de inicial y parvularia de 0 a 7 años, a través de la reflexión-acción de la práctica docente.
+                                    </p>
+                                </li>
+                            </ul>
+                                            
+                            <p class="mb-1 font-weight-bold">Tiempo de duración de la carrera:</p>
+                            <p class="text-muted font-13">
+                                3 Años (6 ciclos) , 30 materias, 123 Unidades Valorativas.
+                            </p>
+    
+                            <p class="mb-1 font-weight-bold">Grado y título que otorga:</p>
+                            <p class="text-muted font-13">
+                                Profesor (a) en educación inicial y parvularia.
+                            </p>
+
+                            <p class="mb-1 font-weight-bold">Pénsum:</p>
+                            <a href="#" type="submit" class="btn btn-outline-danger"> <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div></a>
+                        
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-licenciatura2" role="tabpanel" aria-labelledby="v-pills-licenciatura-tab2">
+                            <h2 class="header-title py-2">Licenciatura en Enseñanza de Idiomas Extranjeros, Especialidad Inglés-Francés</h2>                            
+                            
+                            <p class="mb-1 font-weight-bold">Descripción:</p>
+                            <p class="text-muted font-13 text-justify">
+                                El plan de estudios ofrece al estudiante una preparación primordialmente lingüística en dos idiomas: ingles y Francés; también ofrece un tronco de materias electivas con dos especialidades menores: en la enseñanza y en las relaciones publicas; la elección de cualquiera de estas especialidades menores dependerá de los objetivos del estudiante. Toda la formación lingüística esta orientada profesionalmente para la inserción laboral de los participantes a través del uso de estas lenguas en por lo menos los dos campos mencionados anteriormente.
+                            </p>
+
+                            <p class="mb-1 font-weight-bold">Tiempo de duración de la carrera:</p>
+                            <p class="text-muted font-13">
+                                5 años.
+                            </p>
+    
+                            <p class="mb-1 font-weight-bold">Grado y título que otorga:</p>
+                            <p class="text-muted font-13">
+                                Licenciado (a) en enseñanza de idiomas extranjeros, especialidad inglés-francés.
+                            </p>
+
+                            <p class="mb-1 font-weight-bold">Pénsum:</p>
                             <a href="#" type="submit" class="btn btn-outline-danger"> <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div></a>
                         
                         </div>
@@ -201,11 +539,13 @@
                             Profesorado en Idioma Inglés Para Tercer Ciclo de Educación Básica y Educación Media</a>
                         <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-biologia-tab2" data-toggle="pill" href="#v-pills-biologia2" role="tab" aria-controls="v-pills-biologia2"
                             aria-selected="false">                                 
-                            Profesorado en Biología para Tercer Ciclo en Educación Básica y Educación Media
-                            </a>
+                            Profesorado en Biología para Tercer Ciclo en Educación Básica y Educación Media</a>
                         <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-parvularia-tab2" data-toggle="pill" href="#v-pills-parvularia2" role="tab" aria-controls="v-pills-parvularia2"
                             aria-selected="false">     
                             Profesorado en Educación Inicial y Parvularia</a>
+                        <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-licenciatura-tab2" data-toggle="pill" href="#v-pills-licenciatura2" role="tab" aria-controls="v-pills-licenciatura2"
+                            aria-selected="false">     
+                            Licenciatura en Enseñanza de Idiomas Extranjeros, Especialidad Inglés-Francés</a>
                     </div>
                 </div> <!-- end col -->
             </div> <!-- end row--> 
