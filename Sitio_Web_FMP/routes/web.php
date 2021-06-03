@@ -15,7 +15,7 @@ use App\Http\Controllers\indexController;
 |
 */
 
-Route::get('/', [indexController::class, 'index']);
+Route::get('/', [indexController::class, 'index'])->name('index');
 
 /** RUTAS DE TRANSPARENCIA **/
 

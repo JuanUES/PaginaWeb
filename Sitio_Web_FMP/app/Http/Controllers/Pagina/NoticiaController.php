@@ -69,11 +69,11 @@ class NoticiaController extends Controller
         $noticia -> urlfuente =  $request->urlfuente;
         $noticia -> user      =  auth()->id();
         $noticia -> save();
-
-        return redirect('/');
+        return redirect()->route('index')->with('titulo',$request->titulo)
+                                         ->with('tipo','success');
     }
 
-    public function storeurl(Request $request)
+    public function storeurl(Requtiest $request)
     {
         /**Guardo en carpeta Noticia */
         $file = $request->file('img'); 

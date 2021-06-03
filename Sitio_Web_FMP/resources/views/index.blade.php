@@ -240,7 +240,7 @@
                                             </div>         
                                             <div class="form-group mb-0">
                                                 <div>
-                                                    <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">
+                                                    <button type="submit" id="noticia" class="btn btn-primary waves-effect waves-light mr-1">
                                                         Crear Noticia
                                                     </button>
                                                     <button type="reset" class="btn btn-light waves-effect">
@@ -295,7 +295,7 @@
                                             </div>             
                                             <div class="form-group mb-0">
                                                 <div>
-                                                    <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">
+                                                    <button id="noticiaUrl" type="submit" class="btn btn-primary waves-effect waves-light mr-1">
                                                         Crear Noticia
                                                     </button>
                                                     <button type="reset" class="btn btn-light waves-effect">
@@ -439,7 +439,34 @@
             
         }
     };
-    
+
+
+    /*$(document).ready(function () {    
+        $("#noticia").onclick(function () {
+            var value = document.getElementById("noticia").value;                      
+        });
+    });*/
+    $(document).ready(
+        $(document).load(function(){
+            alert('Harvy se la come');
+            };
+        )        
+    );
+   /* $.toast({
+            heading: 'Success',
+            text: 'And these were just the basic demos! Scroll down to check further details on how to customize the output'.,
+            showHideTransition: 'slide',
+            icon: 'success'
+        });
+    @if(session('mensaje'))
+  
+        $.toast({
+            heading: 'Success',
+            text: 'And these were just the basic demos! Scroll down to check further details on how to customize the output'.{{!!session('mensaje')!!}},
+            showHideTransition: 'slide',
+            icon: 'success'
+        });
+    @endif*/
    /*Dropzone.options.myAwesomeDropzone = {
         maxFiles: 1,
         accept: function(file, done) {
