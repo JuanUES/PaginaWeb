@@ -72,7 +72,7 @@
                     </div>
                     <div class="row">                        
                         @if (count($imgCarrusel) == '0')
-                            <p class="text-center"> Carrusel vacío, por favor ingrese imagenes o fotos</p>
+                            <p class="text-center"> No hay imagenes para mostrar.</p>
                         @else
                         <div id="carouselExampleCaptions" class="carousel slide rounded col-xl-12" data-ride="carousel">
                             <ol class="carousel-indicators">  
@@ -150,7 +150,7 @@
                             <!-- Button trigger modal noticia-->
                             <button type="button" class="btn btn-block btn-primary waves-effect waves-light" 
                             data-toggle="modal" data-target="#myModalNoticia">
-                            <div class=" mdi mdi-bulletin-board mdi-16px"> Nueva Noticia</div>
+                           <i class="mdi mdi-bulletin-board mdi-16px"></i> Nueva Noticia
                         </button>
                         </div>  
                         <!-- noticia modal content -->
@@ -312,29 +312,34 @@
                         </div><!-- /.modal -->                          
                     @endauth     
                     </div>
+                    @if (count($noticias))
+                        @foreach ($noticias as $n)
+                            <div class="border my-1 py-1 rounded p-1 my-1 media">
+                                <img class="mr-3 rounded bx-shadow-lg" src="images/noticias/{{$n->imagen}}"
+                                alt="Generic placeholder image" height="80" width="110">
+                                <div class="media-body">
+                                    <h5 class="mt-0">{{$n->titulo}}</h5>
+                                    {!!$n->subtitulo!!}
+                                <!-- {!! $n->contenido !!}-->
+                                </div>
+                                
+                                @if ($n->tipo)
+                                    <a href="{{ asset('/noticias') }}/{!!base64_encode($n->id)!!}/{!!base64_encode($n->titulo)!!}"
+                                    class="btn btn-info mt-3 mx-1"><li class=""></li> Leer más</a>
+                                @else
+                                    <a href="{!!$n->urlfuente!!}"
+                                        class="btn btn-info mt-3 align-items-center">Leer más <i class="mdi mdi-web mdi-24px"></i></a>
+                                @endif
 
-                    @foreach ($noticias as $n)
-                    <div class="border my-1 py-1 rounded p-1 my-1 media">
-                        <img class="mr-3 rounded bx-shadow-lg" src="images/noticias/{{$n->imagen}}"
-                         alt="Generic placeholder image" height="80" width="110">
-                        <div class="media-body">
-                            <h5 class="mt-0">{{$n->titulo}}</h5>
-                            {!!$n->subtitulo!!}
-                           <!-- {!! $n->contenido !!}-->
-                        </div>
-                        @auth
-                            <a href="#" class="btn btn-light mt-3">Editar</a>
-                        @endauth
-                        @if ($n->tipo)
-                            <a href="{{ asset('/noticias') }}/{!!base64_encode($n->id)!!}/{!!base64_encode($n->titulo)!!}"
-                               class="btn btn-light mt-3 mx-1">Leer más</a>
-                        @else
-                            <a href="{!!$n->urlfuente!!}"
-                                class="btn btn-light mt-3 mx-1">Leer más</a>
-                        @endif
-                        
-                    </div>  
-                    @endforeach
+                                @auth
+                                    <a type="button" href="#" class="btn mx-1 btn-success mt-3">Modificar</a>
+                                    <button type="submit" class="btn btn-danger mt-3">Eliminar</button>
+                                @endauth                                
+                            </div>  
+                        @endforeach
+                    @else
+                        <p>No hay noticias para mostrar.</p>
+                    @endif                    
                     
                 </div> <!-- end card-box -->
             </div><!-- end col -->
@@ -414,6 +419,7 @@
 @endauth
 
 <script>
+    
     Dropzone.options.myAwesomeDropzone = {
         maxFiles: 15,
         accept: function(file, done) {
@@ -433,6 +439,7 @@
             
         }
     };
+    
    /*Dropzone.options.myAwesomeDropzone = {
         maxFiles: 1,
         accept: function(file, done) {

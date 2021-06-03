@@ -34,7 +34,7 @@
                                     <div class="modal-body">                                        
                                         <div class="tab-content">
                                         <form method="POST" 
-                                        action="{{ route('NoticiaFacultad.nueva') }}" 
+                                        action="{{ route('Nosotros.directorio') }}" 
                                         class="parsley-examples"
                                         enctype="multipart/form-data">
                                             @csrf
@@ -55,7 +55,7 @@
                                                     <div class="form-group">
                                                         <label>Contactos</label>
                                                         <div>
-                                                            <textarea required class="form-control" name="contactos" placeholder="Contactos (Obligatorio)"></textarea>
+                                                            <textarea required class="form-control" name="contacto" placeholder="Contactos (Obligatorio)"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>
