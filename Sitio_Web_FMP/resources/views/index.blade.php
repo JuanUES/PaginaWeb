@@ -1,4 +1,4 @@
-@extends('pagina/base')
+@extends('Pagina/base')
 
 @section('appcss')
 <!-- App favicon -->
