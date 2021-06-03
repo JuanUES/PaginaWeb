@@ -439,6 +439,7 @@
             
         }
     };
+    
    /*Dropzone.options.myAwesomeDropzone = {
         maxFiles: 1,
         accept: function(file, done) {

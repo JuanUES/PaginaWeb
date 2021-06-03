@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Directorio extends Model
 {
     use HasFactory;
-    protected $table='imagenes_carrusels';
+    protected $table='directorios';
     protected $guarded = ['id'];
-    protected $fillable =['imagen'];
+    protected $fillable =['nombre,contacto,user'];
 }
