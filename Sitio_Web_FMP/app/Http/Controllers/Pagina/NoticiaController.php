@@ -69,8 +69,7 @@ class NoticiaController extends Controller
         $noticia -> urlfuente =  $request->urlfuente;
         $noticia -> user      =  auth()->id();
         $noticia -> save();
-        return redirect()->route('index')->with('titulo',$request->titulo)
-                                         ->with('tipo','success');
+        return redirect()->route('index')->with('mensaje','sirve el mensaje se envia');
     }
 
     public function storeurl(Requtiest $request)

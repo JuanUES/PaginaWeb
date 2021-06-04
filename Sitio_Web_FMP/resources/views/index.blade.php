@@ -179,7 +179,7 @@
                                                 <form method="POST" 
                                         action="{{ route('NoticiaFacultad.nueva') }}" 
                                         class="parsley-examples"
-                                        enctype="multipart/form-data">
+                                        enctype="multipart/form-data" id="noticiaForm">
                                             @csrf
                                             <div class="row">
                                                 
@@ -240,7 +240,7 @@
                                             </div>         
                                             <div class="form-group mb-0">
                                                 <div>
-                                                    <button type="submit" id="noticia" class="btn btn-primary waves-effect waves-light mr-1">
+                                                    <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">
                                                         Crear Noticia
                                                     </button>
                                                     <button type="reset" class="btn btn-light waves-effect">
@@ -325,14 +325,15 @@
                                 
                                 @if ($n->tipo)
                                     <a href="{{ asset('/noticias') }}/{!!base64_encode($n->id)!!}/{!!base64_encode($n->titulo)!!}"
-                                    class="btn btn-info mt-3 mx-1"><li class=""></li> Leer más</a>
+                                    class="btn btn-light mt-3 mx-1"> Leer más</a>
+                                    <a type="button" href="#" class="btn mx-1 btn-success mt-3">Modificar</a>
                                 @else
                                     <a href="{!!$n->urlfuente!!}"
-                                        class="btn btn-info mt-3 align-items-center">Leer más <i class="mdi mdi-web mdi-24px"></i></a>
+                                        class="btn btn-light mt-3 align-items-center">Leer más </a>
+                                    <a type="button" href="#" class="btn mx-1 btn-success mt-3">Modificar</a>
                                 @endif
 
-                                @auth
-                                    <a type="button" href="#" class="btn mx-1 btn-success mt-3">Modificar</a>
+                                @auth                                    
                                     <button type="submit" class="btn btn-danger mt-3">Eliminar</button>
                                 @endauth                                
                             </div>  
@@ -401,7 +402,9 @@
         </div>
         <!-- end row -->
     </div> <!-- end container -->
-</div>    
+</div>   
+
+
 <!-- end wrapper -->
 @endsection
 
@@ -446,12 +449,14 @@
             var value = document.getElementById("noticia").value;                      
         });
     });*/
-    $(document).ready(
-        $(document).load(function(){
-            alert('Harvy se la come');
-            };
-        )        
-    );
+    $(document).ready(function () {    
+            $("#noticiaEditar").click(function () {          
+                document.getElementById('myform').reset();
+            });
+            $("#noticiaUrlEditar").click(function () {          
+                document.getElementById('myform').reset();
+            });
+        });
    /* $.toast({
             heading: 'Success',
             text: 'And these were just the basic demos! Scroll down to check further details on how to customize the output'.,
