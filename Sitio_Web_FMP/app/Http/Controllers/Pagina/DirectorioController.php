@@ -15,6 +15,9 @@ class DirectorioController extends Controller
      */
     public function index()
     {
+        $directorio=Directorio::all();
+
+        return redirect()->route('Nosotros.directorio',compact('directorio'));
         //
     }
 
