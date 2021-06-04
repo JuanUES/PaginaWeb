@@ -100,7 +100,7 @@
                             <tbody>
                                 <tr>
                                     <th class="text-nowrap" scope="row">Administración Académica</th>
-                                    <td> <br></td>
+                                    <td>Tel. 2393-1993 <br>Correo: academica.paracentral@ues.edu.sv</td>
                                     @auth                                   
                                     <th class="align-middle ">
                                         <div class="row">
