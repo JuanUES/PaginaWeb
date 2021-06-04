@@ -184,51 +184,56 @@ Dropzone.options.myAwesomeDropzone = {
                                     </form>                                    
                                 </div>
                             </div>   
-                        @endauth               
-                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped mb-0">
-                                <thead>
-                                    <tr>
-                                        <th class="tex-left">  
-                                            Nombre                                          
-                                        </th>
-                                        <th class="text-left">
-                                            Sector que Representa
-                                        </th>    
-                                        @auth
+                        @endauth  
+                        @if (count($junta)!=0)
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="tex-left">  
+                                                Nombre                                          
+                                            </th>
                                             <th class="text-left">
-                                                Acciones
-                                            </th>  
-                                        @endauth            
-                                    </tr>
-                                </thead>
-                                <tbody> 
-                                    @foreach ($junta as $item)
-                                    <tr>
-                                        <td class="align-middle">{!!$item->nombre;!!}</td>
-                                        <th class="text-nowrap align-middle" scope="row">{!!$item->sector_dep_unid;!!}</th>
-                                        @auth                                   
-                                        <th class="align-middle">
-                                            <div class="row">
-                                                <div class="col-xl-6 order-first">                                                    
-                                                    <a href="#" class="btn btn-success btn-block"><i class="dripicons-document-edit"></i>  Modificar</a>                                               
-                                                </div>
-                                                <div class="col-xl-6 order-last">                                                    
-                                                    <form action="{{ asset('/EstructuraOrganizativa/JefaturaJunta') }}/{!!base64_encode($item->id)!!}/{!!base64_encode($item->tipo)!!}" 
-                                                        method="POST">     
-                                                        @csrf                                              
-                                                        <button type="submit" class="btn btn-danger btn-block"><i class="dripicons-trash"></i>  Eliminar</button>   
-                                                    </form>   
-                                                </div>
-                                            </div>                                         
-                                        </th>
-                                        @endauth
-                                    </tr>
-                                    @endforeach
-                                    
-                                </tbody>
-                            </table>
-                        </div> <!-- end table-responsive-->
+                                                Sector que Representa
+                                            </th>    
+                                            @auth
+                                                <th class="text-left">
+                                                    Acciones
+                                                </th>  
+                                            @endauth            
+                                        </tr>
+                                    </thead>
+                                    <tbody> 
+                                        @foreach ($junta as $item)
+                                        <tr>
+                                            <td class="align-middle">{!!$item->nombre;!!}</td>
+                                            <th class="text-nowrap align-middle" scope="row">{!!$item->sector_dep_unid;!!}</th>
+                                            @auth                                   
+                                            <th class="align-middle">
+                                                <div class="row">
+                                                    <div class="col-xl-6 order-first">                                                    
+                                                        <a href="#" class="btn btn-success btn-block"><i class="dripicons-document-edit"></i>  Modificar</a>                                               
+                                                    </div>
+                                                    <div class="col-xl-6 order-last">                                                    
+                                                        <form action="{{ asset('/EstructuraOrganizativa/JefaturaJunta') }}/{!!base64_encode($item->id)!!}/{!!base64_encode($item->tipo)!!}" 
+                                                            method="POST">     
+                                                            @csrf                                              
+                                                            <button type="submit" class="btn btn-danger btn-block"><i class="dripicons-trash"></i>  Eliminar</button>   
+                                                        </form>   
+                                                    </div>
+                                                </div>                                         
+                                            </th>
+                                            @endauth
+                                        </tr>
+                                        @endforeach
+                                        
+                                    </tbody>
+                                </table>
+                            </div> <!-- end table-responsive-->
+                        @else
+                            <p class="border p-2 text-center">No hay datos registrados.</p>
+                        @endif             
+                        
                 </div>
             </div>
         </div>
@@ -321,6 +326,7 @@ Dropzone.options.myAwesomeDropzone = {
                             </div>
                         </div>   
                     @endauth 
+                    @if (count($jefaturas)!=0)
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped mb-0">
                             <thead>
@@ -339,7 +345,7 @@ Dropzone.options.myAwesomeDropzone = {
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($jefaturas as $item)                                       
+                                @foreach($jefaturas as $item)                                       
                                 <tr>
                                     <td class="align-middle">
                                         {!!$item->nombre;!!}
@@ -363,6 +369,10 @@ Dropzone.options.myAwesomeDropzone = {
                             </tbody>
                         </table>
                     </div> <!-- end table-responsive-->
+                    @else
+                    <p class="border p-2 text-center">No hay datos registrados.</p>                        
+                    @endif
+                    
                 </div>
             </div>
         </div>

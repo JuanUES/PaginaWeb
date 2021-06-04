@@ -15,7 +15,8 @@ class DirectorioController extends Controller
      */
     public function index()
     {
-        //
+        $directorio = Directorio::all();
+        return view('Nosotros.directorio',compact('directorio'));
     }
 
     /**
@@ -25,7 +26,7 @@ class DirectorioController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**

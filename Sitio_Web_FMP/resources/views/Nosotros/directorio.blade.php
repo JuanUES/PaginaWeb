@@ -79,7 +79,7 @@
                         </div>
                         @endauth
                     </div>
-
+                    @if (count($directorio)!=0)
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped mb-0">
                             <thead>
@@ -98,9 +98,10 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach ($directorio as $item)
                                 <tr>
-                                    <th class="text-nowrap" scope="row">Administración Académica</th>
-                                    <td>Tel. 2393-1993 <br>Correo: academica.paracentral@ues.edu.sv</td>
+                                    <th class="text-nowrap" scope="row">{{!!$item->nombre!!}}</th>
+                                    <td>{{!!$item->contacto!!}}</td>
                                     @auth                                   
                                     <th class="align-middle ">
                                         <div class="row">
@@ -114,10 +115,14 @@
                                         </div>                                         
                                     </th>
                                     @endauth 
-                                </tr>                                
+                                </tr>  
+                                @endforeach                                                              
                             </tbody>
                         </table>
                     </div> <!-- end table-responsive-->
+                    @else
+                    <p class="border p-2 text-center">No hay datos registrados.</p>
+                    @endif                    
                 </div> <!-- end card-box -->
             </div> <!-- end col -->
         </div>

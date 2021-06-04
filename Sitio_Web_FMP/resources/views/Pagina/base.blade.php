@@ -106,7 +106,7 @@
                                     <a href="{{ asset('MisionVision') }}">Misión y Visión</a>
                                 </li>                                           
                                 <li>
-                                    <a href="{{ asset('Directorio') }}">Directorio</a>
+                                    <a href="{{ route('directorio') }}">Directorio</a>
                                 </li>
                                 <li class="has-submenu">
                                     <a href="{{ asset('EstructuraOrganizativa') }}">Estructura Organizativa&nbsp;</a>                                    
@@ -146,8 +146,8 @@
                                     </ul>
                                 </li>                                
                                 <li class="has-submenu">
-                                    <a href="#">Investigación <div class="arrow-down"></div></a>
-                                    <ul class="submenu">
+                                    <a href="{{ route('investigacion')}}">Investigación</a>
+                                    <!--<ul class="submenu">
                                         <li>
                                             <a href="#">Centro de estudio de Información Publica (CEO)</a>
                                         </li>
@@ -155,17 +155,17 @@
                                         <li>
                                             <a href="#">Centro de Investigación Ambiental</a>
                                         </li>      
-                                    </ul>
+                                    </ul>-->
                                 </li>
                                 <li class="has-submenu">
                                     <a href="#">Proyección Social</a>
                                 </li>   
                                 <li class="has-submenu">
-                                    <a href="http://biblio.fmp.ues.edu.sv/">Biblioteca</a>
+                                    <a href="#">Procesos de Graduacion</a>
                                 </li> 
                                 <li class="has-submenu">
-                                    <a href="#">CELEUES</a>
-                                </li> 
+                                    <a href="http://biblio.fmp.ues.edu.sv/">Biblioteca</a>
+                                </li>                                 
                             </ul>
                         </li>
 
@@ -263,11 +263,11 @@
         <!-- ============================================================== -->      
 
         <!-- Footer Start -->
-        <footer class="footer py-1 color-boton text-white">
+        <footer class="footer py-1 color-top text-white">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        {{ date('Y') }} &copy; Facultad Multidisciplinaria Paracentral - <a href="https://www.ues.edu.sv/" class="text-white-50">Universidad de El Salvador</a>. Todos los derechos reservados
+                        {{ date('Y') }} &copy; Facultad Multidisciplinaria Paracentral - <a href="https://www.ues.edu.sv/" class="text-white-50">Universidad de El Salvador</a>.   Todos los derechos reservados.
                     </div>
                 </div>
             </div>
