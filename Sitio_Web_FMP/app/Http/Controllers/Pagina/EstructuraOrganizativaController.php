@@ -16,12 +16,15 @@ class EstructuraOrganizativaController extends Controller
      */
     public function index()
     {   
-        $junta       = JuntaJefatura::where('tipo',0)->get();
-        $jefaturas   = JuntaJefatura::where('tipo',1)->get();
-        $pjunta      = JuntaJefatura::where('tipo',2)->get();
-        $pjefatura   = JuntaJefatura::where('tipo',3)->get();
-        $organigrama = PDF::where('localizacion','organigrama')->get();
+        $junta         = JuntaJefatura::where('tipo',0)->get();
+        $jefaturas     = JuntaJefatura::where('tipo',1)->get();
+        $pjunta        = JuntaJefatura::where('tipo',2)->get();
+        $pjefatura     = JuntaJefatura::where('tipo',3)->get();
+        $periodoJunta  = JuntaJefatura::where('nombre','periodo') -> where('tipo',2) -> get();
+
+        $organigrama   = PDF::where('localizacion','organigrama')->get();
+
         return view('Nosotros.estructuraOrganizativa', 
-            compact('organigrama','junta','jefaturas','pjunta','pjefatura'));     
+            compact('organigrama','junta','jefaturas','pjunta','pjefatura','periodoJunta'));     
     }
 }

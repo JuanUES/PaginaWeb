@@ -90,8 +90,10 @@ class DirectorioController extends Controller
      * @param  \App\Models\Pagina\Directorio  $directorio
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Directorio $directorio)
+    public function destroy(Directorio $directorio, $id)
     {
-        //
+        $contacto = Directorio::find($id);
+        $contacto = delete();
+        return view('Nosotros.directorio');
     }
 }

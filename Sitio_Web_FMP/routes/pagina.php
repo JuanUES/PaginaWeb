@@ -51,6 +51,9 @@ Route::get('MisionVision', function () {
     return view('Nosotros.misionVision');
 });
 
+Route::post('/EstructuraOrganizativa/PeriodoJunta',[JuntaJefaturaController::class, 'periodoJunta'])
+->middleware(['auth'])->name('Periodo.junta');
+
 /**------------------------------------------------------------------------------------------ */
 /**Academicos-------------------------------------------------------------------------------- */
 Route::get('Informatica', function () {

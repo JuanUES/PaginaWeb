@@ -165,17 +165,19 @@ Dropzone.options.myAwesomeDropzone = {
                         @endauth
                     </div>
                         @guest
-                            <p>Periodo 2019-2023</p>
+                            <p>{!!count($periodoJunta)==1 ? $periodoJunta[0] -> sector_dep_unid :'Periodo:'!!}</p>
                         @endguest
                         @auth
                             <div class="row">
                                 <div class="col-xl-12">
-                                    <form action="" method="POST">
+                                    <form action="{{ route('Periodo.junta') }}" method="POST">
+                                        @csrf
                                         <div class="row my-2">                                            
                                             <div class="col-lg-3">
-                                                <input type="text" class="form-control" required
+                                                <input type="text" class="form-control" required 
                                                 placeholder="Periodo (Obligatorio)"
-                                                name="sector" />
+                                                name="periodo" 
+                                                value="{!!count($periodoJunta)==1 ? $periodoJunta[0] -> sector_dep_unid:null!!}"/>
                                             </div>
                                             <div class="col-lg-2">
                                                 <button type="submit" class="btn btn-block btn-info">Guardar   <i class=" mdi mdi-content-save-move"></i></button>

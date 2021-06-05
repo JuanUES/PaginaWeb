@@ -62,7 +62,7 @@ class PDFController extends Controller
         $file = $request->file('file'); 
         if(count($pdfs)==0){ 
             
-            /**Guardo en carpeta Pdfs */
+            /**Guardo en carpeta */
             $path = public_path() . '/files/image';
             $fileName = uniqid();
             $file->move($path, $fileName);
@@ -77,10 +77,10 @@ class PDFController extends Controller
         }else{
             $_img = $pdfs[0];
             
-            /**Elimino del servidor el pdf */
+            /**Elimino del servidor  */
             File::delete(public_path() . '/files/image/'.$_img->file); 
 
-            /**Guardo en carpeta Pdfs */
+            /**Guardo en carpeta */
             $path = public_path() . '/files/image';
             $fileName = uniqid();
             $file->move($path, $fileName);

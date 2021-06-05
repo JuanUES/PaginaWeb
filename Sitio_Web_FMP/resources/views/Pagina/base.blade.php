@@ -147,15 +147,6 @@
                                 </li>                                
                                 <li class="has-submenu">
                                     <a href="{{ route('investigacion')}}">Investigación</a>
-                                    <!--<ul class="submenu">
-                                        <li>
-                                            <a href="#">Centro de estudio de Información Publica (CEO)</a>
-                                        </li>
-                                        
-                                        <li>
-                                            <a href="#">Centro de Investigación Ambiental</a>
-                                        </li>      
-                                    </ul>-->
                                 </li>
                                 <li class="has-submenu">
                                     <a href="#">Proyección Social</a>
