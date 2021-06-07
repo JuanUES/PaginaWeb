@@ -101,21 +101,16 @@
                             <tbody>
                                 @foreach ($directorio as $item)
                                 <tr>
-<<<<<<< HEAD
-                                    <th class="text-nowrap" scope="row">Administración Académica</th>
-                                    <td>Tel. 2393-1993 <br>Correo: academica.paracentral@ues.edu.sv</td>
-=======
                                     <th class="text-nowrap" scope="row">{!!$item->nombre!!}</th>
                                     <td>{!!$item->contacto!!}</td>
->>>>>>> 6c4f23b9003421029db58138d4fffd05149db3aa
                                     @auth                                   
                                     <th class="align-middle ">
                                         <div class="row">
                                             <div class="col-xl-12"> 
-                                                <form id="{!! base64_encode($item->id) !!}" action="{{ asset('/Directorio/borrar') }}/{!! base64_encode($item->id) !!}" 
+                                                <form id="{!! base64_encode($item->id) !!}" action="" 
                                                     method="POST">     
                                                     @csrf                                              
-                                                    <a type="buttom"  class="btn btn-danger text-white btn-block" onclick="eliminar({!! base64_encode($item->id) !!});"><i class="dripicons-trash"></i>  Eliminar</a>   
+                                                    <a type="buttom"  class="btn btn-danger text-white btn-block" onclick="eliminar({!! '#'.base64_encode($item->id) !!});"><i class="dripicons-trash"></i>  Eliminar</a>   
                                                 </form>
                                             </div>
                                         </div>                                         
@@ -151,7 +146,7 @@
             showHideTransition : 'slide',
             bgColor : '#FBCC5C',   
             hideAfter : false
-        });*/
+        });
     }
     
     function si(formulario){
