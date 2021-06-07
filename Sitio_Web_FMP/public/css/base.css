@@ -1,0 +1,40 @@
+
+            .color-top{
+                background:#DC3545;
+            }
+            .bottom-aligned {
+                display: flex;
+                align-items: flex-end;
+            }
+            .color-boton{
+                background: #bb3b44;
+            }
+            .min-width-full-container{
+                min-width: 100vh;
+            }
+
+            @media screen and (max-width: 992px) {
+                .ocultar-div{
+                     display:none;
+                }
+            }
+
+            /*@media screen and (min-width: 992px) {
+                .ocultar-div{
+                     display:none;
+                }
+            }*/
+
+            .full-height{
+                height:100%;
+            }
+
+            .full-width{
+                width: 100%;
+            }
+            .center-h {
+                justify-content: center;
+            }
+            .center-v {
+                align-items: center;
+            }
