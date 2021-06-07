@@ -42,9 +42,19 @@ class DirectorioController extends Controller
         $directorio->contacto = nl2br($request->contacto);
         $directorio->user =  auth()->id();
 
-        $directorio->save();
+        $exito = $directorio->save();
 
-        return redirect('/Directorio')->with('mjs','mensaje de prueba');
+        if(!$exito){
+            return redirect('/Directorio')
+            ->with('titulo','Error')
+            ->with('mensaje','No se realizo el registro en directorio.')
+            ->with('tipo','error');
+        }
+
+        return redirect('/Directorio')
+        ->with('titulo','Exito')
+        ->with('mensaje','Registro realizado')
+        ->with('tipo','success');
     }
 
     /**
