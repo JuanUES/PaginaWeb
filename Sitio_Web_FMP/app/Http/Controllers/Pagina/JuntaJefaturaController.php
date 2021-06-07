@@ -48,6 +48,49 @@ class JuntaJefaturaController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function periodoJunta(Request $request){
+
+        $periodo  = JuntaJefatura::where('nombre','periodo') -> where('tipo',2) -> get();
+        
+        if(count($periodo) == 0){
+            $_periodo                =  new JuntaJefatura;
+
+        }else{
+            $_periodo                =  $periodo[0];           
+        }
+        $_periodo  -> nombre          =  'periodo';
+        $_periodo -> sector_dep_unid =  nl2br($request->periodo); 
+        $_periodo -> tipo            =  2; 
+        $_periodo -> user            =  auth()->id();
+        $_periodo -> save();
+        
+        return redirect('/EstructuraOrganizativa#junta');
+    }
+                    
+    public function periodoJefatura(Request $request){
+
+        $periodo  = JuntaJefatura::where('nombre','periodo') -> where('tipo',3) -> get();
+        
+        if(count($periodo) == 0){
+            $_periodo                =  new JuntaJefatura;
+
+        }else{
+            $_periodo                =  $periodo[0];           
+        }
+        $_periodo  -> nombre          =  'periodo';
+        $_periodo -> sector_dep_unid =  nl2br($request->periodo); 
+        $_periodo -> tipo            =  3; 
+        $_periodo -> user            =  auth()->id();
+        $_periodo -> save();
+        
+        return redirect('/EstructuraOrganizativa#jefatura');
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Pagina\JuntaJefatura  $juntaJefatura

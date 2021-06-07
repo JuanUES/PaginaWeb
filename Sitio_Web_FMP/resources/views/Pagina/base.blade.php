@@ -9,7 +9,52 @@
         <meta content="Coderthemes" name="UTI" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         @yield('appcss')
+<<<<<<< HEAD
         <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
+=======
+        @yield('csstoast')
+        <style>
+            .color-top{
+                background:#DC3545;
+            }
+            .bottom-aligned {
+                display: flex;
+                align-items: flex-end;
+            }
+            .color-boton{
+                background: #bb3b44;
+            }
+            .min-width-full-container{
+                min-width: 100vh;
+            }
+
+            @media screen and (max-width: 992px) {
+                .ocultar-div{
+                     display:none;
+                }
+            }
+
+            /*@media screen and (min-width: 992px) {
+                .ocultar-div{
+                     display:none;
+                }
+            }*/
+
+            .full-height{
+                height:100%;
+            }
+
+            .full-width{
+                width: 100%;
+            }
+            .center-h {
+                justify-content: center;
+            }
+            .center-v {
+                align-items: center;
+            }
+        </style>
+>>>>>>> 6c4f23b9003421029db58138d4fffd05149db3aa
     </head>
 
     <body class="unsticky-header">
@@ -66,7 +111,7 @@
                                     <a href="{{ asset('MisionVision') }}">Misión y Visión</a>
                                 </li>                                           
                                 <li>
-                                    <a href="{{ asset('Directorio') }}">Directorio</a>
+                                    <a href="{{ route('directorio') }}">Directorio</a>
                                 </li>
                                 <li class="has-submenu">
                                     <a href="{{ asset('EstructuraOrganizativa') }}">Estructura Organizativa&nbsp;</a>                                    
@@ -106,26 +151,17 @@
                                     </ul>
                                 </li>                                
                                 <li class="has-submenu">
-                                    <a href="#">Investigación <div class="arrow-down"></div></a>
-                                    <ul class="submenu">
-                                        <li>
-                                            <a href="#">Centro de estudio de Información Publica (CEO)</a>
-                                        </li>
-                                        
-                                        <li>
-                                            <a href="#">Centro de Investigación Ambiental</a>
-                                        </li>      
-                                    </ul>
+                                    <a href="{{ route('investigacion')}}">Investigación</a>
                                 </li>
                                 <li class="has-submenu">
                                     <a href="#">Proyección Social</a>
                                 </li>   
                                 <li class="has-submenu">
-                                    <a href="http://biblio.fmp.ues.edu.sv/">Biblioteca</a>
+                                    <a href="#">Procesos de Graduacion</a>
                                 </li> 
                                 <li class="has-submenu">
-                                    <a href="#">CELEUES</a>
-                                </li> 
+                                    <a href="http://biblio.fmp.ues.edu.sv/">Biblioteca</a>
+                                </li>                                 
                             </ul>
                         </li>
 
@@ -223,11 +259,11 @@
         <!-- ============================================================== -->      
 
         <!-- Footer Start -->
-        <footer class="footer py-1 color-boton text-white">
+        <footer class="footer py-1 color-top text-white">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12 text-center">
-                        {{ date('Y') }} &copy; Facultad Multidisciplinaria Paracentral - <a href="https://www.ues.edu.sv/" class="text-white-50">Universidad de El Salvador</a>. Todos los derechos reservados
+                        {{ date('Y') }} &copy; Facultad Multidisciplinaria Paracentral - <a href="https://www.ues.edu.sv/" class="text-white-50">Universidad de El Salvador</a>.   Todos los derechos reservados.
                     </div>
                 </div>
             </div>
@@ -235,6 +271,6 @@
         <!-- end Footer -->
 
         @yield('footerjs')       
-        
+        @yield('jstoast')
     </body>
 </html> 

@@ -41,20 +41,24 @@ Route::post('EstructuraOrganizativa/Jefatura', [JuntaJefaturaController::class, 
 Route::post('/EstructuraOrganizativa/JefaturaJunta/{id}/{tipo}', [JuntaJefaturaController::class, 'destroy'])
 ->middleware(['auth'])->name('EstructuraOrganizativa.Jefatura.Borrar');
 
-Route::post('Directorio', [DirectorioController::class, 'store'])
+Route::post('/Directorio/Nuevo', [DirectorioController::class, 'store'])
 ->middleware(['auth'])->name('Nosotros.directorio');
 
+Route::get('/Directorio', [DirectorioController::class, 'index'])
+->name('directorio');
 
 Route::get('MisionVision', function () {
     return view('Nosotros.misionVision');
 });
 
-Route::get('Directorio', function () {
-    return view('Nosotros.directorio');
-});
+Route::post('/EstructuraOrganizativa/PeriodoJunta',[JuntaJefaturaController::class, 'periodoJunta'])
+->middleware(['auth'])->name('Periodo.junta');
+
+Route::post('/EstructuraOrganizativa/PeriodoJefatura',[JuntaJefaturaController::class, 'periodoJefatura'])
+->middleware(['auth'])->name('Periodo.jefatura');
 
 /**------------------------------------------------------------------------------------------ */
-
+/**Academicos-------------------------------------------------------------------------------- */
 Route::get('Informatica', function () {
     return view('Academicos.Departamentos.informatica');
 });
@@ -70,3 +74,7 @@ Route::get('CienciasEconomicas', function () {
 Route::get('CienciasEducacion', function () {
     return view('Academicos.Departamentos.CienciasEducacion');
 });
+
+Route::get('Investigacion', function () {
+    return view('Academicos.investigacion');
+})->name('investigacion');
