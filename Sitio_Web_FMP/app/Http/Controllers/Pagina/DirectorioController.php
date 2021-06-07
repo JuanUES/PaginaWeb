@@ -39,15 +39,12 @@ class DirectorioController extends Controller
     {
         $directorio = new Directorio();
         $directorio->nombre = $request->nombre;
-        $directorio->contacto = $request->contacto;
+        $directorio->contacto = nl2br($request->contacto);
         $directorio->user =  auth()->id();
 
         $directorio->save();
 
-        return redirect('/Directorio');
-
-
-        //
+        return redirect('/Directorio')->with('mjs','mensaje de prueba');
     }
 
     /**

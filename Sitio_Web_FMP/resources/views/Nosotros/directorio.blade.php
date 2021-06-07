@@ -1,4 +1,5 @@
 @extends('Pagina/baseOnlyHtml')
+@extends('MensajesToast/notificacionesErrores')
 
 @section('container')
 <div class="wrapper">
@@ -100,8 +101,8 @@
                             <tbody>
                                 @foreach ($directorio as $item)
                                 <tr>
-                                    <th class="text-nowrap" scope="row">{{!!$item->nombre!!}}</th>
-                                    <td>{{!!$item->contacto!!}}</td>
+                                    <th class="text-nowrap" scope="row">{!!$item->nombre!!}</th>
+                                    <td>{!!$item->contacto!!}</td>
                                     @auth                                   
                                     <th class="align-middle ">
                                         <div class="row">
@@ -122,7 +123,8 @@
                     </div> <!-- end table-responsive-->
                     @else
                     <p class="border p-2 text-center">No hay datos registrados.</p>
-                    @endif                    
+                    @endif         
+                             
                 </div> <!-- end card-box -->
             </div> <!-- end col -->
         </div>

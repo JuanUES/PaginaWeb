@@ -9,6 +9,7 @@
         <meta content="Coderthemes" name="UTI" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         @yield('appcss')
+        @yield('csstoast')
         <style>
             .color-top{
                 background:#DC3545;
@@ -266,6 +267,6 @@
         <!-- end Footer -->
 
         @yield('footerjs')       
-        
+        @yield('jstoast')
     </body>
 </html> 
