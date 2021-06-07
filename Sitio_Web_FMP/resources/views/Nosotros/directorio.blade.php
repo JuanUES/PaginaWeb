@@ -101,8 +101,13 @@
                             <tbody>
                                 @foreach ($directorio as $item)
                                 <tr>
+<<<<<<< HEAD
+                                    <th class="text-nowrap" scope="row">Administración Académica</th>
+                                    <td>Tel. 2393-1993 <br>Correo: academica.paracentral@ues.edu.sv</td>
+=======
                                     <th class="text-nowrap" scope="row">{!!$item->nombre!!}</th>
                                     <td>{!!$item->contacto!!}</td>
+>>>>>>> 6c4f23b9003421029db58138d4fffd05149db3aa
                                     @auth                                   
                                     <th class="align-middle ">
                                         <div class="row">

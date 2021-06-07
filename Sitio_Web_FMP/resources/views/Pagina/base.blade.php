@@ -5,10 +5,13 @@
         <title>Facultad Multidisciplinaria Paracentral</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+        <meta content="Facultad Multidisciplinaria Paracentral" name="description" />
         <meta content="Coderthemes" name="UTI" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         @yield('appcss')
+<<<<<<< HEAD
+        <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
+=======
         @yield('csstoast')
         <style>
             .color-top{
@@ -51,6 +54,7 @@
                 align-items: center;
             }
         </style>
+>>>>>>> 6c4f23b9003421029db58138d4fffd05149db3aa
     </head>
 
     <body class="unsticky-header">
