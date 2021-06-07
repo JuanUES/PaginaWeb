@@ -42,17 +42,5 @@
         </script>    
         @endforeach     
     @endif
-    
-
-    <script>
-        $.toast({ 
-            heading: "¡¡ Aviso !!",
-            text: "Se eliminara el registro de la base de datos <br> ¿Desea continuar con esta acción? <br><div class='row my-1'><div class='col order-first mx-1'><button type='submit' class='btn btn-outline-light waves-effect btn-block px-2'>Si</button></div><div class='col order-last mx-1'><button type='submit' class='btn btn-block btn-outline-light waves-effect px-2'>No</button></div></div>",
-            icon: "warning",
-            position: "top-center",
-            showHideTransition : 'slide',
-            hideAfter : false,
-            allowToastClose : false
-        });
-    </script>   
+    @yield('nuevotoast')     
 @endsection

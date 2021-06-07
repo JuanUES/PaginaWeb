@@ -44,6 +44,9 @@ Route::post('/EstructuraOrganizativa/JefaturaJunta/{id}/{tipo}', [JuntaJefaturaC
 Route::post('/Directorio/Nuevo', [DirectorioController::class, 'store'])
 ->middleware(['auth'])->name('Nosotros.directorio');
 
+Route::post('/Directorio/borrar/{id}', [DirectorioController::class, 'destroy'])
+->middleware(['auth'])->name('Nosotros.directorio.borrar');
+
 Route::get('/Directorio', [DirectorioController::class, 'index'])
 ->name('directorio');
 
@@ -57,7 +60,6 @@ Route::post('/EstructuraOrganizativa/PeriodoJunta',[JuntaJefaturaController::cla
 Route::post('/EstructuraOrganizativa/PeriodoJefatura',[JuntaJefaturaController::class, 'periodoJefatura'])
 ->middleware(['auth'])->name('Periodo.jefatura');
 
-/**------------------------------------------------------------------------------------------ */
 /**Academicos-------------------------------------------------------------------------------- */
 Route::get('Informatica', function () {
     return view('Academicos.Departamentos.informatica');

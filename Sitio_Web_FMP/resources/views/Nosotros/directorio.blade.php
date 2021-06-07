@@ -107,10 +107,10 @@
                                     <th class="align-middle ">
                                         <div class="row">
                                             <div class="col-xl-12"> 
-                                                <form action="" 
+                                                <form id="{!! base64_encode($item->id) !!}" action="{{ asset('/Directorio/borrar') }}/{!! base64_encode($item->id) !!}" 
                                                     method="POST">     
                                                     @csrf                                              
-                                                    <button type="submit" class="btn btn-danger btn-block"><i class="dripicons-trash"></i>  Eliminar</button>   
+                                                    <a type="buttom"  class="btn btn-danger text-white btn-block" onclick="eliminar({!! base64_encode($item->id) !!});"><i class="dripicons-trash"></i>  Eliminar</a>   
                                                 </form>
                                             </div>
                                         </div>                                         
@@ -131,5 +131,28 @@
         <!-- end row -->       
         
     </div> <!-- end container -->
+    
 </div> 
+@endsection
+@section('nuevotoast')
+<script type="text/javascript">
+
+    function eliminar(formulario){
+      /*  $.toast({ 
+            heading: "¡¡ Aviso !!",
+            text: "<p class='my-1'>Se eliminara el registro de la base de datos de forma permanente.</p>¿Desea continuar con esta acción?<a type='buttom' class='btn btn-outline-light waves-effect btn-block my-1' onclick='si("+formulario+");'>Si, eliminar</a>",
+            icon: "warning",
+            position: "top-right",
+            showHideTransition : 'slide',
+            bgColor : '#FBCC5C',   
+            hideAfter : false
+        });*/
+    }
+    
+    function si(formulario){
+        $form = "#"+formulario;
+        alert($form);
+        //$("#editarForm").submit();
+    }
+</script>  
 @endsection
