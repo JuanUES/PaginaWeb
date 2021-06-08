@@ -226,18 +226,10 @@
                                                             <div class="form-group">
                                                                 <label>Contenido</label>
                                                                 <div>
-                                                                    <div id="summernote-editor">
-                                                                        <h6>This is an simple editable area.</h6>
-                                                                        <ul>
-                                                                            <li>
-                                                                                Select a text to reveal the toolbar.
-                                                                            </li>
-                                                                            <li>
-                                                                                Edit rich document on-the-fly, so elastic!
-                                                                            </li>
-                                                                        </ul>
+                                                                    <div id="summernote-inline" name="contenido" style="border-color: red;">
+                                                                      
                                                                         <p>
-                                                                            End of simple area
+                                                                            Digite o inserte (pegar texto) aquí. (borrar este comentario)
                                                                         </p>
                                                                     </div> <!-- end summernote-editor-->
                                                                    <!-- <textarea required class="form-control" name="contenido" id="contenido"></textarea>-->
