@@ -16,6 +16,9 @@
 <!--Libreria css para el editor de texto-->
 <link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" type="text/css" />
 
+<!--Libreria data table para paginacion de noticias-->
+<link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+
 <style>
     carousel-inner > .item > img {
         position: absolute;
@@ -305,6 +308,7 @@
                             </div>
                             @if (count($noticias))
                                 @foreach ($noticias as $n)
+                                table
                                     <div class="border my-1 py-1 rounded p-1 my-1 media">
                                         <img class="mr-3 rounded bx-shadow-lg" src="images/noticias/{{$n->imagen}}"
                                         alt="Generic placeholder image" height="80" width="110">
@@ -441,6 +445,8 @@
 
 <!-- App js -->
 <script src="{{ asset('js/app.min.js') }}"></script>
+<!--Librerias js para datatable-->
+<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 @auth    
 <!-- Plugins js -->
 <script src=" {{ asset('js/dropzone.min.js') }} "></script>
