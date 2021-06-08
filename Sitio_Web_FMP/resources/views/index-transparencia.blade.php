@@ -11,15 +11,6 @@
 <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('css/icons.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('css/app.min.css') }}" rel="stylesheet" type="text/css" />
-
-<style>
-    carousel-inner > .item > img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        min-width: 100%;
-    }
-</style>
 @endsection
 
 @section('container')

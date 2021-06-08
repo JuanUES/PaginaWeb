@@ -1,13 +1,23 @@
 .color-top{
     background:#AA0000;
 }
+
 .bottom-aligned {
     display: flex;
     align-items: flex-end;
 }
+
+#topnav {
+    background: #AA0000;
+}
 .color-boton{
     background: #AA0000;
 }
+
+.header{
+    background: #AA0000;
+}
+
 .min-width-full-container{
     min-width: 100vh;
 }
