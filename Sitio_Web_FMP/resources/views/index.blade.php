@@ -423,8 +423,11 @@
                         </div>
                         <div class="col order-last">
                             <p class="header-title">Institución</p>
+                            <div class="p-1"><a href="https://www.ues.edu.sv/becas/">Consejo de Becas</a></div>                            
                             <div class="p-1"><a href="#">Consejo Superior Universitario</a></div>
                             <div class="p-1"><a href="#">Asamblea General Universitaria</a></div>
+                            <div class="p-1"><a href="https://www.uese.ues.edu.sv/">Unidad de Estudio Socioeconómico </a></div>
+                            <div class="p-1"><a href="https://www.facebook.com/defensoriaues/">Defensoría de los Derechos Universitarios</a></div>                            
                         </div>
                     </div>                            
                 </div> <!-- end card-box -->

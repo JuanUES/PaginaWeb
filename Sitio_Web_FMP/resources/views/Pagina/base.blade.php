@@ -54,7 +54,7 @@
                 </div>
                 <div id="navigation" >
                     <!-- Navigation Menu-->
-                    <ul class="navigation-menu py-1 color-fondo " >
+                    <ul id="navigationul" class="navigation-menu py-1 color-fondo" >
                         
                         <li class="has-submenu p-1 center-text">
                             <a href="{{ asset('/') }}" class=" rounded text-left" >
@@ -107,7 +107,10 @@
                                             <a href="#">Postgrado</a>
                                         </li>                                       
                                     </ul>
-                                </li>                                
+                                </li>     
+                                <li>
+                                    <a href="https://distancia.ues.edu.sv/">Universidad en Linea</a>
+                                </li>                             
                                 <li class="has-submenu">
                                     <a href="{{ route('investigacion')}}">Investigación</a>
                                 </li>
@@ -128,7 +131,7 @@
                                  <i class="mdi mdi-clipboard-text mdi-24px"></i>Administrativo<div class="arrow-down"></div></a>
                             <ul class="submenu">                                
                                 <li>
-                                    <a href="#">Colecturia</a>
+                                    <a href="#">Administración Financiera</a>
                                 </li>
                                 
                                 <li>
@@ -137,11 +140,7 @@
 
                                 <li>
                                     <a href="#">Desarrollo Físico</a>
-                                </li>
-
-                                <li>
-                                    <a href="#">Universidad en Linea</a>
-                                </li>                                    
+                                </li>                                                                 
                             </ul>
                         </li>     
 
@@ -181,11 +180,10 @@
                         
                     </ul>
                     <!-- End navigation menu -->
-                    <ul class="list-unstyled topnav-menu float-right mb-0">
+                    <ul class="list-unstyled topnav-menu  mb-0">
 
                         <li class="dropdown notification-list">
-                            <!-- Mobile menu toggle-->
-                            
+                            <!-- Mobile menu toggle-->                            
                             <a class="navbar-toggle nav-link">
                                 <div class="lines">
                                     <span></span>
