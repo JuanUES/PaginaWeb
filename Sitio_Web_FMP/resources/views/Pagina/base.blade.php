@@ -131,7 +131,7 @@
                                  <i class="mdi mdi-clipboard-text mdi-24px"></i>Administrativo<div class="arrow-down"></div></a>
                             <ul class="submenu">                                
                                 <li>
-                                    <a href="#">Administración Financiera</a>
+                                    <a href="{{ route('administracionFinanciera') }}">Administración Financiera</a>
                                 </li>
                                 
                                 <li>

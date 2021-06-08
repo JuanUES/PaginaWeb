@@ -224,16 +224,8 @@
                                                     <div class="row">
                                                         <div class="col-xl-12">
                                                             <div class="form-group">
-                                                                <label>Contenido</label>
-                                                                <div>
-                                                                    <div id="summernote-inline" name="contenido" style="border-color: red;">
-                                                                      
-                                                                        <p>
-                                                                            Digite o inserte (pegar texto) aquí. (borrar este comentario)
-                                                                        </p>
-                                                                    </div> <!-- end summernote-editor-->
-                                                                   <!-- <textarea required class="form-control" name="contenido" id="contenido"></textarea>-->
-                                                                </div>
+                                                                <label>Contenido</label>                                                                
+                                                                <!-- <textarea required class="form-control" name="contenido" id="contenido"></textarea>-->                                                                
                                                             </div>
                                                         </div>
                                                     </div>         

@@ -7,10 +7,6 @@
     align-items: flex-end;
 }
 
-#navigationul{
-    overflow: scroll;
-}
-
 #topnav {
     background: #AA0000;
 }
@@ -29,6 +25,9 @@
 @media screen and (max-width: 992px) {
     .ocultar-div{
             display:none;
+    }
+    #navigationul{
+        overflow: scroll;
     }
 }
 
