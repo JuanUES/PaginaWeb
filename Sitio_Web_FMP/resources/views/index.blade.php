@@ -13,6 +13,9 @@
 <link href="{{ asset('css/icons.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('css/app.min.css') }}" rel="stylesheet" type="text/css" />
 
+<!--Libreria css para el editor de texto-->
+<link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" type="text/css" />
+
 <style>
     carousel-inner > .item > img {
         position: absolute;
@@ -223,7 +226,21 @@
                                                             <div class="form-group">
                                                                 <label>Contenido</label>
                                                                 <div>
-                                                                    <textarea required class="form-control" name="contenido" id="contenido"></textarea>
+                                                                    <div id="summernote-editor">
+                                                                        <h6>This is an simple editable area.</h6>
+                                                                        <ul>
+                                                                            <li>
+                                                                                Select a text to reveal the toolbar.
+                                                                            </li>
+                                                                            <li>
+                                                                                Edit rich document on-the-fly, so elastic!
+                                                                            </li>
+                                                                        </ul>
+                                                                        <p>
+                                                                            End of simple area
+                                                                        </p>
+                                                                    </div> <!-- end summernote-editor-->
+                                                                   <!-- <textarea required class="form-control" name="contenido" id="contenido"></textarea>-->
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -440,6 +457,10 @@
 @auth    
 <!-- Plugins js -->
 <script src=" {{ asset('js/dropzone.min.js') }} "></script>
+
+<!--libreria js para el ditor-->
+<script src=" {{ asset('js/summernote-bs4.min.js') }} "></script>
+<script src=" {{ asset('js/form-summernote.init.js') }} "></script>
 @endauth
 
 @auth
