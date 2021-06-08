@@ -64,7 +64,7 @@ class NoticiaController extends Controller
         $noticia -> subtitulo =  $request->subtitulo;        
         $noticia -> imagen    =  $fileName;
         $noticia -> tipo      =  'true'; 
-        $noticia -> contenido =  nl2br($request->contenido);
+        $noticia -> contenido =  str_replace(array("\r\n", "\n\r", "\r", "\n"), "<br/>", $request->contenido);
         $noticia -> fuente    =  $request->fuente;        
         $noticia -> urlfuente =  $request->urlfuente;
         $noticia -> user      =  auth()->id();
@@ -157,6 +157,18 @@ class NoticiaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $noticia = Noticia::find(base64_decode($id));
+        $exito = $noticia -> delete();
+        if($exito){
+            return redirect('/#noticias')
+            ->with('titulo','Exito')
+            ->with('mensaje','Se elimino el registro de la base de datos.')
+            ->with('tipo','info');
+        }else{
+            return redirect('/#noticias')
+            ->with('titulo','Exito')
+            ->with('mensaje','El se guardo el registro en la base de datos.')
+            ->with('tipo','success');
+        }        
     }
 }

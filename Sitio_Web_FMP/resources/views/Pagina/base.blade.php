@@ -18,7 +18,7 @@
     <body class="unsticky-header">
 
         <!-- Navigation Bar-->
-        <header id="topnav" style="background: #DC3545;">
+        <header id="topnav">
             <div class="navb  color-top">
                 <ul class="list-unstyled bottomnav-menu float-right color-top">
 

@@ -131,7 +131,7 @@
                             </div> <!-- end row-->
                         </div>  <!-- end card-box-->
                     </div> <!-- end col -->
-                    <div class="col-xl-12">
+                    <div class="col-xl-12" id="noticias">
                         <div class="card-box"> 
                             <div class="row">
                             <div class="col-xl order-first"><h1 class="header-title mb-3">Noticias</h1></div>                     
@@ -317,7 +317,13 @@
                                             <a href="{{ asset('/noticias') }}/{!!base64_encode($n->id)!!}/{!!base64_encode($n->titulo)!!}"
                                             class="btn btn-light mt-3 mx-1"> Leer más</a>
                                             @auth
-                                            <button type="button"  class="btn mx-1 btn-success mt-3" onclick="modificarNoticia('{!!$n->titulo !!}', '{!!$n->subtitulo!!}', '{!!$n->fuente!!}', '{!!$n->urlfuente!!}', '{!! preg_replace("[\n|\r|\n]","",$n->contenido)!!}', '{!!$n->imagen!!}')">Modificar</button>
+                                            <button type="button"  class="btn mx-1 btn-success mt-3" 
+                                            onclick="modificarNoticia('{!!$n->titulo !!}',
+                                             '{!!$n->subtitulo!!}', 
+                                             '{!!$n->fuente!!}', 
+                                             '{!!$n->urlfuente!!}',
+                                             '{!!$n->contenido!!}',
+                                             '{!!$n->imagen!!}')">Modificar</button>
                                             @endauth
                                         @else
                                             <a href="{!!$n->urlfuente!!}"
@@ -327,13 +333,16 @@
                                             @endauth
                                         @endif
         
-                                        @auth                                    
-                                            <button type="submit" class="btn btn-danger mt-3">Eliminar</button>
+                                        @auth 
+                                            <form action="{{ route('NoticiaFacultad.borrar',['id'=>base64_encode($n->id)]) }}" method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger mt-3">Eliminar</button>
+                                            </form>                                  
                                         @endauth                                
                                     </div>  
                                 @endforeach
                             @else
-                                <p>No hay noticias para mostrar.</p>
+                                <p class="p-2 border">No hay noticias para mostrar.</p>
                             @endif                    
                             
                         </div> <!-- end card-box -->
@@ -491,8 +500,8 @@
         document.getElementById("subtitulo").value = subtitulo;
         document.getElementById("fuente").value = fuente;
         document.getElementById("urlfuente").value = urlfuente;
-        document.getElementById("contenido").value = contenido;
-        document.getElementById("img").value = img;
+        document.getElementById("contenido").innerHTML = "<p>"+contenido+"</p>";
+        //document.getElementById("img").value = img;
     }
 
     function modificarNoticiaUrl(){

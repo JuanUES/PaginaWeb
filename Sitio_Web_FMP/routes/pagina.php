@@ -22,6 +22,9 @@ Route::post('/noticias/nueva', [NoticiaController::class, 'store'])
 Route::post('/noticias/nuevaurl', [NoticiaController::class, 'storeurl'])
 ->middleware(['auth'])->name('NoticiaFacultad.nuevaurl');
 
+Route::post('/noticias/{id}', [NoticiaController::class, 'destroy'])
+->middleware(['auth'])->name('NoticiaFacultad.borrar');
+
 Route::get('/noticias/{titulo}/{id}',[NoticiaController::class, 'index'])
 ->name('NoticiaFacultad.ver');
 
