@@ -15,12 +15,8 @@ class DirectorioController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
-        //
-=======
         $directorio = Directorio::all();
         return view('Nosotros.directorio',compact('directorio'));
->>>>>>> 6c4f23b9003421029db58138d4fffd05149db3aa
     }
 
     /**
@@ -101,10 +97,9 @@ class DirectorioController extends Controller
      * @param  \App\Models\Pagina\Directorio  $directorio
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Directorio $directorio, $id)
-    {
-        $contacto = Directorio::find($id);
-        $contacto = delete();
-        return view('Nosotros.directorio');
+    public function destroy(Directorio $directorio, $id){
+        $contacto = Directorio::find(base64_decode($id));
+        $contacto -> delete();
+        return redirect()->route('directorio');
     }
 }

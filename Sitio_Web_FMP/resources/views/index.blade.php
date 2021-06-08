@@ -1,4 +1,5 @@
 @extends('Pagina/base')
+@extends('MensajesToast/notificacionesErrores')
 
 @section('appcss')
 <!-- App favicon -->
@@ -222,7 +223,7 @@
                                                             <div class="form-group">
                                                                 <label>Contenido</label>
                                                                 <div>
-                                                                    <textarea required class="form-control" name="contenido"></textarea>
+                                                                    <textarea required class="form-control" name="contenido" id="contenido"></textarea>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -316,7 +317,7 @@
                                             <a href="{{ asset('/noticias') }}/{!!base64_encode($n->id)!!}/{!!base64_encode($n->titulo)!!}"
                                             class="btn btn-light mt-3 mx-1"> Leer más</a>
                                             @auth
-                                            <a type="button" href="#" class="btn mx-1 btn-success mt-3">Modificar</a>
+                                            <button type="button"  class="btn mx-1 btn-success mt-3" onclick="modificarNoticia('{!!$n->titulo !!}', '{!!$n->subtitulo!!}', '{!!$n->fuente!!}', '{!!$n->urlfuente!!}', '{!! preg_replace("[\n|\r|\n]","",$n->contenido)!!}', '{!!$n->imagen!!}')">Modificar</button>
                                             @endauth
                                         @else
                                             <a href="{!!$n->urlfuente!!}"
@@ -469,21 +470,7 @@
                 document.getElementById('myform').reset();
             });
         });
-   /* $.toast({
-            heading: 'Success',
-            text: 'And these were just the basic demos! Scroll down to check further details on how to customize the output'.,
-            showHideTransition: 'slide',
-            icon: 'success'
-        });
-    @if(session('mensaje'))
-  
-        $.toast({
-            heading: 'Success',
-            text: 'And these were just the basic demos! Scroll down to check further details on how to customize the output'.{{!!session('mensaje')!!}},
-            showHideTransition: 'slide',
-            icon: 'success'
-        });
-    @endif*/
+   
    /*Dropzone.options.myAwesomeDropzone = {
         maxFiles: 1,
         accept: function(file, done) {
@@ -497,6 +484,21 @@
         }
     };*/
 </script> 
+
+<script>
+    function modificarNoticia(titulo, subtitulo, fuente, urlfuente, contenido, img){
+        document.getElementById("titulo").value = titulo;
+        document.getElementById("subtitulo").value = subtitulo;
+        document.getElementById("fuente").value = fuente;
+        document.getElementById("urlfuente").value = urlfuente;
+        document.getElementById("contenido").value = contenido;
+        document.getElementById("img").value = img;
+    }
+
+    function modificarNoticiaUrl(){
+
+    }
+</script>
 @endauth
 
 @endsection

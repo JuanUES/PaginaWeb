@@ -8,53 +8,11 @@
         <meta content="Facultad Multidisciplinaria Paracentral" name="description" />
         <meta content="Coderthemes" name="UTI" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        
         @yield('appcss')
-<<<<<<< HEAD
-        <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
-=======
         @yield('csstoast')
-        <style>
-            .color-top{
-                background:#DC3545;
-            }
-            .bottom-aligned {
-                display: flex;
-                align-items: flex-end;
-            }
-            .color-boton{
-                background: #bb3b44;
-            }
-            .min-width-full-container{
-                min-width: 100vh;
-            }
 
-            @media screen and (max-width: 992px) {
-                .ocultar-div{
-                     display:none;
-                }
-            }
-
-            /*@media screen and (min-width: 992px) {
-                .ocultar-div{
-                     display:none;
-                }
-            }*/
-
-            .full-height{
-                height:100%;
-            }
-
-            .full-width{
-                width: 100%;
-            }
-            .center-h {
-                justify-content: center;
-            }
-            .center-v {
-                align-items: center;
-            }
-        </style>
->>>>>>> 6c4f23b9003421029db58138d4fffd05149db3aa
+        <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
     </head>
 
     <body class="unsticky-header">

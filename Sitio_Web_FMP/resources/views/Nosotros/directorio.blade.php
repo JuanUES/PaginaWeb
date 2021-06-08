@@ -107,10 +107,10 @@
                                     <th class="align-middle ">
                                         <div class="row">
                                             <div class="col-xl-12"> 
-                                                <form id="{!! base64_encode($item->id) !!}" action="" 
+                                                <form name="{!!  str_replace ( '=', '', base64_encode(md5($item->id))) !!}" action="{{ asset('/Directorio/borrar') }}/{!! base64_encode($item->id) !!}" 
                                                     method="POST">     
                                                     @csrf                                              
-                                                    <a type="buttom"  class="btn btn-danger text-white btn-block" onclick="eliminar({!! '#'.base64_encode($item->id) !!});"><i class="dripicons-trash"></i>  Eliminar</a>   
+                                                    <a type="buttom"  class="btn btn-danger text-white btn-block" onclick="eliminar('{!! str_replace ( '=', '', base64_encode(md5($item->id))) !!}');"><i class="dripicons-trash"></i>  Eliminar</a>   
                                                 </form>
                                             </div>
                                         </div>                                         
@@ -138,21 +138,16 @@
 <script type="text/javascript">
 
     function eliminar(formulario){
-      /*  $.toast({ 
+        console.log(formulario);
+        $.toast({ 
             heading: "¡¡ Aviso !!",
-            text: "<p class='my-1'>Se eliminara el registro de la base de datos de forma permanente.</p>¿Desea continuar con esta acción?<a type='buttom' class='btn btn-outline-light waves-effect btn-block my-1' onclick='si("+formulario+");'>Si, eliminar</a>",
+            text: "<p class='my-1'>Se eliminara el registro de la base de datos de forma permanente.</p>¿Desea continuar con esta acción?<a class='btn btn-outline-light waves-effect btn-block my-1' href='javascript:document."+formulario+".submit()'>Si, eliminar el registro.</a>",
             icon: "warning",
             position: "top-right",
             showHideTransition : 'slide',
             bgColor : '#FBCC5C',   
             hideAfter : false
         });
-    }
-    
-    function si(formulario){
-        $form = "#"+formulario;
-        alert($form);
-        //$("#editarForm").submit();
     }
 </script>  
 @endsection

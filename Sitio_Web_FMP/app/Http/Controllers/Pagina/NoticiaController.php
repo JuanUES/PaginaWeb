@@ -68,8 +68,19 @@ class NoticiaController extends Controller
         $noticia -> fuente    =  $request->fuente;        
         $noticia -> urlfuente =  $request->urlfuente;
         $noticia -> user      =  auth()->id();
-        $noticia -> save();
-        return redirect()->route('index')->with('mensaje','sirve el mensaje se envia');
+        $exito = $noticia -> save();
+        if(!$exito){
+            return redirect()->route('index')
+            ->with('titulo','Error')
+            ->with('No se guardo el registro en la base de datos.')
+            ->with('error');
+
+        }else{
+            return redirect()->route('index')
+            ->with('titulo','Exito')
+            ->with('El se guardo el registro en la base de datos.')
+            ->with('success');
+        }
     }
 
     public function storeurl(Requtiest $request)
@@ -90,7 +101,18 @@ class NoticiaController extends Controller
         $noticia -> user      =  auth()->id();
         $noticia -> save();
 
-        return redirect('/');
+        if(!$exito){
+            return redirect()->route('index')
+            ->with('titulo','Error')
+            ->with('No se guardo el registro en la base de datos.')
+            ->with('error');
+
+        }else{
+            return redirect()->route('index')
+            ->with('titulo','Exito')
+            ->with('El se guardo el registro en la base de datos.')
+            ->with('success');
+        }
     }
 
     /**
