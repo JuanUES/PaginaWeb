@@ -1,5 +1,5 @@
-<x-guest-layout class="color-top">
-    <x-auth-card class="color-top">
+<x-guest-layout>
+    <x-auth-card>
         <x-slot name="logo">
             <a href="/">
                 <img src="images/ues-logo.svg">
