@@ -26,7 +26,7 @@
                                 Licda. María Isaura Esperanza Guardado
                             </p>  
                             
-                            <p class="mb-1 font-weight-bold font-15 text-center">Gestor De Compra</p>
+                            <p class="mb-1 font-weight-bold font-15 text-center">Gestor de Compra</p>
                             <p class="text-muted font-10 text-justify text-center">
                                 Msc. Delmy Elizabeth Jovel de Jovel
                             </p>  

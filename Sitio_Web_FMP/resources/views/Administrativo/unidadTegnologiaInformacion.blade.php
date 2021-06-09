@@ -16,7 +16,7 @@
             <div class="col-xl-12">   
                 <div class="card-box">
                     <h3 class="text-center">
-                        Unidad De Tecnología De La Información
+                        Unidad de Tecnología de la Información
                         </h3>
                     <div class="row">
                         <div class="col-xl-12"> 
