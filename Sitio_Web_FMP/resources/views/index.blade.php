@@ -60,7 +60,7 @@
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h4 class="modal-title" id="myCenterModalLabel">Zona para subir imagenes</h4>
+                                                <h4 class="modal-title" id="myCenterModalLabel">Zona para subir imágenes</h4>
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                             </div>
                                             <div class="modal-body">
@@ -228,7 +228,7 @@
                                                         <div class="col-xl-12">
                                                             <div class="form-group">
                                                                 <label>Contenido</label>                                                                
-                                                                <!-- <textarea required class="form-control" name="contenido" id="contenido"></textarea>-->                                                                
+                                                               <textarea required class="form-control" name="contenido" id="contenido"></textarea>                                                           
                                                             </div>
                                                         </div>
                                                     </div>         
@@ -306,9 +306,68 @@
                                 </div><!-- /.modal -->                          
                             @endauth     
                             </div>
+                            <div class="table-responsive">
+                                <table class="table table-centered table-hover mb-0" id="datatable">
+                                    <tbody>
+                                        
+                                        <tr>
+                                            <td>
+                                                <img src="assets/images/users/avatar-5.jpg" alt="user-pic" class="rounded-circle avatar-sm bx-shadow-lg" />
+                                                <span class="ml-2">Karen I. McCluskey</span>
+                                            </td>
+                                            <td>
+                                                <img src="assets/images/cards/discover.png" alt="user-card" height="24" />
+                                                <span class="ml-2">**** 0021</span>
+                                            </td>
+                                            <td>31.03.2018</td>
+                                            <td>$24.95</td>
+                                            <td><span class="badge badge-pill badge-success">Paid</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img src="assets/images/users/avatar-6.jpg" alt="user-pic" class="rounded-circle avatar-sm bx-shadow-lg" />
+                                                <span class="ml-2">Kenneth J. Melendez</span>
+                                            </td>
+                                            <td>
+                                                <img src="assets/images/cards/visa.png" alt="user-card" height="24" />
+                                                <span class="ml-2">**** 2840</span>
+                                            </td>
+                                            <td>27.03.2018</td>
+                                            <td>$345.98</td>
+                                            <td><span class="badge badge-pill badge-success">Paid</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img src="assets/images/users/avatar-9.jpg" alt="user-pic" class="rounded-circle avatar-sm bx-shadow-lg" />
+                                                <span class="ml-2">Beatrice L. Iacovelli</span>
+                                            </td>
+                                            <td>
+                                                <img src="assets/images/cards/discover.png" alt="user-card" height="24" />
+                                                <span class="ml-2">**** 9058</span>
+                                            </td>
+                                            <td>29.03.2018</td>
+                                            <td>$6,542.32</td>
+                                            <td><span class="badge badge-pill badge-success">Paid</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img src="assets/images/users/avatar-10.jpg" alt="user-pic" class="rounded-circle avatar-sm bx-shadow-lg" />
+                                                <span class="ml-2">Sylvia H. Parker</span>
+                                            </td>
+                                            <td>
+                                                <img src="assets/images/cards/discover.png" alt="user-card" height="24" />
+                                                <span class="ml-2">**** 2577</span>
+                                            </td>
+                                            <td>31.03.2018</td>
+                                            <td>$24.95</td>
+                                            <td><span class="badge badge-pill badge-danger">Failed</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                             @if (count($noticias))
                                 @foreach ($noticias as $n)
-                                table
+                                
                                     <div class="border my-1 py-1 rounded p-1 my-1 media">
                                         <img class="mr-3 rounded bx-shadow-lg" src="images/noticias/{{$n->imagen}}"
                                         alt="Generic placeholder image" height="80" width="110">

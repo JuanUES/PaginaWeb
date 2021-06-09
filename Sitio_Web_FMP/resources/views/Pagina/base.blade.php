@@ -80,10 +80,10 @@
 
                         <li class="has-submenu p-1">
                             <a href="#">
-                            <i class="mdi mdi-book-open-page-variant mdi-24px"></i>Academicos <div class="arrow-down"></div></a>
+                            <i class="mdi mdi-book-open-page-variant mdi-24px"></i>Académico<div class="arrow-down"></div></a>
                             <ul class="submenu">    
                                 <li class="has-submenu">
-                                    <a href="#">Administracion Académica</a>                                    
+                                    <a href="#">Administración Académica</a>                                    
                                 </li>                            
                                 <li class="has-submenu">
                                     <a href="#">Departamentos <div class="arrow-down"></div></a>
@@ -118,7 +118,7 @@
                                     <a href="#">Proyección Social</a>
                                 </li>   
                                 <li class="has-submenu">
-                                    <a href="#">Procesos de Graduacion</a>
+                                    <a href="#">Procesos de Graduación</a>
                                 </li> 
                                 <li class="has-submenu">
                                     <a href="http://biblio.fmp.ues.edu.sv/">Biblioteca</a>
@@ -135,7 +135,7 @@
                                 </li>
                                 
                                 <li>
-                                    <a href="{{ route('uti') }}">Unidad de Tegnologia<br>de la Informacion</a>
+                                    <a href="{{ route('uti') }}">Unidad de Tecnología<br>de la Información</a>
                                 </li>
 
                                 <li>
