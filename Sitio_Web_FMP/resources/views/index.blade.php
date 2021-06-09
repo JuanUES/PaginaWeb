@@ -18,6 +18,8 @@
 
 <!--Libreria data table para paginacion de noticias-->
 <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
+
 
 <style>
     carousel-inner > .item > img {
@@ -306,65 +308,6 @@
                                 </div><!-- /.modal -->                          
                             @endauth     
                             </div>
-                            <div class="table-responsive">
-                                <table class="table table-centered table-hover mb-0" id="datatable">
-                                    <tbody>
-                                        
-                                        <tr>
-                                            <td>
-                                                <img src="assets/images/users/avatar-5.jpg" alt="user-pic" class="rounded-circle avatar-sm bx-shadow-lg" />
-                                                <span class="ml-2">Karen I. McCluskey</span>
-                                            </td>
-                                            <td>
-                                                <img src="assets/images/cards/discover.png" alt="user-card" height="24" />
-                                                <span class="ml-2">**** 0021</span>
-                                            </td>
-                                            <td>31.03.2018</td>
-                                            <td>$24.95</td>
-                                            <td><span class="badge badge-pill badge-success">Paid</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <img src="assets/images/users/avatar-6.jpg" alt="user-pic" class="rounded-circle avatar-sm bx-shadow-lg" />
-                                                <span class="ml-2">Kenneth J. Melendez</span>
-                                            </td>
-                                            <td>
-                                                <img src="assets/images/cards/visa.png" alt="user-card" height="24" />
-                                                <span class="ml-2">**** 2840</span>
-                                            </td>
-                                            <td>27.03.2018</td>
-                                            <td>$345.98</td>
-                                            <td><span class="badge badge-pill badge-success">Paid</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <img src="assets/images/users/avatar-9.jpg" alt="user-pic" class="rounded-circle avatar-sm bx-shadow-lg" />
-                                                <span class="ml-2">Beatrice L. Iacovelli</span>
-                                            </td>
-                                            <td>
-                                                <img src="assets/images/cards/discover.png" alt="user-card" height="24" />
-                                                <span class="ml-2">**** 9058</span>
-                                            </td>
-                                            <td>29.03.2018</td>
-                                            <td>$6,542.32</td>
-                                            <td><span class="badge badge-pill badge-success">Paid</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <img src="assets/images/users/avatar-10.jpg" alt="user-pic" class="rounded-circle avatar-sm bx-shadow-lg" />
-                                                <span class="ml-2">Sylvia H. Parker</span>
-                                            </td>
-                                            <td>
-                                                <img src="assets/images/cards/discover.png" alt="user-card" height="24" />
-                                                <span class="ml-2">**** 2577</span>
-                                            </td>
-                                            <td>31.03.2018</td>
-                                            <td>$24.95</td>
-                                            <td><span class="badge badge-pill badge-danger">Failed</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
                             @if (count($noticias))
                                 @foreach ($noticias as $n)
                                 
@@ -487,6 +430,95 @@
                     </div>                            
                 </div> <!-- end card-box -->
             </div><!-- end col -->
+
+            <table id="dtNoticias" class="table table-borderless table-striped table-sm table-responsive-md" cellspacing="0" width="100%">
+                <thead id="dtNoticiasthead">
+                  <tr>
+                    <th>
+              
+                    </th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                      <td>Tiger Nixon</td>                      
+                    </tr>
+                    <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+
+                      <tr>
+                        <td>Tiger Nixon</td>                      
+                      </tr>
+                      
+                </tbody>
+              </table>
         </div>
         <!-- end row -->
     </div> <!-- end container -->
@@ -504,8 +536,11 @@
 
 <!-- App js -->
 <script src="{{ asset('js/app.min.js') }}"></script>
+
 <!--Librerias js para datatable-->
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+
 @auth    
 <!-- Plugins js -->
 <script src=" {{ asset('js/dropzone.min.js') }} "></script>
@@ -514,6 +549,14 @@
 <script src=" {{ asset('js/summernote-bs4.min.js') }} "></script>
 <script src=" {{ asset('js/form-summernote.init.js') }} "></script>
 @endauth
+
+<script>
+    $(document).ready(function () {
+  $('#dtNoticias').DataTable({
+    "searching": false
+  });  
+});
+</script>
 
 @auth
 <script>
