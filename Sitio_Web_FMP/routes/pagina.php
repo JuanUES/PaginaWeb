@@ -88,3 +88,7 @@ Route::get('Investigacion', function () {
 Route::get('/AdministracionFinanciera', function () {
     return view('Administrativo.administracionFinanciera');
 })->name('administracionFinanciera');
+
+Route::get('/UnidadDeTegnologiaDeLaInformacion', function () {
+    return view('Administrativo.unidadTegnologiaInformacion');
+})->name('uti');

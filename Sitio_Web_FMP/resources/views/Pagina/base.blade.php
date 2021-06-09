@@ -135,7 +135,7 @@
                                 </li>
                                 
                                 <li>
-                                    <a href="#">Unidad de Tegnologia<br>de la Informacion</a>
+                                    <a href="{{ route('uti') }}">Unidad de Tegnologia<br>de la Informacion</a>
                                 </li>
 
                                 <li>
@@ -215,7 +215,7 @@
         <!-- ============================================================== -->      
 
         <!-- Footer Start -->
-        <footer class="footer py-1 color-top text-white">
+        <footer class="footer py-1 text-white" id="footerbase">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12 text-center">

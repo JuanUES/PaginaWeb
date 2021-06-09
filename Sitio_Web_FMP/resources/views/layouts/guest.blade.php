@@ -15,14 +15,9 @@
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
-        <style>
-            .color-top{
-                background:#DC3545;
-            }
-        </style>
     </head>
     <body>
-        <div class="font-sans btn-danger color-top antialiased">
+        <div class="font-sans text-gray-900 antialiased">
             {{ $slot }}
         </div>
     </body>

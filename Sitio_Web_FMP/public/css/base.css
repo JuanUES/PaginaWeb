@@ -1,4 +1,6 @@
-
+#footerbase{
+    background: #AA0000;
+}
 
 .bottom-aligned {
     display: flex;

@@ -17,15 +17,6 @@ use App\Http\Controllers\indexController;
 
 Route::get('/', [indexController::class, 'index'])->name('index');
 
-/** RUTAS DE TRANSPARENCIA **/
-
-Route::get('transparencia', function () {
-    return view('index-transparencia');
-});
-
-Route::get('admin', function () {
-    return view('Admin.home');
-});
-
+require __DIR__.'/transparencia.php';
 require __DIR__.'/auth.php';
 require __DIR__.'/pagina.php';

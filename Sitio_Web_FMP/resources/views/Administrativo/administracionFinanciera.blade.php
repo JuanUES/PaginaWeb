@@ -53,36 +53,29 @@
                             
                             
                         </div><!-- end col -->      
-                        <div class="col-xl-12 border-top" >
+                        <div class="col-xl-12 border-top my-2" >
                             <h4 class="text-center">Horarios de colecturia</h4>
+                            <p>Fecha: 07/06/2021 - 11/06/2021</p>
                             <div class="table-responsive">
                                 <table class="table table-bordered mb-0">
                                     <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Username</th>
+                                        <th>Lunes</th>
+                                        <th>Martes</th>
+                                        <th>Miercoles</th>
+                                        <th>Jueves</th>
+                                        <th>Viernes</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>Otto</td>
-                                        <td>@mdo</td>
+                                        <td>8:00 am<br> 4:00 pm</td>
+                                        <td>8:00 am<br> 4:00 pm</td>
+                                        <td>8:00 am<br> 4:00 pm</td>
+                                        <td>8:00 am<br> 4:00 pm</td>
+                                        <td>Cerrado</td>
                                     </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jacob</td>
-                                        <td>Thornton</td>
-                                        <td>@fat</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">3</th>
-                                        <td colspan="2">Larry the Bird</td>
-                                        <td>@twitter</td>
-                                    </tr>
+                                   
                                     </tbody>
                                 </table>
                             </div>
