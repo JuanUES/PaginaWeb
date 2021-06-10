@@ -107,6 +107,7 @@
                                     <th class="align-middle ">
                                         <div class="row">
                                             <div class="col-xl-12"> 
+                                                <button class="btn btn-info"> <i class="fa fa-edit"></i> Editar</button>
                                                 <form name="{!!  str_replace ( '=', '', base64_encode(md5($item->id))) !!}" action="{{ asset('/Directorio/borrar') }}/{!! base64_encode($item->id) !!}" 
                                                     method="POST">     
                                                     @csrf                                              
