@@ -45,7 +45,7 @@
         <script>
             $.toast({ 
                 heading: "¡¡ Error !!",
-                text: {!! $error !!}."",
+                text: '{!! $error !!}',
                 hideAfter: 3000,  
                 icon: "error",
                 loaderBg: "#FFFFFF",

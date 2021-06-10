@@ -56,8 +56,7 @@
                                         <div class="mdi mdi-upload mdi-16px text-center"> Agregar Imagen</div>
                                     </a>
                                 </div>                            
-                                @endauth
-        
+                                @endauth        
                                 <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
@@ -142,7 +141,9 @@
                     <div class="col-xl-12" id="noticias">
                         <div class="card-box"> 
                             <div class="row">
-                            <div class="col-xl order-first"><h1 class="header-title mb-3">Noticias</h1></div>                     
+                            <div class="col-xl order-first">
+                                <h1 class="header-title mb-3">Noticias</h1>
+                            </div>                     
                             @auth
                                 <div class="col-lg-3 order-last">
                                     <!-- Button trigger modal noticia-->
@@ -222,6 +223,7 @@
                                                         <div class="col-xl-12">
                                                             <div class="form-group">
                                                                 <label>Imagen o Foto </label>
+                                                                
                                                                 <input type="file"  accept="image/*" class="form-control" name="img" id="img"/>
                                                             </div>
                                                         </div>
@@ -230,7 +232,7 @@
                                                         <div class="col-xl-12">
                                                             <div class="form-group">
                                                                 <label>Contenido</label>                                                                
-                                                               <textarea required class="form-control" name="contenido" id="contenido"></textarea>                                                           
+                                                               <textarea required class="form-control" name="contenido" id="contenido" rows="7"></textarea>                                                           
                                                             </div>
                                                         </div>
                                                     </div>         
@@ -259,7 +261,7 @@
                                                                 <label>Titulo</label>
                                                                 <input type="text" class="form-control" required
                                                                         placeholder="Titulo Noticia (Obligatorio)"
-                                                                        name="titulo" id="titulo"/>
+                                                                        name="titulo" />
                                                             </div> 
                                                         </div>
                                                         <div class="col-xl-6">
@@ -267,7 +269,7 @@
                                                                 <label>Sub-Titulo</label>
                                                                 <input type="text" class="form-control" required
                                                                         placeholder="Sub-Titulo Noticia (Obligatorio)"
-                                                                        name="subtitulo" id="subtitulo"/>
+                                                                        name="subtitulo" />
                                                             </div> 
                                                         </div>
                                                     </div>
@@ -275,7 +277,7 @@
                                                         <div class="col-xl-6">
                                                             <div class="form-group">
                                                                 <label>Imagen o Foto </label>
-                                                                <input type="file"  accept="image/*" class="form-control" name="img" id="img"/>
+                                                                <input type="file"  accept="image/*" class="form-control" name="img" />
                                                             </div>
                                                         </div>
                                                         <div class="col-xl-6">
@@ -284,8 +286,13 @@
                                                                 <div>
                                                                     <input parsley-type="url" type="url" class="form-control"
                                                                              placeholder="URL Fuente (Opcional)"
-                                                                             name="urlfuente" id="urlfuente"/>
+                                                                             name="urlfuente" />
                                                                 </div>
+                                                                <div class="custom-file">
+                                                                    <input type="file" class="custom-file-input" id="customFile" lang="es">
+                                                                    <label class="custom-file-label" for="customFile">Seleccionar imagen</label>
+                                                                </div>
+                                                                
                                                             </div>
                                                         </div>
                                                     </div>             
@@ -308,46 +315,61 @@
                                 </div><!-- /.modal -->                          
                             @endauth     
                             </div>
-                            @if (count($noticias))
-                                @foreach ($noticias as $n)
+                            @if (count($noticias))                                
+                                <table id="dtNoticias" class="table table-borderless  btn-table table-sm table-responsive-md" cellspacing="0" width="100%">
+                                    <thead id="dtNoticiasthead">
+                                      <tr>
+                                        <th>             
+                                        </th>                   
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($noticias as $n)
+                                        <tr>
+                                            <td>
+                                                <div class="border p-1 rounded media">
+                                                    <img class="mr-3 rounded bx-shadow-lg" src="{{ asset('/') }}images/noticias/{{$n->imagen}}"
+                                                    alt="Generic placeholder image" height="80" width="110">
+                                                    <div class="media-body">
+                                                        <h5 class="mt-0">{{$n->titulo}}</h5>
+                                                        {!!$n->subtitulo!!}
+                                                    </div>
+                                                    
+                                                    @if ($n->tipo)
+                                                        <a href="{{ asset('/noticias') }}/{!!base64_encode($n->id)!!}/{!!base64_encode($n->titulo)!!}"
+                                                        class="btn btn-light mt-3 mx-1"> Leer más</a>
+                                                        @auth
+                                                        <button type="button"  class="btn mx-1 btn-success mt-3" 
+                                                        onclick="modificarNoticia('{!!$n->titulo !!}',
+                                                         '{!!$n->subtitulo!!}', 
+                                                         '{!!$n->fuente!!}', 
+                                                         '{!!$n->urlfuente!!}',
+                                                         '{!!$n->contenido!!}',
+                                                         '{{ asset('/') }}images/noticias/{{$n->imagen}}');">Modificar</button>
+                                                        @endauth
+                                                    @else
+                                                        <a href="{!!$n->urlfuente!!}"
+                                                            class="btn btn-light mt-3 align-items-center">Leer más </a>
+                                                        @auth
+                                                        <span data-toggle="modal" data-target="#myModalNoticia">
+                                                            <a href="javascrip" class="btn mx-1 btn-success mt-3" >Modificar</a>
+                                                        </span>
+                                                        @endauth
+                                                    @endif
+                    
+                                                    @auth 
+                                                        <form action="{{ route('NoticiaFacultad.borrar',['id'=>base64_encode($n->id)]) }}" method="POST">
+                                                            @csrf
+                                                            <button type="submit" class="btn btn-danger mt-3">Eliminar</button>
+                                                        </form>                                  
+                                                    @endauth                                
+                                                </div>
+                                            </td>                      
+                                        </tr>   
+                                        @endforeach                
+                                    </tbody>
+                                </table>                              
                                 
-                                    <div class="border my-1 py-1 rounded p-1 my-1 media">
-                                        <img class="mr-3 rounded bx-shadow-lg" src="images/noticias/{{$n->imagen}}"
-                                        alt="Generic placeholder image" height="80" width="110">
-                                        <div class="media-body">
-                                            <h5 class="mt-0">{{$n->titulo}}</h5>
-                                            {!!$n->subtitulo!!}
-                                        <!-- {!! $n->contenido !!}-->
-                                        </div>
-                                        
-                                        @if ($n->tipo)
-                                            <a href="{{ asset('/noticias') }}/{!!base64_encode($n->id)!!}/{!!base64_encode($n->titulo)!!}"
-                                            class="btn btn-light mt-3 mx-1"> Leer más</a>
-                                            @auth
-                                            <button type="button"  class="btn mx-1 btn-success mt-3" 
-                                            onclick="modificarNoticia('{!!$n->titulo !!}',
-                                             '{!!$n->subtitulo!!}', 
-                                             '{!!$n->fuente!!}', 
-                                             '{!!$n->urlfuente!!}',
-                                             '{!!$n->contenido!!}',
-                                             '{!!$n->imagen!!}')">Modificar</button>
-                                            @endauth
-                                        @else
-                                            <a href="{!!$n->urlfuente!!}"
-                                                class="btn btn-light mt-3 align-items-center">Leer más </a>
-                                            @auth
-                                            <a type="button" href="#" class="btn mx-1 btn-success mt-3">Modificar</a>
-                                            @endauth
-                                        @endif
-        
-                                        @auth 
-                                            <form action="{{ route('NoticiaFacultad.borrar',['id'=>base64_encode($n->id)]) }}" method="POST">
-                                                @csrf
-                                                <button type="submit" class="btn btn-danger mt-3">Eliminar</button>
-                                            </form>                                  
-                                        @endauth                                
-                                    </div>  
-                                @endforeach
                             @else
                                 <p class="p-2 border">No hay noticias para mostrar.</p>
                             @endif                    
@@ -360,8 +382,9 @@
             <div class="col-xl-4">
                 <div class="row">
                     <div class="col-xl-12">
-                        <div class="card-box ">
-                                <div class="fb-page text-center"
+                        <div class="card-box align-items-center">
+                                <h1 class="header-title mb-3">Siguenos en facebook</h1>
+                                <div class="fb-page"
                                 data-href="https://www.facebook.com/Facultad-Multidisciplinaria-Paracentral-Decanato-104296228519520" 
                                 data-tabs="timeline" data-small-header="true" 
                                 data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true" >
@@ -431,94 +454,7 @@
                 </div> <!-- end card-box -->
             </div><!-- end col -->
 
-            <table id="dtNoticias" class="table table-borderless table-striped table-sm table-responsive-md" cellspacing="0" width="100%">
-                <thead id="dtNoticiasthead">
-                  <tr>
-                    <th>
-              
-                    </th>
-                    
-                  </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                      <td>Tiger Nixon</td>                      
-                    </tr>
-                    <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-
-                      <tr>
-                        <td>Tiger Nixon</td>                      
-                      </tr>
-                      
-                </tbody>
-              </table>
+            
         </div>
         <!-- end row -->
     </div> <!-- end container -->
@@ -550,65 +486,34 @@
 <script src=" {{ asset('js/form-summernote.init.js') }} "></script>
 @endauth
 
-<script>
-    $(document).ready(function () {
-  $('#dtNoticias').DataTable({
-    "searching": false
-  });  
-});
-</script>
+<script src="{{ asset('js/index/index.datatable.js') }}"></script>
 
 @auth
 <script>
     
-    Dropzone.options.myAwesomeDropzone = {
-        maxFiles: 15,
-        accept: function(file, done) {
-            console.log("uploaded");
-            done();
-        },
-        init: function() {
-            this.on("maxfilesexceeded", function(file){
-                ("No more files please!");                
-            });
-
-            this.on("complete", function (file) {
-                if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
-                    location.reload();
-                }
-            });
-            
-        }
-    };
-
-
     /*$(document).ready(function () {    
         $("#noticia").onclick(function () {
             var value = document.getElementById("noticia").value;                      
         });
     });*/
     $(document).ready(function () {    
-            $("#noticiaEditar").click(function () {          
-                document.getElementById('myform').reset();
-            });
-            $("#noticiaUrlEditar").click(function () {          
-                document.getElementById('myform').reset();
-            });
+        $("#noticiaEditar").click(function () {          
+            document.getElementById('myform').reset();
         });
-   
-   /*Dropzone.options.myAwesomeDropzone = {
-        maxFiles: 1,
-        accept: function(file, done) {
-            console.log("uploaded");
-            done();
-        },
-        init: function() {
-            this.on("maxfilesexceeded", function(file){
-                alert("No more files please!");
-            });
-        }
-    };*/
+        
+        $("#noticiaUrlEditar").click(function () {          
+            document.getElementById('myform').reset();
+        });
+    });
 </script> 
+
+<script>
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function() {
+      var fileName = $(this).val().split("\\").pop();
+      $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+    </script>
 
 <script>
     function modificarNoticia(titulo, subtitulo, fuente, urlfuente, contenido, img){
@@ -616,8 +521,8 @@
         document.getElementById("subtitulo").value = subtitulo;
         document.getElementById("fuente").value = fuente;
         document.getElementById("urlfuente").value = urlfuente;
-        document.getElementById("contenido").innerHTML = "<p>"+contenido+"</p>";
-        //document.getElementById("img").value = img;
+        document.getElementById("contenido").value = contenido.replace(new RegExp("<br/>","g") ,"\n");
+        document.getElementById("img").classList.add(img);
     }
 
     function modificarNoticiaUrl(){
