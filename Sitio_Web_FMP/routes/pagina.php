@@ -92,3 +92,7 @@ Route::get('/AdministracionFinanciera', function () {
 Route::get('/UnidadDeTegnologiaDeLaInformacion', function () {
     return view('Administrativo.unidadTegnologiaInformacion');
 })->name('uti');
+
+Route::get('Academica', function () {
+    return view('Academicos.administracionAcademica');
+});
