@@ -5,6 +5,7 @@
 <!-- App favicon -->
 <link rel="shortcut icon" href="images/favicon.ico">
 @auth
+<!-- Este css se carga nada mas cuando esta logeado un usuario-->
 <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
 @endauth
 
@@ -20,15 +21,6 @@
 <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('css/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 
-
-<style>
-    carousel-inner > .item > img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        min-width: 100%;
-    }
-</style>
 @endsection
 
 @section('container')
@@ -48,7 +40,7 @@
                     <div class="col-xl-12">
                         <div class="card-box">
                             <div class="row py-1">
-                                <div class="col order-first "><h1 class="header-title mb-3">Facultad Multidisciplinaria Paracentral</h1></div>
+                                <div class="col order-first "><h3>Facultad Multidisciplinaria Paracentral</h3></div>
                                 @auth
                                 <div class="col-lg-3 order-last">
                                     <a href="" class="btn btn-block btn-info tex-left" 
@@ -70,7 +62,7 @@
                                                 class="dropzone" id="my-awesome-dropzone">
                                                     @csrf                                 
                                                     <div class="dz-message needsclick">
-                                                        <i class="h1 text-muted dripicons-cloud-upload"></i>
+                                                        <i class="h3 text-muted dripicons-cloud-upload"></i>
                                                         <h3>Suelta los archivos aquí o haz clic para subir.</h3>
                                                     </div>
                                                     <div class="dropzone-previews"></div>
@@ -142,7 +134,7 @@
                         <div class="card-box"> 
                             <div class="row">
                             <div class="col-xl order-first">
-                                <h1 class="header-title mb-3">Noticias</h1>
+                                <h3>Noticias</h3>
                             </div>                     
                             @auth
                                 <div class="col-lg-3 order-last">
@@ -383,7 +375,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="card-box align-items-center">
-                                <h1 class="header-title mb-3">Siguenos en facebook</h1>
+                                <h3>Siguenos en facebook</h3>
                                 <div class="fb-page"
                                 data-href="https://www.facebook.com/Facultad-Multidisciplinaria-Paracentral-Decanato-104296228519520" 
                                 data-tabs="timeline" data-small-header="true" 
@@ -397,7 +389,7 @@
                     </div><!-- end col-->
                     <div class="col-xl-12" >                        
                         <div class="card-box"> 
-                            <h1 class="header-title mb-3">Canales Digitales</h1>                    
+                            <h3>Canales Digitales</h3>                    
                             <a href="https://campus.ues.edu.sv/" class="btn btn-danger btn-block mt-3 text-left">Campus Virtual</a>
                             <a href="https://eel.ues.edu.sv/" class="btn btn-danger btn-block mt-3 text-left">Expediente en linea</a>                      
                             <a href="https://correo.ues.edu.sv/" class="btn btn-danger  btn-block mt-3 text-left">Correo institucional</a>                           
@@ -412,7 +404,7 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="card-box"> 
-                    <h1 class="header-title mb-3 ">Sitios de interes</h1>                         
+                    <h3>Sitios de interes</h3>                         
                     
                     <div class="row">
                         <div class="col order-first">
@@ -516,15 +508,15 @@
     </script>
 
 <script>
+    /*Carga del model con los datos de la noticia actual */
     function modificarNoticia(titulo, subtitulo, fuente, urlfuente, contenido, img){
         document.getElementById("titulo").value = titulo;
         document.getElementById("subtitulo").value = subtitulo;
         document.getElementById("fuente").value = fuente;
         document.getElementById("urlfuente").value = urlfuente;
         document.getElementById("contenido").value = contenido.replace(new RegExp("<br/>","g") ,"\n");
-        document.getElementById("img").classList.add(img);
     }
-
+    /*Carga el model con las noticias de url con noticias externas*/
     function modificarNoticiaUrl(){
 
     }

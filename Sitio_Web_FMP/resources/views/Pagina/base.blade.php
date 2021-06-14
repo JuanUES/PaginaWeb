@@ -104,10 +104,13 @@
                                         </li>     
 
                                         <li>
-                                            <a href="#">Postgrado</a>
+                                            <a href="#">Plan Complementario</a>
                                         </li>                                       
                                     </ul>
-                                </li>     
+                                </li> 
+                                <li>
+                                    <a href="#">Postgrado</a>
+                                </li>      
                                 <li>
                                     <a href="https://distancia.ues.edu.sv/">Universidad en Linea</a>
                                 </li>                             
@@ -115,7 +118,7 @@
                                     <a href="{{ route('investigacion')}}">Investigación</a>
                                 </li>
                                 <li class="has-submenu">
-                                    <a href="#">Proyección Social</a>
+                                    <a href="{{ route('proyeccionSocial') }}">Proyección Social</a>
                                 </li>   
                                 <li class="has-submenu">
                                     <a href="#">Procesos de Graduación</a>

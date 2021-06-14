@@ -18,7 +18,7 @@
                 <div class="card-box">
                     <div class="row">
                         <div class="col order-first">
-                            <h1 class="header-title py-2">Directorio</h1>                   
+                            <h3>Directorio</h3>                   
                         </div>
                         @auth                           
                         <div class="col-lg-2 order-last container-fluid">

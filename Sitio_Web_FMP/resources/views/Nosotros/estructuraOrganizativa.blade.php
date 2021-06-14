@@ -53,7 +53,7 @@ Dropzone.options.myAwesomeDropzone = {
                 <div class="card-box">
                     <div class="row">
                         <div class="col order-first">
-                            <h4 class="my-2">Organigrama</h4>
+                            <h3 class="my-2">Organigrama</h3>
                         </div>
                         @auth                            
                         <div class="col-lg-2 order-last">
@@ -67,7 +67,7 @@ Dropzone.options.myAwesomeDropzone = {
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h4 class="modal-title" id="myCenterModalLabel">Zona para subir</h4>
+                                                <h3 class="modal-title" id="myCenterModalLabel">Zona para subir</h3>
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                             </div>
                                             <div class="modal-body">
@@ -103,8 +103,7 @@ Dropzone.options.myAwesomeDropzone = {
                 <div class="card-box">
                     <div class="row">
                         <div class="col order-first">
-                            <h4 class="my-2">Miembros de la junta directiva de la facultad
-                                multidisciplinaria paracentral</h4>
+                            <h3 class="my-2">Miembros de la Junta Directiva de la Facultad Multidisciplinaria Paracentral</h3>
                         </div>
                         @auth                            
                         <div class="col-lg-3 order-last">
@@ -113,7 +112,7 @@ Dropzone.options.myAwesomeDropzone = {
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title" id="myCenterModalLabel">Registro</h4>
+                                            <h3 class="modal-title" id="myCenterModalLabel">Registro</h3>
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                         </div>
                                         <div class="modal-body">                                        
@@ -245,7 +244,7 @@ Dropzone.options.myAwesomeDropzone = {
                 <div class="card-box">
                     <div class="row">
                         <div class="col order-first">
-                            <h4 class="my-2">Jefaturas Académicas y Administrativas de la facultad multidisciplinaria paracentral</h4>
+                            <h3 class="my-2">Jefaturas Académicas y Administrativas de la Facultad Multidisciplinaria Paracentral</h3>
                         </div>
                         @auth                            
                         <div class="col-lg-2 order-last">
@@ -254,7 +253,7 @@ Dropzone.options.myAwesomeDropzone = {
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title" id="myCenterModalLabel">Registro</h4>
+                                            <h3 class="modal-title" id="myCenterModalLabel">Registro</h3>
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                         </div>
                                         <div class="modal-body">                                        

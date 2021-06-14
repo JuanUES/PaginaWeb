@@ -37,31 +37,31 @@
                                 <div class="col-xl-8 order-first ">
 
                                     <p class="mb-1 font-weight-bold ">Código:</p>
-                                    <p class="text-muted font-13 text-justify">L70802 </p>
+                                    <p class="text-muted font-15 text-justify">L70802 </p>
             
                                     <p class="mb-1 font-weight-bold py-2">Descripción:</p>
-                                    <p class="text-muted font-13 text-justify">
+                                    <p class="text-muted font-15 text-justify">
                                         Los estudios de Contaduría Pública persiguen formar profesionales con amplio dominio de la técnica, sistemas contables y conocimientos legales que se utilizan modernamente, para examinar y dictaminar sobre los resultados reales de las operaciones de las empresas, y además dotarlos de conocimientos suficientes, para analizar y presentar las bases que permitan orientar eficientemente las políticas financieras de la Empresa y así encaminar su ejercicio profesional al mejor desarrollo de nuestro pueblo, procurando tener un conocimiento científico y objetivo de la realidad.
                                     </p> 
-                                    <p class="text-muted font-13 text-justify">PRE-ESPECIALIDADES: La Escuela de Contaduría no tiene especializaciones; pero en el campo profesional se puede especializar en las siguientes áreas:</p>
+                                    <p class="text-muted font-15 text-justify">PRE-ESPECIALIDADES: La Escuela de Contaduría no tiene especializaciones; pero en el campo profesional se puede especializar en las siguientes áreas:</p>
                                     <ul>
                                         <li>
-                                            <p class="text-muted font-13 text-justify">
+                                            <p class="text-muted font-15 text-justify">
                                                 	Auditoría
                                             </p> 
                                         </li>
                                         <li>
-                                            <p class="text-muted font-13 text-justify">
+                                            <p class="text-muted font-15 text-justify">
                                                 	Costos
                                             </p> 
                                         </li>
                                         <li>
-                                            <p class="text-muted font-13 text-justify">
+                                            <p class="text-muted font-15 text-justify">
                                                 	Financiera
                                             </p> 
                                         </li>
                                         <li>
-                                            <p class="text-muted font-13 text-justify">
+                                            <p class="text-muted font-15 text-justify">
                                                 	Legal
                                             </p> 
                                         </li>
@@ -69,12 +69,12 @@
                                                      
             
                                     <p class="mb-1 font-weight-bold">Tiempo de duración:</p>
-                                    <p class="text-muted font-13">
+                                    <p class="text-muted font-15">
                                         5 años.
                                     </p>
             
                                     <p class="mb-1 font-weight-bold">Grado y título que otorga:</p>
-                                    <p class="text-muted font-13">
+                                    <p class="text-muted font-15">
                                         LICENCIADO (A) EN CONTADURÍA PÚBLICA.
                                     </p>
                                 </div>
@@ -87,22 +87,22 @@
                             <div class="row">
                                 <div class="col-xl-8">
                                     <p class="mb-0 font-weight-bold ">Código</p> 
-                            <p class="text-muted font-13 text-justify">
+                            <p class="text-muted font-15 text-justify">
                                 L70803
                             </p>                   
                             <p class="mb-1 font-weight-bold py-2">Descripción:</p>
-                            <p class="text-muted font-13 text-justify">
+                            <p class="text-muted font-15 text-justify">
                                 El estudio de la Administración se enmarca en el contexto de la economía globalizada y su misión es formar recurso humano capacitado en la teoría económica, la investigación científica y el manejo de la tecnología apropiada, necesaria para el desarrollo económico-social sustentable.
                             </p> 
                             
 
                             <p class="mb-1 font-weight-bold">Tiempo de duración:</p>
-                            <p class="text-muted font-13">
+                            <p class="text-muted font-15">
                                 5 años.
                             </p>
     
                             <p class="mb-1 font-weight-bold">Grado y título que otorga:</p>
-                            <p class="text-muted font-13">
+                            <p class="text-muted font-15">
                                 LICENCIADO (A) EN ADMINISTRACIÓN DE EMPRESAS
                             </p>
                                 </div>
