@@ -20,4 +20,4 @@ Route::get('/', [indexController::class, 'index'])->name('index');
 require __DIR__.'/transparencia.php';
 require __DIR__.'/auth.php';
 require __DIR__.'/pagina.php';
-require __DIR__.'/licencias.php';
+
