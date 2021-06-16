@@ -84,10 +84,13 @@ Route::get('Investigacion', function () {
     return view('Academicos.investigacion');
 })->name('investigacion');
 
-
 Route::get('ProyeccionSocial', function () {
     return view('Academicos.proyeccionSocial');
 })->name('proyeccionSocial');
+
+Route::get('Postgrado', function () {
+    return view('Academicos.postgrado');
+})->name('postgrado');
 
 /**Administrativo */
 Route::get('/AdministracionFinanciera', function () {

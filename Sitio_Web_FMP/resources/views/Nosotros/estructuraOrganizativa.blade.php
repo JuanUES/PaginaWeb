@@ -41,7 +41,6 @@ Dropzone.options.myAwesomeDropzone = {
     <div class="container-fluid">
 
         <!-- start page title -->
-        <div class="page-title-alt-bg color-top"></div>
         <div class="page-title-box color-boton py-2 rounded">
             <h2 class="page-title text-white">Facultad Multidisciplinaria Paracentral</h2>
         </div> 

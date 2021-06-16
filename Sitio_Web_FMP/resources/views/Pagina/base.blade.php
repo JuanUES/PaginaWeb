@@ -109,7 +109,7 @@
                                     </ul>
                                 </li> 
                                 <li>
-                                    <a href="#">Postgrado</a>
+                                    <a href="{{ route('postgrado') }}">Postgrado</a>
                                 </li>      
                                 <li>
                                     <a href="https://distancia.ues.edu.sv/">Universidad en Linea</a>

@@ -27,9 +27,8 @@
 <div class="wrapper">
     <div class="container-fluid">
         <!-- start page title -->
-        <div class="page-title-alt-bg color-top"></div>
         <div class="page-title-box color-boton py-2 rounded">
-            <h2 class="page-title text-white">Facultad Multidisciplinaria Paracentral</h2>
+            <a class="page-title text-white h2" href="{{ route('index') }}">Facultad Multidisciplinaria Paracentral</a>
         </div>         
         <div class="my-4"></div>
         <!-- end page title -->               
