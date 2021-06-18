@@ -10,3 +10,14 @@ Route::get('transparencia', function () {
 Route::get('admin', function () {
     return view('Admin.home');
 });
+
+//RUTAS PARA LA ADMINISTRACION DE LA PAGINA DE TRANSPArencia
+Route::get('/admin/marco-normativo', 'App\Http\Controllers\TransparenciaController@index')->name('marco-normativo');
+Route::get('admin/marco-gestion', 'App\Http\Controllers\TransparenciaController@index')->name('marco-gestion');
+Route::get('admin/marco-presupuestario', 'App\Http\Controllers\TransparenciaController@index')->name('marco-presupuestario');
+Route::get('admin/estadisticas', 'App\Http\Controllers\TransparenciaController@index')->name('estadisticas');
+Route::get('admin/documentos-JD', 'App\Http\Controllers\TransparenciaController@index')->name('documentos-JD');
+
+
+Route::get('/admin/create/{categoria}', 'App\Http\Controllers\TransparenciaController@create');
+Route::post('/admin/transparencia/store', 'App\Http\Controllers\TransparenciaController@store');

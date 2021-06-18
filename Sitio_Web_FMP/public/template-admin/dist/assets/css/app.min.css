@@ -259,8 +259,8 @@ body {
 .enlarged .left-side-menu #sidebar-menu>ul>li:hover>a {
     position: relative;
     width: calc(190px + 70px);
-    color: #188ae2;
-    background-color: #343b4a;
+    color: #ffffff;
+    background-color: #aa0000;
     -webkit-transition: none;
     transition: none
 }
@@ -518,7 +518,7 @@ body {
 }
 
 .navbar-custom {
-    background-color: #dc3545;
+    background-color: #aa0000;
     padding: 0 10px 0 0;
     position: fixed;
     left: 0;

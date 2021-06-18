@@ -515,3 +515,8 @@
 <!-- end row -->
 
 @endsection
+
+@section('plugins-js')
+<!-- Dashboard Init JS -->
+<script src="{{ asset('template-admin/dist/assets/js/pages/dashboard.init.js') }}"></script>
+@endsection
