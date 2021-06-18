@@ -84,6 +84,21 @@
                                 </li>
                                 
                             </ul>
+                            <h4>Formatos</h4>
+                            <p class="mb-1 font-weight-bold">Manual de procedimientos</p>
+                            <ul>
+                                <li>                                    
+                                    <p class="border text-center"></p>
+                                </li>
+                                <li>                                    
+                                    <p class="border text-center"></p>
+                                </li>
+                                <li>                                    
+                                    <p class="border text-center"></p>
+                                </li>
+                            </ul>
+                            <h4>Contactanos</h4>
+                            
                         </div>
                     </div>                       
                 </div>

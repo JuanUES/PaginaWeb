@@ -18,6 +18,7 @@ class CreateDirectoriosTable extends Migration
             $table->string('nombre');
             $table->string('contacto');
             $table->bigInteger('user');
+            $table->integer('tipo')->default(0);
             $table->timestamps();
             $table->foreign('user')
                 ->references('id')
