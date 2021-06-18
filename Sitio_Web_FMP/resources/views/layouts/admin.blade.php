@@ -14,10 +14,18 @@
         <!-- DataTables -->
         <link href="{{ asset('template-admin/dist/assets/libs/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('template-admin/dist/assets/libs/datatables/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css"/>
+
+        <!-- Summernote css -->
+        <link href="{{ asset('template-admin/dist/assets/libs/summernote/summernote-bs4.css') }}" rel="stylesheet" />
+
         <!-- App css -->
         <link href="{{ asset('template-admin/dist/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('template-admin/dist/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('template-admin/dist/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
+
+
+        @yield('plugins')
+
     </head>
     <body>
         <!-- Begin page -->
@@ -127,7 +135,7 @@
 
                 <ul class="list-unstyled menu-left mb-0">
                     <li class="float-left">
-                        <a href="index.html" class="logo">
+                        <a href="{{ asset('admin') }}" class="logo">
                             <span class="logo-lg">
                                 <img src="{{ asset('/images/ues_logo3.svg') }}" alt="" height="22">
                                 <strong class="text-white">Universidad de El Salvador</strong>
@@ -159,7 +167,7 @@
                         <ul class="metismenu" id="side-menu">
                             <li class="menu-title">Administración</li>
                             <li>
-                                <a href="index.html">
+                                <a href="{{ url('admin/') }}">
                                     <i class="dripicons-meter"></i>
                                     <span> Tablero </span>
                                 </a>
@@ -172,23 +180,23 @@
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <li>
-                                        <a href="{{ url('admin') }}">Normativo</a>
+                                        <a href="{{ url('admin/marco-normativo') }}">Normativo</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('admin') }}">De Gestión</a>
+                                        <a href="{{ url('admin/marco-gestion') }}">De Gestión</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('admin') }}">Presupuestario</a>
+                                        <a href="{{ url('admin/marco-presupuestario') }}">Presupuestario</a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a href=".">
+                                <a href="{{ url('admin/estadisticas') }}">
                                     <i class="dripicons-graph-bar "></i> <span> Estadísticas </span>
                                 </a>
                             </li>
                             <li>
-                                <a href=".">
+                                <a href="{{ url('admin/documentos-JD') }}">
                                     <i class="dripicons-document"></i> <span> Documentos de Junta Directiva </span>
                                 </a>
                             </li>
@@ -243,7 +251,8 @@
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12 text-center">
-                                2018 - 2019 &copy; Greeva theme by <a href="">Coderthemes</a>
+                                {{ date('Y') }} &copy; Universidad de El Salvador
+                                {{-- 2018 - 2019 &copy; Greeva theme by <a href="">Coderthemes</a> --}}
                             </div>
                         </div>
                     </div>
@@ -260,6 +269,8 @@
         </div>
 
 
+        {{-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> --}}
+
         <!-- Vendor js -->
         <script src="{{ asset('template-admin/dist/assets/js/vendor.min.js') }}"></script>
 
@@ -272,17 +283,26 @@
         <script src="{{ asset('template-admin/dist/assets/libs/jqvmap/jquery.vmap.min.js') }}"></script>
         <script src="{{ asset('template-admin/dist/assets/libs/jqvmap/jquery.vmap.usa.js') }}"></script>
 
+
+
         <!-- Datatable js -->
         <script src="{{ asset('template-admin/dist/assets/libs/datatables/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('template-admin/dist/assets/libs/datatables/dataTables.bootstrap4.min.js') }}"></script>
         <script src="{{ asset('template-admin/dist/assets/libs/datatables/dataTables.responsive.min.js') }}"></script>
         <script src="{{ asset('template-admin/dist/assets/libs/datatables/responsive.bootstrap4.min.js') }}"></script>
 
-        <!-- Dashboard Init JS -->
-        <script src="{{ asset('template-admin/dist/assets/js/pages/dashboard.init.js') }}"></script>
 
+
+        <!--Summernote js-->
+        <script src="{{ asset('template-admin/dist/assets/libs/summernote/summernote-bs4.min.js') }}"></script>
+        <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
+
+        <!-- Init js -->
+        {{-- <script src="{{ asset('template-admin/dist/assets/js/pages/form-summernote.init.js') }}"></script> --}}
         <!-- App js -->
         <script src="{{ asset('template-admin/dist/assets/js/app.min.js') }}"></script>
+
+        @yield('plugins-js')
 
     </body>
 </html>
