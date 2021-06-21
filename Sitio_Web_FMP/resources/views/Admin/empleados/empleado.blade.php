@@ -1,7 +1,50 @@
 @extends('layouts.admin')
 
 @section('content')
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Agregar empleado</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Apellido</label>
+                  <input type="text" class="form-control" id="apellido"  placeholder="Digite el apellido">
+                 
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Nombre</label>
+                  <input type="text" class="form-control" id="nombre" placeholder="Digite el nombre">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">D.U.I.</label>
+                    <input type="text" class="form-control" id="dui" placeholder="Digite el número de D.U.I.">
+                  </div>
 
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">N.I.T.</label>
+                    <input type="text" class="form-control" id="nit" placeholder="Digite el número de N.I.T.">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Teléfono</label>
+                    <input type="tel" class="form-control" id="tel" placeholder="Digite el número de teléfono">
+                  </div>
+                
+              </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-primary">Guardar empleado</button>
+        </div>
+      </div>
+    </div>
+  </div>
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
@@ -31,7 +74,10 @@
                     <button class="btn btn-info" style="float: right">Subir excel</button>  
                 </div>
                 <div class="col-3">
-                    <button class="btn btn-primary" style="float: right">Agregar</button>
+                    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Agregar empleado
+  </button>
                 </div>
             </div>
 
