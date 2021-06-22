@@ -1,7 +1,7 @@
 <input type="hidden" name="categoria" value="{{ $categoria }}">
 <div class="form-group">
     <label for="exampleInputEmail1">Titulo <span class="text-danger">*</span> </label>
-    <input type="text" class="form-control {{ $errors->has('titulo') ? 'is-invalid' : ''}}" id="titulo" name="titulo" aria-describedby="titulo" placeholder="Ingrese el titulo para el Documento">
+    <input type="text" class="form-control {{ $errors->has('titulo') ? 'is-invalid' : ''}}" id="titulo" name="titulo" aria-describedby="titulo" placeholder="Ingrese el titulo para el Documento" value="{{ isset($transparencia) ? $transparencia->titulo : old('titulo') }}">
     {!! $errors->first('titulo', '<p class="invalid-feedback">:message</p>') !!}
     {{-- <small id="titulo" class="form-text text-muted">We'll never share your email with anyone else.</small> --}}
 </div>
@@ -10,10 +10,10 @@
     <div class="col-12 col-sm-12">
         <div class="form-group mb-3">
             <label for="descripcion">Descripcion</label>
-            <textarea class="form-control" id="descripcion" name="descripcion" placeholder="Ingrese una descripcion"></textarea>
+            <textarea class="form-control" id="descripcion" name="descripcion" placeholder="Ingrese una descripcion">{{ isset($transparencia) ? $transparencia->descripcion : old('descripcion') }}</textarea>
         </div>
     </div>
-    <div class="col-12 col-sm-12">
+    <div class="col-12 col-sm-12" >
         <div class="form-group mb-3">
             <label for="summernote-editor">Documento <span class="text-danger">*</span> </label>
             <div class="file-loading">
@@ -23,15 +23,11 @@
     </div>
 </div>
 
-
-<div class="form-group mb-3">
-    <div class="checkbox">
-        <input id="publicar" name="publicar" type="checkbox" checked value="true">
-        <label for="publicar">
-            Publicar documento
-        </label>
-    </div>
+<div class="custom-control custom-checkbox">
+    <input type="checkbox" class="custom-control-input" id="publicar" name="publicar" {{ isset($transparencia) ? ( ($transparencia->publicar==true) ? 'checked' : '' ) : 'checked' }}>
+    <label class="custom-control-label" for="publicar">Publicar documento</label>
 </div>
+
 
 <br><br>
 <hr>
@@ -77,8 +73,6 @@
 
     $("#documento").fileinput({
         language: 'es',
-        // uploadUrl: "/file-upload-batch/1",
-        // pdfRendererUrl: 'https://plugins.krajee.com/pdfjs/web/viewer.html',
         uploadAsync: false,
         maxFileCount: 1,
         showUpload: false,
@@ -90,12 +84,6 @@
         reversePreviewOrder: true,
         initialPreviewAsData: true,
         overwriteInitial: false,
-        // initialPreview: [
-        //     'https://plugins.krajee.com/samples/sample-2.pdf'
-        // ],
-        // initialPreviewConfig: [
-        //     {type: 'pdf', size: 3072}
-        // ]
         allowedFileExtensions: ["pdf"],
         showBrowse: false,
         browseOnZoneClick: true,

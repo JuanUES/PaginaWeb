@@ -139,9 +139,11 @@ body {
 }
 
 #sidebar-menu>ul>li>a.active {
-    color: #188ae2;
+    /* color: #188ae2; */
+    color: #aa0000;
     background-color: #f1f5f7;
-    border-right-color: #188ae2
+    /* border-right-color: #188ae2; */
+    border-right-color: #aa0000;
 }
 
 #sidebar-menu>ul>li>ul {

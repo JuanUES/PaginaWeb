@@ -54,7 +54,7 @@ class TransparenciaController extends Controller
     {
         $campos = [
             'titulo' => 'required',
-            "documento" => "required|mimes:pdf|max:20000",
+            "documento" => "required|mimes:pdf",
         ];
         $this->validate($request, $campos);
 
@@ -64,11 +64,7 @@ class TransparenciaController extends Controller
                 ->store('uploads/transparencia', 'public');
         }
 
-
         Transparencia::create($requestData);
-
-
-
         return redirect('admin/'.$request->categoria)->with('flash_message', 'Documento almacenado con exito!');
     }
 
@@ -78,9 +74,9 @@ class TransparenciaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($id){
+        $transparencia = Transparencia::findOrFail($id);
+        return view('Transparencia.show', compact('transparencia'));
     }
 
     /**
@@ -89,9 +85,10 @@ class TransparenciaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function edit($id){
+        $transparencia = Transparencia::findOrFail($id);
+        $categoria = $transparencia->categoria;
+        return view('Transparencia.edit', compact(['transparencia', 'categoria']));
     }
 
     /**
@@ -103,7 +100,21 @@ class TransparenciaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $transparencia = Transparencia::findOrFail($id);
+        $campos = [
+            'titulo' => 'required',
+            "documento" => "required|mimes:pdf",
+        ];
+        $this->validate($request, $campos);
+
+        $requestData = $request->all();
+        if ($request->hasFile('documento')) {
+            $requestData['documento'] = $request->file('documento')
+            ->store('uploads/transparencia', 'public');
+        }
+
+        $transparencia->update($requestData);
+        return redirect('admin/' . $request->categoria)->with('flash_message', 'Documento modificado con exito!');
     }
 
     /**
@@ -115,5 +126,12 @@ class TransparenciaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function web($categoria){
+        $documentos = Transparencia::where('estado', true)
+            ->where('categoria', $categoria)
+            ->get();
+        return view('index-transparencia', compact('documentos'));
     }
 }

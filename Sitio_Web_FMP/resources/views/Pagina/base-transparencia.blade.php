@@ -31,10 +31,10 @@
                         <!-- End mobile menu toggle-->
                     </li>
 
-                </ul>           
-            </div>            
-            <!-- end Topbar -->          
-                
+                </ul>
+            </div>
+            <!-- end Topbar -->
+
             <div class="container-fluid">
                 <div class="row align-items-center color-top ocultar-div ">
                     <div class="col-2">
@@ -46,45 +46,45 @@
                     </div>
                     <div class="col-10 text-white text-left">
                         <h3 class="text-white">Universidad de El Salvador</h3>
-                        <h1 class="text-white">Facultad Multidisciplinaria Paracentral</h1> 
+                        <h1 class="text-white">Facultad Multidisciplinaria Paracentral</h1>
                         <h3 class="text-white">Unidad de Acceso a la Información Pública</h2>
-                    </div>                    
+                    </div>
                 </div>
                 <div id="navigation" >
                     <!-- Navigation Menu-->
                     <ul class="navigation-menu py-1 color-fondo " >
                         <li class="has-submenu p-1 center-text">
                             <a href="{{ asset('/') }}" class=" rounded text-left" >
-                                <i class=" mdi mdi-home mdi-24px"></i>Inicio </a>
+                                <i class="mdi mdi-arrow-left-box  mdi-24px"></i>Regresar a la Pagina Web </a>
                         </li>
                         <li class="has-submenu p-1">
                             <a href="#" class="rounded btn text-left">
                                  <i class="mdi mdi-view-list mdi-24px"></i>Marcos<div class="arrow-down"></div></a>
-                            <ul class="submenu">                                
-                                <li><a href="#">Normativo</a></li>
-                                <li><a href="#">De Gestión</a></li>
-                                <li><a href="#">Presupuestario</a></li>
+                            <ul class="submenu">
+                                <li><a href="{{ url('transparencia/marco-normativo') }}">Normativo</a></li>
+                                <li><a href="{{ url('transparencia/marco-gestion') }}">De Gestión</a></li>
+                                <li><a href="{{ url('transparencia/marco-presupuestario') }}">Presupuestario</a></li>
                             </ul>
                         </li>
                         <li class="has-submenu p-1">
-                            <a href="#" class="rounded btn text-left">
+                            <a href="{{ url('transparencia/estadisticas') }}" class="rounded btn text-left">
                                  <i class="mdi mdi-chart-line mdi-24px"></i>Estadísticas
                              </a>
-                        </li> 
+                        </li>
                         <li class="has-submenu p-1">
-                            <a href="#" class="rounded btn text-left">
+                            <a href="{{ url('transparencia/documentos-JD') }}" class="rounded btn text-left">
                                  <i class="mdi mdi-file-pdf mdi-24px"></i>Documentos Junta Directiva
                              </a>
-                        </li>     
+                        </li>
 
                         <li class="has-submenu float-right p-1">
-                            
-                            @auth                                
+
+                            @auth
                                 <a href="#"  class="rounded btn text-left">
                                     <i class="mdi mdi-account mdi-24px"></i>
                                     {{ Auth::user()->name }}
                                     <div class="arrow-down"></div>
-                                </a>  
+                                </a>
                                 <ul class="submenu">
                                     <li>
                                         <form method="POST" action="{{ route('logout') }}">
@@ -92,25 +92,25 @@
                                             <a href="route('logout')" onclick="event.preventDefault();
                                             this.closest('form').submit();">{{ __('Cerrar sesión') }}</a>
                                         </form>
-                                    </li>      
+                                    </li>
                                 </ul>
-                               
+
                             @else
                                 <a href="{{ route('login') }}"  class="rounded btn text-left">
                                     <i class="mdi mdi-account mdi-24px"></i>
                                     Iniciar Sesión
-                                </a>   
+                                </a>
                             @endauth
-                                                      
+
                         </li>
-                        
+
                     </ul>
                     <!-- End navigation menu -->
                     <ul class="list-unstyled topnav-menu float-right mb-0">
 
                         <li class="dropdown notification-list">
                             <!-- Mobile menu toggle-->
-                            
+
                             <a class="navbar-toggle nav-link">
                                 <div class="lines">
                                     <span></span>
@@ -119,15 +119,15 @@
                                 </div>
                             </a>
                             <!-- End mobile menu toggle-->
-                        </li>  
+                        </li>
                     </ul>
-                    
+
                     <div class="clearfix"></div>
-                    
+
                 </div>
                 <!-- end #navigation -->
             </div>
-            
+
             <!-- end navbar-custom -->
 
         </header>
@@ -136,10 +136,10 @@
         <!-- ============================================================== -->
         <!-- Start Page Content here -->
         <!-- ============================================================== -->
-        @yield('container')      
+        @yield('container')
         <!-- ============================================================== -->
         <!-- End Page content -->
-        <!-- ============================================================== -->      
+        <!-- ============================================================== -->
 
         <!-- Footer Start -->
         <footer class="footer py-1 color-boton text-white">
@@ -153,7 +153,7 @@
         </footer>
         <!-- end Footer -->
 
-        @yield('footerjs')       
-        
+        @yield('footerjs')
+
     </body>
-</html> 
+</html>
