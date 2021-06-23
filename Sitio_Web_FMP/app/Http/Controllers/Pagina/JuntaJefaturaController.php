@@ -47,6 +47,7 @@ class JuntaJefaturaController extends Controller
         return redirect('/EstructuraOrganizativa#jefatura');
     }
 
+    
     /**
      * Display a listing of the resource.
      *

@@ -14,12 +14,9 @@
 <link href="{{ asset('css/icons.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('css/app.min.css') }}" rel="stylesheet" type="text/css" />
 
-<!--Libreria css para el editor de texto-->
-<link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" type="text/css" />
 
 <!--Libreria data table para paginacion de noticias-->
 <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('css/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 
 @endsection
 
@@ -47,7 +44,7 @@
                                         <div class="mdi mdi-upload mdi-16px text-center"> Agregar Imagen</div>
                                     </a>
                                 </div>                            
-                                @endauth        
+                                      
                                 <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
@@ -70,10 +67,11 @@
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal -->
+                                @endauth  
                             </div>
                             <div class="row">                        
                                 @if (count($imgCarrusel) == '0')
-                                    <p class="text-center"> No hay imagenes para mostrar.</p>
+                                    <p class="p-2 mx-2 border"> No hay imagenes para mostrar.</p>
                                 @else
                                 <div id="carouselExampleCaptions" class="carousel slide rounded col-xl-12" data-ride="carousel">
                                     <ol class="carousel-indicators">  
@@ -359,12 +357,10 @@
                                         </tr>   
                                         @endforeach                
                                     </tbody>
-                                </table>                              
-                                
-                            @else
+                                </table>         
+                                @else
                                 <p class="p-2 border">No hay noticias para mostrar.</p>
-                            @endif                    
-                            
+                                 @endif   
                         </div> <!-- end card-box -->
                     </div><!-- end col -->
                 </div>
@@ -373,17 +369,14 @@
             <div class="col-xl-4">
                 <div class="row">
                     <div class="col-xl-12">
-                        <div class="card-box align-items-center">
-                                <h3>Siguenos en facebook</h3>
-                                <div class="fb-page"
-                                data-href="https://www.facebook.com/Facultad-Multidisciplinaria-Paracentral-Decanato-104296228519520" 
-                                data-tabs="timeline" data-small-header="true" 
-                                data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="true" >
-                                    <blockquote cite="https://www.facebook.com/Facultad-Multidisciplinaria-Paracentral-Decanato-104296228519520" class="fb-xfbml-parse-ignore ">
-                                        <a href="https://www.facebook.com/Facultad-Multidisciplinaria-Paracentral-Decanato-104296228519520">Facultad Multidisciplinaria Paracentral - Decanato</a>
-                                    </blockquote>
-                                
-                            </div>                            
+                        <div class="card-box">
+                            <div class="row">
+                                <div class="col-xl-12"><h3>Siguenos en facebook</h3></div>
+                                <div class="col-xl-12 text-center" style="overflow: auto;">
+                                    <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FFacultad-Multidisciplinaria-Paracentral-Decanato-104296228519520&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=false&hide_cover=false&show_facepile=true&appId" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
+                                                        </iframe> 
+                                </div>                                                                                                                
+                            </div>                                                         
                         </div>
                     </div><!-- end col-->
                     <div class="col-xl-12" >                        
@@ -471,10 +464,6 @@
 @auth    
 <!-- Plugins js -->
 <script src=" {{ asset('js/dropzone.min.js') }} "></script>
-
-<!--libreria js para el ditor-->
-<script src=" {{ asset('js/summernote-bs4.min.js') }} "></script>
-<script src=" {{ asset('js/form-summernote.init.js') }} "></script>
 @endauth
 
 <script src="{{ asset('js/index/index.datatable.js') }}"></script>

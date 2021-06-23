@@ -2,11 +2,15 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Pagina\ImagenesCarruselController;
 use App\Http\Controllers\Pagina\NoticiaController;
-use App\Http\Controllers\Pagina\PDFController;
+use App\Http\Controllers\Pagina\PDFImageController;
 use App\Http\Controllers\Pagina\EstructuraOrganizativaController;
 use App\Http\Controllers\Pagina\JuntaJefaturaController;
 use App\Http\Controllers\Pagina\DirectorioController;
+use App\Http\Controllers\Pagina\ProyeccionSocialController;
 
+/**PDF ------------------------------------------------------------------*/
+
+Route::post('PDF/{localizacion}',[PDFImageController::class,'storeAll'])->middleware(['auth'])->name('subirPdf');
 
 /**Index ----------------------------------------------------------------*/
 
@@ -30,7 +34,7 @@ Route::get('/noticias/{titulo}/{id}',[NoticiaController::class, 'index'])
 
 /**Nosotros----------------------------------------------------------------------*/
 
-Route::post('/nosotros/organigrama/image/{localizacion}', [PDFController::class, 'store1'])
+Route::post('/nosotros/organigrama/image/{localizacion}', [PDFImageController::class, 'store1'])
 ->middleware(['auth'])->name('Nosotros.organigrama');
 
 Route::get('EstructuraOrganizativa', [EstructuraOrganizativaController::class, 'index']);
@@ -84,9 +88,11 @@ Route::get('Investigacion', function () {
     return view('Academicos.investigacion');
 })->name('investigacion');
 
-Route::get('ProyeccionSocial', function () {
-    return view('Academicos.proyeccionSocial');
-})->name('proyeccionSocial');
+Route::get('ProyeccionSocial',[ProyeccionSocialController::class, 'index'])
+->name('proyeccionSocial');
+
+Route::post('ProyeccionSocial/Coordinadores/',[ProyeccionSocialController::class, 'storeProyeccionSocial'])
+->name('nuevoCoordinador');
 
 Route::get('Postgrado', function () {
     return view('Academicos.postgrado');

@@ -1,5 +1,16 @@
 @extends('Pagina/baseOnlyHtml')
-
+@section('header')
+@auth
+<!-- Este css se carga nada mas cuando esta logeado un usuario-->
+<link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
+@endauth
+@endsection
+@section('footer')
+@auth    
+<!-- Plugins js -->
+<script src=" {{ asset('js/dropzone.min.js') }} "></script>
+@endauth
+@endsection
 @section('container')
 <div class="wrapper">
     <div class="container-fluid">
@@ -23,12 +34,144 @@
                                 Es el conjunto de actividades planificadas que persiguen objetivos académicos, de investigación y de servicio; con el fin de poner a los miembros de la comunidad universitaria en contacto con la realidad, para obtener una toma de conciencia ante la problemática social salvadoreña e incidir en la transformación y superación de la sociedad.
                             </p>
                             <p class="mb-1 font-weight-bold">Jefe de la Unidad</p>
+                            @guest
                             <p class="text-muted font-15 text-justify">
-                                Lic. Edwin Arnoldo Cerón Chávez
+                                Lic. Edwin Arnoldo Cerón Chávez     
                             </p>
-                            <p class="mb-1 font-weight-bold">Jefe de la Unidad</p>
-                            <p class="border rounded p-3 text-center">Aqui va la tabla</p>
-                            
+                            @endguest
+                            @auth
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <form action="" method="POST">
+                                        @csrf
+                                        <div class="row my-2">                                            
+                                            <div class="col-lg-6">
+                                                <input type="text" class="form-control" required 
+                                                placeholder="Jefe de la Unidad (Obligatorio)"
+                                                name="periodo" 
+                                                />
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <button type="submit" class="btn btn-block btn-info">Guardar   <i class=" mdi mdi-content-save-move"></i></button>
+                                            </div>                                            
+                                        </div> 
+                                    </form>                                    
+                                </div>
+                            </div>  
+                            @endauth
+                            <p class="mb-1 font-weight-bold">Coordinadores de Carreras</p>
+                            <div class="row">
+                                @auth         
+                                <div class="col-xl-12 p-2">              
+                                    <a type="button" href="#" class="btn btn-info"
+                                    data-toggle="modal" data-target="#myModalCoordinadores"><i class="dripicons-document"></i> Nuevo</a>
+                                    <!-- Coordinadores modal content -->
+                                    <div id="myModalCoordinadores" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="myCenterModalLabel">Registro Nuevo</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                </div>
+                                                <div class="modal-body">                                        
+                                                    <div class="tab-content">
+                                                    <form method="POST" 
+                                                    action="{{ route('nuevoCoordinador') }}" 
+                                                    class="parsley-examples"
+                                                    enctype="multipart/form-data">
+                                                        @csrf
+                                                        <div class="row">
+                                                            
+                                                            <div class="col-xl-12">
+                                                                <div class="form-group">
+                                                                    <label>Coordinador</label>
+                                                                    <input type="text" class="form-control" required
+                                                                            placeholder="Coordinador (Obligatorio)"
+                                                                            name="coordinador" />
+                                                                </div> 
+                                                            </div>
+                                                            
+                                                        </div>      
+                                                        <div class="row">
+                                                            <div class="col-xl-12">
+                                                                <div class="form-group">
+                                                                    <label>Departamento</label>
+                                                                    <div>
+                                                                        <textarea required class="form-control" name="departamento" placeholder="Departamento (Obligatorio)"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>         
+                                                        <div class="form-group mb-0">
+                                                            <div>
+                                                                <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">
+                                                                    Nuevo
+                                                                </button>
+                                                                <button type="reset" class="btn btn-light waves-effect">
+                                                                    Cancelar
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>       
+                                                    </div>
+                                                </div>                                    
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->                                     
+                                </div>
+                                @endauth
+
+                                @if (count($coordinadores)!=0)
+                                <div class="col-xl-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered  ">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <p>Nombre</p>
+                                                    </th>
+                                                    <th class="text-lefth">
+                                                        <p>Departamento</p>
+                                                    </th>   
+                                                    @auth
+                                                    <th>
+                                                        <p>Acciones</p>
+                                                    </th> 
+                                                    @endauth                           
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($coordinadores as $item)
+                                                <tr>
+                                                    <th class="text-nowrap" scope="row">{!!$item->nombre!!}</th>
+                                                    <td>{!!$item->sector_dep_unid!!}</td>
+                                                    @auth                                   
+                                                    <td>
+                                                        <div class="row">                                                
+                                                            <div class="col-xl-6 order-first">
+                                                                <button class="btn btn-success btn-icon btn-block">
+                                                                    <i class=" dripicons-pencil"></i> Editar
+                                                                </button></div>
+                                                            <div class="col-xl-6 order-last">
+                                                                <form name="{!!  str_replace ( '=', '', base64_encode(md5($item->id))) !!}" action="{{ asset('/Coordinadores/borrar') }}/{!! base64_encode($item->id) !!}" 
+                                                                    method="POST">     
+                                                                    @csrf                                              
+                                                                    <a type="buttom"  class="btn btn-danger text-white btn-block" onclick="eliminar('{!! str_replace ( '=', '', base64_encode(md5($item->id))) !!}');"><i class="dripicons-trash"></i> Eliminar</a>   
+                                                                </form>
+                                                            </div>
+                                                        </div>                         
+                                                    </th>
+                                                    @endauth 
+                                                </tr>  
+                                                @endforeach                                                              
+                                            </tbody>
+                                        </table>
+                                    </div> <!-- end table-responsive-->
+                                </div>
+                                @else
+                                <p class="border p-2 text-center">No hay datos registrados.</p>
+                                @endif  
+                            </div>
                             <h4>Formularios y Guías</h4>
                             <p class="mb-1 font-weight-bold">Lineamientos</p>
                             <ul>
@@ -53,7 +196,7 @@
                                     </p>
                                 </li>
                                 <li>
-                                    <p class=" font-15 text-justify">
+                                    <p class="text-muted font-15 text-justify">
                                         Si el Alumno presenta proyectos externos y se comprueba la no realización de estos, se procederá a anularse el Servicio Social.
                                     </p>
                                 </li>
@@ -84,20 +227,49 @@
                                 </li>
                                 
                             </ul>
-                            <h4>Formatos</h4>
-                            <p class="mb-1 font-weight-bold">Manual de procedimientos</p>
-                            <ul>
-                                <li>                                    
-                                    <p class="border text-center"></p>
-                                </li>
-                                <li>                                    
-                                    <p class="border text-center"></p>
-                                </li>
-                                <li>                                    
-                                    <p class="border text-center"></p>
-                                </li>
-                            </ul>
+                            <div class="row">
+                                <div class="col order-first"><h4>Formatos</h4></div>
+                                @auth
+                                <div class="col-lg-3 order-last">
+                                    <button class="btn btn-block btn-info tex-left" 
+                                        data-toggle="modal" data-target=".bs-example-modal-center">
+                                        <div class="mdi mdi-upload mdi-16px text-center"> Subir PDF</div>
+                                    </button>
+                                </div>  
+                                <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="myCenterModalLabel">Zona para subir imágenes</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                
+                                                <form action="{{ route('subirPdf', ['localizacion'=>'ProyeccionSocial']) }}" method="post"
+                                                    class="dropzone" id="my-awesome-dropzone">
+                                                    @csrf                                 
+                                                    <div class="dz-message needsclick">
+                                                        <i class="h3 text-muted dripicons-cloud-upload"></i>
+                                                        <h3>Suelta los archivos aquí o haz clic para subir.</h3>
+                                                    </div>
+                                                    <div class="dropzone-previews"></div>
+                                                </form>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+                                @endauth
+                            </div> 
+                            <ol>
+                            @foreach ($pdfs as $item)                                
+                                <li><a type="button" href="{!!public_path() . '/files/pdfs/'.$item->file !!}">{!!$item->file !!}</a></li>                                
+                            @endforeach
+                            </ol>
+                            
                             <h4>Contactanos</h4>
+                            <p class="text-muted font-15 text-justify">
+                                Correo: proyeccionsocial.fmp@ues.edu.sv    
+                            </p>
                             
                         </div>
                     </div>                       
@@ -107,3 +279,4 @@
     </div> <!-- end container -->
 </div> 
 @endsection
+

@@ -109,19 +109,19 @@
                                     </ul>
                                 </li> 
                                 <li>
-                                    <a href="{{ route('postgrado') }}">Postgrado</a>
+                                    <a href="{{ route('postgrado') }}">Unidad de Postgrado</a>
                                 </li>      
                                 <li>
                                     <a href="https://distancia.ues.edu.sv/">Universidad en Linea</a>
                                 </li>                             
                                 <li class="has-submenu">
-                                    <a href="{{ route('investigacion')}}">Investigación</a>
+                                    <a href="{{ route('investigacion')}}">Unidad de Investigación</a>
                                 </li>
                                 <li class="has-submenu">
-                                    <a href="{{ route('proyeccionSocial') }}">Proyección Social</a>
+                                    <a href="{{ route('proyeccionSocial') }}">Unidad de Proyección Social</a>
                                 </li>   
                                 <li class="has-submenu">
-                                    <a href="#">Procesos de Graduación</a>
+                                    <a href="#">Coordinación General de<br>Procesos de Graduación</a>
                                 </li> 
                                 <li class="has-submenu">
                                     <a href="http://biblio.fmp.ues.edu.sv/">Biblioteca</a>
