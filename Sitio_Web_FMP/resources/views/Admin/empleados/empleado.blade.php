@@ -12,28 +12,69 @@
           </button>
         </div>
         <div class="modal-body">
-            <form>
-                <div class="form-group">
-                  <label for="exampleInputEmail1">Apellido</label>
-                  <input type="text" class="form-control" id="apellido"  placeholder="Digite el apellido">
-                 
+            <form action="" method="POST">
+                @csrf
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Nombre</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="Digite el nombre">
+                          </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Apellido</label>
+                            <input type="text" class="form-control" id="apellido"  placeholder="Digite el apellido">
+                           
+                          </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Nombre</label>
-                  <input type="text" class="form-control" id="nombre" placeholder="Digite el nombre">
+                
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">D.U.I.</label>
+                            <input type="text" class="form-control" id="dui" placeholder="Digite el número de D.U.I.">
+                          </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">N.I.T.</label>
+                            <input type="text" class="form-control" id="nit" placeholder="Digite el número de N.I.T.">
+                          </div>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="exampleInputPassword1">D.U.I.</label>
-                    <input type="text" class="form-control" id="dui" placeholder="Digite el número de D.U.I.">
-                  </div>
+                
 
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">N.I.T.</label>
-                    <input type="text" class="form-control" id="nit" placeholder="Digite el número de N.I.T.">
-                  </div>
+                 
                   <div class="form-group">
                     <label for="exampleInputPassword1">Teléfono</label>
                     <input type="tel" class="form-control" id="tel" placeholder="Digite el número de teléfono">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Tipo empleado</label>
+                <select class="custom-select" name="emepleadosSelect" id="empleadosSelect">
+                    <option value="1">Decano</option>
+                    <option value="2">Vice-decano</option>
+                    <option value="3">Administrativo</option>
+                    <option value="4">Académico</option>
+                </select>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Jefe</label>
+                    @if (count($empleadoJefe))
+                        <select class="custom-select" name="" id="">
+                            @foreach ($empleadoJefe as $item)
+                            <option value="{!!$item->id!!}">{!!$item->nombre.' '.$item->apellido!!}</option>
+                            @endforeach
+                        </select>
+                    @else
+                        <select class="custom-select" name="" disabled>
+                            <option value="">Sin datos</option>
+                        </select>
+                    @endif                 
                   </div>
                 
               </form>

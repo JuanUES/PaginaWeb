@@ -15,14 +15,20 @@ class Empleados extends Migration
     {
         Schema::create('empleado', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('nombre');
             $table->string('apellidos');
             $table->string('dui');
             $table->string('nit');
             $table->string('telefono');
-            $table->string('urlfot');
+            $table->string('urlfoto')->nullable();
             $table->boolean("estado");
+            $table->integer('tipo_jefe');
+            $table->bigInteger('jefe')->nullable();
+            $table->foreign('jefe')
+            ->references('id')
+            ->on('empleado')
+            ->onDelete('cascade');
+            $table->timestamps();         
         });
     }
 

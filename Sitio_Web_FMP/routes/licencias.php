@@ -1,6 +1,6 @@
 <?php
+
+use App\Http\Controllers\EmpleadoController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('empleado', function () {
-    return view('Admin.empleados.empleado');
-});
+Route::get('Empleado',[EmpleadoController::class, 'index'])->name('indexEmpleado');
