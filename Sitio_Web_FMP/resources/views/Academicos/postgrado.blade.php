@@ -1,5 +1,19 @@
 @extends('Pagina/baseOnlyHtml')
 
+@section('header')
+@auth
+    <!-- Summernote css -->
+    <link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
+@endauth    
+@endsection
+
+@section('footer')
+@auth
+    <!--Summernote js-->
+    <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
+@endauth    
+@endsection
+
 @section('container')
 <div class="wrapper">
     <div class="container-fluid">
@@ -50,60 +64,7 @@
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal -->
                             </div>
-                            <div class="row">                        
-                                <!--@if (count($imgCarrusel) == '0')
-                                    <p class="text-center"> No hay imagenes para mostrar.</p>
-                                @else-->
-                                <div id="carouselExampleCaptions" class="carousel slide rounded col-xl-12" data-ride="carousel">
-                                    <ol class="carousel-indicators">  
-                                       <!-- @for ($i = 0; $i < count($imgCarrusel); $i++)
-                                            @if ($i == 0 )
-                                                <li data-target="#carouselExampleCaptions" data-slide-to="{{$i}}" class="active"></li>
-                                            @else                                        
-                                                <li data-target="#carouselExampleCaptions" data-slide-to="{{$i}}" ></li>
-                                            @endif
-                                        @endfor-->                          
-                                    </ol>
-                                    <div class="carousel-inner">
-                                        <!--@for ($i = 0; $i < count($imgCarrusel); $i++)            
-                                            @if ($i == 0 )
-                                                <div class="carousel-item active">
-                                                    @auth
-                                                        <form method="POST" action="{{ asset('/borrar') }}/{{$imgCarrusel[$i]->id}}/{{$imgCarrusel[$i]->imagen}}" id="{{$imgCarrusel[$i]->imagen}}">
-                                                            @csrf                                                   
-                                                            <button type="submit" class="btn text-white btn-danger btn-block">
-                                                                <div class=" mdi mdi-delete mdi-16px text-center">Eliminar</div>
-                                                            </button>
-                                                        </form>
-                                                    @endauth                                              
-                                                    <img src="images/carrusel/{{$imgCarrusel[$i]->imagen}}" class="img-fluid" width="100%" alt="{!!$imgCarrusel[$i]->imagen!!}">                      
-                                                </div>
-                                            @else                                        
-                                                <div class="carousel-item">
-                                                    @auth
-                                                    <form method="POST" 
-                                                    action="{{ asset('/borrar') }}/{{$imgCarrusel[$i]->id}}/{{$imgCarrusel[$i]->imagen}}" id="{{$imgCarrusel[$i]->imagen}}">
-                                                        @csrf
-                                                        <button type="submit" class="btn text-white btn-danger btn-block">
-                                                            <div class=" mdi mdi-delete mdi-16px text-center">Eliminar</div>
-                                                        </button>
-                                                    </form>
-                                                    @endauth  
-                                                    <img src="images/carrusel/{{$imgCarrusel[$i]->imagen}}" class="img-fluid" width="100%" alt="{!!$imgCarrusel[$i]->imagen!!}">                                
-                                                </div> 
-                                            @endif        
-                                        @endfor -->
-                                    </div>
-                                    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Anterior</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Siguiente</span>
-                                    </a>
-                                </div>    
-                                @endif
+                            <div class="row"> 
                                 <!-- end col -->
                             </div> <!-- end row-->          
                             <p class="mb-1 font-weight-bold">Grado y título que otorga:</p>
@@ -183,7 +144,6 @@
                 </div> <!-- end col -->
             </div> <!-- end row--> 
         </div> <!-- end card-box -->
-
     </div> <!-- end container-->
 </div>
 <!-- end row -->
