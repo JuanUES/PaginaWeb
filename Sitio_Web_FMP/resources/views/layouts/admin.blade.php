@@ -303,6 +303,5 @@
         <script src="{{ asset('template-admin/dist/assets/js/app.min.js') }}"></script>
 
         @yield('plugins-js')
-
     </body>
 </html>

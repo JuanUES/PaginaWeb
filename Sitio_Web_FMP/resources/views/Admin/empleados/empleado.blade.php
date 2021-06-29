@@ -1,18 +1,54 @@
 @extends('layouts.admin')
 
+@section('plugins')
+<link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />    
+@endsection
+@section('plugins-js')
+   <!--Librerias js para datatable
+    <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('js/index/index.datatable.js') }}"></script>-->
+
+    <script>
+        $(document).ready(function(){
+            $("#btnAgregarEmp").on('click',function(){
+                let _url = `{{ route('Empleado.empleado') }}`;
+                
+                $.ajax({
+                    url: _url,
+                    type: 'POST',
+                    data: {
+                    _token: "{{csrf_token()}}",
+                    apellido: $('#apellido').val(),
+                    nombre: $('#nombre').val(),
+                    dui: $('#dui').val(),
+                    nit: $('#nit').val(),
+                    telefono: $('#telefono').val(),
+                    tipo_jefe: $('#tipo_empleado').val(),
+                    jefe:$('#jefe').val()
+                    },
+                    success: function(response) {
+                        $("#row_"+id).remove();
+                    }
+                });// fin ajax
+            });
+        });
+    </script> 
+@endsection
+
 @section('content')
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Agregar empleado</h5>
+          <h5 class="modal-title" id=" exampleModalLongTitle">Agregar empleado</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
-            <form action="" method="POST">
+            <form name="empleadoForm" action="" method="POST">
                 @csrf
                 <div class="row">
                     <div class="col-xl-6">
@@ -81,7 +117,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary">Guardar empleado</button>
+          <button type="button" class="btn btn-primary" id="btnAgregarEmp">Guardar empleado</button>
         </div>
       </div>
     </div>
@@ -125,7 +161,7 @@
  
             <div class="responsive-table-plugin">
                 <div class="table-rep-plugin">
-                    <div class="table-responsive" data-pattern="priority-columns">
+                    <div class="table table-borderless  btn-table table-sm table-responsive-md" data-pattern="priority-columns">
                         <table id="tech-companies-1" class="table table-striped">
                             <thead>
                             <tr>
@@ -224,10 +260,4 @@
     </div> <!-- end col -->
 </div>
 <!-- end row -->   
-
-
-
-
-
-
 @endsection
