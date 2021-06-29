@@ -91,8 +91,14 @@ Route::get('Investigacion', function () {
 Route::get('ProyeccionSocial',[ProyeccionSocialController::class, 'index'])
 ->name('proyeccionSocial');
 
+Route::post('ProyeccionSocial/Jefe/',[ProyeccionSocialController::class, 'jefaturaProyeccionSocial'])
+->name('JefeProyeccionSocial')->middleware(['auth']);
+
 Route::post('ProyeccionSocial/Coordinadores/',[ProyeccionSocialController::class, 'storeProyeccionSocial'])
-->name('nuevoCoordinador');
+->name('nuevoCoordinador')->middleware(['auth']);
+
+Route::delete('ProyeccionSocial/EliminarPDF/{id}',[ProyeccionSocialController::class, 'eliminarPDF'])
+->middleware(['auth'])->name('EliminarProyeccionPDF');
 
 Route::get('Postgrado', function () {
     return view('Academicos.postgrado');

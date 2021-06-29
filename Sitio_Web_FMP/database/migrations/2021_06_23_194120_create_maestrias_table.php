@@ -17,16 +17,20 @@ class CreateMaestriasTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('titulo');
-            $table->string('modalidad');
-            $table->string('duracion');
-            $table->string('numero_asignatura');
-            $table->string('unidades_valorativas');
-            $table->string('precio');
-            $table->longtext('presentacion');
-            $table->longtext('objetivo');
-            $table->longtext('dirigido_a');
-            $table->longtext('requisitos');
-            $table->longtext('perfil_egresado');
+            $table->string('modalidad')->nullable();;
+            $table->string('duracion')->nullable();;
+            $table->string('numero_asignatura')->nullable();;
+            $table->string('unidades_valorativas')->nullable();;
+            $table->string('precio')->nullable();;
+            $table->longtext('contenido')->nullable();;
+            $table->bigInteger('user');
+            $table->bigInteger('PDF')->nullable();
+            $table->foreign('PDF')
+                ->references('id')
+                ->on('p_d_f_s');
+            $table->foreign('user')
+                ->references('id')
+                ->on('users');
             $table->timestamps();
         });
     }

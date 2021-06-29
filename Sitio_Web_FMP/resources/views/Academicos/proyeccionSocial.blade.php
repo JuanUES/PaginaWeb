@@ -36,19 +36,19 @@
                             <p class="mb-1 font-weight-bold">Jefe de la Unidad</p>
                             @guest
                             <p class="text-muted font-15 text-justify">
-                                Lic. Edwin Arnoldo Cerón Chávez     
+                                {!!count($jefaturas)?$jefaturas[0]->sector_dep_unid:null;!!}   
                             </p>
                             @endguest
                             @auth
                             <div class="row">
                                 <div class="col-xl-12">
-                                    <form action="" method="POST">
+                                    <form action="{{ route('JefeProyeccionSocial') }}" method="POST">
                                         @csrf
                                         <div class="row my-2">                                            
                                             <div class="col-lg-6">
                                                 <input type="text" class="form-control" required 
                                                 placeholder="Jefe de la Unidad (Obligatorio)"
-                                                name="periodo" 
+                                                name="jefatura" value="{!!count($jefaturas)?$jefaturas[0]->sector_dep_unid:null;!!}"
                                                 />
                                             </div>
                                             <div class="col-lg-2">
@@ -240,7 +240,7 @@
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h4 class="modal-title" id="myCenterModalLabel">Zona para subir imágenes</h4>
+                                                <h4 class="modal-title" id="myCenterModalLabel">Zona para subir PDF</h4>
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                             </div>
                                             <div class="modal-body">
@@ -260,9 +260,24 @@
                                 </div><!-- /.modal -->
                                 @endauth
                             </div> 
-                            <ol>
+                            <ol id="listaPDF">
                             @foreach ($pdfs as $item)                                
-                                <li><a type="button" href="{!!public_path() . '/files/pdfs/'.$item->file !!}">{!!$item->file !!}</a></li>                                
+                                <li class="py-1">
+                                    @auth
+                                        <form action="{{ route('EliminarProyeccionPDF', ['id'=>$item->id]) }}" method="POST">
+                                            @method('DELETE')
+                                            @csrf
+                                                <button data-toggle="tooltip" data-placement="left" title="Eliminar" data-original-title="Tooltip on left"
+                                                type="submit" class="btn btn-icon btn-outline-danger btn-sm waves-effect waves-light"> 
+                                                    <i class="mdi mdi-close"></i> 
+                                                </button>
+                                                <a type="button" href="{{ route('index') }}{!!'/files/pdfs/'.$item->file !!}" target="_blank">{!!$item->file !!}</a>
+                                        </form>
+                                    @endauth
+                                    @guest
+                                        <a type="button" href="{{ route('index') }}{!!'/files/pdfs/'.$item->file !!}" target="_blank">{!!$item->file !!}</a>
+                                    @endguest
+                                </li>                                
                             @endforeach
                             </ol>
                             

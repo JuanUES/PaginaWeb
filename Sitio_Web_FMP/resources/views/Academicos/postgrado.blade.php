@@ -28,45 +28,22 @@
                 <div class="col-xl-8 px-3">
                     <div class="tab-content pt-0" id="v-pills-tabContent">
                         <div class="tab-pane fade active show" id="v-pills-index3" role="tabpanel" aria-labelledby="v-pills-index-tab3">
-                            <h3 class="my-1">Postgrado</h3>                            
                             <div class="row py-1">
                                 <div class="col order-first ">
+                                    <h3 class="my-1">Postgrado</h3>
                                     <h4>Aviso de Convocatoria de Ingresos</h4>
                                 </div>
+
                                 @auth
                                 <div class="col-lg-3 order-last">
-                                    <a href="" class="btn btn-block btn-info tex-left" 
-                                    data-toggle="modal" data-target=".bs-example-modal-center">
-                                        <div class="mdi mdi-upload mdi-16px text-center"> Agregar Imagen</div>
-                                    </a>
-                                </div>                            
-                                @endauth        
-                                <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h4 class="modal-title" id="myCenterModalLabel">Zona para subir imágenes</h4>
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                            </div>
-                                            <div class="modal-body">
-                                                
-                                                <form action="#" method="post"
-                                                class="dropzone" id="my-awesome-dropzone">
-                                                    @csrf                                 
-                                                    <div class="dz-message needsclick">
-                                                        <i class="h3 text-muted dripicons-cloud-upload"></i>
-                                                        <h3>Suelta los archivos aquí o haz clic para subir.</h3>
-                                                    </div>
-                                                    <div class="dropzone-previews"></div>
-                                                </form>
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->
-                            </div>
-                            <div class="row"> 
-                                <!-- end col -->
-                            </div> <!-- end row-->          
+                                    <!-- Button trigger modal noticia-->
+                                    <button type="button" class="btn btn-block btn-primary waves-effect waves-light" 
+                                        data-toggle="modal" data-target="#myModalMaestrias">
+                                        <i class="mdi mdi-upload mdi-16px text-center"></i> Agregar Imagen
+                                    </button>
+                                </div>  
+                                @endauth
+                            </div>         
                             <p class="mb-1 font-weight-bold">Grado y título que otorga:</p>
                             <p class="text-muted font-15">
                                 Licenciado (a) en trabajo social.
@@ -133,14 +110,21 @@
                 </div> <!-- end col -->
                 <div class="col-xl-4 ">
                     <h4>Maestrias</h4>
+                        @auth
+                        <a class="btn btn-info mb-2  btn-block text-white"><i class="dripicons-document"></i> Nueva Maestria</a>
+                       
+                        @endauth 
                     <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
+                                     
+                        
                         <a class="nav-link mb-2 btn-outline-danger  border" id="v-pills-social-tab2" data-toggle="pill" href="#v-pills-social2" role="tab" aria-controls="v-pills-social2"
                             aria-selected="false">
                             Licenciatura en Trabajo Social</a>
                         <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-profile-tab2" data-toggle="pill" href="#v-pills-profile2" role="tab" aria-controls="v-pills-profile2"
                             aria-selected="false">
                             Administracion de Maestrias</a>
-                        </div>
+                            
+                    </div>
                 </div> <!-- end col -->
             </div> <!-- end row--> 
         </div> <!-- end card-box -->

@@ -11,7 +11,9 @@
 
     <script>
         $(document).ready(function(){
-            $("#btnAgregarEmp").on('click',function(){
+
+
+           /* $("#btnAgregarEmp").on('click',function(){
                 let _url = `{{ route('Empleado.empleado') }}`;
                 
                 $.ajax({
@@ -31,6 +33,16 @@
                         $("#row_"+id).remove();
                     }
                 });// fin ajax
+            });*/
+            $("#btnAgregarEmp").on('click',function(){
+                $.ajax({
+                    type: $('#empleadoForm').attr('method'), 
+                    url: $('#empleadoForm').attr('action'),
+                    data: $('#empleadoForm').serialize(),
+                    success: function (data) { 
+                        alert('Datos enviados !!!'); 
+                    } 
+                });
             });
         });
     </script> 
@@ -47,78 +59,75 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
-            <form name="empleadoForm" action="" method="POST">
-                @csrf
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" placeholder="Digite el nombre">
-                          </div>
+        <form id="empleadoForm" action="{{ route('Empleado.empleado') }}" method="POST">
+            <div class="modal-body">
+                    @csrf
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Nombre</label>
+                                <input type="text" class="form-control" name="nombre" placeholder="Digite el nombre">
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Apellido</label>
+                                <input type="text" class="form-control" name="apellido"  placeholder="Digite el apellido">
+                            
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Apellido</label>
-                            <input type="text" class="form-control" id="apellido"  placeholder="Digite el apellido">
-                           
-                          </div>
+                    
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">D.U.I.</label>
+                                <input type="text" class="form-control" name="dui" placeholder="Digite el número de D.U.I.">
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">N.I.T.</label>
+                                <input type="text" class="form-control" name="nit" placeholder="Digite el número de N.I.T.">
+                            </div>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">D.U.I.</label>
-                            <input type="text" class="form-control" id="dui" placeholder="Digite el número de D.U.I.">
-                          </div>
+                    
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Teléfono</label>
+                        <input type="tel" class="form-control" name="telefono" placeholder="Digite el número de teléfono">
                     </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">N.I.T.</label>
-                            <input type="text" class="form-control" id="nit" placeholder="Digite el número de N.I.T.">
-                          </div>
-                    </div>
-                </div>
-                
 
-                 
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Teléfono</label>
-                    <input type="tel" class="form-control" id="tel" placeholder="Digite el número de teléfono">
-                  </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Tipo empleado</label>
+                    <select class="custom-select" name="tipo_jefe">
+                        <option value="1">Decano</option>
+                        <option value="2">Vice-decano</option>
+                        <option value="3">Administrativo</option>
+                        <option value="4">Académico</option>
+                    </select>
+                    </div>
 
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Tipo empleado</label>
-                <select class="custom-select" name="emepleadosSelect" id="empleadosSelect">
-                    <option value="1">Decano</option>
-                    <option value="2">Vice-decano</option>
-                    <option value="3">Administrativo</option>
-                    <option value="4">Académico</option>
-                </select>
-                  </div>
-
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Jefe</label>
-                    @if (count($empleadoJefe))
-                        <select class="custom-select" name="" id="">
-                            @foreach ($empleadoJefe as $item)
-                            <option value="{!!$item->id!!}">{!!$item->nombre.' '.$item->apellido!!}</option>
-                            @endforeach
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Jefe</label>
+                        
+                            @if (count($empleadoJefe))
+                            <select class="custom-select" name="jefe">
+                                @foreach ($empleadoJefe as $item)
+                                <option value="{!!$item->id!!}">{!!$item->nombre.' '.$item->apellido!!}</option>
+                                @endforeach
+                            @else
+                            <select class="custom-select" name="jefe" disabled>
+                                <option value="">Sin datos</option>
+                            @endif          
                         </select>
-                    @else
-                        <select class="custom-select" name="" disabled>
-                            <option value="">Sin datos</option>
-                        </select>
-                    @endif                 
-                  </div>
-                
-              </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-primary" id="btnAgregarEmp">Guardar empleado</button>
-        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="submit" id="btnAgregarEmp" class="btn btn-primary">Guardar empleado</button>
+            </div>
+        </form>
       </div>
     </div>
   </div>

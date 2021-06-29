@@ -138,8 +138,8 @@
                                     <!-- Button trigger modal noticia-->
                                     <button type="button" class="btn btn-block btn-primary waves-effect waves-light" 
                                     data-toggle="modal" data-target="#myModalNoticia">
-                                   <i class="mdi mdi-bulletin-board mdi-16px"></i> Nueva Noticia
-                                </button>
+                                        <i class="mdi mdi-bulletin-board mdi-16px"></i> Nueva Noticia
+                                    </button>
                                 </div>  
                                 <!-- noticia modal content -->
                                 <div id="myModalNoticia" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -374,7 +374,7 @@
                                 <div class="col-xl-12"><h3>Siguenos en facebook</h3></div>
                                 <div class="col-xl-12 text-center" style="overflow: auto;">
                                     <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FFacultad-Multidisciplinaria-Paracentral-Decanato-104296228519520&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=false&hide_cover=false&show_facepile=true&appId" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-                                                        </iframe> 
+                                    </iframe> 
                                 </div>                                                                                                                
                             </div>                                                         
                         </div>

@@ -6,14 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Pagina\JuntaJefatura;
 use App\Models\Pagina\PDF;
+use File;
 
 class ProyeccionSocialController extends Controller
 {
     public function index()
     { 
         $pdfs = PDF::where('localizacion','ProyeccionSocial')->get();
-        $coordinadores = JuntaJefatura::where('tipo','=','4')->get();
-        return view('Academicos.proyeccionSocial',compact('coordinadores','pdfs'));
+        $coordinadores = JuntaJefatura::where('tipo',4)->get();
+        $jefaturas  = JuntaJefatura::where('nombre','jefatura') -> where('tipo',5) -> get();
+        return view('Academicos.proyeccionSocial',compact('coordinadores','pdfs','jefaturas'));
     }
     
     /**
@@ -55,7 +57,7 @@ class ProyeccionSocialController extends Controller
         $_jefatura -> user            =  auth()->id();
         $_jefatura -> save();
         
-        return redirect('/');
+        return redirect()->route('proyeccionSocial');
     }
 
     /**
@@ -72,7 +74,24 @@ class ProyeccionSocialController extends Controller
         $juntaJefatura =  JuntaJefatura::find($id);        
         $juntaJefatura -> delete();
         
-        return redirect()->route('');
+        return redirect()->route('proyeccionSocial');
         
+    }
+
+    public function eliminarPDF(PDF $pdf, $id){
+        /**busco en la base de datos */
+        $_pdf = PDF::find($id);
+
+        if($_pdf != null){
+
+            /**Elimino del servidor el pdf */
+            File::delete(public_path() . '/files/pdfs/'.$_pdf->file); 
+
+            /**Elimino de la base de datos */
+            $_pdf -> delete();
+        }
+
+        /**Redirecciono a la vista de proyeccion */
+        return redirect(route('proyeccionSocial').'#listaPDF');
     }
 }
