@@ -22,7 +22,10 @@ class EmpleadoController extends Controller
         'nit' => 'required|max:40',
         'telefono' => 'required|max:9',
         ]);
-        
+        if ($request->fails())
+        {
+            return response()->json(['errors'=>$request->errors()->all()]);
+        }
         $empleado = Empleado::updateOrCreate(['apellido'=>$request->apellido,
             'nombre'=>$request->nombre,
             'dui'=>$request->dui,
