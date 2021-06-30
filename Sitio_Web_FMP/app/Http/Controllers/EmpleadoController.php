@@ -9,18 +9,19 @@ class EmpleadoController extends Controller
     function index(){
         
         $empleadoJefe = Empleado::where('jefe',null)->get();
+        $todosLosEmpleados=Empleado::get();
 
-        return view('Admin.empleados.empleado',compact('empleadoJefe'));
+        return view('Admin.empleados.empleado',compact('empleadoJefe','todosLosEmpleados'));
     }
 
     public function store (Request $request){
 
-        /*$request->validate(['apellido' => 'required|max:20',
+        $request->validate(['apellido' => 'required|max:20',
         'nombre' => 'required|max:25',
         'dui' => 'required|max:10',
         'nit' => 'required|max:40',
         'telefono' => 'required|max:9',
-        ]);*/
+        ]);
         
         $empleado = Empleado::updateOrCreate(['apellido'=>$request->apellido,
             'nombre'=>$request->nombre,
