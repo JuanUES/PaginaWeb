@@ -8,7 +8,7 @@
 }
 
 #dtNoticiasthead{
-    display:none; 
+    display:none;
 }
 
 carousel-inner > .item > img {
@@ -42,6 +42,16 @@ carousel-inner > .item > img {
     }
 }
 
+
+
+@media screen and (min-width: 992px) {
+    .titulo-responsive {
+        display: none;
+    }
+    .margin-start{
+        margin-top: 130px;
+    }
+}
 /*@media screen and (min-width: 992px) {
     .ocultar-div{
             display:none;

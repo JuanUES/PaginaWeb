@@ -131,7 +131,17 @@ class TransparenciaController extends Controller
     public function web($categoria){
         $documentos = Transparencia::where('estado', true)
             ->where('categoria', $categoria)
+            ->paginate(2);
+        return view('Transparencia-web.documentos', compact(['documentos','categoria']));
+    }
+
+    public function documento($categoria, $id){
+        $documentos = Transparencia::where('estado', true)
+            ->where('categoria', $categoria)
             ->get();
-        return view('index-transparencia', compact('documentos'));
+
+        $documento = Transparencia::findOrFail($id);
+
+        return view('Transparencia-web.documento', compact(['documentos', 'categoria', 'documento']));
     }
 }

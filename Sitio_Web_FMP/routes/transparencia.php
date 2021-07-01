@@ -26,3 +26,4 @@ Route::patch('/admin/transparencia/{id}', 'App\Http\Controllers\TransparenciaCon
 
 //RUTAS WEB
 Route::get('/transparencia/{categoria}', 'App\Http\Controllers\TransparenciaController@web');
+Route::get('/transparencia/{categoria}/{id}', 'App\Http\Controllers\TransparenciaController@documento');
