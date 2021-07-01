@@ -105,6 +105,7 @@ class TransparenciaController extends Controller
             'titulo' => 'required',
             "documento" => "required|mimes:pdf",
         ];
+        
         $this->validate($request, $campos);
 
         $requestData = $request->all();

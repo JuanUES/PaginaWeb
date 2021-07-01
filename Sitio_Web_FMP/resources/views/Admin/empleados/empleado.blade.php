@@ -1,51 +1,14 @@
 @extends('layouts.admin')
 
 @section('plugins')
-<link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />    
+<link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" /> 
 @endsection
 @section('plugins-js')
    <!--Librerias js para datatable
     <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
     <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
     <script src="{{ asset('js/index/index.datatable.js') }}"></script>-->
-
-    <script>
-        $(document).ready(function(){
-
-
-           /* $("#btnAgregarEmp").on('click',function(){
-                let _url = `{{ route('Empleado.empleado') }}`;
-                
-                $.ajax({
-                    url: _url,
-                    type: 'POST',
-                    data: {
-                    _token: "{{csrf_token()}}",
-                    apellido: $('#apellido').val(),
-                    nombre: $('#nombre').val(),
-                    dui: $('#dui').val(),
-                    nit: $('#nit').val(),
-                    telefono: $('#telefono').val(),
-                    tipo_jefe: $('#tipo_empleado').val(),
-                    jefe:$('#jefe').val()
-                    },
-                    success: function(response) {
-                        $("#row_"+id).remove();
-                    }
-                });// fin ajax
-            });*/
-            $("#btnAgregarEmp").on('click',function(){
-                $.ajax({
-                    type: $('#empleadoForm').attr('method'), 
-                    url: $('#empleadoForm').attr('action'),
-                    data: $('#empleadoForm').serialize(),
-                    success: function (data) { 
-                        alert('Datos enviados !!!'); 
-                    } 
-                });
-            });
-        });
-    </script> 
+    <script src="{{ asset('template-admin/dist/assets/js/licencia/httpLicencia.min.js') }}"></script>
 @endsection
 
 @section('content')
@@ -125,7 +88,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="submit" id="btnAgregarEmp" class="btn btn-primary">Guardar empleado</button>
+                <button type="button" class="btn btn-primary" onClick="submitForm('#empleadoForm')">Guardar empleado</button>
             </div>
         </form>
       </div>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Licencias\Empleado;
+use Illuminate\Support\Facades\Validator;
+
 class EmpleadoController extends Controller
 {
     function index(){
@@ -15,18 +17,23 @@ class EmpleadoController extends Controller
     }
 
     public function store (Request $request){
+        try{
 
-        $request->validate(['apellido' => 'required|max:20',
-        'nombre' => 'required|max:25',
-        'dui' => 'required|max:10',
-        'nit' => 'required|max:40',
-        'telefono' => 'required|max:9',
-        ]);
-        if ($request->fails())
-        {
-            return response()->json(['errors'=>$request->errors()->all()]);
+            $validator = Validator::make($request->all(),[
+                'apellido' => 'required|max:20',
+                'nombre' => 'required|max:25',
+                'dui' => 'required|max:10',
+                'nit' => 'required|max:40',
+                'telefono' => 'required|max:9',
+            ]);         
+
+        if($validator->fails())
+        {            
+            return response()->json(['errors'=>$validator->errors()->all()]);
         }
-        $empleado = Empleado::updateOrCreate(['apellido'=>$request->apellido,
+
+        $empleado = Empleado::updateOrCreate([
+            'apellido'=>$request->apellido,
             'nombre'=>$request->nombre,
             'dui'=>$request->dui,
             'nit'=>$request->nit,
@@ -35,8 +42,12 @@ class EmpleadoController extends Controller
             'tipo_jefe'=>$request->tipo_jefe,
             'jefe'=>$request->jefe,
         ]);
-
+        
         return response()->json(['code'=>200, 'message'=>'Empleado añadido correctamente','data' => $empleado], 200);
+        
+        }catch(Exception $e){
+            echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+        }
     }
 
 
