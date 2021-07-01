@@ -17,6 +17,10 @@
         <link href="{{ asset('css/icons.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/app.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/base.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet" />
+        <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" />
+        <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
+
 
         @yield('appcss')
 
@@ -213,6 +217,14 @@
         <script src="{{ asset('js/vendor.min.js') }}"></script>
         <!-- App js -->
         <script src="{{ asset('js/app.min.js') }}"></script>
+
+
+
+        <script src="{{ asset('template-admin/dist/assets/libs/moment/moment.min.js') }}"></script>
+        <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.js') }}"></script>
+        <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+        <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+
         @yield('footerjs')
 
     </body>

@@ -42,8 +42,6 @@ carousel-inner > .item > img {
     }
 }
 
-
-
 @media screen and (min-width: 992px) {
     .titulo-responsive {
         display: none;
@@ -70,4 +68,10 @@ carousel-inner > .item > img {
 }
 .center-v {
     align-items: center;
+}
+
+
+.color-fa-main{
+    color: rgb(180, 58, 58);
+    color: linear-gradient(90deg, rgba(180, 58, 58, 0.8589636538209033) 0%, rgba(253, 29, 29, 1) 34%, rgba(252, 176, 69, 1) 100%);
 }
