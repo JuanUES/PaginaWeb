@@ -170,15 +170,16 @@ class TransparenciaController extends Controller
     {
         $categoria = $request->get('category');
         $keyword = $request->get('search');
-        //$fechaStart = $request->get('start');
-       // $fechaEnd = $request->get('end');
+        $fechaStart = strftime("%Y-%m-%d", strtotime($request->get('start')));
+        $fechaEnd = strftime("%Y-%m-%d", strtotime($request->get('end')));
         $perPage = 10;
 
-        if (!empty($keyword) || !empty($categoria) ) {
-            $items = Transparencia::where('estado', true)->where('categoria', 'LIKE', "%$categoria%")
-                ->where('titulo', 'LIKE', "%$keyword%")
+        if (!empty($keyword) || !empty($categoria) || !empty($fechaStart) || !empty($fechaEnd)) {
+            $items = Transparencia::where('estado', true)
+                ->where('categoria', $categoria)
+                ->orWhere('titulo', 'LIKE', "%$keyword%")
                 ->orWhere('descripcion', 'LIKE', "%$keyword%")
-                //->orWhereBetween('created_at', [$fechaStart, $fechaEnd])
+                ->orWhereBetween('created_at', [$fechaStart, $fechaEnd])
                 ->latest()
                 ->paginate($perPage);
         } 

@@ -88,9 +88,8 @@
                         </form>
                     </td>
                     <td class="text-center">
-                        {{-- <a href="{{ url('/employees/' . $item->id) }}" title="Detalle"><button class="btn btn-info btn-sm"><i class="fa fa-eye fa-fw" aria-hidden="true"></i></button></a> --}}
+                        <button type="button" data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-info btn-sm openModal"><i class="fa fa-eye fa-fw" aria-hidden="true"></i></button>
                         <a href="{{ url('/admin/transparencia/edit/' . $item->id) }}" title="Modificar contenido"><button class="btn btn-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button></a>
-
                         <form method="POST" action="{{ url('/employees' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
                             {{ method_field('DELETE') }}
                             {{ csrf_field() }}
@@ -106,4 +105,38 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+
+    $(".openModal").click(function (e) {
+        e.preventDefault();
+        $('#modalView').modal('show');
+        
+    });
+</script>
+
 @endsection
+
+
+@section('modals')
+<!-- Modal -->
+<div class="modal fade" id="modalView" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> <i class="fa fa-info-circle"></i> Archivo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-12 col-sm-7">
+                <div class="card-box" id="content">
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+@endsection
+

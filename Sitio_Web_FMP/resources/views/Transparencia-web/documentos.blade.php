@@ -21,8 +21,9 @@
             <div class="col-12">
                 <div class="card-box ribbon-box">
                     <div class="ribbon ribbon-danger float-left">{{ strftime("%A, %d de %B de %Y", strtotime($item->created_at)) }}</div>
+                    <div class="float-right"><a href="{{ route('downloadFile', $item->documento) }}"><i class="fa fa-download" aria-hidden="true" style="color: brown"></i></a></div>
                     <div class="ribbon-content">
-                        <h3><a href="{{ url('transparencia').'/'.$categoria.'/'.$item->id }}">{{ $item->titulo }}</a></h3>
+                        <h3><a href="{{ url('transparencia').'/'.$categoria.'/'.$item->id }}">{{ $item->titulo }}</a></h3>                        
                         <p>{!! $item->descripcion !!}</p>
                         <div class="float-right">
                             <a href="{{ url('transparencia').'/'.$categoria.'/'.$item->id }}"> <i class="fa fa-eye"></i> Ver mas</a>
