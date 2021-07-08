@@ -27,3 +27,7 @@ Route::patch('/admin/transparencia/{id}', 'App\Http\Controllers\TransparenciaCon
 //RUTAS WEB
 Route::get('/transparencia/{categoria}', 'App\Http\Controllers\TransparenciaController@web');
 Route::get('/transparencia/{categoria}/{id}', 'App\Http\Controllers\TransparenciaController@documento');
+Route::get('/transparencia/resultado/a/b', 'App\Http\Controllers\TransparenciaController@busqueda');
+
+//RUTAS DESCARGA ARCHIVOS
+Route::get('/transparencia/download/a/b/{id}', 'App\Http\Controllers\TransparenciaController@dowload_Storage')->name('downloadFile');

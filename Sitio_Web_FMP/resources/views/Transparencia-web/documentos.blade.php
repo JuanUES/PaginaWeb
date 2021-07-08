@@ -4,10 +4,11 @@
 
 <div class="card-box margin-start">
     @php
-        $titulo = "Marcos Normativos ";
+        //$titulo = "Marcos Normativos ";
+        $titulo = explode("-", $categoria);
     @endphp
 
-    <h1 class="text-center text-danger font-weight-bold">Marcos Normativos</h1>
+    <h1 class="text-center text-danger font-weight-bold">{{ ucfirst("$titulo[0]"). " " .ucfirst("$titulo[1]")  }}</h1>
     <hr>
 </div>
 <div class="row">
