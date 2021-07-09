@@ -25,6 +25,9 @@
         <form id="empleadoForm" action="{{ route('Empleado.empleado') }}" method="POST">
             <div class="modal-body">
                     @csrf
+                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" 
+                        role="alert" style="display:none" id="notificacion">                                               
+                    </div>
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="form-group">
@@ -88,7 +91,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" onClick="submitForm('#empleadoForm')">Guardar empleado</button>
+                <button type="button" class="btn btn-primary" onClick="submitForm('#empleadoForm','#notificacion')">Guardar empleado</button>
             </div>
         </form>
       </div>

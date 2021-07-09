@@ -22,7 +22,7 @@
                         @auth                           
                         <div class="col-lg-2 order-last container-fluid">
                             <a type="button" href="#" class="btn btn-block btn-info"
-                             data-toggle="modal" data-target="#myModalDirectorio"><i class="dripicons-document"></i> Nuevo Contacto</a>
+                            data-toggle="modal" data-target="#myModalDirectorio"><i class="dripicons-document"></i> Nuevo Contacto</a>
                             <!-- directorio modal content -->
                         <div id="myModalDirectorio" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -122,7 +122,7 @@
                         </table>
                     </div> <!-- end table-responsive-->
                     @else
-                    <p class="border p-2 text-center">No hay datos registrados.</p>
+                    <p class="border p-2">No hay datos registrados.</p>
                     @endif         
                              
                 </div> <!-- end card-box -->

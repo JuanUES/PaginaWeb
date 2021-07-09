@@ -5,18 +5,10 @@ namespace App\Http\Controllers\Pagina;
 use App\Http\Controllers\Controller;
 use App\Models\Pagina\Maestria;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class MaestriaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -36,7 +28,42 @@ class MaestriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+
+            $validator = Validator::make($request->all(),[
+                'nombre' => 'required|max:255',
+                'titulo' => 'required|max:255',
+                'modalidad' => 'required|max:255',
+                'asignaturas' => 'required|max:255|numeric',
+                'duracion' => 'required|max:255',
+                'unidades' =>'required|numeric|max:255',
+                'precio' =>'required|numeric|max:255',
+                'contenido' =>'required'
+            ]);         
+
+            if($validator->fails())
+            {            
+                return response()->json(['error'=>$validator->errors()->all()]);                
+            }
+
+            $ma = new Maestria();
+            $ma -> nombre               = $request->nombre;
+            $ma -> titulo               = $request->titulo;
+            $ma -> modalidad            = $request->modalidad;
+            $ma -> numero_asignatura    = $request->asignaturas;
+            $ma -> duracion             = $request->duracion;
+            $ma -> unidades_valorativas = $request->unidades;
+            $ma -> precio               = $request->precio;
+            $ma -> contenido            = $request->contenido;
+            $ma -> estado               = true;
+            $ma -> user                 = auth()->id();   
+            $ma -> save();         
+        
+            return response()->json(['mensaje'=>'Registro exitoso.']);
+        
+        }catch(Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
     }
 
     /**

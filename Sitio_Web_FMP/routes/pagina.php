@@ -7,6 +7,8 @@ use App\Http\Controllers\Pagina\EstructuraOrganizativaController;
 use App\Http\Controllers\Pagina\JuntaJefaturaController;
 use App\Http\Controllers\Pagina\DirectorioController;
 use App\Http\Controllers\Pagina\ProyeccionSocialController;
+use App\Http\Controllers\Pagina\MaestriaController;
+use App\Http\Controllers\Pagina\PostgradoController;
 
 /**PDF ------------------------------------------------------------------*/
 
@@ -100,9 +102,11 @@ Route::post('ProyeccionSocial/Coordinadores/',[ProyeccionSocialController::class
 Route::delete('ProyeccionSocial/EliminarPDF/{id}',[ProyeccionSocialController::class, 'eliminarPDF'])
 ->middleware(['auth'])->name('EliminarProyeccionPDF');
 
-Route::get('Postgrado', function () {
-    return view('Academicos.postgrado');
-})->name('postgrado');
+Route::get('Postgrado',[PostgradoController::class,'index'])->name('postgrado');
+
+Route::post('Postgrado/Maestria/Registro',[MaestriaController::class,'store'])
+->middleware(['auth'])
+->name('Postgrado.registro');
 
 /**Administrativo */
 Route::get('/AdministracionFinanciera', function () {
