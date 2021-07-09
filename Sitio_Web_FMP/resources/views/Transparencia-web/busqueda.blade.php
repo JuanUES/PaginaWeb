@@ -26,7 +26,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="input-daterange input-group" data-provide="datepicker">
                 <input type="text" class="form-control" name="start"  value="{{ request('start') }}"/>
                 <input type="text" class="form-control" name="end" value="{{ request('end') }}"/>
@@ -38,7 +37,6 @@
     @php
         setlocale(LC_TIME,"es_SV");
     @endphp
-
         @foreach($items as $item)
             <div class="col-12">
                 <div class="card-box ribbon-box">
@@ -51,36 +49,4 @@
             </div>
         @endforeach
 </div>
-<!--
-<div class="row">
-    <div class="col-12 col-sm-12 col-md-12">
-        <div class="card-box">
-            <div class="table-responsive">
-                <table class="table table-sm">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Titulo</th>
-                            <th>Descripcion</th>
-                            <th>Fecha de publicacion</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($items as $item)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td><a href="{{ url('transparencia').'/'.request('category').'/'.$item->id }}" data-id="{{ Hash::make($item->id) }}" ><i class="fa fa-file-pdf"></i> {{ $item->titulo }}</td>
-                            <td>{!! $item->descripcion !!}</td>
-                            <td>{!! $item->created_at !!}</td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-                <div class="d-flex justify-content-center">
-                </div>
-            </div>
-        </div>
-    </div>
-</div>-->
-
 @endsection

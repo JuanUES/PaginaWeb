@@ -18,9 +18,10 @@ class CreateTransparenciaTable extends Migration
             $table->string('titulo');
             $table->text('descripcion');
             $table->string('documento');
-            $table->boolean('publicar')->default(false);
+            $table->enum('publicar',['publicado', 'sin publicar'])->default('publicado');
             $table->string('categoria');
-            $table->boolean('estado')->default(true);
+            $table->string('subcategoria')->nullable();
+            $table->enum('estado',['activo','inactivo'])->default('activo');
             $table->timestamps();
         });
     }

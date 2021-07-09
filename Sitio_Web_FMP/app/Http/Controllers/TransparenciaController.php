@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Transparencia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\DataTables;
 
 class TransparenciaController extends Controller
 {
@@ -15,25 +16,41 @@ class TransparenciaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
-        $categoria = Route::currentRouteName();
-        $keyword = $request->get('search');
-        $perPage = 10;
+    public function index(Request $request, $categoria){
 
-        if (!empty($keyword)) {
-            $items = Transparencia::where('estado', true)->where('categoria', $categoria)
-                ->where('titulo', 'LIKE', "%$keyword%")
-                ->orWhere('descripcion', 'LIKE', "%$keyword%")
-                ->latest()
-                ->paginate($perPage);
-        } else {
-            $items = Transparencia::where('estado', true)
-                        ->where('categoria', $categoria)
-                        ->latest()
-                        ->paginate($perPage);
+        // dd($request);
+
+        // $categoria = Route::currentRouteName();
+
+        // dd($categoria);
+
+        // $keyword = $request->get('search');
+        // $perPage = 10;
+
+        // if (!empty($keyword)) {
+        //     $items = Transparencia::where('estado', true)->where('categoria', $categoria)
+        //         ->where('titulo', 'LIKE', "%$keyword%")
+        //         ->orWhere('descripcion', 'LIKE', "%$keyword%")
+        //         ->latest()
+        //         ->paginate($perPage);
+        // } else {
+        //     $items = Transparencia::where('estado', true)
+        //                 ->where('categoria', $categoria)
+        //                 ->latest()
+        //                 ->paginate($perPage);
+        // }
+        if ($request->ajax()) {
+            $data = Transparencia::where('estado','activo')
+                                ->where('categoria', $categoria)
+                                ->get();
+            return DataTables::of($data)
+                ->addColumn('publicar', 'Transparencia.dataTable.publicar')
+                ->addColumn('action', 'Transparencia.dataTable.actions')
+                ->rawColumns(['action', 'publicar'])
+                ->make(true);
         }
-        return view('Transparencia.index', compact(['items','categoria']));
+
+        return view('Transparencia.index', compact(['categoria']));
     }
 
     /**
@@ -106,7 +123,7 @@ class TransparenciaController extends Controller
             'titulo' => 'required',
             "documento" => "required|mimes:pdf",
         ];
-        
+
         $this->validate($request, $campos);
 
         $requestData = $request->all();
@@ -130,59 +147,5 @@ class TransparenciaController extends Controller
         //
     }
 
-    public function web($categoria){
-        $documentos = Transparencia::where('estado', true)
-            ->where('categoria', $categoria)
-            ->paginate(2);
-        return view('Transparencia-web.documentos', compact(['documentos','categoria']));
-    }
 
-    public function resultados(){
-        return view('Transparencia-web.busqueda');
-    }
-
-    public function documento($categoria, $id){
-        $documentos = Transparencia::where('estado', true)
-            ->where('categoria', $categoria)
-            ->get();
-
-        $documento = Transparencia::findOrFail($id);
-
-        return view('Transparencia-web.documento', compact(['documentos', 'categoria', 'documento']));
-    }
-
-    public function dowload_Storage($file){
-        $dl = File::find($file);
-        return Storage::download($dl->documento,$dl->titulo);
-        //return response()->download(public_path('assets/'.$file));
-
-        /*if(Storage::disk('public')->path("/uploads/transparencia/$request->documento")){
-            $path = Storage::disk('public')->path("asset('storage').'/'.$request->documento");
-            $content = file_get_contents($path);
-            return response($content)->witHeaders([
-                'Content-Type'=>mime_content_type($path)
-            ]);
-        }
-        return redirect('/404');*/
-    }
-
-    public function busqueda(Request $request)
-    {
-        $categoria = $request->get('category');
-        $keyword = $request->get('search');
-        $fechaStart = strftime("%Y-%m-%d", strtotime($request->get('start')));
-        $fechaEnd = strftime("%Y-%m-%d", strtotime($request->get('end')));
-        $perPage = 10;
-
-        if (!empty($keyword) || !empty($categoria) || !empty($fechaStart) || !empty($fechaEnd)) {
-            $items = Transparencia::where('estado', true)
-                ->where('categoria', $categoria)
-                ->orWhere('titulo', 'LIKE', "%$keyword%")
-                ->orWhere('descripcion', 'LIKE', "%$keyword%")
-                ->orWhereBetween('created_at', [$fechaStart, $fechaEnd])
-                ->latest()
-                ->paginate($perPage);
-        } 
-        return view('Transparencia-web.busqueda', compact(['items']));
-    }
 }
