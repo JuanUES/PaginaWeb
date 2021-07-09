@@ -220,10 +220,11 @@
 
 
 
-        <script src="{{ asset('template-admin/dist/assets/libs/moment/moment.min.js') }}"></script>
-        <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.js') }}"></script>
+        {{-- <script src="{{ asset('template-admin/dist/assets/libs/moment/moment.min.js') }}"></script> --}}
+        {{-- <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.js') }}"></script> --}}
         <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-        <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
+        <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker-es.js') }}"></script>
+        {{-- <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-daterangepicker/daterangepicker.js') }}"></script> --}}
 
         @yield('footerjs')
 
