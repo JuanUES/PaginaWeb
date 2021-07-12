@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Pagina;
 
 use App\Http\Controllers\Controller;
-use App\Models\Pagina\Maestria;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class PostgradoController extends Controller
@@ -14,8 +14,11 @@ class PostgradoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('Academicos.postgrado');
+    {  
+        $maestrias = DB::table('maestrias')
+            ->leftJoin('p_d_f_s', 'maestrias.pdf', '=', 'p_d_f_s.id')
+            ->get();
+        return view('Academicos.postgrado',compact('maestrias'));
     }
 
     /**
