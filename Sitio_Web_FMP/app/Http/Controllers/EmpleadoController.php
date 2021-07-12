@@ -29,7 +29,8 @@ class EmpleadoController extends Controller
 
         if($validator->fails())
         {            
-            return response()->json(['errors'=>$validator->errors()->all()]);
+            return response()->json(['error'=>$validator->errors()->all()]);
+            
         }
 
         $empleado = Empleado::updateOrCreate([
@@ -43,10 +44,10 @@ class EmpleadoController extends Controller
             'jefe'=>$request->jefe,
         ]);
         
-        return response()->json(['code'=>200, 'message'=>'Empleado añadido correctamente','data' => $empleado], 200);
+        return response()->json(['code'=>200, 'mensaje'=>'Empleado añadido correctamente','data' => $empleado], 200);
         
         }catch(Exception $e){
-            echo 'Excepción capturada: ',  $e->getMessage(), "\n";
+            echo 'Excepción capturada: '.  $e->getMessage(). "\n";
         }
     }
 

@@ -71,7 +71,7 @@
                             </div>
                             <div class="row">                        
                                 @if (count($imgCarrusel) == '0')
-                                    <p class="p-2 mx-2 border"> No hay imagenes para mostrar.</p>
+                                    <p class="p-2 mx-2 border btn-block"> No hay imagenes para mostrar.</p>
                                 @else
                                 <div id="carouselExampleCaptions" class="carousel slide rounded col-xl-12" data-ride="carousel">
                                     <ol class="carousel-indicators">  
@@ -136,7 +136,7 @@
                             @auth
                                 <div class="col-lg-3 order-last">
                                     <!-- Button trigger modal noticia-->
-                                    <button type="button" class="btn btn-block btn-primary waves-effect waves-light" 
+                                    <button type="button" class="btn btn-block btn-info waves-effect waves-light" 
                                     data-toggle="modal" data-target="#myModalNoticia">
                                         <i class="mdi mdi-bulletin-board mdi-16px"></i> Nueva Noticia
                                     </button>

@@ -18,7 +18,7 @@ $codifica3 = convert_uuencode($cadena);
 $decodifica4 = convert_uudecode($codifica3);
 
 --Crear un modelo-------------------------------------------------------
-php artisan make:model <Aqui donde y como se llamara>
+php artisan make:model <Aqui donde y como se llamara> -m
 
 --Crear un controlador con el modelo--
 php artisan make:Controller <Nombre de controlador>  --resource --model=<Nombre del Modelo>

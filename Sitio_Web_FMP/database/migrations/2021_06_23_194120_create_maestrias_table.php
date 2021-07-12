@@ -24,8 +24,9 @@ class CreateMaestriasTable extends Migration
             $table->string('precio')->nullable();;
             $table->longtext('contenido')->nullable();;
             $table->bigInteger('user');
-            $table->bigInteger('PDF')->nullable();
-            $table->foreign('PDF')
+            $table->boolean('estado');
+            $table->bigInteger('pdf')->nullable();
+            $table->foreign('pdf')
                 ->references('id')
                 ->on('p_d_f_s');
             $table->foreign('user')

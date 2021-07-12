@@ -20,7 +20,7 @@
                     <div class="row">
                         <div class="col-xl-12"> 
                             <br>
-                            <h4 class="text-center">Coordinador de la unidad de tecnología de la información</h4>
+                            <h4 class="text-center">Coordinador de la Unidad de Tecnología de la Información</h4>
                             <p class="mb-1 font-weight-bold font-15 text-center">Ing. Herbert Orlando Monge Barrios</p>
                             <br>
                             <h4 class="text-center">Personal de la unidad</h4>
