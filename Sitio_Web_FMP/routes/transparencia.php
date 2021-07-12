@@ -5,9 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 /** RUTAS DE TRANSPARENCIA **/
 
-Route::get('transparencia', function () {
-    return view('index-transparencia');
-});
+
 
 Route::get('admin', function () {
     return view('Admin.home');
@@ -22,16 +20,21 @@ Route::get('admin', function () {
 
 //RUTAS PARA EL CRUD TRANSPARENCIA
 // Route::resource('admin/transparencia', 'App\Http\Controllers\TransparenciaController')->names('admin.transparencia');
-Route::get('/admin/transparencia/{categoria}', 'App\Http\Controllers\TransparenciaController@index')->name('admin.transparencia.index');
-// Route::get('/admin/create/{categoria}', 'App\Http\Controllers\TransparenciaController@create');
-// Route::post('/admin/transparencia/store', 'App\Http\Controllers\TransparenciaController@store');
+Route::get('admin/transparencia/{categoria}', 'App\Http\Controllers\TransparenciaController@index')->name('admin.transparencia.index');
+Route::get('admin/transparencia/{categoria}/create', 'App\Http\Controllers\TransparenciaController@create')->name('admin.transparencia.create');
+Route::post('admin/transparencia/store', 'App\Http\Controllers\TransparenciaController@store')->name('admin.transparencia.store');
 // Route::get('/admin/transparencia/edit/{id}', 'App\Http\Controllers\TransparenciaController@edit');
 // Route::patch('/admin/transparencia/{id}', 'App\Http\Controllers\TransparenciaController@update');
 
 //RUTAS WEB
-Route::get('/transparencia/{categoria}', 'App\Http\Controllers\TransparenciaWebController@web');
-Route::get('/transparencia/{categoria}/{id}', 'App\Http\Controllers\TransparenciaWebController@documento');
-Route::get('/transparencia/resultado/a/b', 'App\Http\Controllers\TransparenciaWebController@busqueda');
+// Route::get('transparencia', function () {
+//     return view('index-transparencia');
+// });
+Route::get( 'transparencia', 'App\Http\Controllers\TransparenciaWebController@index');
+Route::get('transparencia/{categoria}', 'App\Http\Controllers\TransparenciaWebController@web')->name('transparencia');
+Route::get('transparencia/{categoria}/{id}', 'App\Http\Controllers\TransparenciaWebController@documento');
+Route::get('transparencia-busqueda', 'App\Http\Controllers\TransparenciaWebController@busqueda')->name( 'transparencia.busqueda');
+Route::get('transparencia-datatable/{categoria}', 'App\Http\Controllers\TransparenciaWebController@datatable')->name('transparencia.datatable');
 
 //RUTAS DESCARGA ARCHIVOS
-Route::get('/transparencia/download/a/b/{id}', 'App\Http\Controllers\TransparenciaWebController@dowload_Storage')->name('downloadFile');
+Route::get('/transparencia-download/{id}', 'App\Http\Controllers\TransparenciaWebController@download')->name('transparencia.download');

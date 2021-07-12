@@ -5,52 +5,43 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Transparencia;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\DataTables;
 
 class TransparenciaController extends Controller
 {
+    public $categorias = array(
+        'Marco Normativo' => 'marco-normativo',
+        'Marco de Gestion' => 'marco-gestion',
+        'Marco Presupuestario' => 'marco-presupuestario',
+        'Estadisticas' => 'estadisticas',
+        'Documentos de Junta Directiva' => 'documentos-JD'
+    );
+
+    public $subcategorias = ['acuerdos', 'agendas', 'actas'];
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request, $categoria){
+        $titulo = array_search($categoria, $this->categorias, true);
 
-        // dd($request);
-
-        // $categoria = Route::currentRouteName();
-
-        // dd($categoria);
-
-        // $keyword = $request->get('search');
-        // $perPage = 10;
-
-        // if (!empty($keyword)) {
-        //     $items = Transparencia::where('estado', true)->where('categoria', $categoria)
-        //         ->where('titulo', 'LIKE', "%$keyword%")
-        //         ->orWhere('descripcion', 'LIKE', "%$keyword%")
-        //         ->latest()
-        //         ->paginate($perPage);
-        // } else {
-        //     $items = Transparencia::where('estado', true)
-        //                 ->where('categoria', $categoria)
-        //                 ->latest()
-        //                 ->paginate($perPage);
-        // }
         if ($request->ajax()) {
-            $data = Transparencia::where('estado','activo')
+            $data = Transparencia::select('*')
+                                ->where('estado','activo')
                                 ->where('categoria', $categoria)
+                                ->orderByRaw('created_at ASC')
                                 ->get();
             return DataTables::of($data)
+                ->addColumn('descripcion', 'Transparencia.dataTable.descripcion')
                 ->addColumn('publicar', 'Transparencia.dataTable.publicar')
                 ->addColumn('action', 'Transparencia.dataTable.actions')
-                ->rawColumns(['action', 'publicar'])
+                ->rawColumns(['action', 'publicar', 'descripcion'])
                 ->make(true);
         }
-
-        return view('Transparencia.index', compact(['categoria']));
+        return view('Transparencia.index', compact(['categoria', 'titulo']));
     }
 
     /**
@@ -59,7 +50,10 @@ class TransparenciaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create($categoria){
-        return view('Transparencia.create', compact('categoria'));
+        $titulo = array_search($categoria, $this->categorias, true);
+        $subcategorias = $this->subcategorias;
+
+        return view('Transparencia.create', compact('categoria', 'titulo', 'subcategorias'));
     }
 
     /**
@@ -68,8 +62,8 @@ class TransparenciaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
+
         $campos = [
             'titulo' => 'required',
             "documento" => "required|mimes:pdf",
@@ -82,8 +76,12 @@ class TransparenciaController extends Controller
                 ->store('uploads/transparencia', 'public');
         }
 
-        Transparencia::create($requestData);
-        return redirect('admin/'.$request->categoria)->with('flash_message', 'Documento almacenado con exito!');
+        $doc = Transparencia::create($requestData);
+
+        // $categoria = $doc->categoria;
+        // $titulo = array_search($categoria, $this->categorias, true);
+
+        return redirect('admin/transparencia/' . $request->categoria)->with('flash_message', 'Documento almacenado con exito!');
     }
 
     /**

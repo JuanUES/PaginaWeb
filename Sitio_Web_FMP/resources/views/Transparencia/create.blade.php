@@ -6,22 +6,18 @@
         <div class="page-title-box">
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                    {{-- <li class="breadcrumb-item"><a href="javascript: void(0);">Greeva</a></li>
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
-                    <li class="breadcrumb-item active">Form Elements</li> --}}
+                    <li class="breadcrumb-item"><a href="{{ url('admin') }}">Inicio</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.transparencia.index', $categoria) }}">{{ $titulo }}</a></li>
+                    <li class="breadcrumb-item active">Registro</li>
                 </ol>
             </div>
-            <h4 class="page-title"><i class="fa fa-plus-square"></i> Crear Nuevo</h4>
+            <h4 class="page-title"> <i class="fa fa-list"></i> Administracion de {{ $titulo }}</h4>
         </div>
     </div>
 </div>
 
-
 <div class="card-box">
-    {{-- <div class="header-title"> <i class="fa fa-plus-square"></i> Crear Nuevo</div>
-    <hr class="mt-0 pt-0"> --}}
     <div class="card-body">
-
         @if ($errors->any())
             <div class="alert alert-danger" role="alert">
                 <div class="alert-message">
@@ -34,10 +30,8 @@
                 </div>
             </div>
         @endif
-
-        <form method="POST" id="frmTransparencia" action="{{ url('/admin/transparencia/store') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+        <form method="POST" id="frmTransparencia" action="{{ route('admin.transparencia.store') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
             @csrf
-
             @include ('Transparencia.form', ['formMode' => 'create'])
         </form>
     </div>

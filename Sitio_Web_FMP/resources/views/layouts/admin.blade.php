@@ -180,23 +180,23 @@
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <li>
-                                        <a href="{{ url('admin/marco-normativo') }}">Normativo</a>
+                                        <a href="{{ url('admin/transparencia/marco-normativo') }}">Normativo</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('admin/marco-gestion') }}">De Gestión</a>
+                                        <a href="{{ url('admin/transparencia/marco-gestion') }}">De Gestión</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('admin/marco-presupuestario') }}">Presupuestario</a>
+                                        <a href="{{ url('admin/transparencia/marco-presupuestario') }}">Presupuestario</a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="{{ url('admin/estadisticas') }}">
+                                <a href="{{ url('admin/transparencia/estadisticas') }}">
                                     <i class="dripicons-graph-bar "></i> <span> Estadísticas </span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ url('admin/documentos-JD') }}">
+                                <a href="{{ url('admin/transparencia/documentos-JD') }}">
                                     <i class="dripicons-document"></i> <span> Documentos de Junta Directiva </span>
                                 </a>
                             </li>

@@ -1,9 +1,22 @@
 <input type="hidden" name="categoria" value="{{ $categoria }}">
-<div class="form-group">
-    <label for="exampleInputEmail1">Titulo <span class="text-danger">*</span> </label>
-    <input type="text" class="form-control {{ $errors->has('titulo') ? 'is-invalid' : ''}}" id="titulo" name="titulo" aria-describedby="titulo" placeholder="Ingrese el titulo para el Documento" value="{{ isset($transparencia) ? $transparencia->titulo : old('titulo') }}">
-    {!! $errors->first('titulo', '<p class="invalid-feedback">:message</p>') !!}
-    {{-- <small id="titulo" class="form-text text-muted">We'll never share your email with anyone else.</small> --}}
+<div class="row">
+    @if(strcmp('documentos-jd', strtolower($categoria))==0)
+        <div class="col-12 col-sm-3 mb-3" >
+            <label for="titulo">Sub categoria <span class="text-danger">*</span> </label>
+            <select class="custom-select" name="subcategoria" id="subcategoria">
+                @foreach($subcategorias as $key => $value)
+                    <option value="{{ $value }}" {{ (isset($subcategoria) && $subcategoria==$value) ? 'selected' : '' }}>{{ Str::ucfirst($value) }}</option>
+                @endforeach
+            </select>
+        </div>
+    @endif
+    <div class="col-12 col-sm-{{ (strcmp('documentos-jd', strtolower($categoria))==0) ? '9' : '12' }} mb-3">
+        <div class="form-group">
+            <label for="titulo">Titulo <span class="text-danger">*</span> </label>
+            <input type="text" class="form-control {{ $errors->has('titulo') ? 'is-invalid' : ''}}" id="titulo" name="titulo" aria-describedby="titulo" placeholder="Ingrese el titulo para el Documento" value="{{ isset($transparencia) ? $transparencia->titulo : old('titulo') }}">
+            {!! $errors->first('titulo', '<p class="invalid-feedback">:message</p>') !!}
+        </div>
+    </div>
 </div>
 
 <div class="row">
@@ -17,14 +30,15 @@
         <div class="form-group mb-3">
             <label for="summernote-editor">Documento <span class="text-danger">*</span> </label>
             <div class="file-loading">
-                <input id="documento" name="documento" type="file" >
+                <input id="documento" name="documento" class="{{ $errors->has('documento') ? 'is-invalid' : ''}}" type="file" >
+                {!! $errors->first('documento', '<p class="invalid-feedback">:message</p>') !!}
             </div>
         </div>
     </div>
 </div>
 
 <div class="custom-control custom-checkbox">
-    <input type="checkbox" class="custom-control-input" id="publicar" name="publicar" {{ isset($transparencia) ? ( ($transparencia->publicar==true) ? 'checked' : '' ) : 'checked' }}>
+    <input type="checkbox" class="custom-control-input" id="publicar" value="publicado" name="publicar" {{ isset($transparencia) ? ( ($transparencia->publicar==true) ? 'checked' : '' ) : 'checked' }}>
     <label class="custom-control-label" for="publicar">Publicar documento</label>
 </div>
 
@@ -33,8 +47,8 @@
 <hr>
 
 <div class="text-right">
-    <a href="{{ url('/admin').'/'.$categoria }}" title="Back"><button type="button" class="btn btn-dark btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Retroceder</button></a>
-    <button type="submit" class="btn btn-info btn-sm" >{!! $formMode === 'edit' ? '<i class="fa fa-edit"></i>' : '<i class="fa fa-save"></i>' !!} {{ $formMode === 'edit' ? 'Modificar' : 'Guardar' }}</button>
+    <a href="{{ route('admin.transparencia.index', $categoria) }}" title="Listado de documentos"><button type="button" class="btn btn-dark btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Retroceder</button></a>
+    <button type="submit" class="btn btn-info btn-sm" title="Guardar Informacion">{!! $formMode === 'edit' ? '<i class="fa fa-edit"></i>' : '<i class="fa fa-save"></i>' !!} {{ $formMode === 'edit' ? 'Modificar' : 'Guardar' }}</button>
 </div>
 
 @section('plugins')

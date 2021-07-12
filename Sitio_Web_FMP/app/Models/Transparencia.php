@@ -16,6 +16,8 @@ class Transparencia extends Model
         'documento',
         'publicar',
         'categoria',
+        'subcategoria',
         'estado',
+        // 'created_at'
     ];
 }

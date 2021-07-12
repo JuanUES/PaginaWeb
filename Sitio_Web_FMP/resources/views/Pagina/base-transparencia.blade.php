@@ -21,6 +21,9 @@
         <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet" />
         <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet" />
 
+         <!-- DataTables -->
+        <link href="{{ asset('template-admin/dist/assets/libs/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css"/>
+        <link href="{{ asset('template-admin/dist/assets/libs/datatables/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css"/>
 
         @yield('appcss')
 
@@ -70,8 +73,14 @@
                     <!-- Navigation Menu-->
                     <ul class="navigation-menu py-1 color-fondo " >
                         <li class="has-submenu p-1 center-text">
-                            <a href="{{ asset('/') }}" class=" rounded text-left" >
-                                <i class="mdi mdi-arrow-left-box  mdi-24px"></i>Regresar a la Pagina Web </a>
+                            <a href="{{ url('/') }}" class=" rounded text-left" >
+                                <i class="mdi mdi-arrow-left-box  mdi-24px"></i>Regresar a la Pagina Web
+                            </a>
+                        </li>
+                        <li class="has-submenu p-1 center-text">
+                            <a href="{{ url('transparencia') }}" class=" rounded text-left" >
+                                <i class="mdi mdi-home  mdi-24px"></i>Inicio
+                            </a>
                         </li>
                         <li class="has-submenu p-1">
                             <a href="#" class="rounded btn text-left">
@@ -225,6 +234,12 @@
         <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
         <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker-es.js') }}"></script>
         {{-- <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-daterangepicker/daterangepicker.js') }}"></script> --}}
+
+        <!-- Datatable js -->
+        <script src="{{ asset('template-admin/dist/assets/libs/datatables/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ asset('template-admin/dist/assets/libs/datatables/dataTables.bootstrap4.min.js') }}"></script>
+        <script src="{{ asset('template-admin/dist/assets/libs/datatables/dataTables.responsive.min.js') }}"></script>
+        <script src="{{ asset('template-admin/dist/assets/libs/datatables/responsive.bootstrap4.min.js') }}"></script>
 
         @yield('footerjs')
 
