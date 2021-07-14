@@ -26,7 +26,7 @@
             <textarea class="form-control" id="descripcion" name="descripcion" placeholder="Ingrese una descripcion">{{ isset($transparencia) ? $transparencia->descripcion : old('descripcion') }}</textarea>
         </div>
     </div>
-    <div class="col-12 col-sm-12" >
+    <div class="col-12 col-sm-12" {!! isset($transparencia) ? 'style="display: none;"' : '' !!} id="divPDF">
         <div class="form-group mb-3">
             <label for="summernote-editor">Documento <span class="text-danger">*</span> </label>
             <div class="file-loading">
@@ -41,7 +41,6 @@
     <input type="checkbox" class="custom-control-input" id="publicar" value="publicado" name="publicar" {{ isset($transparencia) ? ( ($transparencia->publicar==true) ? 'checked' : '' ) : 'checked' }}>
     <label class="custom-control-label" for="publicar">Publicar documento</label>
 </div>
-
 
 <br><br>
 <hr>

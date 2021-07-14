@@ -50,29 +50,37 @@
 </div>
 
 
+<div class="modal fade" id="modalViewPDF" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"> <i class="fa fa-file-pdf"></i> Visualizacion de PDF</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <object id="PDFdoc" width="100%" height="500px" type="application/pdf" data=""></object>
+        <p id="prueba"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 @endsection
 
 @section('plugins-js')
 <script type="text/javascript">
-
-    $(".openModal").click(function (e) {
-        e.preventDefault();
-        $('#modalView').modal('show');
-
-    });
-
      $(function () {
-        $('table').DataTable({
+        let tabla = $('table').DataTable({
             processing: true,
             serverSide: true,
             ajax: "{{ route('admin.transparencia.index', $categoria) }}",
             columns: [
-                {data: 'created_at', name: 'fecha'},
-                {data: 'titulo', name: 'titulo'},
-                {data: 'descripcion', name: 'descripcion'},
-                {data: 'publicar', name: 'publicar'},
+                {data: 'created_at'},
+                {data: 'titulo'},
+                {data: 'descripcion'},
+                {data: 'publicar'},
                 {
                     data: 'action',
                     width: '150',
@@ -84,29 +92,23 @@
                 url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
             }
         });
+
+        //para actualizar el dom y que reconozca el  class de los botones
+        tabla.on( 'draw', function () {
+            const btns = document.querySelectorAll('.btnViewPDF');
+            btns.forEach(el => el.addEventListener('click', event => {
+                let pdf = event.target.getAttribute("data-pdf");
+                $('#PDFdoc').attr('data',pdf);
+            }));
+
+            const frmPublicar = document.querySelectorAll('.frmPublicar');
+            frmPublicar.forEach(el => el.addEventListener('change', event => {
+                el.submit();
+            }));
+        });
+
+
     });
 </script>
-@endsection
-
-@section('modals')
-<!-- Modal -->
-<div class="modal fade" id="modalView" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"> <i class="fa fa-info-circle"></i> Archivo</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div class="row">
-            <div class="col-12 col-sm-7">
-                <div class="card-box" id="content">
-                </div>
-            </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
 @endsection
 

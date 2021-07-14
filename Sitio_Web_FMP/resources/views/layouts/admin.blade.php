@@ -26,6 +26,8 @@
 
         @yield('plugins')
 
+        {{-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> --}}
+
     </head>
     <body>
         <!-- Begin page -->
@@ -197,7 +199,7 @@
                             </li>
                             <li>
                                 <a href="{{ url('admin/transparencia/documentos-JD') }}">
-                                    <i class="dripicons-document"></i> <span> Documentos de Junta Directiva </span>
+                                    <i class="dripicons-document"></i> <span> Doc. de Junta Directiva </span>
                                 </a>
                             </li>
                             <li class="menu-title">Seguridad</li>
@@ -269,7 +271,6 @@
         </div>
 
 
-        {{-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> --}}
 
         <!-- Vendor js -->
         <script src="{{ asset('template-admin/dist/assets/js/vendor.min.js') }}"></script>
@@ -301,6 +302,7 @@
         {{-- <script src="{{ asset('template-admin/dist/assets/js/pages/form-summernote.init.js') }}"></script> --}}
         <!-- App js -->
         <script src="{{ asset('template-admin/dist/assets/js/app.min.js') }}"></script>
+
 
         @yield('plugins-js')
     </body>

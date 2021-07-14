@@ -23,8 +23,9 @@ Route::get('admin', function () {
 Route::get('admin/transparencia/{categoria}', 'App\Http\Controllers\TransparenciaController@index')->name('admin.transparencia.index');
 Route::get('admin/transparencia/{categoria}/create', 'App\Http\Controllers\TransparenciaController@create')->name('admin.transparencia.create');
 Route::post('admin/transparencia/store', 'App\Http\Controllers\TransparenciaController@store')->name('admin.transparencia.store');
-// Route::get('/admin/transparencia/edit/{id}', 'App\Http\Controllers\TransparenciaController@edit');
-// Route::patch('/admin/transparencia/{id}', 'App\Http\Controllers\TransparenciaController@update');
+Route::get('admin/transparencia/{categoria}/edit/{id}', 'App\Http\Controllers\TransparenciaController@edit')->name('admin.transparencia.edit');
+Route::patch('admin/transparencia/{id}', 'App\Http\Controllers\TransparenciaController@update')->name('admin.transparencia.update');
+Route::post('admin/transparencia-publicar/{id}', 'App\Http\Controllers\TransparenciaController@publicar')->name('admin.transparencia.publicar');
 
 //RUTAS WEB
 // Route::get('transparencia', function () {

@@ -90,10 +90,10 @@ class TransparenciaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id){
-        $transparencia = Transparencia::findOrFail($id);
-        return view('Transparencia.show', compact('transparencia'));
-    }
+    // public function show($id){
+    //     $transparencia = Transparencia::findOrFail($id);
+    //     return view('Transparencia.show', compact('transparencia'));
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -101,10 +101,26 @@ class TransparenciaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id){
+    public function edit($categoria, $id){
         $transparencia = Transparencia::findOrFail($id);
+        $titulo = array_search($categoria, $this->categorias, true);
+        // $categoria = $transparencia->categoria;
+        return view('Transparencia.edit', compact(['transparencia', 'categoria','titulo']));
+    }
+
+    public function publicar($id, Request $request){
+        $transparencia = Transparencia::findOrFail($id);
+
+        // dd($request);
+        $publicar = (isset($request->publicar)) ? 'publicado' : 'sin publicar';
+
+        $transparencia->update([
+            'publicar' => $publicar
+        ]);
+
         $categoria = $transparencia->categoria;
-        return view('Transparencia.edit', compact(['transparencia', 'categoria']));
+        // $categoria = $transparencia->categoria;
+        return redirect('admin/transparencia/' . $categoria)->with('flash_message', 'Documento modificado con exito!');
     }
 
     /**
@@ -131,7 +147,7 @@ class TransparenciaController extends Controller
         }
 
         $transparencia->update($requestData);
-        return redirect('admin/' . $request->categoria)->with('flash_message', 'Documento modificado con exito!');
+        return redirect('admin/transparencia/' . $request->categoria)->with('flash_message', 'Documento modificado con exito!');
     }
 
     /**
