@@ -26,6 +26,7 @@ Route::post('admin/transparencia/store', 'App\Http\Controllers\TransparenciaCont
 Route::get('admin/transparencia/{categoria}/edit/{id}', 'App\Http\Controllers\TransparenciaController@edit')->name('admin.transparencia.edit');
 Route::patch('admin/transparencia/{id}', 'App\Http\Controllers\TransparenciaController@update')->name('admin.transparencia.update');
 Route::post('admin/transparencia-publicar/{id}', 'App\Http\Controllers\TransparenciaController@publicar')->name('admin.transparencia.publicar');
+Route::get('admin/transparencia-file/{id}', 'App\Http\Controllers\TransparenciaController@file')->name('admin.transparencia.file');
 
 //RUTAS WEB
 // Route::get('transparencia', function () {
@@ -36,6 +37,5 @@ Route::get('transparencia/{categoria}', 'App\Http\Controllers\TransparenciaWebCo
 Route::get('transparencia/{categoria}/{id}', 'App\Http\Controllers\TransparenciaWebController@documento');
 Route::get('transparencia-busqueda', 'App\Http\Controllers\TransparenciaWebController@busqueda')->name( 'transparencia.busqueda');
 Route::get('transparencia-datatable/{categoria}', 'App\Http\Controllers\TransparenciaWebController@datatable')->name('transparencia.datatable');
-
 //RUTAS DESCARGA ARCHIVOS
 Route::get('/transparencia-download/{id}', 'App\Http\Controllers\TransparenciaWebController@download')->name('transparencia.download');
