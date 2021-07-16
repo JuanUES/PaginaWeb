@@ -284,6 +284,7 @@
         <script src="{{ asset('template-admin/dist/assets/libs/jqvmap/jquery.vmap.min.js') }}"></script>
         <script src="{{ asset('template-admin/dist/assets/libs/jqvmap/jquery.vmap.usa.js') }}"></script>
 
+        <script src="{{ asset('template-admin/dist/assets/libs/moment/moment.min.js') }}"></script>
 
 
         <!-- Datatable js -->

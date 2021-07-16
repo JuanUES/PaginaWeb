@@ -12,7 +12,7 @@
     @endif
     <div class="col-12 col-sm-{{ (strcmp('documentos-jd', strtolower($categoria))==0) ? '9' : '12' }} mb-3">
         <div class="form-group">
-            <label for="titulo">Titulo <span class="text-danger">*</span> </label>
+            <label for="titulo">Título <span class="text-danger">*</span> </label>
             <input type="text" class="form-control {{ $errors->has('titulo') ? 'is-invalid' : ''}}" id="titulo" name="titulo" aria-describedby="titulo" placeholder="Ingrese el titulo para el Documento" value="{{ isset($transparencia) ? $transparencia->titulo : old('titulo') }}">
             {!! $errors->first('titulo', '<p class="invalid-feedback">:message</p>') !!}
         </div>
@@ -22,11 +22,11 @@
 <div class="row">
     <div class="col-12 col-sm-12">
         <div class="form-group mb-3">
-            <label for="descripcion">Descripcion</label>
+            <label for="descripcion">Descripción</label>
             <textarea class="form-control" id="descripcion" name="descripcion" placeholder="Ingrese una descripcion">{{ isset($transparencia) ? $transparencia->descripcion : old('descripcion') }}</textarea>
         </div>
     </div>
-    <div class="col-12 col-sm-12" {!! isset($transparencia) ? 'style="display: none;"' : '' !!} id="divPDF">
+    <div class="col-12 col-sm-12" {!! old('modificar_doc') ? '' : (isset($transparencia)   ? 'style="display: none;"' : '') !!} id="divPDF">
         <div class="form-group mb-3">
             <label for="summernote-editor">Documento <span class="text-danger">*</span> </label>
             <div class="file-loading">

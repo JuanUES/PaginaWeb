@@ -14,9 +14,9 @@ class TransparenciaWebController extends Controller{
 
     public $categorias = array(
         'Marco Normativo' => 'marco-normativo',
-        'Marco de Gestion' => 'marco-gestion',
+        'Marco de Gestión' => 'marco-gestion',
         'Marco Presupuestario' => 'marco-presupuestario',
-        'Estadisticas' => 'estadisticas',
+        'Estadísticas' => 'estadisticas',
         'Documentos de Junta Directiva' => 'documentos-JD'
     );
 

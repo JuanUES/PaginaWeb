@@ -20,7 +20,7 @@
     @if(Session::has('flash_message'))
         <div class="alert alert-success alert-dismissible" role="alert">
             <div class="alert-message">
-                <strong> <i class="fa fa-info-circle"></i> Informacion!</strong> {{ (Session::get('flash_message')) }}
+                <strong> <i class="fa fa-info-circle"></i> Información!</strong> {{ (Session::get('flash_message')) }}
             </div>
         </div>
     @endif
@@ -40,9 +40,9 @@
         <thead>
             <tr>
                 <th>Fecha</th>
-                <th>Titulo</th>
-                <th>Descripcion</th>
-                <th>Publico</th>
+                <th>Título</th>
+                <th>Descripción</th>
+                <th>Público</th>
                 <th class="text-center">Acciones</th>
             </tr>
         </thead>
@@ -84,13 +84,21 @@
                 {
                     data: 'action',
                     width: '150',
-                    orderable: true,
-                    searchable: true
+                    orderable: false,
+                    searchable: false
                 },
             ],
+            order: [ [0, 'desc'] ],
             language:{
                 url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
-            }
+            },
+            // rowCallback: function (row, data, index) {
+            //     let dateCell = data.created_at;
+            //     if (dateCell !== undefined && dateCell > 0) {
+            //         let date = moment.unix(dateCell).format('DD/MM/YYYY h:mm:ss a');
+            //         $('td:eq(0)', row).html(date);
+            //     }
+            // }
         });
 
         //para actualizar el dom y que reconozca el  class de los botones
@@ -98,6 +106,7 @@
             const btns = document.querySelectorAll('.btnViewPDF');
             btns.forEach(el => el.addEventListener('click', event => {
                 let pdf = event.target.getAttribute("data-pdf");
+                console.log(pdf);
                 $('#PDFdoc').attr('data',pdf);
             }));
 
