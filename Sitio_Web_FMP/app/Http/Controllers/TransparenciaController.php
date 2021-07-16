@@ -28,11 +28,11 @@ class TransparenciaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request, $categoria){
+        // date_default_timezone_set('Amercia/El_Salvador');
         $titulo = array_search($categoria, $this->categorias, true);
 
         if ($request->ajax()) {
-            $data = Transparencia::select('*', DB::raw("to_char(created_at, 'dd/mm/YYYY') as fecha"))
-                                ->where('estado','activo')
+            $data = Transparencia::where('estado','activo')
                                 ->where('categoria', $categoria)
                                 ->latest('created_at')
                                 ->get();
@@ -45,7 +45,7 @@ class TransparenciaController extends Controller
                 //     return $data_rem->created_at->timestamp;
                 // })
                 ->editColumn('created_at', function ($data_rem) {
-                    return date('d/m/Y h:m:s a', strtotime($data_rem->created_at));
+                    return date('d/m/Y h:i:s a', strtotime($data_rem->created_at));
                 })
                 ->rawColumns(['action', 'publicar', 'descripcion'])
                 ->make(true);
