@@ -61,4 +61,7 @@
         </div> --}}
     </div>
 </div>
+
+@include('components.sitios_interes')
+
 @endsection

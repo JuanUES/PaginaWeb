@@ -1,4 +1,4 @@
-<h4 class="text-center text-danger font-weight-bold"> <i class="fa fa-search"></i> Buscar informacion...</h4>
+<h4 class="text-center text-danger font-weight-bold"> <i class="fa fa-search"></i> Buscar información...</h4>
 <hr>
 <form method="GET" action="{{ route('transparencia.busqueda') }}" accept-charset="UTF-8"  role="search">
     <div class="row mb-0">
@@ -13,7 +13,7 @@
         <div class="col-12 col-sm-9 mb-3">
             <div class="form-group mb-0">
                 <div class="input-group">
-                    <input type="text" name="search" class="form-control" placeholder="Buscar informacion" aria-label="Recipient's username" value="{{ isset($busqueda) ? $busqueda : '' }}">
+                    <input type="text" name="search" class="form-control" placeholder="Buscar información" aria-label="Recipient's username" value="{{ isset($busqueda) ? $busqueda : '' }}">
                 </div>
             </div>
         </div>

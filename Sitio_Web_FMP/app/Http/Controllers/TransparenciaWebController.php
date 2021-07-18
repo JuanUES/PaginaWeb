@@ -31,14 +31,12 @@ class TransparenciaWebController extends Controller{
     public function web($categoria, Request $request){
         $titulo = array_search($categoria, $this->categorias, true);
         $categorias = $this->categorias;
+        $perPage = 5;
         $query = Transparencia::where('estado', 'activo')
             ->where('categoria', $categoria);
 
         $resultados = $query->count();
-        $documentos = $query->paginate(10);
-
-
-
+        $documentos = $query->paginate($perPage);
         return view('Transparencia-web.documentos', compact(['documentos', 'categoria', 'titulo', 'resultados', 'categorias']));
     }
 
@@ -59,9 +57,7 @@ class TransparenciaWebController extends Controller{
     public function download($id){
         $msg = 'Fallo al descargar el archivo, no se encontro...!';
         $registro = Transparencia::findOrFail($id);
-        $headers = array(
-            'Content-Type: application/pdf',
-        );
+        $headers = array('Content-Type: application/pdf');
         $name = strtolower(preg_replace('([^A-Za-z0-9])', '', $registro->titulo));
         $pdf = public_path('storage').'/'.$registro->documento;
         return (FacadesFile::exists($pdf))
@@ -77,7 +73,7 @@ class TransparenciaWebController extends Controller{
         $busqueda = $request->search;
         $start = $request->start;
         $end = $request->end;
-        $perPage = 10;
+        $perPage = 5;
 
         $query = Transparencia::where('estado', 'activo');
 
@@ -110,10 +106,14 @@ class TransparenciaWebController extends Controller{
         if ($request->ajax()) {
             $data = Transparencia::where('estado', 'activo')
                 ->where('categoria', $categoria)
+                ->latest('created_at')
                 ->get();
             return DataTables::of($data)
                 ->addColumn('action', 'Transparencia-web.dataTable.download')
                 ->addColumn('titulo', 'Transparencia-web.dataTable.link')
+                ->editColumn('created_at', function ($data_rem) {
+                    return date('d/m/Y h:i:s a', strtotime($data_rem->created_at));
+                })
                 ->rawColumns(['action','titulo'])
                 ->make(true);
         }
