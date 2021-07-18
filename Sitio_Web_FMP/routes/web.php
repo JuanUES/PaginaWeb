@@ -1,8 +1,9 @@
 <?php
 /**Importaciones por default */
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\indexController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +17,15 @@ use App\Http\Controllers\indexController;
 */
 
 Route::get('/', [indexController::class, 'index'])->name('index');
+
+
+//Ruta para el admin
+Route::get('admin', function () {
+    return (!Auth::guest())
+            ? view('Admin.home')
+            : Redirect::to('/');
+});
+
 
 require __DIR__.'/transparencia.php';
 require __DIR__.'/auth.php';

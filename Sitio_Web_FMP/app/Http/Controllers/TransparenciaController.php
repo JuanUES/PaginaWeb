@@ -27,29 +27,30 @@ class TransparenciaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request, $categoria){
-        // date_default_timezone_set('Amercia/El_Salvador');
         $titulo = array_search($categoria, $this->categorias, true);
 
-        if ($request->ajax()) {
-            $data = Transparencia::where('estado','activo')
-                                ->where('categoria', $categoria)
-                                ->latest('created_at')
-                                ->get();
+        //para validar que existe la categoria en el listado y no genere error
+        if($titulo!=false){
+            if ($request->ajax()) {
+                $data = Transparencia::where('estado','activo')
+                                    ->where('categoria', $categoria)
+                                    ->latest('created_at')
+                                    ->get();
 
-            return DataTables::of($data)
-                ->addColumn('descripcion', 'Transparencia.dataTable.descripcion')
-                ->addColumn('publicar', 'Transparencia.dataTable.publicar')
-                ->addColumn('action', 'Transparencia.dataTable.actions')
-                // ->editColumn('created_at', function ($data_rem) {
-                //     return $data_rem->created_at->timestamp;
-                // })
-                ->editColumn('created_at', function ($data_rem) {
-                    return date('d/m/Y h:i:s a', strtotime($data_rem->created_at));
-                })
-                ->rawColumns(['action', 'publicar', 'descripcion'])
-                ->make(true);
+                return DataTables::of($data)
+                    ->addColumn('descripcion', 'Transparencia.dataTable.descripcion')
+                    ->addColumn('publicar', 'Transparencia.dataTable.publicar')
+                    ->addColumn('action', 'Transparencia.dataTable.actions')
+                    ->editColumn('created_at', function ($data_rem) {
+                        return date('d/m/Y h:i:s a', strtotime($data_rem->created_at));
+                    })
+                    ->rawColumns(['action', 'publicar', 'descripcion'])
+                    ->make(true);
+            }
+            return view('Transparencia.index', compact(['categoria', 'titulo']));
+        }else{
+            return abort(404);
         }
-        return view('Transparencia.index', compact(['categoria', 'titulo']));
     }
 
     /**
@@ -59,8 +60,13 @@ class TransparenciaController extends Controller
      */
     public function create($categoria){
         $titulo = array_search($categoria, $this->categorias, true);
-        $subcategorias = $this->subcategorias;
-        return view('Transparencia.create', compact('categoria', 'titulo', 'subcategorias'));
+
+        if($titulo!=false){
+            $subcategorias = $this->subcategorias;
+            return view('Transparencia.create', compact('categoria', 'titulo', 'subcategorias'));
+        }else{
+            return abort(404);
+        }
     }
 
     /**
@@ -70,20 +76,16 @@ class TransparenciaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-
         $campos = [
             'titulo' => 'required',
             "documento" => "required|mimes:pdf",
         ];
-
         $this->validate($request, $campos);
-
         $requestData = $request->all();
         if ($request->hasFile('documento'))
             $requestData['documento'] = $request->file('documento')->store('uploads/transparencia', 'public');
 
         $doc = Transparencia::create($requestData);
-
         return redirect('admin/transparencia/' . $request->categoria)->with('flash_message', 'Documento almacenado con éxito!');
     }
 
@@ -107,8 +109,10 @@ class TransparenciaController extends Controller
     public function edit($categoria, $id){
         $transparencia = Transparencia::findOrFail($id);
         $titulo = array_search($categoria, $this->categorias, true);
-        // $categoria = $transparencia->categoria;
-        return view('Transparencia.edit', compact(['transparencia', 'categoria','titulo']));
+
+        return $titulo!=false
+                ? view('Transparencia.edit', compact(['transparencia', 'categoria','titulo']))
+                : abort(404);
     }
 
     /**
@@ -167,6 +171,7 @@ class TransparenciaController extends Controller
         $categoria = $transparencia->categoria;
         return redirect('admin/transparencia/' . $categoria)->with('flash_message', 'Documento modificado con éxito!');
     }
+
 
     public function file($id){
         $transparencia = Transparencia::findOrFail($id);

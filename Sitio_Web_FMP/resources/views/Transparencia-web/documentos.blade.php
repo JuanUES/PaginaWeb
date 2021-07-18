@@ -18,8 +18,8 @@
         <div class="col-12">
             <span class="float-right">
                 {{-- <strong class="font-weight-lighter">Visualizacion</strong> --}}
-                <button class="btn btn-outline-danger btn-sm" onclick="fnChangeView('list');" title="Seleccione el tipo de visualizacion como Lista"><i class="fa fa-th-list"></i></button>
-                <button class="btn btn-outline-danger btn-sm" onclick="fnChangeView('table');" title="Seleccione el tipo de visualizacion como Tabla"><i class="fa fa-table"></i></button>
+                <button class="btn btn-outline-danger btn-sm" onclick="fnChangeView('list');" title="Seleccione el tipo de visualización como Lista"><i class="fa fa-th-list"></i></button>
+                <button class="btn btn-outline-danger btn-sm" onclick="fnChangeView('table');" title="Seleccione el tipo de visualización como Tabla"><i class="fa fa-table"></i></button>
             </span>
         </div>
     </div>

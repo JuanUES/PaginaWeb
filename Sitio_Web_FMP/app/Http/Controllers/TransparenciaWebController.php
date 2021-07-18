@@ -30,28 +30,37 @@ class TransparenciaWebController extends Controller{
 
     public function web($categoria, Request $request){
         $titulo = array_search($categoria, $this->categorias, true);
-        $categorias = $this->categorias;
-        $perPage = 5;
-        $query = Transparencia::where('estado', 'activo')
-            ->where('categoria', $categoria);
 
-        $resultados = $query->count();
-        $documentos = $query->paginate($perPage);
-        return view('Transparencia-web.documentos', compact(['documentos', 'categoria', 'titulo', 'resultados', 'categorias']));
+        if($titulo!=false){
+            $categorias = $this->categorias;
+            $perPage = 5;
+            $query = Transparencia::where('estado', 'activo')
+                ->where('categoria', $categoria);
+
+            $resultados = $query->count();
+            $documentos = $query->paginate($perPage);
+            return view('Transparencia-web.documentos', compact(['documentos', 'categoria', 'titulo', 'resultados', 'categorias']));
+        } else {
+            return abort(404);
+        }
     }
 
-    // public function resultados(){
-    //     return view('Transparencia-web.busqueda');
-    // }
 
     public function documento($categoria, $id){
         $titulo = array_search($categoria, $this->categorias, true);
-        $documentos = Transparencia::where('estado', 'activo')
-            ->where('categoria', $categoria)
-            ->take(10)
-            ->get();
-        $documento = Transparencia::findOrFail($id);
-        return view('Transparencia-web.documento', compact(['documentos', 'categoria', 'documento', 'titulo']));
+
+        if($titulo!=false){
+            $documento = Transparencia::findOrFail($id);
+            $documentos = Transparencia::where('estado', 'activo')
+                ->where('categoria', $categoria)
+                ->where('id', '!=', $documento->id)
+                ->take(10)
+                ->latest()
+                ->get();
+            return view('Transparencia-web.documento', compact(['documentos', 'categoria', 'documento', 'titulo']));
+        } else {
+            return abort(404);
+        }
     }
 
     public function download($id){
