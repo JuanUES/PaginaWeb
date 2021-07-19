@@ -2,7 +2,7 @@
     @if($resultados>=1)
         <div class="col-12">
             <div class="alert alert-info alert-dismissible fade show mt-2" role="alert">
-                <strong><i class="fa fa-exclamation-circle"></i> Informacion: </strong> <strong> {{ $resultados }} </strong> resultados encontrados
+                <strong><i class="fa fa-exclamation-circle"></i> Información: </strong> <strong> {{ $resultados }} </strong> resultados encontrados
             </div>
         </div>
     @endif
@@ -33,7 +33,7 @@
     @endif
 
     <div class="col-12">
-        {{ $documentos->links('vendor.pagination.bootstrap-4') }}
+        {{ $documentos->appends(request()->input())->links('vendor.pagination.bootstrap-4') }}
     </div>
 
 </div>

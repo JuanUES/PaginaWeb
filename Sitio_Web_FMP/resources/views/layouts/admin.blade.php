@@ -174,34 +174,38 @@
                                     <span> Tablero </span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="javascript: void(0);">
-                                    <i class="dripicons-view-list-large"></i>
-                                    <span> Marcos </span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-                                <ul class="nav-second-level" aria-expanded="false">
-                                    <li>
-                                        <a href="{{ url('admin/transparencia/marco-normativo') }}">Normativo</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('admin/transparencia/marco-gestion') }}">De Gestión</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('admin/transparencia/marco-presupuestario') }}">Presupuestario</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="{{ url('admin/transparencia/estadisticas') }}">
-                                    <i class="dripicons-graph-bar "></i> <span> Estadísticas </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ url('admin/transparencia/documentos-JD') }}">
-                                    <i class="dripicons-document"></i> <span> Doc. de Junta Directiva </span>
-                                </a>
-                            </li>
+
+                            @if(@Auth::user()->hasRole('Transparencia'))
+                                <li>
+                                    <a href="javascript: void(0);">
+                                        <i class="dripicons-view-list-large"></i>
+                                        <span> Marcos </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <ul class="nav-second-level" aria-expanded="false">
+                                        <li>
+                                            <a href="{{ url('admin/transparencia/marco-normativo') }}">Normativo</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url('admin/transparencia/marco-gestion') }}">De Gestión</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ url('admin/transparencia/marco-presupuestario') }}">Presupuestario</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="{{ url('admin/transparencia/estadisticas') }}">
+                                        <i class="dripicons-graph-bar "></i> <span> Estadísticas </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('admin/transparencia/documentos-JD') }}">
+                                        <i class="dripicons-document"></i> <span> Doc. de Junta Directiva </span>
+                                    </a>
+                                </li>
+                            @endif
+
                             <li class="menu-title">Seguridad</li>
                             <li>
                                 <a href="javascript: void(0);">

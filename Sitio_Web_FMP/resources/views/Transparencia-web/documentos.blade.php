@@ -7,19 +7,19 @@
         <div class="col-12">
             <h1 class="text-center text-danger font-weight-bold">{{ $titulo }}</h1>
             <hr>
-            <h5 class="text-center font-weight-lighter">A continuacion se muestra el listado completo de todos los documentos encontrados para esta categoria.</h5>
+            <h5 class="text-center font-weight-lighter">A continuación se muestra el listado completo de todos los documentos encontrados para esta categoria.</h5>
             @if(Session::has('mensaje'))
                 <div class="alert alert-{{ Session::get('tipo') }} alert-dismissible fade show mt-2" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-                    <strong><i class="fa fa-exclamation-circle"></i> Informacion: </strong> {{ Session::get('mensaje'); }}
+                    <strong><i class="fa fa-exclamation-circle"></i> Información: </strong> {{ Session::get('mensaje'); }}
                 </div>
             @endif
         </div>
         <div class="col-12">
             <span class="float-right">
                 {{-- <strong class="font-weight-lighter">Visualizacion</strong> --}}
-                <button class="btn btn-outline-danger btn-sm" onclick="fnChangeView('list');" title="Seleccione el tipo de visualizacion como Lista"><i class="fa fa-th-list"></i></button>
-                <button class="btn btn-outline-danger btn-sm" onclick="fnChangeView('table');" title="Seleccione el tipo de visualizacion como Tabla"><i class="fa fa-table"></i></button>
+                <button class="btn btn-outline-danger btn-sm" onclick="fnChangeView('list');" title="Seleccione el tipo de visualización como Lista"><i class="fa fa-th-list"></i></button>
+                <button class="btn btn-outline-danger btn-sm" onclick="fnChangeView('table');" title="Seleccione el tipo de visualización como Tabla"><i class="fa fa-table"></i></button>
             </span>
         </div>
     </div>
@@ -53,15 +53,19 @@
             <table class="table table-sm table-hover" style="width: 100%;">
                 <thead>
                     <tr>
-                        <th>Titulo</th>
-                        <th>Descripcion</th>
-                        <th class="text-center">Acciones</th>
+                        <th>Fecha</th>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th class="text-center"> <i class="fa fa-file-download"></i>  </th>
                     </tr>
                 </thead>
             </table>
         </div>
     </div>
 </div>
+
+@include('components.sitios_interes')
+
 
 
 @endsection
@@ -74,15 +78,22 @@
             serverSide: true,
             ajax: "{{ route('transparencia.datatable', $categoria) }}",
             columns: [
-                {data: 'titulo', name: 'titulo'},
-                {data: 'descripcion', name: 'descripcion'},
+                {
+                    data: 'created_at',
+                    width: '50'
+                },
+                {data: 'titulo'},
+                {data: 'descripcion'},
                 {
                     data: 'action',
-                    width: '100',
+                    width: '70',
                     orderable: true,
                     searchable: true
                 },
             ],
+            lengthMenu:		[[5, 10, 20, 25, 50, -1], [5, 10, 20, 25, 50, "Todos"]],
+			iDisplayLength:	5,
+            order: [ [0, 'desc'] ],
             language:{
                 url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
             }

@@ -54,12 +54,11 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title"> <i class="fa fa-file-pdf"></i> Visualizacion de PDF</h5>
+        <h5 class="modal-title"> <i class="fa fa-file-pdf"></i> Visualización de PDF</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
-      <div class="modal-body">
-        <object id="PDFdoc" width="100%" height="500px" type="application/pdf" data=""></object>
-        <p id="prueba"></p>
+      <div class="modal-body" id="contentPDF">
+
       </div>
     </div>
   </div>
@@ -92,22 +91,60 @@
             language:{
                 url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
             },
-            // rowCallback: function (row, data, index) {
-            //     let dateCell = data.created_at;
-            //     if (dateCell !== undefined && dateCell > 0) {
-            //         let date = moment.unix(dateCell).format('DD/MM/YYYY h:mm:ss a');
-            //         $('td:eq(0)', row).html(date);
-            //     }
-            // }
         });
 
         //para actualizar el dom y que reconozca el  class de los botones
         tabla.on( 'draw', function () {
             const btns = document.querySelectorAll('.btnViewPDF');
             btns.forEach(el => el.addEventListener('click', event => {
-                let pdf = event.target.getAttribute("data-pdf");
-                console.log(pdf);
-                $('#PDFdoc').attr('data',pdf);
+
+                let id = $(el).data('id')
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: 'GET',
+                    url: '{{ url("admin/transparencia-file") }}/'+id,
+                    // data: formData,
+                    dataType: 'JSON',
+                    beforeSend: function(){
+                        $("#contentPDF").html(`
+                            <div class="text-center">
+                                <img src="{{ asset("images/loading.gif") }}" class="img-fluid" />
+                                <p class="lead">Procesando...</p>
+                            </div>
+                        `);
+                    },
+                    success: function (data) {
+                        if(data.existe){
+                            $("#contentPDF").html(`
+                                <div class="alert alert-success alert-dismissible" role="alert">
+                                    <div class="alert-message">
+                                        <strong> <i class="fa fa-info-circle"></i> Información!</strong> Documento cargado con éxito
+                                    </div>
+                                </div>
+                                <object id="PDFdoc" width="100%" height="500px" type="application/pdf" data="${data.path}"></object>
+                            `);
+                        }else{
+                             $("#contentPDF").html(`
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                    <div class="alert-message">
+                                        <strong> <i class="fa fa-info-circle"></i> Error!</strong> No se encontro el archivo
+                                    </div>
+                                </div>
+                                <div id="loader" class="text-center">
+                                    <img src="{{ asset("images/404.gif") }}" class="img-fluid" />
+                                </div>
+                            `);
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data);
+                    }
+                });
+
             }));
 
             const frmPublicar = document.querySelectorAll('.frmPublicar');
@@ -115,9 +152,9 @@
                 el.submit();
             }));
         });
-
-
     });
+
+
 </script>
 @endsection
 

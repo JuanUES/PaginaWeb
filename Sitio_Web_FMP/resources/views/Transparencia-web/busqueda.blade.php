@@ -14,6 +14,9 @@
 <div class="row">
     <div class="col-12">
         @include('Transparencia-web._components.documents')
+
+        @include('components.sitios_interes')
+
     </div>
 </div>
 @endsection
