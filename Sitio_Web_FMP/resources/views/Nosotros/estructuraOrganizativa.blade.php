@@ -91,7 +91,7 @@ Dropzone.options.myAwesomeDropzone = {
                     @if (count($organigrama)>0)
                         <img  width="100%" height="550px" src="{{ asset('/files/image') }}/{!!$organigrama[0]->file!!}" alt="{!!$organigrama[0]->file!!}">
                     @else
-                        <p>No hay imagen del organigrama.</p>
+                        <p class="border p-2 text-center">No hay imagen del organigrama.</p>
                     @endif
                 </div>
             </div>

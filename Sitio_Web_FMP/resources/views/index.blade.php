@@ -71,7 +71,7 @@
                             </div>
                             <div class="row">                        
                                 @if (count($imgCarrusel) == '0')
-                                    <p class="p-2 mx-2 border btn-block"> No hay imagenes para mostrar.</p>
+                                    <p class="p-2 mx-2 border text-center btn-block"> No hay imagenes para mostrar.</p>
                                 @else
                                 <div id="carouselExampleCaptions" class="carousel slide rounded col-xl-12" data-ride="carousel">
                                     <ol class="carousel-indicators">  
@@ -359,7 +359,7 @@
                                     </tbody>
                                 </table>         
                                 @else
-                                <p class="p-2 border">No hay noticias para mostrar.</p>
+                                <p class="p-2 border text-center">No hay noticias para mostrar.</p>
                                  @endif   
                         </div> <!-- end card-box -->
                     </div><!-- end col -->

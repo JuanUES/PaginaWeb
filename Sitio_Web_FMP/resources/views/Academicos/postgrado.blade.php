@@ -8,7 +8,15 @@
 @endsection
 
 @section('footer')
+    <script>
+         $('.nav-link mb-2 btn-outline-danger p-1 border').click(function (event) {
+            if($('.nav-link mb-2 btn-outline-danger p-1 border').attr('disabled') != 'disabled'){
+                return false;
+            }
+        });
+    </script>
 @auth
+    
     <!--Summernote js-->
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('js/summernote.config.min.js') }}"></script>
@@ -36,25 +44,23 @@
                                     <h3 class="my-1">Postgrado</h3>
                                     <h4>Aviso de Convocatoria de Ingresos</h4>
                                 </div>
-
-                                @auth
-                                <div class="col-lg-3 order-last">
-                                    <!-- Button trigger modal noticia-->
-                                    <button type="button" class="btn btn-block btn-primary waves-effect waves-light" 
-                                        data-toggle="modal" data-target="#myModalMaestrias">
-                                        <i class="mdi mdi-upload mdi-16px text-center"></i> Agregar Imagen
-                                    </button>
-                                </div>  
-                                @endauth
                             </div>         
-                            <p class="mb-1 font-weight-bold">Grado y título que otorga:</p>
-                            <p class="text-muted font-15">
-                                Licenciado (a) en trabajo social.
-                            </p>
                         </div>
                         @foreach ($maestrias as $m)
                         <div class="tab-pane fade" id="{!!str_replace (' ','',$m->nombre)!!}" role="tabpanel">
-                            <a class="btn-outline-danger btn btn-lg " href="{{ route('postgrado') }}"><i class="mdi mdi-arrow-left-thick"></i> Volver</a>
+                            <div class="btn-group" role="group">
+                                <a class="nav-link btn btn-danger waves-effect width-md" href="#indexPostgrado"
+                                    onclick="$('.nav-link').removeClass('active')" data-toggle="pill">
+                                    <i class="mdi mdi-arrow-left-thick"></i> 
+                                    Volver a Postgrado
+                                </a>
+                               @auth                                 
+                                    <button class="btn btn-light waves-effect width-md" >Modificar</button>
+                                    <button class="btn btn-light waves-effect width-md" >Desactivar</button>
+                                    <button class="btn btn-light waves-effect width-md" >Eliminar</button>
+                                @endauth
+                            </div>
+                            <div class="py-6"></div>
                             <h2 class="header-title py-2">{!!$m->nombre!!}</h2>                            
                             {!!$m->contenido!!}
                             <a><div class="mdi mdi-file-pdf mdi-24px align-top btn-outline-danger btn btn-lg my-2">Descargar</div></a>
@@ -64,7 +70,6 @@
                     </div>
                 </div> <!-- end col -->
                 <div class="col-xl-4 ">
-                    <h4>Maestrias</h4>
                         @auth
                            <a class="btn btn-info btn-block text-white text-left  mb-2" data-toggle="modal" data-target="#myModalMaestria"><i class="dripicons-document"></i> Nueva Maestria</a>
                            <div id="myModalMaestria" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -84,6 +89,19 @@
                                         >
                                             @csrf
                                             
+                                            <div class="alert alert-primary text-white" 
+                                                role="alert" style="display:none" id="notificacionMaestrias">                                               
+                                            </div>
+                                            <!--<div class="row">
+                                                <div class="col-xl-12">
+                                                    <div class="input-group mb-3">
+                                                        <div class="custom-file">
+                                                          <input type="file" class="custom-file-input inputfile" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                                          <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                                        </div>
+                                                      </div>
+                                                </div>
+                                            </div>-->
                                             <div class="row">
                                                 <div class="col-xl-6">
                                                     <div class="form-group">
@@ -150,9 +168,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="alert alert-primary text-white" 
-                                                role="alert" style="display:none" id="notificacionMaestrias">                                               
-                                            </div>
                                             
                                             <div class="form-group mb-0">
                                                 <div>
@@ -175,12 +190,12 @@
                             </div><!-- /.modal --> 
                         @endauth 
                     <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
+                        <h4>Maestrias</h4>
                         @foreach ($maestrias as $m)
-                        <a class="nav-link mb-2 btn-outline-danger  border" data-toggle="pill" href="#{!!str_replace (' ','',$m->nombre)!!}" role="tab" 
+                        <a class="nav-link mb-2 btn-outline-danger  border " data-toggle="pill" href="#{!!str_replace (' ','',$m->nombre)!!}" role="tab" 
                         aria-selected="false">
                                 {!!$m->nombre!!}
                         </a>
-                        
                         @endforeach                                                
                     </div>
                 </div> <!-- end col -->

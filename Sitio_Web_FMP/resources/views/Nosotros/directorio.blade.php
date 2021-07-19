@@ -122,7 +122,7 @@
                         </table>
                     </div> <!-- end table-responsive-->
                     @else
-                    <p class="border p-2">No hay datos registrados.</p>
+                    <p class="border p-2 text-center">No hay datos registrados.</p>
                     @endif         
                              
                 </div> <!-- end card-box -->
