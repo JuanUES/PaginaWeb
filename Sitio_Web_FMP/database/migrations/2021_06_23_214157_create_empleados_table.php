@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Empleados extends Migration
+class CreateEmpleadosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -24,9 +24,14 @@ class Empleados extends Migration
             $table->boolean("estado");
             $table->integer('tipo_jefe');
             $table->bigInteger('jefe')->nullable();
+            $table->bigInteger('id_depto');
             $table->foreign('jefe')
             ->references('id')
             ->on('empleado')
+            ->onDelete('cascade');
+            $table->foreign('id_depto')
+            ->references('id')
+            ->on('departamentos')
             ->onDelete('cascade');
             $table->timestamps();         
         });
