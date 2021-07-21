@@ -235,13 +235,31 @@
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <li>
-                                        <a href=".">Usuarios</a>
+                                        <a href=".">Crear horarios</a>
                                     </li>
                                     <li>
-                                        <a href=".">Roles</a>
+                                        <a href=".">Materias</a>
                                     </li>
                                     <li>
-                                        <a href=".">Bitacora</a>
+                                        <a href=".">Aulas</a>
+                                    </li>
+                                    <li>
+                                        <a href=".">Departamentos</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="dripicons-briefcase"></i>
+                                    <span> Asignación de carga Administrativa </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href=".">Ingresar carga</a>
+                                    </li>
+                                    <li>
+                                        <a href=".">Asignar Carga</a>
                                     </li>
                                 </ul>
                             </li>
