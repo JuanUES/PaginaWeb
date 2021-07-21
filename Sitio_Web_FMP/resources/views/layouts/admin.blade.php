@@ -225,6 +225,27 @@
                                     </li>
                                 </ul>
                             </li>
+                            <!--para los horarios-->
+                            <li class="menu-title">Horarios</li>
+                            <li>
+                                <a href="javascript: void(0);">
+                                    <i class="dripicons-clipboard"></i>
+                                    <span> Gestión de Horarios </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                    <li>
+                                        <a href=".">Usuarios</a>
+                                    </li>
+                                    <li>
+                                        <a href=".">Roles</a>
+                                    </li>
+                                    <li>
+                                        <a href=".">Bitacora</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!--fin de para los horarios-->
                         </ul>
                     </div>
                     <!-- End Sidebar -->
