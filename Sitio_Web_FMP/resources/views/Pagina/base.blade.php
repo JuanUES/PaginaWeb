@@ -92,7 +92,7 @@
                                             <a href="{{ route('Departamento.CienciasEdu') }}">Ciencias de la Educación</a>
                                         </li>
                                         <li>
-                                            <a href="{{ route('Departamento.CienciasAgr') }}out">Ciencias Agronómicas</a>
+                                            <a href="{{ route('Departamento.CienciasAgr') }}">Ciencias Agronómicas</a>
                                         </li>
                                         
                                         <li>
@@ -109,7 +109,7 @@
                                     </ul>
                                 </li> 
                                 <li>
-                                    <a href="#">Unidad de Postgrado</a>
+                                    <a href="{{ route('postgrado') }}">Unidad de Postgrado</a>
                                 </li>      
                                 <li>
                                     <a href="https://distancia.ues.edu.sv/">Universidad en Linea</a>
@@ -145,7 +145,7 @@
                         </li>     
 
                         <li class="has-submenu p-1">
-                            <a href="#"  class="rounded btn text-left">
+                            <a href="{{ url('transparencia') }}"  class="rounded btn text-left">
                                 <i class="mdi mdi-file-account mdi-24px"></i>
                                 Transparencia
                             </a>

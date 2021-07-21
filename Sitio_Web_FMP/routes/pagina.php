@@ -71,19 +71,19 @@ Route::post('/EstructuraOrganizativa/PeriodoJefatura',[JuntaJefaturaController::
 
 /**Academicos-------------------------------------------------------------------------------- */
 Route::get('Informatica', function () {
-    return view('Academicos.Departamentos.informatica');
+    return view('Academicos.informatica');
 })->name('Departamento.Inform');
 
 Route::get('CienciasAgronomicas', function () {
-    return view('Academicos.Departamentos.CienciasAgronomicas');
+    return view('Academicos.CienciasAgronomicas');
 })->name('Departamento.CienciasAgr');
 
 Route::get('CienciasEconomicas', function () {
-    return view('Academicos.Departamentos.CienciasEconomicas');
+    return view('Academicos.CienciasEconomicas');
 })->name('Departamento.CienciasEcon');
 
 Route::get('CienciasEducacion', function () {
-    return view('Academicos.Departamentos.CienciasEducacion');
+    return view('Academicos.CienciasEducacion');
 })->name('Departamento.CienciasEdu');
 /**---------------------------------------------------------------------------------------- */
 Route::get('Investigacion', function () {
