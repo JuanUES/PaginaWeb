@@ -16,7 +16,7 @@ class ImagenesCarruselController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$tipo)
     {
         /**Guardo en la carpeta del servidor */
         $file = $request->file('file'); 
@@ -28,10 +28,11 @@ class ImagenesCarruselController extends Controller
         /** Guardo en la base de datos */
         $imagenesCarrusel = new ImagenesCarrusel;
         $imagenesCarrusel -> imagen = $fileName;
+        $imagenesCarrusel -> tipo = $tipo;
         $imagenesCarrusel -> user   =  auth()->id();
         $imagenesCarrusel -> save();
 
-        return redirect('/');
+        return redirect();
     }
 
     /**
@@ -75,7 +76,7 @@ class ImagenesCarruselController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(ImagenesCarrusel $imagenesCarrusel, $id, $imagen)
-    {       
+    {   echo dd($id);
         /**Elimino de la base de datos */
         $imgCa = ImagenesCarrusel::find($id);        
         $imgCa -> delete();

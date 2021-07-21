@@ -4,25 +4,24 @@
 @auth
     <!-- Summernote css -->
     <link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
+    
+    <!-- Este css se carga nada mas cuando esta logeado un usuario-->
+    <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
+
 @endauth    
 @endsection
 
 @section('footer')
-    <script>
-         $('.nav-link mb-2 btn-outline-danger p-1 border').click(function (event) {
-            if($('.nav-link mb-2 btn-outline-danger p-1 border').attr('disabled') != 'disabled'){
-                return false;
-            }
-        });
-    </script>
-@auth
-    
+    @auth    
+    <!-- Plugins js -->
+    <script src=" {{ asset('js/dropzone.min.js') }} "></script>
+   
     <!--Summernote js-->
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('js/summernote.config.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
     <script src="{{ asset('js/http.min.js') }}"></script>
-@endauth    
+    @endauth    
 @endsection
 
 @section('container')
@@ -42,7 +41,86 @@
                             <div class="row py-1">
                                 <div class="col order-first ">
                                     <h3 class="my-1">Postgrado</h3>
-                                    <h4>Aviso de Convocatoria de Ingresos</h4>
+                                    <div class="row">
+                                        <div class="col order-first">
+                                            <h4>Aviso de Convocatoria de Ingresos</h4>
+                                        </div>
+                                        @auth
+                                        <div class="col-lg-3 order-last">
+                                            <a href="" class="btn btn-block btn-info tex-left" 
+                                            data-toggle="modal" data-target=".bs-example-modal-center">
+                                                <div class="mdi mdi-upload mdi-16px text-center"> Agregar Imagen</div>
+                                            </a>
+                                        </div>                            
+                                              
+                                        <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title" id="myCenterModalLabel">Zona para subir imágenes</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        
+                                                        <form action="{{ route('ConvocatoriaPostgrado', ['tipo'=>2]) }}" method="post"
+                                                        class="dropzone" id="my-awesome-dropzone">
+                                                            @csrf                                 
+                                                            <div class="dz-message needsclick">
+                                                                <i class="h3 text-muted dripicons-cloud-upload"></i>
+                                                                <h3>Suelta los archivos aquí o haz clic para subir.</h3>
+                                                            </div>
+                                                            <div class="dropzone-previews"></div>
+                                                        </form>
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div><!-- /.modal -->
+                                        @endauth  
+                                    </div>
+                                    
+                                    <div class="row">                        
+                                        @if (count($imagenConvocatoria) == '0')
+                                            <p class="p-2 mx-2 border text-center btn-block"> No hay imagenes para mostrar.</p>
+                                        @else
+                                        <div id="carouselExampleCaptions" class="carousel slide rounded col-xl-12" data-ride="carousel">
+                                            <ol class="carousel-indicators">  
+                                                @for ($i = 0; $i < count($imagenConvocatoria); $i++)
+                                                    @if ($i == 0 )
+                                                        <li data-target="#carouselExampleCaptions" data-slide-to="{{$i}}" class="active"></li>
+                                                    @else                                        
+                                                        <li data-target="#carouselExampleCaptions" data-slide-to="{{$i}}" ></li>
+                                                    @endif
+                                                @endfor                               
+                                            </ol>
+                                            <div class="carousel-inner">
+                                                @for ($i = 0; $i < count($imagenConvocatoria); $i++)            
+                                                                                        
+                                                    <div class="carousel-item {!!$i == 0 ? 'active': null!!}">
+                                                        @auth
+                                                        <form method="POST" 
+                                                        action="{{ asset('/borrar') }}/{{$imagenConvocatoria[$i]->id}}/{{$imagenConvocatoria[$i]->imagen}}" id="{{$imagenConvocatoria[$i]->imagen}}">
+                                                            @csrf
+                                                            <button type="submit" class="btn text-white btn-danger btn-block">
+                                                                <div class=" mdi mdi-delete mdi-16px text-center">Eliminar</div>
+                                                            </button>
+                                                        </form>
+                                                        @endauth  
+                                                        <img src="images/carrusel/{{$imagenConvocatoria[$i]->imagen}}" class="img-fluid" width="100%" height="60%" alt="{!!$imagenConvocatoria[$i]->imagen!!}">                                
+                                                    </div>  
+                                            @endfor 
+                                            </div>
+                                            <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Anterior</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Siguiente</span>
+                                            </a>
+                                        </div>    
+                                        @endif
+                                        <!-- end col -->
+                                    </div> <!-- end row-->
                                 </div>
                             </div>         
                         </div>
@@ -54,7 +132,7 @@
                                     <i class="mdi mdi-arrow-left-thick"></i> 
                                     Volver a Postgrado
                                 </a>
-                               @auth                                 
+                                @auth                                 
                                     <button class="btn btn-light waves-effect width-md" >Modificar</button>
                                     <button class="btn btn-light waves-effect width-md" >Desactivar</button>
                                     <button class="btn btn-light waves-effect width-md" >Eliminar</button>

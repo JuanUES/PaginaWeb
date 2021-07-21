@@ -17,7 +17,7 @@ class indexController extends Controller
     public function index()
     {
         /** Envio imagenes del carrusel a Inicio */
-        $imgCarrusel = ImagenesCarrusel::all();
+        $imgCarrusel = ImagenesCarrusel::where('tipo',1)->get();
 
         /** Envio noticias a Inicio */
         $noticias = Noticia::all();

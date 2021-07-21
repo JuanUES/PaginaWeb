@@ -54,7 +54,7 @@
                                             </div>
                                             <div class="modal-body">
                                                 
-                                                <form action="{{ route('ImagenFacultad.subir') }}" method="post"
+                                                <form action="{{ route('ImagenFacultad.subir', ['tipo'=>1]) }}" method="post"
                                                 class="dropzone" id="my-awesome-dropzone">
                                                     @csrf                                 
                                                     <div class="dz-message needsclick">

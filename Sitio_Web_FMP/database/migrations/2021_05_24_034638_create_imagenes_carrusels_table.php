@@ -17,6 +17,7 @@ class CreateImagenesCarruselsTable extends Migration
             $table->id();
             $table->string('imagen');            
             $table->bigInteger('user');
+            $table->bigInteger('tipo');
             $table->timestamps();
             $table->foreign('user')
                 ->references('id')

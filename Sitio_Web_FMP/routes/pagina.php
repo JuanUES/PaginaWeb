@@ -16,7 +16,7 @@ Route::post('PDF/{localizacion}',[PDFImageController::class,'storeAll'])->middle
 
 /**Index ----------------------------------------------------------------*/
 
-Route::post('/upload', [ImagenesCarruselController::class, 'store'])
+Route::post('/subirCarruselInicio/{tipo}', [ImagenesCarruselController::class, 'store'])
 ->middleware(['auth'])->name('ImagenFacultad.subir');
 
 Route::post('/borrar/{id}/{imagen}', [ImagenesCarruselController::class, 'destroy'])
@@ -107,6 +107,9 @@ Route::get('Postgrado',[PostgradoController::class,'index'])->name('postgrado');
 Route::post('Postgrado/Maestria/Registro',[MaestriaController::class,'store'])
 ->middleware(['auth'])
 ->name('Postgrado.registro');
+
+Route::post('/subirCarruselPostgrado/{tipo}', [ImagenesCarruselController::class, 'store'])
+->middleware(['auth'])->name('ConvocatoriaPostgrado');
 
 /**Administrativo */
 Route::get('/AdministracionFinanciera', function () {
