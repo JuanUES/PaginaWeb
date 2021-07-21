@@ -142,7 +142,7 @@
                                             '{!!$m->precio!!}','{!!$m->contenido!!}')">
                                         Modificar
                                     </button>
-                                    <button class="btn btn-light waves-effect width-md" >{!!$m->estado?'Desactivar':'Activar'!!}</button>
+                                    <button class="btn btn-light waves-effect width-md" onclick="submitActivarDesactivar(this)">{!!$m->estado?'Desactivar':'Activar'!!}</button>
                                     <button class="btn btn-light waves-effect width-md" >Eliminar</button>
                                 @endauth
                             </div>

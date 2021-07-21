@@ -89,18 +89,18 @@
                                     <a href="#">Departamentos <div class="arrow-down"></div></a>
                                     <ul class="submenu">
                                         <li>
-                                            <a href="{{ asset('CienciasEducacion') }}">Ciencias de la Educación</a>
+                                            <a href="{{ route('Departamento.CienciasEdu') }}">Ciencias de la Educación</a>
                                         </li>
                                         <li>
-                                            <a href="{{ asset('CienciasAgronomicas') }}">Ciencias Agronómicas</a>
-                                        </li>
-                                        
-                                        <li>
-                                            <a href="{{ asset('CienciasEconomicas') }}">Ciencias Económicas</a>
+                                            <a href="{{ route('Departamento.CienciasAgr') }}out">Ciencias Agronómicas</a>
                                         </li>
                                         
                                         <li>
-                                            <a href="{{ asset('Informatica') }}">Informática</a>
+                                            <a href="{{ route('Departamento.CienciasEcon') }}">Ciencias Económicas</a>
+                                        </li>
+                                        
+                                        <li>
+                                            <a href="{{ route('Departamento.Inform') }}">Informática</a>
                                         </li>     
 
                                         <li>
@@ -109,7 +109,7 @@
                                     </ul>
                                 </li> 
                                 <li>
-                                    <a href="{{ route('postgrado') }}">Unidad de Postgrado</a>
+                                    <a href="#">Unidad de Postgrado</a>
                                 </li>      
                                 <li>
                                     <a href="https://distancia.ues.edu.sv/">Universidad en Linea</a>
@@ -140,15 +140,12 @@
                                 <li>
                                     <a href="{{ route('uti') }}">Unidad de Tecnología<br>de la Información</a>
                                 </li>
-
-                                <li>
-                                    <a href="#">Desarrollo Físico</a>
-                                </li>                                                                 
+                                                                                          
                             </ul>
                         </li>     
 
                         <li class="has-submenu p-1">
-                            <a href="{{ url('transparencia') }}"  class="rounded btn text-left">
+                            <a href="#"  class="rounded btn text-left">
                                 <i class="mdi mdi-file-account mdi-24px"></i>
                                 Transparencia
                             </a>
