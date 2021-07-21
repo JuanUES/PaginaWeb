@@ -17,7 +17,12 @@ class PostgradoController extends Controller
     public function index()
     {  
         $imagenConvocatoria = ImagenesCarrusel::where('tipo',2)->get();
-        $maestrias = DB::table('maestrias')->leftJoin('p_d_f_s', 'maestrias.pdf', '=', 'p_d_f_s.id')->get();
+
+        $maestrias = DB::table('maestrias')
+        ->select('maestrias.*','p_d_f_s.file')
+        ->leftJoin('p_d_f_s', 'maestrias.pdf', '=', 'p_d_f_s.id')
+        ->get();
+        
         return view('Academicos.postgrado',compact('maestrias','imagenConvocatoria'));
     }
 

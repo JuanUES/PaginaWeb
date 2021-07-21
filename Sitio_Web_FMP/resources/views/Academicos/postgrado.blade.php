@@ -13,6 +13,8 @@
 
 @section('footer')
     @auth    
+    <script src=" {{ asset('js/scripts/postgrado.js') }} "></script>
+
     <!-- Plugins js -->
     <script src=" {{ asset('js/dropzone.min.js') }} "></script>
    
@@ -20,7 +22,7 @@
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('js/summernote.config.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
-    <script src="{{ asset('js/http.min.js') }}"></script>
+    <script src="{{ asset('js/scripts/http.min.js') }}"></script>
     @endauth    
 @endsection
 
@@ -41,7 +43,7 @@
                             <div class="row py-1">
                                 <div class="col order-first ">
                                     <h3 class="my-1">Postgrado</h3>
-                                    <div class="row">
+                                    <div class="row py-1">
                                         <div class="col order-first">
                                             <h4>Aviso de Convocatoria de Ingresos</h4>
                                         </div>
@@ -133,8 +135,14 @@
                                     Volver a Postgrado
                                 </a>
                                 @auth                                 
-                                    <button class="btn btn-light waves-effect width-md" >Modificar</button>
-                                    <button class="btn btn-light waves-effect width-md" >Desactivar</button>
+                                    <button class="btn btn-light waves-effect width-md" data-toggle="modal" data-target="#myModalMaestria"
+                                        onclick="editarMaestria('{!!base64_encode($m->id)!!}','{!!$m->nombre!!}','{!!$m->titulo!!}',
+                                            '{!!$m->modalidad!!}','{!!$m->duracion!!}',
+                                            {!!$m->numero_asignatura!!},{!!$m->unidades_valorativas!!},
+                                            '{!!$m->precio!!}','{!!$m->contenido!!}')">
+                                        Modificar
+                                    </button>
+                                    <button class="btn btn-light waves-effect width-md" >{!!$m->estado?'Desactivar':'Activar'!!}</button>
                                     <button class="btn btn-light waves-effect width-md" >Eliminar</button>
                                 @endauth
                             </div>
@@ -154,7 +162,8 @@
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title" id="myCenterModalLabel">Registro Nuevo</h4>
+                                        <h3 class="modal-title" id="myCenterModalLabel">
+                                            <i class="fa fa-graduation-cap fa-5" aria-hidden="true"></i> Registro de Maestrias</h3>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                     </div>
                                     <div class="modal-body">                                        
@@ -180,69 +189,88 @@
                                                       </div>
                                                 </div>
                                             </div>-->
+                                            <div class="row" style="display: none;">
+                                                <div class="col-xl-12">
+                                                    <div class="form-group">
+                                                        <input type="text" id="id" name="id" disabled>
+                                                    </div>
+                                                </div>                                                                                           
+                                            </div>
+
                                             <div class="row">
                                                 <div class="col-xl-6">
                                                     <div class="form-group">
-                                                        <label>Nombre <code>*</code></label>
+                                                        <label for="nombre" >Nombre <code>*</code></label>
                                                         <input type="text" class="form-control"
                                                                 placeholder="Nombre (Obligatorio)"
-                                                                name="nombre"/>
+                                                                name="nombre" id="nombre"/>
                                                     </div> 
                                                 </div>
                                                 <div class="col-xl-6">
-                                                    <label for="">Título que otorga <code>*</code></label>
-                                                    <input type="text" class="form-control"
-                                                                placeholder="Título que otorga (Obligatorio)"
-                                                                name="titulo"/>
+                                                    <div class="form-group">
+                                                        <label for="titulo">Título que otorga <code>*</code></label>
+                                                        <input type="text" class="form-control"
+                                                                    placeholder="Título que otorga (Obligatorio)"
+                                                                name="titulo" id="titulo"/>
+                                                    </div>
                                                 </div>
                                             </div>      
 
                                             <div class="row">
                                                 <div class="col-xl-6">
                                                     <div class="form-group">
-                                                        <label>Modalidad <code>*</code></label>
+                                                        <label for="modalidad">Modalidad <code>*</code></label>
                                                         <input type="text" class="form-control"
                                                                 placeholder="Modalidad (Obligatorio)"
-                                                                name="modalidad"/>
+                                                                name="modalidad" id="modalidad"/>
                                                     </div> 
                                                 </div>
                                                 <div class="col-xl-6">
-                                                    <label for="">Duración <code>*</code></label>
-                                                    <input type="text" class="form-control"
+                                                    <div class="form-group">
+                                                        <label for="duracion">Duración <code>*</code></label>
+                                                        <input type="text" class="form-control"
                                                                 placeholder="Duración (Obligatorio)"
-                                                                name="duracion"/>
+                                                                name="duracion" id="duracion"/>
+                                                    </div>
                                                 </div>
                                             </div>
                                             
                                             <div class="row">
                                                 
-                                                <div class="col-xl-4">
+                                                <div class="col-xl-6">
                                                     <div class="form-group">
-                                                        <label>Número de asignaturas <code>*</code></label>
+                                                        <label for="asignaturas">Número de asignaturas <code>*</code></label>
                                                         <input type="number" class="form-control" min="1"
                                                                 placeholder="0"
-                                                                name="asignaturas"/>
+                                                                name="asignaturas" id="asignaturas"/>
                                                     </div> 
                                                 </div>
-                                                <div class="col-xl-4">
-                                                    <label for="">Unidades valorativas <code>*</code></label>
-                                                    <input type="number" class="form-control" min="1"
+                                                <div class="col-xl-6">
+                                                    <div class="form-group">
+                                                        <label for="unidades">Unidades valorativas <code>*</code></label>
+                                                        <input type="number" class="form-control" min="1"
                                                                 placeholder="0"
-                                                                name="unidades"/>
+                                                                name="unidades" id="unidades"/>
+                                                    </div>
                                                 </div>
-                                                <div class="col-xl-4">
-                                                    <label for="">Precio ($)<code>*</code></label>
-                                                    <input type="number" class="form-control" min="1" step="any"
-                                                                placeholder="0.00"
-                                                                name="precio"/>
-                                                </div>
+                                                
                                             </div>  
 
                                             <div class="row">
                                                 <div class="col-xl-12">
                                                     <div class="form-group">
-                                                        <label>Contenido <code>*</code></label>
-                                                        <textarea value="" class="form-control summernote-config" name="contenido" ></textarea>
+                                                        <label for="precio">Precio ($) <code>*</code></label>
+                                                        <input type="text" class="form-control" placeholder="Precio (Obligatorio)"
+                                                                name="precio" id="precio"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row py-1">
+                                                <div class="col-xl-12">     
+                                                    <div class="form-group">                                               
+                                                        <label for="contenido">Contenido <code>*</code></label>
+                                                        <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -255,7 +283,8 @@
                                                         <li class="fa fa-save"></li>
                                                         Guardar
                                                     </button>
-                                                    <button type="reset" class="btn btn-light waves-effect">
+                                                    <button type="reset" class="btn btn-light waves-effect" data-dismiss="modal" >
+                                                        <i class="fa fa-ban" aria-hidden="true"></i>
                                                         Cancelar
                                                     </button>
                                                 </div>
