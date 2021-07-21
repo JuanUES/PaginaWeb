@@ -26,4 +26,9 @@ Route::get('admin', function () {
 require __DIR__.'/transparencia.php';
 require __DIR__.'/auth.php';
 require __DIR__.'/pagina.php';
+<<<<<<< HEAD
 require __DIR__.'/licencias.php';
+=======
+require __DIR__.'/licencias.php';
+require __DIR__.'/horarios.php';
+>>>>>>> f7108a213494752ad068bede85a988d0c1f27a86
