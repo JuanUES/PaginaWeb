@@ -76,7 +76,7 @@ class ImagenesCarruselController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(ImagenesCarrusel $imagenesCarrusel, $id, $imagen)
-    {   echo dd($id);
+    {   
         /**Elimino de la base de datos */
         $imgCa = ImagenesCarrusel::find($id);        
         $imgCa -> delete();
