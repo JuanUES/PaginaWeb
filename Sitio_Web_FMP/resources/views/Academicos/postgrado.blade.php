@@ -131,7 +131,7 @@
                             </div>         
                         </div>
                         @foreach ($maestrias as $m)
-                        <div class="tab-pane fade" id="{!!str_replace (' ','',$m->nombre)!!}" role="tabpanel">
+                        <div class="tab-pane fade" id="{!!preg_replace('([^A-Za-z0-9])', 'l', $m->nombre)!!}" role="tabpanel">
                             <div class="btn-group" role="group">
                                 <a class="nav-link btn btn-danger waves-effect width-md" href="#indexPostgrado"
                                     onclick="$('.nav-link').removeClass('active')" data-toggle="pill">
@@ -356,7 +356,7 @@
                         <h4>Maestrias</h4>
                         @endif                        
                         @foreach ($maestrias as $m)
-                        <a class="nav-link mb-2 btn-outline-danger  border " data-toggle="pill" href="#{!!str_replace (' ','',$m->nombre)!!}" role="tab" 
+                        <a class="nav-link mb-2 btn-outline-danger  border " data-toggle="pill" href="#{!! preg_replace('([^A-Za-z0-9])', 'l', $m->nombre)!!}" role="tab" 
                         aria-selected="false">
                                 {!!$m->nombre!!}
                         </a>

@@ -54,12 +54,12 @@ class MaestriaController extends Controller
             $ma -> duracion             = $request->duracion;
             $ma -> unidades_valorativas = $request->unidades;
             $ma -> precio               = $request->precio;
-            $ma -> contenido            = str_replace(array("\r\n", "\n\r", "\r", "\n"), "<br/>",$request->contenido);
+            $ma -> contenido            = $request->contenido;
             $ma -> estado               = true;
             $ma -> user                 = auth()->id();   
             $ma -> save();         
         
-            return $request->_id ==null?response()->json(['mensaje'=>'Modificación exitoso.']):response()->json(['mensaje'=>'Registro exitoso.']);
+            return $request->_id ==null?response()->json(['mensaje'=>'Modificación exitosa.']):response()->json(['mensaje'=>'Registro exitoso.']);
         
         }catch(Exception $e){
             return response()->json(['error'=>$e->getMessage()]);
