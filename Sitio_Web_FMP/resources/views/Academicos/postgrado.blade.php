@@ -142,23 +142,81 @@
                                             '{!!$m->precio!!}','{!!$m->contenido!!}')">
                                         Modificar
                                     </button>
-                                    <button class="btn btn-light waves-effect width-md" onclick="submitActivarDesactivar(this)">{!!$m->estado?'Desactivar':'Activar'!!}</button>
-                                    <button class="btn btn-light waves-effect width-md" >Eliminar</button>
+                                    <form action="{{ route('estadoMaestria') }}" method="POST" id="activarDesactivar"
+                                     style="display: none;" class="parsley-examples" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="hidden" name='_id' value="{!!base64_encode($m->id)!!}">
+                                    </form>
+                                    <button class="btn btn-light waves-effect width-md" onclick="submitActivarDesactivar(this,'#activarDesactivar')">
+                                        {!!$m->estado?'Desactivar':'Activar'!!}
+                                    </button>
+                                    <button class="btn btn-light waves-effect width-md"  data-toggle="modal" data-target="#modalEliminar">
+                                        <i class="mdi mdi-delete mdi-16px"></i> Eliminar
+                                    </button>
                                 @endauth
                             </div>
-                            <div class="py-6"></div>
-                            <h2 class="header-title py-2">{!!$m->nombre!!}</h2>                            
+                            <br>
+                            <h3 class="py-3">{!!$m->nombre!!}</h3>     
+                            <div class="table-responsive py-2 ">
+                                <table class="table mb-0 table-bordered ">
+                                    <tbody>
+                                    <tr>
+                                        <td><h5>Titulo a Obtener</h5><p>{!!$m->titulo!!}</p></td>
+                                        <td><h5>Modalidad</h5><p>{!!$m->modalidad!!}</p></td>
+                                        <td><h5>Duración</h5><p>{!!$m->duracion!!}</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><h5>No. de Asignaturas</h5><p>{!!$m->numero_asignatura!!} Asignaturas</p></td>
+                                        <td><h5>Unidades Valorativas</h5><p>{!!$m->unidades_valorativas!!}</p></td>
+                                        <td><h5>Precio</h5><p>{!!$m->precio!!}</p></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>                       
                             {!!$m->contenido!!}
                             <a><div class="mdi mdi-file-pdf mdi-24px align-top btn-outline-danger btn btn-lg my-2">Descargar</div></a>
                         </div>
                         @endforeach
-                        
+                        <div id="modalEliminar" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row py-3">
+                                            <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                                            <div class="col-lg-10 text-black">
+                                                <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se elimina este registro de manera permanente, ¿Desea continuar?</h4>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-6">
+                                            <button type="button" 
+                                            class="btn p-1 btn-light waves-effect waves-light btn-block font-18"
+                                            onclick="submitForm('#formMaestrias','#notificacionMaestrias')">
+                                            <i class="mdi mdi-check mdi-24px"></i>
+                                            Si
+                                            </button>
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <button type="reset" class="btn btn-light p-1 waves-effect btn-block font-18" data-dismiss="modal" >
+                                                    <i class="mdi mdi-block-helper mdi-16Spx  ml-auto" aria-hidden="true"></i>
+                                                    No
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
                     </div>
                 </div> <!-- end col -->
                 <div class="col-xl-4 ">
-                        @auth
-                           <a class="btn btn-info btn-block text-white text-left  mb-2" data-toggle="modal" data-target="#myModalMaestria"><i class="dripicons-document"></i> Nueva Maestria</a>
-                           <div id="myModalMaestria" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    @auth
+                        <a class="btn btn-info btn-block text-white text-left  mb-2" data-toggle="modal" data-target="#myModalMaestria"><i class="dripicons-document"></i> Nueva Maestria</a>
+                        <div id="myModalMaestria" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -183,10 +241,10 @@
                                                 <div class="col-xl-12">
                                                     <div class="input-group mb-3">
                                                         <div class="custom-file">
-                                                          <input type="file" class="custom-file-input inputfile" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                                                          <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                                                            <input type="file" class="custom-file-input inputfile" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                                                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                                                         </div>
-                                                      </div>
+                                                        </div>
                                                 </div>
                                             </div>-->
                                             <div class="row" style="display: none;">
@@ -294,8 +352,8 @@
                                     </div>                                    
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
-                            </div><!-- /.modal --> 
-                        @endauth 
+                        </div><!-- /.modal --> 
+                    @endauth 
                     <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
                         <h4>Maestrias</h4>
                         @foreach ($maestrias as $m)

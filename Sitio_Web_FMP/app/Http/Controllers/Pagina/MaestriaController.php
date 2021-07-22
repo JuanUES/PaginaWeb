@@ -67,14 +67,18 @@ class MaestriaController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Disable the specified resource.
      *
      * @param  \App\Models\Pagina\Maestria  $maestria
      * @return \Illuminate\Http\Response
      */
-    public function show(Maestria $maestria)
+
+    public function estado(Request $request)
     {
-        //
+        $maestria = Maestria::where('id',base64_decode($request->_id))->first();
+        $maestria -> estado = $maestria -> estado ? false:true;
+        $maestria -> save();        
+        return response()->json(['boton'=>$maestria -> estado ? 'Desactivar':'Activar']);
     }
 
     /**

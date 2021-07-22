@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\Pagina\ImagenesCarrusel;
+use Illuminate\Support\Facades\Auth;
 
 class PostgradoController extends Controller
 {
@@ -18,11 +19,17 @@ class PostgradoController extends Controller
     {  
         $imagenConvocatoria = ImagenesCarrusel::where('tipo',2)->get();
 
-        $maestrias = DB::table('maestrias')
+        $maestrias = (Auth::guest()) ? 
+        DB::table('maestrias')
+        ->select('maestrias.*','p_d_f_s.file')
+        ->leftJoin('p_d_f_s', 'maestrias.pdf', '=', 'p_d_f_s.id')
+        ->where('estado',true)
+        ->get(): 
+        DB::table('maestrias')
         ->select('maestrias.*','p_d_f_s.file')
         ->leftJoin('p_d_f_s', 'maestrias.pdf', '=', 'p_d_f_s.id')
         ->get();
-        
+
         return view('Academicos.postgrado',compact('maestrias','imagenConvocatoria'));
     }
 
