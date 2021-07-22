@@ -29,8 +29,8 @@ class PostgradoController extends Controller
         ->select('maestrias.*','p_d_f_s.file')
         ->leftJoin('p_d_f_s', 'maestrias.pdf', '=', 'p_d_f_s.id')
         ->get();
-
         return view('Academicos.postgrado',compact('maestrias','imagenConvocatoria'));
+
     }
 
     /**

@@ -114,6 +114,9 @@ Route::post('/subirCarruselPostgrado/{tipo}', [ImagenesCarruselController::class
 Route::post('/Postgrado/Maestrias/estado', [MaestriaController::class,'estado'])
 ->middleware(['auth'])->name('estadoMaestria');
 
+Route::post('/Postgrado/Maestria/Eliminar', [MaestriaController::class,'destroy'])
+->middleware(['auth'])->name('EliminarMaestria');
+
 /**Administrativo */
 Route::get('/AdministracionFinanciera', function () {
     return view('Administrativo.administracionFinanciera');

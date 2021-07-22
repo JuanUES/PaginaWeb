@@ -15,6 +15,10 @@
     @auth    
     <script src=" {{ asset('js/scripts/postgrado.js') }} "></script>
 
+    <script>
+        function editarMaestria(id){$json = {!!json_encode($maestrias)!!}.find(x => x.id==id);editar($json);}
+    </script>
+
     <!-- Plugins js -->
     <script src=" {{ asset('js/dropzone.min.js') }} "></script>
    
@@ -136,10 +140,7 @@
                                 </a>
                                 @auth                                 
                                     <button class="btn btn-light waves-effect width-md" data-toggle="modal" data-target="#myModalMaestria"
-                                        onclick="editarMaestria('{!!base64_encode($m->id)!!}','{!!$m->nombre!!}','{!!$m->titulo!!}',
-                                            '{!!$m->modalidad!!}','{!!$m->duracion!!}',
-                                            {!!$m->numero_asignatura!!},{!!$m->unidades_valorativas!!},
-                                            '{!!$m->precio!!}','{!!$m->contenido!!}')">
+                                        onclick="editarMaestria({!!$m->id!!})">
                                         Modificar
                                     </button>
                                     <form action="{{ route('estadoMaestria') }}" method="POST" id="activarDesactivar"
@@ -150,7 +151,7 @@
                                     <button class="btn btn-light waves-effect width-md" onclick="submitActivarDesactivar(this,'#activarDesactivar')">
                                         {!!$m->estado?'Desactivar':'Activar'!!}
                                     </button>
-                                    <button class="btn btn-light waves-effect width-md"  data-toggle="modal" data-target="#modalEliminar">
+                                    <button class="btn btn-light waves-effect width-md"  data-toggle="modal" data-target="#modalEliminar" onclick="eliminarMaestria('{!!base64_encode($m->id)!!}')">
                                         <i class="mdi mdi-delete mdi-16px"></i> Eliminar
                                     </button>
                                 @endauth
@@ -184,30 +185,33 @@
                                         <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                     </div>
-                                    <div class="modal-body">
-                                        <div class="row py-3">
-                                            <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
-                                            <div class="col-lg-10 text-black">
-                                                <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se elimina este registro de manera permanente, ¿Desea continuar?</h4>
+                                    <form action="{{ route('EliminarMaestria') }}" method="POST">
+                                        @csrf
+                                        <div class="modal-body">
+                                            <div class="row py-3">
+                                                <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                                                <div class="col-lg-10 text-black">
+                                                    <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se elimina este registro de manera permanente, ¿Desea continuar?</h4>
+                                                </div>
+                                                <input type="hidden" name="maestria" id="maestria">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-6">
+                                                    <button type="submit" 
+                                                        class="btn p-1 btn-light waves-effect waves-light btn-block font-18">
+                                                        <i class="mdi mdi-check mdi-24px"></i>
+                                                        Si
+                                                    </button>
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <button type="reset" class="btn btn-light p-1 waves-effect btn-block font-18" data-dismiss="modal" >
+                                                        <i class="mdi mdi-block-helper mdi-16Spx  ml-auto" aria-hidden="true"></i>
+                                                        No
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-xl-6">
-                                            <button type="button" 
-                                            class="btn p-1 btn-light waves-effect waves-light btn-block font-18"
-                                            onclick="submitForm('#formMaestrias','#notificacionMaestrias')">
-                                            <i class="mdi mdi-check mdi-24px"></i>
-                                            Si
-                                            </button>
-                                            </div>
-                                            <div class="col-xl-6">
-                                                <button type="reset" class="btn btn-light p-1 waves-effect btn-block font-18" data-dismiss="modal" >
-                                                    <i class="mdi mdi-block-helper mdi-16Spx  ml-auto" aria-hidden="true"></i>
-                                                    No
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal -->
@@ -230,8 +234,9 @@
                                             action="{{ route('Postgrado.registro') }}" 
                                             class="parsley-examples"
                                             enctype="multipart/form-data"
-                                            id="formMaestrias"
-                                        >
+                                            id="formMaestrias">
+                                        
+                                            <input type="hidden" id="_id" name="_id"/>
                                             @csrf
                                             
                                             <div class="alert alert-primary text-white" 
@@ -247,14 +252,6 @@
                                                         </div>
                                                 </div>
                                             </div>-->
-                                            <div class="row" style="display: none;">
-                                                <div class="col-xl-12">
-                                                    <div class="form-group">
-                                                        <input type="text" id="id" name="id" disabled>
-                                                    </div>
-                                                </div>                                                                                           
-                                            </div>
-
                                             <div class="row">
                                                 <div class="col-xl-6">
                                                     <div class="form-group">
@@ -355,7 +352,9 @@
                         </div><!-- /.modal --> 
                     @endauth 
                     <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
+                        @if (count($maestrias)>0)
                         <h4>Maestrias</h4>
+                        @endif                        
                         @foreach ($maestrias as $m)
                         <a class="nav-link mb-2 btn-outline-danger  border " data-toggle="pill" href="#{!!str_replace (' ','',$m->nombre)!!}" role="tab" 
                         aria-selected="false">

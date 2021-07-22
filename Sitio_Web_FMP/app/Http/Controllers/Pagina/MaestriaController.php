@@ -37,7 +37,7 @@ class MaestriaController extends Controller
                 'asignaturas' => 'required|max:255|numeric',
                 'duracion' => 'required|max:255',
                 'unidades' =>'required|numeric|max:255',
-                'precio' =>'required|numeric|max:255',
+                'precio' =>'required|max:255',
                 'contenido' =>'required'
             ]);         
 
@@ -46,7 +46,7 @@ class MaestriaController extends Controller
                 return response()->json(['error'=>$validator->errors()->all()]);                
             }
 
-            $ma = new Maestria();
+            $ma = $request->_id ==null ? new Maestria():Maestria::findOrFail($request->_id);
             $ma -> nombre               = $request->nombre;
             $ma -> titulo               = $request->titulo;
             $ma -> modalidad            = $request->modalidad;
@@ -54,12 +54,12 @@ class MaestriaController extends Controller
             $ma -> duracion             = $request->duracion;
             $ma -> unidades_valorativas = $request->unidades;
             $ma -> precio               = $request->precio;
-            $ma -> contenido            = $request->contenido;
+            $ma -> contenido            = str_replace(array("\r\n", "\n\r", "\r", "\n"), "<br/>",$request->contenido);
             $ma -> estado               = true;
             $ma -> user                 = auth()->id();   
             $ma -> save();         
         
-            return response()->json(['mensaje'=>'Registro exitoso.']);
+            return $request->_id ==null?response()->json(['mensaje'=>'Modificación exitoso.']):response()->json(['mensaje'=>'Registro exitoso.']);
         
         }catch(Exception $e){
             return response()->json(['error'=>$e->getMessage()]);
@@ -110,8 +110,10 @@ class MaestriaController extends Controller
      * @param  \App\Models\Pagina\Maestria  $maestria
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Maestria $maestria)
+    public function destroy(Request $request)
     {
-        //
+        $maestria = Maestria::findorFail(base64_decode($request->maestria),['id']);
+        $maestria -> delete();
+        return redirect()->route('postgrado');
     }
 }

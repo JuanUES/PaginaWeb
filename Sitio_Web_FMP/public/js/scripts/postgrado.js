@@ -1,3 +1,30 @@
-function editarMaestria(id,nombre,titulo,modalidad,duracion,numero_asignatura,unidades_valorativas,precio,contenido){
-    $("#id").val(id);$("#nombre").val(nombre);$("#titulo").val(titulo);$("#modalidad").val(modalidad);$("#duracion").val(duracion);$("#asignaturas").val(numero_asignatura);$("#unidades").val(unidades_valorativas);$("#precio").val(precio);$("#contenido").summernote("code", contenido);
-};
+function editar(json){$("#_id").val(json.id);$("#nombre").val(json.nombre);$("#titulo").val(json.titulo);$("#modalidad").val(json.modalidad);$("#duracion").val(json.duracion);$("#asignaturas").val(json.numero_asignatura);$("#unidades").val(json.unidades_valorativas);$("#precio").val(json.precio);$("#contenido").summernote("code", json.contenido);};
+function eliminarMaestria (maestria){$('#maestria').val(maestria);};
+(function(window){
+	window.htmlentities = {
+		/**
+		 * Convierte una cadena a sus caracteres html por completo.
+		 *
+		 * @param {String} str String with unescaped HTML characters
+		 **/
+		encode : function(str) {
+			var buf = [];
+			
+			for (var i=str.length-1;i>=0;i--) {
+				buf.unshift(['&#', str[i].charCodeAt(), ';'].join(''));
+			}
+			
+			return buf.join('');
+		},
+		/**
+		 * Convierte un conjunto de caracteres html en su carácter original.
+		 *
+		 * @param {String} str htmlSet entities
+		 **/
+		decode : function(str) {
+			return str.replace(/&#(\d+);/g, function(match, dec) {
+				return String.fromCharCode(dec);
+			});
+		}
+	};
+})(window);
