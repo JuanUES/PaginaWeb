@@ -66,8 +66,6 @@
 
 @include('components.sitios_interes')
 
-
-
 @endsection
 
 @section('footerjs')
@@ -96,7 +94,9 @@
             order: [ [0, 'desc'] ],
             language:{
                 url: '//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'
-            }
+            },
+            dom: "<'row'<'col-md-6 col-12'l><'col-md-6 col-12'f>r> t <'row'<'col-12 text-center mb-2'i> <'col-12 dt-center'p> >",
+            // dom: '<"row"<"col-sm-4"l><"col-sm-4 text-center"p><"col-sm-4"f>>tip'
         });
     });
 

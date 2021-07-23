@@ -5,7 +5,7 @@
             <label for="titulo">Sub categoria <span class="text-danger">*</span> </label>
             <select class="custom-select" name="subcategoria" id="subcategoria">
                 @foreach($subcategorias as $key => $value)
-                    <option value="{{ $value }}" {{ (isset($subcategoria) && $subcategoria==$value) ? 'selected' : '' }}>{{ Str::ucfirst($value) }}</option>
+                    <option value="{{ $value }}" {{ (isset($transparencia) && $transparencia->subcategoria==$value) ? 'selected' : '' }}>{{ Str::ucfirst($value) }}</option>
                 @endforeach
             </select>
         </div>

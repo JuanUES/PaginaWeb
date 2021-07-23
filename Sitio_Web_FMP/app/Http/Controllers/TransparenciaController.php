@@ -109,9 +109,10 @@ class TransparenciaController extends Controller
     public function edit($categoria, $id){
         $transparencia = Transparencia::findOrFail($id);
         $titulo = array_search($categoria, $this->categorias, true);
+        $subcategorias = $this->subcategorias;
 
         return $titulo!=false
-                ? view('Transparencia.edit', compact(['transparencia', 'categoria','titulo']))
+                ? view('Transparencia.edit', compact(['transparencia', 'categoria','titulo', 'subcategorias']))
                 : abort(404);
     }
 
