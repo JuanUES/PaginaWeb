@@ -15,6 +15,7 @@ class CreateAulasTable extends Migration
     {
         Schema::create('aulas', function (Blueprint $table) {
             $table->id();
+            $table->string('codigo_aula');
             $table->string('nombre_aula');
             $table->string('ubicacion_aula');
             $table->integer('capacidad_aula');
