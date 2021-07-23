@@ -35,10 +35,11 @@ class TransparenciaWebController extends Controller{
             $categorias = $this->categorias;
             $perPage = 5;
             $query = Transparencia::where('estado', 'activo')
+                ->where('publicar', 'publicado')
                 ->where('categoria', $categoria);
 
             $resultados = $query->count();
-            $documentos = $query->paginate($perPage);
+            $documentos = $query->latest()->paginate($perPage);
             return view('Transparencia-web.documentos', compact(['documentos', 'categoria', 'titulo', 'resultados', 'categorias']));
         } else {
             return abort(404);
@@ -114,16 +115,18 @@ class TransparenciaWebController extends Controller{
     public function datatable($categoria, Request $request){
         if ($request->ajax()) {
             $data = Transparencia::where('estado', 'activo')
+                ->where('publicar','publicado')
                 ->where('categoria', $categoria)
                 ->latest('created_at')
                 ->get();
             return DataTables::of($data)
                 ->addColumn('action', 'Transparencia-web.dataTable.download')
                 ->addColumn('titulo', 'Transparencia-web.dataTable.link')
+                ->addColumn('descripcion', 'Transparencia-web.dataTable.description')
                 ->editColumn('created_at', function ($data_rem) {
                     return date('d/m/Y h:i:s a', strtotime($data_rem->created_at));
                 })
-                ->rawColumns(['action','titulo'])
+                ->rawColumns(['action','titulo', 'descripcion'])
                 ->make(true);
         }
     }
