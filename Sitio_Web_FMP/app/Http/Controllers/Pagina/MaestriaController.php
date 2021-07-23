@@ -78,7 +78,7 @@ class MaestriaController extends Controller
         $maestria = Maestria::where('id',base64_decode($request->_id))->first();
         $maestria -> estado = $maestria -> estado ? false:true;
         $maestria -> save();        
-        return response()->json(['boton'=>$maestria -> estado ? 'Desactivar':'Activar']);
+        return response()->json(['boton'=>$maestria -> estado ? '<i class="mdi mdi-eye-off"></i> Desactivar':'<i class="mdi mdi-eye"></i> Activar']);
     }
 
     /**

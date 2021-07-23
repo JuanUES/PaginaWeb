@@ -52,7 +52,7 @@
                             
                             
                         </div><!-- end col -->      
-                        <div class="col-xl-12 border-top my-2" >
+                        <!--<div class="col-xl-12 border-top my-2" >
                             <h4 class="text-center">Horarios de colecturia</h4>
                             <p>Fecha: 07/06/2021 - 11/06/2021</p>
                             <div class="table-responsive">
@@ -79,7 +79,7 @@
                                 </table>
                             </div>
                                 
-                        </div><!-- end col -->    
+                        </div><!-- end col -->    -->
                     </div> 
                 </div> 
             </div>

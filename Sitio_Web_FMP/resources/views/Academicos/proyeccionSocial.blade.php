@@ -28,12 +28,15 @@
                     <h3>Proyección Social</h3>
                     <div class="row">
                         <div class="col-xl-8 p-3">
-                            <h4>Sobre Nosotros</h4>
-                            <p class="mb-1 font-weight-bold">¿Que es Servicio social?</p>
+                            <h4 class="mb-1 font-weight-bold">¿Que es Servicio social?</h4>
                             <p class="text-muted font-15 text-justify">
                                 Es el conjunto de actividades planificadas que persiguen objetivos académicos, de investigación y de servicio; con el fin de poner a los miembros de la comunidad universitaria en contacto con la realidad, para obtener una toma de conciencia ante la problemática social salvadoreña e incidir en la transformación y superación de la sociedad.
                             </p>
-                            <p class="mb-1 font-weight-bold">Jefe de la Unidad</p>
+                            <h4 class="mb-1 font-weight-bold">Jefe de la Unidad</h4>
+                            @if (count($jefaturas)==0)
+                            <div class="row"><p class="border p-2 text-center btn-block">No hay datos registrados.</p></div>
+                                
+                            @endif
                             @guest
                             <p class="text-muted font-15 text-justify">
                                 {!!count($jefaturas)?$jefaturas[0]->sector_dep_unid:null;!!}   
@@ -59,7 +62,7 @@
                                 </div>
                             </div>  
                             @endauth
-                            <p class="mb-1 font-weight-bold">Coordinadores de Carreras</p>
+                            <h4 class="mb-1 font-weight-bold">Coordinadores de Carreras</h4>
                             <div class="row">
                                 @auth         
                                 <div class="col-xl-12 p-2">              
@@ -169,11 +172,10 @@
                                     </div> <!-- end table-responsive-->
                                 </div>
                                 @else
-                                <p class="border p-2 text-center">No hay datos registrados.</p>
+                                <p class="border p-2 text-center btn-block">No hay datos registrados.</p>
                                 @endif  
                             </div>
-                            <h4>Formularios y Guías</h4>
-                            <p class="mb-1 font-weight-bold">Lineamientos</p>
+                            <h4 class="mb-1 font-weight-bold">Lineamientos</h4>
                             <ul>
                                 <li>
                                     <p class="text-muted font-15 text-justify">
@@ -228,7 +230,11 @@
                                 
                             </ul>
                             <div class="row">
-                                <div class="col order-first"><h4>Formatos</h4></div>
+                                @if (count($pdfs)>0)
+                                <div class="col order-first">
+                                    <h4>Formularios y Guías</h4>
+                                </div>
+                                @endif
                                 @auth
                                 <div class="col-lg-3 order-last">
                                     <button class="btn btn-block btn-info tex-left" 

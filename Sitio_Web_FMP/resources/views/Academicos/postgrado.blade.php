@@ -28,6 +28,8 @@
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
     <script src="{{ asset('js/scripts/http.min.js') }}"></script>
     @endauth    
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v11.0" nonce="FxW143mb"></script>
 @endsection
 
 @section('container')
@@ -127,6 +129,26 @@
                                         @endif
                                         <!-- end col -->
                                     </div> <!-- end row-->
+                                    <h4>Equipo de Trabajo</h4>
+                                    <p class="font-weight-bold">Ing. Rene Francisco Vásquez<br><p class="font-15">Jefe de la Unidad de Postgrado</p> </p>
+                                    
+                                    <div class="row">
+
+                                        
+
+                                        Licda. Thelma Esmeralda Centeno de Hernández
+                                        Coordinadora de la Maestría en Administración Financiera
+
+                                        Dr. Wilfredo Ramírez Escobar
+                                        Coordinador de la Maestría en Desarrollo Local Sostenible
+
+                                        Ing. Edgar Antonio Marinero Orantes
+                                        Coordinador de la Maestría en Formación para la Docencia Universitaria 
+
+                                    </div>
+                                    <h4>Información Contacto</h4>
+                                    <p>postgrado.fmp@ues.edu.sv</p>
+
                                 </div>
                             </div>         
                         </div>
@@ -141,6 +163,7 @@
                                 @auth                                 
                                     <button class="btn btn-light waves-effect width-md" data-toggle="modal" data-target="#myModalMaestria"
                                         onclick="editarMaestria({!!$m->id!!})">
+                                        <i class="mdi mdi-file-document-edit mdi-16p"></i>
                                         Modificar
                                     </button>
                                     <form action="{{ route('estadoMaestria') }}" method="POST" id="activarDesactivar"
@@ -149,7 +172,7 @@
                                         <input type="hidden" name='_id' value="{!!base64_encode($m->id)!!}">
                                     </form>
                                     <button class="btn btn-light waves-effect width-md" onclick="submitActivarDesactivar(this,'#activarDesactivar')">
-                                        {!!$m->estado?'Desactivar':'Activar'!!}
+                                        {!!$m->estado?'<i class="mdi mdi-eye-off"></i> Desactivar':'<i class="mdi mdi-eye"></i> Activar'!!}
                                     </button>
                                     <button class="btn btn-light waves-effect width-md"  data-toggle="modal" data-target="#modalEliminar" onclick="eliminarMaestria('{!!base64_encode($m->id)!!}')">
                                         <i class="mdi mdi-delete mdi-16px"></i> Eliminar
@@ -168,7 +191,7 @@
                                     </tr>
                                     <tr>
                                         <td><h5>No. de Asignaturas</h5><p>{!!$m->numero_asignatura!!} Asignaturas</p></td>
-                                        <td><h5>Unidades Valorativas</h5><p>{!!$m->unidades_valorativas!!}</p></td>
+                                        <td><h5>Unidades Valorativas</h5><p>{!!$m->unidades_valorativas!!} Unidades</p></td>
                                         <td><h5>Precio</h5><p>{!!$m->precio!!}</p></td>
                                     </tr>
                                     </tbody>
@@ -352,6 +375,8 @@
                         </div><!-- /.modal --> 
                     @endauth 
                     <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
+                        <h4>Siguenos en Facebook</h4>
+                        <div class="fb-page" data-href="https://www.facebook.com/PostgradoUESParacentral" data-tabs="" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false"><blockquote cite="https://www.facebook.com/PostgradoUESParacentral" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/PostgradoUESParacentral">Postgrado Facultad Multidisciplinaria Paracentral</a></blockquote></div>
                         @if (count($maestrias)>0)
                         <h4>Maestrias</h4>
                         @endif                        

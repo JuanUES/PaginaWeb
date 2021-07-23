@@ -104,7 +104,7 @@
                                         </li>     
 
                                         <li>
-                                            <a href="#">Plan Complementario</a>
+                                            <a href="{{ route('planComp') }}">Plan Complementario</a>
                                         </li>                                       
                                     </ul>
                                 </li> 
@@ -120,9 +120,9 @@
                                 <li class="has-submenu">
                                     <a href="{{ route('proyeccionSocial') }}">Unidad de Proyección Social</a>
                                 </li>   
-                                <li class="has-submenu">
+                                <!--<li class="has-submenu">
                                     <a href="#">Coordinación General de<br>Procesos de Graduación</a>
-                                </li> 
+                                </li>-->
                                 <li class="has-submenu">
                                     <a href="http://biblio.fmp.ues.edu.sv/">Biblioteca</a>
                                 </li>                                 

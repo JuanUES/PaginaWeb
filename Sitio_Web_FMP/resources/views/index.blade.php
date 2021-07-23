@@ -371,7 +371,7 @@
                     <div class="col-xl-12">
                         <div class="card-box">
                             <div class="row">
-                                <div class="col-xl-12"><h3>Siguenos en facebook</h3></div>
+                                <div class="col-xl-12"><h3>Siguenos en Facebook</h3></div>
                                 <div class="col-xl-12 text-center" style="overflow: auto;">
                                     <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FFacultad-Multidisciplinaria-Paracentral-Decanato-104296228519520&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=false&hide_cover=false&show_facepile=true&appId" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
                                     </iframe> 
@@ -383,9 +383,9 @@
                         <div class="card-box"> 
                             <h3>Canales Digitales</h3>                    
                             <a href="https://campus.ues.edu.sv/" class="btn btn-danger btn-block mt-3 text-left">Campus Virtual</a>
-                            <a href="https://eel.ues.edu.sv/" class="btn btn-danger btn-block mt-3 text-left">Expediente en linea</a>                      
-                            <a href="https://correo.ues.edu.sv/" class="btn btn-danger  btn-block mt-3 text-left">Correo institucional</a>                           
-                            <a href="https://www.facebook.com/DistanciaFMP" class="btn btn-danger  btn-block mt-3 text-left">Universidad en linea / Sede Paracentral</a> 
+                            <a href="https://eel.ues.edu.sv/" class="btn btn-danger btn-block mt-3 text-left">Expediente en Linea</a>                      
+                            <a href="https://correo.ues.edu.sv/" class="btn btn-danger  btn-block mt-3 text-left">Correo Institucional</a>                           
+                            <a href="https://www.facebook.com/DistanciaFMP" class="btn btn-danger  btn-block mt-3 text-left">Universidad en Linea / Sede Paracentral</a> 
                             <a href="https://www.facebook.com/celeues" class="btn btn-danger btn-block mt-3 text-left">CELEUES</a>
                         </div> <!-- end card-box-->                        
                     </div> <!-- end col-->        
@@ -396,7 +396,7 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="card-box"> 
-                    <h3>Sitios de interes</h3>                         
+                    <h3>Sitios de Interes</h3>                         
                     
                     <div class="row">
                         <div class="col order-first">

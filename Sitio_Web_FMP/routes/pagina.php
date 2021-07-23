@@ -85,6 +85,10 @@ Route::get('CienciasEconomicas', function () {
 Route::get('CienciasEducacion', function () {
     return view('Academicos.CienciasEducacion');
 })->name('Departamento.CienciasEdu');
+
+Route::get('PlanComplementario', function () {
+    return view('Academicos.PlanComplementario');
+})->name('planComp');
 /**---------------------------------------------------------------------------------------- */
 Route::get('Investigacion', function () {
     return view('Academicos.investigacion');
