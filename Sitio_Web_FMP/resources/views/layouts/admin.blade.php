@@ -241,7 +241,7 @@
                                         <a href=".">Materias</a>
                                     </li>
                                     <li>
-                                        <a href=".">Aulas</a>
+                                        <a href="{{route('aulas')}}">Aulas</a>
                                     </li>
                                     <li>
                                         <a href=".">Departamentos</a>
