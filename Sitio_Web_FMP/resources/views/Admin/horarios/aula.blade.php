@@ -31,14 +31,14 @@
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Nombre</label>
-                                <input type="text" class="form-control" name="nombre" placeholder="Digite el nombre">
+                                <label for="exampleInputCodigo">Código</label>
+                                <input type="text" class="form-control" name="codigo" placeholder="Digite el código">
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Apellido</label>
-                                <input type="text" class="form-control" name="apellido"  placeholder="Digite el apellido">
+                                <label for="exampleInputNombre">Nombre</label>
+                                <input type="text" class="form-control" name="nombre_aula"  placeholder="Digite el nombre de la Aula">
                             
                             </div>
                         </div>
@@ -47,37 +47,23 @@
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputPassword1">D.U.I.</label>
-                                <input type="text" class="form-control" name="dui" placeholder="Digite el número de D.U.I.">
+                                <label for="exampleInputUbicacion">Ubicación</label>
+                                <input type="text" class="form-control" name="ubicacion_aula" placeholder="Digite la Ubicación">
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputPassword1">N.I.T.</label>
-                                <input type="text" class="form-control" name="nit" placeholder="Digite el número de N.I.T.">
+                                <label for="exampleInputPassword1">Capacidad</label>
+                                <input type="text" class="form-control" name="capacidad" placeholder="Digite la Capacidad">
                             </div>
                         </div>
                     </div>
                     
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Teléfono</label>
-                        <input type="tel" class="form-control" name="telefono" placeholder="Digite el número de teléfono">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Tipo empleado</label>
-                    <select class="custom-select" name="tipo_jefe">
-                        <option value="1">Decano</option>
-                        <option value="2">Vice-decano</option>
-                        <option value="3">Administrativo</option>
-                        <option value="4">Académico</option>
-                    </select>
-                    </div>
 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" onClick="submitForm('#empleadoForm','#notificacion')">Guardar empleado</button>
+                <button type="button" class="btn btn-primary" onClick="submitForm('#empleadoForm','#notificacion')">Guardar</button>
             </div>
         </form>
       </div>
