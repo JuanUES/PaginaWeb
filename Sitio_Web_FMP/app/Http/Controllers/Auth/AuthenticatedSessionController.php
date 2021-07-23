@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Support\Facades\Auth;
+use App\Providers\RouteServiceProvider;
+use App\Http\Requests\Auth\LoginRequest;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -26,13 +28,18 @@ class AuthenticatedSessionController extends Controller
      * @param  \App\Http\Requests\Auth\LoginRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(LoginRequest $request)
-    {
+    public function store(LoginRequest $request){
         $request->authenticate();
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        $user = Auth::user();
+
+        return ($user->hasRole('Transparencia'))
+                ? redirect()->route('admin')
+                : redirect()->intended(RouteServiceProvider::HOME);
+        return redirect()->intended('admin');
+        // return redirect()->intended(RouteServiceProvider::HOME);
     }
 
     /**
@@ -51,4 +58,5 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/');
     }
+
 }
