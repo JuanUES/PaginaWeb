@@ -30,5 +30,13 @@ class UserSeeder extends Seeder
         ]);
         //Asignar el role usuario
         $user->assignRole('Pagina');
+
+        $user = User::create([
+            'name'=>'Jefe Academico',
+            'email'=> 'jefe@ues.edu.sv',
+            'password'=>Hash::make('jefe'),
+        ]);
+        //Asiginar el rol
+        $user->assignRole('jefe_academico');
     }
 }
