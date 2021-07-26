@@ -9,11 +9,16 @@ use App\Http\Controllers\Pagina\DirectorioController;
 use App\Http\Controllers\Pagina\ProyeccionSocialController;
 use App\Http\Controllers\Pagina\MaestriaController;
 use App\Http\Controllers\Pagina\PostgradoController;
+use App\Http\Controllers\Pagina\InvestigacionController;
 
 /**PDF ------------------------------------------------------------------*/
 
-Route::post('PDF/{localizacion}',[PDFImageController::class,'storeAll'])->middleware(['auth'])->name('subirPdf');
+Route::post('PDFS/{localizacion}',[PDFImageController::class,'storeAll'])->middleware(['auth'])->name('subirPdf');
 
+Route::post('PDF/{localizacion}',[PDFImageController::class,'store'])->middleware(['auth'])->name('PDF');
+
+Route::post('/subirCarrusel/{tipo}', [ImagenesCarruselController::class, 'store'])
+->middleware(['auth'])->name('ImagenCarrusel');
 /**Index ----------------------------------------------------------------*/
 
 Route::post('/subirCarruselInicio/{tipo}', [ImagenesCarruselController::class, 'store'])
@@ -70,6 +75,7 @@ Route::post('/EstructuraOrganizativa/PeriodoJefatura',[JuntaJefaturaController::
 ->middleware(['auth'])->name('Periodo.jefatura');
 
 /**Academicos-------------------------------------------------------------------------------- */
+
 Route::get('Informatica', function () {
     return view('Academicos.informatica');
 })->name('Departamento.Inform');
@@ -89,10 +95,10 @@ Route::get('CienciasEducacion', function () {
 Route::get('PlanComplementario', function () {
     return view('Academicos.PlanComplementario');
 })->name('planComp');
+
 /**---------------------------------------------------------------------------------------- */
-Route::get('Investigacion', function () {
-    return view('Academicos.investigacion');
-})->name('investigacion');
+
+Route::get('Investigacion',[InvestigacionController::class, 'index'])->name('investigacion');
 
 Route::get('ProyeccionSocial',[ProyeccionSocialController::class, 'index'])
 ->name('proyeccionSocial');

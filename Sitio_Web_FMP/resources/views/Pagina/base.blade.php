@@ -83,7 +83,7 @@
                             <i class="mdi mdi-book-open-page-variant mdi-24px"></i>Académico<div class="arrow-down"></div></a>
                             <ul class="submenu">    
                                 <li class="has-submenu">
-                                    <a href="{{ asset('Academica') }}">Administración Académica</a>                                    
+                                    <a  href="{{ /*asset('Academica')*/'#' }}">Administración Académica</a>                                    
                                 </li>                            
                                 <li class="has-submenu">
                                     <a href="#">Departamentos <div class="arrow-down"></div></a>

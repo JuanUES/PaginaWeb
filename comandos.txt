@@ -4,7 +4,8 @@
 1. composer install
 2. cp .env.example .env
 3. php artisan key:generate
-4. php artisan serve
+4. php artisan migrate:fresh --seeder
+5. php artisan serve
 
 --Codificicacion-------------------------------------------------------
 
@@ -30,3 +31,6 @@ $out->writeln('<Aqui va la variable o cadena a imprimir>');
 --Ejecutar proyecto---------------------------------------------------
 cd s <Luego de escribir eso presionar la tecla Tab>
 php artisan serve
+
+--Para generar un seeder utilizamos el comando de Artisan make:seeder seguido del nombre del seeder--
+php artisan make:seeder ProfessionSeeder

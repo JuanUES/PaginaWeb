@@ -22,5 +22,13 @@ class UserSeeder extends Seeder
         ]);
         //Asignar el role usuario
         $user->assignRole('Transparencia');
+
+        $user = User::create([
+            'name' => 'Pagina Admin',
+            'email' => 'Pagina@ues.edu.sv',
+            'password' => Hash::make('Pagina'),
+        ]);
+        //Asignar el role usuario
+        $user->assignRole('Pagina');
     }
 }

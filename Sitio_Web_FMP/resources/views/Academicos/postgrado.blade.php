@@ -21,7 +21,7 @@
 
     <!-- Plugins js -->
     <script src=" {{ asset('js/dropzone.min.js') }} "></script>
-   
+    <script src=" {{ asset('js/scripts/dropzoneImagenes.js') }} "></script>
     <!--Summernote js-->
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('js/summernote.config.min.js') }}"></script>
@@ -61,7 +61,7 @@
                                             </a>
                                         </div>                            
                                               
-                                        <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+                                        <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;" id="dropZoneCarrusel">
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -361,7 +361,7 @@
                                                         <li class="fa fa-save"></li>
                                                         Guardar
                                                     </button>
-                                                    <button type="reset" class="btn btn-light waves-effect" data-dismiss="modal" >
+                                                    <button type="button" class="btn btn-light waves-effect" data-dismiss="modal" >
                                                         <i class="fa fa-ban" aria-hidden="true"></i>
                                                         Cancelar
                                                     </button>
