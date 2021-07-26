@@ -11,6 +11,7 @@ use App\Http\Controllers\Pagina\MaestriaController;
 use App\Http\Controllers\Pagina\PostgradoController;
 use App\Http\Controllers\Pagina\InvestigacionController;
 use App\Http\Controllers\Pagina\Academicos;
+use App\Http\Controllers\Pagina\ContenidoHtmlController;
 
 
 /**PDF ------------------------------------------------------------------*/
@@ -19,8 +20,16 @@ Route::post('PDFS/{localizacion}',[PDFImageController::class,'storeAll'])->middl
 
 Route::post('PDF/{localizacion}',[PDFImageController::class,'store'])->middleware(['auth'])->name('PDF');
 
+/**Carrusel */
+
 Route::post('/subirCarrusel/{tipo}', [ImagenesCarruselController::class, 'store'])
 ->middleware(['auth'])->name('ImagenCarrusel');
+
+/**ContenidoHTML */
+
+Route::post('contenidoHTML',[ContenidoHtmlController::class,'store'])
+->middleware(['auth'])->name('contenido');
+
 /**Index ----------------------------------------------------------------*/
 
 Route::post('/subirCarruselInicio/{tipo}', [ImagenesCarruselController::class, 'store'])

@@ -133,7 +133,8 @@
                                     <form action="" method="POST"  class="parsley-examples" enctype="multipart/form-data">
                                         @csrf
                                         <div class="row py-1">
-                                            <div class="col-xl-12">     
+                                            <div class="col-xl-12">   
+                                                <input type="hidden" name="_id">  
                                                 <div class="form-group">                       
                                                     <textarea value="" class="form-control summernote-config" name="contenido" id="contenido" rows="10"></textarea>
                                                 </div>

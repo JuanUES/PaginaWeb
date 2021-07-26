@@ -36,7 +36,12 @@ class ContenidoHtmlController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $contenidoArray = ContenidoHtml::where('id',$request->_id)->get();
+        $contenido = count($contenidoArray) ? new ContenidoHtml : $contenidoArray[0];
+        $contenido -> contenido = $request->contenido;
+        $contenido -> save();
+        return response()
+        ->json( ['mensaje'=>count($contenidoArray) ?'Registro exitoso.':'Se modifico el registro']);
     }
 
     /**
