@@ -30,7 +30,7 @@
                 </div>
             </div>
         @endif
-        <form method="POST" id="frmTransparencia" action="{{ route('admin.transparencia.store') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+        <form method="POST" id="frmTransparencia" action="{{ route('admin.transparencia.store', [$categoria]) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
             @csrf
             @include ('Transparencia.form', ['formMode' => 'create'])
         </form>

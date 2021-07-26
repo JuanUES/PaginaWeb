@@ -17,16 +17,16 @@
 </div>
 
 <div class="card-box">
-    <form method="POST" action="{{ url('/admin/transparencia/' . $transparencia->id) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+    <form method="POST" action="{{ route('admin.transparencia.update', [$categoria, $transparencia->id]) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
         {{ method_field('PATCH') }}
         {{ csrf_field() }}
         <div class="card-title">
-            <h4 class="page-title"><i class="fa fa-edit"></i> Modificacion de Registro #{{ $transparencia->id }}
+            <h4 class="page-title"><i class="fa fa-edit"></i> Modificación de Registro #{{ $transparencia->id }}
                 <span class="float-right">
                     <table class="table table-sm table-borderless mb-0 pt-0 mt-0 pb-0">
                         <tr>
                             <th>
-                                <button class="btn btn-sm btn-outline-danger btn-block" data-toggle="modal" data-target="#modalViewPDF"> <i class="fa fa-file-pdf"></i> Visualizar PDF</button>
+                                <button type="button" class="btn btn-sm btn-outline-danger btn-block" data-toggle="modal" data-target="#modalViewPDF"> <i class="fa fa-file-pdf"></i> Visualizar PDF</button>
                             </th>
                             <th>
                                 <div class="form-check">

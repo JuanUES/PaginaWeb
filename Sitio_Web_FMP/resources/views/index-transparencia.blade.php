@@ -27,7 +27,7 @@
                     <blockquote class="card-bodyquote mb-0">
                         <i class="fa fa-tools fa-5x text-danger"></i> <br>
                         <a href="{{ url('transparencia/marco-gestion') }}" class=" btn btn-link">
-                            <h3>Marco de Gestion</h3>
+                            <h3>Marco de Gestión</h3>
                         </a>
                     </blockquote>
                 </div>
@@ -51,8 +51,8 @@
                 <div class="card-body">
                     <blockquote class="card-bodyquote mb-0">
                         <i class="fa fa-chart-pie fa-5x text-danger"></i> <br>
-                        <a href="{{ url('transparencia/estadistica') }}" class=" btn btn-link">
-                            <h3>Estadisticas</h3>
+                        <a href="{{ url('transparencia/repositorios') }}" class=" btn btn-link">
+                            <h3>Repositorios</h3>
                         </a>
                     </blockquote>
                 </div>
@@ -63,7 +63,7 @@
                 <div class="card-body">
                     <blockquote class="card-bodyquote mb-0">
                         <i class="fa fa-file-pdf fa-5x text-danger"></i> <br>
-                        <a href="{{ url('transparencia/junta-DR') }}" class=" btn btn-link">
+                        <a href="{{ url('transparencia/documentos-JD') }}" class=" btn btn-link">
                             <h3>Documentos de Junta Directiva</h3>
                         </a>
                     </blockquote>

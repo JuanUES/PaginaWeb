@@ -15,11 +15,24 @@ class TransparenciaController extends Controller
         'Marco Normativo' => 'marco-normativo',
         'Marco de Gestión' => 'marco-gestion',
         'Marco Presupuestario' => 'marco-presupuestario',
-        'Estadísticas' => 'estadisticas',
+        'Repositorios' => 'repositorios',
         'Documentos de Junta Directiva' => 'documentos-JD'
     );
 
     public $subcategorias = ['acuerdos', 'agendas', 'actas'];
+
+    /**
+     * Instantiate a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('transparencia-roles');
+        // $this->middleware('log')->only('index');
+        // $this->middleware('subscribed')->except('store');
+    }
 
     /**
      * Display a listing of the resource.
@@ -75,7 +88,7 @@ class TransparenciaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request){
+    public function store($categoria, Request $request){
         $campos = [
             'titulo' => 'required',
             "documento" => "required|mimes:pdf",
@@ -123,7 +136,7 @@ class TransparenciaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id){
+    public function update($categoria, Request $request, $id){
         $transparencia = Transparencia::findOrFail($id);
 
         $campos = [
@@ -163,7 +176,7 @@ class TransparenciaController extends Controller
     //     //
     // }
 
-    public function publicar($id, Request $request){
+    public function publicar($categoria, $id, Request $request){
         $transparencia = Transparencia::findOrFail($id);
         $publicar = (isset($request->publicar)) ? 'publicado' : 'sin publicar';
         $transparencia->update([
@@ -174,7 +187,7 @@ class TransparenciaController extends Controller
     }
 
 
-    public function file($id){
+    public function file($categoria, $id){
         $transparencia = Transparencia::findOrFail($id);
         $exist = false;
         $doc = $transparencia->documento;

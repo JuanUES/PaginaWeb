@@ -1,4 +1,4 @@
-<form method="POST" action="{{ route('admin.transparencia.publicar', $id) }}" class="frmPublicar" accept-charset="UTF-8" >
+<form method="POST" action="{{ route('admin.transparencia.publicar', [$categoria, $id]) }}" class="frmPublicar" accept-charset="UTF-8" >
     @csrf
     <div class="custom-control custom-checkbox" >
         @if(strcmp($publicar, 'publicado')==0)

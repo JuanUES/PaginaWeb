@@ -5,6 +5,12 @@
 <div class="card-box margin-start">
     <div class="row">
         <div class="col-12">
+
+            @if(strcmp(strtolower($categoria), 'documentos-jd')==0 && isset($subcategoria))
+                <h1 class="text-center text-danger font-weight-bold">{{ Str::ucfirst($subcategoria) }}</h1>
+                <hr class="mt-0 mb-0 pt-0 pb-0">
+            @endif
+
             <h1 class="text-center text-danger font-weight-bold">{{ $titulo }}</h1>
             <hr>
             <h5 class="text-center font-weight-lighter">A continuación se muestra el listado completo de todos los documentos encontrados para esta categoria.</h5>
@@ -38,6 +44,15 @@
                                         <a href="{{ url('transparencia').'/'.$value }}" class="btn btn-link"><i class="fa fa-arrow-alt-circle-right"></i> {{ $key }}</a>
                                     </div>
                                 @endforeach
+                                    @isset($subcategorias)
+                                        <div class="col order-first">
+                                        @foreach($subcategorias as $index => $item)
+                                            <div>
+                                                <a href="{{ route('transparencia.subcategoria', [$value, $item]) }}" class="btn btn-link mt-0 mb-1 pt-0 pb-0 ml-3"><i class="fa fa-angle-double-right"></i> {{ Str::ucfirst($item) }}</a>
+                                            </div>
+                                        @endforeach
+                                        </div>
+                                    @endisset
                             @endisset
                         </div>
                     </div>

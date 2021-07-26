@@ -74,7 +74,7 @@
                     <ul class="navigation-menu py-1 color-fondo " >
                         <li class="has-submenu p-1 center-text">
                             <a href="{{ url('/') }}" class=" rounded text-left" >
-                                <i class="mdi mdi-arrow-left-box  mdi-24px"></i>Regresar a la Pagina Web
+                                <i class="mdi mdi-arrow-left-box  mdi-24px"></i>Pagina Web
                             </a>
                         </li>
                         <li class="has-submenu p-1 center-text">
@@ -92,8 +92,8 @@
                             </ul>
                         </li>
                         <li class="has-submenu p-1">
-                            <a href="{{ url('transparencia/estadisticas') }}" class="rounded btn text-left">
-                                 <i class="mdi mdi-chart-line mdi-24px"></i>Estadísticas
+                            <a href="{{ url('transparencia/repositorios') }}" class="rounded btn text-left">
+                                 <i class="mdi mdi-chart-line mdi-24px"></i>Repositorios
                              </a>
                         </li>
                         <li class="has-submenu p-1">

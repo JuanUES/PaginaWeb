@@ -23,7 +23,7 @@
     <div class="col-12 col-sm-12">
         <div class="form-group mb-3">
             <label for="descripcion">Descripción</label>
-            <textarea class="form-control" id="descripcion" name="descripcion" placeholder="Ingrese una descripcion">{{ isset($transparencia) ? $transparencia->descripcion : old('descripcion') }}</textarea>
+            <textarea class="form-control" id="descripcion" name="descripcion" placeholder="Ingrese una descripción">{{ isset($transparencia) ? $transparencia->descripcion : old('descripcion') }}</textarea>
         </div>
     </div>
     <div class="col-12 col-sm-12" {!! old('modificar_doc') ? '' : (isset($transparencia)   ? 'style="display: none;"' : '') !!} id="divPDF">
@@ -38,7 +38,7 @@
 </div>
 
 <div class="custom-control custom-checkbox">
-    <input type="checkbox" class="custom-control-input" id="publicar" value="publicado" name="publicar" {{ isset($transparencia) ? ( ($transparencia->publicar==true) ? 'checked' : '' ) : 'checked' }}>
+    <input type="checkbox" class="custom-control-input" id="publicar" value="publicado" name="publicar" {{ isset($transparencia) ? ( ($transparencia->publicar=='publicado') ? 'checked' : '' ) : 'checked' }}>
     <label class="custom-control-label" for="publicar">Publicar documento</label>
 </div>
 

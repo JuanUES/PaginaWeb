@@ -99,6 +99,7 @@
             btns.forEach(el => el.addEventListener('click', event => {
 
                 let id = $(el).data('id')
+                let categoria = $(el).data('categoria') 
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -106,7 +107,7 @@
                 });
                 $.ajax({
                     type: 'GET',
-                    url: '{{ url("admin/transparencia-file") }}/'+id,
+                    url: '{{ url("admin/transparencia") }}/'+categoria+'/file/'+id,
                     // data: formData,
                     dataType: 'JSON',
                     beforeSend: function(){

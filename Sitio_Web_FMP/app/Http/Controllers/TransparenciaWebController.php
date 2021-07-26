@@ -16,7 +16,7 @@ class TransparenciaWebController extends Controller{
         'Marco Normativo' => 'marco-normativo',
         'Marco de Gestión' => 'marco-gestion',
         'Marco Presupuestario' => 'marco-presupuestario',
-        'Estadísticas' => 'estadisticas',
+        'Repositorios' => 'repositorios',
         'Documentos de Junta Directiva' => 'documentos-JD'
     );
 
@@ -28,8 +28,9 @@ class TransparenciaWebController extends Controller{
         return view('index-transparencia', compact(['categorias', 'subcategorias']));
     }
 
-    public function web($categoria, Request $request){
+    public function categoria($categoria, Request $request){
         $titulo = array_search($categoria, $this->categorias, true);
+        $subcategorias = $this->subcategorias;
 
         if($titulo!=false){
             $categorias = $this->categorias;
@@ -40,7 +41,27 @@ class TransparenciaWebController extends Controller{
 
             $resultados = $query->count();
             $documentos = $query->latest()->paginate($perPage);
-            return view('Transparencia-web.documentos', compact(['documentos', 'categoria', 'titulo', 'resultados', 'categorias']));
+            return view('Transparencia-web.documentos', compact(['documentos', 'categoria', 'titulo', 'resultados', 'categorias', 'subcategorias']));
+        } else {
+            return abort(404);
+        }
+    }
+
+    public function subcategoria($categoria, $subcategoria, Request $request){
+        $titulo = array_search($categoria, $this->categorias, true);
+        $subcategorias = $this->subcategorias;
+
+        if($titulo!=false){
+            $categorias = $this->categorias;
+            $perPage = 5;
+            $query = Transparencia::where('estado', 'activo')
+                ->where('publicar', 'publicado')
+                ->where('subcategoria', $subcategoria)
+                ->where('categoria', $categoria);
+
+            $resultados = $query->count();
+            $documentos = $query->latest()->paginate($perPage);
+            return view('Transparencia-web.documentos', compact(['documentos', 'subcategoria' , 'categoria', 'titulo', 'resultados', 'categorias', 'subcategorias']));
         } else {
             return abort(404);
         }
