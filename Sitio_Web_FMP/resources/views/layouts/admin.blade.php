@@ -234,6 +234,7 @@
                                     </li>
                                 </ul>
                             </li>
+                            @if (@Auth::user()->hasRole('jefe_academico'))
                             <!--para los horarios-->
                             <li class="menu-title">Horarios</li>
                             <li>
@@ -250,7 +251,7 @@
                                         <a href=".">Materias</a>
                                     </li>
                                     <li>
-                                        <a href=".">Aulas</a>
+                                        <a href="{{route('aulas')}}">Aulas</a>
                                     </li>
                                     <li>
                                         <a href=".">Departamentos</a>
@@ -288,6 +289,9 @@
                                 </ul>
                             </li>
                             <!--fin de para los horarios-->
+                                
+                            @endif
+                            
                         </ul>
                     </div>
                     <!-- End Sidebar -->

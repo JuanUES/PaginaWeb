@@ -32,10 +32,13 @@ class RolesSeeder extends Seeder
         // $role->givePermissionTo('edit articles');
 
         // or may be done by chaining
-        // $role = Role::create(['name' => 'moderator'])
+        $role = Role::create(['name' => 'Pagina']);
         // ->givePermissionTo(['publish articles', 'unpublish articles']);
 
         $role = Role::create(['name' => 'super-admin']);
         // $role->givePermissionTo(Permission::all());
+
+        $role = Role::create(['name' => 'jefe_academico']);
+        // ->givePermissionTo(['publish horarios', 'unpublish ']);
     }
 }

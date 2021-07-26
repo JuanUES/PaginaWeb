@@ -21,13 +21,15 @@
 
     <!-- Plugins js -->
     <script src=" {{ asset('js/dropzone.min.js') }} "></script>
-   
+    <script src=" {{ asset('js/scripts/dropzoneImagenes.js') }} "></script>
     <!--Summernote js-->
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('js/summernote.config.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
     <script src="{{ asset('js/scripts/http.min.js') }}"></script>
     @endauth    
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v11.0" nonce="FxW143mb"></script>
 @endsection
 
 @section('container')
@@ -59,7 +61,7 @@
                                             </a>
                                         </div>                            
                                               
-                                        <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+                                        <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;" id="dropZoneCarrusel">
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -127,6 +129,25 @@
                                         @endif
                                         <!-- end col -->
                                     </div> <!-- end row-->
+
+                                    <form action="" method="POST"  class="parsley-examples" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="row py-1">
+                                            <div class="col-xl-12">   
+                                                <input type="hidden" name="_id">  
+                                                <div class="form-group">                       
+                                                    <textarea value="" class="form-control summernote-config" name="contenido" id="contenido" rows="10"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12">
+                                                <div class="form-group">
+                                                    <button type="button" class="btn btn-primary waves-effect waves-light btn-block">
+                                                        <i class="fa fa-save fa-5 ml-3"></i> Guardar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>                  
+
                                 </div>
                             </div>         
                         </div>
@@ -141,6 +162,7 @@
                                 @auth                                 
                                     <button class="btn btn-light waves-effect width-md" data-toggle="modal" data-target="#myModalMaestria"
                                         onclick="editarMaestria({!!$m->id!!})">
+                                        <i class="mdi mdi-file-document-edit mdi-16p"></i>
                                         Modificar
                                     </button>
                                     <form action="{{ route('estadoMaestria') }}" method="POST" id="activarDesactivar"
@@ -149,7 +171,7 @@
                                         <input type="hidden" name='_id' value="{!!base64_encode($m->id)!!}">
                                     </form>
                                     <button class="btn btn-light waves-effect width-md" onclick="submitActivarDesactivar(this,'#activarDesactivar')">
-                                        {!!$m->estado?'Desactivar':'Activar'!!}
+                                        {!!$m->estado?'<i class="mdi mdi-eye-off"></i> Desactivar':'<i class="mdi mdi-eye"></i> Activar'!!}
                                     </button>
                                     <button class="btn btn-light waves-effect width-md"  data-toggle="modal" data-target="#modalEliminar" onclick="eliminarMaestria('{!!base64_encode($m->id)!!}')">
                                         <i class="mdi mdi-delete mdi-16px"></i> Eliminar
@@ -168,7 +190,7 @@
                                     </tr>
                                     <tr>
                                         <td><h5>No. de Asignaturas</h5><p>{!!$m->numero_asignatura!!} Asignaturas</p></td>
-                                        <td><h5>Unidades Valorativas</h5><p>{!!$m->unidades_valorativas!!}</p></td>
+                                        <td><h5>Unidades Valorativas</h5><p>{!!$m->unidades_valorativas!!} Unidades</p></td>
                                         <td><h5>Precio</h5><p>{!!$m->precio!!}</p></td>
                                     </tr>
                                     </tbody>
@@ -219,13 +241,13 @@
                 </div> <!-- end col -->
                 <div class="col-xl-4 ">
                     @auth
-                        <a class="btn btn-info btn-block text-white text-left  mb-2" data-toggle="modal" data-target="#myModalMaestria"><i class="dripicons-document"></i> Nueva Maestria</a>
+                        <a class="btn btn-info btn-block text-white text-left  mb-2" data-toggle="modal" data-target="#myModalMaestria"><i class="dripicons-document"></i> Nuevo Registro</a>
                         <div id="myModalMaestria" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h3 class="modal-title" id="myCenterModalLabel">
-                                            <i class="fa fa-graduation-cap fa-5" aria-hidden="true"></i> Registro de Maestrias</h3>
+                                            <i class="fa fa-graduation-cap fa-5" aria-hidden="true"></i> Registro de Postgrado</h3>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                     </div>
                                     <div class="modal-body">                                        
@@ -312,11 +334,21 @@
                                             </div>  
 
                                             <div class="row">
-                                                <div class="col-xl-12">
+                                                <div class="col-xl-6">
                                                     <div class="form-group">
                                                         <label for="precio">Precio ($) <code>*</code></label>
                                                         <input type="text" class="form-control" placeholder="Precio (Obligatorio)"
                                                                 name="precio" id="precio"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <div class="form-group">
+                                                        <label for="tipo">Tipo <code>*</code></label>
+                                                        <select class="form-control" id="tipo" name="tipo">
+                                                            <option value="1">Maestria</option>
+                                                            <option value="2">Doctorado</option>
+                                                            <option value="3">Diplomado</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -338,7 +370,7 @@
                                                         <li class="fa fa-save"></li>
                                                         Guardar
                                                     </button>
-                                                    <button type="reset" class="btn btn-light waves-effect" data-dismiss="modal" >
+                                                    <button type="button" class="btn btn-light waves-effect" data-dismiss="modal" >
                                                         <i class="fa fa-ban" aria-hidden="true"></i>
                                                         Cancelar
                                                     </button>
@@ -352,6 +384,8 @@
                         </div><!-- /.modal --> 
                     @endauth 
                     <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
+                        <h4>Siguenos en Facebook</h4>
+                        <div class="fb-page" data-href="https://www.facebook.com/PostgradoUESParacentral" data-tabs="" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false"><blockquote cite="https://www.facebook.com/PostgradoUESParacentral" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/PostgradoUESParacentral">Postgrado Facultad Multidisciplinaria Paracentral</a></blockquote></div>
                         @if (count($maestrias)>0)
                         <h4>Maestrias</h4>
                         @endif                        

@@ -7,6 +7,9 @@
 @auth
 <!-- Este css se carga nada mas cuando esta logeado un usuario-->
 <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
+
+<!-- Summernote css -->
+<link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
 @endauth
 
 <!-- App css -->
@@ -146,103 +149,101 @@
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <ul class="nav nav-tabs nav-bordered">
-                                                    <li class="nav-item">
-                                                        <a href="#agronomica" data-toggle="tab" aria-expanded="true" class="nav-link active">
-                                                            Nueva Noticia de FMP
-                                                        </a>
-                                                    </li>
-                                                    <li class="nav-item">
-                                                        <a href="#industrial" data-toggle="tab" aria-expanded="false" class="nav-link">
-                                                            Nueva Noticia Externa
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                            </div>
-                                            <div class="modal-body">
                                                 
+                                                <h3 class="modal-title"> <i class="mdi mdi-bulletin-board mdi-24px" aria-hidden="true"></i> Noticia</h3>
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                
+                                            </div>
+                                            <ul class="nav nav-tabs nav-bordered">
+                                                <li class="nav-item">
+                                                    <a href="#agronomica" data-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                        Local
+                                                    </a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a href="#industrial" data-toggle="tab" aria-expanded="false" class="nav-link">
+                                                        Externa
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <div class="modal-body">
+
                                                 <div class="tab-content">
+                                                    
                                                     <div class="tab-pane show active" id="agronomica" >
                                                         <form method="POST" 
-                                                action="{{ route('NoticiaFacultad.nueva') }}" 
-                                                class="parsley-examples"
-                                                enctype="multipart/form-data" id="noticiaForm">
-                                                    @csrf
-                                                    <div class="row">
+                                                        action="{{ route('NoticiaFacultad.nueva') }}" 
+                                                        class="parsley-examples"
+                                                        enctype="multipart/form-data" id="noticiaForm">
+                                                        <input type="hidden" id="_id_local" name="_id_local"/>
+                                                        @csrf
                                                         
-                                                        <div class="col-xl-6">
-                                                            <div class="form-group">
-                                                                <label>Titulo</label>
-                                                                <input type="text" class="form-control" required
-                                                                        placeholder="Titulo Noticia (Obligatorio)"
-                                                                        name="titulo" id="titulo"/>
-                                                            </div> 
+                                                        <div class="alert alert-primary text-white" 
+                                                            role="alert" style="display:none" id="notificacionMaestrias">                                               
                                                         </div>
-                                                        <div class="col-xl-6">
-                                                            <div class="form-group">
-                                                                <label>Sub-Titulo</label>
-                                                                <input type="text" class="form-control" required
-                                                                        placeholder="Sub-Titulo Noticia (Obligatorio)"
-                                                                        name="subtitulo" id="subtitulo"/>
-                                                            </div> 
+                                                        <div class="row">
+                                                            
+                                                            <div class="col-xl-6">
+                                                                <div class="form-group">
+                                                                    <label>Titulo</label>
+                                                                    <input type="text" class="form-control" required
+                                                                            placeholder="Titulo Noticia (Obligatorio)"
+                                                                            name="titulo" id="titulo"/>
+                                                                </div> 
+                                                            </div>
+                                                            <div class="col-xl-6">
+                                                                <div class="form-group">
+                                                                    <label>SubTitulo</label>
+                                                                    <input type="text" class="form-control" required
+                                                                            placeholder="Sub-Titulo Noticia (Obligatorio)"
+                                                                            name="subtitulo" id="subtitulo"/>
+                                                                </div> 
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-xl-6">
-                                                            <div class="form-group">
-                                                                <label>Fuente</label>
-                                                                <input type="text" class="form-control"
-                                                                        placeholder="Fuente Noticia (Opcional)"
-                                                                        name="fuente" id="fuente"/>
-                                                            </div> 
-                                                        </div>
-                                                        <div class="col-xl-6">
-                                                            <div class="form-group">
-                                                                <label>Url de la fuente</label>
-                                                                <div>
-                                                                    <input parsley-type="url" type="url" class="form-control"
-                                                                             placeholder="URL Fuente (Opcional)"
-                                                                             name="urlfuente" id="urlfuente"/>
+                                                        
+                                                        <div class="row">
+                                                            <div class="col-xl-12">
+                                                                <div class="form-group">
+                                                                    <label>Imagen</label>
+                                                                    <div class="custom-file">
+                                                                        <input type="file" value=" " class="custom-file-input form-control" accept="image/*"  name="img" id="img"  lang="es">
+                                                                        <label class="custom-file-label" for="customFile">Seleccionar imagen</label>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-xl-12">
-                                                            <div class="form-group">
-                                                                <label>Imagen o Foto </label>
+                                                        </div>       
+                                                        <div class="row">
+                                                            <div class="col-xl-12">
                                                                 
-                                                                <input type="file"  accept="image/*" class="form-control" name="img" id="img"/>
+                                                                <div class="form-group">                                               
+                                                                    <label for="contenido">Contenido <code>*</code></label>
+                                                                    <textarea value=" " class="form-control summernote-config" name="contenido" id="contenido" rows="6"></textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>         
+                                                        <div class="form-group mb-0">
+                                                            <div>
+                                                                <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">
+                                                                    <li class="fa fa-save"></li> Guardar
+                                                                </button>
+                                                                <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">
+                                                                    <i class="fa fa-ban" aria-hidden="true"></i> Cancelar
+                                                                </button>
                                                             </div>
                                                         </div>
-                                                    </div>       
-                                                    <div class="row">
-                                                        <div class="col-xl-12">
-                                                            <div class="form-group">
-                                                                <label>Contenido</label>                                                                
-                                                               <textarea required class="form-control" name="contenido" id="contenido" rows="7"></textarea>                                                           
-                                                            </div>
-                                                        </div>
-                                                    </div>         
-                                                    <div class="form-group mb-0">
-                                                        <div>
-                                                            <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">
-                                                                Crear Noticia
-                                                            </button>
-                                                            <button type="reset" class="btn btn-light waves-effect">
-                                                                Cancelar
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </form>                    
+                                                    </form>                    
                                                     </div>
                                                     <div class="tab-pane" id="industrial">
                                                         <form method="POST" 
-                                                action="{{ route('NoticiaFacultad.nuevaurl') }}" 
-                                                class="parsley-examples"
-                                                enctype="multipart/form-data">
+                                                    action="{{ route('NoticiaFacultad.nuevaurl') }}" 
+                                                    class="parsley-examples"
+                                                    enctype="multipart/form-data">
+                                                    <input type="hidden" id="_id_externa" name="_id_externa"/>
                                                     @csrf
+                                                    
+                                                    <div class="alert alert-primary text-white" 
+                                                        role="alert" style="display:none" id="notificacionMaestrias">                                               
+                                                    </div>
                                                     <div class="row">
                                                         
                                                         <div class="col-xl-6">
@@ -255,7 +256,7 @@
                                                         </div>
                                                         <div class="col-xl-6">
                                                             <div class="form-group">
-                                                                <label>Sub-Titulo</label>
+                                                                <label>SubTitulo</label>
                                                                 <input type="text" class="form-control" required
                                                                         placeholder="Sub-Titulo Noticia (Obligatorio)"
                                                                         name="subtitulo" />
@@ -265,8 +266,11 @@
                                                     <div class="row">
                                                         <div class="col-xl-6">
                                                             <div class="form-group">
-                                                                <label>Imagen o Foto </label>
-                                                                <input type="file"  accept="image/*" class="form-control" name="img" />
+                                                                <label>Imagen</label>
+                                                                <div class="custom-file">
+                                                                    <input type="file" class="custom-file-input" id="customFileLang" lang="es">
+                                                                    <label class="custom-file-label" for="customFile">Seleccionar imagen</label>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                         <div class="col-xl-6">
@@ -277,21 +281,16 @@
                                                                              placeholder="URL Fuente (Opcional)"
                                                                              name="urlfuente" />
                                                                 </div>
-                                                                <div class="custom-file">
-                                                                    <input type="file" class="custom-file-input" id="customFile" lang="es">
-                                                                    <label class="custom-file-label" for="customFile">Seleccionar imagen</label>
-                                                                </div>
-                                                                
                                                             </div>
                                                         </div>
                                                     </div>             
                                                     <div class="form-group mb-0">
                                                         <div>
                                                             <button id="noticiaUrl" type="submit" class="btn btn-primary waves-effect waves-light mr-1">
-                                                                Crear Noticia
+                                                                <li class="fa fa-save"></li> Guardar
                                                             </button>
-                                                            <button type="reset" class="btn btn-light waves-effect">
-                                                                Cancelar
+                                                            <button  type="button" class="btn btn-light waves-effect" data-dismiss="modal">
+                                                                <i class="fa fa-ban" aria-hidden="true"></i> Cancelar
                                                             </button>
                                                         </div>
                                                     </div>
@@ -317,47 +316,84 @@
                                         <tr>
                                             <td>
                                                 <div class="border p-1 rounded media">
-                                                    <img class="mr-3 rounded bx-shadow-lg" src="{{ asset('/') }}images/noticias/{{$n->imagen}}"
+                                                    <img class="mr-3 mt-1 rounded bx-shadow-lg" src="{{ asset('/') }}images/noticias/{{$n->imagen}}"
                                                     alt="Generic placeholder image" height="80" width="110">
-                                                    <div class="media-body">
+                                                    <div class="media-body" style="width: 20em">
                                                         <h5 class="mt-0">{{$n->titulo}}</h5>
-                                                        {!!$n->subtitulo!!}
+                                                        <h6>{!!$n->subtitulo!!}</h6>
+                                                        <p>{!!mb_strwidth(strip_tags($n->contenido), 'UTF-8') <= 125?strip_tags($n->contenido):rtrim(mb_strimwidth(strip_tags($n->contenido), 0, 125, '', 'UTF-8')).'...'!!}</p>
                                                     </div>
-                                                    
+                                                    <div class="btn-group-vertical" role="group">
                                                     @if ($n->tipo)
                                                         <a href="{{ asset('/noticias') }}/{!!base64_encode($n->id)!!}/{!!base64_encode($n->titulo)!!}"
-                                                        class="btn btn-light mt-3 mx-1"> Leer más</a>
+                                                           
+                                                        class="btn btn-light waves-effect width-md  @guest mt-5 @endguest">Leer más <i class="mdi mdi-send ml-2"></i></a>
                                                         @auth
-                                                        <button type="button"  class="btn mx-1 btn-success mt-3" 
-                                                        onclick="modificarNoticia('{!!$n->titulo !!}',
-                                                         '{!!$n->subtitulo!!}', 
-                                                         '{!!$n->fuente!!}', 
-                                                         '{!!$n->urlfuente!!}',
-                                                         '{!!$n->contenido!!}',
-                                                         '{{ asset('/') }}images/noticias/{{$n->imagen}}');">Modificar</button>
+                                                        <button type="button"  class="btn btn-light waves-effect width-md">
+                                                         <i class="mdi mdi-file-document-edit mdi-16p"></i> Modificar
+                                                        </button>
                                                         @endauth
                                                     @else
                                                         <a href="{!!$n->urlfuente!!}"
-                                                            class="btn btn-light mt-3 align-items-center">Leer más </a>
+                                                            class="btn btn-light waves-effect width-md @guest mt-5 @endguest">Leer más <i class="mdi mdi-send ml-2"></i></a>
                                                         @auth
                                                         <span data-toggle="modal" data-target="#myModalNoticia">
-                                                            <a href="javascrip" class="btn mx-1 btn-success mt-3" >Modificar</a>
+                                                            <a href="javascrip" class="btn btn-light waves-effect width-md" >
+                                                                <i class="mdi mdi-file-document-edit mdi-16p"></i> Modificar</a>
                                                         </span>
                                                         @endauth
                                                     @endif
-                    
+                                                    
                                                     @auth 
                                                         <form action="{{ route('NoticiaFacultad.borrar',['id'=>base64_encode($n->id)]) }}" method="POST">
                                                             @csrf
-                                                            <button type="submit" class="btn btn-danger mt-3">Eliminar</button>
+                                                            <button type="submit" class="btn btn-light waves-effect width-md btn-block"><i class="mdi mdi-delete"></i> Eliminar</button>
                                                         </form>                                  
-                                                    @endauth                                
+                                                    @endauth      
+                                                </div>                          
                                                 </div>
                                             </td>                      
                                         </tr>   
                                         @endforeach                
                                     </tbody>
-                                </table>         
+                                </table>      
+                                <div id="modalEliminar" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            </div>
+                                            <form action="{{ route('EliminarMaestria') }}" method="POST">
+                                                @csrf
+                                                <div class="modal-body">
+                                                    <div class="row py-3">
+                                                        <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                                                        <div class="col-lg-10 text-black">
+                                                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se elimina este registro de manera permanente, ¿Desea continuar?</h4>
+                                                        </div>
+                                                        <input type="hidden" name="maestria" id="maestria">
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-xl-6">
+                                                            <button type="submit" 
+                                                                class="btn p-1 btn-light waves-effect waves-light btn-block font-18">
+                                                                <i class="mdi mdi-check mdi-24px"></i>
+                                                                Si
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-xl-6">
+                                                            <button type="reset" class="btn btn-light p-1 waves-effect btn-block font-18" data-dismiss="modal" >
+                                                                <i class="mdi mdi-block-helper mdi-16Spx  ml-auto" aria-hidden="true"></i>
+                                                                No
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->   
                                 @else
                                 <p class="p-2 border text-center">No hay noticias para mostrar.</p>
                                  @endif   
@@ -371,7 +407,7 @@
                     <div class="col-xl-12">
                         <div class="card-box">
                             <div class="row">
-                                <div class="col-xl-12"><h3>Siguenos en facebook</h3></div>
+                                <div class="col-xl-12"><h3>Siguenos en Facebook</h3></div>
                                 <div class="col-xl-12 text-center" style="overflow: auto;">
                                     <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FFacultad-Multidisciplinaria-Paracentral-Decanato-104296228519520&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=false&hide_cover=false&show_facepile=true&appId" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
                                     </iframe> 
@@ -383,9 +419,9 @@
                         <div class="card-box"> 
                             <h3>Canales Digitales</h3>                    
                             <a href="https://campus.ues.edu.sv/" class="btn btn-danger btn-block mt-3 text-left">Campus Virtual</a>
-                            <a href="https://eel.ues.edu.sv/" class="btn btn-danger btn-block mt-3 text-left">Expediente en linea</a>                      
-                            <a href="https://correo.ues.edu.sv/" class="btn btn-danger  btn-block mt-3 text-left">Correo institucional</a>                           
-                            <a href="https://www.facebook.com/DistanciaFMP" class="btn btn-danger  btn-block mt-3 text-left">Universidad en linea / Sede Paracentral</a> 
+                            <a href="https://eel.ues.edu.sv/" class="btn btn-danger btn-block mt-3 text-left">Expediente en Linea</a>                      
+                            <a href="https://correo.ues.edu.sv/" class="btn btn-danger  btn-block mt-3 text-left">Correo Institucional</a>                           
+                            <a href="https://www.facebook.com/DistanciaFMP" class="btn btn-danger  btn-block mt-3 text-left">Universidad en Linea / Sede Paracentral</a> 
                             <a href="https://www.facebook.com/celeues" class="btn btn-danger btn-block mt-3 text-left">CELEUES</a>
                         </div> <!-- end card-box-->                        
                     </div> <!-- end col-->        
@@ -396,7 +432,7 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="card-box"> 
-                    <h3>Sitios de interes</h3>                         
+                    <h3>Sitios de Interes</h3>                         
                     
                     <div class="row">
                         <div class="col order-first">
@@ -449,6 +485,7 @@
 @endsection
 
 @section('footerjs')
+
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v10.0" nonce="4Ddk6ohO"></script>
 <!-- Vendor js -->
@@ -461,14 +498,19 @@
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
 
-@auth    
+@auth  
+<script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
+<script src="{{ asset('js/summernote.config.min.js') }}"></script>
+<script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>  
+<script src="{{ asset('js/scripts/http.min.js') }}"></script>
+
 <!-- Plugins js -->
 <script src=" {{ asset('js/dropzone.min.js') }} "></script>
-@endauth
+
 
 <script src="{{ asset('js/index/index.datatable.js') }}"></script>
 
-@auth
+
 <script>
     
     /*$(document).ready(function () {    
@@ -488,11 +530,7 @@
 </script> 
 
 <script>
-    // Add the following code if you want the name of the file appear on select
-    $(".custom-file-input").on("change", function() {
-      var fileName = $(this).val().split("\\").pop();
-      $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-    });
+    
     </script>
 
 <script>

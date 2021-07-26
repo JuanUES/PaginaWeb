@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Pagina;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Pagina\ImagenesCarrusel;
-use App\Models\Pagina\Noticia;
 
-class indexController extends Controller
+class InvestigacionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,13 +15,8 @@ class indexController extends Controller
      */
     public function index()
     {
-        /** Envio imagenes del carrusel a Inicio */
-        $imgCarrusel = ImagenesCarrusel::where('tipo',1)->get();
-
-        /** Envio noticias a Inicio */
-        $noticias = Noticia::all()-> sortBy('created_at');
-        
-        return view('index',compact('imgCarrusel','noticias'));
+        $investigacionCarrusel = ImagenesCarrusel::where('tipo',3)->get();
+        return view('Academicos.investigacion',compact('investigacionCarrusel'));
     }
 
     /**

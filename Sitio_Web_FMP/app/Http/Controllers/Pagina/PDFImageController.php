@@ -17,15 +17,13 @@ class PDFImageController extends Controller
      */
     public function store(Request $request, $localizacion)
     {
-        $pdfs = PDF::where('localizacion', $localizacion)->get();   
+        $fileName = $request->pdf.'.pdf';
+        $pdfs = PDF::where('localizacion', $localizacion)->where('file',$fileName)->get();   
         $file = $request->file('file');  
+        $path = public_path() . '/files/pdfs/'.$localizacion;
         
-        if(count($pdfs)==0){ 
-            
-            /**Guardo en carpeta Pdfs */
-            $path = public_path() . '/files/pdfs';
-            $fileName = $file->getClientOriginalName();
-            $file->move($path, $fileName);
+
+        if(count($pdfs)==0){       
             
             /**Guardo en base de datos */
             $pdf = new PDF;
@@ -40,17 +38,16 @@ class PDFImageController extends Controller
             /**Elimino del servidor el pdf */
             File::delete(public_path() . '/files/pdfs/'.$_pdf->file); 
 
-            /**Guardo en carpeta Pdfs */
-            $path = public_path() . '/files/pdfs';
-            $fileName = $file->getClientOriginalName();
-            $file->move($path, $fileName);
-
             /**Guardo en la base de datos */
             $_pdf -> file   =  $fileName;
             $_pdf -> user   =  auth()->id();
             $_pdf -> save();         
         }
 
+        /**Guardo en carpeta Pdfs */
+        $file->move($path, $fileName);
+
+        return response()->json( ['boton'=>'#'.$request->pdf,'archivo'=> route('index').'/files/pdfs/'.$localizacion.'/'.$request->pdf.'.pdf']);
     }
 
 
@@ -62,6 +59,9 @@ class PDFImageController extends Controller
      */
     public function storeAll(Request $request, $localizacion)
     {
+        try {
+            //code...
+        
         $file = $request->file('file');  
         $pdfs = PDF::where('file', $file->getClientOriginalName())->get();   
         
@@ -94,6 +94,9 @@ class PDFImageController extends Controller
             $_pdf -> file   =  $fileName;
             $_pdf -> user   =  auth()->id();
             $_pdf -> save();         
+        }
+        } catch (\Throwable $th) {
+            echo dd($th);
         }
 
     }

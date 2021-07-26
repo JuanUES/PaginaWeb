@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Pagina;
 
+use App\Http\Controllers\Controller;
+use App\Models\Pagina\ContenidoHtml;
 use Illuminate\Http\Request;
-use App\Models\Pagina\ImagenesCarrusel;
-use App\Models\Pagina\Noticia;
 
-class indexController extends Controller
+class ContenidoHtmlController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,13 +15,7 @@ class indexController extends Controller
      */
     public function index()
     {
-        /** Envio imagenes del carrusel a Inicio */
-        $imgCarrusel = ImagenesCarrusel::where('tipo',1)->get();
-
-        /** Envio noticias a Inicio */
-        $noticias = Noticia::all()-> sortBy('created_at');
-        
-        return view('index',compact('imgCarrusel','noticias'));
+        //
     }
 
     /**
@@ -42,16 +36,21 @@ class indexController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $contenidoArray = ContenidoHtml::where('id',$request->_id)->get();
+        $contenido = count($contenidoArray) ? new ContenidoHtml : $contenidoArray[0];
+        $contenido -> contenido = $request->contenido;
+        $contenido -> save();
+        return response()
+        ->json( ['mensaje'=>count($contenidoArray) ?'Registro exitoso.':'Se modifico el registro']);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Pagina\ContenidoHtml  $contenidoHtml
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(ContenidoHtml $contenidoHtml)
     {
         //
     }
@@ -59,10 +58,10 @@ class indexController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Pagina\ContenidoHtml  $contenidoHtml
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(ContenidoHtml $contenidoHtml)
     {
         //
     }
@@ -71,10 +70,10 @@ class indexController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Pagina\ContenidoHtml  $contenidoHtml
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, ContenidoHtml $contenidoHtml)
     {
         //
     }
@@ -82,10 +81,10 @@ class indexController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Pagina\ContenidoHtml  $contenidoHtml
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(ContenidoHtml $contenidoHtml)
     {
         //
     }

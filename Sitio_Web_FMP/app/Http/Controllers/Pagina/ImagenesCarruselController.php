@@ -32,7 +32,7 @@ class ImagenesCarruselController extends Controller
         $imagenesCarrusel -> user   =  auth()->id();
         $imagenesCarrusel -> save();
 
-        return redirect();
+        //return redirect();
     }
 
     /**
