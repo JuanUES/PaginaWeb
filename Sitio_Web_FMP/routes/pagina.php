@@ -10,6 +10,8 @@ use App\Http\Controllers\Pagina\ProyeccionSocialController;
 use App\Http\Controllers\Pagina\MaestriaController;
 use App\Http\Controllers\Pagina\PostgradoController;
 use App\Http\Controllers\Pagina\InvestigacionController;
+use App\Http\Controllers\Pagina\Academicos;
+
 
 /**PDF ------------------------------------------------------------------*/
 
@@ -76,21 +78,13 @@ Route::post('/EstructuraOrganizativa/PeriodoJefatura',[JuntaJefaturaController::
 
 /**Academicos-------------------------------------------------------------------------------- */
 
-Route::get('Informatica', function () {
-    return view('Academicos.informatica');
-})->name('Departamento.Inform');
+Route::get('Informatica',[Academicos::class,'indexInfor'])->name('Departamento.Inform');
 
-Route::get('CienciasAgronomicas', function () {
-    return view('Academicos.CienciasAgronomicas');
-})->name('Departamento.CienciasAgr');
+Route::get('CienciasAgronomicas', [Academicos::class,'indexAgro'])->name('Departamento.CienciasAgr');
 
-Route::get('CienciasEconomicas', function () {
-    return view('Academicos.CienciasEconomicas');
-})->name('Departamento.CienciasEcon');
+Route::get('CienciasEconomicas', [Academicos::class,'indexEcono'])->name('Departamento.CienciasEcon');
 
-Route::get('CienciasEducacion', function () {
-    return view('Academicos.CienciasEducacion');
-})->name('Departamento.CienciasEdu');
+Route::get('CienciasEducacion', [Academicos::class,'indexEdu'])->name('Departamento.CienciasEdu');
 
 Route::get('PlanComplementario', function () {
     return view('Academicos.PlanComplementario');

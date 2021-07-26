@@ -1,5 +1,18 @@
 @extends('Pagina/baseOnlyHtml')
+@section('header')
+@auth    
+    <!-- Este css se carga nada mas cuando esta logeado un usuario-->
+    <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
+@endauth    
+@endsection
 
+@section('footer')
+    @auth
+    <script src=" {{ asset('js/dropzone.min.js') }} "></script>   
+    <script src=" {{ asset('js/scripts/dropzonePdf.js') }} "></script>
+    <script src=" {{ asset('js/scripts/pdf.js') }} "></script>
+    @endauth
+@endsection
 @section('container')
 <div class="wrapper">
     <div class="container-fluid">
@@ -9,6 +22,7 @@
         </div>         
         <div class="my-3"></div>
         <!-- end page title -->
+        
         <div class="card-box"> 
             <div class="row">
                 <div class="col-xl-8 px-3">
@@ -35,8 +49,18 @@
                             <p class="text-muted font-15">
                                 Licenciado (a) en trabajo social.
                             </p>
-                            <p class="mb-1 font-weight-bold">Pénsum:</p>
-                            <a href="#" type="submit" class="btn btn-outline-danger"> <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div></a>
+                            <p class="mb-1 font-weight-bold">Pensum:</p>
+                            <a href="{{$pdfs->where('file','LicSocial.pdf')->first()==null 
+                                ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/LicSocial.pdf')}}" 
+                                type="submit" class="btn btn-outline-danger" id="LicSocial" target="_blank">
+                                    <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
+                            </a>
+                            @auth
+                            <a href="#" class="btn  btn-outline-info my-2" 
+                            data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('LicSocial')">
+                                <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
+                            </a>
+                            @endauth 
                         </div>
                         <div class="tab-pane fade" id="v-pills-profile2" role="tabpanel" aria-labelledby="v-pills-profile-tab2">
                             <h2 class="header-title py-2">Profesorado en Educación Básica para Primero y Segundo Ciclos</h2>                            
@@ -64,8 +88,18 @@
                             <p class="text-muted font-15">
                                 Profesor (a) en educación básica para primero y segundo ciclo.
                             </p>
-                            <p class="mb-1 font-weight-bold">Pénsum:</p>
-                            <a href="#" type="submit" class="btn btn-outline-danger"> <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div></a>
+                            <p class="mb-1 font-weight-bold">Pensum:</p>
+                            <a href="{{$pdfs->where('file','profeBasica.pdf')->first()==null 
+                                ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeBasica.pdf')}}" 
+                                type="submit" class="btn btn-outline-danger" id="profeBasica" target="_blank">
+                                <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
+                            </a>
+                            @auth
+                            <a href="#" class="btn  btn-outline-info my-2" 
+                            data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('profeBasica')">
+                                <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
+                            </a>
+                            @endauth 
                         </div>
                         <div class="tab-pane fade" id="v-pills-messages2" role="tabpanel" aria-labelledby="v-pills-messages-tab2">
                             <h2 class="header-title py-2">Profesorado en Matemática para Tercer Ciclo de Educación Básica y Educación Media</h2>                            
@@ -120,9 +154,18 @@
                             <p class="text-muted font-15">
                                 Profesor  (a)  en matemática para tercer ciclo de educación básica y educación media.
                             </p>
-                            <p class="mb-1 font-weight-bold">Pénsum:</p>
-                            <a type="submit" href="#" class="btn btn-outline-danger"> <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div></a>
-                        
+                            <p class="mb-1 font-weight-bold">Pensum:</p>
+                            <a href="{{$pdfs->where('file','profeMate.pdf')->first()==null 
+                                ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeMate.pdf')}}" 
+                                type="submit" class="btn btn-outline-danger" id="profeMate" target="_blank">
+                                <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
+                            </a>
+                            @auth
+                            <a href="#" class="btn  btn-outline-info my-2" 
+                            data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('profeMate')">
+                                <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
+                            </a>
+                            @endauth 
                         </div>
                         <div class="tab-pane fade" id="v-pills-settings2" role="tabpanel" aria-labelledby="v-pills-settings-tab2">
                             <h2 class="header-title py-2">Profesorado en Idioma Inglés Para Tercer Ciclo de Educación Básica y Educación Media</h2>                            
@@ -144,9 +187,18 @@
                             <p class="text-muted font-15">
                                 Profesor (a) en inglés para tercer ciclo de educación básica y educación media.
                             </p>
-                            <p class="mb-1 font-weight-bold">Pénsum:</p>
-                            <a href="#" type="submit" class="btn btn-outline-danger"> <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div></a>
-                        
+                            <p class="mb-1 font-weight-bold">Pensum:</p>
+                            <a href="{{$pdfs->where('file','profeIngles.pdf')->first()==null 
+                                ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeIngles.pdf')}}"
+                                 type="submit" class="btn btn-outline-danger" id="profeIngles" target="_blank">
+                                    <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
+                            </a>
+                            @auth
+                            <a href="#" class="btn  btn-outline-info my-2" 
+                            data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('profeIngles')">
+                                <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
+                            </a>
+                            @endauth 
                         </div>
                         <div class="tab-pane fade" id="v-pills-biologia2" role="tabpanel" aria-labelledby="v-pills-biologia-tab2">
                             <h2 class="header-title py-2">
@@ -215,10 +267,19 @@
                                 Profesor o profesora de Biología para Tercer Ciclo de Educación Básica y Educación Media. 
                             </p>
 
-                            <p class="mb-1 font-weight-bold">Pénsum:</p>
-                            <a href="#" type="submit" class="btn btn-outline-danger"> <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div></a>
-                        
-                        </div>
+                            <p class="mb-1 font-weight-bold">Pensum:</p>
+                            <a href="{{$pdfs->where('file','profeBiolo.pdf')->first()==null 
+                                ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeBiolo.pdf')}}"
+                                 type="submit" class="btn btn-outline-danger" id="profeBiolo" target="_blank">
+                                <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
+                            </a>
+                            @auth
+                            <a href="#" class="btn  btn-outline-info my-2" 
+                            data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('profeBiolo')">
+                                <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
+                            </a>
+                            @endauth                        
+                        </div>                        
                         <div class="tab-pane fade" id="v-pills-parvularia2" role="tabpanel" aria-labelledby="v-pills-parvularia-tab2">
                             <h2 class="header-title py-2">Profesorado en Educación Inicial y Parvularia</h2>                            
                             <p class="mb-1 font-weight-bold ">Código:</p>
@@ -354,147 +415,18 @@
                                 Profesor (a) en educación inicial y parvularia.
                             </p>
 
-                            <p class="mb-1 font-weight-bold">Pénsum:</p>
-                            <a href="#" type="submit" class="btn btn-outline-danger"> <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div></a>
-                        
-                        </div>
-                        <div class="tab-pane fade" id="v-pills-parvularia2" role="tabpanel" aria-labelledby="v-pills-parvularia-tab2">
-                            <h2 class="header-title py-2">Profesorado en Educación Inicial y Parvularia</h2>                            
-                            <p class="mb-1 font-weight-bold ">Código:</p>
-                            <p class="text-muted font-15 text-justify">P70403</p>
-                            <p class="mb-1 font-weight-bold">Descripción:</p>
-                            <p class="text-muted font-15 text-justify">
-                                Se espera que el estudiantado al finalizar el Profesorado en Educación Inicial y Parvularia logre  las siguientes competencias:
-                            </p>
-                            <ul>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Aplicar teorías y enfoques recientes que ayuden a fundamentar las áreas de la formación de inicial y parvularia.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Aplicar la teoría y metodología curricular de la formación inicial y parvularia que orienten acciones educativas de diseño, ejecución y evaluación.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Comprometerse y responsabilizarse con el desarrollo personal y profesional en forma permanente.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Desarrollar habilidades comunicativas como parte integral de la formación personal y profesional.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Aplicar estrategias metodológicas que fortalezcan la inclusión, los derechos de la niñez y la atención a la diversidad.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Orientar y facilitar procesos de cambio en la comunidad con acciones educativas de carácter interdisciplinario.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Aplicar estrategias metodológicas lúdicas y placenteras con enfoque globalizador en educación infantil.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Seleccionar y elaborar recursos educativos utilizando materiales reciclables y del medio ambiente atendiendo a cada etapa evolutiva y a la diversidad socio- cultural.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Desarrollar el pensamiento lógico, crítico y creativo de las niñas y los niños para la resolución de problemas de la vida diaria.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Diseñar, implementar y evaluar procesos de aprendizaje que integren a personas con discapacidad.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Seleccionar, utilizar y evaluar las tecnologías de la comunicación e información como recurso de enseñanza y aprendizaje.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Investigar y generar innovaciones en distintos ámbitos del sistema educativo.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Promover el desarrollo en educación en valores, equidad de género, medio ambiente, formación ciudadana, democracia y cultura de paz.
-                                    </p>
-                                </li>
-
-                            </ul>
-                            <p class="mb-1 font-weight-bold">Objetivos:</p>
-                            <ul>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Analizar la relevancia de la educación en la niñez y el rol de la persona educadora en esta etapa, con el fin de valorar su incidencia en el desarrollo de la personalidad infantil.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Desarrollar actitudes críticas, profesionales, éticas, investigativas y cualidades de personalidad equilibrada, necesarias para orientar el proceso educativo infantil.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Promover y facilitar, desde una perspectiva integradora, estrategias educativas para el trabajo con niñez de 0 a 7 años de edad en sus dimensiones cognitiva, emocional, psicomotora y social.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Identificar la diversidad de modalidades de atención educativa de niñez de 0 a 7 años de edad, para favorecer el desarrollo integral de la niñez.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Propiciar aprendizajes significativos con un enfoque globalizador en ambientes que favorezcan el desarrollo integral del niño y la niña, reconociendo y estimulando las singularidades educativas, la equidad de género y el respeto a los derechos humanos.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Identificar los factores de riesgo que amenazan el desarrollo integral infantil, con el fin de prevenir y reducir estos efectos en la infancia.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Indagar las diversas etapas del desarrollo evolutivo de la niñez de 0 a 7 años, períodos significativos, etapas de aprendizaje y estrategias didácticas, para favorecer la estimulación en cada período de edad de la niñez.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Orientar, mediante un trabajo colaborativo, a familias, centros educativos y comunidad, en los procesos educativos y de desarrollo de la niñez de 0 a 7 años, con el fin de establecer vínculos de cooperación para la mejora de la calidad educativa.
-                                    </p>
-                                </li>
-                                <li>
-                                    <p class="text-muted font-15">
-                                        Innovar y mejorar la labor educativa en el nivel de inicial y parvularia de 0 a 7 años, a través de la reflexión-acción de la práctica docente.
-                                    </p>
-                                </li>
-                            </ul>
-                                            
-                            <p class="mb-1 font-weight-bold">Tiempo de duración de la carrera:</p>
-                            <p class="text-muted font-15">
-                                3 Años (6 ciclos) , 30 materias, 123 Unidades Valorativas.
-                            </p>
-    
-                            <p class="mb-1 font-weight-bold">Grado y título que otorga:</p>
-                            <p class="text-muted font-15">
-                                Profesor (a) en educación inicial y parvularia.
-                            </p>
-
-                            <p class="mb-1 font-weight-bold">Pénsum:</p>
-                            <a href="#" type="submit" class="btn btn-outline-danger"> <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div></a>
+                            <p class="mb-1 font-weight-bold">Pensum:</p>
+                            <a href="{{$pdfs->where('file','profeParvularia.pdf')->first()==null 
+                                ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeParvularia.pdf')}}"
+                                 type="submit" class="btn btn-outline-danger" id="profeParvularia" target="_blank">
+                                    <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
+                            </a>
+                            @auth
+                            <a href="#" class="btn  btn-outline-info my-2" 
+                            data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('profeParvularia')">
+                                <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
+                            </a>
+                            @endauth 
                         
                         </div>
                         <div class="tab-pane fade" id="v-pills-licenciatura2" role="tabpanel" aria-labelledby="v-pills-licenciatura-tab2">
@@ -515,11 +447,45 @@
                                 Licenciado (a) en enseñanza de idiomas extranjeros, especialidad inglés-francés.
                             </p>
 
-                            <p class="mb-1 font-weight-bold">Pénsum:</p>
-                            <a href="#" type="submit" class="btn btn-outline-danger"> <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div></a>
-                        
+                            <p class="mb-1 font-weight-bold">Pensum:</p>
+                            <a href="{{$pdfs->where('file','licEspInglesFrances.pdf')->first()==null 
+                                ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/licEspInglesFrances.pdf')}}"
+                                type="submit" class="btn btn-outline-danger" id="licEspInglesFrances" target="_blank">
+                                    <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
+                            </a>
+                            @auth
+                            <a href="#" class="btn  btn-outline-info my-2" 
+                            data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('licEspInglesFrances')">
+                                <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
+                            </a>
+                            @endauth 
                         </div>
                     </div>
+                    @auth
+                    <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;" id="dropZonePdf">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="myCenterModalLabel">Zona para subir imágenes</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                    <form action="{{ route('PDF', ['localizacion'=>'ccEdu']) }}" method="post"
+                                        class="dropzone" id="my-awesome-dropzone">
+                                        @csrf                                 
+                                        <input type="hidden" name='pdf' id="pdf">
+                                        <div class="dz-message needsclick">
+                                            <i class="h3 text-muted dripicons-cloud-upload"></i>
+                                            <h3>Suelta los archivos aquí o haz clic para subir.</h3>
+                                        </div>
+                                        <div class="dropzone-previews"></div>
+                                    </form>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                    @endauth   
                 </div> <!-- end col -->
                 <div class="col-xl-4">
                     <h4>Departamentos de Ciencias de la Educación</h4>

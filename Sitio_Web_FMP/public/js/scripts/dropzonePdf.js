@@ -13,5 +13,5 @@ $(".dropzone").dropzone({
 });
 
 $('#dropZonePdf').on('hidden.bs.modal',function(){ 
-    Dropzone.removeAllFiles();
+    Dropzone.forElement(".dropzone").removeAllFiles();
 });

@@ -129,25 +129,23 @@
                                         @endif
                                         <!-- end col -->
                                     </div> <!-- end row-->
-                                    <h4>Equipo de Trabajo</h4>
-                                    <p class="font-weight-bold">Ing. Rene Francisco Vásquez<br><p class="font-15">Jefe de la Unidad de Postgrado</p> </p>
-                                    
-                                    <div class="row">
 
-                                        
-
-                                        Licda. Thelma Esmeralda Centeno de Hernández
-                                        Coordinadora de la Maestría en Administración Financiera
-
-                                        Dr. Wilfredo Ramírez Escobar
-                                        Coordinador de la Maestría en Desarrollo Local Sostenible
-
-                                        Ing. Edgar Antonio Marinero Orantes
-                                        Coordinador de la Maestría en Formación para la Docencia Universitaria 
-
-                                    </div>
-                                    <h4>Información Contacto</h4>
-                                    <p>postgrado.fmp@ues.edu.sv</p>
+                                    <form action="" method="POST"  class="parsley-examples" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="row py-1">
+                                            <div class="col-xl-12">     
+                                                <div class="form-group">                       
+                                                    <textarea value="" class="form-control summernote-config" name="contenido" id="contenido" rows="10"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12">
+                                                <div class="form-group">
+                                                    <button type="button" class="btn btn-primary waves-effect waves-light btn-block">
+                                                        <i class="fa fa-save fa-5 ml-3"></i> Guardar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>                  
 
                                 </div>
                             </div>         
@@ -242,13 +240,13 @@
                 </div> <!-- end col -->
                 <div class="col-xl-4 ">
                     @auth
-                        <a class="btn btn-info btn-block text-white text-left  mb-2" data-toggle="modal" data-target="#myModalMaestria"><i class="dripicons-document"></i> Nueva Maestria</a>
+                        <a class="btn btn-info btn-block text-white text-left  mb-2" data-toggle="modal" data-target="#myModalMaestria"><i class="dripicons-document"></i> Nuevo Registro</a>
                         <div id="myModalMaestria" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h3 class="modal-title" id="myCenterModalLabel">
-                                            <i class="fa fa-graduation-cap fa-5" aria-hidden="true"></i> Registro de Maestrias</h3>
+                                            <i class="fa fa-graduation-cap fa-5" aria-hidden="true"></i> Registro de Postgrado</h3>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                     </div>
                                     <div class="modal-body">                                        
@@ -335,11 +333,21 @@
                                             </div>  
 
                                             <div class="row">
-                                                <div class="col-xl-12">
+                                                <div class="col-xl-6">
                                                     <div class="form-group">
                                                         <label for="precio">Precio ($) <code>*</code></label>
                                                         <input type="text" class="form-control" placeholder="Precio (Obligatorio)"
                                                                 name="precio" id="precio"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <div class="form-group">
+                                                        <label for="tipo">Tipo <code>*</code></label>
+                                                        <select class="form-control" id="tipo" name="tipo">
+                                                            <option value="1">Maestria</option>
+                                                            <option value="2">Doctorado</option>
+                                                            <option value="3">Diplomado</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>

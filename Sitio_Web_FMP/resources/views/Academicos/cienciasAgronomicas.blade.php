@@ -11,7 +11,7 @@
     @auth
     <script src=" {{ asset('js/dropzone.min.js') }} "></script>   
     <script src=" {{ asset('js/scripts/dropzonePdf.js') }} "></script>
-    <script src=" {{ asset('js/scripts/ccAgro.js') }} "></script>
+    <script src=" {{ asset('js/scripts/pdf.js') }} "></script>
     @endauth
 @endsection
 
@@ -88,7 +88,9 @@
                                     </p>
                                     
                                     <p class="mb-1 font-weight-bold">Pensum:</p>
-                                    <a href="#" type="submit" class="btn btn-outline-danger" id="ingAgro" target="_blank">
+                                    <a href="{{$pdfs->where('file','ingAgro.pdf')->first()==null 
+                                        ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/ingAgro.pdf')}}"
+                                         type="submit" class="btn btn-outline-danger" id="ingAgro" target="_blank">
                                          <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
                                     </a>
                                     @auth
@@ -107,59 +109,71 @@
                             <div class="row">
                                 <div class="col-xl-8">
                                     <p class="mb-0 font-weight-bold ">Código</p> 
-                            <p class="text-muted font-15 text-justify">
-                                I70305
-                            </p>                   
-    
-                            <p class="mb-1 font-weight-bold">Objetivo:</p>
-                            <p class="text-muted font-15 text-justify">
-                                Tiene como objetivo fundamental formar profesionales integrales, para que desempeñen profesionalmente y con pertinencia mediante sus capacidades humanas, científicas-técnicas y contribuyan al desarrollo sostenible de la agroindustria nacional.
-                            </p>                   
-    
-                            <p class="mb-1 font-weight-bold">Perfil profesional:</p>
-                            <p class="text-muted font-15 text-justify">
-                                El desempeño del Ingeniero o Ingeniera Agroindustrial en un determinado tipo de empresa productiva o de servicio, está basado en las habilidades, conocimientos y destrezas adquiridas durante su formación y que lo hacen competente para desempeñarse en cualquier situación. Por lo tanto, el siguiente perfil considera las necesidades objetivas de la sociedad y la práctica profesional necesaria para la transformación y el desarrollo del entorno cultural, socioeconómico y político del país y la región.
-                            </p>
-                            <p class="text-muted font-15 text-justify">
-                                Formación en ciencias básicas y aplicadas que lo capacitan para comprender, modelar, analizar procesos productivos que enfrentará en su ejercicio profesional.
-                            </p>
-                            <p class="text-muted font-15 text-justify">
-                                Instrucción en ciencias de la producción de alimentos y materias primas para la agroindustria, mediante el desarrollo de prácticas y actividades educativas.
-                            </p>
-                            <p class="text-muted font-15 text-justify">
-                                Preparación en procesos de pre cosecha, cosecha, empaque, almacenamiento y transporte de productos agropecuarios, permitiéndole actuar con tecnología de vanguardia, sobre los procesos de la agroindustria y utilizar en forma óptima los recursos.
-                            </p>
-                            <p class="text-muted font-15 text-justify">
-                                Conocimiento en el área de economía, administración, mercadeo, formulación, evaluación, análisis y gestión de proyectos productivos y de procesamientos agroindustriales, que complementan su formación profesional y que lo capacitan para dirigir procesos y actuar en la forma de decisiones en las instituciones y empresas.
-                            </p>
-                            <p class="text-muted font-15 text-justify">
-                                Adiestramiento en la implementación de buenas prácticas agrícolas, pecuarias y de manufactura, así como de normas y estándares de calidad e inocuidad de alimentos para la certificación de procesos y productos.
-                            </p>
-                            <p class="text-muted font-15 text-justify">
-                                Actitud empresarial que le permita acceder a mejores oportunidades de desarrollo social y económico.
-                            </p>
-                            <p class="text-muted font-15 text-justify">
-                                Competencia para desarrollar investigación científica e innovación tecnológica.
-                            </p>
-                            <p class="text-muted font-15 text-justify">
-                                Conocimientos de informática que faciliten hacer uso efectivo de los recursos tecnológicos modernos, para el análisis y resolución de las diversas situaciones que presentan los procesos productivos agro-alimentarios.
-                            </p>
-                            <p class="text-muted font-15 text-justify">
-                                Adiestramiento sobre el manejo de los recursos naturales en los procesos productivos con enfoque de sostenibilidad.
-                            </p>
-                            <p class="text-muted font-15 text-justify">
-                                Formación académica en el ámbito social, económico y ambiental que le permita trabajar en equipo, comunicarse efectivamente y con creatividad e iniciativa en el desempeño de sus actividades.
-                            </p>
+                                    <p class="text-muted font-15 text-justify">
+                                        I70305
+                                    </p>                   
+            
+                                    <p class="mb-1 font-weight-bold">Objetivo:</p>
+                                    <p class="text-muted font-15 text-justify">
+                                        Tiene como objetivo fundamental formar profesionales integrales, para que desempeñen profesionalmente y con pertinencia mediante sus capacidades humanas, científicas-técnicas y contribuyan al desarrollo sostenible de la agroindustria nacional.
+                                    </p>                   
+            
+                                    <p class="mb-1 font-weight-bold">Perfil profesional:</p>
+                                    <p class="text-muted font-15 text-justify">
+                                        El desempeño del Ingeniero o Ingeniera Agroindustrial en un determinado tipo de empresa productiva o de servicio, está basado en las habilidades, conocimientos y destrezas adquiridas durante su formación y que lo hacen competente para desempeñarse en cualquier situación. Por lo tanto, el siguiente perfil considera las necesidades objetivas de la sociedad y la práctica profesional necesaria para la transformación y el desarrollo del entorno cultural, socioeconómico y político del país y la región.
+                                    </p>
+                                    <p class="text-muted font-15 text-justify">
+                                        Formación en ciencias básicas y aplicadas que lo capacitan para comprender, modelar, analizar procesos productivos que enfrentará en su ejercicio profesional.
+                                    </p>
+                                    <p class="text-muted font-15 text-justify">
+                                        Instrucción en ciencias de la producción de alimentos y materias primas para la agroindustria, mediante el desarrollo de prácticas y actividades educativas.
+                                    </p>
+                                    <p class="text-muted font-15 text-justify">
+                                        Preparación en procesos de pre cosecha, cosecha, empaque, almacenamiento y transporte de productos agropecuarios, permitiéndole actuar con tecnología de vanguardia, sobre los procesos de la agroindustria y utilizar en forma óptima los recursos.
+                                    </p>
+                                    <p class="text-muted font-15 text-justify">
+                                        Conocimiento en el área de economía, administración, mercadeo, formulación, evaluación, análisis y gestión de proyectos productivos y de procesamientos agroindustriales, que complementan su formación profesional y que lo capacitan para dirigir procesos y actuar en la forma de decisiones en las instituciones y empresas.
+                                    </p>
+                                    <p class="text-muted font-15 text-justify">
+                                        Adiestramiento en la implementación de buenas prácticas agrícolas, pecuarias y de manufactura, así como de normas y estándares de calidad e inocuidad de alimentos para la certificación de procesos y productos.
+                                    </p>
+                                    <p class="text-muted font-15 text-justify">
+                                        Actitud empresarial que le permita acceder a mejores oportunidades de desarrollo social y económico.
+                                    </p>
+                                    <p class="text-muted font-15 text-justify">
+                                        Competencia para desarrollar investigación científica e innovación tecnológica.
+                                    </p>
+                                    <p class="text-muted font-15 text-justify">
+                                        Conocimientos de informática que faciliten hacer uso efectivo de los recursos tecnológicos modernos, para el análisis y resolución de las diversas situaciones que presentan los procesos productivos agro-alimentarios.
+                                    </p>
+                                    <p class="text-muted font-15 text-justify">
+                                        Adiestramiento sobre el manejo de los recursos naturales en los procesos productivos con enfoque de sostenibilidad.
+                                    </p>
+                                    <p class="text-muted font-15 text-justify">
+                                        Formación académica en el ámbito social, económico y ambiental que le permita trabajar en equipo, comunicarse efectivamente y con creatividad e iniciativa en el desempeño de sus actividades.
+                                    </p>
 
-                            <p class="mb-1 font-weight-bold">Tiempo de duración:</p>
-                            <p class="text-muted font-15">
-                                5 años.
-                            </p>
-    
-                            <p class="mb-1 font-weight-bold">Grado y título que otorga:</p>
-                            <p class="text-muted font-15">
-                                Ingeniero(a) Agroindustrial
-                            </p>
+                                    <p class="mb-1 font-weight-bold">Tiempo de duración:</p>
+                                    <p class="text-muted font-15">
+                                        5 años.
+                                    </p>
+            
+                                    <p class="mb-1 font-weight-bold">Grado y título que otorga:</p>
+                                    <p class="text-muted font-15">
+                                        Ingeniero(a) Agroindustrial
+                                    </p>
+                                    <p class="mb-1 font-weight-bold">Pensum:</p>
+                                    <a href="{{$pdfs->where('file','ingIndus.pdf')->first()==null 
+                                        ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/ingIndus.pdf')}}"
+                                         type="submit" class="btn btn-outline-danger" id="ingIndus" target="_blank">
+                                         <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
+                                    </a>
+                                    @auth
+                                    <a href="#" class="btn  btn-outline-info my-2" 
+                                    data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('ingIndus')">
+                                        <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
+                                    </a>
+                                    @endauth 
                                 </div>
                             </div>                            
     

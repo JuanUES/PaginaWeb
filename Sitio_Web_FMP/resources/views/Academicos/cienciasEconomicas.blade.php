@@ -1,5 +1,18 @@
 @extends('Pagina/baseOnlyHtml')
+@section('header')
+@auth    
+    <!-- Este css se carga nada mas cuando esta logeado un usuario-->
+    <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
+@endauth    
+@endsection
 
+@section('footer')
+    @auth
+    <script src=" {{ asset('js/dropzone.min.js') }} "></script>   
+    <script src=" {{ asset('js/scripts/dropzonePdf.js') }} "></script>
+    <script src=" {{ asset('js/scripts/pdf.js') }} "></script>
+    @endauth
+@endsection
 @section('container')
 <div class="wrapper">
     <div class="container-fluid">
@@ -74,8 +87,20 @@
             
                                     <p class="mb-1 font-weight-bold">Grado y título que otorga:</p>
                                     <p class="text-muted font-15">
-                                        LICENCIADO (A) EN CONTADURÍA PÚBLICA.
+                                        Licenciado(a) en Contaduría Pública.
                                     </p>
+                                    <p class="mb-1 font-weight-bold">Pensum:</p>
+                                    <a href="{{$pdfs->where('file','licConta.pdf')->first()==null 
+                                        ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/licConta.pdf')}}"
+                                         type="submit" class="btn btn-outline-danger" id="licConta" target="_blank">
+                                         <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
+                                    </a>
+                                    @auth
+                                    <a href="#" class="btn  btn-outline-info my-2" 
+                                    data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('licConta')">
+                                        <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
+                                    </a>
+                                    @endauth 
                                 </div>
                                 
                             </div>
@@ -100,14 +125,51 @@
     
                             <p class="mb-1 font-weight-bold">Grado y título que otorga:</p>
                             <p class="text-muted font-15">
-                                LICENCIADO (A) EN ADMINISTRACIÓN DE EMPRESAS
+                                Licenciado(a) en Administración de Empresas.
                             </p>
+                            <p class="mb-1 font-weight-bold">Pensum:</p>
+                            <a href="{{$pdfs->where('file','licAdmon.pdf')->first()==null 
+                                ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/licAdmon.pdf')}}"
+                                 type="submit" class="btn btn-outline-danger" id="licAdmon" target="_blank">
+                                    <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
+                            </a>
+                            @auth
+                            <a href="#" class="btn  btn-outline-info my-2" 
+                            data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('licAdmon')">
+                                <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
+                            </a>
+                            @endauth 
                                 </div>
                             </div>                            
     
                         </div>
                     </div>
-                </div>              
+                </div>  
+                @auth
+                <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;" id="dropZonePdf">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="myCenterModalLabel">Zona para subir imágenes</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div class="modal-body">
+                                
+                                <form action="{{ route('PDF', ['localizacion'=>'ccEco']) }}" method="post"
+                                    class="dropzone" id="my-awesome-dropzone">
+                                    @csrf                                 
+                                    <input type="hidden" name='pdf' id="pdf">
+                                    <div class="dz-message needsclick">
+                                        <i class="h3 text-muted dripicons-cloud-upload"></i>
+                                        <h3>Suelta los archivos aquí o haz clic para subir.</h3>
+                                    </div>
+                                    <div class="dropzone-previews"></div>
+                                </form>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal -->
+                @endauth            
 
             </div>
             <!-- end row -->

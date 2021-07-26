@@ -17,10 +17,11 @@ class PDFImageController extends Controller
      */
     public function store(Request $request, $localizacion)
     {
-        $pdfs = PDF::where('localizacion', $localizacion)->get();   
+        $fileName = $request->pdf.'.pdf';
+        $pdfs = PDF::where('localizacion', $localizacion)->where('file',$fileName)->get();   
         $file = $request->file('file');  
         $path = public_path() . '/files/pdfs/'.$localizacion;
-        $fileName = $request->pdf.'.pdf';
+        
 
         if(count($pdfs)==0){       
             
