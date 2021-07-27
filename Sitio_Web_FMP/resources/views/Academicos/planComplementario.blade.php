@@ -21,8 +21,7 @@
                 <div class="col-xl-8 px-3">
                     <div class="tab-content pt-0" id="v-pills-tabContent">
                         <div class="tab-pane fade active show" id="index" role="tabpanel">
-                            <h3 class="py-2">Plan Complementario</h3>
-                              
+                            <h3 class="py-2">Licenciaturas en Educación - Plan Complementario</h3>
                             <div class="row"><h4>Documentación A Presentar:</h4></div>
                             <div class="row">
                                 <div class="col-xl-6">

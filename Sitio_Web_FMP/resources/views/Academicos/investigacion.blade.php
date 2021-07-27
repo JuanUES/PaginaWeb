@@ -47,7 +47,7 @@
                             
                             <div class="row py-1">
                                 <div class="col order-first">
-                                    <h4>Aun no se que poner</h4>
+                                    <h4></h4>
                                 </div>
                                 @auth
                                 <div class="col-lg-3 order-last">
@@ -127,6 +127,11 @@
                             </div> <!-- end row-->
                         </div>
                         <div class="tab-pane fade " id="v-pills-social2" role="tabpanel" aria-labelledby="v-pills-social-tab2">
+                            <a class="nav-link btn btn-danger waves-effect width-md" href="#index"
+                                onclick="$('.nav-link').removeClass('active')" data-toggle="pill">
+                                    <i class="mdi mdi-arrow-left-thick"></i> 
+                                        Volver a Investigación
+                            </a>
                             <h3 class="py-2">Centro de estudio de Información Publica (CEOP)</h3>
                             <p class="mb-1 font-weight-bold py-2">Sobre el CEOP FMP:</p>
                             <p class="text-muted font-15 text-justify">
@@ -174,6 +179,11 @@
                             </div>             
                         </div>
                         <div class="tab-pane fade" id="v-pills-profile2" role="tabpanel" aria-labelledby="v-pills-profile-tab2">                           
+                            <a class="nav-link btn btn-danger waves-effect width-md" href="#index"
+                            onclick="$('.nav-link').removeClass('active')" data-toggle="pill">
+                                <i class="mdi mdi-arrow-left-thick"></i> 
+                                    Volver a Investigación
+                            </a>
                         </div>                        
                     </div>
                 </div> <!-- end col -->

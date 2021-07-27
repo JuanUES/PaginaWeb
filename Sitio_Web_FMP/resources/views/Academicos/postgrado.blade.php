@@ -154,12 +154,7 @@
                                             </div>
                                         </div>
                                     </form>      
-                                    @endauth  
-                                    @guest
-                                        @if ($contenido!=null)
-                                            {{$contenido}}
-                                        @endif
-                                    @endguest          
+                                    @endauth       
 
                                 </div>
                             </div>         
@@ -250,6 +245,13 @@
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal -->
+                    </div>
+                    <div class="py-1">
+                        @guest
+                            @if ($contenido!=null)
+                                {!!$contenido->contenido!!}
+                            @endif
+                        @endguest  
                     </div>
                 </div> <!-- end col -->
                 <div class="col-xl-4 ">
