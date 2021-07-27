@@ -63,7 +63,7 @@
                 </div>
                 <div class="col-3">
                     <!-- Button trigger modal -->
-                 <button type="button" title="Agregar Aula" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#exampleModalCenter"></button>
+                 <button type="button" title="Agregar Departamentos" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#exampleModalCenter"></button>
                 </div>
             </div>
             <table  class="table table-sm" id="table-depto">
