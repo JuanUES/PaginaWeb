@@ -6,7 +6,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id=" exampleModalLongTitle">Agregar Aulas</h5>
+          <h5 class="modal-title" id=" exampleModalLongTitle">Agregar Materias</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -21,14 +21,24 @@
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputCodigo">Código</label>
-                                <input type="text" class="form-control" name="codigo" placeholder="Digite el código">
+                                <input type="text" class="form-control" name="codigo_materia" placeholder="Digite el código">
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputNombre">Nombre</label>
-                                <input type="text" class="form-control" name="nombre_aula"  placeholder="Digite el nombre de la Aula">
+                                <input type="text" class="form-control" name="nombre_materia"  placeholder="Digite el nombre de la materia">
                             
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label for="exampleInputCodigo">Carrera</label>
+                                <select class="custom-select" name="id_carrera">
+                                    <option value="">Seleccione</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -36,14 +46,33 @@
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputUbicacion">Ubicación</label>
-                                <input type="text" class="form-control" name="ubicacion_aula" placeholder="Digite la Ubicación">
+                                <label for="exampleInputUbicacion">UV</label>
+                                <select class="custom-select" name="uv_materia">
+                                    <option value="">Seleccione</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Capacidad</label>
-                                <input type="text" class="form-control" name="capacidad" placeholder="Digite la Capacidad">
+                                <label for="exampleInputPassword1">Nivel</label>
+                                <select class="custom-select" name="uv_materia">
+                                    <option value="">Seleccione</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -65,10 +94,10 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Inicio</a></li>
-                    <li class="breadcrumb-item active">Aulas</li>
+                    <li class="breadcrumb-item active">Materias</li>
                 </ol>
             </div>
-            <h4 class="page-title">Creación de Aulas</h4>
+            <h4 class="page-title">Creación de Materias</h4>
         </div>
     </div>
 </div>
@@ -80,7 +109,7 @@
             <div class="row">
                 <div class="col-6">
                     <h3>
-                        Aulas Registradas
+                        Materias Registradas
                     </h3>      
                 </div>
                 <div class="col-3">
@@ -88,13 +117,13 @@
                  <button type="button" title="Agregar Aula" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#exampleModalCenter"></button>
                 </div>
             </div>
-            <table  class="table table-sm" id="table-aulas">
+            <table  class="table table-sm" id="table-materias">
                 <thead>
                 <tr>
                     <th data-priority="1">Código</th>
                     <th data-priority="3">Nombre</th>
-                    <th data-priority="1">Ubicación</th>
-                    <th data-priority="3">Capacidad</th>
+                    <th data-priority="1">UV</th>
+                    <th data-priority="3">Nivel</th>
                     <th data-priority="3">Acciones</th>
                   
                 </tr>
@@ -195,7 +224,7 @@
 <script src="{{ asset('template-admin/dist/assets/js/pages/dashboard.init.js') }}"></script>
 <script>
     $(document).ready(function () {
-        $('#table-aulas').DataTable({
+        $('#table-materias').DataTable({
           "language": {
               "decimal":        ".",
               "emptyTable":     "No hay datos para mostrar",

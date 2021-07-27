@@ -234,7 +234,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            @if (@Auth::user()->hasRole('jefe_academico'))
+                            @if (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Jefe Academico'))
                             <!--para los horarios-->
                             <li class="menu-title">Horarios</li>
                             <li>
@@ -247,15 +247,17 @@
                                     <li>
                                         <a href=".">Crear horarios</a>
                                     </li>
+                                    @if(@Auth::user()->hasRole('super-admin'))
                                     <li>
-                                        <a href=".">Materias</a>
+                                        <a href="{{route('materias')}}">Materias</a>
                                     </li>
                                     <li>
                                         <a href="{{route('aulas')}}">Aulas</a>
                                     </li>
                                     <li>
-                                        <a href=".">Departamentos</a>
+                                        <a href="{{route('depto')}}">Departamentos</a>
                                     </li>
+                                    @endif
                                 </ul>
                             </li>
                             <li>

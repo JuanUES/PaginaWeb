@@ -57,6 +57,6 @@ class UserSeeder extends Seeder
             'password'=>Hash::make('jefe'),
         ]);
         //Asiginar el rol
-        $user->assignRole('jefe_academico');
+        $user->assignRole('Jefe Academico');
     }
 }
