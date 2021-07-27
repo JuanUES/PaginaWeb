@@ -20,8 +20,9 @@ Route::get('/', [indexController::class, 'index'])->name('index');
 
 //Ruta para el admin
 Route::get('admin', function () {
-    return (!Auth::guest()) ? view('Admin.home') : Redirect::to('/');
-})->name('admin');
+    return view('Admin.home');})
+    ->middleware('auth')
+    ->name('admin');
 
 require __DIR__.'/transparencia.php';
 require __DIR__.'/auth.php';

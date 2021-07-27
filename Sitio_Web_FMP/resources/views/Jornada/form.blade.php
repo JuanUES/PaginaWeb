@@ -20,7 +20,7 @@
     </div>
 </div>
 
-<h5 class="mt-3">Details</h5>
+<h5 class="mt-3">Detalles</h5>
 <hr>
 <div id="days-table"></div>
 <button type="button" class="btn btn-sm btn-primary mt-3" id="btnNewRow"> <i class="fa fa-plus-square"></i> Nueva Linea </button>
