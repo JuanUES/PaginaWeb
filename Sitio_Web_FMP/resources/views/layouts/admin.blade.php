@@ -254,7 +254,7 @@
                                         <a href="{{route('aulas')}}">Aulas</a>
                                     </li>
                                     <li>
-                                        <a href=".">Departamentos</a>
+                                        <a href="{{route('depto')}}">Departamentos</a>
                                     </li>
                                 </ul>
                             </li>

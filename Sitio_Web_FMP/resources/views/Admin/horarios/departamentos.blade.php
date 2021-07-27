@@ -99,8 +99,8 @@
                 </thead>
                 <tbody>
                 <tr>
+                    <td>1</td>
                     <th>GOOG <span class="co-name">Google Inc.</span></th>
-                    <td>597.74</td>
                     <td><a href="" title="Editar Aula">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
@@ -111,8 +111,8 @@
                
                 </tr>
                 <tr>
+                    <td>2</td>
                     <th>AAPL <span class="co-name">Apple Inc.</span></th>
-                    <td>378.94</td>
                     <td><a href="" title="Editar Aula">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
@@ -122,8 +122,8 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>3</td>
                     <th>AMZN <span class="co-name">Amazon.com Inc.</span></th>
-                    <td>191.55</td>
                     <td><a href="" title="Editar Aula">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
@@ -133,8 +133,8 @@
                     </td>
                 </tr>
                 <tr>
+                    <td>4</td>
                     <th>ORCL <span class="co-name">Oracle Corporation</span></th>
-                    <td>31.15</td>
                     <td><a href="" title="Editar Aula">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
@@ -145,8 +145,8 @@
                   
                 </tr>
                 <tr>
+                    <td>5</td>
                     <th>MSFT <span class="co-name">Microsoft Corporation</span></th>
-                    <td>25.50</td>
                     <td><a href="" title="Editar Aula">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
@@ -157,8 +157,8 @@
                 </tr>
                 
                 <tr>
+                    <td>6</td>
                     <th>YHOO <span class="co-name">Yahoo! Inc.</span></th>
-                    <td>15.81</td>
                     <td><a href="" title="Editar Aula">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
