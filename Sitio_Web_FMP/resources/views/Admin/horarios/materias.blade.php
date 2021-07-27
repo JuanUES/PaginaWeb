@@ -6,7 +6,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id=" exampleModalLongTitle">Agregar Departamentos</h5>
+          <h5 class="modal-title" id=" exampleModalLongTitle">Agregar Materias</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -18,15 +18,66 @@
                         role="alert" style="display:none" id="notificacion">                                               
                     </div>
                     <div class="row">
-                        <div class="col-xl-12">
+                        <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputNombre">Nombre Departamento</label>
-                                <input type="text" class="form-control" name="nombre_departamento"  placeholder="Digite el nombre del departamento">
+                                <label for="exampleInputCodigo">Código</label>
+                                <input type="text" class="form-control" name="codigo_materia" placeholder="Digite el código">
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="exampleInputNombre">Nombre</label>
+                                <input type="text" class="form-control" name="nombre_materia"  placeholder="Digite el nombre de la materia">
                             
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label for="exampleInputCodigo">Carrera</label>
+                                <select class="custom-select" name="id_carrera">
+                                    <option value="">Seleccione</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="exampleInputUbicacion">UV</label>
+                                <select class="custom-select" name="uv_materia">
+                                    <option value="">Seleccione</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Nivel</label>
+                                <select class="custom-select" name="uv_materia">
+                                    <option value="">Seleccione</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i>Cerrar</button>
@@ -43,10 +94,10 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Inicio</a></li>
-                    <li class="breadcrumb-item active">Departamentos</li>
+                    <li class="breadcrumb-item active">Materias</li>
                 </ol>
             </div>
-            <h4 class="page-title">Creación de Departamentos</h4>
+            <h4 class="page-title">Creación de Materias</h4>
         </div>
     </div>
 </div>
@@ -58,7 +109,7 @@
             <div class="row">
                 <div class="col-6">
                     <h3>
-                        Departamentos Registrados
+                        Materias Registradas
                     </h3>      
                 </div>
                 <div class="col-3">
@@ -66,19 +117,23 @@
                  <button type="button" title="Agregar Aula" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#exampleModalCenter"></button>
                 </div>
             </div>
-            <table  class="table table-sm" id="table-depto">
+            <table  class="table table-sm" id="table-materias">
                 <thead>
                 <tr>
-                    <th data-priority="1">N°</th>
+                    <th data-priority="1">Código</th>
                     <th data-priority="3">Nombre</th>
-                    <th data-priority="1">Acciones</th>
+                    <th data-priority="1">UV</th>
+                    <th data-priority="3">Nivel</th>
+                    <th data-priority="3">Acciones</th>
                   
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td>1</td>
                     <th>GOOG <span class="co-name">Google Inc.</span></th>
+                    <td>597.74</td>
+                    <td>12:12PM</td>
+                    <td>14.81 (2.54%)</td>
                     <td><a href="" title="Editar Aula">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
@@ -89,8 +144,10 @@
                
                 </tr>
                 <tr>
-                    <td>2</td>
                     <th>AAPL <span class="co-name">Apple Inc.</span></th>
+                    <td>378.94</td>
+                    <td>12:22PM</td>
+                    <td>5.74 (1.54%)</td>
                     <td><a href="" title="Editar Aula">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
@@ -100,8 +157,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>3</td>
                     <th>AMZN <span class="co-name">Amazon.com Inc.</span></th>
+                    <td>191.55</td>
+                    <td>12:23PM</td>
+                    <td>3.16 (1.68%)</td>
                     <td><a href="" title="Editar Aula">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
@@ -111,8 +170,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>4</td>
                     <th>ORCL <span class="co-name">Oracle Corporation</span></th>
+                    <td>31.15</td>
+                    <td>12:44PM</td>
+                    <td>1.41 (4.72%)</td>
                     <td><a href="" title="Editar Aula">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
@@ -123,8 +184,10 @@
                   
                 </tr>
                 <tr>
-                    <td>5</td>
                     <th>MSFT <span class="co-name">Microsoft Corporation</span></th>
+                    <td>25.50</td>
+                    <td>12:27PM</td>
+                    <td>0.66 (2.67%)</td>
                     <td><a href="" title="Editar Aula">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
@@ -135,8 +198,10 @@
                 </tr>
                 
                 <tr>
-                    <td>6</td>
                     <th>YHOO <span class="co-name">Yahoo! Inc.</span></th>
+                    <td>15.81</td>
+                    <td>12:25PM</td>
+                    <td>0.11 (0.67%)</td>
                     <td><a href="" title="Editar Aula">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
@@ -159,7 +224,7 @@
 <script src="{{ asset('template-admin/dist/assets/js/pages/dashboard.init.js') }}"></script>
 <script>
     $(document).ready(function () {
-        $('#table-depto').DataTable({
+        $('#table-materias').DataTable({
           "language": {
               "decimal":        ".",
               "emptyTable":     "No hay datos para mostrar",
