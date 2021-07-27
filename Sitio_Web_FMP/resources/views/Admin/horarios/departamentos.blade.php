@@ -6,7 +6,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id=" exampleModalLongTitle">Agregar Aulas</h5>
+          <h5 class="modal-title" id=" exampleModalLongTitle">Agregar Departamentos</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -18,37 +18,15 @@
                         role="alert" style="display:none" id="notificacion">                                               
                     </div>
                     <div class="row">
-                        <div class="col-xl-6">
+                        <div class="col-xl-12">
                             <div class="form-group">
-                                <label for="exampleInputCodigo">Código</label>
-                                <input type="text" class="form-control" name="codigo" placeholder="Digite el código">
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="exampleInputNombre">Nombre</label>
-                                <input type="text" class="form-control" name="nombre_aula"  placeholder="Digite el nombre de la Aula">
+                                <label for="exampleInputNombre">Nombre Departamento</label>
+                                <input type="text" class="form-control" name="nombre_departamento"  placeholder="Digite el nombre del departamento">
                             
                             </div>
                         </div>
                     </div>
                     
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="exampleInputUbicacion">Ubicación</label>
-                                <input type="text" class="form-control" name="ubicacion_aula" placeholder="Digite la Ubicación">
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Capacidad</label>
-                                <input type="text" class="form-control" name="capacidad" placeholder="Digite la Capacidad">
-                            </div>
-                        </div>
-                    </div>
-                    
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i>Cerrar</button>
