@@ -15,6 +15,9 @@
         <link href="{{ asset('template-admin/dist/assets/libs/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('template-admin/dist/assets/libs/datatables/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css"/>
 
+        <!-- SweetAlert2 -->
+        <link rel="stylesheet" href="{{ asset('vendor/sweetalert2/dist/sweetalert2.css') }}">
+
         <!-- Summernote css -->
         <link href="{{ asset('template-admin/dist/assets/libs/summernote/summernote-bs4.css') }}" rel="stylesheet" />
 
@@ -376,6 +379,13 @@
         {{-- <script src="{{ asset('template-admin/dist/assets/js/pages/form-summernote.init.js') }}"></script> --}}
         <!-- App js -->
         <script src="{{ asset('template-admin/dist/assets/js/app.min.js') }}"></script>
+
+        <!-- Sweetalert2 -->
+        <script src="{{asset('vendor/sweetalert2/dist/sweetalert2.js') }}"></script>
+        <!-- Jquery-Validate -->
+        <script src="{{ asset('vendor/jquery-validation/jquery.validate.js') }}"></script>
+
+
 
 
         @yield('plugins-js')

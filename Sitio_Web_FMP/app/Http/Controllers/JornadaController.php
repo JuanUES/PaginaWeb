@@ -14,7 +14,18 @@ class JornadaController extends Controller
      */
     public function index()
     {
-        //
+        $keyword = $request->get('search');
+        $perPage = 25;
+
+        if (!empty($keyword)) {
+            $jornada = Jornada::where('id_emp', 'LIKE', "%$keyword%")
+            ->orWhere('id_periodo', 'LIKE', "%$keyword%")
+            ->latest()->paginate($perPage);
+        } else {
+            $jornada = Invoice::latest()->paginate($perPage);
+        }
+
+        return view('Jornada.index', compact(['jornada']));
     }
 
     /**
@@ -24,7 +35,7 @@ class JornadaController extends Controller
      */
     public function create()
     {
-        //
+        return view('Jornada.create');
     }
 
     /**
@@ -35,7 +46,23 @@ class JornadaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $requestData = $request->except('items');
+        $items = json_decode($request->items);
+
+        // dd($items);
+
+        $jornada = Jornada::create($requestData);
+        foreach ($items as $key => $value) { //para guardar los items del presupuesto
+            JornadaItem::create([
+                'id_jornada' => $jornada->id,
+                'dia' => $value->dia,
+                'hora_inicio' => $value->hora_inicio,
+                'hora_fin' => $value->hora_fin,
+                'estado' => 1
+            ]);
+        }
+        return redirect('Jornada')->with('flash_message', 'Agregado');
+
     }
 
     /**
