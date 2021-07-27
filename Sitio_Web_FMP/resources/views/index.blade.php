@@ -17,6 +17,8 @@
 <link href="{{ asset('css/icons.min.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('css/app.min.css') }}" rel="stylesheet" type="text/css" />
 
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v11.0" nonce="qj9mH20N"></script>
 
 <!--Libreria data table para paginacion de noticias-->
 <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
@@ -408,9 +410,8 @@
                         <div class="card-box">
                             <div class="row">
                                 <div class="col-xl-12"><h3>Siguenos en Facebook</h3></div>
-                                <div class="col-xl-12 text-center" style="overflow: auto;">
-                                    <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FFacultad-Multidisciplinaria-Paracentral-Decanato-104296228519520&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=false&hide_cover=false&show_facepile=true&appId" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share">
-                                    </iframe> 
+                                <div class="col-xl-12" style="overflow: auto;">
+                                    <div class="fb-page" data-href="https://www.facebook.com/Facultad-Multidisciplinaria-Paracentral-Decanato-104296228519520"  data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/Facultad-Multidisciplinaria-Paracentral-Decanato-104296228519520/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/Facultad-Multidisciplinaria-Paracentral-Decanato-104296228519520/">Facultad Multidisciplinaria Paracentral - Decanato</a></blockquote></div>
                                 </div>                                                                                                                
                             </div>                                                         
                         </div>
@@ -486,8 +487,6 @@
 
 @section('footerjs')
 
-<div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v10.0" nonce="4Ddk6ohO"></script>
 <!-- Vendor js -->
 <script src="{{ asset('js/vendor.min.js') }}"></script>
 
@@ -497,7 +496,6 @@
 <!--Librerias js para datatable-->
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
-
 @auth  
 <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
 <script src="{{ asset('js/summernote.config.min.js') }}"></script>

@@ -27,7 +27,7 @@ Route::post('/subirCarrusel/{tipo}', [ImagenesCarruselController::class, 'store'
 
 /**ContenidoHTML */
 
-Route::post('contenidoHTML',[ContenidoHtmlController::class,'store'])
+Route::post('contenidoHTML/{localizacion}',[ContenidoHtmlController::class,'store'])
 ->middleware(['auth'])->name('contenido');
 
 /**Index ----------------------------------------------------------------*/

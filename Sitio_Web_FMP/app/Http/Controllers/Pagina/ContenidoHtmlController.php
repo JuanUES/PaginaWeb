@@ -34,14 +34,16 @@ class ContenidoHtmlController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$localizacion)
     {
-        $contenidoArray = ContenidoHtml::where('id',$request->_id)->get();
-        $contenido = count($contenidoArray) ? new ContenidoHtml : $contenidoArray[0];
-        $contenido -> contenido = $request->contenido;
+        $contenidoBD = ContenidoHtml::where('localizacion',$localizacion)->first();
+        $contenido = $contenidoBD  == null ? new ContenidoHtml : $contenidoBD;
+        $contenido -> contenido = $request -> contenido;
+        $contenido -> localizacion = $localizacion;
+        $contenido ->user = auth()->id();
         $contenido -> save();
         return response()
-        ->json( ['mensaje'=>count($contenidoArray) ?'Registro exitoso.':'Se modifico el registro']);
+        ->json( ['mensaje'=>$contenidoBD == NULL ?'Registro exitoso.':'Se modifico el registro']);
     }
 
     /**

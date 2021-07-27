@@ -129,24 +129,37 @@
                                         @endif
                                         <!-- end col -->
                                     </div> <!-- end row-->
-
-                                    <form action="" method="POST"  class="parsley-examples" enctype="multipart/form-data">
+                                    @auth
+                                    <form action="{{ route('contenido', ['localizacion'=>'postgradoIndex']) }}" method="POST"  
+                                        class="parsley-examples"  id="indexContenido">
                                         @csrf
+                                        <div class="alert alert-primary text-white" 
+                                                role="alert" style="display:none" id="notificacion">                                               
+                                        </div>
                                         <div class="row py-1">
                                             <div class="col-xl-12">   
-                                                <input type="hidden" name="_id">  
                                                 <div class="form-group">                       
-                                                    <textarea value="" class="form-control summernote-config" name="contenido" id="contenido" rows="10"></textarea>
+                                                    <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
+                                                        {{$contenido->contenido}}
+                                                    </textarea>
                                                 </div>
                                             </div>
                                             <div class="col-xl-12">
                                                 <div class="form-group">
-                                                    <button type="button" class="btn btn-primary waves-effect waves-light btn-block">
-                                                        <i class="fa fa-save fa-5 ml-3"></i> Guardar</button>
+                                                    <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
+                                                        onclick="submitForm('#indexContenido','#notificacion')">
+                                                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>                  
+                                    </form>      
+                                    @endauth  
+                                    @guest
+                                        @if ($contenido!=null)
+                                            {{$contenido}}
+                                        @endif
+                                    @endguest          
 
                                 </div>
                             </div>         
