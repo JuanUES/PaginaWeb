@@ -113,7 +113,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary"><i class="fa fa-ban" aria-hidden="true"></i>Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i>Cerrar</button>
                 <button type="button" class="btn btn-primary" onClick="submitForm('#empleadoForm','#notificacion')"><li class="fa fa-save"></li>Guardar</button>
             </div>
         </form>
