@@ -65,10 +65,10 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Inicio</a></li>
-                    <li class="breadcrumb-item active">Aulas</li>
+                    <li class="breadcrumb-item active">Departamentos</li>
                 </ol>
             </div>
-            <h4 class="page-title">Creación de Aulas</h4>
+            <h4 class="page-title">Creación de Departamentos</h4>
         </div>
     </div>
 </div>
@@ -80,7 +80,7 @@
             <div class="row">
                 <div class="col-6">
                     <h3>
-                        Aulas Registradas
+                        Departamentos Registrados
                     </h3>      
                 </div>
                 <div class="col-3">
@@ -88,13 +88,11 @@
                  <button type="button" title="Agregar Aula" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#exampleModalCenter"></button>
                 </div>
             </div>
-            <table  class="table table-sm" id="table-aulas">
+            <table  class="table table-sm" id="table-depto">
                 <thead>
                 <tr>
-                    <th data-priority="1">Código</th>
+                    <th data-priority="1">N°</th>
                     <th data-priority="3">Nombre</th>
-                    <th data-priority="1">Ubicación</th>
-                    <th data-priority="3">Capacidad</th>
                     <th data-priority="3">Acciones</th>
                   
                 </tr>
@@ -103,8 +101,6 @@
                 <tr>
                     <th>GOOG <span class="co-name">Google Inc.</span></th>
                     <td>597.74</td>
-                    <td>12:12PM</td>
-                    <td>14.81 (2.54%)</td>
                     <td><a href="" title="Editar Aula">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
@@ -117,8 +113,6 @@
                 <tr>
                     <th>AAPL <span class="co-name">Apple Inc.</span></th>
                     <td>378.94</td>
-                    <td>12:22PM</td>
-                    <td>5.74 (1.54%)</td>
                     <td><a href="" title="Editar Aula">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
@@ -130,8 +124,6 @@
                 <tr>
                     <th>AMZN <span class="co-name">Amazon.com Inc.</span></th>
                     <td>191.55</td>
-                    <td>12:23PM</td>
-                    <td>3.16 (1.68%)</td>
                     <td><a href="" title="Editar Aula">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
@@ -143,8 +135,6 @@
                 <tr>
                     <th>ORCL <span class="co-name">Oracle Corporation</span></th>
                     <td>31.15</td>
-                    <td>12:44PM</td>
-                    <td>1.41 (4.72%)</td>
                     <td><a href="" title="Editar Aula">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
@@ -157,8 +147,6 @@
                 <tr>
                     <th>MSFT <span class="co-name">Microsoft Corporation</span></th>
                     <td>25.50</td>
-                    <td>12:27PM</td>
-                    <td>0.66 (2.67%)</td>
                     <td><a href="" title="Editar Aula">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
@@ -171,8 +159,6 @@
                 <tr>
                     <th>YHOO <span class="co-name">Yahoo! Inc.</span></th>
                     <td>15.81</td>
-                    <td>12:25PM</td>
-                    <td>0.11 (0.67%)</td>
                     <td><a href="" title="Editar Aula">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
@@ -195,7 +181,7 @@
 <script src="{{ asset('template-admin/dist/assets/js/pages/dashboard.init.js') }}"></script>
 <script>
     $(document).ready(function () {
-        $('#table-aulas').DataTable({
+        $('#table-depto').DataTable({
           "language": {
               "decimal":        ".",
               "emptyTable":     "No hay datos para mostrar",

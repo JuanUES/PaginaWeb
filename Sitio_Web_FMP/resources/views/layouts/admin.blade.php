@@ -234,7 +234,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            @if (@Auth::user()->hasRole('jefe_academico'))
+                            @if (@Auth::user()->hasRole('Jefe Academico'))
                             <!--para los horarios-->
                             <li class="menu-title">Horarios</li>
                             <li>
