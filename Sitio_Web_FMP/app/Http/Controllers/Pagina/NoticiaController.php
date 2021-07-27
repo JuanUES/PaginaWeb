@@ -83,7 +83,7 @@ class NoticiaController extends Controller
         }
     }
 
-    public function storeurl(Requtiest $request)
+    public function storeurl(Request $request)
     {
         /**Guardo en carpeta Noticia */
         $file = $request->file('img'); 
@@ -101,18 +101,7 @@ class NoticiaController extends Controller
         $noticia -> user      =  auth()->id();
         $noticia -> save();
 
-        if(!$exito){
-            return redirect()->route('index')
-            ->with('titulo','Error')
-            ->with('No se guardo el registro en la base de datos.')
-            ->with('error');
-
-        }else{
-            return redirect()->route('index')
-            ->with('titulo','Exito')
-            ->with('El se guardo el registro en la base de datos.')
-            ->with('success');
-        }
+        return redirect()->route('index');        
     }
 
     /**

@@ -270,7 +270,7 @@
                                                             <div class="form-group">
                                                                 <label>Imagen</label>
                                                                 <div class="custom-file">
-                                                                    <input type="file" class="custom-file-input" id="customFileLang" lang="es">
+                                                                    <input type="file" class="custom-file-input" name="img" id="customFileLang" lang="es">
                                                                     <label class="custom-file-label" for="customFile">Seleccionar imagen</label>
                                                                 </div>
                                                             </div>
