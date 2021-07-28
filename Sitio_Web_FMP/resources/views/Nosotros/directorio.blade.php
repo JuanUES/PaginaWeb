@@ -28,7 +28,7 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title" id="myCenterModalLabel">Registro Nuevo</h4>
+                                        <h4 class="modal-title" id="myCenterModalLabel">Registro</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                     </div>
                                     <div class="modal-body">                                        
@@ -39,13 +39,13 @@
                                         enctype="multipart/form-data">
                                             @csrf
                                             <div class="row">
-                                                
+                                                <input type="hidden" id="_id" name="_id">
                                                 <div class="col-xl-12">
                                                     <div class="form-group">
                                                         <label>Nombre</label>
                                                         <input type="text" class="form-control" required
                                                                 placeholder="Nombre (Obligatorio)"
-                                                                name="nombre" id="titulo"/>
+                                                                name="nombre" id="nombre"/>
                                                     </div> 
                                                 </div>
                                                 
@@ -55,7 +55,7 @@
                                                     <div class="form-group">
                                                         <label>Contactos</label>
                                                         <div>
-                                                            <textarea required class="form-control" name="contacto" placeholder="Contactos (Obligatorio)"></textarea>
+                                                            <textarea required class="form-control" name="contacto" id="contacto" placeholder="Contactos (Obligatorio)"></textarea>
                                                         </div>
                                                     </div>
                                                 </div>

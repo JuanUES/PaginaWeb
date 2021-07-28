@@ -88,7 +88,13 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                            </div>     
+                            </div>    
+                            <h4>Formatos</h4> 
+                            <a href="{{ asset('/Plan/AdministracionEscolar/Descripcionyobjetivos.pdf') }}" type="submit" class="btn px-1 btn-outline-danger" id="ingSistemas" target="_blank">
+                                    <div class="mdi mdi-file-pdf mdi-24px align-top">Descripción y objetivos</div>
+                            </a>
+                            <a href="{{ asset('/Plan/AdministracionEscolar/PlandeestudioadministracionEscolar.pdf') }}" type="submit" class="px-1 btn btn-outline-danger" id="ingSistemas" target="_blank">
+                                <div class="mdi mdi-file-pdf mdi-24px align-top">Plan de Estudio</div></a>
                         </div>
                         <div class="tab-pane fade" id="LicenciaturaenLenguajeyLiteratura" role="tabpanel">
                             <a class="nav-link btn btn-danger waves-effect width-md" href="#index"
@@ -120,7 +126,11 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                            </div>      
+                            </div>     
+                            <h4>Formatos</h4>
+                            <a href="{{ asset('/Plan/LenguajeyLiteratura/Descripcionyobjetivos.pdf') }}" type="submit" class="btn px-1  btn-outline-danger" id="ingSistemas" target="_blank">
+                                <div class="mdi mdi-file-pdf mdi-24px align-top">Descripción y objetivos</div>
+                            </a>
                         </div>       
                         <div class="tab-pane fade" id="LicenciaturaenMatematicas" role="tabpanel">
                             <a class="nav-link btn btn-danger waves-effect width-md" href="#index"
@@ -153,6 +163,12 @@
                                     </tbody>
                                 </table>
                             </div>      
+                            <h4>Formatos</h4>
+                            <a href="{{ asset('/Plan/AdministracionEscolar/Descripcionyobjetivos.pdf') }}" type="submit" class="btn px-1 btn-outline-danger" id="ingSistemas" target="_blank">
+                                <div class="mdi mdi-file-pdf mdi-24px align-top">Descripción y objetivos</div>
+                            </a>
+                            <a href="{{ asset('/Plan/AdministracionEscolar/PlandeestudioadministracionEscolar.pdf') }}" type="submit" class="px-1 btn btn-outline-danger" id="ingSistemas" target="_blank">
+                                <div class="mdi mdi-file-pdf mdi-24px align-top">Plan de Estudio</div></a>
                         </div>     
                         <div class="tab-pane fade" id="LicenciaturaenPrimeroySegundoCiclo" role="tabpanel">
                             <a class="nav-link btn btn-danger waves-effect width-md" href="#index"
@@ -185,7 +201,13 @@
                                     </tbody>
                                 </table>
                             </div>      
-                        </div>       
+                            <h4>Formatos</h4>
+                            <a href="{{ asset('/Plan/AdministracionEscolar/Descripcionyobjetivos.pdf') }}" type="submit" class="btn px-1 btn-outline-danger" id="ingSistemas" target="_blank">
+                                <div class="mdi mdi-file-pdf mdi-24px align-top">Descripción y objetivos</div>
+                            </a>
+                            <a href="{{ asset('/Plan/AdministracionEscolar/PlandeestudioadministracionEscolar.pdf') }}" type="submit" class="px-1 btn btn-outline-danger" id="ingSistemas" target="_blank">
+                                <div class="mdi mdi-file-pdf mdi-24px align-top">Plan de Estudio</div></a>
+                            </div>       
                     </div>
                 </div> <!-- end col -->
                 <div class="col-xl-4">

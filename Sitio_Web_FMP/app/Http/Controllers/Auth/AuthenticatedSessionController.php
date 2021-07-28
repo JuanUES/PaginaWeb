@@ -35,7 +35,10 @@ class AuthenticatedSessionController extends Controller
 
         $user = Auth::user();
 
-        return ($user->hasRole('super-admin') || $user->hasRole('Transparencia-Secretario') || $user->hasRole('Transparencia-Decano') || $user()->hasRole('Transparencia-Presupuestario') )
+        return ($user->hasRole('super-admin') ||
+            $user->hasRole('Transparencia-Secretario') || 
+            $user->hasRole('Transparencia-Decano') ||
+            $user->hasRole('Transparencia-Presupuestario') )
                 ? redirect()->intended('/admin')
                 : redirect()->intended(RouteServiceProvider::HOME);
         // return redirect()->intended(RouteServiceProvider::HOME);

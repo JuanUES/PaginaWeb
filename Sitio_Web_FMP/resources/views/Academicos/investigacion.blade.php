@@ -43,11 +43,11 @@
                 <div class="col-xl-8 px-3">
                     <div class="tab-content pt-0" id="v-pills-tabContent">
                         <div class="tab-pane fade active show" id="index" role="tabpanel" >
-                            <h3 class="py-2">Unidad de Investigación</h3>
+                            
                             
                             <div class="row py-1">
                                 <div class="col order-first">
-                                    <h4></h4>
+                                    <h3 >Unidad de Investigación</h3>
                                 </div>
                                 @auth
                                 <div class="col-lg-3 order-last">
@@ -102,7 +102,7 @@
                                             <div class="carousel-item {!!$i == 0 ? 'active': null!!}">
                                                 @auth
                                                 <form method="POST" 
-                                                action="{{ asset('/borrar') }}/{{$investigacionCarrusel[$i]->id}}/{{$investigacionCarrusel[$i]->imagen}}" id="{{$investigacionCarrusel[$i]->imagen}}">
+                                                    action="{{route('ImagenFacultad.borrar', ['id'=>$investigacionCarrusel[$i]->id,'imagen'=>$investigacionCarrusel[$i]->imagen,'url'=> 'investigacion']) }}">
                                                     @csrf
                                                     <button type="submit" class="btn text-white btn-danger btn-block">
                                                         <div class=" mdi mdi-delete mdi-16px text-center">Eliminar</div>
@@ -188,9 +188,9 @@
                     </div>
                 </div> <!-- end col -->
                 <div class="col-xl-4">
-                    <h4>Unidades</h4>
+                    <h4>Subunidades</h4>
                     <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link active show mb-2 btn-outline-danger  border" id="v-pills-social-tab2" data-toggle="pill" href="#v-pills-social2" role="tab" aria-controls="v-pills-social2"
+                        <a class="nav-link mb-2 btn-outline-danger  border" id="v-pills-social-tab2" data-toggle="pill" href="#v-pills-social2" role="tab" aria-controls="v-pills-social2"
                             aria-selected="true">Centro de Estudio de Información Publica (CEOP)</a>
                         <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-profile-tab2" data-toggle="pill" href="#v-pills-profile2" role="tab" aria-controls="v-pills-profile2"
                             aria-selected="false">Centro de Investigación Ambiental</a>

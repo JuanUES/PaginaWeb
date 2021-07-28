@@ -105,8 +105,9 @@
                                                                                         
                                                     <div class="carousel-item {!!$i == 0 ? 'active': null!!}">
                                                         @auth
-                                                        <form method="POST" 
-                                                        action="{{ asset('/borrar') }}/{{$imagenConvocatoria[$i]->id}}/{{$imagenConvocatoria[$i]->imagen}}" id="{{$imagenConvocatoria[$i]->imagen}}">
+                                                        <form method="POST"
+                                                            action="{{route('ImagenFacultad.borrar', ['id'=>$imagenConvocatoria[$i]->id,'imagen'=>$imagenConvocatoria[$i]->imagen,'url'=> 'postgrado']) }}" 
+                                                            id="{{$imagenConvocatoria[$i]->imagen}}">
                                                             @csrf
                                                             <button type="submit" class="btn text-white btn-danger btn-block">
                                                                 <div class=" mdi mdi-delete mdi-16px text-center">Eliminar</div>
@@ -205,6 +206,7 @@
                                 </table>
                             </div>                       
                             {!!$m->contenido!!}
+                            <h4>Formato</h4>
                             <a><div class="mdi mdi-file-pdf mdi-24px align-top btn-outline-danger btn btn-lg my-2">Descargar</div></a>
                         </div>
                         @endforeach

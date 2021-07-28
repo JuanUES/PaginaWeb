@@ -35,7 +35,7 @@ Route::post('contenidoHTML/{localizacion}',[ContenidoHtmlController::class,'stor
 Route::post('/subirCarruselInicio/{tipo}', [ImagenesCarruselController::class, 'store'])
 ->middleware(['auth'])->name('ImagenFacultad.subir');
 
-Route::post('/borrar/{id}/{imagen}', [ImagenesCarruselController::class, 'destroy'])
+Route::post('/borrar/{id}/{imagen}/{url}', [ImagenesCarruselController::class, 'destroy'])
 ->middleware(['auth'])->name('ImagenFacultad.borrar');
 
 Route::post('/noticias/nueva', [NoticiaController::class, 'store'])
@@ -44,8 +44,8 @@ Route::post('/noticias/nueva', [NoticiaController::class, 'store'])
 Route::post('/noticias/nuevaurl', [NoticiaController::class, 'storeurl'])
 ->middleware(['auth'])->name('NoticiaFacultad.nuevaurl');
 
-Route::post('/noticias/{id}', [NoticiaController::class, 'destroy'])
-->middleware(['auth'])->name('NoticiaFacultad.borrar');
+Route::post('/noticias/borrar', [NoticiaController::class, 'destroy'])
+->middleware(['auth'])->name('NoticiaBorrar');
 
 Route::get('/noticias/{titulo}/{id}',[NoticiaController::class, 'index'])
 ->name('NoticiaFacultad.ver');

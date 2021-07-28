@@ -144,20 +144,9 @@ class NoticiaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        $noticia = Noticia::find(base64_decode($id));
-        $exito = $noticia -> delete();
-        if($exito){
-            return redirect('/#noticias')
-            ->with('titulo','Exito')
-            ->with('mensaje','Se elimino el registro de la base de datos.')
-            ->with('tipo','info');
-        }else{
-            return redirect('/#noticias')
-            ->with('titulo','Exito')
-            ->with('mensaje','El se guardo el registro en la base de datos.')
-            ->with('tipo','success');
-        }        
+        $noticia = Noticia::destroy(base64_decode($request->_id));
+        return redirect('/#noticias');
     }
 }
