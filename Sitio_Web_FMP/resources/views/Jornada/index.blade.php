@@ -1,89 +1,169 @@
 @extends('layouts.admin')
 
 @section('content')
+<!-- start page title -->
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
-            <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                    {{-- <li class="breadcrumb-item"><a href="javascript: void(0);">Greeva</a></li>
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Forms</a></li>
-                    <li class="breadcrumb-item active">Form Elements</li> --}}
-                </ol>
-            </div>
-            <h4 class="page-title">Administracion</h4>
+            <h4 class="page-title"><i class="fa fa-list"></i> Administracion de Jonada</h4>
         </div>
     </div>
 </div>
+<!-- end page title -->
 
-<div class="card-box">
-    @if(Session::has('flash_message'))
-        <div class="alert alert-success alert-dismissible" role="alert">
-            <div class="alert-message">
-                <strong> <i class="fa fa-info-circle"></i> Informacion!</strong> {{ (Session::get('flash_message')) }}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card-box">
+            <div class="row">
+                <div class="col-6">
+                    <h3>
+                        
+                    </h3>      
+                </div>
+                <div class="col-6 ">
+                    <a href="{{ url('/admin/jornada/create') }}" class="btn btn-success" title="Agregar">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Agregar
+                    </a>
+                </div>
             </div>
-        </div>
-    @endif
+            <!--<table  class="table table-sm" id="table-jornada">
+                <thead>
+                <tr>
+                    <th data-priority="1">Id</th>
+                    <th data-priority="3">Jornada</th>
+                    <th data-priority="1">Periodo</th>
+                    <th data-priority="3">Estado</th>
+                    <th data-priority="3">Acciones</th>
+                  
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th>GOOG <span class="co-name">Google Inc.</span></th>
+                    <td>597.74</td>
+                    <td>12:12PM</td>
+                    <td>14.81 (2.54%)</td>
+                    <td><a href="" title="Editar Aula">
+                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
+                        </button></a>
+                        <a href="" title="Eliminar Aula">
+                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
+                            </button></a>
+                    </td>
+               
+                </tr>
+                <tr>
+                    <th>AAPL <span class="co-name">Apple Inc.</span></th>
+                    <td>378.94</td>
+                    <td>12:22PM</td>
+                    <td>5.74 (1.54%)</td>
+                    <td><a href="" title="Editar Aula">
+                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
+                        </button></a>
+                        <a href="" title="Eliminar Aula">
+                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
+                            </button></a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>AMZN <span class="co-name">Amazon.com Inc.</span></th>
+                    <td>191.55</td>
+                    <td>12:23PM</td>
+                    <td>3.16 (1.68%)</td>
+                    <td><a href="" title="Editar Aula">
+                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
+                        </button></a>
+                        <a href="" title="Eliminar Aula">
+                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
+                            </button></a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>ORCL <span class="co-name">Oracle Corporation</span></th>
+                    <td>31.15</td>
+                    <td>12:44PM</td>
+                    <td>1.41 (4.72%)</td>
+                    <td><a href="" title="Editar Aula">
+                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
+                        </button></a>
+                        <a href="" title="Eliminar Aula">
+                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
+                        </button></a>
+                    </td>
+                  
+                </tr>
+                <tr>
+                    <th>MSFT <span class="co-name">Microsoft Corporation</span></th>
+                    <td>25.50</td>
+                    <td>12:27PM</td>
+                    <td>0.66 (2.67%)</td>
+                    <td><a href="" title="Editar Aula">
+                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
+                        </button></a>
+                        <a href="" title="Eliminar Aula">
+                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
+                            </button></a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th>YHOO <span class="co-name">Yahoo! Inc.</span></th>
+                    <td>15.81</td>
+                    <td>12:25PM</td>
+                    <td>0.11 (0.67%)</td>
+                    <td><a href="" title="Editar Aula">
+                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
+                        </button></a>
+                    </td>
+                </tr>
+                
+                
+                
+                </tbody>
+            </table>-->
 
-
-    <div class="row">
-        <div class="col-12 col-sm-4">
-            <a href="{{ url('/admin/create').'/'.$categoria }}" class="btn btn-success" title="Add New Client">
-                <i class="fa fa-plus" aria-hidden="true"></i> Agregar
-            </a>
-        </div>
-    </div>
-
-    <br/>
-    <br/>
-    <table class="table table-sm">
-        <thead>
-            <tr>
-                <th>Jornada</th>
-                <th>Periodo</th>
-                <th>Estado</th>
-                <th class="text-center">Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach($items as $item)
-            <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $item->titulo }}</td>
-                <td>{!! $item->descripcion !!}</td>
-                <td>
-                    <form method="POST" action="{{ url('/Jornada' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
-                        {{ method_field('DELETE') }}
-                        {{ csrf_field() }}
-
-                        @if($item->publicar)
-                            <span class="badge badge-primary">Activo</span>
-                        @else
-                            <span class="badge badge-warning">Inactivo</span>
-                        @endif
-
-                        <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="publicar" name="publicar">
-                            <label class="custom-control-label" for="publicar">Publicar</label>
-                        </div>
-                    </form>
-                </td>
-                {{--<td class="text-center">
-                    <button type="button" data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-info btn-sm openModal"><i class="fa fa-eye fa-fw" aria-hidden="true"></i></button>
-                    <a href="{{ url('/admin/transparencia/edit/' . $item->id) }}" title="Modificar contenido"><button class="btn btn-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button></a>
-                    <form method="POST" action="{{ url('/employees' . '/' . $item->id) }}" accept-charset="UTF-8" style="display:inline">
-                        {{ method_field('DELETE') }}
-                        {{ csrf_field() }}
-                        <button type="submit" class="btn btn-danger btn-sm" title="Eliminar" onclick="return confirm(&quot;Confirm delete?&quot;)"><i class="fa fa-trash fa-fw" aria-hidden="true"></i></button>
-                    </form>
-                </td>--}}
-            </tr>
-        @endforeach
-        </tbody> 
-    </table>
+        </div> <!-- end card-box -->
+    </div> <!-- end col -->
 </div>
+<!-- end row -->   
 
+@endsection
 
-
-
+@section('plugins-js')
+<!-- Dashboard Init JS -->
+<script src="{{ asset('template-admin/dist/assets/js/pages/dashboard.init.js') }}"></script>
+<script>
+    $(document).ready(function () {
+        $('#table-jornada').DataTable({
+          "language": {
+              "decimal":        ".",
+              "emptyTable":     "No hay datos para mostrar",
+              "info":           "Del _START_ al _END_ (_TOTAL_ total)",
+              "infoEmpty":      "Del 0 al 0 (0 total)",
+              "infoFiltered":   "(Filtrado de todas las _MAX_ entradas)",
+              "infoPostFix":    "",
+              "thousands":      "'",
+              "lengthMenu":     "Mostrar _MENU_ entradas",
+              "loadingRecords": "Cargando...",
+              "processing":     "Procesando...",
+              "search":         "Buscar:",
+              "zeroRecords":    "No hay resultados",
+              "paginate": {
+                "first":      "Primero",
+                "last":       "Último",
+                "next":       "Siguiente",
+                "previous":   "Anterior"
+              },
+              "aria": {
+                "sortAscending":  ": Ordenar de manera Ascendente",
+                "sortDescending": ": Ordenar de manera Descendente ",
+              }
+            },
+              "pagingType": "full_numbers",
+              "lengthMenu":		[[5, 10, 20, 25, 50, -1], [5, 10, 20, 25, 50, "Todos"]],
+		        	"iDisplayLength":	5,
+        });  
+      });
+</script>
 @endsection

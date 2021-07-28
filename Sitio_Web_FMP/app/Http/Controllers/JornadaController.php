@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Jornada;
+use App\Models\Jornada\Jornada;
+use App\Models\Jornada\JornadaItem;
 use Illuminate\Http\Request;
 
 class JornadaController extends Controller
@@ -12,9 +13,9 @@ class JornadaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $keyword = $request->get('search');
+        /*$keyword = $request->get('search');
         $perPage = 25;
 
         if (!empty($keyword)) {
@@ -22,10 +23,10 @@ class JornadaController extends Controller
             ->orWhere('id_periodo', 'LIKE', "%$keyword%")
             ->latest()->paginate($perPage);
         } else {
-            $jornada = Invoice::latest()->paginate($perPage);
-        }
+            $jornada = Jornada::latest()->paginate($perPage);
+        }*/
 
-        return view('Jornada.index', compact(['jornada']));
+        return view('Jornada.index');
     }
 
     /**
@@ -52,7 +53,7 @@ class JornadaController extends Controller
         // dd($items);
 
         $jornada = Jornada::create($requestData);
-        foreach ($items as $key => $value) { //para guardar los items del presupuesto
+        foreach ($items as $key => $value) { //para guardar los items del jornada
             JornadaItem::create([
                 'id_jornada' => $jornada->id,
                 'dia' => $value->dia,
@@ -61,7 +62,7 @@ class JornadaController extends Controller
                 'estado' => 1
             ]);
         }
-        return redirect('Jornada')->with('flash_message', 'Agregado');
+        return redirect('Jornada.index')->with('flash_message', 'Agregado');
 
     }
 

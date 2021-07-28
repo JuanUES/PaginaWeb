@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Periodo;
+use App\Models\Jornada\Periodo;
 use Illuminate\Http\Request;
 
 class PeriodoController extends Controller
@@ -12,9 +12,22 @@ class PeriodoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        /*$keyword = $request->get('search');
+        $perPage = 25;
+
+        if (!empty($keyword)) {
+            $periodo = Periodo::where('fecha_inicio', 'LIKE', "%$keyword%")
+            ->orWhere('fecha_fin', 'LIKE', "%$keyword%")
+            ->orWhere('tipo', 'LIKE', "%$keyword%")
+            ->orWhere('estado', 'LIKE', "%$keyword%")
+            ->latest()->paginate($perPage);
+        } else {
+            $periodo = Periodo::latest()->paginate($perPage);
+        }*/
+
+        return view('Periodo.index');
     }
 
     /**
@@ -24,7 +37,7 @@ class PeriodoController extends Controller
      */
     public function create()
     {
-        //
+        return view('Periodo.create');
     }
 
     /**
@@ -35,7 +48,20 @@ class PeriodoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $campos = [
+            'fecha_inicio' => 'required|string|max:255',
+            'fecha_fin' => 'required',
+            'tipo' => 'required|string|max:255',
+            'estado' => 'required|string',
+        ];
+
+        $this->validate($request, $campos);
+
+        $requestData = $request->all();
+
+        Periodo::create($requestData);
+
+        return redirect('admin/periodos')->with('flash_message', 'Periodo agregado!');
     }
 
     /**

@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Models\Jornada;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class JornadaItem extends Model
+class Tipo_Contrato extends Model
 {
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'jornadaitem';
+    protected $table = 'tipo_contrato';
 
     /**
      * The database primary key value.
@@ -25,5 +25,5 @@ class JornadaItem extends Model
      *
      * @var array
      */
-    protected $fillable = ['dia', 'hora_inicio', 'hora_fin', 'id_jornada'];
+    protected $fillable = ['tipo'];
 }

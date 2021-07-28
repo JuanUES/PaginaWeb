@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Jornada;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,5 +25,5 @@ class Periodo extends Model
      *
      * @var array
      */
-    protected $fillable = ['fecha_inicio', 'fecha_fin', 'tipo'];
+    protected $fillable = ['fecha_inicio', 'fecha_fin', 'tipo', 'estado'];
 }
