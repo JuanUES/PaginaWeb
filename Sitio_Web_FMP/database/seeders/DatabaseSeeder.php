@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Pagina\Maestria;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,6 +20,10 @@ class DatabaseSeeder extends Seeder
             RolesSeeder::class,
             UserSeeder::class,
             DirectorioSeeder::class,
+            MaestriaSeeder::class,
+            CarrucelSeeder::class,
+            JuntaSeeder::class,
+            PDFSeeder::class,
         ]);
     }
 }
