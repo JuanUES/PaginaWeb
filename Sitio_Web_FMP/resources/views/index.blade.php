@@ -502,8 +502,8 @@
 <script>
     /*Carga del model con los datos de la noticia actual */
     function modificarNoticia(id){
-        $json = {!!json_encode($maestrias)!!}.find(x => x.id==id);
-        editar($json);
+        /*$json = {!!json_encode($maestrias)!!}.find(x => x.id==id);
+        editar($json);*/
     }
     /*Carga el model con las noticias de url con noticias externas*/
     function modificarNoticiaUrl(id){
