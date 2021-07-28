@@ -141,7 +141,9 @@
                                             <div class="col-xl-12">   
                                                 <div class="form-group">                       
                                                     <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
-                                                        {{$contenido->contenido}}
+                                                        @if ($contenido!=null)
+                                                            {{$contenido->contenido}}
+                                                        @endif
                                                     </textarea>
                                                 </div>
                                             </div>
