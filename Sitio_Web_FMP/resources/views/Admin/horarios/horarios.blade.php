@@ -6,7 +6,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id=" exampleModalLongTitle">Agregar Materias</h5>
+          <h5 class="modal-title" id=" exampleModalLongTitle">Agregar Horario</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -20,25 +20,19 @@
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputCodigo">Código</label>
-                                <input type="text" class="form-control" name="codigo_materia" placeholder="Digite el código">
+                                <label for="exampleInputCiclo">Ciclo</label>
+                                <select class="custom-select" name="ciclo">
+                                    <option value="">Seleccione</option>
+                                    <option value="">Ciclo I</option>
+                                    <option value="">Ciclo II</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputNombre">Nombre</label>
-                                <input type="text" class="form-control" name="nombre_materia"  placeholder="Digite el nombre de la materia">
-                            
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group">
-                                <label for="exampleInputCodigo">Carrera</label>
-                                <select class="custom-select" name="id_carrera">
-                                    <option value="">Seleccione</option>
-                                </select>
+                                <label for="exampleInputNombre">Cupo</label>
+                                <input type="number" class="form-control" name="cupo" placeholder="Ingres el cupo">
+                           
                             </div>
                         </div>
                     </div>
@@ -46,32 +40,71 @@
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputUbicacion">UV</label>
-                                <select class="custom-select" name="uv_materia">
+                                <label for="exampleInputUbicacion">Grupo</label>
+                                <select class="custom-select" name="tipo_grupo">
                                     <option value="">Seleccione</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
+                                    <option value="Teórico">Teórico</option>
+                                    <option value="Laboratorio">Laboratorio</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Nivel</label>
-                                <select class="custom-select" name="uv_materia">
+                                <label for="exampleInputNumGrupo">número de grupo</label>
+                                <input type="number" class="form-control" name="numero_grupo" placeholder="Digite el numero">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="exampleInputMateria">Materia</label>
+                                <select class="custom-select" name="id_materia">
                                     <option value="">Seleccione</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="exampleInputDias">Día</label>
+                                <select class="custom-select" name="dias">
+                                    <option value="">Seleccione</option>
+                                    <option value="Lunes">Lunes</option>
+                                    <option value="Martes">Martes</option>
+                                    <option value="Miércoles">Miércoles</option>
+                                    <option value="Jueves">Jueves</option>
+                                    <option value="Viernes">Viernes</option>
+                                    <option value="Sábado">Sábado</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="exampleInputHora">Hora</label>
+                                <select class="custom-select" name="id_hora">
+                                    <option value="">Seleccione</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="exampleInputAula">Aula</label>
+                                <select class="custom-select" name="id_aula">
+                                    <option value="">Seleccione</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label for="exampleInputDocente">Docente</label>
+                                <select class="custom-select" name="id_empleado">
+                                    <option value="">Seleccione</option>
                                 </select>
                             </div>
                         </div>
@@ -94,10 +127,10 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Inicio</a></li>
-                    <li class="breadcrumb-item active">Materias</li>
+                    <li class="breadcrumb-item active">Horarios de clase</li>
                 </ol>
             </div>
-            <h4 class="page-title">Creación de Materias</h4>
+            <h4 class="page-title">Creación de horarios de clases</h4>
         </div>
     </div>
 </div>
@@ -109,22 +142,29 @@
             <div class="row">
                 <div class="col-6">
                     <h3>
-                        Materias Registradas
+                        Horarios de clases Registrados
                     </h3>      
                 </div>
                 <div class="col-3">
                     <!-- Button trigger modal -->
-                 <button type="button" title="Agregar Materias" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#exampleModalCenter"></button>
+                 <button type="button" title="Agregar Horario" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#exampleModalCenter"></button>
                 </div>
             </div>
-            <table  class="table table-sm" id="table-materias">
+            <table  class="table table-sm" id="table-horarios">
                 <thead>
                 <tr>
                     <th data-priority="1">Código</th>
-                    <th data-priority="3">Nombre</th>
-                    <th data-priority="1">UV</th>
-                    <th data-priority="3">Nivel</th>
-                    <th data-priority="3">Acciones</th>
+                    <th data-priority="1">Materia</th>
+                    <th data-priority="1">T</th>
+                    <th data-priority="1">GRP</th>
+                    <th data-priority="1">Cupo</th>
+                    <th data-priority="1">Modalidad</th>
+                    <th data-priority="1">Carrera</th>
+                    <th data-priority="1">Horario</th>
+                    <th data-priority="1">Días</th>
+                    <th data-priority="1">Aula</th>
+                    <th data-priority="1">Docente</th>
+                    <th data-priority="1">Acciones</th>
                   
                 </tr>
                 </thead>
@@ -132,12 +172,19 @@
                 <tr>
                     <th>GOOG <span class="co-name">Google Inc.</span></th>
                     <td>597.74</td>
+                    <td>597.74</td>
                     <td>12:12PM</td>
                     <td>14.81 (2.54%)</td>
-                    <td><a href="" title="Editar Aula">
+                    <td>597.74</td>
+                    <td>12:12PM</td>
+                    <td>14.81 (2.54%)</td>
+                    <td>597.74</td>
+                    <td>12:12PM</td>
+                    <td>14.81 (2.54%)</td>
+                    <td><a href="" title="Editar Horario">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
-                        <a href="" title="Eliminar Aula">
+                        <a href="" title="Eliminar Horario">
                             <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
                             </button></a>
                     </td>
@@ -147,11 +194,18 @@
                     <th>AAPL <span class="co-name">Apple Inc.</span></th>
                     <td>378.94</td>
                     <td>12:22PM</td>
+                    <td>597.74</td>
                     <td>5.74 (1.54%)</td>
-                    <td><a href="" title="Editar Aula">
+                    <td>597.74</td>
+                    <td>12:12PM</td>
+                    <td>14.81 (2.54%)</td>
+                    <td>597.74</td>
+                    <td>12:12PM</td>
+                    <td>14.81 (2.54%)</td>
+                    <td><a href="" title="Editar Horario ">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
-                        <a href="" title="Eliminar Aula">
+                        <a href="" title="Eliminar Horario">
                             <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
                             </button></a>
                     </td>
@@ -160,11 +214,18 @@
                     <th>AMZN <span class="co-name">Amazon.com Inc.</span></th>
                     <td>191.55</td>
                     <td>12:23PM</td>
+                    <td>597.74</td>
                     <td>3.16 (1.68%)</td>
-                    <td><a href="" title="Editar Aula">
+                    <td>597.74</td>
+                    <td>12:12PM</td>
+                    <td>14.81 (2.54%)</td>
+                    <td>597.74</td>
+                    <td>12:12PM</td>
+                    <td>14.81 (2.54%)</td>
+                    <td><a href="" title="Editar Horario">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
-                        <a href="" title="Eliminar Aula">
+                        <a href="" title="Eliminar Horario">
                             <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
                             </button></a>
                     </td>
@@ -173,11 +234,18 @@
                     <th>ORCL <span class="co-name">Oracle Corporation</span></th>
                     <td>31.15</td>
                     <td>12:44PM</td>
+                    <td>597.74</td>
                     <td>1.41 (4.72%)</td>
-                    <td><a href="" title="Editar Aula">
+                    <td>597.74</td>
+                    <td>12:12PM</td>
+                    <td>14.81 (2.54%)</td>
+                    <td>597.74</td>
+                    <td>12:12PM</td>
+                    <td>14.81 (2.54%)</td>
+                    <td><a href="" title="Editar Horario">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
-                        <a href="" title="Eliminar Aula">
+                        <a href="" title="Eliminar Horario">
                             <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
                         </button></a>
                     </td>
@@ -187,11 +255,18 @@
                     <th>MSFT <span class="co-name">Microsoft Corporation</span></th>
                     <td>25.50</td>
                     <td>12:27PM</td>
+                    <td>597.74</td>
                     <td>0.66 (2.67%)</td>
-                    <td><a href="" title="Editar Aula">
+                    <td>597.74</td>
+                    <td>12:12PM</td>
+                    <td>14.81 (2.54%)</td>
+                    <td>597.74</td>
+                    <td>12:12PM</td>
+                    <td>14.81 (2.54%)</td>
+                    <td><a href="" title="Editar Horario">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
-                        <a href="" title="Eliminar Aula">
+                        <a href="" title="Eliminar Horario">
                             <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
                             </button></a>
                     </td>
@@ -202,7 +277,14 @@
                     <td>15.81</td>
                     <td>12:25PM</td>
                     <td>0.11 (0.67%)</td>
-                    <td><a href="" title="Editar Aula">
+                    <td>597.74</td>
+                    <td>597.74</td>
+                    <td>12:12PM</td>
+                    <td>14.81 (2.54%)</td>
+                    <td>597.74</td>
+                    <td>12:12PM</td>
+                    <td>14.81 (2.54%)</td>
+                    <td><a href="" title="Editar Horario">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
                     </td>
@@ -224,7 +306,7 @@
 <script src="{{ asset('template-admin/dist/assets/js/pages/dashboard.init.js') }}"></script>
 <script>
     $(document).ready(function () {
-        $('#table-materias').DataTable({
+        $('#table-horarios').DataTable({
           "language": {
               "decimal":        ".",
               "emptyTable":     "No hay datos para mostrar",
