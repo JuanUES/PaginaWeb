@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Pagina;
 
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Models\Pagina\Noticia;
 use Illuminate\Http\Request;
+
 use File;
 
 class NoticiaController extends Controller
@@ -24,25 +26,6 @@ class NoticiaController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {      
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function noticia()
-    {
-        
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -52,42 +35,50 @@ class NoticiaController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(),[
+            'titulo' => 'required|max:255',
+            'img' => 'required',
+            'subtitulo' => 'required|max:255',
+            'contenido' => 'required',
+        ]);         
+
+        if($validator->fails())
+        {            
+            return response()->json(['error'=>$validator->errors()->all()]);                
+        }
+
+        $noticia = $request->_id == null ? new Noticia:Noticia::findOrFail($request->_id);
+
+        /**Elimino de la carpeta del servidor si se realiza una modificacion*/
+        if($request->_id == null){
+            File::delete(public_path() . '/images/noticias/'.$noticia->imagen); 
+        }
+
         /**Guardo en carpeta Noticia */
         $file = $request->file('img'); 
-        $path = public_path() . '\images\noticias';
+        $path = public_path() . '/images/noticias';
         $fileName = uniqid();
         $file->move($path, $fileName);
         
         /**Guardo en base de datos */
-        $noticia = new Noticia;
         $noticia -> titulo    =  $request->titulo;        
         $noticia -> subtitulo =  $request->subtitulo;        
         $noticia -> imagen    =  $fileName;
         $noticia -> tipo      =  'true'; 
-        $noticia -> contenido =  str_replace(array("\r\n", "\n\r", "\r", "\n"), "<br/>", $request->contenido);
+        $noticia -> contenido =  $request->contenido;
         $noticia -> fuente    =  $request->fuente;        
         $noticia -> urlfuente =  $request->urlfuente;
         $noticia -> user      =  auth()->id();
         $exito = $noticia -> save();
-        if(!$exito){
-            return redirect()->route('index')
-            ->with('titulo','Error')
-            ->with('No se guardo el registro en la base de datos.')
-            ->with('error');
 
-        }else{
-            return redirect()->route('index')
-            ->with('titulo','Exito')
-            ->with('El se guardo el registro en la base de datos.')
-            ->with('success');
-        }
+        return $request->_id ==null?response()->json(['mensaje'=>'Modificación exitosa.']):response()->json(['mensaje'=>'Registro exitoso.']);
     }
 
     public function storeurl(Request $request)
     {
         /**Guardo en carpeta Noticia */
         $file = $request->file('img'); 
-        $path = public_path() . '\images\noticias';
+        $path = public_path().'\images\noticias';
         $fileName = uniqid();
         $file->move($path, $fileName);
         
@@ -146,7 +137,12 @@ class NoticiaController extends Controller
      */
     public function destroy(Request $request)
     {
+        /**Elimino de la carpeta del servidor */
+        File::delete(public_path() . '/images/noticias/'.Noticia::findOrFail(base64_decode($request->_id))->imagen); 
+
+        /**Elimino de la base de datos */
         $noticia = Noticia::destroy(base64_decode($request->_id));
+
         return redirect('/#noticias');
     }
 }

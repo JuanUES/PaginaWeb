@@ -59,7 +59,7 @@ class MaestriaController extends Controller
             $ma -> user                 = auth()->id();   
             $ma -> save();         
         
-            return $request->_id ==null?response()->json(['mensaje'=>'Modificación exitosa.']):response()->json(['mensaje'=>'Registro exitoso.']);
+            return $request->_id == null?response()->json(['mensaje'=>'Modificación exitosa.']):response()->json(['mensaje'=>'Registro exitoso.']);
         
         }catch(Exception $e){
             return response()->json(['error'=>$e->getMessage()]);
