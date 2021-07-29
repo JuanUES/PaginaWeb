@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             CarrucelSeeder::class,
             JuntaSeeder::class,
             PDFSeeder::class,
+            DepartamentoSeeder::class,
         ]);
     }
 }

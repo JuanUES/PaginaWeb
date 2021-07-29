@@ -274,7 +274,7 @@
                                         <a href="{{route('crear-carga')}}">Ingresar carga</a>
                                     </li>
                                     <li>
-                                        <a href=".">Asignar Carga</a>
+                                        <a href="{{route('asignar-carga')}}">Asignar Carga</a>
                                     </li>
                                 </ul>
                             </li>
