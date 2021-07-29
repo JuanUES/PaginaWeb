@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
             PDFSeeder::class,
             DepartamentoSeeder::class,
             HoraSeeder::class,
+            AulaSeeder::class,
+            CargaAdminSeeder::class,
         ]);
     }
 }

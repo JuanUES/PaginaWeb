@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCargaAdminTable extends Migration
+class CreateCargaAdminsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCargaAdminTable extends Migration
      */
     public function up()
     {
-        Schema::create('carga_admin', function (Blueprint $table) {
+        Schema::create('carga_admins', function (Blueprint $table) {
             $table->id();
             $table->string('nombre_carga');
             $table->timestamps();
@@ -27,6 +27,6 @@ class CreateCargaAdminTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('carga_admin');
+        Schema::dropIfExists('carga_admins');
     }
 }
