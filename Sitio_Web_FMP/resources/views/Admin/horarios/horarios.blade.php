@@ -20,26 +20,6 @@
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputCiclo">Ciclo</label>
-                                <select class="custom-select" name="ciclo">
-                                    <option value="">Seleccione</option>
-                                    <option value="">Ciclo I</option>
-                                    <option value="">Ciclo II</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="exampleInputNombre">Cupo</label>
-                                <input type="number" class="form-control" name="cupo" placeholder="Ingres el cupo">
-                           
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group">
                                 <label for="exampleInputUbicacion">Grupo</label>
                                 <select class="custom-select" name="tipo_grupo">
                                     <option value="">Seleccione</option>
@@ -50,8 +30,18 @@
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputNumGrupo">número de grupo</label>
+                                <label for="exampleInputNumGrupo">Número de grupo</label>
                                 <input type="number" class="form-control" name="numero_grupo" placeholder="Digite el numero">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label for="exampleInputDocente">Docente</label>
+                                <select class="custom-select" name="id_empleado">
+                                    <option value="">Seleccione</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -66,6 +56,26 @@
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
+                                <label for="exampleInputNombre">Cupo</label>
+                                <input type="number" class="form-control" name="cupo" placeholder="Ingres el cupo">
+                           
+                            </div>
+                        </div>
+                       
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="exampleInputHora">Hora</label>
+                                <select class="custom-select" name="id_hora">
+                                    <option value="">Seleccione</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6">
+                            <div class="form-group">
                                 <label for="exampleInputDias">Día</label>
                                 <select class="custom-select" name="dias">
                                     <option value="">Seleccione</option>
@@ -78,18 +88,11 @@
                                 </select>
                             </div>
                         </div>
+                        
                     </div>
 
                     <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="exampleInputHora">Hora</label>
-                                <select class="custom-select" name="id_hora">
-                                    <option value="">Seleccione</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
+                        <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="exampleInputAula">Aula</label>
                                 <select class="custom-select" name="id_aula">
@@ -99,16 +102,8 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group">
-                                <label for="exampleInputDocente">Docente</label>
-                                <select class="custom-select" name="id_empleado">
-                                    <option value="">Seleccione</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
+
+                   
                     
 
             </div>

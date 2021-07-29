@@ -271,7 +271,7 @@
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <li>
-                                        <a href=".">Ingresar carga</a>
+                                        <a href="{{route('crear-carga')}}">Ingresar carga</a>
                                     </li>
                                     <li>
                                         <a href=".">Asignar Carga</a>
