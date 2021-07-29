@@ -260,6 +260,9 @@
                                     <li>
                                         <a href="{{route('depto')}}">Departamentos</a>
                                     </li>
+                                    <li>
+                                        <a href="{{route('horas')}}">Ingresar Horas</a>
+                                    </li>
                                     @endif
                                 </ul>
                             </li>

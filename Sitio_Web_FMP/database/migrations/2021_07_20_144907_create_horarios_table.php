@@ -17,12 +17,12 @@ class CreateHorariosTable extends Migration
             $table->id();
             $table->string('numero_grupo');
             $table->string('tipo_grupo');
-            $table->string('horas');
             $table->string('dias');
             $table->string('ciclo');
             $table->bigInteger('id_materia');
             $table->bigInteger('id_aula');
             $table->bigInteger('id_empleado');
+            $table->bigInteger('id_hora');
 
             $table->foreign('id_materia')
             ->references('id')
@@ -35,6 +35,10 @@ class CreateHorariosTable extends Migration
             $table->foreign('id_empleado')
             ->references('id')
             ->on('empleado')
+            ->onDelete('cascade');
+            $table->foreign('id_hora')
+            ->references('id')
+            ->on('horas')
             ->onDelete('cascade');
             $table->timestamps();
 

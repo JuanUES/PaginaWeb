@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             JuntaSeeder::class,
             PDFSeeder::class,
             DepartamentoSeeder::class,
+            HoraSeeder::class,
         ]);
     }
 }
