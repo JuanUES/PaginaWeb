@@ -2,28 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Tipo_Jornada extends Model
 {
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
+    use HasFactory;
     protected $table = 'tipo_jornada';
-
-    /**
-     * The database primary key value.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'id';
-
-    /**
-     * Attributes that should be mass-assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['tipo', 'horas_semanales'];
+    protected $guarded = ['id'];
+    protected $fillable = ['tipo', 'horas_semanales', 'estado'];
 }

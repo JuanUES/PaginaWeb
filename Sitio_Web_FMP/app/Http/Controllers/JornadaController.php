@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Jornada\Jornada;
 use App\Models\Jornada\JornadaItem;
+use App\Models\Jornada\Periodo;
 use Illuminate\Http\Request;
 
 class JornadaController extends Controller
@@ -36,7 +37,8 @@ class JornadaController extends Controller
      */
     public function create()
     {
-        return view('Jornada.create');
+        $periodos = Periodo::get();
+        return view('Jornada.create', compact('periodos'));
     }
 
     /**
@@ -59,10 +61,9 @@ class JornadaController extends Controller
                 'dia' => $value->dia,
                 'hora_inicio' => $value->hora_inicio,
                 'hora_fin' => $value->hora_fin,
-                'estado' => 1
             ]);
         }
-        return redirect('Jornada.index')->with('flash_message', 'Agregado');
+        return redirect('/admin/jornada/')->with('flash_message', 'Agregado');
 
     }
 

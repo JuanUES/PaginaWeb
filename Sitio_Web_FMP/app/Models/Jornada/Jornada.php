@@ -2,37 +2,25 @@
 
 namespace App\Models\Jornada;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Jornada extends Model
 {
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
+    use HasFactory;
     protected $table = 'jornada';
 
-    /**
-     * The database primary key value.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'id';
+    protected $guarded = 'id';
 
-    /**
-     * Attributes that should be mass-assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['id_emp', 'id_periodo'];
+    protected $fillable = ['id_emp', 'id_periodo','estado'];
 
     public function items(){
         return $this->hasMany(JornadaItem::class, 'id_jornada', 'id');
     }
 
-    public function items_enabled($status){
-        return $this->items()->select('dia', 'hora_inicio', 'hora_fin', 'id_jornada')->where('status', '=', $status)->get();
+    public function items_enabled($estado){
+        return $this->items()->select('dia', 'hora_inicio', 'hora_fin', 'id_jornada')->where('estado', '=', $estado)->get();
     }
 
     public function periodo_rf(){

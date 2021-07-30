@@ -14,7 +14,19 @@ class Tipo_ContratoController extends Controller
      */
     public function index(Request $request)
     {
-        //
+        $keyword = $request->get('search');
+        $perPage = 25;
+
+        if (!empty($keyword)) {
+            $tcontrato = Tipo_Contrato::where('tipo', 'LIKE', "%$keyword%")
+            ->orWhere('estado', 'LIKE', "%$keyword%")
+            ->latest()->paginate($perPage);
+        } else {
+            $tcontrato = Tipo_Contrato::latest()->paginate($perPage);
+        }
+
+        return view('Tipo_Contrato.index', compact('tcontrato'));
+
     }
 
     /**
@@ -24,7 +36,7 @@ class Tipo_ContratoController extends Controller
      */
     public function create()
     {
-        //
+        return view('Tipo_Contrato.create');
     }
 
     /**
@@ -35,7 +47,18 @@ class Tipo_ContratoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /**Guardo en base de datos */
+        $tcontrato = new Tipo_Contrato;
+        $tcontrato -> tipo  =  $request->tipo;
+        $exito = $tcontrato -> save();
+        if(!$exito){
+            return abort(404);
+        }else{
+            return redirect()->route('admin.tcontrato.index')
+            ->with('titulo','Exito')
+            ->with('El se guardo el registro en la base de datos.')
+            ->with('success');
+        }
     }
 
     /**
