@@ -1,6 +1,6 @@
 
     $(document).ready(function () {
-        $('#dtNoticias').DataTable({
+        $('table').DataTable({
           "language": {
               "decimal":        ".",
               "emptyTable":     "No hay datos para mostrar",
@@ -25,8 +25,9 @@
                 "sortDescending": ": Ordenar de manera Descendente ",
               }
             },
-              "pagingType": "full_numbers",
-              "lengthMenu":		[[5, 10, 20, 25, 50, -1], [5, 10, 20, 25, 50, "Todos"]],
-		        	"iDisplayLength":	5,
+            "pagingType": "full_numbers",
+            "lengthMenu":		[[4, 10, 20, 25, 50, -1], [4, 10, 20, 25, 50, "Todos"]],
+            "iDisplayLength":	4,
+            "ordering": false,
         });  
       });

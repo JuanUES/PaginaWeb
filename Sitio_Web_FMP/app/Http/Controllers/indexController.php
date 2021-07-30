@@ -19,8 +19,7 @@ class indexController extends Controller
         $imgCarrusel = ImagenesCarrusel::where('tipo',1)->get();
 
         /** Envio noticias a Inicio */
-        $noticias = Noticia::all()-> sortBy('created_at');
-        
+        $noticias = Noticia::orderBy("created_at",'desc')->get();
         return view('index',compact('imgCarrusel','noticias'));
     }
 

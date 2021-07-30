@@ -96,7 +96,7 @@
                                          <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
                                     </a>
                                     @auth
-                                    <a href="#" class="btn  btn-outline-info my-2" 
+                                    <a href="#" class="btn  btn-outline-info my-2"
                                     data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('licConta')">
                                         <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
                                     </a>

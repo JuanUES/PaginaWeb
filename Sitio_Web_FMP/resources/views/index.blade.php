@@ -43,7 +43,7 @@
                             <div class="row py-1">
                                 <div class="col order-first "><h3>Facultad Multidisciplinaria Paracentral</h3></div>
                                 @auth
-                                <div class="col-lg-3 order-last">
+                                <div class="col-lg-3 order-last ">
                                     <a href="" class="btn btn-block btn-info tex-left" 
                                     data-toggle="modal" data-target=".bs-example-modal-center">
                                         <div class="mdi mdi-upload mdi-16px text-center"> Agregar Imagen</div>
@@ -121,15 +121,15 @@
                     </div> <!-- end col -->
                     <div class="col-xl-12" id="noticias">
                         <div class="card-box"> 
-                            <div class="row">
+                            <div class="row my-2">
                             <div class="col-xl order-first">
                                 <h3>Noticias</h3>
                             </div>                     
                             @auth
-                                <div class="col-lg-3 order-last">
+                                <div class="col-lg-3 order-last btn-block">
                                     <!-- Button trigger modal noticia-->
                                     <button type="button" class="btn btn-block btn-info waves-effect waves-light" 
-                                    data-toggle="modal" data-target="#myModalNoticia">
+                                        data-toggle="modal" data-target="#myModalNoticia" onclick="reset()">
                                         <i class="mdi mdi-bulletin-board mdi-16px"></i> Nueva Noticia
                                     </button>
                                 </div>  
@@ -145,12 +145,12 @@
                                             </div>
                                             <ul class="nav nav-tabs nav-bordered">
                                                 <li class="nav-item">
-                                                    <a href="#agronomica" data-toggle="tab" aria-expanded="true" class="nav-link active">
+                                                    <a href="#noticiaL" data-toggle="tab" aria-expanded="true" class="nav-link active">
                                                         Local
                                                     </a>
                                                 </li>
                                                 <li class="nav-item">
-                                                    <a href="#industrial" data-toggle="tab" aria-expanded="false" class="nav-link">
+                                                    <a href="#noticiaE" data-toggle="tab" aria-expanded="false" class="nav-link">
                                                         Externa
                                                     </a>
                                                 </li>
@@ -158,18 +158,17 @@
                                             <div class="modal-body">
 
                                                 <div class="tab-content">
+                                                    
+                                                    <div class="tab-pane show active" id="noticiaL" >
                                                     <div class="alert alert-primary text-white" 
-                                                        role="alert" style="display:none" id="notificacionNoticia">                                               
+                                                        role="alert" style="display:none" id="notificacionNoticiaL">                                               
                                                     </div>
-                                                    <div class="tab-pane show active" id="agronomica" >
-                                                        
                                                     <form method="POST" 
                                                         action="{{ route('NoticiaFacultad.nueva') }}" 
-                                                        class="parsley-examples"
-                                                        enctype="multipart/form-data" id="noticiaLocal">
+                                                        class="parsley-examples" id="noticiaLocal"
+                                                        enctype="multipart/form-data">
                                                         <input type="hidden" id="_id_local" name="_id"/>
-                                                        @csrf
-                                                        
+                                                        @csrf                                                        
                                                        
                                                         <div class="row">
                                                             
@@ -196,8 +195,8 @@
                                                                 <div class="form-group">
                                                                     <label>Imagen</label>
                                                                     <div class="custom-file">
-                                                                        <input type="file" value=" " class="custom-file-input form-control" accept="image/*"  name="img" id="img"  lang="es">
-                                                                        <label class="custom-file-label" name='iamgen' for="customFile">Seleccionar imagen</label>
+                                                                        <input type="file" value="" class="custom-file-input form-control" accept="image/*"  name="imagen"  id="img" />
+                                                                        <label class="custom-file-label" name='imagenlabel' for="img">Seleccionar imagen</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -213,7 +212,7 @@
                                                         <div class="form-group mb-0">
                                                             <div>
                                                                 <button type="button" class="btn btn-primary waves-effect waves-light mr-1"
-                                                                onclick="submitForm('#noticiaLocal','#notificacionNoticia')">
+                                                                onclick="submitForm('#noticiaLocal','#notificacionNoticiaL')">
                                                                     <li class="fa fa-save"></li> Guardar
                                                                 </button>
                                                                 <button type="button" class="btn btn-light waves-effect" data-dismiss="modal">
@@ -223,11 +222,14 @@
                                                         </div>
                                                     </form>                    
                                                     </div>
-                                                    <div class="tab-pane" id="industrial">
+                                                    <div class="tab-pane" id="noticiaE">
+                                                    <div class="alert alert-primary text-white" 
+                                                        role="alert" style="display:none" id="notificacionNoticiaE">                                               
+                                                    </div>
                                                     <form method="POST" 
                                                         action="{{ route('NoticiaFacultad.nuevaurl') }}" 
                                                         class="parsley-examples"
-                                                        enctype="multipart/form-data">
+                                                        enctype="multipart/form-data" id="noticiaEx">
                                                         <input type="hidden" id="_id_externa" name="_id"/>
                                                         @csrf
                                                         
@@ -241,7 +243,7 @@
                                                                     <label>Titulo</label>
                                                                     <input type="text" class="form-control" required
                                                                             placeholder="Titulo Noticia (Obligatorio)"
-                                                                            name="titulo" />
+                                                                            name="titulo" id="tituloUrl"/>
                                                                 </div> 
                                                             </div>
                                                             <div class="col-xl-6">
@@ -249,7 +251,7 @@
                                                                     <label>SubTitulo</label>
                                                                     <input type="text" class="form-control" required
                                                                             placeholder="Sub-Titulo Noticia (Obligatorio)"
-                                                                            name="subtitulo" />
+                                                                            name="subtitulo" id="subtituloUrl" />
                                                                 </div> 
                                                             </div>
                                                         </div>
@@ -258,7 +260,7 @@
                                                                 <div class="form-group">
                                                                     <label>Imagen</label>
                                                                     <div class="custom-file">
-                                                                        <input type="file" class="custom-file-input" name="img" id="customFileLang" lang="es">
+                                                                        <input type="file" class="custom-file-input" name="imagen" id="customFileLang" lang="es">
                                                                         <label class="custom-file-label" for="customFile">Seleccionar imagen</label>
                                                                     </div>
                                                                 </div>
@@ -269,14 +271,15 @@
                                                                     <div>
                                                                         <input parsley-type="url" type="url" class="form-control"
                                                                                 placeholder="URL Fuente (Opcional)"
-                                                                                name="urlfuente" />
+                                                                                name="urlfuente" id="urlfuente"/>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>             
                                                         <div class="form-group mb-0">
                                                             <div>
-                                                                <button id="noticiaUrl" type="submit" class="btn btn-primary waves-effect waves-light mr-1">
+                                                                <button id="noticiaUrl" type="button" class="btn btn-primary waves-effect waves-light mr-1" 
+                                                                    onclick="submitForm('#noticiaEx','#notificacionNoticiaE')">
                                                                     <li class="fa fa-save"></li> Guardar
                                                                 </button>
                                                                 <button  type="button" class="btn btn-light waves-effect" data-dismiss="modal">
@@ -294,7 +297,7 @@
                             @endauth     
                             </div>
                             @if (count($noticias))                                
-                                <table id="dtNoticias" class="table table-borderless  btn-table table-sm table-responsive-md" 
+                                <table id="dtNoticias" class="table table-borderless  btn-table"  
                                     cellspacing="0" width="100%">
                                     <thead id="dtNoticiasthead">
                                       <tr>
@@ -304,14 +307,17 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($noticias as $n)
+                                        
                                         <tr>
                                             <td>
                                                 <div class="border p-1 rounded media">
+                                                    
                                                     <img class="mr-3 mt-1 rounded bx-shadow-lg" src="{{ asset('/') }}images/noticias/{{$n->imagen}}"
-                                                    alt="Generic placeholder image" height="80" width="110">
+                                                    alt="Generic placeholder image" height="110" width="140" style="">
                                                     <div class="media-body" style="width: 20em">
-                                                        <h5 class="mt-0">{{$n->titulo}}</h5>
-                                                        <h6>{!!$n->subtitulo!!}</h6>
+                                                        <h6 class="text-left">Publicado el {!!date('d M Y - h:i:s A', strtotime($n->created_at))!!}</h6>
+                                                        <h4 class="mt-0">{{$n->titulo}}</h4>
+                                                        <h6>{!!$n->subtitulo !!}</h6>
                                                         <p>{!!mb_strwidth(strip_tags($n->contenido), 'UTF-8') <= 125?strip_tags($n->contenido):rtrim(mb_strimwidth(strip_tags($n->contenido), 0, 125, '', 'UTF-8')).'...'!!}</p>
                                                     </div>
                                                     <div class="btn-group-vertical" role="group">
@@ -327,11 +333,11 @@
                                                         @endauth
                                                     @else
                                                         <a href="{!!$n->urlfuente!!}"
-                                                            class="btn btn-light waves-effect width-md @guest mt-4 @endguest" target="_blank">Leer más <i class="mdi mdi-send"></i></a>
+                                                            class="btn btn-light waves-effect width-md @guest mt-4 @endguest" target="_blank">Leer más <i class="mdi mdi-earth"></i></a>
                                                         @auth
                                                         <span data-toggle="modal" data-target="#myModalNoticia">
-                                                            <a href="javascrip" class="btn btn-light waves-effect width-md" >
-                                                                <i class="mdi mdi-file-document-edit mdi-16p"></i> Modificar</a>
+                                                            <button type="button"  class="btn btn-light waves-effect width-md" onclick="modificarEX({!!$n->id!!})" >
+                                                                <i class="mdi mdi-file-document-edit mdi-16p"></i> Modificar</button>
                                                         </span>
                                                         @endauth
                                                     @endif
@@ -502,15 +508,21 @@
 <script src="{{ asset('js/index/index.datatable.js') }}"></script>
 
 <script>
+    function reset(){$('.nav-tabs a[href="#noticiaL"]').tab('show')};
+  
     /*Carga del model con los datos de la noticia actual */
-    function modificarNL(id){
+    function modificarNL(id){        
+        $('.nav-tabs a[href="#noticiaL"]').tab('show');
         $json = {!!json_encode($noticias)!!}.find(x => x.id==id);
-        editarNL($json);
-    }
-    /*Carga el model con las noticias de url con noticias externas*/
-    function modificarNoticiaUrl(id){
+        editarNL($json);        
+    };
 
-    }
+    /*Carga el model con las noticias de url con noticias externas*/
+    function modificarEX(id){
+        $('.nav-tabs a[href="#noticiaE"]').tab('show');
+        $json = {!!json_encode($noticias)!!}.find(x => x.id==id);
+        editarEX($json);        
+    };
 </script>
 @endauth
 

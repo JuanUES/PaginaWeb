@@ -34,8 +34,11 @@
                             </p>
                             <h4 class="mb-1 font-weight-bold">Jefe de la Unidad</h4>
                             @if (count($jefaturas)==0)
-                            <div class="row"><p class="border p-2 text-center btn-block">No hay datos registrados.</p></div>
-                                
+                            @guest
+                            <div class="row">
+                                <p class="border p-2 text-center btn-block">No hay datos registrados.</p>
+                            </div>
+                            @endguest
                             @endif
                             @guest
                             <p class="text-muted font-15 text-justify">
@@ -297,9 +300,8 @@
                             <div class="col-xl-12">
                             <h4>Siguenos en Facebook</h4>
                             </div>
-                            <div class="col-xl-12 text-centerro rounded" style="overflow: auto;">
-                                <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FProyecci%25C3%25B3n-Social-Facultad-Multidisciplinaria-Paracentral-107669451092211&tabs&width=340&height=130&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="340" height="130" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-                            </div>                          
+                            <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FProyecci%25C3%25B3n-Social-Facultad-Multidisciplinaria-Paracentral-107669451092211&tabs&width=340&height=130&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="340" height="130" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                                                   
                         </div>
                     </div>                       
                 </div>

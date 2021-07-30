@@ -35,9 +35,9 @@ class NoticiaController extends Controller
      */
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(),[
             'titulo' => 'required|max:255',
-            'img' => 'required',
             'subtitulo' => 'required|max:255',
             'contenido' => 'required',
         ]);         
@@ -47,23 +47,35 @@ class NoticiaController extends Controller
             return response()->json(['error'=>$validator->errors()->all()]);                
         }
 
-        $noticia = $request->_id == null ? new Noticia:Noticia::findOrFail($request->_id);
-
-        /**Elimino de la carpeta del servidor si se realiza una modificacion*/
-        if($request->_id == null){
-            File::delete(public_path() . '/images/noticias/'.$noticia->imagen); 
-        }
+        $noticia = $request->_id == null ? new Noticia : Noticia:: findOrFail($request->_id);
 
         /**Guardo en carpeta Noticia */
-        $file = $request->file('img'); 
+        $file = $request->file('imagen'); 
         $path = public_path() . '/images/noticias';
-        $fileName = uniqid();
-        $file->move($path, $fileName);
+        $fileName = count($request->files)? uniqid():'sin_imagen';
+
+        /**Elimino de la carpeta del servidor si se realiza una modificacion*/
+        if($request->_id != null && count($request->files)){
+            File::delete(public_path() . '/images/noticias/'.$noticia->imagen); 
+            /**Guardo en base de datos */   
+            $noticia -> imagen    =  $fileName;
+            /**Guardo en servidor*/
+            $file->move($path, $fileName);
+        }
         
+        if($request->_id == null && count($request->files)){   
+            /**Guardo en base de datos */   
+            $noticia -> imagen    =  $fileName;
+            /**Guardo en servidor*/
+            $file->move($path, $fileName);
+        } else{
+            /**Guardo en base de datos */   
+            $noticia -> imagen    =  $fileName;
+        }
+
         /**Guardo en base de datos */
         $noticia -> titulo    =  $request->titulo;        
-        $noticia -> subtitulo =  $request->subtitulo;        
-        $noticia -> imagen    =  $fileName;
+        $noticia -> subtitulo =  $request->subtitulo;  
         $noticia -> tipo      =  'true'; 
         $noticia -> contenido =  $request->contenido;
         $noticia -> fuente    =  $request->fuente;        
@@ -71,19 +83,39 @@ class NoticiaController extends Controller
         $noticia -> user      =  auth()->id();
         $exito = $noticia -> save();
 
-        return $request->_id ==null?response()->json(['mensaje'=>'Modificación exitosa.']):response()->json(['mensaje'=>'Registro exitoso.']);
+        return $request->_id !=null ?response()->json(['mensaje'=>'Modificación exitosa.']):response()->json(['mensaje'=>'Registro exitoso.']);
     }
 
     public function storeurl(Request $request)
     {
         /**Guardo en carpeta Noticia */
-        $file = $request->file('img'); 
+        $file = $request->file('imagen'); 
         $path = public_path().'\images\noticias';
-        $fileName = uniqid();
-        $file->move($path, $fileName);
+        $fileName = count($request->files)? uniqid():'sin_imagen';
+
+        $noticia = $request->_id == null ? new Noticia : Noticia:: findOrFail($request->_id);
+
+        /**Elimino de la carpeta del servidor si se realiza una modificacion*/
+        if($request->_id != null && count($request->files)){
+            File::delete(public_path() . '/images/noticias/'.$noticia->imagen); 
+            /**Guardo en base de datos */   
+            $noticia -> imagen    =  $fileName;
+            /**Guardo en servidor*/
+            $file->move($path, $fileName);
+        }
+        
+        if($request->_id == null && count($request->files)){   
+            /**Guardo en base de datos */   
+            $noticia -> imagen    =  $fileName;
+            /**Guardo en servidor*/
+            $file->move($path, $fileName);
+        } else{
+            /**Guardo en base de datos */   
+            $noticia -> imagen    =  $fileName;
+        }
         
         /**Guardo en base de datos */
-        $noticia = new Noticia;
+        
         $noticia -> titulo    =  $request->titulo;        
         $noticia -> subtitulo =  $request->subtitulo;        
         $noticia -> imagen    =  $fileName;
@@ -92,7 +124,8 @@ class NoticiaController extends Controller
         $noticia -> user      =  auth()->id();
         $noticia -> save();
 
-        return redirect()->route('index');        
+        return $request->_id !=null ?response()->json(['mensaje'=>'Modificación exitosa.']):response()->json(['mensaje'=>'Registro exitoso.']);
+
     }
 
     /**
