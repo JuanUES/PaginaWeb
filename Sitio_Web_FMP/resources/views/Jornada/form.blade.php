@@ -2,9 +2,13 @@
     <div class="col-12 col-sm-6">
         <div class="form-group col-12 col-sm-4 mb-3 {{ $errors->has('empleado') ? 'is-invalid' : ''}}">
             <label for="empleado" class="control-label">{{ 'Empleado' }} <span class="text-danger">*</span> </label>
+            <input id="id_emp" name="id_emp" readonly="readonly" value="1" style="border-width:0px; border:none; outline:none;"></input>
+
         </div>
         <div class="form-group col-12 col-sm-4 mb-3 {{ $errors->has('periodo') ? 'is-invalid' : ''}}">
             <label for="periodo" class="control-label">{{ 'Periodo' }} <span class="text-danger">*</span> </label>
+            <input  id="id_periodo" name="id_periodo" readonly="readonly" value="1" style="border-width:0px; border:none; outline:none;"></input>
+            <input id="detalle" name="detalle" readonly="readonly" value="" style="border-width:0px; border:none; outline:none;"></input>
         </div>
     </div>
     <div class="col-12 col-sm-6">
@@ -14,8 +18,6 @@
             <input type="hidden" id="auxCalhour" for="_horas" readonly="readonly" >
             <input type="hidden" id="auxJornada" for="_horas" readonly="readonly" value="40">
             <input type="hidden" id="otro" for="_horas" readonly="readonly" value="-">
-
-
         </div>
     </div>
 </div>
@@ -51,7 +53,7 @@
     }else{
         //para calcular el monto total por fila al actualizar
         $.each(items, function( index, value ) {
-            value.jornada = parseInt(value.salida)-parseInt(value.entrada);
+            value.jornada = parseInt(value.hora_fin)-parseInt(value.hora_inicio);
         });
     }
 
@@ -95,7 +97,7 @@
         let row = cell.getRow();
         let data = cell.getData();
         
-        row.update({ 'jornada': (parseInt(data.salida) - parseInt(data.entrada)) });
+        row.update({ 'jornada': (parseInt(data.hora_fin) - parseInt(data.hora_inicio)) });
         
         let hoursTotal = fnHoras();
         let aux = $("#auxCalhour").val(''+hoursTotal);
@@ -122,7 +124,7 @@
 
     //funcion para gregar una nueva fila
     $("#btnNewRow").on('click', function () {
-       table.addRow({dia:"", entrada:"", salida:"", jornada:""}, false);
+       table.addRow({dia:"", hora_inicio:"", hora_fin:"", jornada:""}, false);
     });
 
     //Create Date Editor
@@ -193,12 +195,11 @@
             {title:"", field:"option", formatter: btn, cellClick: btncallback, width:100},
             {title:"Dia", field:"dia", editor:"select",validator:"required", width:300, editorParams:{values:["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"]}},
             {
-                title:"Entrada", field:"entrada", hozAlign:"center", sorter:"time", width:240, editor:dateEditor,
+                title:"Entrada", field:"hora_inicio", hozAlign:"center", sorter:"time", width:240, editor:dateEditor,
                 cellEdited: updateHour
-                //title:"Entrada", field:"entrada", editor:"input",validator: ["required","numeric"],
             },
             {
-                title:"Salida", field:"salida", hozAlign:"center", sorter:"time", width:240, editor:dateEditor,
+                title:"Salida", field:"hora_fin", hozAlign:"center", sorter:"time", width:240, editor:dateEditor,
                 cellEdited: updateHour
             },
             {title:"Jornada", field:"jornada", editor:false,validator:"numeric" },
@@ -221,10 +222,10 @@
             dia: {
                 required: true
             },
-            entrada:{
+            hora_inicio:{
                 required: true
             },
-            salida:{
+            hora_fin:{
                 required: true
             }
         },
