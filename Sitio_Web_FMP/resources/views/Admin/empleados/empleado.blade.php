@@ -30,8 +30,10 @@
                     </div>
                     <div class="form-group">
                         <label for="Departamento">Departamento</label>
-                       <select class="custom-select" id="departamento" name="departamento">
-
+                       <select class="custom-select" id="id_depto" name="id_depto">
+                        @foreach ($departamentos as $depto)
+                        <option value="{!!$depto->id!!}">{!!$depto->nombre_departamento!!}</option>
+                        @endforeach
                        </select>
                     </div>
                     <div class="row">

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Licencias\Empleado;
+use App\Models\Horarios\Departamento;
 use Illuminate\Support\Facades\Validator;
 
 class EmpleadoController extends Controller
@@ -12,12 +13,13 @@ class EmpleadoController extends Controller
         
         $empleadoJefe = Empleado::where('jefe',null)->get();
         $todosLosEmpleados=Empleado::get();
+        $departamentos=Departamento::get();
 
-        return view('Admin.empleados.empleado',compact('empleadoJefe','todosLosEmpleados'));
+        return view('Admin.empleados.empleado',compact('empleadoJefe','todosLosEmpleados','departamentos'));
     }
 
     public function store (Request $request){
-        try{
+  
 
             $validator = Validator::make($request->all(),[
                 'apellido' => 'required|max:20',
@@ -26,7 +28,7 @@ class EmpleadoController extends Controller
                 'nit' => 'required|max:40',
                 'telefono' => 'required|max:9',
             ]);         
-
+            echo dd($request);
         if($validator->fails())
         {            
             return response()->json(['error'=>$validator->errors()->all()]);
@@ -46,9 +48,7 @@ class EmpleadoController extends Controller
         
         return response()->json(['code'=>200, 'mensaje'=>'Empleado añadido correctamente','data' => $empleado], 200);
         
-        }catch(Exception $e){
-            echo 'Excepción capturada: '.  $e->getMessage(). "\n";
-        }
+    
     }
 
 

@@ -11,6 +11,7 @@ class Empleado extends Model
     protected $table = 'empleado';
     protected $guarded = ['id'];
     protected $fillable = [
+        'id_depto',
         'nombre',
         'apellido',
         'dui',
