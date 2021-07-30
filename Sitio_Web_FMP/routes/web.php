@@ -30,3 +30,4 @@ require __DIR__.'/pagina.php';
 require __DIR__.'/licencias.php';
 require __DIR__.'/horarios.php';
 require __DIR__.'/jornadas.php';
+require __DIR__.'/auxiliares.php';

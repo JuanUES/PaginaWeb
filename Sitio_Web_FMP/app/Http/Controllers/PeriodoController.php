@@ -14,7 +14,7 @@ class PeriodoController extends Controller
      */
     public function index(Request $request)
     {
-        /*$keyword = $request->get('search');
+        $keyword = $request->get('search');
         $perPage = 25;
 
         if (!empty($keyword)) {
@@ -25,9 +25,9 @@ class PeriodoController extends Controller
             ->latest()->paginate($perPage);
         } else {
             $periodo = Periodo::latest()->paginate($perPage);
-        }*/
+        }
 
-        return view('Periodo.index');
+        return view('Periodo.index', compact('periodo'));
     }
 
     /**
@@ -48,20 +48,21 @@ class PeriodoController extends Controller
      */
     public function store(Request $request)
     {
-        $campos = [
-            'fecha_inicio' => 'required|string|max:255',
-            'fecha_fin' => 'required',
-            'tipo' => 'required|string|max:255',
-            'estado' => 'required|string',
-        ];
+        /**Guardo en base de datos */
+        $periodo = new Periodo;
+        $periodo -> fecha_inicio =  $request->fecha_inicio;        
+        $periodo -> fecha_fin    =  $request->fecha_fin;        
+        $periodo -> tipo         =  $request->tipo;
+        $exito = $periodo -> save();
+        if(!$exito){
+            return abort(404);
+        }else{
+            return redirect()->route('admin.periodo.index')
+            ->with('titulo','Exito')
+            ->with('El se guardo el registro en la base de datos.')
+            ->with('success');
+        }
 
-        $this->validate($request, $campos);
-
-        $requestData = $request->all();
-
-        Periodo::create($requestData);
-
-        return redirect('admin/periodos')->with('flash_message', 'Periodo agregado!');
     }
 
     /**

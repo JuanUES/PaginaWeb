@@ -12,9 +12,21 @@ class Tipo_JornadaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $keyword = $request->get('search');
+        $perPage = 25;
+
+        if (!empty($keyword)) {
+            $tjornada = Tipo_Jornada::where('tipo', 'LIKE', "%$keyword%")
+            ->orWhere('horas_semanales', 'LIKE', "%$keyword%")
+            ->orWhere('estado', 'LIKE', "%$keyword%")
+            ->latest()->paginate($perPage);
+        } else {
+            $tjornada = Tipo_Jornada::latest()->paginate($perPage);
+        }
+
+        return view('Tipo_Jornada.index', compact('tjornada'));
     }
 
     /**
@@ -24,7 +36,7 @@ class Tipo_JornadaController extends Controller
      */
     public function create()
     {
-        //
+        return view('Tipo_Jornada.create');
     }
 
     /**
@@ -35,7 +47,19 @@ class Tipo_JornadaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        /**Guardo en base de datos */
+        $tjornada = new Tipo_Jornada;
+        $tjornada -> tipo         =  $request->tipo;
+        $tjornada -> horas_semanales    =  $request->horas_semanales;        
+        $exito = $tjornada -> save();
+        if(!$exito){
+            return abort(404);
+        }else{
+            return redirect()->route('admin.tjornada.index')
+            ->with('titulo','Exito')
+            ->with('El se guardo el registro en la base de datos.')
+            ->with('success');
+        }
     }
 
     /**

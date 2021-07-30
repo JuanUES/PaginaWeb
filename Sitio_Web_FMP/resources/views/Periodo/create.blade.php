@@ -35,9 +35,6 @@
         @endif
 
         <form method="POST" id="frmPeriodo" action="{{ url('/admin/Periodo/store') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-            @csrf
-
-            @include ('Periodo.form', ['formMode' => 'create'])
         </form>
     </div>
 </div>

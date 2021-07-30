@@ -29,7 +29,7 @@
 
 <div class="form-group float-end">
     <a href="{{ route('admin.jornada.index') }}" title=""><button type="button" class="btn btn-dark btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Retroceder</button></a>
-    <button type="submit" class="btn btn-primary" >{!! $formMode === 'edit' ? '<i class="fa fa-edit"></i>' : '<i class="fa fa-save"></i>' !!} {{ $formMode === 'edit' ? 'Modificar' : 'Guardar' }}</button>
+    <button type="submit" class="btn btn-info btn-sm" title="Guardar Informacion">{!! $formMode === 'edit' ? '<i class="fa fa-edit"></i>' : '<i class="fa fa-save"></i>' !!} {{ $formMode === 'edit' ? 'Modificar' : 'Guardar' }}</button>
 </div>
 
 
@@ -42,11 +42,11 @@
 
 <script>
 
-    var items = @json(isset($invoice) ? $invoice->items_enabled(true) : []);//set los items del presupuesto
+    var items = @json(isset($jornada) ? $jornada->items_enabled(true) : []);//set los items del presupuesto
     // console.log(items);
     if(!items.length){//set dos rows vacias para el agregar
         items = [
-            {Codigo:1, Dia:"", Entrada:"", Salida:"", Jornada:""},
+            {Dia:"", Entrada:"", Salida:"", Jornada:""},
         ];
     }else{
         //para calcular el monto total por fila al actualizar
@@ -72,7 +72,9 @@
             if (result.isConfirmed) {
                 let row = cell.getRow();
                 row.delete();
-                $("#update").keyup();
+               
+                let updatehours = updateJornada();
+                $("#_horas").val(''+updatehours);
 
                 /*Toast.fire({
                     icon: "success",
@@ -106,7 +108,6 @@
 
         $("#_horas").val(''+total);
 
-        $("#update").keyup();
     }
 
     //para calcular el total horas por fila
@@ -261,7 +262,7 @@
         }
     });
 
-    $("#update").on('keyup', function () {
+    function updateJornada() {
         let hoursTotal = fnHoras();
         let aux = $("#auxCalhour").val(''+hoursTotal);
         let valor = $("#auxJornada").val();
@@ -271,8 +272,8 @@
 
         console.log(vat);
 
-        $("#_horas").val(''+total);
-    });
+        return total;
+    }
 
 </script>
 

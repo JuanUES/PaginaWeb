@@ -6,45 +6,35 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id=" exampleModalLongTitle">Agregar Periodo</h5>
+          <h5 class="modal-title" id=" exampleModalLongTitle">Agregar Tipo Jornada</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form method="POST" action="{{ route('Admin.Periodo.store') }}" enctype="multipart/form-data" id="periodoForm">
+        <form method="POST" action="{{ route('admin.tjornada.store') }}" enctype="multipart/form-data" id="tjornadaForm">
             <div class="modal-body">
-            @csrf
+                    @csrf
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" 
                         role="alert" style="display:none" id="notificacion">                                               
                     </div>
                     <div class="row">
-                        <div class="col-xl-6">
+                        <div class="col-xl-12">
                             <div class="form-group">
-                                <label for="FechaI">Fecha Inicio</label>
-                                <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio" >
+                                <label for="tipoJ">Tipo</label>
+                                <input type="text" class="form-control" id="tipo" name="tipo" >
                             </div>
                         </div>
-                        <div class="col-xl-6">
+                    </div> 
+                    
+                    <div class="row">
+                        <div class="col-xl-12">
                             <div class="form-group">
-                                <label for="FechaF">Fecha Fin</label>
-                                <input type="date" class="form-control" name="fecha_fin" id="fecha_fin"  >
-                            
+                                <label for="horaS">Horas Semanales</label>
+                                <input type="number" class="form-control" id="horas_semanales" name="horas_semanales" min="10" max="40" >
                             </div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="tipoS">Tipo</label>
-                                <select name="tipo" id="tipo">
-                                    <option value="0" selected>Seleccion</option>
-                                    <option value="Administrativo" >Administrativo</option>
-                                    <option value="Docente">Docente</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i>Cerrar</button>
@@ -64,7 +54,7 @@
                     <li class="breadcrumb-item active">Aulas</li>
                 </ol>
             </div>-->
-            <h4 class="page-title"><i class="fa fa-list"></i> Administacion de Periodos</h4>
+            <h4 class="page-title"><i class="fa fa-list"></i> Administacion de Tipos de Jornadas</h4>
         </div>
     </div>
 </div>
@@ -83,27 +73,25 @@
             
             <br/>
             <br/>
-            <table  class="table table-sm" id="table-periodo">
+            <table  class="table table-sm" id="table-tjornada">
                 <thead>
                 <tr>
                     <th data-priority="1">Id</th>
                     <th data-priority="3">Tipo</th>
-                    <th data-priority="3">Fecha Inicio</th>
-                    <th data-priority="1">Fecha Fin</th>
+                    <th data-priority="3">Horas Semanlaes</th>
                     <th data-priority="3">Estado</th>
                     <th data-priority="3">Acciones</th>
                   
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($periodo as $item)
+                @foreach($tjornada as $item)
                 <tr>
-                    <th>{{ $item->id }}</th>
+                    <th>{{ $item->id }}</span></th>
                     <td>{{ $item->tipo }}</td>
-                    <td>{{ date('d-m-Y', strtotime( $item->fecha_inicio)) }}</td>
-                    <td>{{ date('d-m-Y', strtotime( $item->fecha_fin)) }}</td>
+                    <td>{{ $item->horas_semanales }}</td>
                     <td>{{ $item->estado }}</td>
-                    <td><a href="" title="Editar Periodo">
+                    <td><a href="" title="Editar Tipo Jornada">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                         </button></a>
                     </td>
@@ -124,7 +112,7 @@
 <script src="{{ asset('template-admin/dist/assets/js/pages/dashboard.init.js') }}"></script>
 <script>
     $(document).ready(function () {
-        $('#table-periodo').DataTable({
+        $('#table-tjornada').DataTable({
           "language": {
               "decimal":        ".",
               "emptyTable":     "No hay datos para mostrar",
@@ -154,5 +142,5 @@
 		        	"iDisplayLength":	5,
         });  
       });
-    </script>
+</script>
 @endsection

@@ -16,112 +16,33 @@
     <div class="col-12">
         <div class="card-box">
             <div class="row">
-                <div class="col-6">
-                    <h3>
-                        
-                    </h3>      
-                </div>
-                <div class="col-6 ">
-                    <a href="{{ url('/admin/jornada/create') }}" class="btn btn-success" title="Agregar">
-                        <i class="fa fa-plus" aria-hidden="true"></i> Agregar
+                <div class="col-12 col-sm-4">
+                <a href="{{ url('/admin/jornada/create') }}" class="btn btn-success" title="Agregar">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Agregar Nuevo Registro
                     </a>
                 </div>
             </div>
-            <!--<table  class="table table-sm" id="table-jornada">
+            
+            <br/>
+            <br/>
+            <table  class="table table-sm" id="table-jornada">
                 <thead>
                 <tr>
                     <th data-priority="1">Id</th>
-                    <th data-priority="3">Jornada</th>
-                    <th data-priority="1">Periodo</th>
-                    <th data-priority="3">Estado</th>
-                    <th data-priority="3">Acciones</th>
-                  
+                    <th data-priority="3">Periodo</th>
+                    <th data-priority="3">Detalle</th>
+                    <th data-priority="3">Estado</th>                  
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
                     <th>GOOG <span class="co-name">Google Inc.</span></th>
-                    <td>597.74</td>
-                    <td>12:12PM</td>
-                    <td>14.81 (2.54%)</td>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
-                    </td>
-               
+                    <td>---</td>
+                    <td>---</td>
+                    <td>---</td>   
                 </tr>
-                <tr>
-                    <th>AAPL <span class="co-name">Apple Inc.</span></th>
-                    <td>378.94</td>
-                    <td>12:22PM</td>
-                    <td>5.74 (1.54%)</td>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
-                    </td>
-                </tr>
-                <tr>
-                    <th>AMZN <span class="co-name">Amazon.com Inc.</span></th>
-                    <td>191.55</td>
-                    <td>12:23PM</td>
-                    <td>3.16 (1.68%)</td>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
-                    </td>
-                </tr>
-                <tr>
-                    <th>ORCL <span class="co-name">Oracle Corporation</span></th>
-                    <td>31.15</td>
-                    <td>12:44PM</td>
-                    <td>1.41 (4.72%)</td>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                        </button></a>
-                    </td>
-                  
-                </tr>
-                <tr>
-                    <th>MSFT <span class="co-name">Microsoft Corporation</span></th>
-                    <td>25.50</td>
-                    <td>12:27PM</td>
-                    <td>0.66 (2.67%)</td>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <th>YHOO <span class="co-name">Yahoo! Inc.</span></th>
-                    <td>15.81</td>
-                    <td>12:25PM</td>
-                    <td>0.11 (0.67%)</td>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                    </td>
-                </tr>
-                
-                
-                
                 </tbody>
-            </table>-->
+            </table>
 
         </div> <!-- end card-box -->
     </div> <!-- end col -->

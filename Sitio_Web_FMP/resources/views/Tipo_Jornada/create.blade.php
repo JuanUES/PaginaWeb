@@ -34,10 +34,8 @@
             </div>
         @endif
 
-        <form method="POST" id="frmJornada" action="{{ url('/admin/jornada/store') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
-            @csrf
+        <form method="POST" id="frmTJornada" action="{{ url('/admin/tjornada/store') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
 
-            @include ('Jornada.form', ['formMode' => 'create'])
         </form>
     </div>
 </div>

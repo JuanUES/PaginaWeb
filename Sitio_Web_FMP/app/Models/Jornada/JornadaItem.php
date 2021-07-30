@@ -6,24 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class JornadaItem extends Model
 {
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
+    use HasFactory;
     protected $table = 'jornadaitem';
 
-    /**
-     * The database primary key value.
-     *
-     * @var string
-     */
-    protected $primaryKey = 'id';
-
-    /**
-     * Attributes that should be mass-assignable.
-     *
-     * @var array
-     */
+    protected $guarded = ['id'];
     protected $fillable = ['dia', 'hora_inicio', 'hora_fin', 'id_jornada'];
 }
