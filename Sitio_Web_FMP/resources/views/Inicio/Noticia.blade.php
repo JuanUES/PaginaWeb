@@ -13,11 +13,15 @@
 
         <div class="row">
             <div class="card-box col-xl-12">
+                <a class="nav-link btn btn-danger waves-effect width-md" href="{{ route('index') }}#noticias">
+                    <i class="mdi mdi-arrow-left-thick"></i> 
+                    Volver a Noticias
+                </a>
                 <div class="row">
                     <div class="col-xl-12 ">
                         <h1 class="my-3">{!!$noticia->titulo!!} </h1>                                                   
                         <h3 class="my-2">{!!$noticia->subtitulo!!}</h3>
-                        <p class="p-6">Publicado el {!!date('d M Y', strtotime($noticia->created_at))!!}</p>
+                        <p class="p-6">Publicado el {!!/*date('d M Y', strtotime())*/$noticia->created_at->translatedFormat('l d \d\e F \d\e\l Y')!!}</p>
                     </div>
                 </div>
                 <div class="row">

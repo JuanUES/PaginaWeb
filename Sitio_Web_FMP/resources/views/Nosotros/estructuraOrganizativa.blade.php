@@ -18,19 +18,7 @@ Dropzone.options.myAwesomeDropzone = {
     uploadMultiple: false,
     parallelUploads: 1,
     maxFiles: 1,
-    acceptedFiles: "image/*"
-    ,init: function () {
-        this.on("complete", function (file) {
-            if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
-                
-            };
-
-            this.on("maxfilesexceeded", function(file){
-                done("Limite de archivos 1!");
-            });
-            
-        });
-    }
+    acceptedFiles: "image/*",    
 }
 </script>
 @endauth
@@ -103,64 +91,7 @@ Dropzone.options.myAwesomeDropzone = {
                     <div class="row">
                         <div class="col order-first">
                             <h3 class="my-2">Miembros de la Junta Directiva de la Facultad Multidisciplinaria Paracentral</h3>
-                        </div>
-                        @auth                            
-                        <div class="col-lg-3 order-last">
-                            <a href="#" class="btn btn-block btn-info" data-toggle="modal" data-target="#myModalJunta"><i class="dripicons-document"></i> Nuevo Miembro de Junta</a>
-                            <div id="myModalJunta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h3 class="modal-title" id="myCenterModalLabel">Registro</h3>
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                        </div>
-                                        <div class="modal-body">                                        
-                                            <div class="tab-content">
-                                            <form method="POST" 
-                                            action="{{ route('EstructuraOrganizativa.Junta') }}" 
-                                            class="parsley-examples"
-                                            enctype="multipart/form-data">
-                                                @csrf
-                                                <div class="row">
-                                                    <div class="col-xl-12">
-                                                        <div class="form-group">
-                                                            <label>Nombre</label>
-                                                            <input type="text" class="form-control" required
-                                                                    placeholder="Nombre (Obligatorio)"
-                                                                    name="nombre"/>
-                                                        </div> 
-                                                    </div>
-                                                </div>  
-                                                <div class="row">
-                                                    <div class="col-xl-12">
-                                                        <div class="form-group">
-                                                            <label>Sector que representa</label>
-                                                            
-                                                            <input type="text" class="form-control" required
-                                                                    placeholder="Sector que representa (Obligatorio)"
-                                                                    name="sector" />
-                                                            
-                                                        </div>
-                                                    </div>
-                                                </div> 
-                                                <div class="form-group mb-0">
-                                                    <div>
-                                                        <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">
-                                                            Crear Miembro de Junta
-                                                        </button>
-                                                        <button type="reset" class="btn btn-light waves-effect">
-                                                            Cancelar
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </form>       
-                                            </div>
-                                        </div>                                    
-                                    </div><!-- /.modal-content -->
-                                </div><!-- /.modal-dialog -->
-                            </div><!-- /.modal --> 
-                        </div>
-                        @endauth
+                        </div>                        
                     </div>
                         @guest
                             <p>{!!count($periodoJunta)==1 ? $periodoJunta[0] -> sector_dep_unid :'Periodo:'!!}</p>
@@ -170,16 +101,77 @@ Dropzone.options.myAwesomeDropzone = {
                                 <div class="col-xl-12">
                                     <form action="{{ route('Periodo.junta') }}" method="POST">
                                         @csrf
-                                        <div class="row my-2">                                            
-                                            <div class="col-lg-3">
-                                                <input type="text" class="form-control" required 
-                                                placeholder="Periodo (Obligatorio)"
-                                                name="periodo" 
-                                                value="{!!count($periodoJunta)==1 ? $periodoJunta[0] -> sector_dep_unid:null!!}"/>
+                                        <div class="row my-2">  
+                                            <div class="col">
+                                                <div class="row">
+                                                    <div class="col-lg-3">
+                                                        <input type="text" class="form-control" required 
+                                                        placeholder="Periodo (Obligatorio)"
+                                                        name="periodo" 
+                                                        value="{!!count($periodoJunta)==1 ? $periodoJunta[0] -> sector_dep_unid:null!!}"/>
+                                                    </div>
+                                                    <div class="col-lg-2">
+                                                        <button type="submit" class="btn btn-block btn-info">Guardar   <i class=" mdi mdi-content-save-move"></i></button>
+                                                    </div> 
+                                                </div>
+                                            </div>                               
+                                            @auth
+                                            <div class="col-lg-3 order-last">
+                                                <a href="#" class="btn btn-block btn-info" data-toggle="modal" data-target="#myModalJunta"><i class="dripicons-document"></i> Nuevo Miembro de Junta</a>
+                                                <div id="myModalJunta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h3 class="modal-title" id="myCenterModalLabel">Registro</h3>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                            </div>
+                                                            <div class="modal-body">                                        
+                                                                <div class="tab-content">
+                                                                <form method="POST" 
+                                                                action="{{ route('EstructuraOrganizativa.Junta') }}" 
+                                                                class="parsley-examples"
+                                                                enctype="multipart/form-data">
+                                                                    @csrf
+                                                                    <div class="row">
+                                                                        <div class="col-xl-12">
+                                                                            <div class="form-group">
+                                                                                <label>Nombre</label>
+                                                                                <input type="text" class="form-control" required
+                                                                                        placeholder="Nombre (Obligatorio)"
+                                                                                        name="nombre"/>
+                                                                            </div> 
+                                                                        </div>
+                                                                    </div>  
+                                                                    <div class="row">
+                                                                        <div class="col-xl-12">
+                                                                            <div class="form-group">
+                                                                                <label>Sector que representa</label>
+                                                                                
+                                                                                <input type="text" class="form-control" required
+                                                                                        placeholder="Sector que representa (Obligatorio)"
+                                                                                        name="sector" />
+                                                                                
+                                                                            </div>
+                                                                        </div>
+                                                                    </div> 
+                                                                    <div class="form-group mb-0">
+                                                                        <div>
+                                                                            <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">
+                                                                                Crear Miembro de Junta
+                                                                            </button>
+                                                                            <button type="reset" class="btn btn-light waves-effect">
+                                                                                Cancelar
+                                                                            </button>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>       
+                                                                </div>
+                                                            </div>                                    
+                                                        </div><!-- /.modal-content -->
+                                                    </div><!-- /.modal-dialog -->
+                                                </div><!-- /.modal --> 
                                             </div>
-                                            <div class="col-lg-2">
-                                                <button type="submit" class="btn btn-block btn-info">Guardar   <i class=" mdi mdi-content-save-move"></i></button>
-                                            </div>                                            
+                                            @endauth                                      
                                         </div> 
                                     </form>                                    
                                 </div>
@@ -187,14 +179,14 @@ Dropzone.options.myAwesomeDropzone = {
                         @endauth  
                         @if (count($junta)!=0)
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped mb-0">
+                                <table class="table table-bordered @guest table-striped @endguest mb-0">
                                     <thead>
                                         <tr>
                                             <th class="tex-left">  
                                                 Nombre                                          
                                             </th>
                                             <th class="text-left">
-                                                Sector que Representa
+                                                Sector que representa
                                             </th>    
                                             @auth
                                                 <th class="text-left">
@@ -210,15 +202,13 @@ Dropzone.options.myAwesomeDropzone = {
                                             <th class="text-nowrap align-middle" scope="row">{!!$item->sector_dep_unid;!!}</th>
                                             @auth                                   
                                             <th class="align-middle">
-                                                <div class="row">
-                                                    <div class="col-xl-6 order-first">                                                    
-                                                        <a href="#" class="btn btn-success btn-block"><i class="dripicons-document-edit"></i>  Modificar</a>                                               
-                                                    </div>
-                                                    <div class="col-xl-6 order-last">                                                    
+                                                <div class="row text-center">
+                                                    <div class="btn-group" role="group">                                
+                                                        <button href="#" class="btn btn-light waves-effect width-md m-1"><i class="mdi mdi-file-document-edit mdi-16p"></i>  Modificar</button>                                               
                                                         <form action="{{ asset('/EstructuraOrganizativa/JefaturaJunta') }}/{!!base64_encode($item->id)!!}/{!!base64_encode($item->tipo)!!}" 
                                                             method="POST">     
                                                             @csrf                                              
-                                                            <button type="submit" class="btn btn-danger btn-block"><i class="dripicons-trash"></i>  Eliminar</button>   
+                                                            <button type="submit" class="btn btn-light waves-effect width-md m-1"><i class="mdi mdi-delete"></i> Eliminar</button>   
                                                         </form>   
                                                     </div>
                                                 </div>                                         
@@ -246,63 +236,7 @@ Dropzone.options.myAwesomeDropzone = {
                             <h3 class="my-2">Jefaturas Académicas y Administrativas de la Facultad Multidisciplinaria Paracentral</h3>
                         </div>
                         @auth                            
-                        <div class="col-lg-2 order-last">
-                            <a class="btn btn-block btn-info" href="#" data-toggle="modal" data-target="#myModalJefatura"><i class="dripicons-document"></i> Nueva Jefatura</a>
-                            <div id="myModalJefatura" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h3 class="modal-title" id="myCenterModalLabel">Registro</h3>
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                        </div>
-                                        <div class="modal-body">                                        
-                                            <div class="tab-content">
-                                            <form method="POST" 
-                                            action="{{ route('EstructuraOrganizativa.Jefatura') }}" 
-                                            class="parsley-examples"
-                                            enctype="multipart/form-data">
-                                                @csrf
-                                                <div class="row">
-                                                    
-                                                    <div class="col-xl-12">
-                                                        <div class="form-group">
-                                                            <label>Nombre</label>
-                                                            <input type="text" class="form-control" required
-                                                                    placeholder="Nombre (Obligatorio)"
-                                                                    name="nombre"/>
-                                                        </div> 
-                                                    </div>
-                                                    
-                                                </div>      
-                                                <div class="row">
-                                                    <div class="col-xl-12">
-                                                        <div class="form-group">
-                                                            <label>Departamento/Unidad</label>
-                                                            <div>
-                                                                <input type="text" class="form-control" required
-                                                                    placeholder="Sector que representa (Obligatorio)"
-                                                                    name="jefatura" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>         
-                                                <div class="form-group mb-0">
-                                                    <div>
-                                                        <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">
-                                                            Crear Jefatura
-                                                        </button>
-                                                        <button type="reset" class="btn btn-light waves-effect">
-                                                            Cancelar
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </form>       
-                                            </div>
-                                        </div>                                    
-                                    </div><!-- /.modal-content -->
-                                </div><!-- /.modal-dialog -->
-                            </div><!-- /.modal -->
-                        </div>
+                        
                         @endauth
                     </div>                    
                     @guest
@@ -310,26 +244,87 @@ Dropzone.options.myAwesomeDropzone = {
                     @endguest
                     @auth
                         <div class="row">
-                            <div class="col-xl-12">
-                                <form action="{{ route('Periodo.jefatura') }}" method="POST">
-                                    @csrf
-                                    <div class="row my-2">                                            
-                                        <div class="col-lg-3">
-                                            <input type="text" class="form-control" required
-                                            placeholder="Periodo (Obligatorio)"
-                                            name="periodo" value="{!!count($periodoJefatura)==1 ? $periodoJefatura[0] -> sector_dep_unid:null!!}"/>
-                                        </div>
-                                        <div class="col-lg-2">
-                                            <button type="submit" class="btn btn-block btn-info">Guardar   <i class=" mdi mdi-content-save-move"></i></button>
-                                        </div>                                            
-                                    </div> 
-                                </form>                                    
+                            <div class="col order-first">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <form action="{{ route('Periodo.jefatura') }}" method="POST">
+                                            @csrf
+                                            <div class="row my-2">                                            
+                                                <div class="col-lg-3">
+                                                    <input type="text" class="form-control" required
+                                                    placeholder="Periodo (Obligatorio)"
+                                                    name="periodo" value="{!!count($periodoJefatura)==1 ? $periodoJefatura[0] -> sector_dep_unid:null!!}"/>
+                                                </div>
+                                                <div class="col-lg-2">
+                                                    <button type="submit" class="btn btn-block btn-info">Guardar   <i class=" mdi mdi-content-save-move"></i></button>
+                                                </div>                                            
+                                            </div> 
+                                        </form>                                    
+                                    </div>
+                                </div> 
                             </div>
-                        </div>   
+                            <div class="col-lg-2 order-last">
+                                <a class="btn btn-block btn-info" href="#" data-toggle="modal" data-target="#myModalJefatura"><i class="dripicons-document"></i> Nueva Jefatura</a>
+                                <div id="myModalJefatura" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title" id="myCenterModalLabel">Registro</h3>
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            </div>
+                                            <div class="modal-body">                                        
+                                                <div class="tab-content">
+                                                <form method="POST" 
+                                                action="{{ route('EstructuraOrganizativa.Jefatura') }}" 
+                                                class="parsley-examples"
+                                                enctype="multipart/form-data">
+                                                    @csrf
+                                                    <div class="row">
+                                                        
+                                                        <div class="col-xl-12">
+                                                            <div class="form-group">
+                                                                <label>Nombre</label>
+                                                                <input type="text" class="form-control" required
+                                                                        placeholder="Nombre (Obligatorio)"
+                                                                        name="nombre"/>
+                                                            </div> 
+                                                        </div>
+                                                        
+                                                    </div>      
+                                                    <div class="row">
+                                                        <div class="col-xl-12">
+                                                            <div class="form-group">
+                                                                <label>Departamento/Unidad</label>
+                                                                <div>
+                                                                    <input type="text" class="form-control" required
+                                                                        placeholder="Sector que representa (Obligatorio)"
+                                                                        name="jefatura" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>         
+                                                    <div class="form-group mb-0">
+                                                        <div>
+                                                            <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">
+                                                                Crear Jefatura
+                                                            </button>
+                                                            <button type="reset" class="btn btn-light waves-effect">
+                                                                Cancelar
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>       
+                                                </div>
+                                            </div>                                    
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+                            </div>
+                        </div>  
                     @endauth 
                     @if (count($jefaturas)!=0)
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped mb-0">
+                        <table class="table table-bordered @guest table-striped @endguest mb-0">
                             <thead>
                                 <tr>
                                     <th class="tex-left">  
@@ -353,15 +348,14 @@ Dropzone.options.myAwesomeDropzone = {
                                     </td>
                                     <th class="align-middle" scope="row">{!!$item->sector_dep_unid;!!}</th> 
                                     @auth                                   
-                                    <th class="align-middle ">
-                                        <div class="row">
-                                            <div class="col-xl-12"> 
-                                                <form action="{{ asset('/EstructuraOrganizativa/JefaturaJunta') }}/{!!base64_encode($item->id)!!}/{!!base64_encode($item->tipo)!!}" 
-                                                    method="POST">     
-                                                    @csrf                                              
-                                                    <button type="submit" class="btn btn-danger btn-block"><i class="dripicons-trash"></i>  Eliminar</button>   
-                                                </form>
-                                            </div>
+                                    <th class="align-middle ">                                        
+                                        <div class="btn-group" role="group"> 
+                                            <button href="#" class="btn btn-light waves-effect width-md m-1"><i class="mdi mdi-file-document-edit mdi-16p"></i>  Modificar</button>                                               
+                                            <form action="{{ asset('/EstructuraOrganizativa/JefaturaJunta') }}/{!!base64_encode($item->id)!!}/{!!base64_encode($item->tipo)!!}" 
+                                                method="POST">     
+                                                @csrf                                              
+                                                <button type="submit" class="btn btn-light waves-effect width-md m-1"><i class="mdi mdi-delete"></i>  Eliminar</button>   
+                                            </form>                                            
                                         </div>                                         
                                     </th>
                                     @endauth  

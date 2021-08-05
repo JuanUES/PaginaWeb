@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Models\Pagina\Noticia;
 use Illuminate\Http\Request;
-
 use File;
 
 class NoticiaController extends Controller
@@ -38,8 +37,8 @@ class NoticiaController extends Controller
 
         $validator = Validator::make($request->all(),[
             'titulo' => 'required|max:255',
-            'subtitulo' => 'required|max:255',
             'contenido' => 'required',
+            'imagen' => 'required',
         ]);         
 
         if($validator->fails())
@@ -56,7 +55,9 @@ class NoticiaController extends Controller
 
         /**Elimino de la carpeta del servidor si se realiza una modificacion*/
         if($request->_id != null && count($request->files)){
-            File::delete(public_path() . '/images/noticias/'.$noticia->imagen); 
+            if($fileName !='sin_imagen'){
+                File::delete(public_path() . '/images/noticias/'.$noticia->imagen); 
+            }
             /**Guardo en base de datos */   
             $noticia -> imagen    =  $fileName;
             /**Guardo en servidor*/
@@ -74,8 +75,7 @@ class NoticiaController extends Controller
         }
 
         /**Guardo en base de datos */
-        $noticia -> titulo    =  $request->titulo;        
-        $noticia -> subtitulo =  $request->subtitulo;  
+        $noticia -> titulo    =  $request->titulo;       
         $noticia -> tipo      =  'true'; 
         $noticia -> contenido =  $request->contenido;
         $noticia -> fuente    =  $request->fuente;        
@@ -88,6 +88,17 @@ class NoticiaController extends Controller
 
     public function storeurl(Request $request)
     {
+        $validator = Validator::make($request->all(),[
+            'titulo' => 'required|max:255',
+            'imagen' => 'required',
+            'urlfuente' => 'required',
+        ]);         
+
+        if($validator->fails())
+        {            
+            return response()->json(['error'=>$validator->errors()->all()]);                
+        }
+
         /**Guardo en carpeta Noticia */
         $file = $request->file('imagen'); 
         $path = public_path().'\images\noticias';
@@ -97,6 +108,7 @@ class NoticiaController extends Controller
 
         /**Elimino de la carpeta del servidor si se realiza una modificacion*/
         if($request->_id != null && count($request->files)){
+            if($fileName !='sin_imagen')
             File::delete(public_path() . '/images/noticias/'.$noticia->imagen); 
             /**Guardo en base de datos */   
             $noticia -> imagen    =  $fileName;
@@ -171,6 +183,7 @@ class NoticiaController extends Controller
     public function destroy(Request $request)
     {
         /**Elimino de la carpeta del servidor */
+        if(Noticia::findOrFail(base64_decode($request->_id))->imagen !='sin_imagen')
         File::delete(public_path() . '/images/noticias/'.Noticia::findOrFail(base64_decode($request->_id))->imagen); 
 
         /**Elimino de la base de datos */

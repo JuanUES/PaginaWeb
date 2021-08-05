@@ -69,8 +69,8 @@ Route::post('/EstructuraOrganizativa/JefaturaJunta/{id}/{tipo}', [JuntaJefaturaC
 Route::post('/Directorio/Nuevo', [DirectorioController::class, 'store'])
 ->middleware(['auth'])->name('Nosotros.directorio');
 
-Route::post('/Directorio/borrar/{id}', [DirectorioController::class, 'destroy'])
-->middleware(['auth'])->name('Nosotros.directorio.borrar');
+Route::post('/Directorio/borrar', [DirectorioController::class, 'destroy'])
+->middleware(['auth'])->name('directorio.borrar');
 
 Route::get('/Directorio', [DirectorioController::class, 'index'])
 ->name('directorio');

@@ -156,7 +156,11 @@
                                                 </li>
                                             </ul>
                                             <div class="modal-body">
-
+                                                <div class="row">
+                                                    <div class="col-xl-12">
+                                                    <label>Nota: <code>* Campos Obligatorio</code></label>
+                                                    </div>
+                                                </div>
                                                 <div class="tab-content">
                                                     
                                                     <div class="tab-pane show active" id="noticiaL" >
@@ -169,31 +173,24 @@
                                                         enctype="multipart/form-data">
                                                         <input type="hidden" id="_id_local" name="_id"/>
                                                         @csrf                                                        
-                                                       
+                                                        
                                                         <div class="row">
                                                             
-                                                            <div class="col-xl-6">
+                                                            <div class="col-xl-12">
                                                                 <div class="form-group">
-                                                                    <label>Titulo</label>
+                                                                    <label>Titulo <code>*</code></label>
                                                                     <input type="text" class="form-control" required
                                                                             placeholder="Titulo Noticia (Obligatorio)"
                                                                             name="titulo" id="titulo"/>
                                                                 </div> 
                                                             </div>
-                                                            <div class="col-xl-6">
-                                                                <div class="form-group">
-                                                                    <label>SubTitulo</label>
-                                                                    <input type="text" class="form-control" required
-                                                                            placeholder="Sub-Titulo Noticia (Obligatorio)"
-                                                                            name="subtitulo" id="subtitulo"/>
-                                                                </div> 
-                                                            </div>
+                                                        
                                                         </div>
                                                         
                                                         <div class="row">
                                                             <div class="col-xl-12">
                                                                 <div class="form-group">
-                                                                    <label>Imagen</label>
+                                                                    <label>Imagen <code>*</code></label>
                                                                     <div class="custom-file">
                                                                         <input type="file" value="" class="custom-file-input form-control" accept="image/*"  name="imagen"  id="img" />
                                                                         <label class="custom-file-label" name='imagenlabel' for="img">Seleccionar imagen</label>
@@ -236,19 +233,20 @@
                                                         <div class="alert alert-primary text-white" 
                                                             role="alert" style="display:none" id="notificacionMaestrias">                                               
                                                         </div>
-                                                        <div class="row">
-                                                            
-                                                            <div class="col-xl-6">
+                                                        <div class="row">                                                            
+                                                            <div class="col-xl-12">
                                                                 <div class="form-group">
-                                                                    <label>Titulo</label>
+                                                                    <label>Titulo <code>*</code></label>
                                                                     <input type="text" class="form-control" required
                                                                             placeholder="Titulo Noticia (Obligatorio)"
                                                                             name="titulo" id="tituloUrl"/>
                                                                 </div> 
-                                                            </div>
-                                                            <div class="col-xl-6">
+                                                            </div>                                                            
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xl-12">
                                                                 <div class="form-group">
-                                                                    <label>SubTitulo</label>
+                                                                    <label>Descripción <code>*</code></label>
                                                                     <input type="text" class="form-control" required
                                                                             placeholder="Sub-Titulo Noticia (Obligatorio)"
                                                                             name="subtitulo" id="subtituloUrl" />
@@ -256,18 +254,21 @@
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            <div class="col-xl-6">
+                                                            <div class="col-xl-12">
                                                                 <div class="form-group">
-                                                                    <label>Imagen</label>
+                                                                    <label>Imagen <code>*</code></label>
                                                                     <div class="custom-file">
                                                                         <input type="file" class="custom-file-input" name="imagen" id="customFileLang" lang="es">
                                                                         <label class="custom-file-label" for="customFile">Seleccionar imagen</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-xl-6">
+                                                            
+                                                        </div>            
+                                                        <div class="row">
+                                                            <div class="col-xl-12">
                                                                 <div class="form-group">
-                                                                    <label>Url de la fuente</label>
+                                                                    <label>Url de la fuente <code>*</code></label>
                                                                     <div>
                                                                         <input parsley-type="url" type="url" class="form-control"
                                                                                 placeholder="URL Fuente (Opcional)"
@@ -275,7 +276,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>             
+                                                        </div> 
                                                         <div class="form-group mb-0">
                                                             <div>
                                                                 <button id="noticiaUrl" type="button" class="btn btn-primary waves-effect waves-light mr-1" 
@@ -309,23 +310,33 @@
                                         @foreach ($noticias as $n)
                                         
                                         <tr>
+
                                             <td>
                                                 <div class="border p-1 rounded media">
                                                     
                                                     <img class="mr-3 mt-1 rounded bx-shadow-lg" src="{{ asset('/') }}images/noticias/{{$n->imagen}}"
                                                     alt="Generic placeholder image" height="110" width="140" style="">
                                                     <div class="media-body" style="width: 20em">
-                                                        <h6 class="text-left">Publicado el {!!date('d M Y - h:i:s A', strtotime($n->created_at))!!}</h6>
+                                                        <h6 class="text-left">Publicado {!!/*date('d M Y - h:i:s A', strtotime($n->created_at))*/$n->created_at->diffForHumans()!!}</h6>
                                                         <h4 class="mt-0">{{$n->titulo}}</h4>
-                                                        <h6>{!!$n->subtitulo !!}</h6>
+                                                        @if (!$n->tipo)
+                                                            <p>{!!$n->subtitulo !!}</p>
+                                                        @endif
                                                         <p>{!!mb_strwidth(strip_tags($n->contenido), 'UTF-8') <= 125?strip_tags($n->contenido):rtrim(mb_strimwidth(strip_tags($n->contenido), 0, 125, '', 'UTF-8')).'...'!!}</p>
                                                     </div>
                                                     <div class="btn-group-vertical" role="group">
                                                     @if ($n->tipo)
                                                         <a href="{{ asset('/noticias') }}/{!!base64_encode($n->id)!!}/{!!base64_encode($n->titulo)!!}"
                                                            
-                                                        class="btn btn-light waves-effect width-md  @guest mt-4 @endguest" target="_blank">Leer más <i class="mdi mdi-send"></i></a>
+                                                        class="btn btn-light waves-effect width-md  @guest mt-4 @endguest" target="_blank">
                                                         @auth
+                                                            <i class="mdi mdi-send"></i>
+                                                        @endauth Leer más 
+                                                        @guest
+                                                        <i class="mdi mdi-send"></i>
+                                                        @endguest
+                                                        </a>
+                                                        @auth                                                        
                                                         <button type="button"  class="btn btn-light waves-effect width-md"
                                                             onclick="modificarNL({!!$n->id!!})" data-toggle="modal" data-target="#myModalNoticia">
                                                          <i class="mdi mdi-file-document-edit mdi-16p"></i> Modificar
@@ -333,7 +344,15 @@
                                                         @endauth
                                                     @else
                                                         <a href="{!!$n->urlfuente!!}"
-                                                            class="btn btn-light waves-effect width-md @guest mt-4 @endguest" target="_blank">Leer más <i class="mdi mdi-earth"></i></a>
+                                                            class="btn btn-light waves-effect width-md @guest mt-4 @endguest" target="_blank">
+                                                            @auth
+                                                            <i class="mdi mdi-earth"></i>
+                                                            @endauth
+                                                            Leer más 
+                                                            @guest
+                                                            <i class="mdi mdi-earth"></i>
+                                                            @endguest
+                                                        </a>
                                                         @auth
                                                         <span data-toggle="modal" data-target="#myModalNoticia">
                                                             <button type="button"  class="btn btn-light waves-effect width-md" onclick="modificarEX({!!$n->id!!})" >
@@ -406,7 +425,7 @@
                     <div class="col-xl-12">
                         <div class="card-box">
                             <div class="row">
-                                <div class="col-xl-12"><h3>Siguenos en Facebook</h3></div>
+                                <div class="col-xl-12"><h3>Síguenos en Facebook</h3></div>
                                 <div class="col-xl-12" style="overflow: auto;">
                                     <div class="fb-page" data-href="https://www.facebook.com/Facultad-Multidisciplinaria-Paracentral-Decanato-104296228519520"  data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/Facultad-Multidisciplinaria-Paracentral-Decanato-104296228519520/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/Facultad-Multidisciplinaria-Paracentral-Decanato-104296228519520/">Facultad Multidisciplinaria Paracentral - Decanato</a></blockquote></div>
                                 </div>                                                                                                                
@@ -420,7 +439,7 @@
                             <a href="https://eel.ues.edu.sv/" target="_blank" class="btn btn-danger btn-block mt-3 text-left">Expediente en Linea</a>                      
                             <a href="https://correo.ues.edu.sv/" target="_blank" class="btn btn-danger  btn-block mt-3 text-left">Correo Institucional</a>                           
                             <a href="https://www.facebook.com/DistanciaFMP" target="_blank" class="btn btn-danger  btn-block mt-3 text-left"><i class=" mdi mdi-facebook border rounded"></i> Universidad en Linea / Sede Paracentral</a> 
-                            <a href="https://www.facebook.com/celeues" target="_blank" class="btn btn-danger btn-block mt-3 text-left">CELEUES</a>
+                            <a href="https://www.facebook.com/celeues" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-facebook border rounded"></i> CELEUES</a>
                         </div> <!-- end card-box-->                        
                     </div> <!-- end col-->        
                 </div>

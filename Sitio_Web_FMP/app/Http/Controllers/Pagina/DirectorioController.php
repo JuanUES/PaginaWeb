@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pagina;
 use App\Http\Controllers\Controller;
 use App\Models\Pagina\Directorio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class DirectorioController extends Controller
 {
@@ -37,24 +38,23 @@ class DirectorioController extends Controller
      */
     public function store(Request $request)
     {
-        $directorio = new Directorio();
-        $directorio->nombre = $request->nombre;
-        $directorio->contacto = nl2br($request->contacto);
-        $directorio->user =  auth()->id();
-
+        $validator = Validator::make($request->all(),[
+            'nombre' => 'required',
+            'contacto' => 'required',
+        ]);         
+        if($validator->fails())
+        {            
+            return response()->json(['error'=>$validator->errors()->all()]);                
+        }
+        
+        $directorio = $request->_id == null ? new Directorio() : Directorio::findOrFail($request->_id);
+        $directorio -> nombre = $request->nombre;
+        $directorio -> contacto = $request->contacto;
+        $directorio -> user =  auth()->id();
         $exito = $directorio->save();
 
-        if(!$exito){
-            return redirect('/Directorio')
-            ->with('titulo','Error')
-            ->with('mensaje','No se realizo el registro en directorio.')
-            ->with('tipo','error');
-        }
-
-        return redirect('/Directorio')
-        ->with('titulo','Exito')
-        ->with('mensaje','Registro realizado')
-        ->with('tipo','success');
+        return $request->_id !=null ?response()->json(['mensaje'=>'Modificación exitosa.']):response()->json(['mensaje'=>'Registro exitoso.']);
+        
     }
 
     /**
@@ -97,9 +97,8 @@ class DirectorioController extends Controller
      * @param  \App\Models\Pagina\Directorio  $directorio
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Directorio $directorio, $id){
-        $contacto = Directorio::find(base64_decode($id));
-        $contacto -> delete();
+    public function destroy(Request $request){
+        Directorio::destroy($request->_id);
         return redirect()->route('directorio');
     }
 }
