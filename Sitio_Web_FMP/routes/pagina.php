@@ -12,7 +12,7 @@ use App\Http\Controllers\Pagina\PostgradoController;
 use App\Http\Controllers\Pagina\InvestigacionController;
 use App\Http\Controllers\Pagina\Academicos;
 use App\Http\Controllers\Pagina\ContenidoHtmlController;
-
+use App\Http\Controllers\Pagina\PlaComplementarioController;
 
 /**PDF ------------------------------------------------------------------*/
 
@@ -95,9 +95,7 @@ Route::get('CienciasEconomicas', [Academicos::class,'indexEcono'])->name('Depart
 
 Route::get('CienciasEducacion', [Academicos::class,'indexEdu'])->name('Departamento.CienciasEdu');
 
-Route::get('PlanComplementario', function () {
-    return view('Academicos.PlanComplementario');
-})->name('planComp');
+Route::get('PlanComplementario', [PlaComplementarioController::class,'index'])->name('planComp');
 
 /**---------------------------------------------------------------------------------------- */
 

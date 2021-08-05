@@ -1,6 +1,32 @@
 @extends('Pagina/baseOnlyHtml')
 
+@section('header')
+@auth
+    <!-- Summernote css -->
+    <link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
+    
+    <!-- Este css se carga nada mas cuando esta logeado un usuario-->
+    <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
+
+@endauth    
+@endsection
+
 @section('footer')
+
+@auth    
+<script src=" {{ asset('js/scripts/postgrado.js') }} "></script>
+<!-- Plugins js -->
+<script src=" {{ asset('js/dropzone.min.js') }} "></script>
+<script src=" {{ asset('js/scripts/dropzoneImagenes.js') }} "></script>
+<!--Summernote js-->
+<script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
+<script src="{{ asset('js/summernote.config.min.js') }}"></script>
+<script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
+<script src="{{ asset('js/scripts/http.min.js') }}"></script>
+@endauth  
+
+
+
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v11.0" nonce="3YGowOpk"></script>    
 @endsection
@@ -21,42 +47,34 @@
                 <div class="col-xl-8 px-3">
                     <div class="tab-content pt-0" id="v-pills-tabContent">
                         <div class="tab-pane fade active show" id="index" role="tabpanel">
-                            <h3 class="py-2">Licenciaturas en Educación - Plan Complementario</h3>
-                            <div class="row"><h4>Documentación A Presentar:</h4></div>
-                            <div class="row">
-                                <div class="col-xl-6">
-                                    <p class="mb-1 font-weight-bold py-2">Egresados De Profesorado</p>
-                                    <ol>
-                                        <li>Título de bachiller.</li>
-                                        <li>ECAP.</li>
-                                        <li>Certificación de notas Autenticadas.</li>
-                                        <li>Partida de nacimiento.</li> 
-                                        <li>DUI y NIT.</li> 
-                                        <li>Fotografía tamaño 3.5x4.5 c.m. a color en papel granulado.</li>
-                                    </ol>
-                                </div>
-                                <div class="col-xl-6">
-                                    <p class="mb-1 font-weight-bold py-2">Profesores Graduados</p>
-                                    <ol>                                        
-                                    <li>Título de bachiller.</li>
-                                    <li>Título de Profesor.</li>
-                                    <li>Certificación y autenticada de título.</li>
-                                    <li>Certificación de notas y auténticas.</li>
-                                    <li>Partida de Nacimiento.</li>
-                                    <li>DUI y NIT.</li>
-                                    <li>Fotografía tamaño 3.5 x 4.5 c.m. a color en papel granulado.</li>
-                                    </ol>
-                                </div>
-                            </div>  
-                            <div class="row">
-                                <div class="col-xl-12"><div class="row">
-                                    <h4>Horario de Atención:</h4></div>
-                                    <p>Lunes, Miércoles, Viernes y Sábado</p>
-                                    <p>De: 8:00 a.m. a 3:00 p.m.</p>
-                                    <div class="row"><h4>Contáctanos:</h4></div>
-                                    <p>Tel. 7662-5484  y 7682-6951</p>
-                                </div>                                                                
-                            </div>
+                            @auth
+                                    <form action="{{ route('contenido', ['localizacion'=>'complementarioIndex']) }}" method="POST"  
+                                        class="parsley-examples"  id="indexContenido">
+                                        @csrf
+                                        <div class="alert alert-primary text-white" 
+                                                role="alert" style="display:none" id="notificacion">                                               
+                                        </div>
+                                        <div class="row py-1">
+                                            <div class="col-xl-12">   
+                                                <div class="form-group">                       
+                                                    <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
+                                                        @if ($contenido!=null)
+                                                            {{$contenido->contenido}}
+                                                        @endif
+                                                    </textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12">
+                                                <div class="form-group">
+                                                    <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
+                                                        onclick="submitForm('#indexContenido','#notificacion')">
+                                                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>      
+                                    @endauth       
                         </div>
                         <div class="tab-pane fade" id="LicenciaturaenAdministracionEscolar" role="tabpanel" >
                             <a class="nav-link btn btn-danger waves-effect width-md" href="#index"
