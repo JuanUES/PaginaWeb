@@ -57,7 +57,7 @@
                                         <div class="row py-1">
                                             <div class="col-xl-12">   
                                                 <div class="form-group">                       
-                                                    <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
+                                                    <textarea value="" class="form-control summernote-config" name="contenido"  rows="15">
                                                         @if ($contenido!=null)
                                                             {{$contenido->contenido}}
                                                         @endif
@@ -74,7 +74,15 @@
                                             </div>
                                         </div>
                                     </form>      
-                                    @endauth       
+                                    @endauth 
+                                    
+                                    <div class="py-1">
+                                        @guest
+                                            @if ($contenido!=null)
+                                                {!!$contenido->contenido!!}
+                                            @endif
+                                        @endguest  
+                                    </div>
                         </div>
                         <div class="tab-pane fade" id="LicenciaturaenAdministracionEscolar" role="tabpanel" >
                             <a class="nav-link btn btn-danger waves-effect width-md" href="#index"
