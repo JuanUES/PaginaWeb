@@ -104,6 +104,9 @@ Route::post('PlanCOmplementario/Licenciaturas',[PlaComplementarioController::cla
 Route::post('PlanComplementario/destroy', [PlaComplementarioController::class,'destroy'])
 ->middleware(['auth'])->name('EliminarPlan');//para eliminar
 
+Route::post('PlanComplementario/estado', [PlaComplementarioController::class,'estado'])
+->middleware(['auth'])->name('estadoPlan');
+
 /**---------------------------------------------------------------------------------------- */
 
 Route::get('Investigacion',[InvestigacionController::class, 'index'])->name('investigacion');

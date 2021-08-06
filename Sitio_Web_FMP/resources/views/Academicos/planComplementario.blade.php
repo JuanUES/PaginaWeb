@@ -104,7 +104,7 @@
                                         <i class="mdi mdi-file-document-edit mdi-16p"></i>
                                         Modificar
                                     </button>
-                                    <form action="{{ route('estadoMaestria') }}" method="POST" id="activarDesactivar"
+                                    <form action="{{ route('estadoPlan') }}" method="POST" id="activarDesactivar"
                                      style="display: none;" class="parsley-examples" enctype="multipart/form-data">
                                         @csrf
                                         <input type="hidden" name='_id' value="{!!base64_encode($m->id)!!}">

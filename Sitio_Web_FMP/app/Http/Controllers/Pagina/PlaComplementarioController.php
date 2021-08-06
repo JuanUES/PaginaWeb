@@ -76,4 +76,12 @@ class PlaComplementarioController extends Controller
         $complementario-> delete();
         return redirect()->route('planComp');
     }
+
+    public function estado(Request $request)
+    {
+        $comple = Complementario::where('id',base64_decode($request->_id))->first();
+        $comple -> estado = $comple -> estado ? false:true;
+        $comple -> save();        
+        return response()->json(['boton'=>$comple -> estado ? '<i class="mdi mdi-eye-off"></i> Desactivar':'<i class="mdi mdi-eye"></i> Activar']);
+    }
 }
