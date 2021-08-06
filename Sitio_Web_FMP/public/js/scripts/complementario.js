@@ -2,7 +2,9 @@ function editar(json){$("#_id").val(json.id);$("#nombre").val(json.nombre);
 $("#titulo").val(json.titulo);$("#modalidad").val(json.modalidad);$("#duracion").val(json.duracion);
 $("#asignaturas").val(json.numero_asignatura);$("#unidades").val(json.unidades_valorativas);
 $("#precio").val(json.precio);$("#dirigido").val(json.dirigido);};
-//function eliminarMaestria (maestria){$('#maestria').val(maestria);};
+function eliminarPlan (id)
+{$('#complementario').val(id);
+};
 (function(window){
 	window.htmlentities = {
 		/**

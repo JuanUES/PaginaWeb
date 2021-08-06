@@ -32,8 +32,7 @@ class PlaComplementarioController extends Controller
         return view('Academicos.PlanComplementario',compact('complementario','contenido'));
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         try{
 
             $validator = validator::make($request->all(),[
@@ -70,5 +69,11 @@ class PlaComplementarioController extends Controller
         }catch(Exception $e){
             return response()->json(['error'=>$e->getMessage()]);
         }
+    }
+    public function destroy(Request $request)
+    {
+        $complementario = Complementario::findorFail(base64_decode($request->complementario),['id']);
+        $complementario-> delete();
+        return redirect()->route('planComp');
     }
 }
