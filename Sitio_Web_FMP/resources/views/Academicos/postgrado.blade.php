@@ -213,8 +213,18 @@
                                 </table>
                             </div>                       
                             {!!$m->contenido!!}
-                            <h4>Formato</h4>
-                            <a><div class="mdi mdi-file-pdf mdi-24px align-top btn-outline-danger btn btn-lg my-2">Descargar</div></a>
+                            <h4>Malla Curricular</h4>
+                            <a href="{{$pdfs->where('file','licEspInglesFrances.pdf')->first()==null 
+                                ? '#':asset('files/pdfs/'.{{$pdfs[0]->localizacion}}.'/licEspInglesFrances.pdf')}}"
+                                type="submit" class="btn btn-outline-danger" id="licEspInglesFrances" target="_blank">
+                                    <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
+                            </a>
+                            @auth
+                            <a href="#" class="btn  btn-outline-info my-2" 
+                                data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('licEspInglesFrances')">
+                                <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
+                            </a>
+                            @endauth 
                         </div>
                         @endforeach
                         <div id="modalEliminar" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
@@ -412,6 +422,31 @@
                         </a>
                         @endforeach                                                
                     </div>
+                    @auth
+                    <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;" id="dropZonePdf">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="myCenterModalLabel">Zona para subir imágenes</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                    <form action="{{ route('PDF', ['localizacion'=>'ccEdu']) }}" method="post"
+                                        class="dropzone" id="my-awesome-dropzone">
+                                        @csrf                                 
+                                        <input type="hidden" name='pdf' id="pdf">
+                                        <div class="dz-message needsclick">
+                                            <i class="h3 text-muted dripicons-cloud-upload"></i>
+                                            <h3>Suelta los archivos aquí o haz clic para subir.</h3>
+                                        </div>
+                                        <div class="dropzone-previews"></div>
+                                    </form>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                    @endauth 
                 </div> <!-- end col -->
             </div> <!-- end row--> 
         </div> <!-- end card-box -->
