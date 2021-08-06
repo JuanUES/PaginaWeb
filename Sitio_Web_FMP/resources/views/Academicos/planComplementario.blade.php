@@ -151,8 +151,8 @@
                     <h4>Licenciaturas</h4>
                     @endif
                     @auth
-                    <a class="btn btn-info btn-block text-white text-left  mb-2" data-toggle="modal" data-target="#myModalMaestria"><i class="dripicons-document"></i> Nuevo Registro</a>
-                    <div id="myModalMaestria" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <a class="btn btn-info btn-block text-white text-left  mb-2" data-toggle="modal" data-target="#myModalPlan"><i class="dripicons-document"></i> Nuevo Registro</a>
+                    <div id="myModalPlan" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -163,16 +163,16 @@
                                 <div class="modal-body">                                        
                                     <div class="tab-content">
                                     <form method="POST" 
-                                        action="{{ route('Postgrado.registro') }}" 
+                                        action="{{ route('Plan.registro') }}" 
                                         class="parsley-examples"
                                         enctype="multipart/form-data"
-                                        id="formMaestrias">
+                                        id="formComplementario">
                                     
                                         <input type="hidden" id="_id" name="_id"/>
                                         @csrf
                                         
                                         <div class="alert alert-primary text-white" 
-                                            role="alert" style="display:none" id="notificacionMaestrias">                                               
+                                            role="alert" style="display:none" id="notificacionComplementario">                                               
                                         </div>
                                         
                                         <div class="row">
@@ -246,7 +246,7 @@
                                                 <div class="form-group">
                                                     <label for="precio">Dirigido a: <code>*</code></label>
                                                     <input type="text" class="form-control" placeholder="Dirigido a (Obligatorio)"
-                                                            name="precio" id="precio"/>
+                                                            name="dirigido" id="dirigido"/>
                                                 </div>
                                             </div>                                                
                                         </div>
@@ -255,7 +255,7 @@
                                             <div>
                                                 <button type="button" 
                                                         class="btn btn-primary waves-effect waves-light mr-1"
-                                                        onclick="submitForm('#formMaestrias','#notificacionMaestrias')">
+                                                        onclick="submitForm('#formComplementario','#notificacionComplementario')">
                                                     <li class="fa fa-save"></li>
                                                     Guardar
                                                 </button>

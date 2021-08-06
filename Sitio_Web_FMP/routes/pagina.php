@@ -96,6 +96,9 @@ Route::get('CienciasEconomicas', [Academicos::class,'indexEcono'])->name('Depart
 Route::get('CienciasEducacion', [Academicos::class,'indexEdu'])->name('Departamento.CienciasEdu');
 
 Route::get('PlanComplementario', [PlaComplementarioController::class,'index'])->name('planComp');
+Route::post('PlanCOmplementario/Licenciaturas',[PlaComplementarioController::class,'store'])
+->middleware(['auth'])
+->name('Plan.registro');
 
 /**---------------------------------------------------------------------------------------- */
 
