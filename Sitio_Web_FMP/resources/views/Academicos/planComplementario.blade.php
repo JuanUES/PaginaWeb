@@ -14,7 +14,7 @@
 @section('footer')
 
 @auth    
-<script src=" {{ asset('js/scripts/postgrado.js') }} "></script>
+
 <!-- Plugins js -->
 <script src=" {{ asset('js/dropzone.min.js') }} "></script>
 <script src=" {{ asset('js/scripts/dropzoneImagenes.js') }} "></script>
@@ -23,6 +23,10 @@
 <script src="{{ asset('js/summernote.config.min.js') }}"></script>
 <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
 <script src="{{ asset('js/scripts/http.min.js') }}"></script>
+<script src=" {{ asset('js/scripts/complementario.js') }} "></script>
+<script>
+    function editarComplementario(id){$json = {!!json_encode($complementario)!!}.find(x => x.id==id);editar($json);}
+</script>
 @endauth  
 
 
@@ -95,8 +99,8 @@
                                     Volver a Plan
                                 </a>
                                 @auth                                 
-                                    <button class="btn btn-light waves-effect width-md" data-toggle="modal" data-target="#myModalMaestria"
-                                        onclick="editarMaestria({!!$m->id!!})">
+                                    <button class="btn btn-light waves-effect width-md" data-toggle="modal" data-target="#myModalPlan"
+                                        onclick="editarComplementario({!!$m->id!!})">
                                         <i class="mdi mdi-file-document-edit mdi-16p"></i>
                                         Modificar
                                     </button>
