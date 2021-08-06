@@ -65,11 +65,13 @@
                                 </div>
                             </div>  
                             @endauth
-                            <h4 class="mb-1 font-weight-bold">Coordinadores de Carreras</h4>
-                            <div class="row">
+                            <div class="row py-2">
+                                <div class="col order-first">
+                                <h4 class="mb-1 font-weight-bold">Coordinadores de Carreras</h4>
+                                </div>
                                 @auth         
-                                <div class="col-xl-12 p-2">              
-                                    <a type="button" href="#" class="btn btn-info"
+                                <div class="col-lg-4 order-last">              
+                                    <a type="button" href="#" class="btn btn-info btn-block"
                                     data-toggle="modal" data-target="#myModalCoordinadores"><i class="dripicons-document"></i> Nuevo Coordinador</a>
                                     <!-- Coordinadores modal content -->
                                     <div id="myModalCoordinadores" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -126,7 +128,10 @@
                                     </div><!-- /.modal -->                                     
                                 </div>
                                 @endauth
+                            </div>
 
+                            <div class="row">
+                                
                                 @if (count($coordinadores)!=0)
                                 <div class="col-xl-12">
                                     <div class="table-responsive">
@@ -159,7 +164,8 @@
                                                                     <i class=" dripicons-pencil"></i> Editar
                                                                 </button></div>
                                                             <div class="col-xl-6 order-last">
-                                                                <form name="{!!  str_replace ( '=', '', base64_encode(md5($item->id))) !!}" action="{{ asset('/Coordinadores/borrar') }}/{!! base64_encode($item->id) !!}" 
+                                                                <form name="{!!  str_replace ( '=', '', base64_encode(md5($item->id))) !!}"
+                                                                     action="{{ asset('/Coordinadores/borrar') }}/{!! base64_encode($item->id) !!}" 
                                                                     method="POST">     
                                                                     @csrf                                              
                                                                     <a type="buttom"  class="btn btn-danger text-white btn-block" onclick="eliminar('{!! str_replace ( '=', '', base64_encode(md5($item->id))) !!}');"><i class="dripicons-trash"></i> Eliminar</a>   
@@ -232,12 +238,11 @@
                                 </li>
                                 
                             </ul>
-                            <div class="row">
-                                @if (count($pdfs)>0)
+                            
+                            <div class="row">                                
                                 <div class="col order-first">
-                                    <h4>Formularios y Guías</h4>
-                                </div>
-                                @endif
+                                    <h4></h4>
+                                </div>                               
                                 @auth
                                 <div class="col-lg-3 order-last">
                                     <button class="btn btn-block btn-info tex-left" 
@@ -269,26 +274,87 @@
                                 </div><!-- /.modal -->
                                 @endauth
                             </div> 
-                            <ol id="listaPDF">
-                            @foreach ($pdfs as $item)                                
-                                <li class="py-1">
-                                    @auth
-                                        <form action="{{ route('EliminarProyeccionPDF', ['id'=>$item->id]) }}" method="POST">
-                                            @method('DELETE')
-                                            @csrf
-                                                <button data-toggle="tooltip" data-placement="left" title="Eliminar" data-original-title="Tooltip on left"
-                                                type="submit" class="btn btn-icon btn-outline-danger btn-sm waves-effect waves-light"> 
-                                                    <i class="mdi mdi-close"></i> 
-                                                </button>
-                                                <a type="button" href="{{ route('index') }}{!!'/files/pdfs/'.$item->file !!}" target="_blank">{!!$item->file !!}</a>
-                                        </form>
-                                    @endauth
-                                    @guest
-                                        <a type="button" href="{{ route('index') }}{!!'/files/pdfs/'.$item->file !!}" target="_blank">{!!$item->file !!}</a>
-                                    @endguest
-                                </li>                                
-                            @endforeach
-                            </ol>
+                            @if (count($pdfs)>0)
+                            <div class="table-responsive my-2" id="listaPDF">
+                                <table class="table mb-0 border @guest table-striped @endguest">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <h4>Formularios y Guías</h4>
+                                            </th>
+                                            <th class="col-sm-4">                                              
+                                            </th>                             
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($pdfs as $item)
+                                        <tr>
+                                            <th class="text-nowrap align-middle" scope="row">
+                                                <p class="font-18">{!!$item->file!!}</p>
+                                            </th>                                             
+                                                                             
+                                            <th class="align-middle ">
+                                                
+                                                <div class="btn-group" role="group">
+                                                    <a class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/'.$item->file !!}" target="_blank"> 
+                                                        <i class="mdi mdi-file-pdf mdi-24px mr-1"></i>Descargar
+                                                    </a>
+                                                    @auth
+                                                    <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminar"
+                                                        onclick="$('#eliminar').val({{$item->id}})"><i class="mdi mdi-delete mdi-24px"></i>  Eliminar
+                                                    </button>  
+                                                    @endauth 
+                                                </div>
+                                                                                         
+                                            </th>
+                                             
+                                        </tr>  
+                                        @endforeach                                                              
+                                    </tbody>
+                                </table>
+                            </div> <!-- end table-responsive-->    
+
+                            @auth
+                            <div id="modalEliminar" class="modal fade bs-example-modal-center" tabindex="-1" 
+                                role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ route('EliminarProyeccionPDF') }}" method="POST">
+                                                @csrf
+                                                <div class="row py-3">
+                                                    <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                                                    <div class="col-lg-10 text-black">
+                                                        <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se elimina este registro de manera permanente, ¿Desea continuar?</h4>
+                                                    </div>
+                                                    <input type="hidden" name="_id" id="eliminar">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xl-6">
+                                                        <button type="submit" 
+                                                            class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
+                                                            <i class="mdi mdi-check mdi-16px"></i>
+                                                            Si
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <button type="reset" class="btn btn-light p-1 waves-light waves-effect btn-block font-24" data-dismiss="modal" >
+                                                            <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
+                                                            No
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal --> 
+                            @endauth
+                            @endif
                             
                             <h4>Contactanos</h4>
                             <p class="text-muted font-15 text-justify">

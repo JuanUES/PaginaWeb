@@ -52,41 +52,40 @@
                     <div class="tab-content pt-0" id="v-pills-tabContent">
                         <div class="tab-pane fade active show" id="index" role="tabpanel">
                             @auth
-                                    <form action="{{ route('contenido', ['localizacion'=>'complementarioIndex']) }}" method="POST"  
-                                        class="parsley-examples"  id="indexContenido">
-                                        @csrf
-                                        <div class="alert alert-primary text-white" 
-                                                role="alert" style="display:none" id="notificacion">                                               
+                            <form action="{{ route('contenido', ['localizacion'=>'complementarioIndex']) }}" method="POST"  
+                                class="parsley-examples"  id="indexContenido">
+                                @csrf
+                                <div class="alert alert-primary text-white" 
+                                        role="alert" style="display:none" id="notificacion">                                               
+                                </div>
+                                <div class="row py-1">
+                                    <div class="col-xl-12">   
+                                        <div class="form-group">                       
+                                            <textarea value="" class="form-control summernote-config" name="contenido"  rows="15">
+                                                @if ($contenido!=null)
+                                                    {{$contenido->contenido}}
+                                                @endif
+                                            </textarea>
                                         </div>
-                                        <div class="row py-1">
-                                            <div class="col-xl-12">   
-                                                <div class="form-group">                       
-                                                    <textarea value="" class="form-control summernote-config" name="contenido"  rows="15">
-                                                        @if ($contenido!=null)
-                                                            {{$contenido->contenido}}
-                                                        @endif
-                                                    </textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-12">
-                                                <div class="form-group">
-                                                    <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
-                                                        onclick="submitForm('#indexContenido','#notificacion')">
-                                                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>      
-                                    @endauth 
-                                    
-                                    <div class="py-1">
-                                        @guest
-                                            @if ($contenido!=null)
-                                                {!!$contenido->contenido!!}
-                                            @endif
-                                        @endguest  
                                     </div>
+                                    <div class="col-xl-12">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
+                                                onclick="submitForm('#indexContenido','#notificacion')">
+                                                <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>      
+                            @endauth 
+                            @guest
+                            <div class="py-1">
+                                @if ($contenido!=null)
+                                    {!!$contenido->contenido!!}
+                                @endif
+                            </div>
+                            @endguest 
                         </div>
 
                         <!--aqui va-->
@@ -193,7 +192,7 @@
                     <h4>Licenciaturas</h4>
                     @endif
                     @auth
-                    <a class="btn btn-info btn-block text-white text-left  mb-2" data-toggle="modal" data-target="#myModalPlan"><i class="dripicons-document"></i> Nuevo Registro</a>
+                    <a class="btn btn-info btn-block text-white text-left  my-2" data-toggle="modal" data-target="#myModalPlan"><i class="dripicons-document"></i> Nuevo Registro</a>
                     <div id="myModalPlan" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
@@ -316,7 +315,7 @@
                 @endauth       
                     @foreach ($complementario as $comple)
                         <a class="nav-link  mb-2 btn-outline-danger  border" id="v-pills-social-tab2" data-toggle="pill" href="#{!! preg_replace('([^A-Za-z0-9])', 'l', $comple->nombre)!!}" role="tab" aria-controls="v-pills-social2"
-                            aria-selected="true">{!!$comple->nombre!!}</a>
+                            aria-selected="false">{!!$comple->nombre!!}</a>
                       @endforeach 
                 </div> <!-- end col -->
             </div> <!-- end row--> 

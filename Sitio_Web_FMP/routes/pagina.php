@@ -120,7 +120,7 @@ Route::post('ProyeccionSocial/Jefe/',[ProyeccionSocialController::class, 'jefatu
 Route::post('ProyeccionSocial/Coordinadores/',[ProyeccionSocialController::class, 'storeProyeccionSocial'])
 ->name('nuevoCoordinador')->middleware(['auth']);
 
-Route::delete('ProyeccionSocial/EliminarPDF/{id}',[ProyeccionSocialController::class, 'eliminarPDF'])
+Route::post('ProyeccionSocial/EliminarPDF',[ProyeccionSocialController::class, 'eliminarPDF'])
 ->middleware(['auth'])->name('EliminarProyeccionPDF');
 
 Route::get('Postgrado',[PostgradoController::class,'index'])->name('postgrado');

@@ -78,9 +78,9 @@ class ProyeccionSocialController extends Controller
         
     }
 
-    public function eliminarPDF(PDF $pdf, $id){
+    public function eliminarPDF(Request $request){
         /**busco en la base de datos */
-        $_pdf = PDF::find($id);
+        $_pdf = PDF::find($request->_id);
 
         if($_pdf != null){
 
