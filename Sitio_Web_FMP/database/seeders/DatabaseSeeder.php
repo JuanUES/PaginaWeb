@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             HoraSeeder::class,
             AulaSeeder::class,
             CargaAdminSeeder::class,
+            ComplementarioSeeder::class,
         ]);
     }
 }

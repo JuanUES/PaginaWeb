@@ -84,172 +84,198 @@
                                         @endguest  
                                     </div>
                         </div>
-                        <div class="tab-pane fade" id="LicenciaturaenAdministracionEscolar" role="tabpanel" >
-                            <a class="nav-link btn btn-danger waves-effect width-md" href="#index"
+
+                        <!--aqui va-->
+                        @foreach ($complementario as $m)
+                        <div class="tab-pane fade" id="{!!preg_replace('([^A-Za-z0-9])', 'l', $m->nombre)!!}" role="tabpanel">
+                            <div class="btn-group" role="group">
+                                <a class="nav-link btn btn-danger waves-effect width-md" href="#indexPostgrado"
                                     onclick="$('.nav-link').removeClass('active')" data-toggle="pill">
                                     <i class="mdi mdi-arrow-left-thick"></i> 
-                                    Volver a Plan Complementario
-                            </a>
-                            <h3 class="py-2">Licenciatura en Administración Escolar</h3>
+                                    Volver a Plan
+                                </a>
+                                @auth                                 
+                                    <button class="btn btn-light waves-effect width-md" data-toggle="modal" data-target="#myModalMaestria"
+                                        onclick="editarMaestria({!!$m->id!!})">
+                                        <i class="mdi mdi-file-document-edit mdi-16p"></i>
+                                        Modificar
+                                    </button>
+                                    <form action="{{ route('estadoMaestria') }}" method="POST" id="activarDesactivar"
+                                     style="display: none;" class="parsley-examples" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="hidden" name='_id' value="{!!base64_encode($m->id)!!}">
+                                    </form>
+                                    <button class="btn btn-light waves-effect width-md" onclick="submitActivarDesactivar(this,'#activarDesactivar')">
+                                        {!!$m->estado?'<i class="mdi mdi-eye-off"></i> Desactivar':'<i class="mdi mdi-eye"></i> Activar'!!}
+                                    </button>
+                                    <button class="btn btn-light waves-effect width-md"  data-toggle="modal" data-target="#modalEliminar" onclick="eliminarMaestria('{!!base64_encode($m->id)!!}')">
+                                        <i class="mdi mdi-delete mdi-16px"></i> Eliminar
+                                    </button>
+                                @endauth
+                            </div>
+                            <br>
+                            <h3 class="py-3">{!!$m->nombre!!}</h3>     
                             <div class="table-responsive py-2 ">
                                 <table class="table mb-0 table-bordered ">
                                     <tbody>
                                     <tr>
-                                        <td><h5>Titulo a Obtener:</h5><p>Licenciado/a en Administración Escolar</p></td>
-                                        <td><h5>Modalidad:</h5><p>Semipresencial </p></td>
-                                        <td><h5>Duración:</h5><p>2 Años</p></td>
+                                        <td><h5>Titulo a Obtener</h5><p>{!!$m->titulo!!}</p></td>
+                                        <td><h5>Modalidad</h5><p>{!!$m->modalidad!!}</p></td>
+                                        <td><h5>Duración</h5><p>{!!$m->duracion!!}</p></td>
                                     </tr>
                                     <tr>
-                                        <td><h5>Dirigido a:</h5><p>Egresados de Profesorado y Profesores Graduados</p></td>
+                                        <td><h5>Dirigido a:</h5><p>{!!$m->dirigido!!}</p></td>
                                         <td>
-                                            <h5>No. De Asignaturas:</h5><p>12</p>
-                                            <h5>Unidades Valorativas:</h5><p>161</p>
-                                        </td>
-                                        <td><h5>Inversión:</h5>
-                                            <p>Nuevo Ingreso: $11.43 <br>
-                                            Reingreso: $5.71 <br>
-                                            Matricula:  $30.00 <br>
-                                            Mensualidad: $30.00</p>
-                                        </td>
+                                        <h5>No. de Asignaturas</h5><p>{!!$m->numero_asignatura!!} Asignaturas</p>
+                                        <h5>Unidades Valorativas</h5><p>{!!$m->unidades_valorativas!!} Unidades</p></td>
+                                        <td><h5>Precio</h5><p>{!!$m->precio!!}</p></td>
                                     </tr>
                                     </tbody>
                                 </table>
-                            </div>    
-                            <h4>Formatos</h4> 
-                            <a href="{{ asset('/Plan/AdministracionEscolar/Descripcionyobjetivos.pdf') }}" type="submit" class="btn px-1 btn-outline-danger" id="ingSistemas" target="_blank">
-                                    <div class="mdi mdi-file-pdf mdi-24px align-top">Descripción y objetivos</div>
-                            </a>
-                            <a href="{{ asset('/Plan/AdministracionEscolar/PlandeestudioadministracionEscolar.pdf') }}" type="submit" class="px-1 btn btn-outline-danger" id="ingSistemas" target="_blank">
-                                <div class="mdi mdi-file-pdf mdi-24px align-top">Plan de Estudio</div></a>
+                            </div>                       
+                            {!!$m->contenido!!}
+                            <h4>Formato</h4>
+                            <a><div class="mdi mdi-file-pdf mdi-24px align-top btn-outline-danger btn btn-lg my-2">Descargar</div></a>
                         </div>
-                        <div class="tab-pane fade" id="LicenciaturaenLenguajeyLiteratura" role="tabpanel">
-                            <a class="nav-link btn btn-danger waves-effect width-md" href="#index"
-                                    onclick="$('.nav-link').removeClass('active')" data-toggle="pill">
-                                    <i class="mdi mdi-arrow-left-thick"></i> 
-                                    Volver a Plan Complementario
-                            </a>
-                            <h3 class="py-2">Licenciatura en Lenguaje y Literatura</h3>
-                            <div class="table-responsive py-2 ">
-                                <table class="table mb-0 table-bordered ">
-                                    <tbody>
-                                    <tr>
-                                        <td><h5>Titulo a Obtener:</h5><p>Licenciado/a en Lenguaje y Literatura</p></td>
-                                        <td><h5>Modalidad:</h5><p>Semipresencial </p></td>
-                                        <td><h5>Duración:</h5><p>2 Años</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><h5>Dirigido a:</h5><p>Egresados de Profesorado y Profesores Graduados</p></td>
-                                        <td>
-                                            <h5>No. De Asignaturas:</h5><p>12</p>
-                                            <h5>Unidades Valorativas:</h5><p>162</p>
-                                        </td>
-                                        <td><h5>Inversión:</h5>
-                                            <p>Nuevo Ingreso: $11.43 <br>
-                                            Reingreso: $5.71<br>
-                                            Matricula:  $30.00<br>
-                                            Mensualidad: $30.00</p>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>     
-                            <h4>Formatos</h4>
-                            <a href="{{ asset('/Plan/LenguajeyLiteratura/Descripcionyobjetivos.pdf') }}" type="submit" class="btn px-1  btn-outline-danger" id="ingSistemas" target="_blank">
-                                <div class="mdi mdi-file-pdf mdi-24px align-top">Descripción y objetivos</div>
-                            </a>
-                        </div>       
-                        <div class="tab-pane fade" id="LicenciaturaenMatematicas" role="tabpanel">
-                            <a class="nav-link btn btn-danger waves-effect width-md" href="#index"
-                                    onclick="$('.nav-link').removeClass('active')" data-toggle="pill">
-                                    <i class="mdi mdi-arrow-left-thick"></i> 
-                                    Volver a Plan Complementario
-                            </a>
-                            <h3 class="py-2">Licenciatura en Matemáticas</h3>
-                            <div class="table-responsive py-2 ">
-                                <table class="table mb-0 table-bordered ">
-                                    <tbody>
-                                    <tr>
-                                        <td><h5>Titulo a Obtener:</h5><p>Licenciado/a en Lenguaje y Literatura</p></td>
-                                        <td><h5>Modalidad:</h5><p>Semipresencial </p></td>
-                                        <td><h5>Duración:</h5><p>2 Años</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><h5>Dirigido a:</h5><p>Egresados de Profesorado y Profesores Graduados</p></td>
-                                        <td>
-                                            <h5>No. De Asignaturas:</h5><p>12</p>
-                                            <h5>Unidades Valorativas:</h5><p>160</p>
-                                        </td>
-                                        <td><h5>Inversión:</h5>
-                                            <p>Nuevo Ingreso: $11.43 <br>
-                                            Reingreso: $5.71<br>
-                                            Matricula:  $30.00<br>
-                                            Mensualidad: $30.00</p>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>      
-                            <h4>Formatos</h4>
-                            <a href="{{ asset('/Plan/AdministracionEscolar/Descripcionyobjetivos.pdf') }}" type="submit" class="btn px-1 btn-outline-danger" id="ingSistemas" target="_blank">
-                                <div class="mdi mdi-file-pdf mdi-24px align-top">Descripción y objetivos</div>
-                            </a>
-                            <a href="{{ asset('/Plan/AdministracionEscolar/PlandeestudioadministracionEscolar.pdf') }}" type="submit" class="px-1 btn btn-outline-danger" id="ingSistemas" target="_blank">
-                                <div class="mdi mdi-file-pdf mdi-24px align-top">Plan de Estudio</div></a>
-                        </div>     
-                        <div class="tab-pane fade" id="LicenciaturaenPrimeroySegundoCiclo" role="tabpanel">
-                            <a class="nav-link btn btn-danger waves-effect width-md" href="#index"
-                                    onclick="$('.nav-link').removeClass('active')" data-toggle="pill">
-                                    <i class="mdi mdi-arrow-left-thick"></i> 
-                                    Volver a Plan Complementario
-                            </a>
-                            <h3 class="py-2">Licenciatura en Primero y Segundo Ciclo</h3>
-                            <div class="table-responsive py-2 ">
-                                <table class="table mb-0 table-bordered ">
-                                    <tbody>
-                                    <tr>
-                                        <td><h5>Titulo a Obtener:</h5><p>Licenciado/a en Primero y segundo ciclo</p></td>
-                                        <td><h5>Modalidad:</h5><p>Semipresencial </p></td>
-                                        <td><h5>Duración:</h5><p>2 Años</p></td>
-                                    </tr>
-                                    <tr>
-                                        <td><h5>Dirigido a:</h5><p>Egresados de Profesorado y Profesores Graduados</p></td>
-                                        <td>
-                                            <h5>No. De Asignaturas:</h5><p>12</p>
-                                            <h5>Unidades Valorativas:</h5><p>161</p>
-                                        </td>
-                                        <td><h5>Inversión:</h5>
-                                            <p>Nuevo Ingreso: $11.43 <br>
-                                            Reingreso: $5.71<br>
-                                            Matricula:  $30.00<br>
-                                            Mensualidad: $30.00</p>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>      
-                            <h4>Formatos</h4>
-                            <a href="{{ asset('/Plan/AdministracionEscolar/Descripcionyobjetivos.pdf') }}" type="submit" class="btn px-1 btn-outline-danger" id="ingSistemas" target="_blank">
-                                <div class="mdi mdi-file-pdf mdi-24px align-top">Descripción y objetivos</div>
-                            </a>
-                            <a href="{{ asset('/Plan/AdministracionEscolar/PlandeestudioadministracionEscolar.pdf') }}" type="submit" class="px-1 btn btn-outline-danger" id="ingSistemas" target="_blank">
-                                <div class="mdi mdi-file-pdf mdi-24px align-top">Plan de Estudio</div></a>
-                            </div>       
-                    </div>
+                        @endforeach
+                       
+                    </div>     
+                           
+                        
                 </div> <!-- end col -->
+            
                 <div class="col-xl-4">
-                    <h4>Siguenos en Facebook</h4>
+                    <h4>Síguenos en Facebook</h4>
                     <div class="fb-page" data-href="https://www.facebook.com/Licenciatura-en-Educaci%C3%B3n-Plan-complementario-UES-FMP-102012865071802" data-tabs="" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/Licenciatura-en-Educaci%C3%B3n-Plan-complementario-UES-FMP-102012865071802" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/Licenciatura-en-Educaci%C3%B3n-Plan-complementario-UES-FMP-102012865071802">Licenciatura en Educación, Plan complementario;  UES - FMP</a></blockquote></div>
+                    @if (count($complementario)>0)
                     <h4>Licenciaturas</h4>
-                    <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link  mb-2 btn-outline-danger  border" id="v-pills-social-tab2" data-toggle="pill" href="#LicenciaturaenAdministracionEscolar" role="tab" aria-controls="v-pills-social2"
-                            aria-selected="true">Licenciatura en Administración Escolar</a>
-                        <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-profile-tab2" data-toggle="pill" href="#LicenciaturaenLenguajeyLiteratura" role="tab" aria-controls="v-pills-profile2"
-                            aria-selected="false">Licenciatura en Lenguaje y Literatura</a>
-                        <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-profile-tab2" data-toggle="pill" href="#LicenciaturaenMatematicas" role="tab" aria-controls="v-pills-profile2"
-                            aria-selected="false">Licenciatura en Matemáticas</a>
-                        <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-profile-tab2" data-toggle="pill" href="#LicenciaturaenPrimeroySegundoCiclo" role="tab" aria-controls="v-pills-profile2"
-                            aria-selected="false">Licenciatura en Primero y Segundo Ciclo</a>
-                    </div>
+                    @endif
+                    @auth
+                    <a class="btn btn-info btn-block text-white text-left  mb-2" data-toggle="modal" data-target="#myModalMaestria"><i class="dripicons-document"></i> Nuevo Registro</a>
+                    <div id="myModalMaestria" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title" id="myCenterModalLabel">
+                                        <i class="fa fa-graduation-cap fa-5" aria-hidden="true"></i> Registro de Plan complentario</h3>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                </div>
+                                <div class="modal-body">                                        
+                                    <div class="tab-content">
+                                    <form method="POST" 
+                                        action="{{ route('Postgrado.registro') }}" 
+                                        class="parsley-examples"
+                                        enctype="multipart/form-data"
+                                        id="formMaestrias">
+                                    
+                                        <input type="hidden" id="_id" name="_id"/>
+                                        @csrf
+                                        
+                                        <div class="alert alert-primary text-white" 
+                                            role="alert" style="display:none" id="notificacionMaestrias">                                               
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-xl-6">
+                                                <div class="form-group">
+                                                    <label for="nombre" >Nombre <code>*</code></label>
+                                                    <input type="text" class="form-control"
+                                                            placeholder="Nombre (Obligatorio)"
+                                                            name="nombre" id="nombre"/>
+                                                </div> 
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <div class="form-group">
+                                                    <label for="titulo">Título que otorga <code>*</code></label>
+                                                    <input type="text" class="form-control"
+                                                                placeholder="Título que otorga (Obligatorio)"
+                                                            name="titulo" id="titulo"/>
+                                                </div>
+                                            </div>
+                                        </div>      
+
+                                        <div class="row">
+                                            <div class="col-xl-6">
+                                                <div class="form-group">
+                                                    <label for="modalidad">Modalidad <code>*</code></label>
+                                                    <input type="text" class="form-control"
+                                                            placeholder="Modalidad (Obligatorio)"
+                                                            name="modalidad" id="modalidad"/>
+                                                </div> 
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <div class="form-group">
+                                                    <label for="duracion">Duración <code>*</code></label>
+                                                    <input type="text" class="form-control"
+                                                            placeholder="Duración (Obligatorio)"
+                                                            name="duracion" id="duracion"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            
+                                            <div class="col-xl-6">
+                                                <div class="form-group">
+                                                    <label for="asignaturas">Número de asignaturas <code>*</code></label>
+                                                    <input type="number" class="form-control" min="1"
+                                                            placeholder="0"
+                                                            name="asignaturas" id="asignaturas"/>
+                                                </div> 
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <div class="form-group">
+                                                    <label for="unidades">Unidades valorativas <code>*</code></label>
+                                                    <input type="number" class="form-control" min="1"
+                                                            placeholder="0"
+                                                            name="unidades" id="unidades"/>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>  
+
+                                        <div class="row">
+                                            <div class="col-xl-6">
+                                                <div class="form-group">
+                                                    <label for="precio">Precio ($) <code>*</code></label>
+                                                    <input type="text" class="form-control" placeholder="Precio (Obligatorio)"
+                                                            name="precio" id="precio"/>
+                                                </div>
+                                            </div> 
+                                            <div class="col-xl-6">
+                                                <div class="form-group">
+                                                    <label for="precio">Dirigido a: <code>*</code></label>
+                                                    <input type="text" class="form-control" placeholder="Dirigido a (Obligatorio)"
+                                                            name="precio" id="precio"/>
+                                                </div>
+                                            </div>                                                
+                                        </div>
+                                        
+                                        <div class="form-group mb-0">
+                                            <div>
+                                                <button type="button" 
+                                                        class="btn btn-primary waves-effect waves-light mr-1"
+                                                        onclick="submitForm('#formMaestrias','#notificacionMaestrias')">
+                                                    <li class="fa fa-save"></li>
+                                                    Guardar
+                                                </button>
+                                                <button type="button" class="btn btn-light waves-effect" data-dismiss="modal" >
+                                                    <i class="fa fa-ban" aria-hidden="true"></i>
+                                                    Cancelar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>       
+                                    </div>
+                                </div>                                    
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal --> 
+                @endauth       
+                    @foreach ($complementario as $comple)
+                        <a class="nav-link  mb-2 btn-outline-danger  border" id="v-pills-social-tab2" data-toggle="pill" href="#{!! preg_replace('([^A-Za-z0-9])', 'l', $comple->nombre)!!}" role="tab" aria-controls="v-pills-social2"
+                            aria-selected="true">{!!$comple->nombre!!}</a>
+                      @endforeach 
                 </div> <!-- end col -->
             </div> <!-- end row--> 
         </div> <!-- end card-box -->
