@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Pagina;
-
+use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
 use App\Models\Pagina\JuntaJefatura;
 use Illuminate\Http\Request;
@@ -15,17 +15,26 @@ class JuntaJefaturaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store1(Request $request)
-    {
+    public function store1(Request $request){
+        $validator = Validator::make($request->all(),[
+            'nombre' => 'required|max:255',
+            'sector' => 'required|max:255',
+        ]);         
+
+        if($validator->fails())
+        {            
+            return response()->json(['error'=>$validator->errors()->all()]);                
+        }
+
         /**Guardo en base de datos */
-        $juntaJefatura = new JuntaJefatura;
+        $juntaJefatura = $request->_id==null ? new JuntaJefatura : JuntaJefatura::findOrFail($request->_id);
         $juntaJefatura -> nombre          =  $request->nombre;        
         $juntaJefatura -> sector_dep_unid =  $request->sector; 
         $juntaJefatura -> tipo            =  0; 
         $juntaJefatura -> user            =  auth()->id();
         $juntaJefatura -> save();
 
-        return redirect('/EstructuraOrganizativa#junta');
+        return $request->_id !=null ?response()->json(['mensaje'=>'Modificación exitosa']):response()->json(['mensaje'=>'Registro exitoso']);
     }
 
     /**
@@ -36,15 +45,26 @@ class JuntaJefaturaController extends Controller
      */
     public function store2(Request $request)
     {
+        $validator = Validator::make($request->all(),[
+            'nombre' => 'required|max:255',
+            'jefatura' => 'required|max:255',
+        ]);       
+
+        if($validator->fails())
+        {            
+            return response()->json(['error'=>$validator->errors()->all()]);                
+        }
+
+        
         /**Guardo en base de datos */
-        $juntaJefatura = new JuntaJefatura;
+        $juntaJefatura = $request->_id==null ? new JuntaJefatura : JuntaJefatura::findOrFail($request->_id);
         $juntaJefatura -> nombre          =  $request->nombre;        
-        $juntaJefatura -> sector_dep_unid =  nl2br($request->jefatura); 
+        $juntaJefatura -> sector_dep_unid =  $request->jefatura; 
         $juntaJefatura -> tipo            =  1; 
         $juntaJefatura -> user            =  auth()->id();
         $juntaJefatura -> save();
 
-        return redirect('/EstructuraOrganizativa#jefatura');
+        return $request->_id !=null ?response()->json(['mensaje'=>'Modificación exitosa']):response()->json(['mensaje'=>'Registro exitoso']);
     }
 
     
@@ -97,19 +117,11 @@ class JuntaJefaturaController extends Controller
      * @param  \App\Models\Pagina\JuntaJefatura  $juntaJefatura
      * @return \Illuminate\Http\Response
      */
-    public function destroy(JuntaJefatura $juntaJefatura, $id, $tipo)
+    public function destroy(Request $request)
     {
-        /**Elimino de la base de datos */
-        $id            =  base64_decode($id);
-        $tipo          =  base64_decode($tipo);
-        $juntaJefatura =  JuntaJefatura::find($id);        
-        $juntaJefatura -> delete();
-        if(!$tipo){
-            return redirect('/EstructuraOrganizativa#junta');
-        }
-        else{
-            return redirect('/EstructuraOrganizativa#jefatura');
-        } 
+        /**Elimino de la base de datos */        
+        $juntaJefatura =  JuntaJefatura::destroy($request->_id);        
+        return redirect()->route('EstructOrga');
     }
     
 }

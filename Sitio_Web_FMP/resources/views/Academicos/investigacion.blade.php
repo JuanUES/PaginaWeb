@@ -132,7 +132,7 @@
                                     <i class="mdi mdi-arrow-left-thick"></i> 
                                         Volver a Investigación
                             </a>
-                            <h3 class="py-2">Centro de estudio de Información Publica (CEOP)</h3>
+                            <h3 class="py-2">Centro de Estudio de Opinión Publica (CEOP)</h3>
                             <p class="mb-1 font-weight-bold py-2">Sobre el CEOP FMP:</p>
                             <p class="text-muted font-15 text-justify">
                                 Considerando la importancia de contribuir a la comprensión de diferentes procesos sociales en la región paracentral y a nivel nacional, la Junta Directiva de la FMP ha aprobado según acuerdo Nº 24/2019-2021-V la creación del Centro de Estudios de Opinión Pública de la Facultad Multidisciplinaria Paracentral (CEOP FMP), que inició sus actividades en agosto de 2021.
@@ -191,7 +191,7 @@
                     <h4>Subunidades</h4>
                     <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
                         <a class="nav-link mb-2 btn-outline-danger  border" id="v-pills-social-tab2" data-toggle="pill" href="#v-pills-social2" role="tab" aria-controls="v-pills-social2"
-                            aria-selected="true">Centro de Estudio de Información Publica (CEOP)</a>
+                            aria-selected="true">Centro de Estudio de Opinión Publica (CEOP)</a>
                         <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-profile-tab2" data-toggle="pill" href="#v-pills-profile2" role="tab" aria-controls="v-pills-profile2"
                             aria-selected="false">Centro de Investigación Ambiental</a>
                     </div>

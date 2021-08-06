@@ -25,7 +25,7 @@
     <script src="{{ asset('js/summernote.config.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
 
-    <script src="{{ asset('js/scripts/http.min.js') }}"></script>
+    <script src="{{ asset('js/scripts/http.min.js') }}"></script><!--Este es el script que se utiliza para enviar post con un ajax generico-->
     
     <script src="{{ asset('js/scripts/directorio.js') }}"></script>
     <script>
@@ -105,7 +105,8 @@
                                             </div>         
                                             <div class="form-group mb-0">
                                                 <div>
-                                                    <button type="button" class="btn btn-primary waves-effect waves-light mr-1" onclick="submitForm('#directorio','#notificacion')">
+                                                    <button type="button" class="btn btn-primary waves-effect waves-light mr-1" 
+                                                        onclick="submitForm('#directorio','#notificacion')">
                                                         <li class="fa fa-save"></li> Guardar
                                                     </button>
                                                     <button type="reset" class="btn btn-light waves-effect" data-dismiss="modal">
@@ -162,6 +163,7 @@
                             </tbody>
                         </table>
                     </div> <!-- end table-responsive-->
+                    @auth
                     <div id="modalEliminar" class="modal fade bs-example-modal-center" tabindex="-1" 
                         role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                         <div class="modal-dialog modal-dialog-centered">
@@ -200,6 +202,7 @@
                             </div><!-- /.modal-content -->
                         </div><!-- /.modal-dialog -->
                     </div><!-- /.modal --> 
+                    @endauth
                     @else
                     <p class="border p-2 text-center">No hay datos registrados.</p>
                     @endif         

@@ -55,7 +55,7 @@ Route::get('/noticias/{titulo}/{id}',[NoticiaController::class, 'index'])
 Route::post('/nosotros/organigrama/image/{localizacion}', [PDFImageController::class, 'store1'])
 ->middleware(['auth'])->name('Nosotros.organigrama');
 
-Route::get('EstructuraOrganizativa', [EstructuraOrganizativaController::class, 'index']);
+Route::get('EstructuraOrganizativa', [EstructuraOrganizativaController::class, 'index'])->name('EstructOrga');
 
 Route::post('EstructuraOrganizativa/Junta', [JuntaJefaturaController::class, 'store1'])
 ->middleware(['auth'])->name('EstructuraOrganizativa.Junta');
@@ -63,8 +63,8 @@ Route::post('EstructuraOrganizativa/Junta', [JuntaJefaturaController::class, 'st
 Route::post('EstructuraOrganizativa/Jefatura', [JuntaJefaturaController::class, 'store2'])
 ->middleware(['auth'])->name('EstructuraOrganizativa.Jefatura');
 
-Route::post('/EstructuraOrganizativa/JefaturaJunta/{id}/{tipo}', [JuntaJefaturaController::class, 'destroy'])
-->middleware(['auth'])->name('EstructuraOrganizativa.Jefatura.Borrar');
+Route::post('/EstructuraOrganizativa/JefaturaJunta', [JuntaJefaturaController::class, 'destroy'])
+->middleware(['auth'])->name('JefaturaJuntaBorrar');
 
 Route::post('/Directorio/Nuevo', [DirectorioController::class, 'store'])
 ->middleware(['auth'])->name('Nosotros.directorio');

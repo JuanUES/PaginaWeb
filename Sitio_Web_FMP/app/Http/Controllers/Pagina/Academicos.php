@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pagina;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Pagina\PDF;
+use App\Models\Pagina\ContenidoHtml;
 
 class Academicos extends Controller
 {

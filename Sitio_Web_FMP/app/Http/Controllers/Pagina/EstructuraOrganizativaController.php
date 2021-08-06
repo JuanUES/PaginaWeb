@@ -16,8 +16,8 @@ class EstructuraOrganizativaController extends Controller
      */
     public function index()
     {   
-        $junta         = JuntaJefatura::where('tipo',0)->get();
-        $jefaturas     = JuntaJefatura::where('tipo',1)->get();
+        $junta         = JuntaJefatura::where('tipo',0)->orderBy("created_at",'asc')->get();
+        $jefaturas     = JuntaJefatura::where('tipo',1)->orderBy("created_at",'asc')->get();
 
         $periodoJunta     = JuntaJefatura::where('nombre','periodo') -> where('tipo',2) -> get();
         $periodoJefatura  = JuntaJefatura::where('nombre','periodo') -> where('tipo',3) -> get();

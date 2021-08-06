@@ -58,7 +58,7 @@
                                                 />
                                             </div>
                                             <div class="col-lg-2">
-                                                <button type="submit" class="btn btn-block btn-info">Guardar   <i class=" mdi mdi-content-save-move"></i></button>
+                                                <button type="submit" class="btn btn-block btn-info"><i class=" mdi mdi-content-save-move"></i> Guardar</button>
                                             </div>                                            
                                         </div> 
                                     </form>                                    
@@ -70,7 +70,7 @@
                                 @auth         
                                 <div class="col-xl-12 p-2">              
                                     <a type="button" href="#" class="btn btn-info"
-                                    data-toggle="modal" data-target="#myModalCoordinadores"><i class="dripicons-document"></i> Nuevo</a>
+                                    data-toggle="modal" data-target="#myModalCoordinadores"><i class="dripicons-document"></i> Nuevo Coordinador</a>
                                     <!-- Coordinadores modal content -->
                                     <div id="myModalCoordinadores" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">

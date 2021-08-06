@@ -9,17 +9,14 @@
 @section('footer')
 @auth
 <!-- Plugins js -->
-<script src=" {{ asset('js/dropzone.min.js') }} "></script>
+<script src="{{ asset('js/dropzone.min.js') }}"></script>
+
+<script src="{{ asset('js/scripts/http.min.js') }}"></script>
+    
+<script src="{{ asset('js/scripts/estructuraOrganizativa.js') }}"></script>
 <script>
-Dropzone.options.myAwesomeDropzone = {
-    paramName: "file",
-    addRemoveLinks: true,
-    dictRemoveFile: "Eliminar",
-    uploadMultiple: false,
-    parallelUploads: 1,
-    maxFiles: 1,
-    acceptedFiles: "image/*",    
-}
+    function modificarJunta(id){modificarj({!!json_encode($junta)!!}.find(x => x.id==id));}
+    function modificarJefatura(id){modificarjf({!!json_encode($jefaturas)!!}.find(x => x.id==id));}
 </script>
 @endauth
 @endsection
@@ -99,9 +96,9 @@ Dropzone.options.myAwesomeDropzone = {
                         @auth
                             <div class="row">
                                 <div class="col-xl-12">
-                                    <form action="{{ route('Periodo.junta') }}" method="POST">
-                                        @csrf
-                                        <div class="row my-2">  
+                                        <form action="{{ route('Periodo.junta') }}" method="POST">
+                                            @csrf
+                                            <div class="row my-2">  
                                             <div class="col">
                                                 <div class="row">
                                                     <div class="col-lg-3">
@@ -111,10 +108,11 @@ Dropzone.options.myAwesomeDropzone = {
                                                         value="{!!count($periodoJunta)==1 ? $periodoJunta[0] -> sector_dep_unid:null!!}"/>
                                                     </div>
                                                     <div class="col-lg-2">
-                                                        <button type="submit" class="btn btn-block btn-info">Guardar   <i class=" mdi mdi-content-save-move"></i></button>
+                                                        <button type="submit" class="btn btn-block btn-info"><i class=" mdi mdi-content-save-move"></i> Guardar</button>
                                                     </div> 
                                                 </div>
-                                            </div>                               
+                                            </div>  
+                                        </form>                            
                                             @auth
                                             <div class="col-lg-3 order-last">
                                                 <a href="#" class="btn btn-block btn-info" data-toggle="modal" data-target="#myModalJunta"><i class="dripicons-document"></i> Nuevo Miembro de Junta</a>
@@ -122,23 +120,23 @@ Dropzone.options.myAwesomeDropzone = {
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h3 class="modal-title" id="myCenterModalLabel">Registro</h3>
+                                                                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-account-multiple mdi-24px"></i> Miembro de la Junta Directiva</h3>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                                             </div>
                                                             <div class="modal-body">                                        
                                                                 <div class="tab-content">
-                                                                <form method="POST" 
-                                                                action="{{ route('EstructuraOrganizativa.Junta') }}" 
-                                                                class="parsley-examples"
-                                                                enctype="multipart/form-data">
+                                                                <div class="alert alert-primary text-white" role="alert" style="display:none" id="notificacionjunta"></div>
+                                                                <form action="{{ route('EstructuraOrganizativa.Junta') }}" method="POST"
+                                                                     enctype="multipart/form-data" id="formulario">
                                                                     @csrf
+                                                                    <input type="hidden" id="idj" name="_id">
                                                                     <div class="row">
                                                                         <div class="col-xl-12">
                                                                             <div class="form-group">
                                                                                 <label>Nombre</label>
                                                                                 <input type="text" class="form-control" required
                                                                                         placeholder="Nombre (Obligatorio)"
-                                                                                        name="nombre"/>
+                                                                                        name="nombre" id="nombrej"/>
                                                                             </div> 
                                                                         </div>
                                                                     </div>  
@@ -149,20 +147,20 @@ Dropzone.options.myAwesomeDropzone = {
                                                                                 
                                                                                 <input type="text" class="form-control" required
                                                                                         placeholder="Sector que representa (Obligatorio)"
-                                                                                        name="sector" />
-                                                                                
+                                                                                        name="sector" id="sectorj"/>
                                                                             </div>
                                                                         </div>
                                                                     </div> 
                                                                     <div class="form-group mb-0">
-                                                                        <div>
-                                                                            <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">
-                                                                                Crear Miembro de Junta
-                                                                            </button>
-                                                                            <button type="reset" class="btn btn-light waves-effect">
-                                                                                Cancelar
-                                                                            </button>
-                                                                        </div>
+                                                                       
+                                                                        <button type="button" class="btn btn-primary waves-effect waves-light mr-1" 
+                                                                            onclick="submitForm('#formulario','#notificacionjunta')">
+                                                                            <i class="fa fa-save"></i> Guardar
+                                                                        </button>
+                                                                        <button type="button" data-dismiss="modal" class="btn btn-light waves-effect">
+                                                                            <i class="fa fa-ban" aria-hidden="true"></i> Cancelar
+                                                                        </button>
+                                                                        
                                                                     </div>
                                                                 </form>       
                                                                 </div>
@@ -173,7 +171,7 @@ Dropzone.options.myAwesomeDropzone = {
                                             </div>
                                             @endauth                                      
                                         </div> 
-                                    </form>                                    
+                                                                       
                                 </div>
                             </div>   
                         @endauth  
@@ -189,7 +187,7 @@ Dropzone.options.myAwesomeDropzone = {
                                                 Sector que representa
                                             </th>    
                                             @auth
-                                                <th class="text-left">
+                                                <th class="col-sm-1 text-left">
                                                     Acciones
                                                 </th>  
                                             @endauth            
@@ -204,12 +202,12 @@ Dropzone.options.myAwesomeDropzone = {
                                             <th class="align-middle">
                                                 <div class="row text-center">
                                                     <div class="btn-group" role="group">                                
-                                                        <button href="#" class="btn btn-light waves-effect width-md m-1"><i class="mdi mdi-file-document-edit mdi-16p"></i>  Modificar</button>                                               
-                                                        <form action="{{ asset('/EstructuraOrganizativa/JefaturaJunta') }}/{!!base64_encode($item->id)!!}/{!!base64_encode($item->tipo)!!}" 
-                                                            method="POST">     
-                                                            @csrf                                              
-                                                            <button type="submit" class="btn btn-light waves-effect width-md m-1"><i class="mdi mdi-delete"></i> Eliminar</button>   
-                                                        </form>   
+                                                        <button class="btn btn-light waves-effect width-md m-1" data-toggle="modal" data-target="#myModalJunta" onclick="modificarJunta({!!$item->id!!})">
+                                                            <i class="mdi mdi-file-document-edit mdi-16p"></i>  Modificar
+                                                        </button>                                                    
+                                                        <button type="submit" class="btn btn-light waves-effect width-md m-1" data-toggle="modal" data-target="#modalEliminar" onclick="eliminar({!!$item->id!!})">
+                                                            <i class="mdi mdi-delete"></i> Eliminar
+                                                        </button>                                                      
                                                     </div>
                                                 </div>                                         
                                             </th>
@@ -220,6 +218,46 @@ Dropzone.options.myAwesomeDropzone = {
                                     </tbody>
                                 </table>
                             </div> <!-- end table-responsive-->
+                            @auth
+                            <div id="modalEliminar" class="modal fade bs-example-modal-center" tabindex="-1" 
+                                role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ route('JefaturaJuntaBorrar') }}" method="POST">
+                                                @csrf
+                                                <div class="row py-3">
+                                                    <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                                                    <div class="col-lg-10 text-black">
+                                                        <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se elimina este registro de manera permanente, ¿Desea continuar?</h4>
+                                                    </div>
+                                                    <input type="hidden" name="_id" id="eliminar">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xl-6">
+                                                        <button type="submit" 
+                                                            class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
+                                                            <i class="mdi mdi-check mdi-16px"></i>
+                                                            Si
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <button type="reset" class="btn btn-light p-1 waves-light waves-effect btn-block font-24" data-dismiss="modal" >
+                                                            <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
+                                                            No
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal --> 
+                            @endauth
                         @else
                             <p class="border p-2 text-center">No hay datos registrados.</p>
                         @endif             
@@ -233,7 +271,7 @@ Dropzone.options.myAwesomeDropzone = {
                 <div class="card-box">
                     <div class="row">
                         <div class="col order-first">
-                            <h3 class="my-2">Jefaturas Académicas y Administrativas de la Facultad Multidisciplinaria Paracentral</h3>
+                            <h3 class="my-2" >Jefaturas Académicas y Administrativas de la Facultad Multidisciplinaria Paracentral</h3>
                         </div>
                         @auth                            
                         
@@ -256,7 +294,7 @@ Dropzone.options.myAwesomeDropzone = {
                                                     name="periodo" value="{!!count($periodoJefatura)==1 ? $periodoJefatura[0] -> sector_dep_unid:null!!}"/>
                                                 </div>
                                                 <div class="col-lg-2">
-                                                    <button type="submit" class="btn btn-block btn-info">Guardar   <i class=" mdi mdi-content-save-move"></i></button>
+                                                    <button type="submit" class="btn btn-block btn-info"><i class=" mdi mdi-content-save-move"> </i> Guardar</button>
                                                 </div>                                            
                                             </div> 
                                         </form>                                    
@@ -269,24 +307,25 @@ Dropzone.options.myAwesomeDropzone = {
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h3 class="modal-title" id="myCenterModalLabel">Registro</h3>
+                                                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-account-multiple mdi-24px"></i> Jefatura</h3>
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                             </div>
                                             <div class="modal-body">                                        
                                                 <div class="tab-content">
+                                                <div class="alert alert-primary text-white" role="alert" style="display:none" id="notificacionjf"></div>
                                                 <form method="POST" 
                                                 action="{{ route('EstructuraOrganizativa.Jefatura') }}" 
                                                 class="parsley-examples"
-                                                enctype="multipart/form-data">
+                                                enctype="multipart/form-data" id="jefaturaForm">
                                                     @csrf
                                                     <div class="row">
-                                                        
+                                                        <input type="hidden" id="idjf" name="_id">
                                                         <div class="col-xl-12">
                                                             <div class="form-group">
                                                                 <label>Nombre</label>
                                                                 <input type="text" class="form-control" required
                                                                         placeholder="Nombre (Obligatorio)"
-                                                                        name="nombre"/>
+                                                                        name="nombre" id="nombrejf"/>
                                                             </div> 
                                                         </div>
                                                         
@@ -298,18 +337,19 @@ Dropzone.options.myAwesomeDropzone = {
                                                                 <div>
                                                                     <input type="text" class="form-control" required
                                                                         placeholder="Sector que representa (Obligatorio)"
-                                                                        name="jefatura" />
+                                                                        name="jefatura" id="jefaturajf"/>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>         
                                                     <div class="form-group mb-0">
                                                         <div>
-                                                            <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">
-                                                                Crear Jefatura
+                                                            <button type="button" class="btn btn-primary waves-effect waves-light mr-1"
+                                                                onclick="submitForm('#jefaturaForm','#notificacionjf')">
+                                                                <li class="fa fa-save"></li> Guardar
                                                             </button>
                                                             <button type="reset" class="btn btn-light waves-effect">
-                                                                Cancelar
+                                                                <i class="fa fa-ban" aria-hidden="true"></i> Cancelar
                                                             </button>
                                                         </div>
                                                     </div>
@@ -334,7 +374,7 @@ Dropzone.options.myAwesomeDropzone = {
                                         Departamento / Unidad
                                     </th>   
                                     @auth
-                                    <th>
+                                    <th class="col-sm-1 text-left">
                                         Acciones
                                     </th> 
                                     @endauth                                                                   
@@ -344,18 +384,16 @@ Dropzone.options.myAwesomeDropzone = {
                                 @foreach($jefaturas as $item)                                       
                                 <tr>
                                     <td class="align-middle">
-                                        {!!$item->nombre;!!}
+                                        {!!$item->nombre!!}
                                     </td>
-                                    <th class="align-middle" scope="row">{!!$item->sector_dep_unid;!!}</th> 
+                                    <th class="align-middle" scope="row">{!!$item->sector_dep_unid!!}</th> 
                                     @auth                                   
-                                    <th class="align-middle ">                                        
+                                    <th >                                        
                                         <div class="btn-group" role="group"> 
-                                            <button href="#" class="btn btn-light waves-effect width-md m-1"><i class="mdi mdi-file-document-edit mdi-16p"></i>  Modificar</button>                                               
-                                            <form action="{{ asset('/EstructuraOrganizativa/JefaturaJunta') }}/{!!base64_encode($item->id)!!}/{!!base64_encode($item->tipo)!!}" 
-                                                method="POST">     
-                                                @csrf                                              
-                                                <button type="submit" class="btn btn-light waves-effect width-md m-1"><i class="mdi mdi-delete"></i>  Eliminar</button>   
-                                            </form>                                            
+                                            <button href="#" class="btn btn-light waves-effect width-md m-1" data-toggle="modal" data-target="#myModalJefatura" onclick="modificarJefatura({!!$item->id!!})"><i class="mdi mdi-file-document-edit mdi-16p"></i>  Modificar</button>                                               
+                                                                                     
+                                            <button type="submit" class="btn btn-light waves-effect width-md m-1" data-toggle="modal" data-target="#modalEliminar" onclick="eliminar({!!$item->id!!})"><i class="mdi mdi-delete"></i>  Eliminar</button>   
+                                                                                      
                                         </div>                                         
                                     </th>
                                     @endauth  
@@ -364,6 +402,7 @@ Dropzone.options.myAwesomeDropzone = {
                             </tbody>
                         </table>
                     </div> <!-- end table-responsive-->
+                    
                     @else
                     <p class="border p-2 text-center">No hay datos registrados.</p>                        
                     @endif

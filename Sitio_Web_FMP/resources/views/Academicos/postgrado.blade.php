@@ -13,12 +13,7 @@
 
 @section('footer')
     @auth    
-    <script src=" {{ asset('js/scripts/postgrado.js') }} "></script>
-
-    <script>
-        function editarMaestria(id){$json = {!!json_encode($maestrias)!!}.find(x => x.id==id);editar($json);}
-    </script>
-
+    
     <!-- Plugins js -->
     <script src=" {{ asset('js/dropzone.min.js') }} "></script>
     <script src=" {{ asset('js/scripts/dropzoneImagenes.js') }} "></script>
@@ -27,6 +22,11 @@
     <script src="{{ asset('js/summernote.config.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
     <script src="{{ asset('js/scripts/http.min.js') }}"></script>
+    <script src=" {{ asset('js/scripts/postgrado.js') }} "></script>
+
+    <script>
+        function editarMaestria(id){$json = {!!json_encode($maestrias)!!}.find(x => x.id==id);editar($json);}
+    </script>
     @endauth    
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v11.0" nonce="FxW143mb"></script>
@@ -130,6 +130,9 @@
                                         @endif
                                         <!-- end col -->
                                     </div> <!-- end row-->
+
+                                    <!--Aqui cargamos el contenido que sera visualizado para las personas que esten logeadas-->
+                                    <!--Nota:Impotante cambiar la localizacion de la ruta y los id del form,notificacion y el boton guardar-->
                                     @auth
                                     <form action="{{ route('contenido', ['localizacion'=>'postgradoIndex']) }}" method="POST"  
                                         class="parsley-examples"  id="indexContenido">
@@ -141,9 +144,11 @@
                                             <div class="col-xl-12">   
                                                 <div class="form-group">                       
                                                     <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
+                                                        <!--Aqui cargamos la variables que viene del controlador si existe el contenido en la base de datos-->
                                                         @if ($contenido!=null)
                                                             {{$contenido->contenido}}
                                                         @endif
+                                                        <!--------------------------------------------------------------------------------------------------->
                                                     </textarea>
                                                 </div>
                                             </div>
@@ -158,7 +163,7 @@
                                         </div>
                                     </form>      
                                     @endauth       
-
+                                    <!--------------------------------------------------------------------------------------------------->
                                 </div>
                             </div>         
                         </div>
@@ -251,15 +256,23 @@
                         </div><!-- /.modal -->
                     </div>
                     <div class="py-1">
-                        @guest
+                        <!--Aqui cargamos el contenido que sera visualizado para las personas que no esten logeadas-->
+                        @guest                            
                             @if ($contenido!=null)
                                 {!!$contenido->contenido!!}
                             @endif
                         @endguest  
+                        <!-------------------------------------------------------------------------------------------->
                     </div>
                 </div> <!-- end col -->
-                <div class="col-xl-4 ">
-                    @auth
+                <div class="col-xl-4 ">                   
+                    <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
+                        <h4>Siguenos en Facebook</h4>
+                        <div class="fb-page" data-href="https://www.facebook.com/PostgradoUESParacentral" data-tabs="" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false"><blockquote cite="https://www.facebook.com/PostgradoUESParacentral" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/PostgradoUESParacentral">Postgrado Facultad Multidisciplinaria Paracentral</a></blockquote></div>
+                        @if (count($maestrias)>0)
+                        <h4>Maestrias</h4>
+                        @endif            
+                        @auth
                         <a class="btn btn-info btn-block text-white text-left  mb-2" data-toggle="modal" data-target="#myModalMaestria"><i class="dripicons-document"></i> Nuevo Registro</a>
                         <div id="myModalMaestria" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
@@ -353,23 +366,13 @@
                                             </div>  
 
                                             <div class="row">
-                                                <div class="col-xl-6">
+                                                <div class="col-xl-12">
                                                     <div class="form-group">
                                                         <label for="precio">Precio ($) <code>*</code></label>
                                                         <input type="text" class="form-control" placeholder="Precio (Obligatorio)"
                                                                 name="precio" id="precio"/>
                                                     </div>
-                                                </div>
-                                                <div class="col-xl-6">
-                                                    <div class="form-group">
-                                                        <label for="tipo">Tipo <code>*</code></label>
-                                                        <select class="form-control" id="tipo" name="tipo">
-                                                            <option value="1">Maestria</option>
-                                                            <option value="2">Doctorado</option>
-                                                            <option value="3">Diplomado</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
+                                                </div>                                                
                                             </div>
 
                                             <div class="row py-1">
@@ -401,13 +404,7 @@
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal --> 
-                    @endauth 
-                    <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
-                        <h4>Siguenos en Facebook</h4>
-                        <div class="fb-page" data-href="https://www.facebook.com/PostgradoUESParacentral" data-tabs="" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false"><blockquote cite="https://www.facebook.com/PostgradoUESParacentral" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/PostgradoUESParacentral">Postgrado Facultad Multidisciplinaria Paracentral</a></blockquote></div>
-                        @if (count($maestrias)>0)
-                        <h4>Maestrias</h4>
-                        @endif                        
+                    @endauth             
                         @foreach ($maestrias as $m)
                         <a class="nav-link mb-2 btn-outline-danger  border " data-toggle="pill" href="#{!! preg_replace('([^A-Za-z0-9])', 'l', $m->nombre)!!}" role="tab" 
                         aria-selected="false">
