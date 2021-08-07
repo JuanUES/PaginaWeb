@@ -217,6 +217,9 @@
                                         </div>
                                         
                                         <div class="row">
+                                            <div class="col-xl-12">
+                                                <label>Nota: <code>* Campos Obligatorio</code></label>
+                                                </div>
                                             <div class="col-xl-6">
                                                 <div class="form-group">
                                                     <label for="nombre" >Nombre <code>*</code></label>
