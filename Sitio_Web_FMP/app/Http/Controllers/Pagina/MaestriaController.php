@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Pagina;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pagina\Maestria;
+use App\Models\Pagina\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use File;
 
 class MaestriaController extends Controller
 {
@@ -114,6 +116,23 @@ class MaestriaController extends Controller
     {
         $maestria = Maestria::findorFail(base64_decode($request->maestria),['id']);
         $maestria -> delete();
+        return redirect()->route('postgrado');
+    }
+
+    public function eliminarPDF(Request $request){
+        /**busco en la base de datos */
+        $_pdf = PDF::find($request->_id);
+
+        if($_pdf != null){
+
+            /**Elimino del servidor el pdf */
+            File::delete(public_path() . '/files/pdfs/'.$request->localizacion.'/'.$_pdf->file); 
+
+            /**Elimino de la base de datos */
+            $_pdf -> delete();
+        }
+
+        /**Redirecciono a la vista de proyeccion */
         return redirect()->route('postgrado');
     }
 }

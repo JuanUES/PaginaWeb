@@ -59,11 +59,9 @@ class PDFImageController extends Controller
      */
     public function storeAll(Request $request, $localizacion)
     {
-        try {
-            //code...
         
         $file = $request->file('file');  
-        $pdfs = PDF::where('file', $file->getClientOriginalName())->get();   
+        $pdfs = PDF::where('localizacion',$localizacion)->where('file', $file->getClientOriginalName())->get();   
         
         if(count($pdfs)==0){ 
             
@@ -94,9 +92,6 @@ class PDFImageController extends Controller
             $_pdf -> file   =  $fileName;
             $_pdf -> user   =  auth()->id();
             $_pdf -> save();         
-        }
-        } catch (\Throwable $th) {
-            echo dd($th);
         }
 
     }
@@ -136,6 +131,44 @@ class PDFImageController extends Controller
             $_img -> file   =  $fileName;
             $_img -> user   =  auth()->id();
             $_img -> save();         
+        }
+
+    }
+    public function storeFolder(Request $request, $localizacion)
+    {
+        
+        $file = $request->file('file');  
+        $pdfs = PDF::where('localizacion',$localizacion)->where('file', $file->getClientOriginalName())->get();   
+        
+        if(count($pdfs)==0){ 
+            
+            /**Guardo en carpeta Pdfs */
+            $path = public_path() . '/files/pdfs/'.$localizacion;
+            $fileName = $file->getClientOriginalName();
+            $file->move($path, $fileName);
+            
+            /**Guardo en base de datos */
+            $pdf = new PDF;
+            $pdf -> file         = $fileName;
+            $pdf -> localizacion = $localizacion;
+            $pdf -> user         = auth()->id();
+            $pdf -> save();
+
+        }else{
+            $_pdf = $pdfs[0];
+            
+            /**Elimino del servidor el pdf */
+            File::delete(public_path() . '/files/pdfs/'.$_pdf->file); 
+
+            /**Guardo en carpeta Pdfs */
+            $path = public_path() . '/files/pdfs/'.$localizacion;
+            $fileName = $file->getClientOriginalName();
+            $file->move($path, $fileName);
+
+            /**Guardo en la base de datos */
+            $_pdf -> file   =  $fileName;
+            $_pdf -> user   =  auth()->id();
+            $_pdf -> save();         
         }
 
     }
