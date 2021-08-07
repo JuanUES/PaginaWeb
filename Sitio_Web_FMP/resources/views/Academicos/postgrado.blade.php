@@ -16,13 +16,13 @@
     
     <!-- Plugins js -->
     <script src=" {{ asset('js/dropzone.min.js') }} "></script>
-    <script src=" {{ asset('js/scripts/dropzoneImagenes.js') }} "></script>
     <!--Summernote js-->
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('js/summernote.config.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
     <script src="{{ asset('js/scripts/http.min.js') }}"></script>
     <script src=" {{ asset('js/scripts/postgrado.js') }} "></script>
+    <script src=" {{ asset('js/scripts/dropzoneimagenpdf.js') }} "></script>
 
     <script>
         function editarMaestria(id){$json = {!!json_encode($maestrias)!!}.find(x => x.id==id);editar($json);}
@@ -71,7 +71,7 @@
                                                     <div class="modal-body">
                                                         
                                                         <form action="{{ route('ConvocatoriaPostgrado', ['tipo'=>2]) }}" method="post"
-                                                        class="dropzone" id="my-awesome-dropzone">
+                                                        class="dropzone dropzoneimagen">
                                                             @csrf                                 
                                                             <div class="dz-message needsclick">
                                                                 <i class="h3 text-muted dripicons-cloud-upload"></i>
@@ -134,36 +134,37 @@
                                     <!--Aqui cargamos el contenido que sera visualizado para las personas que esten logeadas-->
                                     <!--Nota:Impotante cambiar la localizacion de la ruta y los id del form,notificacion y el boton guardar-->
                                     @auth
-                                    <form action="{{ route('contenido', ['localizacion'=>'postgradoIndex']) }}" method="POST"  
-                                        class="parsley-examples"  id="indexContenido">
-                                        @csrf
-                                        <div class="alert alert-primary text-white" 
-                                                role="alert" style="display:none" id="notificacion">                                               
-                                        </div>
-                                        <div class="row py-1">
-                                            <div class="col-xl-12">   
-                                                <div class="form-group">                       
-                                                    <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
-                                                        <!--Aqui cargamos la variables que viene del controlador si existe el contenido en la base de datos-->
-                                                        @if ($contenido!=null)
-                                                            {{$contenido->contenido}}
-                                                        @endif
-                                                        <!--------------------------------------------------------------------------------------------------->
-                                                    </textarea>
+                                    <div class="row py-3">
+                                        <div class="col-xl-12">
+                                            <form action="{{ route('contenido', ['localizacion'=>'postgradoIndex']) }}" method="POST"  
+                                                class="parsley-examples"  id="indexContenido">
+                                                @csrf
+                                                <div class="alert alert-primary text-white py-1" 
+                                                        role="alert" style="display:none" id="notificacion">                                               
                                                 </div>
-                                            </div>
-                                            <div class="col-xl-12">
-                                                <div class="form-group">
-                                                    <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
-                                                        onclick="submitForm('#indexContenido','#notificacion')">
-                                                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
-                                                    </button>
+                                                <div class="row">
+                                                    <div class="col-xl-12">   
+                                                        <div class="form-group">                       
+                                                            <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
+                                                                @if ($contenido!=null)
+                                                                    {{$contenido->contenido}}
+                                                                @endif
+                                                            </textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-12">
+                                                        <div class="form-group">
+                                                            <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
+                                                                onclick="submitForm('#indexContenido','#notificacion')">
+                                                                <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </form>      
+                                            </form>
+                                        </div>  
+                                    </div>    
                                     @endauth       
-                                    <!--------------------------------------------------------------------------------------------------->
                                 </div>
                             </div>         
                         </div>
@@ -214,17 +215,42 @@
                             </div>                       
                             {!!$m->contenido!!}
                             <h4>Malla Curricular</h4>
-                            <a href="{{$pdfs->where('file','licEspInglesFrances.pdf')->first()==null 
-                                ? '#':asset('files/pdfs/'.{{$pdfs[0]->localizacion}}.'/licEspInglesFrances.pdf')}}"
-                                type="submit" class="btn btn-outline-danger" id="licEspInglesFrances" target="_blank">
-                                    <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
-                            </a>
-                            @auth
-                            <a href="#" class="btn  btn-outline-info my-2" 
-                                data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('licEspInglesFrances')">
-                                <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
-                            </a>
-                            @endauth 
+                            <div class="row">                                
+                                <div class="col order-first">
+                                </div>                               
+                                @auth
+                                <div class="col-lg-3 order-last">
+                                    <button class="btn btn-block btn-info tex-left" 
+                                        data-toggle="modal" data-target="#modalSubir{!!$m->id!!}">
+                                        <div class="mdi mdi-upload mdi-16px text-center" > Subir PDF</div>
+                                    </button>
+                                </div>  
+                                <div id="modalSubir{!!$m->id!!}" class="modal fade bs-example-modal-center" 
+                                    tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" 
+                                    aria-hidden="true" style="display: none;" >
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="myCenterModalLabel">Zona para subir PDF</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                
+                                                <form action="{{ route('subirPdf', ['localizacion'=>$m->nombre.$m->id]) }}" method="post"
+                                                    class="dropzone dropzonepdf" >
+                                                    @csrf                                 
+                                                    <div class="dz-message needsclick">
+                                                        <i class="h3 text-muted dripicons-cloud-upload"></i>
+                                                        <h3>Suelta los archivos aquí o haz clic para subir.</h3>
+                                                    </div>
+                                                    <div class="dropzone-previews"></div>
+                                                </form>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+                                @endauth
+                            </div> 
                         </div>
                         @endforeach
                         <div id="modalEliminar" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
@@ -265,20 +291,25 @@
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal -->
                     </div>
+                    @guest  
                     <div class="py-1">
-                        <!--Aqui cargamos el contenido que sera visualizado para las personas que no esten logeadas-->
-                        @guest                            
-                            @if ($contenido!=null)
-                                {!!$contenido->contenido!!}
-                            @endif
-                        @endguest  
-                        <!-------------------------------------------------------------------------------------------->
+                        @if ($contenido!=null)
+                            {!!$contenido->contenido!!}
+                        @endif
                     </div>
+                    @endguest 
                 </div> <!-- end col -->
                 <div class="col-xl-4 ">                   
                     <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
                         <h4>Siguenos en Facebook</h4>
-                        <div class="fb-page" data-href="https://www.facebook.com/PostgradoUESParacentral" data-tabs="" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false"><blockquote cite="https://www.facebook.com/PostgradoUESParacentral" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/PostgradoUESParacentral">Postgrado Facultad Multidisciplinaria Paracentral</a></blockquote></div>
+                        <div class="fb-page" 
+                            data-href="https://www.facebook.com/PostgradoUESParacentral" 
+                            data-tabs="" data-width="" data-height="" data-small-header="false" 
+                            data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="false">
+                            <blockquote cite="https://www.facebook.com/PostgradoUESParacentral" class="fb-xfbml-parse-ignore">
+                                <a href="https://www.facebook.com/PostgradoUESParacentral">Postgrado Facultad Multidisciplinaria Paracentral</a>
+                            </blockquote>
+                        </div>
                         @if (count($maestrias)>0)
                         <h4>Maestrias</h4>
                         @endif            

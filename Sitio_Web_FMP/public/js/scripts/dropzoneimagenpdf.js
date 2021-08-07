@@ -1,13 +1,16 @@
 Dropzone.autoDiscover = false;
 
-$(".dropzone").dropzone({
+$(".dropzoneimagen").dropzone({
     paramName: "file",
     acceptedFiles: "image/*",
     parallelUploads: 1,
 });
 
-$(".dropzone").on("complete", function(file) {
-    $(".dropzone").removeFile(file);
+
+$(".dropzonepdf").dropzone({
+    paramName: "file",
+    acceptedFiles: "application/pdf",
+    parallelUploads: 1,
 });
 
 $('#dropZoneCarrusel').on('hidden.bs.modal',function(){ location.reload();});

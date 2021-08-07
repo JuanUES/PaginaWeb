@@ -17,7 +17,6 @@
 
 <!-- Plugins js -->
 <script src=" {{ asset('js/dropzone.min.js') }} "></script>
-<script src=" {{ asset('js/scripts/dropzoneImagenes.js') }} "></script>
 <!--Summernote js-->
 <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
 <script src="{{ asset('js/summernote.config.min.js') }}"></script>
@@ -61,7 +60,7 @@
                                 <div class="row py-1">
                                     <div class="col-xl-12">   
                                         <div class="form-group">                       
-                                            <textarea value="" class="form-control summernote-config" name="contenido"  rows="15">
+                                            <textarea value="" class="form-control summernote-config"  name="contenido"  >
                                                 @if ($contenido!=null)
                                                     {{$contenido->contenido}}
                                                 @endif
@@ -92,7 +91,7 @@
                         @foreach ($complementario as $m)
                         <div class="tab-pane fade" id="{!!preg_replace('([^A-Za-z0-9])', 'l', $m->nombre)!!}" role="tabpanel">
                             <div class="btn-group" role="group">
-                                <a class="nav-link btn btn-danger waves-effect width-md" href="#indexPostgrado"
+                                <a class="nav-link btn btn-danger waves-effect width-md" href="#index"
                                     onclick="$('.nav-link').removeClass('active')" data-toggle="pill">
                                     <i class="mdi mdi-arrow-left-thick"></i> 
                                     Volver a Plan
@@ -186,6 +185,7 @@
                 </div> <!-- end col -->
             
                 <div class="col-xl-4">
+                    <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
                     <h4>Síguenos en Facebook</h4>
                     <div class="fb-page" data-href="https://www.facebook.com/Licenciatura-en-Educaci%C3%B3n-Plan-complementario-UES-FMP-102012865071802" data-tabs="" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/Licenciatura-en-Educaci%C3%B3n-Plan-complementario-UES-FMP-102012865071802" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/Licenciatura-en-Educaci%C3%B3n-Plan-complementario-UES-FMP-102012865071802">Licenciatura en Educación, Plan complementario;  UES - FMP</a></blockquote></div>
                     @if (count($complementario)>0)
@@ -314,9 +314,10 @@
                     </div><!-- /.modal --> 
                 @endauth       
                     @foreach ($complementario as $comple)
-                        <a class="nav-link  mb-2 btn-outline-danger  border" id="v-pills-social-tab2" data-toggle="pill" href="#{!! preg_replace('([^A-Za-z0-9])', 'l', $comple->nombre)!!}" role="tab" aria-controls="v-pills-social2"
+                        <a class="nav-link  mb-2 btn-outline-danger  border"  data-toggle="pill" href="#{!! preg_replace('([^A-Za-z0-9])', 'l', $comple->nombre)!!}" role="tab" 
                             aria-selected="false">{!!$comple->nombre!!}</a>
                       @endforeach 
+                    </div>
                 </div> <!-- end col -->
             </div> <!-- end row--> 
         </div> <!-- end card-box -->
