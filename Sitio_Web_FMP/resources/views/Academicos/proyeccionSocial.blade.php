@@ -78,7 +78,7 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title" id="myCenterModalLabel">Registro Nuevo</h4>
+                                                    <h4 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-notebook-multiple mdi-24px"></i>Registro Nuevo</h4>
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                                 </div>
                                                 <div class="modal-body">                                        
@@ -89,10 +89,12 @@
                                                     enctype="multipart/form-data">
                                                         @csrf
                                                         <div class="row">
-                                                            
+                                                            <div class="col-xl-12">
+                                                                <label>Nota: <code>* Campos Obligatorio</code></label>
+                                                                </div>
                                                             <div class="col-xl-12">
                                                                 <div class="form-group">
-                                                                    <label>Coordinador</label>
+                                                                    <label>Coordinador <code>*</code></label>
                                                                     <input type="text" class="form-control" required
                                                                             placeholder="Coordinador (Obligatorio)"
                                                                             name="coordinador" />
@@ -103,7 +105,7 @@
                                                         <div class="row">
                                                             <div class="col-xl-12">
                                                                 <div class="form-group">
-                                                                    <label>Departamento</label>
+                                                                    <label>Departamento <code>*</code></label>
                                                                     <div>
                                                                         <textarea required class="form-control" name="departamento" placeholder="Departamento (Obligatorio)"></textarea>
                                                                     </div>
@@ -112,10 +114,10 @@
                                                         </div>         
                                                         <div class="form-group mb-0">
                                                             <div>
-                                                                <button type="submit" class="btn btn-primary waves-effect waves-light mr-1">
-                                                                    Nuevo
+                                                                <button type="submit" class="btn btn-primary waves-effect waves-light mr-1"> <li class="fa fa-save"></li>
+                                                                    Guardar
                                                                 </button>
-                                                                <button type="reset" class="btn btn-light waves-effect">
+                                                                <button type="reset" class="btn btn-light waves-effect"><i class="fa fa-ban" aria-hidden="true"></i>
                                                                     Cancelar
                                                                 </button>
                                                             </div>
@@ -158,18 +160,20 @@
                                                     <td>{!!$item->sector_dep_unid!!}</td>
                                                     @auth                                   
                                                     <td>
-                                                        <div class="row">                                                
-                                                            <div class="col-xl-6 order-first">
-                                                                <button class="btn btn-success btn-icon btn-block">
-                                                                    <i class=" dripicons-pencil"></i> Editar
-                                                                </button></div>
-                                                            <div class="col-xl-6 order-last">
+                                                        <div class="row">  
+                                                            <div class="col text-center">                                               
+                                                            <div class="btn-group" role="group">
+                                                                <button class="btn btn-light waves-effect width-md m-1">
+                                                                    <i class="mdi mdi-file-document-edit mdi-16p"></i> Editar
+                                                                </button>
+                                                         
                                                                 <form name="{!!  str_replace ( '=', '', base64_encode(md5($item->id))) !!}"
                                                                      action="{{ asset('/Coordinadores/borrar') }}/{!! base64_encode($item->id) !!}" 
                                                                     method="POST">     
                                                                     @csrf                                              
-                                                                    <a type="buttom"  class="btn btn-danger text-white btn-block" onclick="eliminar('{!! str_replace ( '=', '', base64_encode(md5($item->id))) !!}');"><i class="dripicons-trash"></i> Eliminar</a>   
+                                                                    <a type="buttom"  class="btn btn-light waves-effect width-md m-1" onclick="eliminar('{!! str_replace ( '=', '', base64_encode(md5($item->id))) !!}');"><i class="mdi mdi-delete"></i> Eliminar</a>   
                                                                 </form>
+                                                            </div>
                                                             </div>
                                                         </div>                         
                                                     </th>
