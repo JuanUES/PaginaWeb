@@ -74,11 +74,18 @@
     <div class="col-12">
         <div class="card-box">
             <div class="row">
-                <div class="col-12 col-sm-4">
+                <div class="col-6">
+                    <h3>Periodos Registrados</h3>   
+                </div>
+                <div class="col-3">
+                    <!-- Button trigger modal -->
+                    <button type="button" title="Agregar nuevo registro" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#modalPeriodo"></button>
+                </div>
+                <!--<div class="col-12 col-sm-4">
                     <a href="" class="btn btn-success" title="Agregar nuevo registro"  data-toggle="modal" data-target="#modalPeriodo">
                         <i class="fa fa-plus" aria-hidden="true"></i> Agregar nuevo registro
                     </a>
-                </div>
+                </div>-->
             </div>
             
             <br/>
