@@ -27,11 +27,19 @@
 
 
     <div class="row">
-        <div class="col-12 col-sm-4">
+        <div class="col-9">
+            <h3>{{ $titulo }} Registrados</h3>   
+        </div>
+        <div class="col-3" style="text-align:right">
+            <a href="{{ route('admin.transparencia.create', $categoria) }}" class="btn btn-primary" title="Agregar nuevo registro">
+                <i class=" dripicons-plus" aria-hidden="true"></i> 
+            </a>
+        </div>
+        <!--<div class="col-12 col-sm-4">
             <a href="{{ route('admin.transparencia.create', $categoria) }}" class="btn btn-success" title="Add New Client">
                 <i class="fa fa-plus" aria-hidden="true"></i> Agregar nuevo registro
             </a>
-        </div>
+        </div>-->
     </div>
 
     <br/>

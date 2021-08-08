@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Jornada\Jornada;
 use App\Models\Jornada\JornadaItem;
 use App\Models\Jornada\Periodo;
+use App\Models\Tipo_Jornada;
 use Illuminate\Http\Request;
 
 class JornadaController extends Controller
@@ -38,7 +39,8 @@ class JornadaController extends Controller
     public function create()
     {
         $periodos = Periodo::get();
-        return view('Jornada.create', compact('periodos'));
+        $tjornada = Tipo_Jornada::get();
+        return view('Jornada.create', compact('periodos','tjornada'));
     }
 
     /**

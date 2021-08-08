@@ -129,6 +129,10 @@ Route::post('Postgrado/Maestria/Registro',[MaestriaController::class,'store'])
 ->middleware(['auth'])
 ->name('Postgrado.registro');
 
+Route::post('Postgrado/Maestria/EliminarPDF',[MaestriaController::class,'eliminarPDF'])
+->middleware(['auth'])
+->name('eliminarpdfmaestri');
+
 Route::post('/subirCarruselPostgrado/{tipo}', [ImagenesCarruselController::class, 'store'])
 ->middleware(['auth'])->name('ConvocatoriaPostgrado');
 
@@ -137,6 +141,8 @@ Route::post('/Postgrado/Maestrias/estado', [MaestriaController::class,'estado'])
 
 Route::post('/Postgrado/Maestria/Eliminar', [MaestriaController::class,'destroy'])
 ->middleware(['auth'])->name('EliminarMaestria');
+
+Route::post('/Postgrado/pdf/{localizacion}',[PDFImageController::class,'storeFolder'])->middleware(['auth'])->name('Mpdf');
 
 /**Administrativo */
 Route::get('/AdministracionFinanciera', function () {

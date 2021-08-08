@@ -21,6 +21,16 @@ class Empleado extends Model
         'estado',
         'tipo_jefe',
         'jefe',
+        'id_tipo_jornada',
+        'id_tipo_contrato',
     ];
+
+    public function tipo_jornada_rf(){
+        return $this->hasOne(Tipo_Jornada::class, 'id', 'id_tipo_jornada');
+    }
+
+    public function tipo_contrato_rf(){
+        return $this->hasOne(Tipo_Contrato::class, 'id', 'id_tipo_contrato');
+    }
 }
 

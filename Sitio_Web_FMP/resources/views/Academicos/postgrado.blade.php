@@ -165,6 +165,13 @@
                                         </div>  
                                     </div>    
                                     @endauth       
+                                    @guest  
+                                    <div class="py-1">
+                                        @if ($contenido!=null)
+                                            {!!$contenido->contenido!!}
+                                        @endif
+                                    </div>
+                                    @endguest 
                                 </div>
                             </div>         
                         </div>
@@ -214,7 +221,7 @@
                                 </table>
                             </div>                       
                             {!!$m->contenido!!}
-                            <h4>Malla Curricular</h4>
+                            <h4></h4>
                             <div class="row">                                
                                 <div class="col order-first">
                                 </div>                               
@@ -236,7 +243,7 @@
                                             </div>
                                             <div class="modal-body">
                                                 
-                                                <form action="{{ route('subirPdf', ['localizacion'=>$m->nombre.$m->id]) }}" method="post"
+                                                <form action="{{ route('Mpdf', ['localizacion'=>$m->nombre.$m->id]) }}" method="post"
                                                     class="dropzone dropzonepdf" >
                                                     @csrf                                 
                                                     <div class="dz-message needsclick">
@@ -248,11 +255,98 @@
                                             </div>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->
+                                </div><!-- /.modal-->
                                 @endauth
                             </div> 
+                            <div class="row">
+                                <?php
+                                    $pdfs = \App\Models\Pagina\PDF::where('localizacion',$m->nombre.$m->id)->get();
+                                ?>
+                                
+                                @if (count($pdfs)>0)
+                                <div class="table-responsive my-1" id="listaPDF">
+                                    <table class="table mb-0 border @guest table-striped @endguest">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <h4>Malla Curricular y Formatos</h4>
+                                                </th>
+                                                <th class="col-sm-4">                                              
+                                                </th>                             
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($pdfs as $item)
+                                            <tr>
+                                                <th class="text-nowrap align-middle" scope="row">
+                                                    <p class="font-18">{!!$item->file!!}</p>
+                                                </th>                                             
+                                                                                
+                                                <th class="align-middle ">
+                                                    
+                                                    <div class="btn-group" role="group">
+                                                        <a class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/'.$m->nombre.$m->id.'/'.$item->file !!}" target="_blank"> 
+                                                            <i class="mdi mdi-file-pdf mdi-24px mr-1"></i>Descargar
+                                                        </a>
+                                                        @auth
+                                                        <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminarPDF"
+                                                            onclick="$('#eliminar').val({{$item->id}});$('#localizacion').val({{$item->nombre.$item->id}});"><i class="mdi mdi-delete mdi-24px"></i>  Eliminar
+                                                        </button>  
+                                                        @endauth 
+                                                    </div>
+                                                                                            
+                                                </th>
+                                                
+                                            </tr>  
+                                            @endforeach                                                              
+                                        </tbody>
+                                    </table>
+                                </div> <!-- end table-responsive-->    
+                                @endif
+                            </div>
                         </div>
                         @endforeach
+                        @auth
+                        <div id="modalEliminarPDF" class="modal fade bs-example-modal-center" tabindex="-1" 
+                            role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{{ route('eliminarpdfmaestri') }}" method="POST">
+                                            @csrf
+                                            <div class="row py-3">
+                                                <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                                                <div class="col-lg-10 text-black">
+                                                    <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se elimina este registro de manera permanente, ¿Desea continuar?</h4>
+                                                </div>
+                                                <input type="hidden" name="_id" id="eliminar">                                                        
+                                                <input type="hidden" name="localizacion" id="localizacion">
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-6">
+                                                    <button type="submit" 
+                                                        class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
+                                                        <i class="mdi mdi-check mdi-16px"></i>
+                                                        Si
+                                                    </button>
+                                                </div>
+                                                <div class="col-xl-6">
+                                                    <button type="reset" class="btn btn-light p-1 waves-light waves-effect btn-block font-24" data-dismiss="modal" >
+                                                        <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
+                                                        No
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal --> 
+                        @endauth
                         <div id="modalEliminar" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
@@ -291,13 +385,7 @@
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal -->
                     </div>
-                    @guest  
-                    <div class="py-1">
-                        @if ($contenido!=null)
-                            {!!$contenido->contenido!!}
-                        @endif
-                    </div>
-                    @endguest 
+                   
                 </div> <!-- end col -->
                 <div class="col-xl-4 ">                   
                     <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">

@@ -7,16 +7,16 @@
         </div>
         <div class="form-group col-12 col-sm-4 mb-3 {{ $errors->has('periodo') ? 'is-invalid' : ''}}">
             <label for="periodo" class="control-label">{{ 'Periodo' }} <span class="text-danger">*</span> </label>
-            <input  id="id_periodo" name="id_periodo" readonly="readonly" value="1" style="border-width:0px; border:none; outline:none;"></input>
-            <input id="detalle" name="detalle" readonly="readonly" value="" style="border-width:0px; border:none; outline:none;"></input>
+            <input type="hidden" id="id_periodo" name="id_periodo" readonly="readonly" value="{{ $periodos[0]['id'] }}" style="border-width:0px; border:none; outline:none;"></input>
+            <input id="detalle" name="detalle" readonly="readonly" value="{{ date('d-m-Y', strtotime($periodos[0]['fecha_inicio'])) }} -- {{ date('d-m-Y', strtotime($periodos[0]['fecha_fin'])) }}" style="border-width:0px; border:none; outline:none;"></input>
         </div>
     </div>
     <div class="col-12 col-sm-6">
         <div class="form-group col-12 col-sm-6 offset-sm-6 mb-3 {{ $errors->has('start') ? 'is-invalid' : ''}}">
             <label for="thoras" class="control-label">{{ 'Horas' }} <span class="text-danger"></span></label>
-            <input id="_horas" for="_horas" readonly="readonly" value="40" style="border-width:0px; border:none; outline:none;"></input>
+            <input id="_horas" for="_horas" readonly="readonly" value="{{ $tjornada[0]['horas_semanales'] }}" style="border-width:0px; border:none; outline:none;"></input>
             <input type="hidden" id="auxCalhour" for="_horas" readonly="readonly" >
-            <input type="hidden" id="auxJornada" for="_horas" readonly="readonly" value="40">
+            <input type="hidden" id="auxJornada" for="_horas" readonly="readonly" value="{{ $tjornada[0]['horas_semanales'] }}">
             <input type="hidden" id="otro" for="_horas" readonly="readonly" value="-">
         </div>
     </div>
@@ -107,6 +107,7 @@
         let total = parseInt(valor) - parseInt(vat);
 
         console.log(vat);
+        console.log(valor);
 
         $("#_horas").val(''+total);
 
