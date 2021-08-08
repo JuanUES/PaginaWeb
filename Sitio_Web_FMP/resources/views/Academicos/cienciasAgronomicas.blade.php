@@ -154,7 +154,7 @@
                    
                 </div> <!-- end col -->
                 <div class="col-xl-4">
-                    <h4>Departamento de ciencias agronómicas</h4>
+                    <h4>Departamento de Ciencias Agronómicas</h4>
                     <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
                         <a class="nav-link active show mb-2 btn-outline-danger  border" id="v-pills-social-tab2" data-toggle="pill" href="#v-pills-social2" role="tab" aria-controls="v-pills-social2"
                             aria-selected="true">
