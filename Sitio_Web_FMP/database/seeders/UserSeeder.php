@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
 
         $usu = User::create([
             'name'=>'Liseth Guadalupe Merino de Córdova',
-            'email'=>'liseth.merino@ues.edu.sv',
+            'email'=>'12345678',
             'password'=>Hash::make('liseth'),
         ]);
         
@@ -43,6 +43,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('secretario'),
         ]);
         //Asignar el role usuario
+        $usu->assignRole('super-admin');
         $admin->assignRole('super-admin');
         $presupuestario->assignRole('Transparencia-Presupuestario');
         $decano->assignRole('Transparencia-Decano');
