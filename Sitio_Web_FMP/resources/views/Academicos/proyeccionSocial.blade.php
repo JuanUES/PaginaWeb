@@ -11,6 +11,7 @@
 <script src=" {{ asset('js/dropzone.min.js') }} "></script>
 <script src="{{ asset('js/scripts/http.min.js') }}"></script><!--Este es el script que se utiliza para enviar post con un ajax generico-->
 <script src="{{ asset('js/scripts/proyeccionsocial.js')}}"></script>
+<script src="{{ asset('js/scripts/dropzoneimagenpdf.js') }}"></script>
 <script>
     function modificarD(id){
              json = {!!json_encode($coordinadores)!!}.find(x => x.id==id);
@@ -315,7 +316,7 @@
                                             <div class="modal-body">
                                                 
                                                 <form action="{{ route('subirPdf', ['localizacion'=>'ProyeccionSocial']) }}" method="post"
-                                                    class="dropzone" id="my-awesome-dropzone">
+                                                    class="dropzone dropzonepdf" id="my-awesome-dropzone">
                                                     @csrf                                 
                                                     <div class="dz-message needsclick">
                                                         <i class="h3 text-muted dripicons-cloud-upload"></i>
