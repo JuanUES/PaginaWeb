@@ -119,6 +119,9 @@ Route::get('Investigacion',[InvestigacionController::class, 'index'])->name('inv
 Route::get('ProyeccionSocial',[ProyeccionSocialController::class, 'index'])
 ->name('proyeccionSocial');
 
+Route::post('ProyeccionSocial/borrar',[ProyeccionSocialController::class, 'destroy'])
+->name('proyeccionSocial.borrar');
+
 Route::post('ProyeccionSocial/Jefe/',[ProyeccionSocialController::class, 'jefaturaProyeccionSocial'])
 ->name('JefeProyeccionSocial')->middleware(['auth']);
 

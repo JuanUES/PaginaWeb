@@ -161,7 +161,7 @@
                                                         <p>Departamento</p>
                                                     </th>   
                                                     @auth
-                                                    <th>
+                                                    <th class="col-sm-1 text-left">
                                                         <p>Acciones</p>
                                                     </th> 
                                                     @endauth                           
@@ -178,16 +178,13 @@
                                                             <div class="col text-center">                                               
                                                             <div class="btn-group" role="group">
                                                                 <button onclick="modificarD({{$item->id}})" data-toggle="modal" data-target="#myModalCoordinadores" class="btn btn-light waves-effect width-md m-1">
-                                                                    <i class="mdi mdi-file-document-edit mdi-16p"></i> Editar
+                                                                    <i class="mdi mdi-file-document-edit mdi-16p"></i> Modificar
                                                                 </button>
                                                               
                                                          
-                                                                <form name="{!!  str_replace ( '=', '', base64_encode(md5($item->id))) !!}"
-                                                                     action="{{ asset('/Coordinadores/borrar') }}/{!! base64_encode($item->id) !!}" 
-                                                                    method="POST">     
-                                                                    @csrf                                              
-                                                                    <a type="buttom"  class="btn btn-light waves-effect width-md m-1" onclick="eliminar('{!! str_replace ( '=', '', base64_encode(md5($item->id))) !!}');"><i class="mdi mdi-delete"></i> Eliminar</a>   
-                                                                </form>
+                                                                                                             
+                                                                    <button  data-toggle="modal" data-target="#modalEliminar2"  class="btn btn-light waves-effect width-md m-1" onclick="$('#_idEliminar').val({{$item->id}});"><i class="mdi mdi-delete"></i> Eliminar</button>   
+                                                                
                                                             </div>
                                                             </div>
                                                         </div>                         
@@ -257,7 +254,46 @@
                                 </li>
                                 
                             </ul>
-                            
+                            @auth
+                            <div id="modalEliminar2" class="modal fade bs-example-modal-center" tabindex="-1" 
+                            role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ route('proyeccionSocial.borrar') }}" method="POST">
+                                                @csrf
+                                                <div class="row py-3">
+                                                    <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                                                    <div class="col-lg-10 text-black">
+                                                        <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se elimina este registro de manera permanente, ¿Desea continuar?</h4>
+                                                    </div>
+                                                    <input type="hidden" name="_id" id="_idEliminar">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xl-6">
+                                                        <button type="submit" 
+                                                            class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
+                                                            <i class="mdi mdi-check mdi-16px"></i>
+                                                            Si
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <button type="reset" class="btn btn-light p-1 waves-light waves-effect btn-block font-24" data-dismiss="modal" >
+                                                            <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
+                                                            No
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal --> 
+                            @endauth
                             <div class="row">                                
                                 <div class="col order-first">
                                     <h4></h4>
@@ -265,11 +301,11 @@
                                 @auth
                                 <div class="col-lg-3 order-last">
                                     <button class="btn btn-block btn-info tex-left" 
-                                        data-toggle="modal" data-target=".bs-example-modal-center">
+                                        data-toggle="modal" data-target="#subirpdf">
                                         <div class="mdi mdi-upload mdi-16px text-center"> Subir PDF</div>
                                     </button>
                                 </div>  
-                                <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+                                <div id="subirpdf" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -332,6 +368,9 @@
                                     </tbody>
                                 </table>
                             </div> <!-- end table-responsive-->    
+                            
+                   
+                    
 
                             @auth
                             <div id="modalEliminar" class="modal fade bs-example-modal-center" tabindex="-1" 

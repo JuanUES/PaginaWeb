@@ -77,14 +77,10 @@ class ProyeccionSocialController extends Controller
      * @param  \App\Models\Pagina\JuntaJefatura  $juntaJefatura
      * @return \Illuminate\Http\Response
      */
-    public function destroy(JuntaJefatura $juntaJefatura, $id, $tipo)
+    public function destroy(Request $request)
     {
         /**Elimino de la base de datos */
-        $id            =  base64_decode($id);
-        $tipo          =  base64_decode($tipo);
-        $juntaJefatura =  JuntaJefatura::find($id);        
-        $juntaJefatura -> delete();
-        
+        JuntaJefatura::destroy($request->_id);        
         return redirect()->route('proyeccionSocial');
         
     }
