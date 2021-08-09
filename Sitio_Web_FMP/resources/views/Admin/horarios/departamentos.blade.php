@@ -2,26 +2,28 @@
 
 @section('content')
 <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="form-depto" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id=" exampleModalLongTitle">Agregar Departamentos</h5>
+          <h5 class="modal-title" id=" exampleModalLongTitle"><i class=" mdi mdi-book-open-page-variant mdi-24px" aria-hidden="true" ></i> Departamento</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form id="empleadoForm" action="" method="POST">
+        <form id="deptoForm" action="{{route('depto.store')}}" method="POST">
             <div class="modal-body">
+                <input type="hidden" id="_id" name="_id"/>
                     @csrf
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" 
                         role="alert" style="display:none" id="notificacion">                                               
                     </div>
                     <div class="row">
                         <div class="col-xl-12">
+                            <label>Nota: <code>* Campos Obligatorio</code></label>
                             <div class="form-group">
-                                <label for="exampleInputNombre">Nombre Departamento</label>
-                                <input type="text" class="form-control" name="nombre_departamento"  placeholder="Digite el nombre del departamento">
+                                <label for="exampleInputNombre">Nombre Departamento<code>*</code></label>
+                                <input type="text" class="form-control" name="nombre_departamento" id="nombre_departamento" placeholder="Digite el nombre del departamento">
                             
                             </div>
                         </div>
@@ -30,7 +32,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i>Cerrar</button>
-                <button type="button" class="btn btn-primary" onClick="submitForm('#empleadoForm','#notificacion')"><li class="fa fa-save"></li>Guardar</button>
+                <button type="button" class="btn btn-primary" onClick="submitForm('#deptoForm','#notificacion')"><li class="fa fa-save"></li>Guardar</button>
             </div>
         </form>
       </div>
@@ -63,7 +65,7 @@
                 </div>
                 <div class="col-3">
                     <!-- Button trigger modal -->
-                 <button type="button" title="Agregar Departamentos" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#exampleModalCenter"></button>
+                 <button type="button" title="Agregar Departamentos" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#form-depto"></button>
                 </div>
             </div>
             <table  class="table table-sm" id="table-depto">
@@ -76,75 +78,19 @@
                 </tr>
                 </thead>
                 <tbody>
+                    @foreach ($deptos as $item)
                 <tr>
-                    <td>1</td>
-                    <th>GOOG <span class="co-name">Google Inc.</span></th>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
-                    </td>
-               
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <th>AAPL <span class="co-name">Apple Inc.</span></th>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
+                    <td>{!!$item->id!!}</td>
+                    <th><span class="co-name">{!!$item->nombre_departamento!!}</span></th>
+                    <td>
+                        <button title="Editar Departamento" class="btn btn-outline-primary btn-sm"   onclick="editarDepto({!!$item->id!!})" data-toggle="modal" data-target="#form-depto"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
+                        </button>
+                        <a href="" title="Eliminar Departamento">
                             <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
                             </button></a>
                     </td>
                 </tr>
-                <tr>
-                    <td>3</td>
-                    <th>AMZN <span class="co-name">Amazon.com Inc.</span></th>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <th>ORCL <span class="co-name">Oracle Corporation</span></th>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                        </button></a>
-                    </td>
-                  
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <th>MSFT <span class="co-name">Microsoft Corporation</span></th>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td>6</td>
-                    <th>YHOO <span class="co-name">Yahoo! Inc.</span></th>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                    </td>
-                </tr>
-                
-                
-                
+                @endforeach   
                 </tbody>
             </table>
 
@@ -155,8 +101,17 @@
 @endsection
 
 @section('plugins-js')
+<script src="{{ asset('js/scripts/http.min.js') }}"></script>
+<script src="{{ asset('js/horariosJs/depto.js') }}"></script>
 <!-- Dashboard Init JS -->
 <script src="{{ asset('template-admin/dist/assets/js/pages/dashboard.init.js') }}"></script>
+
+<script>
+    function editarDepto(id){
+        $json = {!!json_encode($deptos)!!}.find(x => x.id==id);
+        editar($json);
+        }
+</script>
 <script>
     $(document).ready(function () {
         $('#table-depto').DataTable({

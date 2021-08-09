@@ -16,9 +16,11 @@ class DepartamentoSeeder extends Seeder
     {
         Departamento::create([
             'nombre_departamento'=>'Informática',
+            'estado'=>true,
         ]);
         Departamento::create([
             'nombre_departamento'=>'Ciencias Económicas',
+            'estado'=>true,
         ]);
     }
 }
