@@ -87,7 +87,7 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-notebook-multiple mdi-24px"></i>Registro Nuevo</h4>
+                                                    <h4 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-notebook-multiple mdi-24px"></i> &nbsp; Coordinador</h4>
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                                 </div>
                                                 <div class="modal-body">                                        

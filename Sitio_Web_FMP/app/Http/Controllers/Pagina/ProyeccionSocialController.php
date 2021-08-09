@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Pagina\JuntaJefatura;
 use App\Models\Pagina\PDF;
 use File;
+use Illuminate\Support\Facades\Validator;
 
 class ProyeccionSocialController extends Controller
 {
@@ -26,6 +27,15 @@ class ProyeccionSocialController extends Controller
      */
     public function storeProyeccionSocial(Request $request)
     {
+        $validator = Validator::make($request->all(),[
+            'coordinador' => ['required','min:3'],
+            'departamento' => ['required','min:3'],
+        ]); 
+        if($validator->fails())
+        {            
+            return response()->json(['error'=>$validator->errors()->all()]);                
+        }
+
         /**Guardo en base de datos */
         $proyeccionSocial = $request->_id == null ? new JuntaJefatura() : JuntaJefatura::findOrFail($request->_id);
        // $proyeccionSocial = new JuntaJefatura;
