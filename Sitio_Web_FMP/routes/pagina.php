@@ -35,8 +35,8 @@ Route::post('contenidoHTML/{localizacion}',[ContenidoHtmlController::class,'stor
 Route::post('/subirCarruselInicio/{tipo}', [ImagenesCarruselController::class, 'store'])
 ->middleware(['auth'])->name('ImagenFacultad.subir');
 
-Route::post('/borrar/{id}/{imagen}/{url}', [ImagenesCarruselController::class, 'destroy'])
-->middleware(['auth'])->name('ImagenFacultad.borrar');
+Route::post('Carrusel/Imagen/borrar/{url}', [ImagenesCarruselController::class, 'destroy'])
+->middleware(['auth'])->name('imagenCAborrar');
 
 Route::post('/noticias/nueva', [NoticiaController::class, 'store'])
 ->middleware(['auth'])->name('NoticiaFacultad.nueva');
@@ -86,6 +86,11 @@ Route::post('/EstructuraOrganizativa/PeriodoJefatura',[JuntaJefaturaController::
 ->middleware(['auth'])->name('Periodo.jefatura');
 
 /**Academicos-------------------------------------------------------------------------------- */
+
+Route::post('/AdministracionAcademica/imagen/{localizacion}', [PDFImageController::class, 'store1'])
+->middleware(['auth'])->name('academicaImagen');
+
+Route::get('Academica', [Academicos::class,'indexAdmonAcademica'])->name('admonAcademica');
 
 Route::get('Informatica',[Academicos::class,'indexInfor'])->name('Departamento.Inform');
 
@@ -153,6 +158,3 @@ Route::get('/UnidadDeTegnologiaDeLaInformacion', function () {
     return view('Administrativo.unidadTegnologiaInformacion');
 })->name('uti');
 
-Route::get('Academica', function () {
-    return view('Academicos.administracionAcademica');
-});

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Pagina\ImagenesCarrusel;
 use App\Models\Pagina\ContenidoHtml;
+use App\Models\Pagina\Sondeo;
+
 
 class InvestigacionController extends Controller
 {
@@ -16,8 +18,10 @@ class InvestigacionController extends Controller
      */
     public function index()
     {
+        $sondeos = Sondeo::all();
+        $contenido = ContenidoHtml::where('localizacion','investigacionIndex')->first();
         $investigacionCarrusel = ImagenesCarrusel::where('tipo',3)->get();
-        return view('Academicos.investigacion',compact('investigacionCarrusel'));
+        return view('Academicos.investigacion',compact('investigacionCarrusel','sondeos','contenido'));
     }
 
     /**

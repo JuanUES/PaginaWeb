@@ -9,11 +9,6 @@ use App\Models\Pagina\ContenidoHtml;
 
 class Academicos extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function indexAgro()
     {
         $pdfs = PDF::where('localizacion','ccAgro')->get();
@@ -38,26 +33,9 @@ class Academicos extends Controller
         return view('Academicos.informatica',compact('pdfs'));
     }
     
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+    public function indexAdmonAcademica(){
+        $imagenAcademica=PDF::where('localizacion','imagenAcademica')->first();
+        return view('Academicos.administracionAcademica',compact('imagenAcademica'));
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    
 }

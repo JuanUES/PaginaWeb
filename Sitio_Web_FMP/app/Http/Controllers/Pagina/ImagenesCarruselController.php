@@ -75,15 +75,15 @@ class ImagenesCarruselController extends Controller
      * @param  \App\Models\Pagina\ImagenesCarrusel  $imagenesCarrusel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ImagenesCarrusel $imagenesCarrusel, $id, $imagen,$url)
+    public function destroy(Request $request,$url)
     {   
         /**Elimino de la base de datos */
-        $imgCa = ImagenesCarrusel::find($id);        
-        $imgCa -> delete();
+        $imgCa = ImagenesCarrusel::find($request->_id);        
 
         /**Elimino de la carpeta del servidor */
-        File::delete(public_path() . '/images/carrusel/'.$imagen); 
+        File::delete(public_path() . '/images/carrusel/'.$imgCa->imagen); 
         
+        $imgCa -> delete();
         return redirect()->route($url);
     }
 }

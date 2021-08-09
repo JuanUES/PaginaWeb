@@ -22,13 +22,11 @@ class PostgradoController extends Controller
         $imagenConvocatoria = ImagenesCarrusel::where('tipo',2)->get();
         $maestrias = (Auth::guest()) ? 
         DB::table('maestrias')
-        ->select('maestrias.*','p_d_f_s.file')
-        ->leftJoin('p_d_f_s', 'maestrias.pdf', '=', 'p_d_f_s.id')
+        ->select('maestrias.*')
         ->where('estado',true)
         ->get(): 
         DB::table('maestrias')
-        ->select('maestrias.*','p_d_f_s.file')
-        ->leftJoin('p_d_f_s', 'maestrias.pdf', '=', 'p_d_f_s.id')
+        ->select('maestrias.*')
         ->get();
         $contenido = ContenidoHtml::where('localizacion','postgradoIndex')->first();
         return view('Academicos.postgrado',compact('maestrias','imagenConvocatoria','contenido'));

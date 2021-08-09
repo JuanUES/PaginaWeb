@@ -79,7 +79,7 @@
                                 </table>
                             </div>
                                 
-                        </div><!-- end col -->    -->
+                        </div><!-- end col -->  
                     </div> 
                 </div> 
             </div>

@@ -37,127 +37,190 @@
                 <div class="row">                    
                     <div class="col-xl-12">
                         <div class="card-box">
-                            <div class="row py-1">
-                                <div class="col order-first "><h3>Facultad Multidisciplinaria Paracentral</h3></div>
-                                @auth
+                            <div class="row">
+                                <div class="col order-first">
+                                    <h3 class="my-2">Administración Académica</h3>
+                                </div>
+                                @auth                            
                                 <div class="col-lg-3 order-last">
-                                    <a href="" class="btn btn-block btn-info tex-left" 
-                                    data-toggle="modal" data-target=".bs-example-modal-center">
-                                        <div class="mdi mdi-upload mdi-16px text-center"> Agregar Imagen</div>
-                                    </a>
-                                </div>                            
-                                      
-                                <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
-                                    <div class="modal-dialog modal-dialog-centered">
+                                    @auth
+                                        <button type="button" class="btn btn-info btn-block my-1 float-right"  
+                                            data-toggle="modal" data-target=".bs-example-modal-center"> 
+                                            <div class="dripicons-photo">&nbsp;Subir Imagen</div>
+                                        </button>
+                                        <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" 
+                                            aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h3 class="modal-title" id="myCenterModalLabel">Zona para subir</h3>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form  method="post" action="{{ route('academicaImagen', base64_encode('imagenAcademica')) }}"
+                                                            class="dropzone" id="my-awesome-dropzone">
+                                                            @csrf                                 
+                                                            <div class="dz-message needsclick">
+                                                                <i class="h1 text-muted dripicons-cloud-upload"></i>
+                                                                <h3>Suelta el archivo aquí o haz clic para subir.</h3>
+                                                            </div>
+                                                            <div class="dropzone-previews"></div>
+                                                        </form>
+                                                    </div>
+                                                </div><!-- /.modal-content -->
+                                            </div><!-- /.modal-dialog -->
+                                        </div><!-- /.modal -->
+                                    @endauth
+                                                                
+                                </div>
+                                @endauth
+                            </div>
+                            @if ($imagenAcademica!=null)
+                                <img  width="100%" height="550px" src="{{ asset('/files/image') }}/{!!$imagenAcademica->file!!}" alt="{!!$imagenAcademica->file!!}">
+                            @else
+                                <p class="border p-2 text-center">No hay imagen.</p>
+                            @endif
+                        </div>
+                    </div> <!-- end col -->
+                </div>
+
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card-box text-center">
+                            <div class="row button-list">
+                                <div class="col-xl-6 col-sm-5">
+                                    <div type="button" class="card border border-danger" data-toggle="modal" data-target="#modalAudioVisual">
+                                        <div class="card-body">
+                                            <blockquote class="card-bodyquote mb-0">
+                                                <i class=" mdi mdi-video-vintage fa-4x  text-danger"></i> <br>
+                                                <h3>AudioVisuales</h3>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--  Modal content for the above example -->
+                                <div id="modalAudioVisual" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h4 class="modal-title" id="myCenterModalLabel">Zona para subir imágenes</h4>
+                                                <h3 class="modal-title" id="myLargeModalLabel"><i class=" mdi mdi-video-vintage mdi-24px"></i> AudioVisuales</h3>
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                             </div>
-                                            <div class="modal-body">
-                                                
-                                                <form action="{{ route('ImagenFacultad.subir', ['tipo'=>1]) }}" method="post"
-                                                class="dropzone" id="my-awesome-dropzone">
-                                                    @csrf                                 
-                                                    <div class="dz-message needsclick">
-                                                        <i class="h3 text-muted dripicons-cloud-upload"></i>
-                                                        <h3>Suelta los archivos aquí o haz clic para subir.</h3>
+                                            <div class="modal-body">       
+                                                <div class="card-box">
+                                                    <form action="" id=""
+                                                    method="POST" class="parsley-examples text-left">
+                                                        <div class="row">
+                                                            <div class="col-xl-6">
+                                                                <div class="form-group">
+                                                                    <label for="avTitulo">Titulo</label>
+                                                                    <input type="text" class="form-control" id="avTitulo">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-6">
+                                                                <label for="">URL del video</label>
+                                                                <input type="url" class="form-control">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xl-12">
+                                                                <button type="button" class="btn btn-primary" 
+                                                                style="margin-left: 0px;"><li class="fa fa-save"></li>
+                                                                Guardar</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                                                                  
+                                                <button class="btn btn-danger waves-effect waves-light btn-block text-left fond-19" type="button" 
+                                                data-toggle="collapse" data-target="#collapseExample1" 
+                                                aria-expanded="false" aria-controls="collapseExample1" style="margin-left: 0px;">
+                                                <i class=" mdi mdi-video-vintage mdi-24px"></i>  Titulo
+                                                </button> 
+                                                                                                                                               
+                                                <div class="collapse show" id="collapseExample1">
+                                                    <div class="card-box ">
+                                                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/HnQO0bQuYRE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                                     </div>
-                                                    <div class="dropzone-previews"></div>
-                                                </form>
+                                                </div>             
+                                                                                                   
                                             </div>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal -->
-                                @endauth  
-                            </div>
-                            <div class="row">                        
-                                @if (0 == '0')
-                                    <p class="p-2 mx-2 border text-center btn-block"> No hay imagenes para mostrar.</p>
-                                @else
-                                <div id="carouselExampleCaptions" class="carousel slide rounded col-xl-12" data-ride="carousel">
-                                    <ol class="carousel-indicators">  
-                                        @for ($i = 0; $i < 0; $i++)
-                                            @if ($i == 0 )
-                                                <li data-target="#carouselExampleCaptions" data-slide-to="{{$i}}" class="active"></li>
-                                            @else                                        
-                                                <li data-target="#carouselExampleCaptions" data-slide-to="{{$i}}" ></li>
-                                            @endif
-                                        @endfor                               
-                                    </ol>
-                                    <div class="carousel-inner">
-                                        @for ($i = 0; $i < 0; $i++)            
-                                            @if ($i == 0 )
-                                                <div class="carousel-item active">
-                                                    @auth
-                                                        <form method="POST" action="{{ asset('/borrar') }}/{{$imgCarrusel[$i]->id}}/{{$imgCarrusel[$i]->imagen}}" id="{{$imgCarrusel[$i]->imagen}}">
-                                                            @csrf                                                   
-                                                            <button type="submit" class="btn text-white btn-danger btn-block">
-                                                                <div class=" mdi mdi-delete mdi-16px text-center">Eliminar</div>
-                                                            </button>
-                                                        </form>
-                                                    @endauth                                              
-                                                    <img src="images/carrusel/" class="img-fluid" width="100%" alt="">                      
-                                                </div>
-                                            @else                                        
-                                                <div class="carousel-item">
-                                                    @auth
-                                                    <form method="POST" 
-                                                    action="" id="">
-                                                        @csrf
-                                                        <button type="submit" class="btn text-white btn-danger btn-block">
-                                                            <div class=" mdi mdi-delete mdi-16px text-center">Eliminar</div>
-                                                        </button>
-                                                    </form>
-                                                    @endauth  
-                                                    <img src="images/carrusel/" class="img-fluid" width="100%" alt="">                                
-                                                </div> 
-                                            @endif        
-                                    @endfor 
-                                    </div>
-                                    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Anterior</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Siguiente</span>
-                                    </a>
-                                </div>    
-                                @endif
-                                <!-- end col -->
-                            </div> <!-- end row-->
-                        </div>  <!-- end card-box-->
-                    </div> <!-- end col -->
-                </div>
 
-            </div>
-            <div class="col-xl-4">
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="card-box">
-                            <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
-                                <a class="nav-link  mb-2 btn-outline-danger  border" id="v-pills-social-tab2" data-toggle="pill" href="#LicenciaturaenAdministracionEscolar" role="tab" aria-controls="v-pills-social2"
-                                    aria-selected="true">Licenciatura en Administración Escolar</a>
-                                <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-profile-tab2" data-toggle="pill" href="#LicenciaturaenLenguajeyLiteratura" role="tab" aria-controls="v-pills-profile2"
-                                    aria-selected="false">Licenciatura en Lenguaje y Literatura</a>
-                                <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-profile-tab2" data-toggle="pill" href="#LicenciaturaenMatematicas" role="tab" aria-controls="v-pills-profile2"
-                                    aria-selected="false">Licenciatura en Matemáticas</a>
-                                <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-profile-tab2" data-toggle="pill" href="#LicenciaturaenPrimeroySegundoCiclo" role="tab" aria-controls="v-pills-profile2"
-                                    aria-selected="false">Licenciatura en Primero y Segundo Ciclo</a>
+                                <div class="col-xl-6 col-sm-5" data-toggle="modal" data-target="#modalMallas">
+                                    <div type="button" class="card border border-danger">
+                                        <div class="card-body">
+                                            <blockquote class="card-bodyquote mb-0 ">
+                                                <i class=" mdi mdi-file-pdf fa-4x text-danger"></i> <br>
+                                                <h3>Mallas Curriculares</h3>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </div>      
+                                <!--  Modal content for the above example -->
+                                <div id="modalMallas" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title" id="myLargeModalLabel"><i class="mdi mdi-file-pdf mdi-24px"></i> Mallas Curriculares</h3>
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ...
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+
+                                <div class="col-xl-6 col-sm-5">
+                                    <div type="button" class="card border border-danger">
+                                        <div class="card-body">
+                                            <blockquote class="card-bodyquote mb-0">
+                                                <i class="mdi mdi-school fa-4x text-danger"></i> <br>
+                                                <h3>Graduación</h3>                                                
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-sm-5">
+                                    <div type="button" class="card border border-danger">
+                                        <div class="card-body">
+                                            <blockquote class="card-bodyquote mb-0">
+                                                <i class="mdi mdi-calendar-month fa-4x text-danger"></i> <br>
+                                                <h3>Calendario</h3>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-sm-5">
+                                    <div type="button" class="card border border-danger">
+                                        <div class="card-body">
+                                            <blockquote class="card-bodyquote mb-0">
+                                                <i class="mdi mdi-file-table fa-4x text-danger"></i> <br>
+                                                <h3>Formularios</h3>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-sm-5">
+                                    <div type="button" class="card border border-danger" href="#">
+                                        <div class="card-body">
+                                            <blockquote class="card-bodyquote mb-0">
+                                                <i class="mdi mdi-file-cabinet fa-4x text-danger"></i> <br>
+                                                <h3>Procesos Académicos</h3>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-12" >                        
-                        <div class="card-box"> 
-                            <h3>Canales Digitales</h3>                    
-                            <a href="https://campus.ues.edu.sv/" class="btn btn-danger btn-block mt-3 text-left">Campus Virtual</a>
-                            <a href="https://eel.ues.edu.sv/" class="btn btn-danger btn-block mt-3 text-left">Expediente en Linea</a>                      
-                            <a href="https://correo.ues.edu.sv/" class="btn btn-danger  btn-block mt-3 text-left">Correo Institucional</a>                           
-                            <a href="https://www.facebook.com/DistanciaFMP" class="btn btn-danger  btn-block mt-3 text-left">Universidad en Linea / Sede Paracentral</a> 
-                            <a href="https://www.facebook.com/celeues" class="btn btn-danger btn-block mt-3 text-left">CELEUES</a>
-                        </div> <!-- end card-box-->                        
-                    </div> <!-- end col-->  
+                </div>
+            </div>
+            <div class="col-xl-4">
+                <div class="row">
                     <div class="col-xl-12">
                         <div class="card-box">
                             <div class="row">
@@ -167,11 +230,69 @@
                                 </div>                                                                                                                
                             </div>                                                         
                         </div>
-                    </div><!-- end col-->
-                         
+                    </div><!-- end col-->      
+
+                    <div class="col-xl-12" >                        
+                        <div class="card-box"> 
+                            <h3>Canales Digitales</h3>                    
+                            <a href="https://campus.ues.edu.sv/" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Campus Virtual</a>
+                            <a href="https://eel.ues.edu.sv/" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Expediente en Linea</a>                      
+                            <a href="https://correo.ues.edu.sv/" class="btn btn-danger  btn-block mt-3 text-left"><i class=" mdi mdi-email font-18"></i> Correo Institucional</a>                           
+                            <a href="https://www.facebook.com/DistanciaFMP" class="btn btn-danger  btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Universidad en Linea / Sede Paracentral</a> 
+                            <a href="https://www.facebook.com/celeues" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-facebook border rounded"></i> CELEUES</a>
+                            <a href="http://biblio.fmp.ues.edu.sv/biblioteca/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-book-open-variant font-18"></i> Biblioteca</a>
+                        </div> <!-- end card-box-->                        
+                    </div> <!-- end col-->  
+                                       
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card-box"> 
+                    <h3>Sitios de Interes</h3>                         
+                    
+                    <div class="row">
+                        <div class="col order-first">
+                            <p class="header-title">Facultades</p>                                   
+                            <div class="p-1"><a href="https://humanidades.ues.edu.sv/" target="_blank">Facultad de Ciencias y Humanidades</a></div>
+                            <div class="p-1"><a href="http://www.fmoues.edu.sv/"target="_blank">Facultad Multidisciplinaria de Oriente</a></div>
+                            <div class="p-1"><a href="http://www.fia.ues.edu.sv/"target="_blank">Facultad de Ingeniería y Arquitectura</a></div>
+                            <div class="p-1"><a href="https://www.agronomia.ues.edu.sv/"target="_blank">Facultad de Agronomía</a></div>
+                            <div class="p-1"><a href="http://www.odontologia.ues.edu.sv/"target="_blank">Facultad de Odontología</a></div>
+                            <div class="p-1"><a href="http://www.medicina.ues.edu.sv/"target="_blank">Facultad de Medicina</a></div>
+                            <div class="p-1"><a href="http://jurisprudencia.ues.edu.sv/sitio/"target="_blank">Facultad de Jurisprudencia y Ciencias Sociales</a></div>
+                            <div class="p-1"><a href="https://www.quimicayfarmacia.ues.edu.sv/"target="_blank">Facultad de Química y Farmacia</a></div>
+                            <div class="p-1"><a href="https://www.cimat.ues.edu.sv/"target="_blank">Facultad de Ciencias Naturales y Matemática</a></div>
+                            <div class="p-1"><a href="http://www.occ.ues.edu.sv/"target="_blank">Facultad Multidisciplinaria de Occidente</a></div>
+                            <div class="p-1"><a href="http://www.fce.ues.edu.sv/"target="_blank">Facultad de Ciencias Económicas</a></div>
+                        </div>
+                        <div class="col">
+                            <p class="header-title">Secretarias</p>     
+                            <div class="p-1"><a href="http://secretariageneral.ues.edu.sv/" target="_blank">Secretaría General</a></div>
+                            <div class="p-1"><a href="http://proyeccionsocial.ues.edu.sv/" target="_blank">Secretaría de Proyección Social</a></div>
+                            <div class="p-1"><a href="http://www.eluniversitario.ues.edu.sv/" target="_blank">Secretaría de Comunicaciones</a></div>
+                            <div class="p-1"><a href="https://es-es.facebook.com/ArteyCulturaUES/" target="_blank">Secretaría de Arte y Cultura</a></div>
+                            <div class="p-1"><a href="http://www.bienestar.ues.edu.sv/" target="_blank">Secretaría de Bienestar Universitario</a></div>
+                            <div class="p-1"><a href="http://www.ues.edu.sv/secretaria-de-relaciones-nacionales-e-internacionales/" target="_blank">Secretaría de Relaciones</a></div>
+                            <div class="p-1"><a href="https://secplan.ues.edu.sv/" target="_blank">Secretaría de Planificación</a></div>
+                            <div class="p-1"><a href="https://sic.ues.edu.sv/" target="_blank">Secretaría de Investigaciones Científicas</a></div>
+                            <div class="p-1"><a href="http://saa.ues.edu.sv/portal/" target="_blank">Secretaría de Asuntos Académicos</a></div>
+                        </div>
+                        <div class="col order-last">
+                            <p class="header-title">Institución</p>
+                            <div class="p-1"><a href="https://www.ues.edu.sv/becas/" target="_blank">Consejo de Becas</a></div>                            
+                            <div class="p-1"><a href="#">Consejo Superior Universitario</a></div>
+                            <div class="p-1"><a href="#">Asamblea General Universitaria</a></div>
+                            <div class="p-1"><a href="https://www.uese.ues.edu.sv/" target="_blank">Unidad de Estudio Socioeconómico </a></div>
+                            <div class="p-1"><a href="https://www.facebook.com/defensoriaues/" target="_blank">Defensoría de los Derechos Universitarios</a></div>                            
+                        </div>
+                    </div>                            
+                </div> <!-- end card-box -->
+            </div><!-- end col -->           
+            
+        </div>
+        <!-- end row -->
 
     </div> <!-- end container -->
 </div>   
@@ -207,42 +328,6 @@
 <script src="{{ asset('js/index/index.datatable.js') }}"></script>
 
 
-<script>
-    
-    /*$(document).ready(function () {    
-        $("#noticia").onclick(function () {
-            var value = document.getElementById("noticia").value;                      
-        });
-    });*/
-    $(document).ready(function () {    
-        $("#noticiaEditar").click(function () {          
-            document.getElementById('myform').reset();
-        });
-        
-        $("#noticiaUrlEditar").click(function () {          
-            document.getElementById('myform').reset();
-        });
-    });
-</script> 
-
-<script>
-    
-    </script>
-
-<script>
-    /*Carga del model con los datos de la noticia actual */
-    function modificarNoticia(titulo, subtitulo, fuente, urlfuente, contenido, img){
-        document.getElementById("titulo").value = titulo;
-        document.getElementById("subtitulo").value = subtitulo;
-        document.getElementById("fuente").value = fuente;
-        document.getElementById("urlfuente").value = urlfuente;
-        document.getElementById("contenido").value = contenido.replace(new RegExp("<br/>","g") ,"\n");
-    }
-    /*Carga el model con las noticias de url con noticias externas*/
-    function modificarNoticiaUrl(){
-
-    }
-</script>
 @endauth
 
 @endsection

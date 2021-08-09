@@ -81,6 +81,7 @@
                                 </div><!-- /.modal -->
                                 @endauth  
                             </div>
+                           
                             
                             <div class="row">                        
                                 @if (count($investigacionCarrusel) == '0')
@@ -100,14 +101,10 @@
                                         @for ($i = 0; $i < count($investigacionCarrusel); $i++)            
                                                                                 
                                             <div class="carousel-item {!!$i == 0 ? 'active': null!!}">
-                                                @auth
-                                                <form method="POST" 
-                                                    action="{{route('ImagenFacultad.borrar', ['id'=>$investigacionCarrusel[$i]->id,'imagen'=>$investigacionCarrusel[$i]->imagen,'url'=> 'investigacion']) }}">
-                                                    @csrf
-                                                    <button type="submit" class="btn text-white btn-danger btn-block">
-                                                        <div class=" mdi mdi-delete mdi-16px text-center">Eliminar</div>
-                                                    </button>
-                                                </form>
+                                                @auth                                                
+                                                <button type="submit" class="btn text-white btn-danger btn-block">
+                                                    <div class=" mdi mdi-delete mdi-16px text-center" data-toggle="modal" data-target="#modalCR" onclick="$('#imagenCR').val({!!$investigacionCarrusel[$i]->id!!})">Eliminar</div>
+                                                </button>
                                                 @endauth  
                                                 <img src="images/carrusel/{{$investigacionCarrusel[$i]->imagen}}" class="img-fluid" width="100%" height="60%" alt="{!!$investigacionCarrusel[$i]->imagen!!}">                                
                                             </div>  
@@ -122,9 +119,51 @@
                                     <span class="sr-only">Siguiente</span>
                                     </a>
                                 </div>    
+
+                                @auth
+                                <div class="row py-3">
+                                    <div class="col-xl-12">
+                                        <form action="{{ route('contenido', ['localizacion'=>'investigacionIndex']) }}" method="POST"  
+                                            class="parsley-examples"  id="indexContenido">
+                                            @csrf
+                                            <div class="alert alert-primary text-white py-1" 
+                                                    role="alert" style="display:none" id="notificacion">                                               
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xl-12">   
+                                                    <div class="form-group">                       
+                                                        <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
+                                                            @if ($contenido!=null)
+                                                                {{$contenido->contenido}}
+                                                            @endif
+                                                        </textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-12">
+                                                    <div class="form-group">
+                                                        <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
+                                                            onclick="submitForm('#indexContenido','#notificacion')">
+                                                            <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>  
+                                </div>    
+                                @endauth       
+                                @guest  
+                                <div class="py-1">
+                                    @if ($contenido!=null)
+                                        {!!$contenido->contenido!!}
+                                    @endif
+                                </div>
+                                @endguest 
                                 @endif
+
                                 <!-- end col -->
                             </div> <!-- end row-->
+
                         </div>
                         <div class="tab-pane fade " id="v-pills-social2" role="tabpanel" aria-labelledby="v-pills-social-tab2">
                             <a class="nav-link btn btn-danger waves-effect width-md" href="#index"
@@ -176,7 +215,12 @@
                                 </p>       
                                 <img src="{{ asset('/files/image') }}/ceo2.png" 
                                 alt="Imagen" class="text-center rounded bx-shadow-lg img-fluid" width="100%">
-                            </div>             
+                            </div> 
+                            @if (count($sondeos)>0)
+                                
+                            @else
+                                <p class="p-2 border text-center">No hay noticias para mostrar.</p>                                
+                            @endif            
                         </div>
                         <div class="tab-pane fade" id="v-pills-profile2" role="tabpanel" aria-labelledby="v-pills-profile-tab2">                           
                             <a class="nav-link btn btn-danger waves-effect width-md" href="#index"
@@ -187,6 +231,46 @@
                         </div>                        
                     </div>
                 </div> <!-- end col -->
+                @auth
+                <div id ="modalCR" class="modal fade bs-example-modal-center" tabindex="-1" 
+                role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{route('imagenCAborrar', ['url'=> 'investigacion']) }}" method="POST">
+                                    @csrf
+                                    <div class="row py-3">
+                                        <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                                        <div class="col-lg-10 text-black">
+                                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se elimina este registro de manera permanente, ¿Desea continuar?</h4>
+                                        </div>
+                                        <input type="hidden" name="_id" id="imagenCR">
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-6">
+                                            <button type="submit" 
+                                                class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
+                                                <i class="mdi mdi-check mdi-16px"></i>
+                                                Si
+                                            </button>
+                                        </div>
+                                        <div class="col-xl-6">
+                                            <button type="reset" class="btn btn-light p-1 waves-light waves-effect btn-block font-24" data-dismiss="modal" >
+                                                <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
+                                                No
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div><!-- /.modal-content -->
+                    </div><!-- /.modal-dialog -->
+                </div><!-- /.modal --> 
+                @endauth
                 <div class="col-xl-4">
                     <h4>Subunidades</h4>
                     <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">

@@ -19,13 +19,10 @@ class PlaComplementarioController extends Controller
 
         $complementario = (Auth::guest()) ? 
         DB::table('complementarios')
-        ->select('complementarios.*','p_d_f_s.file')
-        ->leftJoin('p_d_f_s', 'complementarios.pdf', '=', 'p_d_f_s.id')
         ->where('estado',true)
         ->get(): 
         DB::table('complementarios')
-        ->select('complementarios.*','p_d_f_s.file')
-        ->leftJoin('p_d_f_s', 'complementarios.pdf', '=', 'p_d_f_s.id')
+        ->select('complementarios.*')
         ->get();
 
         $contenido = ContenidoHtml::where('localizacion','complementarioIndex')->first();
@@ -60,6 +57,7 @@ class PlaComplementarioController extends Controller
             $co -> unidades_valorativas = $request->unidades;
             $co-> precio               = $request->precio;
             $co-> dirigido             = $request->dirigido;
+            $co-> contenido             = $request->contenido;
             $co -> estado               = true;
             $co -> user                 = auth()->id();   
             $co -> save();         

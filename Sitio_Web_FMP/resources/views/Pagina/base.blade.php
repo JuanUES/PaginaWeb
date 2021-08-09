@@ -83,7 +83,7 @@
                             <i class="mdi mdi-book-open-page-variant mdi-24px"></i>Académico<div class="arrow-down"></div></a>
                             <ul class="submenu">    
                                 <li class="has-submenu">
-                                    <a  href="{{ asset('Academica') }}">Administración Académica</a>                                    
+                                    <a  href="{{ route('admonAcademica') }}">Administración Académica</a>                                    
                                 </li>                            
                                 <li class="has-submenu">
                                     <a href="#">Departamentos <div class="arrow-down"></div></a>
@@ -156,7 +156,7 @@
                             @auth                                
                                 <a href="#"  class="rounded btn text-left">
                                     <i class="mdi mdi-account mdi-24px"></i>
-                                    {{ Auth::user()->name }}
+                                    {!!mb_strwidth(Auth::user()->name) <= 15?Auth::user()->name:rtrim(mb_strimwidth(Auth::user()->name, 0, 15, '', 'UTF-8')).'...'!!}
                                     <div class="arrow-down"></div>
                                 </a>  
                                 <ul class="submenu">
@@ -164,7 +164,7 @@
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
                                             <a href="route('logout')" onclick="event.preventDefault();
-                                            this.closest('form').submit();">{{ __('Cerrar sesión') }}</a>
+                                            this.closest('form').submit(); ">{{ __('Cerrar sesión') }}</a>
                                         </form>
                                     </li>      
                                 </ul>

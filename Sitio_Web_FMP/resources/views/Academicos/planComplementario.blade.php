@@ -414,6 +414,15 @@
                                                 </div>
                                             </div>                                                
                                         </div>
+
+                                        <div class="row py-1">
+                                            <div class="col-xl-12">     
+                                                <div class="form-group">                                               
+                                                    <label for="contenido">Contenido <code>*</code></label>
+                                                    <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
                                         
                                         <div class="form-group mb-0">
                                             <div>
