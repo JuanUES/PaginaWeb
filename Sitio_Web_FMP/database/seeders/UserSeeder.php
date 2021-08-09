@@ -42,29 +42,25 @@ class UserSeeder extends Seeder
             'email' => 'secretario@gmail.com',
             'password' => Hash::make('secretario'),
         ]);
+        $user = User::create([
+            'name' => 'Pagina Admin',
+            'email' => 'Pagina@ues.edu.sv',
+            'password' => Hash::make('Pagina'),
+        ]);
+        $user = User::create([
+            'name'=>'Jefe Academico',
+            'email'=> 'jefe@ues.edu.sv',
+            'password'=>Hash::make('jefe'),
+        ]);
+        
         //Asignar el role usuario
         $usu->assignRole('super-admin');
         $admin->assignRole('super-admin');
         $presupuestario->assignRole('Transparencia-Presupuestario');
         $decano->assignRole('Transparencia-Decano');
         $secretario->assignRole('Transparencia-Secretario');
-
-        // $user->assignRole('Transparencia');
-
-        $user = User::create([
-            'name' => 'Pagina Admin',
-            'email' => 'Pagina@ues.edu.sv',
-            'password' => Hash::make('Pagina'),
-        ]);
-        //Asignar el role usuario
         $user->assignRole('Pagina');
-
-        $user = User::create([
-            'name'=>'Jefe Academico',
-            'email'=> 'jefe@ues.edu.sv',
-            'password'=>Hash::make('jefe'),
-        ]);
-        //Asiginar el rol
         $user->assignRole('Jefe-Academico');
+        
     }
 }
