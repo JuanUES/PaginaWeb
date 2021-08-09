@@ -83,11 +83,14 @@
                                                 </div>
                                                 <div class="modal-body">                                        
                                                     <div class="tab-content">
+                                                    <div class="alert alert-primary text-white" role="alert" style="display:none" id="notificacion"></div>                                        
                                                     <form method="POST" 
                                                     action="{{ route('nuevoCoordinador') }}" 
                                                     class="parsley-examples"
-                                                    enctype="multipart/form-data">
+                                                    enctype="multipart/form-data"
+                                                    id="coordinadoresForm">
                                                         @csrf
+                                                        <input type="hidden" id="_id" name="_id">
                                                         <div class="row">
                                                             <div class="col-xl-12">
                                                                 <label>Nota: <code>* Campos Obligatorio</code></label>
@@ -114,7 +117,9 @@
                                                         </div>         
                                                         <div class="form-group mb-0">
                                                             <div>
-                                                                <button type="submit" class="btn btn-primary waves-effect waves-light mr-1"> <li class="fa fa-save"></li>
+                                                                <button type="button" onclick="submitForm('#coordinadoresForm','#notificacion')"
+                                                                class="btn btn-primary waves-effect waves-light mr-1">
+                                                                     <li class="fa fa-save"></li>
                                                                     Guardar
                                                                 </button>
                                                                 <button type="reset" class="btn btn-light waves-effect"><i class="fa fa-ban" aria-hidden="true"></i>
