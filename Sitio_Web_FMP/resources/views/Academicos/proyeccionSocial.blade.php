@@ -9,6 +9,15 @@
 @auth    
 <!-- Plugins js -->
 <script src=" {{ asset('js/dropzone.min.js') }} "></script>
+<script src="{{ asset('js/scripts/http.min.js') }}"></script><!--Este es el script que se utiliza para enviar post con un ajax generico-->
+<script src="{{ asset('js/scripts/proyeccionsocial.js')}}"></script>
+<script>
+    function modificarD(id){
+             json = {!!json_encode($coordinadores)!!}.find(x => x.id==id);
+             modificar(json);
+         }
+     
+ </script>
 @endauth
 @endsection
 @section('container')
@@ -100,7 +109,7 @@
                                                                     <label>Coordinador <code>*</code></label>
                                                                     <input type="text" class="form-control" required
                                                                             placeholder="Coordinador (Obligatorio)"
-                                                                            name="coordinador" />
+                                                                            name="coordinador" id="nombre" />
                                                                 </div> 
                                                             </div>
                                                             
@@ -110,7 +119,7 @@
                                                                 <div class="form-group">
                                                                     <label>Departamento <code>*</code></label>
                                                                     <div>
-                                                                        <textarea required class="form-control" name="departamento" placeholder="Departamento (Obligatorio)"></textarea>
+                                                                        <textarea id="contacto" required class="form-control" name="departamento" placeholder="Departamento (Obligatorio)"></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -168,63 +177,10 @@
                                                         <div class="row">  
                                                             <div class="col text-center">                                               
                                                             <div class="btn-group" role="group">
-                                                                <button onclick="modificarD({{$item->id}})" data-toggle="modal" data-target="#myModalCoordinadoresEditar" class="btn btn-light waves-effect width-md m-1">
+                                                                <button onclick="modificarD({{$item->id}})" data-toggle="modal" data-target="#myModalCoordinadores" class="btn btn-light waves-effect width-md m-1">
                                                                     <i class="mdi mdi-file-document-edit mdi-16p"></i> Editar
                                                                 </button>
-                                                                <div id="myModalCoordinadoresEditar" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                                                    <div class="modal-dialog">
-                                                                        <div class="modal-content">
-                                                                            <div class="modal-header">
-                                                                                <h4 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-notebook-multiple mdi-24px"></i>Editar</h4>
-                                                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                                            </div>
-                                                                            <div class="modal-body">                                        
-                                                                                <div class="tab-content">
-                                                                                <form method="POST" 
-                                                                                action="{{ route('nuevoCoordinador') }}" 
-                                                                                class="parsley-examples"
-                                                                                enctype="multipart/form-data">
-                                                                                    @csrf
-                                                                                    <div class="row">
-                                                                                        <div class="col-xl-12">
-                                                                                            <label>Nota: <code>* Campos Obligatorio</code></label>
-                                                                                            </div>
-                                                                                        <div class="col-xl-12">
-                                                                                            <div class="form-group">
-                                                                                                <label>Coordinador <code>*</code></label>
-                                                                                                <input type="text" class="form-control" required
-                                                                                                        placeholder="Coordinador (Obligatorio)"
-                                                                                                        name="coordinador" id="cordinador" />
-                                                                                            </div> 
-                                                                                        </div>
-                                                                                        <input type="hidden" name="id" id="id">
-                                                                                    </div>      
-                                                                                    <div class="row">
-                                                                                        <div class="col-xl-12">
-                                                                                            <div class="form-group">
-                                                                                                <label>Departamento <code>*</code></label>
-                                                                                                <div>
-                                                                                                    <textarea id="depto" required class="form-control" name="departamento" placeholder="Departamento (Obligatorio)"></textarea>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>         
-                                                                                    <div class="form-group mb-0">
-                                                                                        <div>
-                                                                                            <button type="submit" class="btn btn-primary waves-effect waves-light mr-1"> <li class="fa fa-save"></li>
-                                                                                                Guardar
-                                                                                            </button>
-                                                                                            <button type="reset" class="btn btn-light waves-effect"><i class="fa fa-ban" aria-hidden="true"></i>
-                                                                                                Cancelar
-                                                                                            </button>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </form>       
-                                                                                </div>
-                                                                            </div>                                    
-                                                                        </div><!-- /.modal-content -->
-                                                                    </div><!-- /.modal-dialog -->
-                                                                </div><!-- /.modal -->
+                                                              
                                                          
                                                                 <form name="{!!  str_replace ( '=', '', base64_encode(md5($item->id))) !!}"
                                                                      action="{{ asset('/Coordinadores/borrar') }}/{!! base64_encode($item->id) !!}" 
@@ -442,14 +398,7 @@
 
     
 
-<script>
-    // pone los campos de la persona que se editara en el modal
-    function modificarD(id){
-      $("#id").val(id);
-      
-      
-    }
-</script>
+
 
 @endsection
 
