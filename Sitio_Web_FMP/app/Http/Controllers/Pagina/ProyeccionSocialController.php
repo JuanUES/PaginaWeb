@@ -27,14 +27,15 @@ class ProyeccionSocialController extends Controller
     public function storeProyeccionSocial(Request $request)
     {
         /**Guardo en base de datos */
-        $proyeccionSocial = new JuntaJefatura;
+        $proyeccionSocial = $request->id == null ? new JuntaJefatura() : JuntaJefatura::findOrFail($request->id);
+       // $proyeccionSocial = new JuntaJefatura;
         $proyeccionSocial -> nombre          =  $request->coordinador;        
         $proyeccionSocial -> sector_dep_unid =  $request->departamento; 
         $proyeccionSocial -> tipo            =  4; 
         $proyeccionSocial -> user            =  auth()->id();
         $proyeccionSocial -> save();
 
-        return redirect()->route('proyeccionSocial');
+        return $request->id !=null ?response()->json(['mensaje'=>'Modificación exitosa.']):response()->json(['mensaje'=>'Registro exitoso.']);
     }
     /**
      * Display a listing of the resource.
