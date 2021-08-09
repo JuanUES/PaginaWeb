@@ -89,6 +89,155 @@
                         <div class="card-box text-center">
                             <div class="row button-list">
                                 <div class="col-xl-6 col-sm-5">
+                                    <div type="button" class="card border border-danger" href="#">
+                                        <div class="card-body">
+                                            <blockquote class="card-bodyquote mb-0">
+                                                <i class="mdi mdi-file-cabinet fa-4x text-danger"></i> <br>
+                                                <h3>Procesos Académicos</h3>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-6 col-sm-5" data-toggle="modal" data-target="#modalMallas">
+                                    <div type="button" class="card border border-danger">
+                                        <div class="card-body">
+                                            <blockquote class="card-bodyquote mb-0 ">
+                                                <i class=" mdi mdi-file-pdf fa-4x text-danger"></i> <br>
+                                                <h3>Mallas Curriculares</h3>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </div>      
+                                <!--  Modal content for the above example -->
+                                <div id="modalMallas" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title" id="myLargeModalLabel"><i class="mdi mdi-file-pdf mdi-24px"></i> Mallas Curriculares</h3>
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">                                
+                                                    <div class="col order-first">
+                                                    </div>                               
+                                                    @auth
+                                                    <div class="col-lg-3 order-last">
+                                                        <button class="btn btn-block btn-info tex-left" 
+                                                            data-toggle="modal" data-target="#modalSubirMalla">
+                                                            <div class="mdi mdi-upload mdi-16px text-center" > Subir PDF</div>
+                                                        </button>
+                                                    </div>  
+                                                    <div id="modalSubirMalla" class="modal fade bs-example-modal-center" 
+                                                        tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" 
+                                                        aria-hidden="true" style="display: none;" >
+                                                        <div class="modal-dialog modal-dialog-centered">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4 class="modal-title" id="myCenterModalLabel">Zona para subir PDF</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    
+                                                                    <form action="{{ route('Mpdf', ['localizacion'=>'academicaMallas']) }}" method="post"
+                                                                        class="dropzone dropzonepdf" >
+                                                                        @csrf                                 
+                                                                        <div class="dz-message needsclick">
+                                                                            <i class="h3 text-muted dripicons-cloud-upload"></i>
+                                                                            <h3>Suelta los archivos aquí o haz clic para subir.</h3>
+                                                                        </div>
+                                                                        <div class="dropzone-previews"></div>
+                                                                    </form>
+                                                                </div>
+                                                            </div><!-- /.modal-content -->
+                                                        </div><!-- /.modal-dialog -->
+                                                    </div><!-- /.modal-->
+                                                    @endauth
+                                                </div> 
+                                                <div class="row">
+                                                    <?php
+                                                        $pdfs = \App\Models\Pagina\PDF::where('localizacion','academicaMallas')->get();
+                                                    ?>
+                                                    
+                                                    @if (count($pdfs)>0)
+                                                    <div class="col-xl-12">
+                                                        <div class="table-responsive text-left" id="listaPDF">
+                                                            <table class="table  mb-0 @guest table-striped @endguest">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>
+                                                                            <h4>Malla Curricular</h4>
+                                                                        </th>                           
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach ($pdfs as $item)
+                                                                    <tr>
+                                                                        <th class="align-middle">
+                                                                            <div class="row">
+                                                                                
+                                                                                <div class="col order-first">
+                                                                                    <p class="font-18">{!!$item->file!!}</p>
+                                                                                </div>
+                                                                                <div class="col-lg-2 order-last">
+                                                                                    <div class="btn-group" role="group">
+                                                                                        <a class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/academicaMallas/'.$item->file !!}" target="_blank"> 
+                                                                                            <i class="mdi mdi-file-pdf font-18 mr-1"></i>Descargar
+                                                                                        </a>
+                                                                                        @auth
+                                                                                        <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminarPDF"
+                                                                                            onclick=""><i class="mdi mdi-delete font-18"></i>  Eliminar
+                                                                                        </button>  
+                                                                                        @endauth 
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>                                                                                                                    
+                                                                        </th>
+                                                                    </tr>  
+                                                                    @endforeach                                                              
+                                                                </tbody>
+                                                            </table>
+                                                        </div> <!-- end table-responsive-->  
+                                                    </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+
+                                <div class="col-xl-6 col-sm-5">
+                                    <div type="button" class="card border border-danger">
+                                        <div class="card-body">
+                                            <blockquote class="card-bodyquote mb-0">
+                                                <i class="mdi mdi-school fa-4x text-danger"></i> <br>
+                                                <h3>Graduación</h3>                                                
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-sm-5">
+                                    <div type="button" class="card border border-danger">
+                                        <div class="card-body">
+                                            <blockquote class="card-bodyquote mb-0">
+                                                <i class="mdi mdi-calendar-month fa-4x text-danger"></i> <br>
+                                                <h3>Calendario</h3>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6 col-sm-5">
+                                    <div type="button" class="card border border-danger">
+                                        <div class="card-body">
+                                            <blockquote class="card-bodyquote mb-0">
+                                                <i class="mdi mdi-file-table fa-4x text-danger"></i> <br>
+                                                <h3>Formularios</h3>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-xl-6 col-sm-5">
                                     <div type="button" class="card border border-danger" data-toggle="modal" data-target="#modalAudioVisual">
                                         <div class="card-body">
                                             <blockquote class="card-bodyquote mb-0">
@@ -148,72 +297,6 @@
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal -->
-
-                                <div class="col-xl-6 col-sm-5" data-toggle="modal" data-target="#modalMallas">
-                                    <div type="button" class="card border border-danger">
-                                        <div class="card-body">
-                                            <blockquote class="card-bodyquote mb-0 ">
-                                                <i class=" mdi mdi-file-pdf fa-4x text-danger"></i> <br>
-                                                <h3>Mallas Curriculares</h3>
-                                            </blockquote>
-                                        </div>
-                                    </div>
-                                </div>      
-                                <!--  Modal content for the above example -->
-                                <div id="modalMallas" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h3 class="modal-title" id="myLargeModalLabel"><i class="mdi mdi-file-pdf mdi-24px"></i> Mallas Curriculares</h3>
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                            </div>
-                                            <div class="modal-body">
-                                                ...
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->
-
-                                <div class="col-xl-6 col-sm-5">
-                                    <div type="button" class="card border border-danger">
-                                        <div class="card-body">
-                                            <blockquote class="card-bodyquote mb-0">
-                                                <i class="mdi mdi-school fa-4x text-danger"></i> <br>
-                                                <h3>Graduación</h3>                                                
-                                            </blockquote>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 col-sm-5">
-                                    <div type="button" class="card border border-danger">
-                                        <div class="card-body">
-                                            <blockquote class="card-bodyquote mb-0">
-                                                <i class="mdi mdi-calendar-month fa-4x text-danger"></i> <br>
-                                                <h3>Calendario</h3>
-                                            </blockquote>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 col-sm-5">
-                                    <div type="button" class="card border border-danger">
-                                        <div class="card-body">
-                                            <blockquote class="card-bodyquote mb-0">
-                                                <i class="mdi mdi-file-table fa-4x text-danger"></i> <br>
-                                                <h3>Formularios</h3>
-                                            </blockquote>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xl-6 col-sm-5">
-                                    <div type="button" class="card border border-danger" href="#">
-                                        <div class="card-body">
-                                            <blockquote class="card-bodyquote mb-0">
-                                                <i class="mdi mdi-file-cabinet fa-4x text-danger"></i> <br>
-                                                <h3>Procesos Académicos</h3>
-                                            </blockquote>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
