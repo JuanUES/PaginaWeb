@@ -21,7 +21,7 @@ class AudioVisualController extends Controller
        // $regex = '/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/';
         $validator = Validator::make($request->all(),[
             'titulo' => 'required|max:255',
-            'url' => 'required|max:255|url'
+            'codigo' => 'required|max:255'
         ]);         
 
         if($validator->fails())
@@ -31,7 +31,7 @@ class AudioVisualController extends Controller
 
         $av = new AudioVisual;
         $av->titulo = $request->titulo;
-        $av->link = $request->url;
+        $av->link = $request->codigo;
         $av -> user  =  auth()->id();
         $av->save();
         return response()->json(['mensaje'=>'Registro exitoso']);

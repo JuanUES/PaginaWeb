@@ -19,7 +19,12 @@
 
 <!--Libreria data table para paginacion de noticias-->
 <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
-
+<style>
+    iframe{
+        width: 100%;
+        height: 350px;
+    }
+</style>
 @endsection
 
 @section('container')
@@ -511,15 +516,20 @@
                                                         id="audioVisualForm">
                                                         @csrf
                                                         <div class="row">
-                                                            <div class="col-xl-6">
+                                                            <div class="col-xl-12">
                                                                 <div class="form-group">
                                                                     <label for="avTitulo">Titulo</label>
                                                                     <input type="text" class="form-control" id="avTitulo" name="titulo" placeholder="Titulo del video">
                                                                 </div>
                                                             </div>
-                                                            <div class="col-xl-6">
-                                                                <label for="">URL del video</label>
-                                                                <input type="url" name="url" class="form-control" placeholder="https://www.sitioweb.com/">
+                                                        
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xl-12">
+                                                                <div class="form-group">
+                                                                    <label for="">Codigo del video</label>
+                                                                    <input type="text" name="codigo" class="form-control" placeholder="<iframe src='https://www.sitio.com/embed/'  allowfullscreen></iframe>">
+                                                                </div>
                                                             </div>
                                                         </div>
 
@@ -555,14 +565,9 @@
                                                         @endauth
                                                     </div>
                                                     
-                                                                                                                                                
                                                     <div class="collapse" id="collapseExample{{$item->id}}">
                                                         <div class="card-box ">
-                                                            <iframe width="100%" height="315" src="{{$item->link}}" 
-                                                                title="YouTube video player" frameborder="0" 
-                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                                                allowfullscreen>
-                                                            </iframe>
+                                                            {!!$item->link!!}                                                            
                                                         </div>
                                                     </div>  
                                                 
