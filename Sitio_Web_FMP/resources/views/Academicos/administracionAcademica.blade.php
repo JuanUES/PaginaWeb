@@ -117,7 +117,7 @@
                                                         <div class="card-box">
                                                             @foreach ($pdfs as $item)
                                                                 <a class="btn btn-danger waves-effect waves-light btn-block text-left fond-19" type="button" 
-                                                                    href="{{ route('index') }}{!!'/files/pdfs/ProAcademica/'.$item->file !!}" style="margin-left: 0px;">
+                                                                    href="{{ route('index') }}{!!'/files/pdfs/ProAcademica/'.$item->file !!}" style="margin-left: 0px; " target="_blank">
                                                                 <i class=" mdi mdi-arrow-down-bold mdi-24px"></i>  {{$item->file}}
                                                                 </a> 
                                                             @endforeach 
