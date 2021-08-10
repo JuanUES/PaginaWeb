@@ -492,43 +492,61 @@
                                                 <h3 class="modal-title" id="myLargeModalLabel"><i class=" mdi mdi-video-vintage mdi-24px"></i> AudioVisuales</h3>
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                             </div>
-                                            <div class="modal-body">       
+                                            <div class="modal-body text-left">       
                                                 <div class="card-box">
-                                                    <form action="" id=""
-                                                    method="POST" class="parsley-examples text-left">
+                                                    <div class="alert alert-primary text-white " 
+                                                        role="alert" style="display:none" id="notificacionAudioVisual">                                               
+                                                    </div>
+                                                    <form method="POST" 
+                                                        action="{{ route('admonAgregarV') }}" 
+                                                        class="parsley-examples text-left"
+                                                        id="audioVisualForm">
+                                                        @csrf
                                                         <div class="row">
                                                             <div class="col-xl-6">
                                                                 <div class="form-group">
                                                                     <label for="avTitulo">Titulo</label>
-                                                                    <input type="text" class="form-control" id="avTitulo">
+                                                                    <input type="text" class="form-control" id="avTitulo" name="titulo" placeholder="Titulo del video">
                                                                 </div>
                                                             </div>
                                                             <div class="col-xl-6">
                                                                 <label for="">URL del video</label>
-                                                                <input type="url" class="form-control">
+                                                                <input type="url" name="url" class="form-control" placeholder="https://www.sitioweb.com/">
                                                             </div>
                                                         </div>
+
                                                         <div class="row">
                                                             <div class="col-xl-12">
                                                                 <button type="button" class="btn btn-primary" 
-                                                                style="margin-left: 0px;"><li class="fa fa-save"></li>
-                                                                Guardar</button>
+                                                                style="margin-left: 0px;" onclick="submitForm('#audioVisualForm','#notificacionAudioVisual')"><li class="fa fa-save"></li>
+                                                                    Guardar
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </form>
                                                 </div>
-                                                                                  
+                                                <?php
+                                                    $videos = \App\Models\Pagina\AudioVisual::all();
+                                                ?>
+                                                @foreach ($videos as $item)
+                                                            
                                                 <button class="btn btn-danger waves-effect waves-light btn-block text-left fond-19" type="button" 
-                                                data-toggle="collapse" data-target="#collapseExample1" 
-                                                aria-expanded="false" aria-controls="collapseExample1" style="margin-left: 0px;">
-                                                <i class=" mdi mdi-video-vintage mdi-24px"></i>  Titulo
+                                                    data-toggle="collapse" data-target="#collapseExample{{$item->id}}" 
+                                                    aria-expanded="false" aria-controls="collapseExample{{$item->id}}" s
+                                                    tyle="margin-left: 0px;">
+                                                    <i class=" mdi mdi-video-vintage mdi-24px"></i>  {{$item->titulo}}
                                                 </button> 
                                                                                                                                                
-                                                <div class="collapse show" id="collapseExample1">
+                                                <div class="collapse" id="collapseExample{{$item->id}}">
                                                     <div class="card-box ">
-                                                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/HnQO0bQuYRE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                        <iframe width="100%" height="315" src="{{$item->link}}" 
+                                                            title="YouTube video player" frameborder="0" 
+                                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                            allowfullscreen>
+                                                        </iframe>
                                                     </div>
-                                                </div>             
+                                                </div>  
+                                                @endforeach             
                                                                                                    
                                             </div>
                                         </div><!-- /.modal-content -->
@@ -651,6 +669,7 @@
 <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
 
 @auth  
+<script src="{{ asset('js/scripts/http.min.js') }}"></script>
 <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
 <script src="{{ asset('js/summernote.config.min.js') }}"></script>
 <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>  

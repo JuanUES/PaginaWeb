@@ -13,6 +13,7 @@ use App\Http\Controllers\Pagina\InvestigacionController;
 use App\Http\Controllers\Pagina\Academicos;
 use App\Http\Controllers\Pagina\ContenidoHtmlController;
 use App\Http\Controllers\Pagina\PlaComplementarioController;
+use App\Http\Controllers\Pagina\AudioVisualController;
 
 /**PDF ------------------------------------------------------------------*/
 
@@ -90,7 +91,13 @@ Route::post('/EstructuraOrganizativa/PeriodoJefatura',[JuntaJefaturaController::
 Route::post('/AdministracionAcademica/imagen/{localizacion}', [PDFImageController::class, 'store1'])
 ->middleware(['auth'])->name('academicaImagen');
 
-Route::get('Academica', [Academicos::class,'indexAdmonAcademica'])->name('admonAcademica');
+Route::get('Administracion Academica', [Academicos::class,'indexAdmonAcademica'])->name('admonAcademica');
+
+Route::post('Administracion Academica/eliminarvideo', [AudioVisualController::class,'destroy'])
+->middleware(['auth'])->name('admonEliminarV');
+
+Route::post('Administracion Academica/agregarVideo', [AudioVisualController::class,'store'])
+->middleware(['auth'])->name('admonAgregarV');
 
 Route::get('Informatica',[Academicos::class,'indexInfor'])->name('Departamento.Inform');
 
