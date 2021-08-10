@@ -133,6 +133,10 @@ class MaestriaController extends Controller
         }
 
         /**Redirecciono a la vista de proyeccion */
-        return redirect()->route('postgrado');
+        if($request->vista!=null){
+            return redirect()->route($request->vista);
+        }else{
+            return redirect()->route('postgrado');
+        }
     }
 }
