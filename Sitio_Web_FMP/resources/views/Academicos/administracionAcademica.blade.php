@@ -109,49 +109,18 @@
                                             <div class="modal-body">
                                                 <div class="row">
                                                     <?php
-                                                        $pdfs = \App\Models\Pagina\PDF::where('localizacion','modalProAca')->get();
+                                                        $pdfs = \App\Models\Pagina\PDF::where('localizacion','ProAcademica')->get();
                                                     ?>
                                                     
                                                     @if (count($pdfs)>0)
                                                     <div class="col-xl-12">
                                                         <div class="card-box">
-                                                            <div class="table-responsive text-left">
-                                                                <table class="table  mb-0 @guest table-striped @endguest">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>
-                                                                                <h4>Procesos Académicos</h4>
-                                                                            </th>                           
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        @foreach ($pdfs as $item)
-                                                                        <tr>
-                                                                            <th class="align-middle" >
-                                                                                <div class="row">
-                                                                                    
-                                                                                    <div class="col order-first">
-                                                                                        <p class="font-14">{!!$item->file!!}</p>
-                                                                                    </div>
-                                                                                    <div class="col-lg-5 order-last text-right">
-                                                                                        <div class="btn-group" role="group">
-                                                                                            <a class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/modalProAca/'.$item->file !!}" target="_blank"> 
-                                                                                                <i class="  mdi mdi-arrow-down-bold font-18 mr-1"></i>Descargar
-                                                                                            </a>
-                                                                                            @auth
-                                                                                            <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminarPDF"
-                                                                                                onclick=""><i class="mdi mdi-delete font-18"></i>  Eliminar
-                                                                                            </button>  
-                                                                                            @endauth 
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>                                                                                                                    
-                                                                            </th>
-                                                                        </tr>  
-                                                                        @endforeach                                                              
-                                                                    </tbody>
-                                                                </table>
-                                                            </div> <!-- end table-responsive-->
+                                                            @foreach ($pdfs as $item)
+                                                                <a class="btn btn-danger waves-effect waves-light btn-block text-left fond-19" type="button" 
+                                                                    href="{{ route('index') }}{!!'/files/pdfs/ProAcademica/'.$item->file !!}" style="margin-left: 0px;">
+                                                                <i class=" mdi mdi-arrow-down-bold mdi-24px"></i>  {{$item->file}}
+                                                                </a> 
+                                                            @endforeach 
                                                         </div>  
                                                     </div>
                                                     @endif
@@ -161,7 +130,7 @@
                                                     <div class="col-xl-12">
                                                         <div class="card-box">
                                                             <h4 class="text-center">Zona para subir archivos</h4>                             
-                                                            <form action="{{ route('Mpdf', ['localizacion'=>'modalProAca']) }}" method="post"
+                                                            <form action="{{ route('Mpdf', ['localizacion'=>'ProAcademica']) }}" method="post"
                                                                 class="dropzone dropzonepdf" >
                                                                 @csrf                                 
                                                                 <div class="dz-message needsclick">
@@ -594,6 +563,21 @@
                             <a href="http://biblio.fmp.ues.edu.sv/biblioteca/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-book-open-variant font-18"></i> Biblioteca</a>
                         </div> <!-- end card-box-->                        
                     </div> <!-- end col-->  
+
+                    <div class="col-xl-12">
+                        <div class="card-box">
+                            <h3>Oferta Académica</h3>
+                            <a href="{{ route('Departamento.CienciasEdu') }}" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Ciencias de la Educación</a>
+                                        
+                            <a href="{{ route('Departamento.CienciasAgr') }}" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Ciencias Agronómicas</a>
+                        
+                            <a href="{{ route('Departamento.CienciasEcon') }}" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Ciencias Económicas</a>
+                        
+                            <a href="{{ route('Departamento.Inform') }}" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Informática</a>
+                        
+                            <a href="{{ route('planComp') }}" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Plan Complementario</a>
+                        </div>
+                    </div>
                                        
                 </div>
             </div>
