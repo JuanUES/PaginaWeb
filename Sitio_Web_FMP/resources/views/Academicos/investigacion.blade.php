@@ -202,6 +202,14 @@
                                     </p>
                                 </li>
                             </ul>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    
+                                </div>
+                                <div class="col-md-6">
+                                    <button data-toggle="modal" data-target="#myModalSondeo" class="btn btn-info">Nuevo sondeo</button>
+                                </div>
+                            </div>
                             <div class="border m-1 rounded p-2">
                                 <p class="mb-1 font-weight-bold py-2">Desarrollo del sondeo:</p>
                                 <h4 class="font-weight-bold">Efectos de la implementación de la modalidad de educación a distancia en la FMP-UES, en el contexto de la pandemia por COVID-19</h4>      
@@ -275,6 +283,82 @@
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal --> 
                 @endauth
+
+                @auth         
+                                
+                                    <!-- Coordinadores modal content -->
+                                    <div id="myModalSondeo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-notebook-multiple mdi-24px"></i> &nbsp; Coordinador</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                </div>
+                                                <div class="modal-body">                                        
+                                                    <div class="tab-content">
+                                                    <div class="alert alert-primary text-white" role="alert" style="display:none" id="notificacion"></div>                                        
+                                                    <form method="POST" 
+                                                    action="{{ route('nuevoCoordinador') }}" 
+                                                    class="parsley-examples"
+                                                    enctype="multipart/form-data"
+                                                    id="coordinadoresForm">
+                                                        @csrf
+                                                        <input type="hidden" id="_id" name="_id">
+                                                        <div class="row">
+                                                            <div class="col-xl-12">
+                                                                <label>Nota: <code>* Campos Obligatorio</code></label>
+                                                                </div>
+                                                            <div class="col-xl-12">
+                                                                <div class="form-group">
+                                                                    <label>Título <code>*</code></label>
+                                                                    <input type="text" class="form-control" required
+                                                                            placeholder="Coordinador (Obligatorio)"
+                                                                            name="coordinador" id="nombre" />
+                                                                </div> 
+                                                            </div>
+                                                            
+                                                        </div> 
+                                                        <div class="row">
+                                                            <div class="col-xl-12">
+                                                                <div class="form-group">
+                                                                    <label>Imagen <code>*</code></label>
+                                                                    <div>
+                                                                        <input type="file" class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>     
+                                                        <div class="row">
+                                                            <div class="col-xl-12">
+                                                                <div class="form-group">
+                                                                    <label>Descripción <code>*</code></label>
+                                                                    <div>
+                                                                        <textarea id="contacto" required class="form-control" name="departamento" placeholder="Departamento (Obligatorio)"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>  
+                                                                
+                                                        <div class="form-group mb-0">
+                                                            <div>
+                                                                <button type="button" onclick="submitForm('#coordinadoresForm','#notificacion')"
+                                                                class="btn btn-primary waves-effect waves-light mr-1">
+                                                                     <li class="fa fa-save"></li>
+                                                                    Guardar
+                                                                </button>
+                                                                <button type="reset" class="btn btn-light waves-effect"><i class="fa fa-ban" aria-hidden="true"></i>
+                                                                    Cancelar
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>       
+                                                    </div>
+                                                </div>                                    
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal -->                                     
+                                
+                                @endauth
                 <div class="col-xl-4">
                     <h4>Subunidades</h4>
                     <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
