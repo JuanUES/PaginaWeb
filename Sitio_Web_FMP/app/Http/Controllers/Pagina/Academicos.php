@@ -34,8 +34,9 @@ class Academicos extends Controller
     }
     
     public function indexAdmonAcademica(){
-        $imagenAcademica=PDF::where('localizacion','imagenAcademica')->first();
-        return view('Academicos.administracionAcademica',compact('imagenAcademica'));
+        $calendarioAcaIMG = PDF::where('localizacion','calendarioAca')->first();
+        $imagenAcademica = PDF::where('localizacion','imagenAcademica')->first();
+        return view('Academicos.administracionAcademica',compact('imagenAcademica','calendarioAcaIMG'));
     }
     
 }

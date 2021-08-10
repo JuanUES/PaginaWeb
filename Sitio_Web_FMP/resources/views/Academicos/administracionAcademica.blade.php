@@ -89,7 +89,7 @@
                         <div class="card-box text-center">
                             <div class="row button-list">
                                 <div class="col-xl-6 col-sm-5">
-                                    <div type="button" class="card border border-danger" href="#">
+                                    <div type="button" class="card border border-danger" href="#" data-toggle="modal" data-target="#modalProAca">
                                         <div class="card-body">
                                             <blockquote class="card-bodyquote mb-0">
                                                 <i class="mdi mdi-file-cabinet fa-4x text-danger"></i> <br>
@@ -98,12 +98,92 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!--  Modal content for the above example -->
+                                <div id="modalProAca" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title" id="myLargeModalLabel"><i class="mdi mdi-file-cabinet mdi-24px"></i> Procesos Académicos</h3>
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <?php
+                                                        $pdfs = \App\Models\Pagina\PDF::where('localizacion','modalProAca')->get();
+                                                    ?>
+                                                    
+                                                    @if (count($pdfs)>0)
+                                                    <div class="col-xl-12">
+                                                        <div class="card-box">
+                                                            <div class="table-responsive text-left">
+                                                                <table class="table  mb-0 @guest table-striped @endguest">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>
+                                                                                <h4>Procesos Académicos</h4>
+                                                                            </th>                           
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach ($pdfs as $item)
+                                                                        <tr>
+                                                                            <th class="align-middle" >
+                                                                                <div class="row">
+                                                                                    
+                                                                                    <div class="col order-first">
+                                                                                        <p class="font-14">{!!$item->file!!}</p>
+                                                                                    </div>
+                                                                                    <div class="col-lg-5 order-last text-right">
+                                                                                        <div class="btn-group" role="group">
+                                                                                            <a class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/modalProAca/'.$item->file !!}" target="_blank"> 
+                                                                                                <i class="  mdi mdi-arrow-down-bold font-18 mr-1"></i>Descargar
+                                                                                            </a>
+                                                                                            @auth
+                                                                                            <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminarPDF"
+                                                                                                onclick=""><i class="mdi mdi-delete font-18"></i>  Eliminar
+                                                                                            </button>  
+                                                                                            @endauth 
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>                                                                                                                    
+                                                                            </th>
+                                                                        </tr>  
+                                                                        @endforeach                                                              
+                                                                    </tbody>
+                                                                </table>
+                                                            </div> <!-- end table-responsive-->
+                                                        </div>  
+                                                    </div>
+                                                    @endif
+                                                </div>
+                                                @auth
+                                                <div class="row">   
+                                                    <div class="col-xl-12">
+                                                        <div class="card-box">
+                                                            <h4 class="text-center">Zona para subir archivos</h4>                             
+                                                            <form action="{{ route('Mpdf', ['localizacion'=>'modalProAca']) }}" method="post"
+                                                                class="dropzone dropzonepdf" >
+                                                                @csrf                                 
+                                                                <div class="dz-message needsclick">
+                                                                    <i class="h3 text-muted dripicons-cloud-upload"></i>
+                                                                    <h3>Suelta los archivos aquí o haz clic para subir.</h3>
+                                                                </div>
+                                                                <div class="dropzone-previews"></div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                                @endauth
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
 
                                 <div class="col-xl-6 col-sm-5" data-toggle="modal" data-target="#modalMallas">
                                     <div type="button" class="card border border-danger">
                                         <div class="card-body">
                                             <blockquote class="card-bodyquote mb-0 ">
-                                                <i class=" mdi mdi-file-pdf fa-4x text-danger"></i> <br>
+                                                <i class=" mdi mdi-file-table  fa-4x text-danger"></i> <br>
                                                 <h3>Mallas Curriculares</h3>
                                             </blockquote>
                                         </div>
@@ -114,46 +194,10 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h3 class="modal-title" id="myLargeModalLabel"><i class="mdi mdi-file-pdf mdi-24px"></i> Mallas Curriculares</h3>
+                                                <h3 class="modal-title" id="myLargeModalLabel"><i class="mdi mdi-file-table mdi-24px"></i> Mallas Curriculares</h3>
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                             </div>
                                             <div class="modal-body">
-                                                <div class="row">                                
-                                                    <div class="col order-first">
-                                                    </div>                               
-                                                    @auth
-                                                    <div class="col-lg-3 order-last">
-                                                        <button class="btn btn-block btn-info tex-left" 
-                                                            data-toggle="modal" data-target="#modalSubirMalla">
-                                                            <div class="mdi mdi-upload mdi-16px text-center" > Subir PDF</div>
-                                                        </button>
-                                                    </div>  
-                                                    <div id="modalSubirMalla" class="modal fade bs-example-modal-center" 
-                                                        tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" 
-                                                        aria-hidden="true" style="display: none;" >
-                                                        <div class="modal-dialog modal-dialog-centered">
-                                                            <div class="modal-content">
-                                                                <div class="modal-header">
-                                                                    <h4 class="modal-title" id="myCenterModalLabel">Zona para subir PDF</h4>
-                                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                                </div>
-                                                                <div class="modal-body">
-                                                                    
-                                                                    <form action="{{ route('Mpdf', ['localizacion'=>'academicaMallas']) }}" method="post"
-                                                                        class="dropzone dropzonepdf" >
-                                                                        @csrf                                 
-                                                                        <div class="dz-message needsclick">
-                                                                            <i class="h3 text-muted dripicons-cloud-upload"></i>
-                                                                            <h3>Suelta los archivos aquí o haz clic para subir.</h3>
-                                                                        </div>
-                                                                        <div class="dropzone-previews"></div>
-                                                                    </form>
-                                                                </div>
-                                                            </div><!-- /.modal-content -->
-                                                        </div><!-- /.modal-dialog -->
-                                                    </div><!-- /.modal-->
-                                                    @endauth
-                                                </div> 
                                                 <div class="row">
                                                     <?php
                                                         $pdfs = \App\Models\Pagina\PDF::where('localizacion','academicaMallas')->get();
@@ -161,53 +205,73 @@
                                                     
                                                     @if (count($pdfs)>0)
                                                     <div class="col-xl-12">
-                                                        <div class="table-responsive text-left" id="listaPDF">
-                                                            <table class="table  mb-0 @guest table-striped @endguest">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>
-                                                                            <h4>Malla Curricular</h4>
-                                                                        </th>                           
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    @foreach ($pdfs as $item)
-                                                                    <tr>
-                                                                        <th class="align-middle">
-                                                                            <div class="row">
-                                                                                
-                                                                                <div class="col order-first">
-                                                                                    <p class="font-18">{!!$item->file!!}</p>
-                                                                                </div>
-                                                                                <div class="col-lg-2 order-last">
-                                                                                    <div class="btn-group" role="group">
-                                                                                        <a class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/academicaMallas/'.$item->file !!}" target="_blank"> 
-                                                                                            <i class="mdi mdi-file-pdf font-18 mr-1"></i>Descargar
-                                                                                        </a>
-                                                                                        @auth
-                                                                                        <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminarPDF"
-                                                                                            onclick=""><i class="mdi mdi-delete font-18"></i>  Eliminar
-                                                                                        </button>  
-                                                                                        @endauth 
+                                                        <div class="card-box">
+                                                            <div class="table-responsive text-left" id="listaPDF">
+                                                                <table class="table  mb-0 @guest table-striped @endguest">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>
+                                                                                <h4>Malla Curricular</h4>
+                                                                            </th>                           
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach ($pdfs as $item)
+                                                                        <tr>
+                                                                            <th class="align-middle" >
+                                                                                <div class="row">
+                                                                                    
+                                                                                    <div class="col order-first">
+                                                                                        <p class="font-14">{!!$item->file!!}</p>
                                                                                     </div>
-                                                                                </div>
-                                                                            </div>                                                                                                                    
-                                                                        </th>
-                                                                    </tr>  
-                                                                    @endforeach                                                              
-                                                                </tbody>
-                                                            </table>
-                                                        </div> <!-- end table-responsive-->  
+                                                                                    <div class="col-lg-5 order-last text-right">
+                                                                                        <div class="btn-group" role="group">
+                                                                                            <a class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/academicaMallas/'.$item->file !!}" target="_blank"> 
+                                                                                                <i class="  mdi mdi-arrow-down-bold font-18 mr-1"></i>Descargar
+                                                                                            </a>
+                                                                                            @auth
+                                                                                            <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminarPDF"
+                                                                                                onclick=""><i class="mdi mdi-delete font-18"></i>  Eliminar
+                                                                                            </button>  
+                                                                                            @endauth 
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>                                                                                                                    
+                                                                            </th>
+                                                                        </tr>  
+                                                                        @endforeach                                                              
+                                                                    </tbody>
+                                                                </table>
+                                                            </div> <!-- end table-responsive-->
+                                                        </div>  
                                                     </div>
                                                     @endif
                                                 </div>
+                                                @auth
+                                                <div class="row">   
+                                                    <div class="col-xl-12">
+                                                        <div class="card-box">
+                                                            <h4 class="text-center">Zona para subir PDF</h4>                             
+                                                            <form action="{{ route('Mpdf', ['localizacion'=>'academicaMallas']) }}" method="post"
+                                                                class="dropzone dropzonepdf" >
+                                                                @csrf                                 
+                                                                <div class="dz-message needsclick">
+                                                                    <i class="h3 text-muted dripicons-cloud-upload"></i>
+                                                                    <h3>Suelta los archivos aquí o haz clic para subir.</h3>
+                                                                </div>
+                                                                <div class="dropzone-previews"></div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                                @endauth
                                             </div>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal -->
 
                                 <div class="col-xl-6 col-sm-5">
-                                    <div type="button" class="card border border-danger">
+                                    <div type="button" class="card border border-danger" data-toggle="modal" data-target="#modalGradua">
                                         <div class="card-body">
                                             <blockquote class="card-bodyquote mb-0">
                                                 <i class="mdi mdi-school fa-4x text-danger"></i> <br>
@@ -216,7 +280,88 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-6 col-sm-5">
+                                <!--  Modal content for the above example -->
+                                <div id="modalGradua" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title" id="myLargeModalLabel"><i class="mdi mdi-school mdi-24px"></i> Graduación</h3>
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <?php
+                                                        $pdfs = \App\Models\Pagina\PDF::where('localizacion','academicaGradua')->get();
+                                                    ?>
+                                                    
+                                                    @if (count($pdfs)>0)
+                                                    <div class="col-xl-12">
+                                                        <div class="card-box">
+                                                            <div class="table-responsive text-left" id="listaPDF">
+                                                                <table class="table  mb-0 @guest table-striped @endguest">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>
+                                                                                <h4>Archivos</h4>
+                                                                            </th>                           
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach ($pdfs as $item)
+                                                                        <tr>
+                                                                            <th class="align-middle" >
+                                                                                <div class="row">
+                                                                                    
+                                                                                    <div class="col order-first">
+                                                                                        <p class="font-14">{!!$item->file!!}</p>
+                                                                                    </div>
+                                                                                    <div class="col-lg-5 order-last text-right">
+                                                                                        <div class="btn-group" role="group">
+                                                                                            <a class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/academicaGradua/'.$item->file !!}" target="_blank"> 
+                                                                                                <i class="  mdi mdi-arrow-down-bold font-18 mr-1"></i>Descargar
+                                                                                            </a>
+                                                                                            @auth
+                                                                                            <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminarPDF"
+                                                                                                onclick=""><i class="mdi mdi-delete font-18"></i>  Eliminar
+                                                                                            </button>  
+                                                                                            @endauth 
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>                                                                                                                    
+                                                                            </th>
+                                                                        </tr>  
+                                                                        @endforeach                                                              
+                                                                    </tbody>
+                                                                </table>
+                                                            </div> <!-- end table-responsive-->
+                                                        </div>  
+                                                    </div>
+                                                    @endif
+                                                </div>
+                                                @auth
+                                                <div class="row">   
+                                                    <div class="col-xl-12">
+                                                        <div class="card-box">
+                                                            <h4 class="text-center">Zona para subir arhivos</h4>                             
+                                                            <form action="{{ route('Mpdf', ['localizacion'=>'academicaGradua']) }}" method="post"
+                                                                class="dropzone dropzonepdf" >
+                                                                @csrf                                 
+                                                                <div class="dz-message needsclick">
+                                                                    <i class="h3 text-muted dripicons-cloud-upload"></i>
+                                                                    <h3>Suelta los archivos aquí o haz clic para subir.</h3>
+                                                                </div>
+                                                                <div class="dropzone-previews"></div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                                @endauth
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+
+                                <div class="col-xl-6 col-sm-5" data-toggle="modal" data-target="#modalCalendario">
                                     <div type="button" class="card border border-danger">
                                         <div class="card-body">
                                             <blockquote class="card-bodyquote mb-0">
@@ -226,16 +371,139 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-6 col-sm-5">
+                                <!--  Modal content for the above example -->
+                                <div id="modalCalendario" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title" id="myLargeModalLabel"><i class="mdi mdi-calendar-month mdi-24px"></i> Calendario</h3>
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            </div>
+                                            <div class="modal-body">    
+                                                <div class="row">
+                                                    <div class="col-xl-12">
+                                                        <div class="card-box">
+                                                            @if ($calendarioAcaIMG!=null)
+                                                            <img  width="100%" height="550px" src="{{ asset('/files/image') }}/{!!$calendarioAcaIMG->file!!}" alt="{!!$calendarioAcaIMG->file!!}">
+                                                            @else
+                                                                <p class="border p-2 text-center">No hay imagen.</p>
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                </div>     
+                                                @auth
+                                                <div class="row">
+                                                    <div class="col-xl-12">
+                                                        <div class="card-box">
+                                                            <h4 class="text-center">Zona para subir imagen</h4>                     
+                                                            <form  method="post" action="{{ route('academicaImagen', base64_encode('calendarioAca')) }}"
+                                                                class="dropzone">
+                                                                @csrf            
+                                                                <div class="dz-message needsclick">
+                                                                    <i class="h1 text-muted dripicons-cloud-upload"></i>
+                                                                    <h3>Suelta el archivo aquí o haz clic para subir.</h3>
+                                                                </div>
+                                                                <div class="dropzone-previews"></div>
+                                                            </form>
+                                                        </div>
+                                                    </div>  
+                                                </div>     
+                                                @endauth                              
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
+
+                                <div class="col-xl-6 col-sm-5" data-toggle="modal" data-target="#modalFromula">
                                     <div type="button" class="card border border-danger">
                                         <div class="card-body">
                                             <blockquote class="card-bodyquote mb-0">
-                                                <i class="mdi mdi-file-table fa-4x text-danger"></i> <br>
-                                                <h3>Formularios</h3>
+                                                <i class="mdi mdi-file-download fa-4x text-danger"></i> <br>
+                                                <h3>Descargas</h3>
                                             </blockquote>
                                         </div>
                                     </div>
                                 </div>
+                                <!--  Modal content for the above example  -->
+                                <div id="modalFromula" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="display: none;">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h3 class="modal-title" id="myLargeModalLabel"><i class="mdi mdi-file-download mdi-24px"></i> Descargas</h3>
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <?php
+                                                        $pdfs = \App\Models\Pagina\PDF::where('localizacion','academicaFormula')->get();
+                                                    ?>
+                                                    
+                                                    @if (count($pdfs)>0)
+                                                    <div class="col-xl-12">
+                                                        <div class="card-box">
+                                                            <div class="table-responsive text-left" >
+                                                                <table class="table  mb-0 @guest table-striped @endguest">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>
+                                                                                <h4>Formularios</h4>
+                                                                            </th>                           
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach ($pdfs as $item)
+                                                                        <tr>
+                                                                            <th class="align-middle" >
+                                                                                <div class="row">
+                                                                                    
+                                                                                    <div class="col order-first">
+                                                                                        <p class="font-14">{!!$item->file!!}</p>
+                                                                                    </div>
+                                                                                    <div class="col-lg-5 order-last text-right">
+                                                                                        <div class="btn-group" role="group">
+                                                                                            <a class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/academicaFormula/'.$item->file !!}" target="_blank"> 
+                                                                                                <i class="  mdi mdi-arrow-down-bold font-18 mr-1"></i>Descargar
+                                                                                            </a>
+                                                                                            @auth
+                                                                                            <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminarPDF"
+                                                                                                onclick=""><i class="mdi mdi-delete font-18"></i>  Eliminar
+                                                                                            </button>  
+                                                                                            @endauth 
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>                                                                                                                    
+                                                                            </th>
+                                                                        </tr>  
+                                                                        @endforeach                                                              
+                                                                    </tbody>
+                                                                </table>
+                                                            </div> <!-- end table-responsive-->
+                                                        </div>  
+                                                    </div>
+                                                    @endif
+                                                </div>
+                                                @auth
+                                                <div class="row">   
+                                                    <div class="col-xl-12">
+                                                        <div class="card-box">
+                                                            <h4 class="text-center">Zona para subir archivos</h4>                             
+                                                            <form action="{{ route('Mpdf', ['localizacion'=>'academicaFormula']) }}" method="post"
+                                                                class="dropzone dropzonepdf" >
+                                                                @csrf                                 
+                                                                <div class="dz-message needsclick">
+                                                                    <i class="h3 text-muted dripicons-cloud-upload"></i>
+                                                                    <h3>Suelta los archivos aquí o haz clic para subir.</h3>
+                                                                </div>
+                                                                <div class="dropzone-previews"></div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                                @endauth
+                                            </div>
+                                        </div><!-- /.modal-content -->
+                                    </div><!-- /.modal-dialog -->
+                                </div><!-- /.modal -->
                                 
                                 <div class="col-xl-6 col-sm-5">
                                     <div type="button" class="card border border-danger" data-toggle="modal" data-target="#modalAudioVisual">
@@ -406,11 +674,7 @@
 
 <!-- Plugins js -->
 <script src=" {{ asset('js/dropzone.min.js') }} "></script>
-
-
-<script src="{{ asset('js/index/index.datatable.js') }}"></script>
-
-
 @endauth
+<script src="{{ asset('js/index/index.datatable.js') }}"></script>
 
 @endsection
