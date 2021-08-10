@@ -21,6 +21,10 @@
         <script src="{{ asset('js/summernote.config.min.js') }}"></script>
         <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
         <script src="{{ asset('js/scripts/http.min.js') }}"></script>
+        <script>
+            // para recargar pagina luego de subir o no imagenes
+            $('.bs-example-modal-center').on('hidden.bs.modal', function() { location.reload(); });
+        </script>
     @endauth    
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v11.0" nonce="FxW143mb"></script>

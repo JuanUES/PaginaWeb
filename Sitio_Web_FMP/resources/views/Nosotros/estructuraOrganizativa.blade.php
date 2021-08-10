@@ -17,6 +17,8 @@
 <script>
     function modificarJunta(id){modificarj({!!json_encode($junta)!!}.find(x => x.id==id));}
     function modificarJefatura(id){modificarjf({!!json_encode($jefaturas)!!}.find(x => x.id==id));}
+    // para recargar pagina luego de subir imagen o cerrar el modal( recarga siempre que se cierra)
+    $('.bs-example-modal-center').on('hidden.bs.modal', function() { location.reload(); });
 </script>
 @endauth
 @endsection

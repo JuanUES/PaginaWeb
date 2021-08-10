@@ -13,4 +13,4 @@ $(".dropzonepdf").dropzone({
     parallelUploads: 1,
 });
 
-$('#dropZoneCarrusel').on('hidden.bs.modal',function(){ location.reload();});
+$('.bs-example-modal-center').on('hidden.bs.modal', function() { location.reload(); });
