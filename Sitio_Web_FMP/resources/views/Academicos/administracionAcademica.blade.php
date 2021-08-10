@@ -547,10 +547,12 @@
                                                             tyle="margin-left: 0px;">
                                                             <i class=" mdi mdi-video-vintage mdi-24px"></i>  {{$item->titulo}}
                                                         </button> 
+                                                        @auth
                                                         <button type="buttom"  class="btn btn-light waves-effect width-md" data-toggle="modal" data-target="#modalEliminarVideo" 
                                                             onclick="$('#eliminarV').val({{$item->id}})">
                                                             <i class="mdi mdi-delete font-18"></i>  Eliminar
                                                         </button>
+                                                        @endauth
                                                     </div>
                                                     
                                                                                                                                                 
