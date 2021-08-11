@@ -14,6 +14,7 @@ use App\Http\Controllers\Pagina\Academicos;
 use App\Http\Controllers\Pagina\ContenidoHtmlController;
 use App\Http\Controllers\Pagina\PlaComplementarioController;
 use App\Http\Controllers\Pagina\AudioVisualController;
+use App\Http\Controllers\Pagina\SondeoController;
 
 /**PDF ------------------------------------------------------------------*/
 

@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Pagina;
 use App\Http\Controllers\Controller;
 use App\Models\Pagina\Sondeo;
 use Illuminate\Http\Request;
-use file;
+use File;
+use Illuminate\Support\Facades\Validator;
 
 class SondeoController extends Controller
 {
