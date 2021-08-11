@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePDFSTable extends Migration
+class CreateAudioVisualsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreatePDFSTable extends Migration
      */
     public function up()
     {
-        Schema::create('p_d_f_s', function (Blueprint $table) {
+        Schema::create('audio_visuals', function (Blueprint $table) {
             $table->id();
-            $table->string('localizacion');
-            $table->string('file');
+            $table->string('titulo');
+            $table->longtext('link');
             $table->bigInteger('user');
             $table->foreign('user')
                 ->references('id')
@@ -33,6 +33,6 @@ class CreatePDFSTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('p_d_f_s');
+        Schema::dropIfExists('audio_visuals');
     }
 }

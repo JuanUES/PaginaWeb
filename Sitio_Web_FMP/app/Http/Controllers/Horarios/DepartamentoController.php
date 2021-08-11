@@ -30,7 +30,8 @@ class DepartamentoController extends Controller
             }
 
             $dep = $request->_id ==null ? new Departamento():Departamento::findOrFail($request->_id);
-            $dep -> nombre_departamento               = $request->nombre_departamento;   
+            $dep -> nombre_departamento   = $request->nombre_departamento; 
+            $dep-> estado = true;  
             $dep -> save();         
         
             return $request->_id != null?response()->json(['mensaje'=>'Modificación exitosa.']):response()->json(['mensaje'=>'Registro exitoso.']);
@@ -38,5 +39,23 @@ class DepartamentoController extends Controller
         }catch(Exception $e){
             return response()->json(['error'=>$e->getMessage()]);
         }
+    }
+    public function estado(Request $request)
+    {
+       //echo dd($request);
+
+        $depto = Departamento::where('id',$request->E_depto)->first();
+        $depto-> estado = $depto -> estado ? false:true;
+        $depto -> save();        
+        return redirect()->route('depto');
+    }
+    public function activarDepto(Request $request)
+    {
+       //echo dd($request);
+
+        $depto = Departamento::where('id',$request->E_Activar)->first();
+        $depto-> estado = $depto -> estado ? false:true;
+        $depto -> save();        
+        return redirect()->route('depto');
     }
 }

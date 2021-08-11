@@ -19,7 +19,12 @@
 
 <!--Libreria data table para paginacion de noticias-->
 <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
-
+<style>
+    iframe{
+        width: 100%;
+        height: 350px;
+    }
+</style>
 @endsection
 
 @section('container')
@@ -116,10 +121,14 @@
                                                     <div class="col-xl-12">
                                                         <div class="card-box">
                                                             @foreach ($pdfs as $item)
+                                                            <div class="btn-group btn-block" role="group">
                                                                 <a class="btn btn-danger waves-effect waves-light btn-block text-left fond-19" type="button" 
                                                                     href="{{ route('index') }}{!!'/files/pdfs/ProAcademica/'.$item->file !!}" style="margin-left: 0px; " target="_blank">
-                                                                <i class=" mdi mdi-arrow-down-bold mdi-24px"></i>  {{$item->file}}
+                                                                    <i class=" mdi mdi-arrow-down-bold font-18"></i>  {{$item->file}}
                                                                 </a> 
+                                                                <a class="btn btn-light waves-effect width-md  text-center" onclick="$('#eliminar').val({{$item->id}});$('#localizacion').val('ProAcademica');"
+                                                                    data-toggle="modal" data-target="#modalEliminarPDF"><i class="mdi mdi-delete font-18"></i> Eliminar</a>
+                                                            </div>
                                                             @endforeach 
                                                         </div>  
                                                     </div>
@@ -200,7 +209,8 @@
                                                                                             </a>
                                                                                             @auth
                                                                                             <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminarPDF"
-                                                                                                onclick=""><i class="mdi mdi-delete font-18"></i>  Eliminar
+                                                                                                onclick="$('#eliminar').val({{$item->id}});$('#localizacion').val('academicaMallas');"
+                                                                                                data-toggle="modal" data-target="#modalEliminarPDF"><i class="mdi mdi-delete font-18"></i>  Eliminar
                                                                                             </button>  
                                                                                             @endauth 
                                                                                         </div>
@@ -286,12 +296,13 @@
                                                                                     </div>
                                                                                     <div class="col-lg-5 order-last text-right">
                                                                                         <div class="btn-group" role="group">
-                                                                                            <a class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/academicaGradua/'.$item->file !!}" target="_blank"> 
+                                                                                            <button class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/academicaGradua/'.$item->file !!}" target="_blank"> 
                                                                                                 <i class="  mdi mdi-arrow-down-bold font-18 mr-1"></i>Descargar
                                                                                             </a>
                                                                                             @auth
                                                                                             <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminarPDF"
-                                                                                                onclick=""><i class="mdi mdi-delete font-18"></i>  Eliminar
+                                                                                                onclick="$('#eliminar').val({{$item->id}});$('#localizacion').val('academicaGradua');"
+                                                                                                data-toggle="modal" data-target="#modalEliminarPDF"><i class="mdi mdi-delete font-18"></i>  Eliminar
                                                                                             </button>  
                                                                                             @endauth 
                                                                                         </div>
@@ -435,7 +446,8 @@
                                                                                             </a>
                                                                                             @auth
                                                                                             <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminarPDF"
-                                                                                                onclick=""><i class="mdi mdi-delete font-18"></i>  Eliminar
+                                                                                                onclick="$('#eliminar').val({{$item->id}});$('#localizacion').val('academicaFormula');"
+                                                                                                ><i class="mdi mdi-delete font-18"></i>  Eliminar
                                                                                             </button>  
                                                                                             @endauth 
                                                                                         </div>
@@ -492,43 +504,75 @@
                                                 <h3 class="modal-title" id="myLargeModalLabel"><i class=" mdi mdi-video-vintage mdi-24px"></i> AudioVisuales</h3>
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                             </div>
-                                            <div class="modal-body">       
+                                            <div class="modal-body text-left"> 
+                                                @auth
                                                 <div class="card-box">
-                                                    <form action="" id=""
-                                                    method="POST" class="parsley-examples text-left">
+                                                    <div class="alert alert-primary text-white " 
+                                                        role="alert" style="display:none" id="notificacionAudioVisual">                                               
+                                                    </div>
+                                                    <form method="POST" 
+                                                        action="{{ route('admonAgregarV') }}" 
+                                                        class="parsley-examples text-left"
+                                                        id="audioVisualForm">
+                                                        @csrf
                                                         <div class="row">
-                                                            <div class="col-xl-6">
+                                                            <div class="col-xl-12">
                                                                 <div class="form-group">
                                                                     <label for="avTitulo">Titulo</label>
-                                                                    <input type="text" class="form-control" id="avTitulo">
+                                                                    <input type="text" class="form-control" id="avTitulo" name="titulo" placeholder="Titulo del video">
                                                                 </div>
                                                             </div>
-                                                            <div class="col-xl-6">
-                                                                <label for="">URL del video</label>
-                                                                <input type="url" class="form-control">
-                                                            </div>
+                                                        
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-xl-12">
+                                                                <div class="form-group">
+                                                                    <label for="">Codigo del video</label>
+                                                                    <input type="text" name="codigo" class="form-control" placeholder="<iframe src='https://www.sitio.com/embed/'  allowfullscreen></iframe>">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-xl-12">
                                                                 <button type="button" class="btn btn-primary" 
-                                                                style="margin-left: 0px;"><li class="fa fa-save"></li>
-                                                                Guardar</button>
+                                                                style="margin-left: 0px;" onclick="submitForm('#audioVisualForm','#notificacionAudioVisual')"><li class="fa fa-save"></li>
+                                                                    Guardar
+                                                                </button>
                                                             </div>
                                                         </div>
                                                     </form>
                                                 </div>
-                                                                                  
-                                                <button class="btn btn-danger waves-effect waves-light btn-block text-left fond-19" type="button" 
-                                                data-toggle="collapse" data-target="#collapseExample1" 
-                                                aria-expanded="false" aria-controls="collapseExample1" style="margin-left: 0px;">
-                                                <i class=" mdi mdi-video-vintage mdi-24px"></i>  Titulo
-                                                </button> 
-                                                                                                                                               
-                                                <div class="collapse show" id="collapseExample1">
-                                                    <div class="card-box ">
-                                                        <iframe width="100%" height="315" src="https://www.youtube.com/embed/HnQO0bQuYRE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                @endauth
+                                                <?php
+                                                    $videos = \App\Models\Pagina\AudioVisual::all();
+                                                ?>
+                                                <div class="card-box">  
+                                                @foreach ($videos as $item)
+                                                    
+                                                    <div class="btn-group btn-block">
+                                                        <button class="btn btn-danger waves-effect waves-light btn-block text-left fond-19" type="button" 
+                                                            data-toggle="collapse" data-target="#collapseExample{{$item->id}}" 
+                                                            aria-expanded="false" aria-controls="collapseExample{{$item->id}}" s
+                                                            tyle="margin-left: 0px;">
+                                                            <i class=" mdi mdi-video-vintage mdi-24px"></i>  {{$item->titulo}}
+                                                        </button> 
+                                                        @auth
+                                                        <button type="buttom"  class="btn btn-light waves-effect width-md" data-toggle="modal" data-target="#modalEliminarVideo" 
+                                                            onclick="$('#eliminarV').val({{$item->id}})">
+                                                            <i class="mdi mdi-delete font-18"></i>  Eliminar
+                                                        </button>
+                                                        @endauth
                                                     </div>
-                                                </div>             
+                                                    
+                                                    <div class="collapse" id="collapseExample{{$item->id}}">
+                                                        <div class="card-box ">
+                                                            {!!$item->link!!}                                                            
+                                                        </div>
+                                                    </div>  
+                                                
+                                                @endforeach     
+                                                </div>        
                                                                                                    
                                             </div>
                                         </div><!-- /.modal-content -->
@@ -577,11 +621,90 @@
                         
                             <a href="{{ route('planComp') }}" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Plan Complementario</a>
                         </div>
-                    </div>
-                                       
+                    </div>                                       
                 </div>
             </div>
         </div>
+        @auth
+        <div id="modalEliminarPDF" class="modal fade bs-example-modal-center" tabindex="-1" 
+            role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border rounded">
+                        <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body border rounded">
+                        <form action="{{ route('eliminarpdfmaestri') }}" method="POST">
+                            @csrf
+                            <div class="row py-3">
+                                <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                                <div class="col-lg-10 text-black">
+                                    <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se elimina este registro de manera permanente, ¿Desea continuar?</h4>
+                                </div>
+                                <input type="hidden" name="_id" id="eliminar">                                                        
+                                <input type="hidden" name="localizacion" id="localizacion">
+                                <input type="hidden" name="vista" value="admonAcademica">
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <button type="submit" 
+                                        class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
+                                        <i class="mdi mdi-check mdi-16px"></i>
+                                        Si
+                                    </button>
+                                </div>
+                                <div class="col-xl-6">
+                                    <button type="reset" class="btn btn-light p-1 waves-light waves-effect btn-block font-24" data-dismiss="modal" >
+                                        <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
+                                        No
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal --> 
+        <div id="modalEliminarVideo" class="modal fade bs-example-modal-center" tabindex="-1" 
+            role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header border rounded">
+                        <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body border rounded">
+                        <form action="{{ route('admonEliminarV') }}" method="POST">
+                            @csrf
+                            <div class="row py-3">
+                                <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                                <div class="col-lg-10 text-black">
+                                    <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se elimina este registro de manera permanente, ¿Desea continuar?</h4>
+                                </div>
+                                <input type="hidden" name="_id" id="eliminarV">             
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <button type="submit" 
+                                        class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
+                                        <i class="mdi mdi-check mdi-16px"></i>
+                                        Si
+                                    </button>
+                                </div>
+                                <div class="col-xl-6">
+                                    <button type="reset" class="btn btn-light p-1 waves-light waves-effect btn-block font-24" data-dismiss="modal" >
+                                        <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
+                                        No
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal --> 
+        @endauth
         <div class="row">
             <div class="col-xl-12">
                 <div class="card-box"> 
@@ -651,6 +774,7 @@
 <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
 
 @auth  
+<script src="{{ asset('js/scripts/http.min.js') }}"></script>
 <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
 <script src="{{ asset('js/summernote.config.min.js') }}"></script>
 <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>  
