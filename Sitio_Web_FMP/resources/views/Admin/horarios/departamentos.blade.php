@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<!-- Modal -->
+<!-- inicio Modal de registro -->
 <div class="modal fade" id="form-depto" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -37,7 +37,88 @@
         </form>
       </div>
     </div>
-  </div>
+</div>
+<!--fin modal de registro-->
+
+<!--inicio modal para eliminar-->
+<div id="modalEliminar" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <form action="{{ route('estadoDept') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="row py-3">
+                        <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                        <div class="col-lg-10 text-black">
+                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se dara de baja este departamento, ¿Desea continuar?</h4>
+                        </div>
+                        <input type="hidden" name="E_depto" id="E_depto">
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <button type="submit" 
+                                class="btn p-1 btn-light waves-effect waves-light btn-block font-18">
+                                <i class="mdi mdi-check mdi-24px"></i>
+                                Si
+                            </button>
+                        </div>
+                        <div class="col-xl-6">
+                            <button type="reset" class="btn btn-light p-1 waves-effect btn-block font-18" data-dismiss="modal" >
+                                <i class="mdi mdi-block-helper mdi-16Spx  ml-auto" aria-hidden="true"></i>
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--fin modal para eliminar-->
+
+<!--modal para dar alta-->
+<div id="modalAlta" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <form action="{{ route('estadoADept') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="row py-3">
+                        <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                        <div class="col-lg-10 text-black">
+                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se dara de alta este departamento, ¿Desea continuar?</h4>
+                        </div>
+                        <input type="hidden" name="E_Activar" id="E_Activar">
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <button type="submit" 
+                                class="btn p-1 btn-light waves-effect waves-light btn-block font-18">
+                                <i class="mdi mdi-check mdi-24px"></i>
+                                Si
+                            </button>
+                        </div>
+                        <div class="col-xl-6">
+                            <button type="reset" class="btn btn-light p-1 waves-effect btn-block font-18" data-dismiss="modal" >
+                                <i class="mdi mdi-block-helper mdi-16Spx  ml-auto" aria-hidden="true"></i>
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--Modal para dar alta fin-->
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
@@ -73,6 +154,7 @@
                 <tr>
                     <th data-priority="1">N°</th>
                     <th data-priority="3">Nombre</th>
+                    <th data-priority="3">Estado</th>
                     <th data-priority="1">Acciones</th>
                   
                 </tr>
@@ -82,13 +164,26 @@
                 <tr>
                     <td>{!!$item->id!!}</td>
                     <th><span class="co-name">{!!$item->nombre_departamento!!}</span></th>
+                    {!!$item->estado?' <th><span class="co-name">Activo</span></th>':'<th><span class="co-name">Inactivo</span></th>'!!}
+                    @if ($item->estado==true)
+                   
                     <td>
-                        <button title="Editar Departamento" class="btn btn-outline-primary btn-sm"   onclick="editarDepto({!!$item->id!!})" data-toggle="modal" data-target="#form-depto"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button>
-                        <a href="" title="Eliminar Departamento">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
+                    <button title="Editar Departamento" class="btn btn-outline-primary btn-sm"   onclick="editarDepto({!!$item->id!!})" data-toggle="modal" data-target="#form-depto"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
+                    </button>
+                    <button title="Desactivar Departamento" class="btn btn-outline-primary btn-sm" onclick="eliminarDepto('{!!$item->id!!}')" data-toggle="modal" data-target="#modalEliminar"><i class="fas fa-trash-alt" aria-hidden="true"></i>
+                    </button>
                     </td>
+                    @endif
+                    @if ($item->estado==false)
+                    <td>
+                    <button title="Editar Departamento" class="btn btn-outline-primary btn-sm"   onclick="editarDepto({!!$item->id!!})" data-toggle="modal" data-target="#form-depto"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
+                    </button>
+                    <button title="Activar Departamento" class="btn btn-outline-primary btn-sm" onclick="ActivarDepto('{!!$item->id!!}')" data-toggle="modal" data-target="#modalAlta"><i class="fa fa-arrow-up" aria-hidden="true"></i>
+                    </button>
+                    </td>
+                    @endif
+                       
+                    
                 </tr>
                 @endforeach   
                 </tbody>
