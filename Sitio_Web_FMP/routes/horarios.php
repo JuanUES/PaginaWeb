@@ -13,6 +13,8 @@ Route::get('Aulas',[AulaController::class,'index'])->name('aulas');
 //para departamentos
 Route::get('Departamentos',[DepartamentoController::class,'index'])->name('depto');
 Route::post('Departamentos/create',[DepartamentoController::class,'store'])->name('depto.store');
+Route::post('Departamentos/estado', [DepartamentoController::class,'estado'])->name('estadoDept');
+Route::post('Departamentos/estadoActivar', [DepartamentoController::class,'activarDepto'])->name('estadoADept');
 //fin de departamentos
 Route::get('Materias',[MateriaController::class,'index'])->name('materias');
 Route::get('Horarios',[HorarioController::class,'index'])->name('horarios');

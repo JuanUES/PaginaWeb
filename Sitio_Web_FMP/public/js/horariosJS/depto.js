@@ -3,9 +3,17 @@ $("#_id").val(json.id);
 $("#nombre_departamento").val(json.nombre_departamento);
 };
 
-/*function eliminarPlan (id)
-{$('#complementario').val(id);
-};*/
+function eliminarDepto(id)
+{
+	//alert(id);
+	$('#E_depto').val(id);
+};
+
+function ActivarDepto(id)
+{
+	//alert(id);
+	$('#E_Activar').val(id);
+};
 
 (function(window){
 	window.htmlentities = {
