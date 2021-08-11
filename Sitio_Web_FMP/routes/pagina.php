@@ -116,6 +116,9 @@ Route::post('PlanComplementario/estado', [PlaComplementarioController::class,'es
 
 Route::get('Investigacion',[InvestigacionController::class, 'index'])->name('investigacion');
 
+Route::post('Sondeo',[SondeoController::class, 'store'])
+->name('sondeo.guardar');
+
 Route::get('ProyeccionSocial',[ProyeccionSocialController::class, 'index'])
 ->name('proyeccionSocial');
 

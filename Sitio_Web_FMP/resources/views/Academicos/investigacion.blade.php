@@ -7,7 +7,7 @@
     
     <!-- Este css se carga nada mas cuando esta logeado un usuario-->
     <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
-
+    
 @endauth    
 @endsection
 
@@ -21,6 +21,8 @@
         <script src="{{ asset('js/summernote.config.min.js') }}"></script>
         <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
         <script src="{{ asset('js/scripts/http.min.js') }}"></script>
+        
+
         <script>
             // para recargar pagina luego de subir o no imagenes
             $('.bs-example-modal-center').on('hidden.bs.modal', function() { location.reload(); });
@@ -202,14 +204,17 @@
                                     </p>
                                 </li>
                             </ul>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    
-                                </div>
-                                <div class="col-md-6">
-                                    <button data-toggle="modal" data-target="#myModalSondeo" class="btn btn-info">Nuevo sondeo</button>
-                                </div>
+                            <div class="row my-2">
+                                <div class="col order-first"></div>
+                                <div class="col-lg-3 order-last">
+                                    <button style="float: righ;" class="btn btn-block btn-info tex-righ" 
+                                    data-toggle="modal" data-target="#myModalSondeo">
+                                        <div class=" mdi dripicons-document"> Nuevo sondeo</div>
+                                    </button>
+                                </div> 
                             </div>
+                           
+                         
                             <div class="border m-1 rounded p-2">
                                 <p class="mb-1 font-weight-bold py-2">Desarrollo del sondeo:</p>
                                 <h4 class="font-weight-bold">Efectos de la implementación de la modalidad de educación a distancia en la FMP-UES, en el contexto de la pandemia por COVID-19</h4>      
@@ -291,14 +296,14 @@
                                         <div class="modal-dialog">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-notebook-multiple mdi-24px"></i> &nbsp; Coordinador</h4>
+                                                    <h4 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-notebook-multiple mdi-24px"></i> &nbsp; Sondeo</h4>
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                                 </div>
                                                 <div class="modal-body">                                        
                                                     <div class="tab-content">
                                                     <div class="alert alert-primary text-white" role="alert" style="display:none" id="notificacion"></div>                                        
                                                     <form method="POST" 
-                                                    action="{{ route('nuevoCoordinador') }}" 
+                                                    action="{{ route('sondeo.guardar') }}" 
                                                     class="parsley-examples"
                                                     enctype="multipart/form-data"
                                                     id="coordinadoresForm">
@@ -322,8 +327,9 @@
                                                             <div class="col-xl-12">
                                                                 <div class="form-group">
                                                                     <label>Imagen <code>*</code></label>
-                                                                    <div>
-                                                                        <input type="file" class="form-control">
+                                                                    <div class="custom-file">
+                                                                        <input type="file" value="" class="custom-file-input form-control" accept="image/*"  name="imagen"  id="img" />
+                                                                        <label class="custom-file-label" name='imagenlabel' for="img">Seleccionar imagen</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
