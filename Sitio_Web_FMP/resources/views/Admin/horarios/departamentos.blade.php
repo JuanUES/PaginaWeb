@@ -164,8 +164,9 @@
                 <tr>
                     <td>{!!$item->id!!}</td>
                     <th><span class="co-name">{!!$item->nombre_departamento!!}</span></th>
+                    {!!$item->estado?' <th><span class="co-name">Activo</span></th>':'<th><span class="co-name">Inactivo</span></th>'!!}
                     @if ($item->estado==true)
-                    <th><span class="co-name">Activo</span></th>
+                   
                     <td>
                     <button title="Editar Departamento" class="btn btn-outline-primary btn-sm"   onclick="editarDepto({!!$item->id!!})" data-toggle="modal" data-target="#form-depto"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                     </button>
@@ -174,7 +175,6 @@
                     </td>
                     @endif
                     @if ($item->estado==false)
-                    <th><span class="co-name">Inactivo</span></th>
                     <td>
                     <button title="Editar Departamento" class="btn btn-outline-primary btn-sm"   onclick="editarDepto({!!$item->id!!})" data-toggle="modal" data-target="#form-depto"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
                     </button>
