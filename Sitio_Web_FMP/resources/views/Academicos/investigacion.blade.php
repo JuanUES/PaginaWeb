@@ -207,32 +207,34 @@
                             <div class="row my-2">
                                 <div class="col order-first"></div>
                                 <div class="col-lg-3 order-last">
-                                    <button style="float: righ;" class="btn btn-block btn-info tex-righ" 
+                                    <button style="float: righ;" class="btn btn-block btn-info tex-righ"
                                     data-toggle="modal" data-target="#myModalSondeo">
                                         <div class=" mdi dripicons-document"> Nuevo sondeo</div>
                                     </button>
                                 </div> 
                             </div>
                            
-                         
+                            <table cellspacing="0" width="100%">
+<thead></thead>
+<tbody>
+                            @foreach ($sondeos as $item)
+<tr>
+    <td>
                             <div class="border m-1 rounded p-2">
                                 <p class="mb-1 font-weight-bold py-2">Desarrollo del sondeo:</p>
-                                <h4 class="font-weight-bold">Efectos de la implementación de la modalidad de educación a distancia en la FMP-UES, en el contexto de la pandemia por COVID-19</h4>      
+                                <h4 class="font-weight-bold">{{$item->titulo}}</h4>      
                                 <p class="text-muted font-15 text-justify">
-                                    En el periodo comprendido de noviembre de 2020 a febrero de 2021 y cuya presentación pública se realizó ante los medios de comunicación el miércoles 10 de febrero de 2021 en la sala de reuniones del Consejo Superior Universitario.
+                                    {{$item->descripcion}}
                                 </p>       
-                                <img src="{{ asset('/files/image') }}/ceo1.png" 
-                                alt="Imagen" class="text-center rounded bx-shadow-lg img-fluid" width="100%">
-                            </div>   
-                            <div class="border rounded m-1 p-2">
-                                <p class="mb-1 font-weight-bold py-2">Desarrollo del sondeo:</p>
-                                <h4 class="font-weight-bold">Cultura política y nuevas formas de gobernanza en El Salvador del siglo 21</h4>      
-                                <p class="text-muted font-15 text-justify">
-                                    En el periodo comprendido de noviembre de 2020 a febrero de 2021 y cuya presentación pública se realizó ante los medios de comunicación el miércoles 10 de febrero de 2021 en la sala de reuniones del Consejo Superior Universitario.
-                                </p>       
-                                <img src="{{ asset('/files/image') }}/ceo2.png" 
+                                <img src="{{ asset('/images/sondeos').'/'.$item->imagen }}" 
                                 alt="Imagen" class="text-center rounded bx-shadow-lg img-fluid" width="100%">
                             </div> 
+                        </td>
+                        </tr>
+                        </tbody>
+                        </table>
+                            @endforeach  
+                           
                             @if (count($sondeos)>0)
                                 
                             @else
@@ -306,7 +308,7 @@
                                                     action="{{ route('sondeo.guardar') }}" 
                                                     class="parsley-examples"
                                                     enctype="multipart/form-data"
-                                                    id="coordinadoresForm">
+                                                    id="sondeoForm">
                                                         @csrf
                                                         <input type="hidden" id="_id" name="_id">
                                                         <div class="row">
@@ -318,7 +320,7 @@
                                                                     <label>Título <code>*</code></label>
                                                                     <input type="text" class="form-control" required
                                                                             placeholder="Coordinador (Obligatorio)"
-                                                                            name="coordinador" id="nombre" />
+                                                                            name="titulo" />
                                                                 </div> 
                                                             </div>
                                                             
@@ -328,8 +330,8 @@
                                                                 <div class="form-group">
                                                                     <label>Imagen <code>*</code></label>
                                                                     <div class="custom-file">
-                                                                        <input type="file" value="" class="custom-file-input form-control" accept="image/*"  name="imagen"  id="img" />
-                                                                        <label class="custom-file-label" name='imagenlabel' for="img">Seleccionar imagen</label>
+                                                                        <input type="file" value="" class="custom-file-input form-control" accept="image/*"  name="imagen" />
+                                                                        <label class="custom-file-label" for="img">Seleccionar imagen</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -339,7 +341,7 @@
                                                                 <div class="form-group">
                                                                     <label>Descripción <code>*</code></label>
                                                                     <div>
-                                                                        <textarea id="contacto" required class="form-control" name="departamento" placeholder="Departamento (Obligatorio)"></textarea>
+                                                                        <textarea required class="form-control" name="descripcion" placeholder="Departamento (Obligatorio)"></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -347,7 +349,7 @@
                                                                 
                                                         <div class="form-group mb-0">
                                                             <div>
-                                                                <button type="button" onclick="submitForm('#coordinadoresForm','#notificacion')"
+                                                                <button type="button" onclick="submitForm('#sondeoForm','#notificacion')"
                                                                 class="btn btn-primary waves-effect waves-light mr-1">
                                                                      <li class="fa fa-save"></li>
                                                                     Guardar

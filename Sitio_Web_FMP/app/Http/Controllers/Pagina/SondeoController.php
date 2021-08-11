@@ -39,6 +39,7 @@ class SondeoController extends Controller
      */
     public function store(Request $request)
     {
+        //echo dd($request->imagen);
         $validator = Validator::make($request->all(),[
             'titulo' => 'required|max:255',
             'descripcion' => 'required|max:255',
@@ -54,26 +55,27 @@ class SondeoController extends Controller
 
         /**Guardo en carpeta Noticia */
         $file = $request->file('imagen'); 
-        $path = public_path() . '/images/noticias';
-        $fileName = count($request->files)? uniqid():'sin_imagen';
-
+        $path = public_path() . '/images/sondeos/';
+        $fileName = $request->imagen->getClientOriginalName();
+        
         /**Elimino de la carpeta del servidor si se realiza una modificacion*/
-        if($request->_id != null && count($request->files)){
-            if($fileName !='sin_imagen'){
-                File::delete(public_path() . '/images/sondeos/'.$noticia->imagen); 
-            }
+        if($request->_id != null && count($request->files)>0){
+           
+            File::delete(public_path() . '/images/sondeos/'.$sondeo->imagen); 
+        
             /**Guardo en base de datos */   
             $sondeo -> imagen    =  $fileName;
             /**Guardo en servidor*/
             $file->move($path, $fileName);
         }else{
             $sondeo -> imagen = $sondeo -> imagen;
+            $file->move($path, $fileName);
         }
 
         /**Guardo en la base de datos */
         $sondeo -> titulo = $request->titulo;
         if($request->imagen !=null){
-            $sondeo -> imagen = $request->imagen;
+            $sondeo -> imagen = $fileName;
         }
         $sondeo -> descripcion = $request->descripcion;
         $sondeo->user = auth()->id();   
