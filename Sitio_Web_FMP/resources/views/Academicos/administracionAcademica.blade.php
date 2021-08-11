@@ -126,8 +126,10 @@
                                                                     href="{{ route('index') }}{!!'/files/pdfs/ProAcademica/'.$item->file !!}" style="margin-left: 0px; " target="_blank">
                                                                     <i class=" mdi mdi-arrow-down-bold font-18"></i>  {{$item->file}}
                                                                 </a> 
+                                                                @auth
                                                                 <a class="btn btn-light waves-effect width-md  text-center" onclick="$('#eliminar').val({{$item->id}});$('#localizacion').val('ProAcademica');"
                                                                     data-toggle="modal" data-target="#modalEliminarPDF"><i class="mdi mdi-delete font-18"></i> Eliminar</a>
+                                                                @endauth
                                                             </div>
                                                             @endforeach 
                                                         </div>  
@@ -296,7 +298,7 @@
                                                                                     </div>
                                                                                     <div class="col-lg-5 order-last text-right">
                                                                                         <div class="btn-group" role="group">
-                                                                                            <button class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/academicaGradua/'.$item->file !!}" target="_blank"> 
+                                                                                            <a class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/academicaGradua/'.$item->file !!}" target="_blank"> 
                                                                                                 <i class="  mdi mdi-arrow-down-bold font-18 mr-1"></i>Descargar
                                                                                             </a>
                                                                                             @auth
@@ -346,7 +348,7 @@
                                         <div class="card-body">
                                             <blockquote class="card-bodyquote mb-0">
                                                 <i class="mdi mdi-calendar-month fa-4x text-danger"></i> <br>
-                                                <h3>Calendario</h3>
+                                                <h3>Calendario Académico</h3>
                                             </blockquote>
                                         </div>
                                     </div>
@@ -356,7 +358,7 @@
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h3 class="modal-title" id="myLargeModalLabel"><i class="mdi mdi-calendar-month mdi-24px"></i> Calendario</h3>
+                                                <h3 class="modal-title" id="myLargeModalLabel"><i class="mdi mdi-calendar-month mdi-24px"></i> Calendario  Académico</h3>
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                             </div>
                                             <div class="modal-body">    
