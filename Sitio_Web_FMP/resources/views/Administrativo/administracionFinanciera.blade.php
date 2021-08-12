@@ -1,5 +1,41 @@
 @extends('Pagina/baseOnlyHtml')
 
+@section('header')
+
+    <!-- Plugin css -->
+    <link href="{{ asset('css/fullcalendar.min.css') }}" rel="stylesheet" type="text/css" />
+@endsection
+
+@section('footer')
+
+    <!-- Calendar init -->
+    <script src="{{ asset('js/moment.min.js') }}"></script>
+    <script src="{{ asset('js/fullcalendar.min.js') }}"></script>  
+    <script src="{{ asset('js/locale/es.js') }}"></script>  
+    <script>
+
+    </script>
+    <script>
+    $('#calendar').fullCalendar({
+        customButtons: {
+        myCustomButton: {
+        text: 'custom!',
+      click: function() {
+        alert('clicked the custom button!');
+      }
+    }
+    },
+  header: {
+    left: 'prev,next today myCustomButton',
+    center: 'title',
+    right: 'month,agendaWeek,agendaDay'
+  },
+  events:[{"id_cita":"19","id_cliente":"2041540712","title":"Asesoria: Zane Kelley","color":"#FF0040","textColor":"#FFFFFF","start":"2021-08-07 08:00:00","fecha":"2021-08-07","hora":"8:00 AM","estado_cita":"0","asistencia":"Multiples Ocaciones","nombre":"Zane Kelley","correo":"test106@gmail.com","celular":"(+666) 6666-6666","nivel":"CLIENTE","uuid":"JxPUKLjDcZhnlSxB8VqjhSVM2Kx2","fbToken":null,"dui":"66666666-6","activo":"1","ultimaConexion":"2021-07-12 20:41:54"},{"id_cita":"20","id_cliente":"2043590712","title":"Asesoria: Imani Wise","color":"#FF0040","textColor":"#FFFFFF","start":"2021-08-07 09:00:00","fecha":"2021-08-07","hora":"9:00 AM","estado_cita":"0","asistencia":"Multiples Ocaciones","nombre":"Imani Wise","correo":"test107@gmail.com","celular":"(+777) 7777-7777","nivel":"CLIENTE","uuid":"uwTnAVMSitUTHg7JGlXML2HpgaB3","fbToken":null,"dui":"77777777-7","activo":"1","ultimaConexion":"2021-07-12 20:43:59"}]
+});
+    </script>
+
+@endsection
+
 @section('container')
 <div class="wrapper">
     <div class="container-fluid">
@@ -82,6 +118,15 @@
                         </div><!-- end col -->  
                     </div> 
                 </div> 
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card-box">
+                    <h3>Horarios de Colecturia</h3>
+                    <div id="calendar"></div>
+                </div>
             </div>
         </div>
     </div> <!-- end container -->
