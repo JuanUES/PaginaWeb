@@ -109,7 +109,7 @@
                                             <div class="carousel-item {!!$i == 0 ? 'active': null!!}">
                                                 @auth                                                
                                                 <button type="submit" class="btn text-white btn-danger btn-block">
-                                                    <div class=" mdi mdi-delete mdi-16px text-center" data-toggle="modal" data-target="#modalCR" onclick="$('#imagenCR').val({!!$investigacionCarrusel[$i]->id!!})">Eliminar</div>
+                                                    <div class=" mdi mdi-delete mdi-16px text-center" data-toggle="modal" data-target="#modalCR" onclick="$('#imagenCR').val({$investigacionCarrusel[$i]->id})">Eliminar</div>
                                                 </button>
                                                 @endauth  
                                                 <img src="images/carrusel/{{$investigacionCarrusel[$i]->imagen}}" class="img-fluid" width="100%" height="60%" alt="{!!$investigacionCarrusel[$i]->imagen!!}">                                
@@ -291,7 +291,7 @@
                                 <div class="col-lg-3 order-last">
                                     <button style="float: righ;" class="btn btn-block btn-info tex-righ"
                                     data-toggle="modal" data-target="#myModalSondeo">
-                                        <div class=" mdi dripicons-document"> Nuevo sondeo</div>
+                                        <i class=" mdi dripicons-document"> Nuevo sondeo</i>
                                     </button>
                                 </div> 
                             </div>
@@ -329,9 +329,10 @@
                             
                         </td>
                         </tr>
+                        @endforeach 
                         </tbody>
                         </table>
-                            @endforeach  
+                             
                            
                             @if (count($sondeos)>0)
                                 
@@ -339,6 +340,44 @@
                                 <p class="p-2 border text-center">No hay noticias para mostrar.</p>                                
                             @endif            
                         </div>
+                        <div id="modalEliminarNoticia" class="modal fade bs-example-modal-center" tabindex="-1" 
+                        role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{{ route('sondeo.borrar') }}" method="POST">
+                                        @csrf
+                                        <div class="row py-3">
+                                            <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                                            <div class="col-lg-10 text-black">
+                                                <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se elimina este registro de manera permanente, ¿Desea continuar?</h4>
+                                            </div>
+                                            <input type="hidden" name="_id" id="noticia">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-6">
+                                                <button type="submit" 
+                                                    class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
+                                                    <i class="mdi mdi-check mdi-16px"></i>
+                                                    Si
+                                                </button>
+                                            </div>
+                                            <div class="col-xl-6">
+                                                <button type="reset" class="btn btn-light p-1 waves-light waves-effect btn-block font-24" data-dismiss="modal" >
+                                                    <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
+                                                    No
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->   
                         <div class="tab-pane fade" id="v-pills-profile2" role="tabpanel" aria-labelledby="v-pills-profile-tab2">                           
                             <a class="nav-link btn btn-danger waves-effect width-md" href="#index"
                             onclick="$('.nav-link').removeClass('active')" data-toggle="pill">
@@ -463,7 +502,7 @@
                                             </div><!-- /.modal-content -->
                                         </div><!-- /.modal-dialog -->
                                     </div><!-- /.modal -->                                     
-                                
+        
                                 @endauth
                 <div class="col-xl-4">
                     <h4>Subunidades</h4>

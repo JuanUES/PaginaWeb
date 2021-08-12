@@ -127,6 +127,9 @@ Route::get('Investigacion',[InvestigacionController::class, 'index'])->name('inv
 Route::post('Sondeo',[SondeoController::class, 'store'])
 ->name('sondeo.guardar');
 
+Route::post('Sondeo/borrar',[SondeoController::class, 'destroy'])
+->name('sondeo.borrar');
+
 Route::get('ProyeccionSocial',[ProyeccionSocialController::class, 'index'])
 ->name('proyeccionSocial');
 
