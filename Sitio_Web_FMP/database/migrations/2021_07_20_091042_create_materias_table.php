@@ -19,6 +19,7 @@ class CreateMateriasTable extends Migration
             $table->string('nombre_materia');
             $table->string('uv_materia');
             $table->integer('nivel');
+            $table->boolean('estado');
             $table->bigInteger('id_carrera');
             $table->foreign('id_carrera')
             ->references('id')

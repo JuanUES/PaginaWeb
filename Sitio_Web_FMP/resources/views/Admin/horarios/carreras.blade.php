@@ -6,7 +6,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id=" exampleModalLongTitle"><i class=" mdi mdi-book-open-page-variant mdi-24px" aria-hidden="true" ></i> Departamento</h5>
+          <h5 class="modal-title" id=" exampleModalLongTitle"><i class="mdi mdi-layers-plus mdi-24px" aria-hidden="true" ></i>Carreras</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -19,11 +19,34 @@
                         role="alert" style="display:none" id="notificacion">                                               
                     </div>
                     <div class="row">
-                        <div class="col-xl-12">
+                        <div class="col-xl-6">
                             <label>Nota: <code>* Campos Obligatorio</code></label>
                             <div class="form-group">
-                                <label for="exampleInputNombre">Nombre Departamento<code>*</code></label>
-                                <input type="text" class="form-control" name="nombre_departamento" id="nombre_departamento" placeholder="Digite el nombre del departamento">
+                                <label for="exampleInputNombre">Código<code>*</code></label>
+                                <input type="text" class="form-control" name="codigo_carrera" id="codigo_carrera" placeholder="Digite el código">
+                            
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="exampleInputNombre">Nombre carrera<code>*</code></label>
+                                <input type="text" class="form-control" name="nombre_carrera" id="nombre_carrera" placeholder="Digite el nombre">
+                            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="exampleInputNombre">Modalidad<code>*</code></label>
+                                <input type="text" class="form-control" name="modalidad_carrera" id="modalidad_carrera" placeholder="Digite el código">
+                            
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="exampleInputNombre">Nombre carrera<code>*</code></label>
+                                <input type="text" class="form-control" name="nombre_carrera" id="nombre_carrera" placeholder="Digite el nombre">
                             
                             </div>
                         </div>
@@ -149,44 +172,19 @@
                  <button type="button" title="Agregar Departamentos" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#form-depto"></button>
                 </div>
             </div>
-            <table  class="table table-sm" id="table-depto">
+            <table  class="table table-sm" id="table-carrera">
                 <thead>
                 <tr>
-                    <th data-priority="1">N°</th>
+                    <th data-priority="1">Código</th>
                     <th data-priority="3">Nombre</th>
+                    <th data-priority="3">Modalidad</th>
+                    <th data-priority="3">Departamento</th>
                     <th data-priority="3">Estado</th>
                     <th data-priority="1">Acciones</th>
                   
                 </tr>
                 </thead>
-                <tbody>
-                    
-                    @foreach ($deptos as $item)
-                <tr>
-                    <td>{!!$item->id!!}</td>
-                    <th><span class="co-name">{!!$item->nombre_departamento!!}</span></th>
-                    {!!$item->estado?' <th><span class="co-name">Activo</span></th>':'<th><span class="co-name">Inactivo</span></th>'!!}
-                    @if ($item->estado==true)
-                   
-                    <td>
-                    <button title="Editar Departamento" class="btn btn-outline-primary btn-sm"   onclick="editarDepto({!!$item->id!!})" data-toggle="modal" data-target="#form-depto"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                    </button>
-                    <button title="Desactivar Departamento" class="btn btn-outline-primary btn-sm" onclick="eliminarDepto('{!!$item->id!!}')" data-toggle="modal" data-target="#modalEliminar"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                    </button>
-                    </td>
-                    @endif
-                    @if ($item->estado==false)
-                    <td>
-                    <button title="Editar Departamento" class="btn btn-outline-primary btn-sm"   onclick="editarDepto({!!$item->id!!})" data-toggle="modal" data-target="#form-depto"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                    </button>
-                    <button title="Activar Departamento" class="btn btn-outline-primary btn-sm" onclick="ActivarDepto('{!!$item->id!!}')" data-toggle="modal" data-target="#modalAlta"><i class="fa fa-arrow-up" aria-hidden="true"></i>
-                    </button>
-                    </td>
-                    @endif
-                       
-                    
-                </tr>
-                @endforeach   
+                <tbody>  
                 </tbody>
             </table>
 
@@ -201,16 +199,9 @@
 <script src="{{ asset('js/horariosJs/depto.js') }}"></script>
 <!-- Dashboard Init JS -->
 <script src="{{ asset('template-admin/dist/assets/js/pages/dashboard.init.js') }}"></script>
-
-<script>
-    function editarDepto(id){
-        $json = {!!json_encode($deptos)!!}.find(x => x.id==id);
-        editar($json);
-        }
-</script>
 <script>
     $(document).ready(function () {
-        $('#table-depto').DataTable({
+        $('#table-carrera').DataTable({
           "language": {
               "decimal":        ".",
               "emptyTable":     "No hay datos para mostrar",
