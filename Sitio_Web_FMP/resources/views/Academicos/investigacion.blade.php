@@ -304,13 +304,29 @@
     <td>
                             <div class="border m-1 rounded p-2">
                                 <p class="mb-1 font-weight-bold py-2">Desarrollo del sondeo:</p>
+                                <span data-toggle="modal" data-target="#myModalNoticia">
+                                    <button style="float: right;" type="button"  class="btn btn-light waves-effect width-md" onclick="modificarEX({!!$item->id!!})" >
+                                        <i class="mdi mdi-file-document-edit mdi-16p"></i> Modificar</button>
+                                </span>
+                             
+                             
+                                 
+                             
+                                <button style="float: right;" type="button" onclick="$('#noticia').val('{!!base64_encode($item->id)!!}')"
+                                     class="btn btn-light waves-effect width-md  width-md" data-toggle="modal" 
+                                     data-target="#modalEliminarNoticia">
+                                    <i class="mdi mdi-delete"></i> Eliminar</button>
                                 <h4 class="font-weight-bold">{{$item->titulo}}</h4>      
                                 <p class="text-muted font-15 text-justify">
                                     {{$item->descripcion}}
                                 </p>       
                                 <img src="{{ asset('/images/sondeos').'/'.$item->imagen }}" 
                                 alt="Imagen" class="text-center rounded bx-shadow-lg img-fluid" width="100%">
+                                
+                                
+                                 
                             </div> 
+                            
                         </td>
                         </tr>
                         </tbody>
