@@ -1,5 +1,46 @@
 @extends('Pagina/baseOnlyHtml')
 
+@section('header')
+
+    <!-- Plugin css -->
+    <link href="{{ asset('css/fullcalendar.min.css') }}" rel="stylesheet" type="text/css" />
+@endsection
+
+@section('footer')
+
+    <!-- Calendar init -->
+    <script src="{{ asset('js/moment.min.js') }}"></script>
+    <script src="{{ asset('js/fullcalendar.min.js') }}"></script>  
+    <script src="{{ asset('js/locale/es.js') }}"></script>  
+    <script>
+
+    </script>
+    <script>
+    
+
+            $('#calendar')
+                .fullCalendar({lang: 'es'})
+                .fullCalendar('option', 'height', 450)
+                .fullCalendar({
+                    events: [
+                        {
+                        title: 'Event1',
+                        start: '2021-08-04'
+                        },
+                        {
+                        title: 'Event2',
+                        start: '2021-08-05'
+                        }
+                        // etc...
+                    ],
+                    color: 'yellow',   // an option!
+                    textColor: 'black' // an option!
+                } 
+            );
+    </script>
+
+@endsection
+
 @section('container')
 <div class="wrapper">
     <div class="container-fluid">
@@ -82,6 +123,15 @@
                         </div><!-- end col -->  
                     </div> 
                 </div> 
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card-box">
+                    <h3>Horarios de Colecturia</h3>
+                    <div id="calendar"></div>
+                </div>
             </div>
         </div>
     </div> <!-- end container -->
