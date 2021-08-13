@@ -49,9 +49,9 @@
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputPassword1"></label>
+                                <label for="exampleInputPassword1">Departamentos</label>
                                 
-                                    @if (count($empleadoJefe))
+                                   
                                     <select class="custom-select" name="jefe">
                                         @foreach ($empleadoJefe as $item)
                                         <option value="{!!$item->id!!}">{!!$item->nombre.' '.$item->apellido!!}</option>
