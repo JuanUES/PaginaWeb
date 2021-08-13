@@ -43,24 +43,25 @@
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputNombre">Modalidad<code>*</code></label>
-                                <input type="text" class="form-control" name="modalidad_carrera" id="modalidad_carrera" placeholder="Digite el código">
-                            
+                                <select class="custom-select" name="modalidad_carrera" id="modalidad_carrera">
+                                    <option>Seleccione</option>
+                                    <option value="PR">PR</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Departamentos</label>
-                                
-                                   
-                                    <select class="custom-select" name="jefe">
-                                        @foreach ($empleadoJefe as $item)
-                                        <option value="{!!$item->id!!}">{!!$item->nombre.' '.$item->apellido!!}</option>
-                                        @endforeach
-                                    @else
-                                    <select class="custom-select" name="jefe" disabled>
-                                        <option value="">Sin datos</option>
-                                    @endif          
-                                </select>
+                                <label for="exampleInputDepto">Departamentos</label>
+                                        @if (count($deptosC))
+                                        <select class="custom-select" name="id_depto" id="id_depto">
+                                            @foreach ($deptosC as $item)
+                                            <option value="{!!$item->id!!}">{!!$item->nombre_departamento!!}</option>
+                                            @endforeach
+                                        @else
+                                        <select class="custom-select" name="id_depto" id="id_depto">
+                                            <option value="">Sin datos</option>
+                                        @endif  
+                                    </select>
                             </div>
                         </div>
                     </div>
