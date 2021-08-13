@@ -19,8 +19,12 @@
                         role="alert" style="display:none" id="notificacion">                                               
                     </div>
                     <div class="row">
-                        <div class="col-xl-6">
+                        <div class="col-xl-12">
                             <label>Nota: <code>* Campos Obligatorio</code></label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputNombre">Código<code>*</code></label>
                                 <input type="text" class="form-control" name="codigo_carrera" id="codigo_carrera" placeholder="Digite el código">
@@ -45,9 +49,18 @@
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputNombre">Nombre carrera<code>*</code></label>
-                                <input type="text" class="form-control" name="nombre_carrera" id="nombre_carrera" placeholder="Digite el nombre">
-                            
+                                <label for="exampleInputPassword1"></label>
+                                
+                                    @if (count($empleadoJefe))
+                                    <select class="custom-select" name="jefe">
+                                        @foreach ($empleadoJefe as $item)
+                                        <option value="{!!$item->id!!}">{!!$item->nombre.' '.$item->apellido!!}</option>
+                                        @endforeach
+                                    @else
+                                    <select class="custom-select" name="jefe" disabled>
+                                        <option value="">Sin datos</option>
+                                    @endif          
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -149,10 +162,10 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Inicio</a></li>
-                    <li class="breadcrumb-item active">Departamentos</li>
+                    <li class="breadcrumb-item active">Carreras</li>
                 </ol>
             </div>
-            <h4 class="page-title">Creación de Departamentos</h4>
+            <h4 class="page-title">Creación de Carreras</h4>
         </div>
     </div>
 </div>
@@ -164,7 +177,7 @@
             <div class="row">
                 <div class="col-6">
                     <h3>
-                        Departamentos Registrados
+                        Carreras Registrados
                     </h3>      
                 </div>
                 <div class="col-3">
