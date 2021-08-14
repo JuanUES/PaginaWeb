@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Transparencia;
 
-
+use App\Http\Controllers\Controller;
+use App\Models\Transparencia\Transparencia;
 use Illuminate\Http\Request;
-use App\Models\Transparencia;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\File;
 use Yajra\DataTables\DataTables;
 
@@ -26,12 +25,9 @@ class TransparenciaController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(){
         $this->middleware('auth');
         $this->middleware('transparencia-roles');
-        // $this->middleware('log')->only('index');
-        // $this->middleware('subscribed')->except('store');
     }
 
     /**

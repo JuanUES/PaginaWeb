@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Transparencia;
 
-use App\Models\Transparencia;
-use Facade\FlareClient\Http\Response;
-use Illuminate\Http\File;
+use App\Http\Controllers\Controller;
+use App\Models\Transparencia\Directorio;
+use App\Models\Transparencia\Transparencia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File as FacadesFile;
-use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 
 class TransparenciaWebController extends Controller{
@@ -70,7 +69,6 @@ class TransparenciaWebController extends Controller{
 
     public function documento($categoria, $id){
         $titulo = array_search($categoria, $this->categorias, true);
-
         if($titulo!=false){
             $documento = Transparencia::findOrFail($id);
             $documentos = Transparencia::where('estado', 'activo')
@@ -151,4 +149,10 @@ class TransparenciaWebController extends Controller{
                 ->make(true);
         }
     }
+
+    public function directorios(){
+        $directorios = Directorio::where('estado', 'activo')->get();
+        return view('Transparencia-web.directorio', compact(['directorios']));
+    }
+
 }

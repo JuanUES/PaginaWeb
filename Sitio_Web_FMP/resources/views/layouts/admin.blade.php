@@ -179,33 +179,33 @@
                             </li>
                             <li class="menu-title">Transparencia</li>
 
-                            <li>
-                                <a href="javascript: void(0);">
-                                    <i class="dripicons-view-list-large"></i>
-                                    <span> Marcos </span>
-                                    <span class="menu-arrow"></span>
-                                </a>
-                                <ul class="nav-second-level" aria-expanded="false">
+                            @hasrole('super-admin|Transparencia-Decano|Transparencia-Secretario|Transparencia-Presupuestario')
+                                <li>
+                                    <a href="javascript: void(0);"><i class="dripicons-view-list-large"></i><span> Marcos </span><span class="menu-arrow"></span></a>
+                                    <ul class="nav-second-level" aria-expanded="false">
+                                        @hasrole('super-admin|Transparencia-Decano|Transparencia-Secretario')
+                                            <li>
+                                                <a href="{{ url('admin/transparencia/marco-normativo') }}">Normativo</a>
+                                            </li>
+                                        @endhasrole
+                                        @hasrole('super-admin|Transparencia-Decano')
+                                            <li>
+                                                <a href="{{ url('admin/transparencia/marco-gestion') }}">De Gestión</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ url('admin/transparencia-directorios') }}">Directorios</a>
+                                            </li>
+                                        @endhasrole
+                                        @hasrole('super-admin|Transparencia-Presupuestario')
+                                            <li>
+                                                <a href="{{ url('admin/transparencia/marco-presupuestario') }}">Presupuestario</a>
+                                            </li>
+                                        @endhasrole
+                                    </ul>
+                                </li>
+                            @endhasrole
 
-                                    @if(@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Transparencia-Decano') || @Auth::user()->hasRole('Transparencia-Secretario') )
-                                        <li>
-                                            <a href="{{ url('admin/transparencia/marco-normativo') }}">Normativo</a>
-                                        </li>
-                                    @endif
-                                    
-                                    @if(@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Transparencia-Decano'))
-                                        <li>
-                                            <a href="{{ url('admin/transparencia/marco-gestion') }}">De Gestión</a>
-                                        </li>
-                                    @endif
-                                    @if(@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Transparencia-Presupuestario') )
-                                        <li>
-                                            <a href="{{ url('admin/transparencia/marco-presupuestario') }}">Presupuestario</a>
-                                        </li>
-                                    @endif
-                                </ul>
-                            </li>
-                            @if(@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Transparencia-Secretario') )   
+                            @if(@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Transparencia-Secretario') )
                                 <li>
                                     <a href="{{ url('admin/transparencia/repositorios') }}">
                                         <i class="dripicons-graph-bar "></i> <span> Repositorios </span>
@@ -300,9 +300,9 @@
                                 </ul>
                             </li>
                             <!--fin de para los horarios-->
-                                
+
                             @endif
-                            
+
                         </ul>
                     </div>
                     <!-- End Sidebar -->

@@ -83,27 +83,36 @@
                             </a>
                         </li>
                         <li class="has-submenu p-1">
-                            <a href="#" class="rounded btn text-left">
-                                 <i class="mdi mdi-view-list mdi-24px"></i>Marcos<div class="arrow-down"></div></a>
+                            <a href="#" class="rounded btn text-left"><i class="mdi mdi-view-list mdi-24px"></i>Marcos<div class="arrow-down"></div></a>
                             <ul class="submenu">
                                 <li><a href="{{ url('transparencia/marco-normativo') }}">Normativo</a></li>
-                                <li><a href="{{ url('transparencia/marco-gestion') }}">De Gestión</a></li>
+                                <li class="has-submenu">
+                                    <a href="{{ url('transparencia/marco-gestion') }}">De Gestión <div class="arrow-down"></div></a>
+                                    <ul class="submenu">
+                                        <li>
+                                            <a href="{{ route('transparencia.directorios') }}">Directorio</a>
+                                        </li>
+                                    </ul>
+                                </li>
                                 <li><a href="{{ url('transparencia/marco-presupuestario') }}">Presupuestario</a></li>
                             </ul>
                         </li>
                         <li class="has-submenu p-1">
                             <a href="{{ url('transparencia/repositorios') }}" class="rounded btn text-left">
-                                 <i class="mdi mdi-chart-line mdi-24px"></i>Repositorios
-                             </a>
+                                <i class="mdi mdi-folder-open mdi-24px"></i>Repositorios
+                            </a>
                         </li>
+
                         <li class="has-submenu p-1">
-                            <a href="{{ url('transparencia/documentos-JD') }}" class="rounded btn text-left">
-                                 <i class="mdi mdi-file-pdf mdi-24px"></i>Documentos Junta Directiva
-                             </a>
+                            <a href="{{ url('transparencia/documentos-JD') }}" class="rounded btn text-left"><i class="mdi mdi-file-pdf mdi-24px"></i>Documentos Junta Directiva<div class="arrow-down"></div></a>
+                            <ul class="submenu">
+                                <li><a href="{{ route('transparencia.subcategoria', ['documentos-JD', 'acuerdos']) }}">Acuerdos</a></li>
+                                <li><a href="{{ route('transparencia.subcategoria', ['documentos-JD', 'agendas']) }}">Agendas</a></li>
+                                <li><a href="{{ route('transparencia.subcategoria', ['documentos-JD', 'actas']) }}">Actas</a></li>
+                            </ul>
                         </li>
 
                         <li class="has-submenu float-right p-1">
-
                             @auth
                                 <a href="#"  class="rounded btn text-left">
                                     <i class="mdi mdi-account mdi-24px"></i>
@@ -119,16 +128,13 @@
                                         </form>
                                     </li>
                                 </ul>
-
                             @else
                                 <a href="{{ route('login') }}"  class="rounded btn text-left">
                                     <i class="mdi mdi-account mdi-24px"></i>
                                     Iniciar Sesión
                                 </a>
                             @endauth
-
                         </li>
-
                     </ul>
                     <ul class="list-unstyled topnav-menu float-right mb-0">
 
@@ -145,9 +151,7 @@
                     <div class="clearfix"></div>
                 </div>
             </div>
-
         </header>
-
         <div class="wrapper">
             <div class="container-fluid">
                 <div class="page-title-box color-boton py-2 rounded titulo-responsive">
@@ -158,15 +162,8 @@
                     </a>
                 </div>
                 <div class="my-4"></div>
-
                 @yield('container')
-
-
-
             </div>
-
-
-
         </div>
 
         <!-- Footer Start -->

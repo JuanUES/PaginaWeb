@@ -10,7 +10,7 @@
                     <li class="breadcrumb-item active">{{ $titulo }}</li>
                 </ol>
             </div>
-            <h4 class="page-title"> <i class="fa fa-list"></i> Administracion de {{ $titulo }}</h4>
+            <h4 class="page-title"> <i class="fa fa-list"></i> Administración de {{ $titulo }}</h4>
         </div>
     </div>
 </div>
@@ -28,11 +28,11 @@
 
     <div class="row">
         <div class="col-9">
-            <h3>{{ $titulo }} Registrados</h3>   
+            <h3>{{ $titulo }} Registrados</h3>
         </div>
         <div class="col-3" style="text-align:right">
             <a href="{{ route('admin.transparencia.create', $categoria) }}" class="btn btn-primary" title="Agregar nuevo registro">
-                <i class=" dripicons-plus" aria-hidden="true"></i> 
+                <i class=" dripicons-plus" aria-hidden="true"></i>
             </a>
         </div>
         <!--<div class="col-12 col-sm-4">
@@ -107,7 +107,7 @@
             btns.forEach(el => el.addEventListener('click', event => {
 
                 let id = $(el).data('id')
-                let categoria = $(el).data('categoria') 
+                let categoria = $(el).data('categoria')
                 $.ajaxSetup({
                     headers: {
                         'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content')
@@ -137,14 +137,14 @@
                                 <object id="PDFdoc" width="100%" height="500px" type="application/pdf" data="${data.path}"></object>
                             `);
                         }else{
-                             $("#contentPDF").html(`
+                            $("#contentPDF").html(`
                                 <div class="alert alert-danger alert-dismissible" role="alert">
                                     <div class="alert-message">
                                         <strong> <i class="fa fa-info-circle"></i> Error!</strong> No se encontro el archivo
                                     </div>
                                 </div>
                                 <div id="loader" class="text-center">
-                                    <img src="{{ asset("images/404.gif") }}" class="img-fluid" />
+                                    <img src="{{ asset("images/not-found.png") }}" class="img-fluid" />
                                 </div>
                             `);
                         }

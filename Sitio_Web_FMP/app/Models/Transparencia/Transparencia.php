@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Transparencia;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Transparencia extends Model
-{
+class Transparencia extends Model{
     use HasFactory;
     protected $table = 'transparencia';
     protected $guarded = ['id'];
