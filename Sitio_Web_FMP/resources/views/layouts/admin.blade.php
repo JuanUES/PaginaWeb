@@ -89,48 +89,53 @@
                         <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             <img src="{{ asset('/images/ues_logo3.svg') }}" alt="user-image" class="rounded-circle">
                             <span class="pro-user-name ml-1">
-                                Agnes K <i class="mdi mdi-chevron-down"></i>
+                                {{ Auth::user()->name }} <i class="mdi mdi-chevron-down"></i>
                             </span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
                             <!-- item-->
                             <div class="dropdown-item noti-title">
                                 <h6 class="m-0">
-                                    Welcome !
+                                    Bienvenido!
                                 </h6>
                             </div>
 
                             <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
                                 <i class="dripicons-user"></i>
-                                <span>My Account</span>
+                                <span>Perfil</span>
                             </a>
 
                             <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            {{-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                                 <i class="dripicons-gear"></i>
                                 <span>Settings</span>
-                            </a>
+                            </a> --}}
 
                             <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            {{-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                                 <i class="dripicons-help"></i>
                                 <span>Support</span>
-                            </a>
+                            </a> --}}
 
                             <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            {{-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                                 <i class="dripicons-lock"></i>
                                 <span>Lock Screen</span>
-                            </a>
+                            </a> --}}
 
                             <div class="dropdown-divider"></div>
 
                             <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <a href="route('logout')" class="dropdown-item notify-item" onclick="event.preventDefault(); this.closest('form').submit();"><i class="dripicons-power"></i> {{ __('Cerrar sesión') }}</a>
+                            </form>
+
+                            {{-- <a href="javascript:void(0);" class="dropdown-item notify-item">
                                 <i class="dripicons-power"></i>
                                 <span>Logout</span>
-                            </a>
+                            </a> --}}
 
                         </div>
                     </li>

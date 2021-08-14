@@ -12,7 +12,7 @@ class DirectoriosController extends Controller{
 
     public function __construct(){
         $this->middleware('auth');
-        // $this->middleware('transparencia-roles');
+        $this->middleware(['role:super-admin|Transparencia-Decano']);
     }
 
     /**
@@ -64,17 +64,6 @@ class DirectoriosController extends Controller{
         $directorio = Directorio::create($requestData);
         return redirect()->route('admin.transparencia.directorios.index')->with('flash_message', 'Directorio almacenado con éxito!');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    // public function show($id){
-    //     // $directorio = Directorio::findOrFail($id);
-    //     // return view('Transparencia.Directorios.create', compact(['directorio']));
-    // }
 
     /**
      * Show the form for editing the specified resource.
