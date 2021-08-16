@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Tipo_Contrato;
+use App\Models\Tipo_Jornada;
 use App\Models\Licencias\Empleado;
 use App\Models\Horarios\Departamento;
 use Illuminate\Support\Facades\Validator;
@@ -14,8 +16,10 @@ class EmpleadoController extends Controller
         $empleadoJefe = Empleado::where('jefe',null)->get();
         $todosLosEmpleados=Empleado::get();
         $departamentos=Departamento::get();
+        $tcontrato=Tipo_Contrato::get();
+        $tjornada=Tipo_Jornada::get();
 
-        return view('Admin.empleados.empleado',compact('empleadoJefe','todosLosEmpleados','departamentos'));
+        return view('Admin.empleados.empleado',compact('empleadoJefe','todosLosEmpleados','departamentos','tjornada','tcontrato'));
     }
 
     public function store (Request $request){
