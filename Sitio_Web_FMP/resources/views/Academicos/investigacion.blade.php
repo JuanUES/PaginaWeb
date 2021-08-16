@@ -224,8 +224,8 @@
                                             <tbody>
                                                 @foreach ($pdfs as $item)
                                                 <tr>
-                                                    <th class="text-nowrap align-middle" scope="row">
-                                                        <h5>{!!$item->file!!}</h5>
+                                                    <th class="align-middle" scope="row">
+                                                        {!!$item->file!!}
                                                     </th>                                             
                                                                                     
                                                     <th class="align-middle ">
