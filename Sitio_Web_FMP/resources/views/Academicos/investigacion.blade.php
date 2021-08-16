@@ -236,7 +236,7 @@
                                                             </a>
                                                             @auth
                                                             <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminarPDF"
-                                                                onclick="$('#eliminar').val({{$item->id}});$('#localizacion').val({{'investigacion'}});"><i class="mdi mdi-delete mdi-24px"></i>  Eliminar
+                                                                onclick="$('#eliminar').val({{$item->id}});$('#localizacion').val('investigacion');$('#vista').val('investigacion')"><i class="mdi mdi-delete mdi-24px"></i>  Eliminar
                                                             </button>  
                                                             @endauth 
                                                         </div>
@@ -269,6 +269,7 @@
                                                             </div>
                                                             <input type="hidden" name="_id" id="eliminar">                                                        
                                                             <input type="hidden" name="localizacion" id="localizacion">
+                                                            <input type="hidden" name="vista" id="vista">
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-xl-6">
