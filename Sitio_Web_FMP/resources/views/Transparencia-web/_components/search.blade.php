@@ -21,7 +21,7 @@
             <select class="custom-select" name="subcategory" id="subcategory" {!! isset($categoria) ? ( (strcmp('documentos-jd', strtolower($categoria))==0) ? '' : 'style="display: none;"') : 'style="display: none;"' !!} >
                 <option selected>Sub Categoria</option>
                 @foreach($categorias['Documentos de Junta Directiva']['subcategorias'] as $key => $value)
-                    <option value="{{ $value }}" {{ (isset($subcategoria) && $subcategoria==$value) ? 'selected' : '' }}>{{ Str::ucfirst($value) }}</option>
+                    <option value="{{ $key }}" {{ (isset($subcategoria) && $subcategoria==$key) ? 'selected' : '' }}>{{ Str::ucfirst($key) }}</option>
                 @endforeach
             </select>
         </div>
