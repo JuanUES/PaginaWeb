@@ -12,27 +12,32 @@ use Yajra\DataTables\DataTables;
 class TransparenciaWebController extends Controller{
 
     public $categorias = array(
-        'Marco Normativo' => 'marco-normativo',
-        'Marco de Gestión' => 'marco-gestion',
-        'Marco Presupuestario' => 'marco-presupuestario',
-        'Repositorios' => 'repositorios',
-        'Documentos de Junta Directiva' => 'documentos-JD'
+        'Marco Normativo' => ['ruta' => 'marco-normativo', 'subcategorias' => []],
+        'Marco de Gestión' => ['ruta' => 'marco-gestion', 'subcategorias' => ['Directorios' => ['ruta_personalizada' =>'transparencia-directorios']]],
+        'Marco Presupuestario' => ['ruta' => 'marco-presupuestario', 'subcategorias' => []],
+        'Repositorios' => ['ruta' => 'repositorios', 'subcategorias' => []],
+        'Documentos de Junta Directiva' => ['ruta'=> 'documentos-JD', 'subcategorias' => ['acuerdos' => ['ruta_personalizada' => null ] , 'agendas' => ['ruta_personalizada' => null], 'actas' => ['ruta_personalizada' => null]]]
     );
 
-    public $subcategorias = ['acuerdos', 'agendas', 'actas'];
+    public function titulos(){
+        $categorias = $this->categorias;
+        $rutas = array_column($categorias, 'ruta');
+        $titulos = array_keys($categorias);
+        $combinados = array_combine($titulos, $rutas);
+        return $combinados;
+    }
 
     public function index(){
         $categorias = $this->categorias;
-        $subcategorias = $this->subcategorias;
-        return view('index-transparencia', compact(['categorias', 'subcategorias']));
+        return view('index-transparencia', compact(['categorias']));
     }
 
     public function categoria($categoria, Request $request){
-        $titulo = array_search($categoria, $this->categorias, true);
-        $subcategorias = $this->subcategorias;
+        $categorias = $this->categorias;
+        $titulos = $this->titulos();
+        $titulo = array_search($categoria, $titulos, true);
 
         if($titulo!=false){
-            $categorias = $this->categorias;
             $perPage = 5;
             $query = Transparencia::where('estado', 'activo')
                 ->where('publicar', 'publicado')
@@ -40,18 +45,18 @@ class TransparenciaWebController extends Controller{
 
             $resultados = $query->count();
             $documentos = $query->latest()->paginate($perPage);
-            return view('Transparencia-web.documentos', compact(['documentos', 'categoria', 'titulo', 'resultados', 'categorias', 'subcategorias']));
+            return view('Transparencia-web.documentos', compact(['documentos', 'categoria', 'titulo', 'resultados', 'categorias']));
         } else {
             return abort(404);
         }
     }
 
     public function subcategoria($categoria, $subcategoria, Request $request){
-        $titulo = array_search($categoria, $this->categorias, true);
-        $subcategorias = $this->subcategorias;
+        $categorias = $this->categorias;
+        $titulos = $this->titulos();
+        $titulo = array_search($categoria, $titulos, true);
 
         if($titulo!=false){
-            $categorias = $this->categorias;
             $perPage = 5;
             $query = Transparencia::where('estado', 'activo')
                 ->where('publicar', 'publicado')
@@ -60,7 +65,7 @@ class TransparenciaWebController extends Controller{
 
             $resultados = $query->count();
             $documentos = $query->latest()->paginate($perPage);
-            return view('Transparencia-web.documentos', compact(['documentos', 'subcategoria' , 'categoria', 'titulo', 'resultados', 'categorias', 'subcategorias']));
+            return view('Transparencia-web.documentos', compact(['documentos', 'subcategoria' , 'categoria', 'titulo', 'resultados', 'categorias']));
         } else {
             return abort(404);
         }
@@ -68,7 +73,10 @@ class TransparenciaWebController extends Controller{
 
 
     public function documento($categoria, $id){
-        $titulo = array_search($categoria, $this->categorias, true);
+        $categorias = $this->categorias;
+        $titulos = $this->titulos();
+        $titulo = array_search($categoria, $titulos, true);
+
         if($titulo!=false){
             $documento = Transparencia::findOrFail($id);
             $documentos = Transparencia::where('estado', 'activo')
@@ -96,7 +104,6 @@ class TransparenciaWebController extends Controller{
 
     public function busqueda(Request $request){
         $categorias = $this->categorias;
-        $subcategorias = $this->subcategorias;
         $categoria = $request->category;
         $subcategoria = $request->subcategory;
         $busqueda = $request->search;
@@ -123,12 +130,11 @@ class TransparenciaWebController extends Controller{
         if(!empty($start) && !empty($end))
             $query->WhereBetween('created_at', [$start, $end]);
 
-        // dd($query->toSql());
 
         $resultados = $query->count();
         $documentos = $query->latest()->paginate($perPage);
 
-        return view('Transparencia-web.busqueda', compact(['documentos', 'resultados', 'categoria', 'categorias', 'subcategoria', 'subcategorias', 'busqueda' ,'start', 'end']));
+        return view('Transparencia-web.busqueda', compact(['documentos', 'resultados', 'categoria', 'categorias', 'subcategoria', 'busqueda' ,'start', 'end']));
     }
 
     public function datatable($categoria, Request $request){

@@ -19,8 +19,8 @@ Route::resource('admin/transparencia-directorios', 'App\Http\Controllers\Transpa
 
 Route::get( 'transparencia', 'App\Http\Controllers\Transparencia\TransparenciaWebController@index');
 Route::get('transparencia/{categoria}', 'App\Http\Controllers\Transparencia\TransparenciaWebController@categoria')->name('transparencia.categoria');
-Route::get('transparencia/{categoria}/{subcategoria}', 'App\Http\Controllers\Transparencia\TransparenciaWebController@subcategoria')->name('transparencia.subcategoria');
-Route::get('transparencia/{categoria}/{id}', 'App\Http\Controllers\Transparencia\TransparenciaWebController@documento');
+Route::get('transparencia-sub/{categoria}/{subcategoria}', 'App\Http\Controllers\Transparencia\TransparenciaWebController@subcategoria')->name('transparencia.subcategoria');
+Route::get('transparencia/{categoria}/{id}', 'App\Http\Controllers\Transparencia\TransparenciaWebController@documento')->name('transparencia.documento');
 Route::get('transparencia-busqueda', 'App\Http\Controllers\Transparencia\TransparenciaWebController@busqueda')->name( 'transparencia.busqueda');
 Route::get('transparencia-datatable/{categoria}', 'App\Http\Controllers\Transparencia\TransparenciaWebController@datatable')->name('transparencia.datatable');
 Route::get('transparencia-directorios', 'App\Http\Controllers\Transparencia\TransparenciaWebController@directorios')->name('transparencia.directorios');
