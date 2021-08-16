@@ -15,6 +15,7 @@ use App\Http\Controllers\Pagina\ContenidoHtmlController;
 use App\Http\Controllers\Pagina\PlaComplementarioController;
 use App\Http\Controllers\Pagina\AudioVisualController;
 use App\Http\Controllers\Pagina\SondeoController;
+use App\Http\Controllers\Pagina\HorariosColecturiaController;
 
 /**PDF ------------------------------------------------------------------*/
 
@@ -174,4 +175,7 @@ Route::get('/AdministracionFinanciera', function () {
 Route::get('/UnidadDeTegnologiaDeLaInformacion', function () {
     return view('Administrativo.unidadTegnologiaInformacion');
 })->name('uti');
+
+Route::get('/HorariosColecturiaJson',[HorariosColecturiaController::class,'horariosColecturia'])
+->name('HorarioCole');
 
