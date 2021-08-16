@@ -1,12 +1,11 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Transparencia;
 
-use App\Models\Transparencia;
+use App\Models\Transparencia\Transparencia;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class TransparenciaFactory extends Factory
-{
+class TransparenciaFactory extends Factory{
     /**
      * The name of the factory's corresponding model.
      *

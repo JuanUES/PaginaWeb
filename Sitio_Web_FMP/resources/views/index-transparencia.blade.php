@@ -50,7 +50,7 @@
             <div class="card border border-danger">
                 <div class="card-body">
                     <blockquote class="card-bodyquote mb-0">
-                        <i class="fa fa-chart-pie fa-5x text-danger"></i> <br>
+                        <i class="fa fa-folder-open fa-5x text-danger"></i> <br>
                         <a href="{{ url('transparencia/repositorios') }}" class=" btn btn-link">
                             <h3>Repositorios</h3>
                         </a>

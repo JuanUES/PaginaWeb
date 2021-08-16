@@ -7,14 +7,15 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="{{ url('admin') }}">Inicio</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('admin.transparencia.index', $categoria) }}">{{ $titulo }}</a></li>
-                    <li class="breadcrumb-item active">Registro</li>
+                    <li class="breadcrumb-item"><a href="{{ url('admin/transparencia-directorios') }}">Directorios</a></li>
+                    <li class="breadcrumb-item active">Nuevo</li>
                 </ol>
             </div>
-            <h4 class="page-title"> <i class="fa fa-list"></i> Administracion de {{ $titulo }}</h4>
+            <h4 class="page-title"> <i class="fa fa-list"></i> Administración de Directorios</h4>
         </div>
     </div>
 </div>
+
 
 <div class="card-box">
     <div class="card-body">
@@ -30,9 +31,9 @@
                 </div>
             </div>
         @endif
-        <form method="POST" id="frmTransparencia" action="{{ route('admin.transparencia.store', [$categoria]) }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
+        <form method="POST" id="frmTransparencia" action="{{ route('admin.transparencia.directorios.store') }}" accept-charset="UTF-8" class="form-horizontal" enctype="multipart/form-data">
             @csrf
-            @include ('Transparencia.form', ['formMode' => 'create'])
+            @include ('Transparencia.Directorios.form', ['formMode' => 'create'])
         </form>
     </div>
 </div>

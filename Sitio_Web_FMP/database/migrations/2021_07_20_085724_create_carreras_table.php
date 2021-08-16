@@ -18,6 +18,7 @@ class CreateCarrerasTable extends Migration
             $table->string('codigo_carrera');
             $table->string('nombre_carrera');
             $table->string('modalidad_carrera');
+            $table->boolean('estado');
             $table->bigInteger('id_depto');
             $table->foreign('id_depto')
             ->references('id')

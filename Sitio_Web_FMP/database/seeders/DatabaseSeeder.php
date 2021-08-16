@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Pagina\Maestria;
+use App\Models\Transparencia\Transparencia;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,7 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(){
         // \App\Models\User::factory(10)->create();
-        \App\Models\Transparencia::factory(1000)->create();
+        Transparencia::factory(2000)->create();
 
         $this->call([
             RolesSeeder::class,

@@ -41,18 +41,14 @@
                             @isset($categorias)
                                 @foreach($categorias as $key => $value)
                                     <div>
-                                        <a href="{{ url('transparencia').'/'.$value }}" class="btn btn-link"><i class="fa fa-arrow-alt-circle-right"></i> {{ $key }}</a>
+                                        <a href="{{ url('transparencia').'/'.$value['ruta'] }}" class="btn btn-link"><i class="fa fa-arrow-alt-circle-right"></i> {{ $key }}</a>
                                     </div>
-                                @endforeach
-                                    @isset($subcategorias)
-                                        <div class="col order-first">
-                                        @foreach($subcategorias as $index => $item)
-                                            <div>
-                                                <a href="{{ route('transparencia.subcategoria', [$value, $item]) }}" class="btn btn-link mt-0 mb-1 pt-0 pb-0 ml-3"><i class="fa fa-angle-double-right"></i> {{ Str::ucfirst($item) }}</a>
-                                            </div>
-                                        @endforeach
+                                    @foreach ($value['subcategorias'] as $index => $item)
+                                        <div>
+                                            <a href="{{ is_null(($item['ruta_personalizada'])) ? route('transparencia.subcategoria', [$value['ruta'], $index]) : url($item['ruta_personalizada']) }}" class="btn btn-link mt-0 mb-1 pt-0 pb-0 ml-3"><i class="fa fa-angle-double-right"></i> {{ Str::ucfirst($index) }}</a>
                                         </div>
-                                    @endisset
+                                    @endforeach
+                                @endforeach
                             @endisset
                         </div>
                     </div>

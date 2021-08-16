@@ -37,7 +37,7 @@
 
                 </div>
                 <div class="float-right mt-2">
-                    <a href="{{ url('transparencia').'/'.$categoria }}" class="font-weight-light"><i class="fa fa-eye"></i> Ver todos ...</a>
+                    <a href="{{ route('transparencia.categoria', $categoria) }}" class="font-weight-light"><i class="fa fa-eye"></i> Ver todos ...</a>
                 </div>
             </div>
         </div>
@@ -45,7 +45,7 @@
     <div class="col-12 col-sm-12 col-md-8">
         <div class="card-box ribbon-box">
             <div class="ribbon ribbon-info float-left">
-                <a href="{{ route('transparencia', $categoria) }}" class="text-white"> <i class="fa fa-chevron-circle-left"></i> Ir a la categoría </a>
+                <a href="{{ route('transparencia.categoria', $categoria) }}" class="text-white"> <i class="fa fa-chevron-circle-left"></i> Ir a la categoría </a>
             </div>
             <a href="{{ route('transparencia.download', $documento->id) }}" class="btn btn-rounded btn-outline-danger btn-sm float-right"><i class="fa fa-cloud-download-alt" aria-hidden="true" title="Descargar Documento">  </i> Descargar</a>
             <div class="ribbon-content mb-4">
@@ -58,7 +58,17 @@
 
                     <h5 class="font-weight-semibold"> <i class="fa fa-calendar-day" style="color: #f34943"></i> Fecha de publicación: <span>{{ strftime("%A, %d de %B de %Y", strtotime($documento->created_at)) }}</span> </h5>
                     <hr>
-                    <embed src="{{ asset('storage').'/'.$documento->documento }}" type="application/pdf" width="100%" height="600px" />
+                    @if (file_exists( public_path('storage').'/'.$documento->documento))
+                        <embed src="{{ asset('storage').'/'.$documento->documento }}" type="application/pdf" width="100%" height="600px" />
+                    @else
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card-box text-center">
+                                    <p class="p-2 border"> <i class="fa fa-info-circle"></i> No es posible cargar el archivo.</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
