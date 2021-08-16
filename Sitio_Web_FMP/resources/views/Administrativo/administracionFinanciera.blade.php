@@ -12,31 +12,15 @@
     <script src="{{ asset('js/moment.min.js') }}"></script>
     <script src="{{ asset('js/fullcalendar.min.js') }}"></script>  
     <script src="{{ asset('js/locale/es.js') }}"></script>  
+    @auth      
+    <script src="{{ asset('js/scripts/admonFinanciero.js') }}"></script>
     <script>
-
+        calendarConfig('{{route('HorarioCole')}}');         
     </script>
-    <script>
-    $('#calendar').fullCalendar({
-        
-        events:[
-            {
-                title:"Abierto",
-                color:"#F50040",
-                textColor:"#AA0000",
-                start:"2021-08-12 08:02:03"
-            },
-            {
-                title:"Cerrado",
-                color:"#AA0000",
-                textColor:"#AA0000",
-                start:"2021-08-12 15:02:03"
-            }
-        ],
-        height: 600,
-        timeFormat: 'hh:mm t'
-
-    });
-    </script>
+    @endauth
+    @guest
+    <script>$('#calendar').fullCalendar({events:'{{route('HorarioCole')}}',height: 600,timeFormat: 'hh:mm t',});</script>        
+    @endguest
 @endsection
 
 @section('container')
@@ -128,9 +112,119 @@
             <div class="col-xl-12">
                 <div class="card-box">
                     <h3>Horarios de Colecturia</h3>
-                    <div id="calendar"></div>
+                    <div id="calendar" ></div>
                 </div>
-            </div>
+            </div>'
+            @auth               
+            <div id="myModalRegistro" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="myCenterModalLabel">
+                                <i class="mdi mdi-calendar-multiselect mdi-24px"></i> Horario Colecturia</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">        
+                            <div class="row">
+                                <div class="col-xl-12">
+                                <label>Nota: <code>* Campos Obligatorio</code></label>
+                                </div>
+                            </div>                                
+                            <div class="tab-content">
+                            <div class="alert alert-primary text-white" role="alert" style="display:none" id="notificacion"></div>                                        
+                            <form method="POST" 
+                            action="{{ route('Nosotros.directorio') }}" 
+                            class="parsley-examples"
+                            enctype="multipart/form-data" id="registro">
+                                @csrf
+                                <div class="row">
+                                    <input type="hidden" id="_id" name="_id">                                    
+                                </div>      
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="form-group">
+                                            <label>Titulo <code>*</code></label>
+                                            <div>
+                                                <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Titulo (Obligatorio)">                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>       
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <div class="form-group">
+                                            <label>Fecha</label>
+                                            <div>
+                                                <input type="date" class="form-control" disabled id="fecha" name="fecha" placeholder="">                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <div class="form-group">
+                                            <label>Hora <code>*</code></label>
+                                            <div>
+                                                <input type="time" class="form-control"
+                                                 min="08:00" max="17:00" id="hora" value="15:00" name="hora" placeholder="">                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>   
+                                <div class="form-group mb-0 row">
+                                    <div class="col order-first">
+                                        <button type="button" class="btn btn-primary waves-effect waves-light mr-1" 
+                                            id="guardar"><i class="fa fa-save font-14"></i> Guardar
+                                        </button>
+                                        <button type="reset" class="btn btn-light waves-effect waves-light" data-dismiss="modal">
+                                            <i class="fa fa-ban font-14" aria-hidden="true"></i> Cancelar
+                                        </button>
+                                    </div>
+                                    <div class="col order-last d-flex justify-content-end">
+                                        <button type="button" class="btn btn-light waves-effect waves-light mr-1"
+                                            id="eliminar" disabled>
+                                            <i class="mdi mdi-delete font-14"></i> Eliminar
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>       
+                            </div>
+                        </div>                                    
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <div id="modalInfo" class="modal fade bs-example-modal-center" tabindex="-1" 
+                role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="myCenterModalLabel">Información</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row ">
+                                <div class="col-lg-2 dripicons-information text-info fa-5x"></div>
+                                <div class="col-lg-10 text-black d-flex align-items-center">
+                                    <h4 class="font-17 text-justify font-weight-bold align-center" id="informacion">
+                                        Informacion: 
+                                    </h4>
+                                </div>
+                                <input type="hidden" name="_id" id="_idEliminar">
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-6">
+                                   
+                                </div>
+                                <div class="col-xl-6">
+                                    <button type="reset" class="btn btn-light p-1 waves-light waves-effect btn-block font-24" data-dismiss="modal" >
+                                        <i class="mdi mdi-door mdi-16px" aria-hidden="true"></i>
+                                        Salir
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal --> 
+            @endauth
         </div>
     </div> <!-- end container -->
 </div> 

@@ -551,7 +551,6 @@
                                                 ?>
                                                 <div class="card-box">  
                                                 @foreach ($videos as $item)
-                                                    
                                                     <div class="btn-group btn-block">
                                                         <button class="btn btn-danger waves-effect waves-light btn-block text-left fond-19" type="button" 
                                                             data-toggle="collapse" data-target="#collapseExample{{$item->id}}" 
@@ -604,7 +603,7 @@
                             <a href="https://campus.ues.edu.sv/" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Campus Virtual</a>
                             <a href="https://eel.ues.edu.sv/" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Expediente en Linea</a>                      
                             <a href="https://correo.ues.edu.sv/" class="btn btn-danger  btn-block mt-3 text-left"><i class=" mdi mdi-email font-18"></i> Correo Institucional</a>                           
-                            <a href="https://www.facebook.com/DistanciaFMP" class="btn btn-danger  btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Universidad en Linea / Sede Paracentral</a> 
+                            <a href="https://www.facebook.com/DistanciaFMP" class="btn btn-danger  btn-block mt-3 text-left"><i class="mdi mdi-facebook border rounded font-18"></i> Universidad en Linea / Sede Paracentral</a> 
                             <a href="https://www.facebook.com/celeues" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-facebook border rounded"></i> CELEUES</a>
                             <a href="http://biblio.fmp.ues.edu.sv/biblioteca/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-book-open-variant font-18"></i> Biblioteca</a>
                         </div> <!-- end card-box-->                        
