@@ -197,7 +197,7 @@
                                 </div> 
                                 @guest  
                                 
-                                <div class="col-xl-12">
+                                <div class="col-xl-12 py-2">
                                     @if ($contenido!=null)
                                         {!!$contenido->contenido!!}
                                     @endif
