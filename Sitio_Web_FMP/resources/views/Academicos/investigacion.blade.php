@@ -196,13 +196,13 @@
                                     @endauth
                                 </div> 
                                 @guest  
-                                <div class="row">
-                                    <div class="col-xl-12">
-                                        @if ($contenido!=null)
-                                            {!!$contenido->contenido!!}
-                                        @endif
-                                    </div>                                    
-                                </div>
+                                
+                                <div class="col-xl-12">
+                                    @if ($contenido!=null)
+                                        {!!$contenido->contenido!!}
+                                    @endif
+                                </div>                                    
+                                
                                 @endguest
                                 <div class="col-xl-12 py-3">
                                     <?php
