@@ -133,7 +133,7 @@
                             <div class="tab-content">
                             <div class="alert alert-primary text-white" role="alert" style="display:none" id="notificacion"></div>                                        
                             <form method="POST" 
-                            action="{{ route('Nosotros.directorio') }}" 
+                            action="{{ route('HorarioColeR') }}" 
                             class="parsley-examples"
                             enctype="multipart/form-data" id="registro">
                                 @csrf
@@ -145,7 +145,10 @@
                                         <div class="form-group">
                                             <label>Titulo <code>*</code></label>
                                             <div>
-                                                <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Titulo (Obligatorio)">                                                
+                                                <select class="form-control" id="titulo" name="titulo">
+                                                    <option value="Abierto">Abierto</option>
+                                                    <option value="Cerrado">Cerrado</option>
+                                                </select>                                             
                                             </div>
                                         </div>
                                     </div>
@@ -155,7 +158,8 @@
                                         <div class="form-group">
                                             <label>Fecha</label>
                                             <div>
-                                                <input type="date" class="form-control" disabled id="fecha" name="fecha" placeholder="">                                                
+                                                <input type="date" class="form-control" id="fecha1" placeholder="" disabled>   
+                                                <input type="hidden"  id="fecha" name="fecha">                                             
                                             </div>
                                         </div>
                                     </div>
@@ -163,8 +167,7 @@
                                         <div class="form-group">
                                             <label>Hora <code>*</code></label>
                                             <div>
-                                                <input type="time" class="form-control"
-                                                 min="08:00" max="17:00" id="hora" value="15:00" name="hora" placeholder="">                                                
+                                                <input type="time" class="form-control" id="hora" name="hora" placeholder="">                                                
                                             </div>
                                         </div>
                                     </div>
@@ -180,7 +183,7 @@
                                     </div>
                                     <div class="col order-last d-flex justify-content-end">
                                         <button type="button" class="btn btn-light waves-effect waves-light mr-1"
-                                            id="eliminar" disabled>
+                                            id="eliminar">
                                             <i class="mdi mdi-delete font-14"></i> Eliminar
                                         </button>
                                     </div>

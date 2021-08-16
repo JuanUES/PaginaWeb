@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Pagina;
 use App\Http\Controllers\Controller;
 use App\Models\Pagina\HorariosColecturia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class HorariosColecturiaController extends Controller
 {
@@ -26,7 +28,8 @@ class HorariosColecturiaController extends Controller
      */
     public function horariosColecturia()
     {
-        return DB::select("select title ,start , '#AA0000' as color,
+        return (Auth::guest()) ?  DB::select("select title ,start , '#AA0000' as color,
+        '#AA0000' as textColor, 'long description' as description from horarios_colecturias"):DB::select("select id, title ,start , '#AA0000' as color,
         '#AA0000' as textColor from horarios_colecturias");
     }
 
@@ -38,7 +41,22 @@ class HorariosColecturiaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(),[
+            'titulo' => 'required|max:255',
+            'hora' => 'required',
+        ]);         
+
+        if($validator->fails())
+        {            
+            return response()->json(['error'=>$validator->errors()->all()]);                
+        }
+         
+        $hc = $request->_id == null ? new horariosColecturia : horariosColecturia::findOrFail($request->_id);
+        $hc->start = $request->fecha.' '.$request->hora;
+        $hc->user = auth()->id();
+        $hc->title = $request->titulo;
+        $hc->save();
+        return  $request->_id !=null ?response()->json(['mensaje'=>'Modificación exitosa']):response()->json(['mensaje'=>'Registro exitoso']);
     }
 
     /**

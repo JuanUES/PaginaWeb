@@ -1,17 +1,17 @@
 function calendarConfig(urlJson){
     $('#calendar').fullCalendar({        
         events:urlJson,
-        height: 600,
+        height: 600, droppable: true,
         timeFormat: 'hh:mm t',
         dayClick: function (date, allDay, jsEvent, view) {
-            $('#eliminar').prop("disabled", true); 
+            $('#eliminar').hide(); 
+            $('#fecha1').prop("disabled", true); 
             const fechaComoCadena = date.format('yyyy-MM-DD h:mm');
             const dias = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado',];
             const numeroDia = new Date(fechaComoCadena).getDay();
             const nombreDia = dias[numeroDia];
             var select = moment(date).format('yyyy-MM-DD');
             var hoy = moment(new Date()).format('yyyy-MM-DD');
-            console.log(nombreDia);
             if (nombreDia == 'domingo' || nombreDia == 'sabado') {
                 //si es sabado o domingo dia que no abre 
                 $('#informacion').html('Información: Este dia esta cerrado.');
@@ -20,6 +20,7 @@ function calendarConfig(urlJson){
 
                 if (select >= hoy) {                            
                     $('#fecha').val(date.format("yyyy-MM-DD"));
+                    $('#fecha1').val(date.format("yyyy-MM-DD"));
                     $('#hora').val(new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false }));
                     $('#myModalRegistro').modal();
                 } else {
@@ -30,7 +31,8 @@ function calendarConfig(urlJson){
             // limpiar();
         }, 
         eventClick: function (calEvent, jsEvent, view) {
-            $('#eliminar').prop("disabled", false); 
+            $('#eliminar').show(); 
+            $('#fecha1').prop("disabled", true); 
             let date = new Date(calEvent.start._i);
             let fecha = moment(date).format('yyyy-MM-DD');
             let hora = moment(date).format('HH:mm:ss'); 
@@ -38,6 +40,7 @@ function calendarConfig(urlJson){
             $('#_id').val(calEvent.id);
             $('#titulo').val(calEvent.title);
             $('#fecha').val(fecha);
+            $('#fecha1').val(fecha);
             $('#hora').val(hora);
             $('#myModalRegistro').modal();
             //document.getElementById("update-form").reset();
@@ -46,7 +49,7 @@ function calendarConfig(urlJson){
 };
 
 $('.modal').on('hidden.bs.modal',function(){
-    $(".alert").hide();$("form").trigger("reset");
+    $(".alert").hide();$("form").trigger("reset");enableform('#registro');$('#_id').val(null);
 });
 
 function disableform(formId) {
@@ -74,6 +77,12 @@ function enableform(formId) {
     for (var i=0;i<f.length;i++)
         f[i].disabled=false
 };
+
+$('#eliminar').click(function(){
+    let id = $('#_id').val();
+    console.log(id);
+    $('#myModalRegistro').modal('toggle');
+});
 
 $("#guardar").click(function() {
     let formulario = '#registro';
@@ -166,6 +175,7 @@ $("#guardar").click(function() {
                 ).show();
                 $("form").trigger("reset");
                 $('#calendar').fullCalendar('refetchEvents');
+                enableform(formulario);
             }
         }
        // $('.modal').scrollTop($('.modal').height());

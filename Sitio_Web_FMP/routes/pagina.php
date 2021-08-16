@@ -179,3 +179,6 @@ Route::get('/UnidadDeTegnologiaDeLaInformacion', function () {
 Route::get('/HorariosColecturiaJson',[HorariosColecturiaController::class,'horariosColecturia'])
 ->name('HorarioCole');
 
+Route::post('/HorariosColecturiaRegistro',[HorariosColecturiaController::class,'store'])
+->name('HorarioColeR')->middleware(['auth']);
+

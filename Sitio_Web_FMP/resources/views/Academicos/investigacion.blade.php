@@ -158,65 +158,108 @@
                                     </div>  
                                 </div>    
                                 @endauth       
+                                <div class="col-xl-12 row">
+
+                                    <div class="col order-first">
+                                    </div>                               
+                                    @auth
+                                    <div class="col-lg-3 order-last">
+                                        <button class="btn btn-block btn-info tex-left" 
+                                            data-toggle="modal" data-target="#modalSubirInvestigacion">
+                                            <div class="mdi mdi-upload mdi-16px text-center" > Subir PDF</div>
+                                        </button>
+                                    </div>  
+                                    <div id="modalSubirInvestigacion" class="modal fade bs-example-modal-center" 
+                                        tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" 
+                                        aria-hidden="true" style="display: none;" >
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title" id="myCenterModalLabel">Zona para subir PDF</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    
+                                                    <form action="{{ route('Mpdf', ['localizacion'=>'investigacion']) }}" method="post"
+                                                        class="dropzone dropzonepdf" >
+                                                        @csrf                                 
+                                                        <div class="dz-message needsclick">
+                                                            <i class="h3 text-muted dripicons-cloud-upload"></i>
+                                                            <h3>Suelta los archivos aquí o haz clic para subir.</h3>
+                                                        </div>
+                                                        <div class="dropzone-previews"></div>
+                                                    </form>
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal-dialog -->
+                                    </div><!-- /.modal-->
+                                    @endauth
+                                </div> 
                                 @guest  
-                                <div class=" row py-1">
+                                <div class="row">
                                     <div class="col-xl-12">
                                         @if ($contenido!=null)
                                             {!!$contenido->contenido!!}
                                         @endif
                                     </div>                                    
                                 </div>
-                                @endguest 
-                                @endif
-                                
-                                <div class="row">
+                                @endguest
+                                <div class="col-xl-12 py-3">
                                     <?php
                                         $pdfs = \App\Models\Pagina\PDF::where('localizacion','investigacion')->get();
                                     ?>
                                     
                                     @if (count($pdfs)>0)
-                                    <div class="col-xl-12">
-                                        <div class="card-box">
-                                            @foreach ($pdfs as $item)
-                                            <div class="btn-group btn-block" role="group">
-                                                <a class="btn btn-danger waves-effect waves-light btn-block text-left fond-19" type="button" 
-                                                    href="{{ route('index') }}{!!'/files/pdfs/investigacion/'.$item->file !!}" style="margin-left: 0px; " target="_blank">
-                                                    <i class=" mdi mdi-arrow-down-bold font-18"></i>  {{$item->file}}
-                                                </a> 
-                                                <a class="btn btn-light waves-effect width-md  text-center" onclick="$('#eliminar').val({{$item->id}});$('#localizacion').val('investigacion');"
-                                                    data-toggle="modal" data-target="#modalEliminarPDF"><i class="mdi mdi-delete font-18"></i> Eliminar</a>
-                                            </div>
-                                            @endforeach 
-                                        </div>  
-                                    </div>
+                                    <div class="table-responsive my-1" id="listaPDFInvestigacion">
+                                        <table class="table mb-0 border @guest table-striped @endguest">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <h4>Formatos</h4>
+                                                    </th>
+                                                    <th class="col-sm-4">                                              
+                                                    </th>                             
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($pdfs as $item)
+                                                <tr>
+                                                    <th class="text-nowrap align-middle" scope="row">
+                                                        <p class="font-18">{!!$item->file!!}</p>
+                                                    </th>                                             
+                                                                                    
+                                                    <th class="align-middle ">
+                                                        
+                                                        <div class="btn-group" role="group">
+                                                            <a class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/investigacion/'.$item->file !!}" target="_blank"> 
+                                                                <i class="mdi mdi-file-pdf mdi-24px mr-1"></i>Descargar
+                                                            </a>
+                                                            @auth
+                                                            <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminarPDF"
+                                                                onclick="$('#eliminar').val({{$item->id}});$('#localizacion').val({{'investigacion'}});"><i class="mdi mdi-delete mdi-24px"></i>  Eliminar
+                                                            </button>  
+                                                            @endauth 
+                                                        </div>
+                                                                                                
+                                                    </th>
+                                                    
+                                                </tr>  
+                                                @endforeach                                                              
+                                            </tbody>
+                                        </table>
+                                    </div> <!-- end table-responsive-->    
                                     @endif
-                                </div>
+                                </div>                                
                                 @auth
-                                    <div class="row">   
-                                        <div class="col-xl-12">
-                                            <div class="card-box">
-                                                <h4 class="text-center">Zona para subir archivos</h4>                             
-                                                <form action="{{ route('Mpdf', ['localizacion'=>'investigacion']) }}" method="post"
-                                                    class="dropzone dropzonepdf" >
-                                                    @csrf                                 
-                                                    <div class="dz-message needsclick">
-                                                        <i class="h3 text-muted dripicons-cloud-upload"></i>
-                                                        <h3>Suelta los archivos aquí o haz clic para subir.</h3>
-                                                    </div>
-                                                    <div class="dropzone-previews"></div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div> 
                                     <div id="modalEliminarPDF" class="modal fade bs-example-modal-center" tabindex="-1" 
                                         role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                                         <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
-                                                <div class="modal-header border rounded">
+                                                <div class="modal-header">
                                                     <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
                                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                                 </div>
-                                                <div class="modal-body border rounded">
+                                                <div class="modal-body">
                                                     <form action="{{ route('eliminarpdfmaestri') }}" method="POST">
                                                         @csrf
                                                         <div class="row py-3">
@@ -226,7 +269,6 @@
                                                             </div>
                                                             <input type="hidden" name="_id" id="eliminar">                                                        
                                                             <input type="hidden" name="localizacion" id="localizacion">
-                                                            <input type="hidden" name="vista" value="investigacion">
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-xl-6">
@@ -249,6 +291,8 @@
                                         </div><!-- /.modal-dialog -->
                                     </div><!-- /.modal --> 
                                 @endauth
+                                 
+                                @endif                                
                                 <!-- end col -->
                             </div> <!-- end row-->
 
