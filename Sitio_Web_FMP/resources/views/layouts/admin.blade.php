@@ -260,13 +260,13 @@
                                         <a href="{{route('materias')}}">Materias</a>
                                     </li>
                                     <li>
-                                        <a href="{{route('aulas')}}">Aulas</a>
-                                    </li>
-                                    <li>
                                         <a href="{{route('carreras')}}">Carreras</a>
                                     </li>
                                     <li>
                                         <a href="{{route('depto')}}">Departamentos</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{route('aulas')}}">Aulas</a>
                                     </li>
                                     <li>
                                         <a href="{{route('horas')}}">Ingresar Horas</a>
