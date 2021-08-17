@@ -35,12 +35,14 @@
                 </tr>
                 </thead>
                 <tbody>
+                {{--@foreach($tcontrato as $item)--}}
                 <tr>
-                    <th>GOOG <span class="co-name">Google Inc.</span></th>
-                    <td>---</td>
-                    <td>---</td>
-                    <td>---</td>   
+                    <th></th>
+                    <td></td>
+                    <td></td>
+                    <td></td>   
                 </tr>
+                {{--@endforeach--}}
                 </tbody>
             </table>
 

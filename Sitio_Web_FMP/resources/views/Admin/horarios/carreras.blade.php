@@ -2,7 +2,7 @@
 
 @section('content')
 <!-- inicio Modal de registro -->
-<div class="modal fade" id="form-depto" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="form-carreras" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -11,7 +11,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form id="deptoForm" action="{{route('depto.store')}}" method="POST">
+        <form id="carrerasForm" action="{{route('carreras.create')}}" method="POST">
             <div class="modal-body">
                 <input type="hidden" id="_id" name="_id"/>
                     @csrf
@@ -27,14 +27,14 @@
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputNombre">Código<code>*</code></label>
-                                <input type="text" class="form-control" name="codigo_carrera" id="codigo_carrera" placeholder="Digite el código">
+                                <input type="text" class="form-control" name="codigo_carrera" id="codigo_carrera" placeholder="Digite el código" autocomplete="off">
                             
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputNombre">Nombre carrera<code>*</code></label>
-                                <input type="text" class="form-control" name="nombre_carrera" id="nombre_carrera" placeholder="Digite el nombre">
+                                <input type="text" class="form-control" name="nombre_carrera" id="nombre_carrera" placeholder="Digite la carrera" autocomplete="off">
                             
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                             <div class="form-group">
                                 <label for="exampleInputNombre">Modalidad<code>*</code></label>
                                 <select class="custom-select" name="modalidad_carrera" id="modalidad_carrera">
-                                    <option>Seleccione</option>
+                                    <option value="">Seleccione</option>
                                     <option value="PR">PR</option>
                                 </select>
                             </div>
@@ -54,12 +54,13 @@
                                 <label for="exampleInputDepto">Departamentos</label>
                                         @if (count($deptosC))
                                         <select class="custom-select" name="id_depto" id="id_depto">
+                                            <option value="">Seleccione</option>
                                             @foreach ($deptosC as $item)
                                             <option value="{!!$item->id!!}">{!!$item->nombre_departamento!!}</option>
                                             @endforeach
                                         @else
                                         <select class="custom-select" name="id_depto" id="id_depto">
-                                            <option value="">Sin datos</option>
+                                            <option>Sin datos</option>
                                         @endif  
                                     </select>
                             </div>
@@ -69,7 +70,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i>Cerrar</button>
-                <button type="button" class="btn btn-primary" onClick="submitForm('#deptoForm','#notificacion')"><li class="fa fa-save"></li>Guardar</button>
+                <button type="button" class="btn btn-primary" onClick="submitForm('#carrerasForm','#notificacion')"><li class="fa fa-save"></li>Guardar</button>
             </div>
         </form>
       </div>
@@ -85,15 +86,15 @@
                 <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            <form action="{{ route('estadoDept') }}" method="POST">
+            <form action="{{ route('estadoCarrera') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="row py-3">
                         <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
                         <div class="col-lg-10 text-black">
-                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se dara de baja este departamento, ¿Desea continuar?</h4>
+                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se dara de baja a esta carrera, ¿Desea continuar?</h4>
                         </div>
-                        <input type="hidden" name="E_depto" id="E_depto">
+                        <input type="hidden" name="B_carrera" id="B_carrera">
                     </div>
                     <div class="row">
                         <div class="col-xl-6">
@@ -125,15 +126,15 @@
                 <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            <form action="{{ route('estadoADept') }}" method="POST">
+            <form action="{{ route('estadoACarre') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="row py-3">
                         <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
                         <div class="col-lg-10 text-black">
-                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se dara de alta este departamento, ¿Desea continuar?</h4>
+                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se dara de alta esta carrera, ¿Desea continuar?</h4>
                         </div>
-                        <input type="hidden" name="E_Activar" id="E_Activar">
+                        <input type="hidden" name="C_Activar" id="C_Activar">
                     </div>
                     <div class="row">
                         <div class="col-xl-6">
@@ -183,7 +184,7 @@
                 </div>
                 <div class="col-3">
                     <!-- Button trigger modal -->
-                 <button type="button" title="Agregar Departamentos" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#form-depto"></button>
+                 <button type="button" title="Agregar Departamentos" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#form-carreras"></button>
                 </div>
             </div>
             <table  class="table table-sm" id="table-carrera">
@@ -198,7 +199,33 @@
                   
                 </tr>
                 </thead>
-                <tbody>  
+                <tbody> 
+                    @foreach ($ver as $item)
+                    <tr>
+                        <td>{!!$item->codigo_carrera!!}</td>
+                        <td><span class="co-name">{!!$item->nombre_carrera!!}</span></td>
+                        <td><span class="co-name">{!!$item->modalidad_carrera!!}</span></td>
+                        <td><span class="co-name">{!!$item->nombre_departamento!!}</span></td>
+                        {!!$item->estado?' <th><span class="co-name">Activo</span></th>':'<th><span class="co-name">Inactivo</span></th>'!!}
+                        @if ($item->estado==true)
+                       
+                        <td>
+                        <button title="Editar Carrera" class="btn btn-outline-primary btn-sm"   onclick="editarDepto({!!$item->id!!})" data-toggle="modal" data-target="#form-carreras"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
+                        </button>
+                        <button title="Desactivar Carrera" class="btn btn-outline-primary btn-sm" onclick="eliminarDepto('{!!$item->id!!}')" data-toggle="modal" data-target="#modalEliminar"><i class="fas fa-trash-alt" aria-hidden="true"></i>
+                        </button>
+                        </td>
+                        @endif
+                        @if ($item->estado==false)
+                        <td>
+                        <button title="Editar Carrera" class="btn btn-outline-primary btn-sm"   onclick="editarDepto({!!$item->id!!})" data-toggle="modal" data-target="#form-carreras"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
+                        </button>
+                        <button title="Activar Carrera" class="btn btn-outline-primary btn-sm" onclick="ActivarCarrer('{!!$item->id!!}')" data-toggle="modal" data-target="#modalAlta"><i class="fa fa-arrow-up" aria-hidden="true"></i>
+                        </button>
+                        </td>
+                        @endif             
+                    </tr>
+                    @endforeach  
                 </tbody>
             </table>
 
@@ -210,9 +237,15 @@
 
 @section('plugins-js')
 <script src="{{ asset('js/scripts/http.min.js') }}"></script>
-<script src="{{ asset('js/horariosJs/depto.js') }}"></script>
+<script src="{{ asset('js/horariosJs/carreras.js') }}"></script>
 <!-- Dashboard Init JS -->
 <script src="{{ asset('template-admin/dist/assets/js/pages/dashboard.init.js') }}"></script>
+<script>
+    function editarDepto(id){
+        $json = {!!json_encode($ver)!!}.find(x => x.id==id);
+        editar($json);
+        }
+</script>
 <script>
     $(document).ready(function () {
         $('#table-carrera').DataTable({

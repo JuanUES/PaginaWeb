@@ -27,4 +27,8 @@ class Jornada extends Model
         return $this->hasOne(Periodo::class, 'id', 'id_periodo');
     }
 
+    public function empleado_rf(){
+        return $this->hasOne(Empleado::class, 'id', 'id_emp');
+    }
+
 }

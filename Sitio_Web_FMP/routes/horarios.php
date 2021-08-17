@@ -19,6 +19,9 @@ Route::post('Departamentos/estadoActivar', [DepartamentoController::class,'activ
 //fin de departamentos
 //para carreras
 Route::get('Carreras',[CarrerasController::class,'index'])->name('carreras');
+Route::post('Carreras/create',[CarrerasController::class,'create'])->name('carreras.create');
+Route::post('Carreras/estado', [CarrerasController::class,'estado'])->name('estadoCarrera');
+Route::post('Carreras/estadoActivar', [CarrerasController::class,'activarCarrera'])->name('estadoACarre');
 //fin de para carreras
 
 Route::get('Materias',[MateriaController::class,'index'])->name('materias');

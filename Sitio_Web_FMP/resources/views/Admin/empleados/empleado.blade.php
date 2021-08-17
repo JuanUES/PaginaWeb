@@ -36,6 +36,22 @@
                         @endforeach
                        </select>
                     </div>
+                    <div class="form-group">
+                        <label for="Departamento">Tipo Contrato</label>
+                       <select class="custom-select" id="id_tipo_contrato" name="id_tipo_contrato">
+                        @foreach ($tcontrato as $contrato)
+                        <option value="{!!$contrato->id!!}">{!!$contrato->tipo!!}</option>
+                        @endforeach
+                       </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Departamento">Tipo Jornada</label>
+                       <select class="custom-select" id="id_tipo_jornada" name="id_tipo_jornada">
+                        @foreach ($tjornada as $jornada)
+                        <option value="{!!$jornada->id!!}">{!!$jornada->tipo!!} - {!!$jornada->horas_semanales!!} horas</option>
+                        @endforeach
+                       </select>
+                    </div>
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="form-group">
