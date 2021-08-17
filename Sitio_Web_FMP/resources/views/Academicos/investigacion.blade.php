@@ -12,7 +12,8 @@
 @endsection
 
 @section('footer')
-    @auth    
+    @auth 
+    <script src="{{ asset('js/scripts/http.min.js') }}"></script>   
         <!-- Plugins js -->
         <script src=" {{ asset('js/dropzone.min.js') }} "></script>   
         <script src=" {{ asset('js/scripts/dropzoneImagenes.js') }} "></script>
@@ -20,7 +21,7 @@
         <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
         <script src="{{ asset('js/summernote.config.min.js') }}"></script>
         <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
-        <script src="{{ asset('js/scripts/http.min.js') }}"></script>
+        
         
 
         <script>
@@ -335,7 +336,7 @@
                                 <div class="col order-first"></div>
                                 <div class="col-lg-3 order-last">
                                     <button style="float: righ;" class="btn btn-block btn-info tex-righ"
-                                    data-toggle="modal" data-target="#myModalSondeo">
+                                    data-toggle="modal" data-target="#sondeo-modal">
                                         <i class=" mdi dripicons-document"> Nuevo sondeo</i>
                                     </button>
                                 </div> 
@@ -473,82 +474,71 @@
                 </div><!-- /.modal --> 
                 @endauth
 
-                @auth         
-                                
-                                    <!-- Coordinadores modal content -->
-                                    <div id="myModalSondeo" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-notebook-multiple mdi-24px"></i> &nbsp; Sondeo</h4>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                                </div>
-                                                <div class="modal-body">                                        
-                                                    <div class="tab-content">
-                                                    <div class="alert alert-primary text-white" role="alert" style="display:none" id="notificacion"></div>                                        
-                                                    <form method="POST" 
-                                                    action="{{ route('sondeo.guardar') }}" 
-                                                    class="parsley-examples"
-                                                    enctype="multipart/form-data"
-                                                    id="sondeoForm">
-                                                        @csrf
-                                                        <input type="hidden" id="_id" name="_id">
-                                                        <div class="row">
-                                                            <div class="col-xl-12">
-                                                                <label>Nota: <code>* Campos Obligatorio</code></label>
-                                                                </div>
-                                                            <div class="col-xl-12">
-                                                                <div class="form-group">
-                                                                    <label>Título <code>*</code></label>
-                                                                    <input type="text" class="form-control" required
-                                                                            placeholder="Coordinador (Obligatorio)"
-                                                                            name="titulo" />
-                                                                </div> 
-                                                            </div>
-                                                            
-                                                        </div> 
-                                                        <div class="row">
-                                                            <div class="col-xl-12">
-                                                                <div class="form-group">
-                                                                    <label>Imagen <code>*</code></label>
-                                                                    <div class="custom-file">
-                                                                        <input type="file" value="" class="custom-file-input form-control" accept="image/*"  name="imagen" />
-                                                                        <label class="custom-file-label" for="img">Seleccionar imagen</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>     
-                                                        <div class="row">
-                                                            <div class="col-xl-12">
-                                                                <div class="form-group">
-                                                                    <label>Descripción <code>*</code></label>
-                                                                    <div>
-                                                                        <textarea required class="form-control" name="descripcion" placeholder="Departamento (Obligatorio)"></textarea>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>  
-                                                                
-                                                        <div class="form-group mb-0">
-                                                            <div>
-                                                                <button type="button" onclick="submitForm('#sondeoForm','#notificacion')"
-                                                                class="btn btn-primary waves-effect waves-light mr-1">
-                                                                     <li class="fa fa-save"></li>
-                                                                    Guardar
-                                                                </button>
-                                                                <button type="reset" class="btn btn-light waves-effect"><i class="fa fa-ban" aria-hidden="true"></i>
-                                                                    Cancelar
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </form>       
-                                                    </div>
-                                                </div>                                    
-                                            </div><!-- /.modal-content -->
-                                        </div><!-- /.modal-dialog -->
-                                    </div><!-- /.modal -->                                     
+@auth         
+<!-- Coordinadores modal content -->
+<div class="modal fade" id="sondeo-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id=" exampleModalLongTitle"><i class="mdi mdi-notebook-multiple mdi-24px"></i> &nbsp; Sondeo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form id="sondeoForm" action="{{route('sondeo.guardar')}}" method="POST">
+            <div class="modal-body">
+                <input type="hidden" id="_id" name="_id"/>
+                    @csrf
+                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" 
+                        role="alert" style="display:none" id="notificacionSonde">                                               
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <label>Nota: <code>* Campos Obligatorio</code></label>
+                            </div>
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label>Título <code>*</code></label>
+                                <input type="text" class="form-control"
+                                        placeholder="Coordinador (Obligatorio)"
+                                        name="titulo" />
+                            </div> 
+                        </div>
+                        
+                    </div> 
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label>Imagen <code>*</code></label>
+                                <div class="custom-file">
+                                    <input type="file" value="" class="custom-file-input form-control" accept="image/*"  name="imagen" />
+                                    <label class="custom-file-label" for="img">Seleccionar imagen</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>     
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label>Descripción <code>*</code></label>
+                                <div>
+                                    <textarea required class="form-control" name="descripcion" placeholder="Departamento (Obligatorio)"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>  
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i>Cerrar</button>
+                <button type="button" class="btn btn-primary" onClick="submitForm('#sondeoForm','#notificacionSonde')"><li class="fa fa-save"></li>Guardar</button>
+            </div>
+        </form>
+      </div>
+    </div>
+</div>
+                                    
         
-                                @endauth
+@endauth
                 <div class="col-xl-4">
                     <h4>Subunidades</h4>
                     <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
