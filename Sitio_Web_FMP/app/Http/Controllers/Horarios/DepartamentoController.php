@@ -40,8 +40,7 @@ class DepartamentoController extends Controller
             return response()->json(['error'=>$e->getMessage()]);
         }
     }
-    public function estado(Request $request)
-    {
+    public function estado(Request $request){
        //echo dd($request);
 
         $depto = Departamento::where('id',$request->E_depto)->first();
@@ -49,6 +48,7 @@ class DepartamentoController extends Controller
         $depto -> save();        
         return redirect()->route('depto');
     }
+    
     public function activarDepto(Request $request)
     {
        //echo dd($request);

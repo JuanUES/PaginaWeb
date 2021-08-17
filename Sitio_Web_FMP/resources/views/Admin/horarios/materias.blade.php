@@ -1,18 +1,20 @@
 @extends('layouts.admin')
 
 @section('content')
+<!--Para registro y actualizar-->
 <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="modal-materias" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id=" exampleModalLongTitle">Agregar Materias</h5>
+          <h5 class="modal-title" id=" exampleModalLongTitle"><i class=" mdi mdi-bag-personal mdi-24px"></i>Materias</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form id="empleadoForm" action="" method="POST">
+        <form id="materiasForm" action="{{route('materias/create')}}" method="POST">
             <div class="modal-body">
+                <input type="hidden" id="_id" name="_id"/>
                     @csrf
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" 
                         role="alert" style="display:none" id="notificacion">                                               
@@ -21,13 +23,13 @@
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputCodigo">Código</label>
-                                <input type="text" class="form-control" name="codigo_materia" placeholder="Digite el código">
+                                <input type="text" class="form-control" name="codigo_materia" id="codigo_materia" placeholder="Digite el código">
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputNombre">Nombre</label>
-                                <input type="text" class="form-control" name="nombre_materia"  placeholder="Digite el nombre de la materia">
+                                <input type="text" class="form-control" name="nombre_materia" id="nombre_materia"  placeholder="Digite el nombre de la materia">
                             
                             </div>
                         </div>
@@ -36,8 +38,16 @@
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="exampleInputCodigo">Carrera</label>
-                                <select class="custom-select" name="id_carrera">
+                                @if (count($carreers))
+                                <select class="custom-select" name="id_carrera" id="id_carrera">
                                     <option value="">Seleccione</option>
+                                    @foreach ($carreers as $item)
+                                    <option value="{!!$item->id!!}">{!!$item->nombre_carrera!!}</option>
+                                    @endforeach
+                                @else
+                                <select class="custom-select" name="id_carrera" id="id_carrera">
+                                    <option>Sin datos</option>
+                                @endif
                                 </select>
                             </div>
                         </div>
@@ -47,7 +57,7 @@
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputUbicacion">UV</label>
-                                <select class="custom-select" name="uv_materia">
+                                <select class="custom-select" name="uv_materia" id="uv_materia">
                                     <option value="">Seleccione</option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
@@ -59,7 +69,7 @@
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Nivel</label>
-                                <select class="custom-select" name="uv_materia">
+                                <select class="custom-select" name="nivel" id="nivel">
                                     <option value="">Seleccione</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -81,12 +91,91 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i>Cerrar</button>
-                <button type="button" class="btn btn-primary" onClick="submitForm('#empleadoForm','#notificacion')"><li class="fa fa-save"></li>Guardar</button>
+                <button type="button" class="btn btn-primary" onClick="submitForm('#materiasForm','#notificacion')"><li class="fa fa-save"></li>Guardar</button>
             </div>
         </form>
       </div>
     </div>
-  </div>
+</div>
+<!--fin de para registro y actualizar-->
+<!--inicio modal para eliminar "Dar de baja"-->
+<div id="modalEliminar" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <form action="{{ route('estadoMateria') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="row py-3">
+                        <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                        <div class="col-lg-10 text-black">
+                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se dara de baja está materia, ¿Desea continuar?</h4>
+                        </div>
+                        <input type="hidden" name="B_materia" id="B_materia">
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <button type="submit" 
+                                class="btn p-1 btn-light waves-effect waves-light btn-block font-18">
+                                <i class="mdi mdi-check mdi-24px"></i>
+                                Si
+                            </button>
+                        </div>
+                        <div class="col-xl-6">
+                            <button type="reset" class="btn btn-light p-1 waves-effect btn-block font-18" data-dismiss="modal" >
+                                <i class="mdi mdi-block-helper mdi-16Spx  ml-auto" aria-hidden="true"></i>
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--fin modal para eliminar-->
+<!--modal para dar alta-->
+<div id="modalAlta" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <form action="{{ route('estadoActi') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="row py-3">
+                        <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                        <div class="col-lg-10 text-black">
+                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se dara de alta está materia, ¿Desea continuar?</h4>
+                        </div>
+                        <input type="hidden" name="M_Activar" id="M_Activar">
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <button type="submit" 
+                                class="btn p-1 btn-light waves-effect waves-light btn-block font-18">
+                                <i class="mdi mdi-check mdi-24px"></i>
+                                Si
+                            </button>
+                        </div>
+                        <div class="col-xl-6">
+                            <button type="reset" class="btn btn-light p-1 waves-effect btn-block font-18" data-dismiss="modal" >
+                                <i class="mdi mdi-block-helper mdi-16Spx  ml-auto" aria-hidden="true"></i>
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--Modal para dar alta fin-->
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
@@ -114,7 +203,7 @@
                 </div>
                 <div class="col-3">
                     <!-- Button trigger modal -->
-                 <button type="button" title="Agregar Materias" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#exampleModalCenter"></button>
+                 <button type="button" title="Agregar Materias" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#modal-materias"></button>
                 </div>
             </div>
             <table  class="table table-sm" id="table-materias">
@@ -124,92 +213,42 @@
                     <th data-priority="3">Nombre</th>
                     <th data-priority="1">UV</th>
                     <th data-priority="3">Nivel</th>
+                    <th data-priority="3">Estado</th>
+                    <th data-priority="3">Carrera</th>
                     <th data-priority="3">Acciones</th>
                   
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th>GOOG <span class="co-name">Google Inc.</span></th>
-                    <td>597.74</td>
-                    <td>12:12PM</td>
-                    <td>14.81 (2.54%)</td>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
-                    </td>
-               
-                </tr>
-                <tr>
-                    <th>AAPL <span class="co-name">Apple Inc.</span></th>
-                    <td>378.94</td>
-                    <td>12:22PM</td>
-                    <td>5.74 (1.54%)</td>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
-                    </td>
-                </tr>
-                <tr>
-                    <th>AMZN <span class="co-name">Amazon.com Inc.</span></th>
-                    <td>191.55</td>
-                    <td>12:23PM</td>
-                    <td>3.16 (1.68%)</td>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
-                    </td>
-                </tr>
-                <tr>
-                    <th>ORCL <span class="co-name">Oracle Corporation</span></th>
-                    <td>31.15</td>
-                    <td>12:44PM</td>
-                    <td>1.41 (4.72%)</td>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                        </button></a>
-                    </td>
-                  
-                </tr>
-                <tr>
-                    <th>MSFT <span class="co-name">Microsoft Corporation</span></th>
-                    <td>25.50</td>
-                    <td>12:27PM</td>
-                    <td>0.66 (2.67%)</td>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <th>YHOO <span class="co-name">Yahoo! Inc.</span></th>
-                    <td>15.81</td>
-                    <td>12:25PM</td>
-                    <td>0.11 (0.67%)</td>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                    </td>
-                </tr>
-                
-                
-                
+                    @foreach ($subjects as $item)
+                    <tr>
+                        <td><span class="co-name">{!!$item->codigo_materia!!}</span></td>
+                        <td><span class="co-name">{!!$item->nombre_materia!!}</span></td>
+                        <td><span class="co-name">{!!$item->uv_materia!!}</span></td>
+                        <td><span class="co-name">{!!$item->nivel!!}</span></td>
+                        {!!$item->estado?' <th><span class="co-name">Activo</span></th>':'<th><span class="co-name">Inactivo</span></th>'!!}
+                        <td><span class="co-name">{!!$item->nombre_carrera!!}</span></td>
+                        @if ($item->estado==true)
+                       
+                        <td>
+                        <button title="Editar Materia" class="btn btn-outline-primary btn-sm"   onclick="editarMateria({!!$item->id!!})" data-toggle="modal" data-target="#modal-materias"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
+                        </button>
+                        <button title="Desactivar Materia" class="btn btn-outline-primary btn-sm" onclick="eliminarMateria('{!!$item->id!!}')" data-toggle="modal" data-target="#modalEliminar"><i class="fas fa-trash-alt" aria-hidden="true"></i>
+                        </button>
+                        </td>
+                        @endif
+                        @if ($item->estado==false)
+                        <td>
+                        <button title="Editar Materia" class="btn btn-outline-primary btn-sm"   onclick="editarMateria({!!$item->id!!})" data-toggle="modal" data-target="#modal-materias"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
+                        </button>
+                        <button title="Activar Materia" class="btn btn-outline-primary btn-sm" onclick="ActivarCarrer('{!!$item->id!!}')" data-toggle="modal" data-target="#modalAlta"><i class="fa fa-arrow-up" aria-hidden="true"></i>
+                        </button>
+                        </td>
+                        @endif
+                           
+                        
+                    </tr>
+                    @endforeach          
                 </tbody>
             </table>
 
@@ -220,8 +259,16 @@
 @endsection
 
 @section('plugins-js')
+<script src="{{ asset('js/scripts/http.min.js') }}"></script>
+<script src="{{ asset('js/horariosJs/materias.js') }}"></script>
 <!-- Dashboard Init JS -->
 <script src="{{ asset('template-admin/dist/assets/js/pages/dashboard.init.js') }}"></script>
+<script>
+    function editarMateria(id){
+        $json = {!!json_encode($subjects)!!}.find(x => x.id==id);
+        editar($json);
+        }
+</script>
 <script>
     $(document).ready(function () {
         $('#table-materias').DataTable({
