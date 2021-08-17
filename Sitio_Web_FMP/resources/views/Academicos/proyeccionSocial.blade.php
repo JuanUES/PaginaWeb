@@ -132,7 +132,7 @@
                                                                      <li class="fa fa-save"></li>
                                                                     Guardar
                                                                 </button>
-                                                                <button type="reset" class="btn btn-light waves-effect"><i class="fa fa-ban" aria-hidden="true"></i>
+                                                                <button data-dismiss="modal" type="reset" class="btn btn-light waves-effect"><i class="fa fa-ban" aria-hidden="true"></i>
                                                                     Cancelar
                                                                 </button>
                                                             </div>
