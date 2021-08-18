@@ -60,6 +60,85 @@
     </div>
 </div>
 <!--fin modal de agregar aulas-->
+<!--inicio modal para eliminar-->
+<div id="modalEliminar" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <form action="{{ route('estadoAula') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="row py-3">
+                        <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                        <div class="col-lg-10 text-black">
+                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se dara de baja está aula, ¿Desea continuar?</h4>
+                        </div>
+                        <input type="hidden" name="E_Aula" id="E_Aula">
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <button type="submit" 
+                                class="btn p-1 btn-light waves-effect waves-light btn-block font-18">
+                                <i class="mdi mdi-check mdi-24px"></i>
+                                Si
+                            </button>
+                        </div>
+                        <div class="col-xl-6">
+                            <button type="reset" class="btn btn-light p-1 waves-effect btn-block font-18" data-dismiss="modal" >
+                                <i class="mdi mdi-block-helper mdi-16Spx  ml-auto" aria-hidden="true"></i>
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--fin modal para eliminar-->
+
+<!--modal para dar alta-->
+<div id="modalAlta" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <form action="{{ route('estadoA_aula') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="row py-3">
+                        <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                        <div class="col-lg-10 text-black">
+                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se dara de alta está aula, ¿Desea continuar?</h4>
+                        </div>
+                        <input type="hidden" name="A_Activar" id="A_Activar">
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <button type="submit" 
+                                class="btn p-1 btn-light waves-effect waves-light btn-block font-18">
+                                <i class="mdi mdi-check mdi-24px"></i>
+                                Si
+                            </button>
+                        </div>
+                        <div class="col-xl-6">
+                            <button type="reset" class="btn btn-light p-1 waves-effect btn-block font-18" data-dismiss="modal" >
+                                <i class="mdi mdi-block-helper mdi-16Spx  ml-auto" aria-hidden="true"></i>
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--Modal para dar alta fin-->
 <!-- start page title -->
 <div class="row">
     <div class="col-12">

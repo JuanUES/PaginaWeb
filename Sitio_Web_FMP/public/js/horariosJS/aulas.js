@@ -7,16 +7,16 @@ function editar(json){
     $("#capacidad_aula").val(json.capacidad_aula);    
     };
     
-    function eliminarMateria(id)
+    function eliminarAula(id)
     {
         //alert(id);
-        $('#B_materia').val(id);
+        $('#E_Aula').val(id);
     };
     
-    function ActivarCarrer(id)
+    function ActivarAula(id)
     {
         //alert(id);
-        $('#M_Activar').val(id);
+        $('#A_Activar').val(id);
     };
     (function(window){
         window.htmlentities = {
