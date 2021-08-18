@@ -23,7 +23,7 @@ class AulaController extends Controller
                 'codigo_aula' => 'required|max:255',
                 'nombre_aula' => 'required|max:255',
                 'ubicacion_aula' => 'required|max:255',
-                'capacidad_aula' => 'required|numeric',
+                'capacidad_aula' => 'required|max:100|numeric',
                 
             ]);         
 
