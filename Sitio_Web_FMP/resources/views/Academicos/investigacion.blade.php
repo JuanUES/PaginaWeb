@@ -443,7 +443,7 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                             </div>
                             <div class="modal-body">
-                                <form action="{{route('imagenCAborrar', ['url'=> 'investigacion']) }}" method="POST">
+                                <form action="{{route('imagenCAborrar', ['url'=> 'investigacion'])}}" method="POST">
                                     @csrf
                                     <div class="row py-3">
                                         <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
@@ -526,12 +526,24 @@
                                 </div>
                             </div>
                         </div>
-                    </div>  
+                    </div> 
+                    <div class="form-group mb-0">
+                        <div>
+                            <button type="button" 
+                                    class="btn btn-primary waves-effect waves-light mr-1"
+                                    onClick="submitForm('#sondeoForm','#notificacionSonde')">
+                                <li class="fa fa-save"></li>
+                                Guardar
+                            </button>
+                            <button type="button" class="btn btn-light waves-effect" data-dismiss="modal" >
+                                <i class="fa fa-ban" aria-hidden="true"></i>
+                                Cancelar
+                            </button>
+                        </div>
+                    </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i>Cerrar</button>
-                <button type="button" class="btn btn-primary" onClick="submitForm('#sondeoForm','#notificacionSonde')"><li class="fa fa-save"></li>Guardar</button>
-            </div>
+
+            
         </form>
       </div>
     </div>

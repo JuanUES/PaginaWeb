@@ -222,12 +222,12 @@
                 <tbody>
                     @foreach ($subjects as $item)
                     <tr>
-                        <td><span class="co-name">{!!$item->codigo_materia!!}</span></td>
+                        <td><span class="co-name"><span class="co-name">{!!$item->codigo_materia!!}</span></td>
                         <td><span class="co-name">{!!$item->nombre_materia!!}</span></td>
                         <td><span class="co-name">{!!$item->uv_materia!!}</span></td>
                         <td><span class="co-name">{!!$item->nivel!!}</span></td>
                         {!!$item->estado?' <th><span class="co-name">Activo</span></th>':'<th><span class="co-name">Inactivo</span></th>'!!}
-                        <td><span class="co-name">{!!$item->nombre_carrera!!}</span></td>
+                        <th><span class="co-name">{!!$item->nombre_carrera!!}</span></th>
                         @if ($item->estado==true)
                        
                         <td>

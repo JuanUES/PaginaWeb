@@ -10,7 +10,10 @@ use App\Http\Controllers\Horarios\HorarioController;
 use App\Http\Controllers\Horarios\MateriaController;
 use Illuminate\Support\Facades\Route;
 
+//para las aulas
 Route::get('Aulas',[AulaController::class,'index'])->name('aulas');
+Route::post('Aulas/create',[AulaController::class,'store'])->name('aulas.store');
+//fin de para las aulas
 //para departamentos
 Route::get('Departamentos',[DepartamentoController::class,'index'])->name('depto');
 Route::post('Departamentos/create',[DepartamentoController::class,'store'])->name('depto.store');

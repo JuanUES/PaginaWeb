@@ -70,9 +70,11 @@ class SondeoController extends Controller
 
     public function destroy(Request $request)
     {
-        
+        //echo dd($request);
+        File::delete(public_path() . '/images/sondeos/'.Sondeo::findOrFail(base64_decode($request->_id))->imagen);
         Sondeo::destroy(base64_decode($request->_id));
-        File::delete(public_path() . '/images/sondeos/'.Sondeo::findOrFail($request->id)->imagen); 
-        return redirect()->route('Investigacion');
+         
+       
+        return redirect()->route('investigacion');
     }
 }

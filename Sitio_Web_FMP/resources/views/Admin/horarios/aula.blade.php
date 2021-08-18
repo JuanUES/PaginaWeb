@@ -1,33 +1,34 @@
 @extends('layouts.admin')
 
 @section('content')
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<!-- Modal para registrar aulas y modificar -->
+<div class="modal fade" id="aula-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id=" exampleModalLongTitle">Agregar Aulas</h5>
+          <h5 class="modal-title" id=" exampleModalLongTitle"><i class="mdi mdi-home-group mdi-24px"></i>Aulas</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form id="empleadoForm" action="" method="POST">
+        <form id="AulaForm" action="{{route('aulas.store')}}" method="POST">
             <div class="modal-body">
+                <input type="hidden" id="_id" name="_id"/>
                     @csrf
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" 
-                        role="alert" style="display:none" id="notificacion">                                               
+                        role="alert" style="display:none" id="notificacionAula">                                               
                     </div>
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputCodigo">Código</label>
-                                <input type="text" class="form-control" name="codigo" placeholder="Digite el código">
+                                <input type="text" class="form-control" name="codigo_aula" id="codigo_aula" placeholder="Digite el código">
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputNombre">Nombre</label>
-                                <input type="text" class="form-control" name="nombre_aula"  placeholder="Digite el nombre de la Aula">
+                                <input type="text" class="form-control" name="nombre_aula" id="nombre_aula"  placeholder="Digite el nombre de la Aula">
                             
                             </div>
                         </div>
@@ -37,13 +38,13 @@
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputUbicacion">Ubicación</label>
-                                <input type="text" class="form-control" name="ubicacion_aula" placeholder="Digite la Ubicación">
+                                <input type="text" class="form-control" name="ubicacion_aula" id="ubicacion_aula" placeholder="Digite la Ubicación">
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Capacidad</label>
-                                <input type="text" class="form-control" name="capacidad" placeholder="Digite la Capacidad">
+                                <input type="text" class="form-control" name="capacidad_aula" id="capacidad_aula" placeholder="Digite la Capacidad">
                             </div>
                         </div>
                     </div>
@@ -52,12 +53,13 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i>Cerrar</button>
-                <button type="button" class="btn btn-primary" onClick="submitForm('#empleadoForm','#notificacion')"><li class="fa fa-save"></li>Guardar</button>
+                <button type="button" class="btn btn-primary" onClick="submitForm('#AulaForm','#notificacionAula')"><li class="fa fa-save"></li>Guardar</button>
             </div>
         </form>
       </div>
     </div>
-  </div>
+</div>
+<!--fin modal de agregar aulas-->
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
@@ -85,7 +87,7 @@
                 </div>
                 <div class="col-3">
                     <!-- Button trigger modal -->
-                 <button type="button" title="Agregar Aula" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#exampleModalCenter"></button>
+                 <button type="button" title="Agregar Aula" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#aula-modal"></button>
                 </div>
             </div>
             <table  class="table table-sm" id="table-aulas">
@@ -95,92 +97,41 @@
                     <th data-priority="3">Nombre</th>
                     <th data-priority="1">Ubicación</th>
                     <th data-priority="3">Capacidad</th>
+                    <th data-priority="3">Estado</th>
                     <th data-priority="3">Acciones</th>
                   
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th>GOOG <span class="co-name">Google Inc.</span></th>
-                    <td>597.74</td>
-                    <td>12:12PM</td>
-                    <td>14.81 (2.54%)</td>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
-                    </td>
-               
-                </tr>
-                <tr>
-                    <th>AAPL <span class="co-name">Apple Inc.</span></th>
-                    <td>378.94</td>
-                    <td>12:22PM</td>
-                    <td>5.74 (1.54%)</td>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
-                    </td>
-                </tr>
-                <tr>
-                    <th>AMZN <span class="co-name">Amazon.com Inc.</span></th>
-                    <td>191.55</td>
-                    <td>12:23PM</td>
-                    <td>3.16 (1.68%)</td>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
-                    </td>
-                </tr>
-                <tr>
-                    <th>ORCL <span class="co-name">Oracle Corporation</span></th>
-                    <td>31.15</td>
-                    <td>12:44PM</td>
-                    <td>1.41 (4.72%)</td>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                        </button></a>
-                    </td>
-                  
-                </tr>
-                <tr>
-                    <th>MSFT <span class="co-name">Microsoft Corporation</span></th>
-                    <td>25.50</td>
-                    <td>12:27PM</td>
-                    <td>0.66 (2.67%)</td>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <th>YHOO <span class="co-name">Yahoo! Inc.</span></th>
-                    <td>15.81</td>
-                    <td>12:25PM</td>
-                    <td>0.11 (0.67%)</td>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                    </td>
-                </tr>
-                
-                
-                
+                    @foreach ($aulas as $item)
+                    <tr>
+                        <td><span class="co-name">{!!$item->codigo_aula!!}</span></td>
+                        <th><span class="co-name">{!!$item->nombre_aula!!}</span></th>
+                        <td><span class="co-name">{!!$item->ubicacion_aula!!}</span></td>
+                        <td><span class="co-name">{!!$item->capacidad_aula!!}</span></td>
+                        {!!$item->estado?' <th><span class="co-name">Activo</span></th>':'<th><span class="co-name">Inactivo</span></th>'!!}
+                        @if ($item->estado==true)
+                       
+                        <td>
+                        <button title="Editar Aula" class="btn btn-outline-primary btn-sm"   onclick="editarAula({!!$item->id!!})" data-toggle="modal" data-target="#aula-modal"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
+                        </button>
+                        <button title="Desactivar Aula" class="btn btn-outline-primary btn-sm" onclick="eliminarAula('{!!$item->id!!}')" data-toggle="modal" data-target="#modalEliminar"><i class="fas fa-trash-alt" aria-hidden="true"></i>
+                        </button>
+                        </td>
+                        @endif
+                        @if ($item->estado==false)
+                        <td>
+                        <button title="Editar Aula" class="btn btn-outline-primary btn-sm"   onclick="editarAula({!!$item->id!!})" data-toggle="modal" data-target="#aula-modal"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
+                        </button>
+                        <button title="Activar Aula" class="btn btn-outline-primary btn-sm" onclick="ActivarAula('{!!$item->id!!}')" data-toggle="modal" data-target="#modalAlta"><i class="fa fa-arrow-up" aria-hidden="true"></i>
+                        </button>
+                        </td>
+                        @endif
+                           
+                        
+                    </tr>
+                    @endforeach
+
                 </tbody>
             </table>
 
@@ -191,6 +142,14 @@
 @endsection
 
 @section('plugins-js')
+<script src="{{ asset('js/scripts/http.min.js') }}"></script>
+<script src="{{ asset('js/horariosJS/aulas.js') }}"></script>
+<script>
+    function editarAula(id){
+        $json = {!!json_encode($aulas)!!}.find(x => x.id==id);
+        editar($json);
+        }
+</script>
 <!-- Dashboard Init JS -->
 <script src="{{ asset('template-admin/dist/assets/js/pages/dashboard.init.js') }}"></script>
 <script>

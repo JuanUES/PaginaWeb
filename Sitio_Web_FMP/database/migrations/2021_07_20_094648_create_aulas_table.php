@@ -19,6 +19,7 @@ class CreateAulasTable extends Migration
             $table->string('nombre_aula');
             $table->string('ubicacion_aula');
             $table->integer('capacidad_aula');
+            $table->boolean('estado');
             $table->timestamps();
         });
     }

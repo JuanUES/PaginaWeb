@@ -20,6 +20,7 @@ class AulaSeeder extends Seeder
             'nombre_aula'=>'Asociación de Estudiantes de Sistemas Informaticos Paracentral',
             'ubicacion_aula'=>'Asociaciones',
             'capacidad_aula'=>30,
+            'estado'=>true,
         ]);
 
         Aula::create([
@@ -27,6 +28,7 @@ class AulaSeeder extends Seeder
             'nombre_aula'=>'Aula 1-1',
             'ubicacion_aula'=>'1a planta Edificio A',
             'capacidad_aula'=>30,
+            'estado'=>true,
         ]);
     }
 }
