@@ -22,13 +22,13 @@
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputCodigo">Código</label>
-                                <input type="text" class="form-control" name="codigo_aula" id="codigo_aula" placeholder="Digite el código">
+                                <input type="text" class="form-control" name="codigo_aula" id="codigo_aula" autocomplete="off" placeholder="Digite el código">
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputNombre">Nombre</label>
-                                <input type="text" class="form-control" name="nombre_aula" id="nombre_aula"  placeholder="Digite el nombre de la Aula">
+                                <input type="text" class="form-control" name="nombre_aula" id="nombre_aula" autocomplete="off"  placeholder="Digite el nombre de la Aula">
                             
                             </div>
                         </div>
@@ -38,13 +38,13 @@
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputUbicacion">Ubicación</label>
-                                <input type="text" class="form-control" name="ubicacion_aula" id="ubicacion_aula" placeholder="Digite la Ubicación">
+                                <input type="text" class="form-control" name="ubicacion_aula" id="ubicacion_aula" autocomplete="off" placeholder="Digite la Ubicación">
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputPassword1">Capacidad</label>
-                                <input type="text" class="form-control" name="capacidad_aula" id="capacidad_aula" placeholder="Digite la Capacidad">
+                                <input type="numeric" min="1" class="form-control" name="capacidad_aula" id="capacidad_aula" autocomplete="off" placeholder="Digite la Capacidad">
                             </div>
                         </div>
                     </div>
