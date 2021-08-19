@@ -27,10 +27,10 @@ class HorariosColecturiaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function horariosColecturia()
-    {
-        return (Auth::guest()) ?  DB::select("select title ,start , '#AA0000' as color,
-        '#AA0000' as textColor, 'long description' as description from horarios_colecturias"):DB::select("select id, title ,start , '#AA0000' as color,
-        '#AA0000' as textColor from horarios_colecturias");
+    {   
+        return (Auth::guest()) ?  
+            DB::select("select hc.title ,hc.inicio as start , hc.final as end, '#AA0000' as color from horarios_colecturias hc"):
+            DB::select("select hc.id, hc.title ,hc.inicio as start , hc.final as end, '#AA0000' as color, hc.final from horarios_colecturias hc");
     }
 
     /**
@@ -43,7 +43,10 @@ class HorariosColecturiaController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'titulo' => 'required|max:255',
-            'hora' => 'required',
+            'hora_inicio' => 'required',
+            'hora_final' => 'required|after_or_equal:hora inicio',
+            'fecha_inicio' =>'required',
+            'fecha_final' => 'required|after_or_equal:fecha inicio'
         ]);         
 
         if($validator->fails())
@@ -52,9 +55,10 @@ class HorariosColecturiaController extends Controller
         }
          
         $hc = $request->_id == null ? new horariosColecturia : horariosColecturia::findOrFail($request->_id);
-        $hc->start = $request->fecha.' '.$request->hora;
-        $hc->user = auth()->id();
         $hc->title = $request->titulo;
+        $hc->inicio = $request->fecha_inicio.' '.$request->hora_inicio;
+        $hc->final = $request->fecha_final.' '.$request->hora_final;
+        $hc->user = auth()->id();
         $hc->save();
         return  $request->_id !=null ?response()->json(['mensaje'=>'Modificación exitosa']):response()->json(['mensaje'=>'Registro exitoso']);
     }
@@ -99,8 +103,8 @@ class HorariosColecturiaController extends Controller
      * @param  \App\Models\Pagina\HorariosColecturia  $horariosColecturia
      * @return \Illuminate\Http\Response
      */
-    public function destroy(HorariosColecturia $horariosColecturia)
+    public function destroy(Request $request)
     {
-        //
+        HorariosColecturia::destroy($request->_id);
     }
 }

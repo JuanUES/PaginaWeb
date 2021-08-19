@@ -1,7 +1,6 @@
 @extends('Pagina/baseOnlyHtml')
 
 @section('header')
-
     <!-- Plugin css -->
     <link href="{{ asset('css/fullcalendar.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
@@ -74,35 +73,7 @@
                             </p>                                
                             
                             
-                        </div><!-- end col -->      
-                        <!--<div class="col-xl-12 border-top my-2" >
-                            <h4 class="text-center">Horarios de colecturia</h4>
-                            <p>Fecha: 07/06/2021 - 11/06/2021</p>
-                            <div class="table-responsive">
-                                <table class="table table-bordered mb-0">
-                                    <thead>
-                                    <tr>
-                                        <th>Lunes</th>
-                                        <th>Martes</th>
-                                        <th>Miercoles</th>
-                                        <th>Jueves</th>
-                                        <th>Viernes</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td>8:00 am<br> 4:00 pm</td>
-                                        <td>8:00 am<br> 4:00 pm</td>
-                                        <td>8:00 am<br> 4:00 pm</td>
-                                        <td>8:00 am<br> 4:00 pm</td>
-                                        <td>Cerrado</td>
-                                    </tr>
-                                   
-                                    </tbody>
-                                </table>
-                            </div>
-                                
-                        </div><!-- end col -->  
+                        </div><!-- end col -->                              
                     </div> 
                 </div> 
             </div>
@@ -143,12 +114,9 @@
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="form-group">
-                                            <label>Titulo <code>*</code></label>
+                                            <label>Título <code>*</code></label>
                                             <div>
-                                                <select class="form-control" id="titulo" name="titulo">
-                                                    <option value="Abierto">Abierto</option>
-                                                    <option value="Cerrado">Cerrado</option>
-                                                </select>                                             
+                                                <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título (Obligatorio)">
                                             </div>
                                         </div>
                                     </div>
@@ -156,22 +124,39 @@
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <div class="form-group">
-                                            <label>Fecha</label>
+                                            <label>Fecha Inicio <code>*</code></label>
                                             <div>
-                                                <input type="date" class="form-control" id="fecha1" placeholder="" disabled>   
-                                                <input type="hidden"  id="fecha" name="fecha">                                             
+                                                <input type="date" class="form-control" id="fecha1" name="fecha_inicio">                                            
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-xl-6">
                                         <div class="form-group">
-                                            <label>Hora <code>*</code></label>
+                                            <label>Hora Inicio <code>*</code></label>
                                             <div>
-                                                <input type="time" class="form-control" id="hora" name="hora" placeholder="">                                                
+                                                <input type="time" class="form-control" id="hora1" name="hora_inicio" placeholder="">                                                
                                             </div>
                                         </div>
                                     </div>
                                 </div>   
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <div class="form-group">
+                                            <label>Fecha Final <code>*</code></label>
+                                            <div>
+                                                <input type="date" class="form-control" id="fecha2" name="fecha_final">   
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <div class="form-group">
+                                            <label>Hora Final <code>*</code></label>
+                                            <div>
+                                                <input type="time" class="form-control" id="hora2" name="hora_final" placeholder="">                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>  
                                 <div class="form-group mb-0 row">
                                     <div class="col order-first">
                                         <button type="button" class="btn btn-primary waves-effect waves-light mr-1" 
@@ -223,6 +208,44 @@
                                     </button>
                                 </div>
                             </div>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div><!-- /.modal --> 
+            <div id="modalEliminar" class="modal fade bs-example-modal-center" tabindex="-1" 
+                role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('HorarioBorrar') }}" method="POST" id="eliminarForm">
+                                @csrf
+                                <div class="row py-3">
+                                    <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                                    <div class="col-lg-10 text-black">
+                                        <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se elimina este registro de manera permanente, ¿Desea continuar?</h4>
+                                    </div>
+                                    <input type="hidden" name="_id" id="eliminarId">
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-6">
+                                        <button type="button" id="btnEliminar" 
+                                            class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
+                                            <i class="mdi mdi-check mdi-16px"></i>
+                                            Si
+                                        </button>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <button type="reset" class="btn btn-light p-1 waves-light waves-effect btn-block font-24" data-dismiss="modal" >
+                                            <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
+                                            No
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->

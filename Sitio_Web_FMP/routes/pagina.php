@@ -182,3 +182,6 @@ Route::get('/HorariosColecturiaJson',[HorariosColecturiaController::class,'horar
 Route::post('/HorariosColecturiaRegistro',[HorariosColecturiaController::class,'store'])
 ->name('HorarioColeR')->middleware(['auth']);
 
+Route::post('/HorariosColecturiaBorrar',[HorariosColecturiaController::class,'destroy'])
+->name('HorarioBorrar')->middleware(['auth']);
+

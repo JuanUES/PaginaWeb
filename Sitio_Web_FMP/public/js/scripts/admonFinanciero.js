@@ -3,9 +3,8 @@ function calendarConfig(urlJson){
         events:urlJson,
         height: 600, droppable: true,
         timeFormat: 'hh:mm t',
-        dayClick: function (date, allDay, jsEvent, view) {
+        dayClick: function (date) {
             $('#eliminar').hide(); 
-            $('#fecha1').prop("disabled", true); 
             const fechaComoCadena = date.format('yyyy-MM-DD h:mm');
             const dias = ['domingo', 'lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado',];
             const numeroDia = new Date(fechaComoCadena).getDay();
@@ -19,9 +18,10 @@ function calendarConfig(urlJson){
             } else {
 
                 if (select >= hoy) {                            
-                    $('#fecha').val(date.format("yyyy-MM-DD"));
                     $('#fecha1').val(date.format("yyyy-MM-DD"));
-                    $('#hora').val(new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false }));
+                    $('#fecha2').val(date.format("yyyy-MM-DD"));
+                    /*$('#hora1').val(new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false }));
+                    $('#hora2').val(new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: false }));*/
                     $('#myModalRegistro').modal();
                 } else {
                     $('#informacion').html('Información: No se puede agendar un evento en el pasado.');
@@ -32,16 +32,21 @@ function calendarConfig(urlJson){
         }, 
         eventClick: function (calEvent, jsEvent, view) {
             $('#eliminar').show(); 
-            $('#fecha1').prop("disabled", true); 
-            let date = new Date(calEvent.start._i);
-            let fecha = moment(date).format('yyyy-MM-DD');
-            let hora = moment(date).format('HH:mm:ss'); 
+
+            let date1 = new Date(calEvent.start._i);
+            let date2 = new Date(calEvent.final);
+
+            let fecha1 = moment(date1).format('yyyy-MM-DD');
+            let fecha2 = moment(date2).format('yyyy-MM-DD');
+            let hora1 = moment(date1).format('HH:mm:ss'); 
+            let hora2 = moment(date2).format('HH:mm:ss'); 
 
             $('#_id').val(calEvent.id);
             $('#titulo').val(calEvent.title);
-            $('#fecha').val(fecha);
-            $('#fecha1').val(fecha);
-            $('#hora').val(hora);
+            $('#fecha1').val(fecha1);
+            $('#fecha2').val(fecha2);
+            $('#hora1').val(hora1);
+            $('#hora2').val(hora2);
             $('#myModalRegistro').modal();
             //document.getElementById("update-form").reset();
         },
@@ -77,12 +82,6 @@ function enableform(formId) {
     for (var i=0;i<f.length;i++)
         f[i].disabled=false
 };
-
-$('#eliminar').click(function(){
-    let id = $('#_id').val();
-    console.log(id);
-    $('#myModalRegistro').modal('toggle');
-});
 
 $("#guardar").click(function() {
     let formulario = '#registro';
@@ -176,9 +175,65 @@ $("#guardar").click(function() {
                 $("form").trigger("reset");
                 $('#calendar').fullCalendar('refetchEvents');
                 enableform(formulario);
+                $('#myModalRegistro').modal('toggle');
             }
         }
        // $('.modal').scrollTop($('.modal').height());
        $('.modal').scrollTop(0);
+    });
+    
+});
+
+$('#eliminar').click(function(){
+    let id = $('#_id').val();
+    console.log(id);
+    $('#myModalRegistro').modal('toggle');
+    $('eliminarId').val(id);
+    $('#modalEliminar').modal();    
+});
+
+$("#btnEliminar").click(function() {
+    let formulario = '#eliminarForm';
+    let notificacion = '#notificacion';
+    $.ajax({
+        type: $(formulario).attr('method'), 
+        url: $(formulario).attr('action'),
+        dataType: "html",
+        data: new FormData(document.getElementById(formulario.replace('#',''))),
+        processData: false,  
+        contentType: false,
+        error : function(jqXHR, textStatus){
+            if (jqXHR.status === 0) {
+      
+                errorServer(notificacion,'No conectar: ​​Verifique la red.');
+        
+            } else if (jqXHR.status == 404) {
+        
+                errorServer(notificacion,'No se encontró la página solicitada [404]');
+        
+            } else if (jqXHR.status == 500) {
+        
+                errorServer(notificacion,'Error interno del servidor [500].');
+        
+            } else if (textStatus === 'parsererror') {
+        
+                errorServer(notificacion,'Error al analizar JSON solicitado.');
+        
+            } else if (textStatus === 'timeout') {
+        
+                errorServer(notificacion,'Error de tiempo de espera.');
+        
+            } else if (textStatus === 'abort') {
+        
+                errorServer(notificacion,'Solicitud de Ajax cancelada.');
+        
+            } else {
+        
+                errorServer(notificacion,'Error no detectado: ' + jqXHR.responseText);
+            }
+            $('.modal').scrollTop($('.modal').height());
+        },succes(){
+            console.log('peticion realizada exitosamente');
+        }
     });
 });

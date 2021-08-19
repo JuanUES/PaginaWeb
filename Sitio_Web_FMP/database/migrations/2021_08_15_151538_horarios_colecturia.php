@@ -16,7 +16,8 @@ class HorariosColecturia extends Migration
         Schema::create('horarios_colecturias', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->dateTime('start');
+            $table->dateTime('inicio');
+            $table->dateTime('final');
             $table->bigInteger('user');
             $table->foreign('user')
                 ->references('id')
