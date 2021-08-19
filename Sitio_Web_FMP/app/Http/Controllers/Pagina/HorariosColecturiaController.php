@@ -44,8 +44,8 @@ class HorariosColecturiaController extends Controller
         $validator = Validator::make($request->all(),[
             'titulo' => 'required|max:255',
             'hora_inicio' => 'required',
-            'hora_final' => 'required|after_or_equal:hora_inicio',
             'fecha_inicio' =>'required',
+            'fecha_final' =>'required|after_or_equal:fecha_final',
         ]);         
 
         if($validator->fails())
