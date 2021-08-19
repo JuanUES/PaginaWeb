@@ -2,7 +2,7 @@ function calendarConfig(urlJson){
     $('#calendar').fullCalendar({        
         events:urlJson,
         height: 600, droppable: true,
-        timeFormat: 'hh:mm t',
+        //timeFormat: 'hh:mm t',
         dayClick: function (date) {
             $('#eliminar').hide(); 
             const fechaComoCadena = date.format('yyyy-MM-DD h:mm');
@@ -39,14 +39,12 @@ function calendarConfig(urlJson){
             let fecha1 = moment(date1).format('yyyy-MM-DD');
             let fecha2 = moment(date2).format('yyyy-MM-DD');
             let hora1 = moment(date1).format('HH:mm:ss'); 
-            let hora2 = moment(date2).format('HH:mm:ss'); 
 
             $('#_id').val(calEvent.id);
             $('#titulo').val(calEvent.title);
             $('#fecha1').val(fecha1);
             $('#fecha2').val(fecha2);
             $('#hora1').val(hora1);
-            $('#hora2').val(hora2);
             $('#myModalRegistro').modal();
             //document.getElementById("update-form").reset();
         },
@@ -151,7 +149,7 @@ $("#guardar").click(function() {
 
             $(notificacion).html('<h4 Class = "text-white">Completar Campos:</h4>'
                 +'<div class="row">'
-                +'<div class="col-lg-9 order-firts">'
+                +'<div class="col-lg-9 order-firts" style="text-transform: capitalize;">'
                 +'<ul>'+$errores+'</ul>'
                 +'</div>'
                 +'<div class="col-lg-3 order-last text-center">'
@@ -188,7 +186,7 @@ $('#eliminar').click(function(){
     let id = $('#_id').val();
     console.log(id);
     $('#myModalRegistro').modal('toggle');
-    $('eliminarId').val(id);
+    $('#eliminarId').val(id);
     $('#modalEliminar').modal();    
 });
 
@@ -232,8 +230,9 @@ $("#btnEliminar").click(function() {
                 errorServer(notificacion,'Error no detectado: ' + jqXHR.responseText);
             }
             $('.modal').scrollTop($('.modal').height());
-        },succes(){
-            console.log('peticion realizada exitosamente');
+        },success: function(params) {
+            $('#calendar').fullCalendar('refetchEvents');
+            $('#modalEliminar').modal('toggle');
         }
     });
 });

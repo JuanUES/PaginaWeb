@@ -113,15 +113,23 @@
                                     <input type="hidden" id="_id" name="_id">                                    
                                 </div>      
                                 <div class="row">
-                                    <div class="col-xl-12">
+                                    <div class="col-xl-6">
                                         <div class="form-group">
                                             <label>Título <code>*</code></label>
                                             <div>
                                                 <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Título (Obligatorio)">
                                             </div>
                                         </div>
+                                    </div>                                   
+                                    <div class="col-xl-6">
+                                        <div class="form-group">
+                                            <label>Hora <code>*</code></label>
+                                            <div>
+                                                <input type="time" class="form-control" id="hora1" name="hora_inicio" placeholder="">                                                
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>       
+                                </div>   
                                 <div class="row">
                                     <div class="col-xl-6">
                                         <div class="form-group">
@@ -133,30 +141,12 @@
                                     </div>
                                     <div class="col-xl-6">
                                         <div class="form-group">
-                                            <label>Hora Inicio <code>*</code></label>
-                                            <div>
-                                                <input type="time" class="form-control" id="hora1" name="hora_inicio" placeholder="">                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>   
-                                <div class="row">
-                                    <div class="col-xl-6">
-                                        <div class="form-group">
                                             <label>Fecha Final <code>*</code></label>
                                             <div>
                                                 <input type="date" class="form-control" id="fecha2" name="fecha_final">   
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-xl-6">
-                                        <div class="form-group">
-                                            <label>Hora Final <code>*</code></label>
-                                            <div>
-                                                <input type="time" class="form-control" id="hora2" name="hora_final" placeholder="">                                                
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </div>                                    
                                 </div>  
                                 <div class="form-group mb-0 row">
                                     <div class="col order-first">
@@ -254,7 +244,7 @@
             @endauth
             <form action="#">
                 <input type="text" class="form-control" name="field-name" data-mask="00/00/0000" />
-                <input type="text" class="form-control" name="field-name" data-mask="00:00 - 00:00" />
+                <input type="text" class="form-control" name="field-name" data-mask="HH:ii - 00:00" />
             </form>
         </div>
     </div> <!-- end container -->

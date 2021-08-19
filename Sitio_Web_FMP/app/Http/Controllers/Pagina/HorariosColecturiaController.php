@@ -44,9 +44,8 @@ class HorariosColecturiaController extends Controller
         $validator = Validator::make($request->all(),[
             'titulo' => 'required|max:255',
             'hora_inicio' => 'required',
-            'hora_final' => 'required|after_or_equal:hora inicio',
+            'hora_final' => 'required|after_or_equal:hora_inicio',
             'fecha_inicio' =>'required',
-            'fecha_final' => 'required|after_or_equal:fecha inicio'
         ]);         
 
         if($validator->fails())
@@ -57,7 +56,7 @@ class HorariosColecturiaController extends Controller
         $hc = $request->_id == null ? new horariosColecturia : horariosColecturia::findOrFail($request->_id);
         $hc->title = $request->titulo;
         $hc->inicio = $request->fecha_inicio.' '.$request->hora_inicio;
-        $hc->final = $request->fecha_final.' '.$request->hora_final;
+        $hc->final = $request->fecha_final.' '.$request->hora_inicio;
         $hc->user = auth()->id();
         $hc->save();
         return  $request->_id !=null ?response()->json(['mensaje'=>'Modificación exitosa']):response()->json(['mensaje'=>'Registro exitoso']);
