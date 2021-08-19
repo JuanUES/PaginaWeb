@@ -20,6 +20,7 @@
     @guest
     <script>$('#calendar').fullCalendar({events:'{{route('HorarioCole')}}',height: 600,timeFormat: 'hh:mm t',});</script>        
     @endguest
+    <script src="{{ asset('js/jquery.mask.js') }}"></script>
 @endsection
 
 @section('container')
@@ -251,6 +252,10 @@
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal --> 
             @endauth
+            <form action="#">
+                <input type="text" class="form-control" name="field-name" data-mask="00/00/0000" />
+                <input type="text" class="form-control" name="field-name" data-mask="00:00 - 00:00" />
+            </form>
         </div>
     </div> <!-- end container -->
 </div> 
