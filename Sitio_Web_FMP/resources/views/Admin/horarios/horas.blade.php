@@ -26,6 +26,17 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group mb-0">
+                        <label>Date Range</label>
+                        <div>
+                            <div class="input-daterange input-group" data-provide="datepicker">
+                                <input type="time" class="form-control" name="hora_inicio"  />
+                                <input type="time" class="form-control" name="hora_final" />
+                            </div>
+                        </div>
+                    </div>
+
                     
             </div>
             <div class="modal-footer">

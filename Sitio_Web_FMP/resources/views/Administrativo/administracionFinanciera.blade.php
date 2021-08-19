@@ -11,7 +11,8 @@
     <script src="{{ asset('js/moment.min.js') }}"></script>
     <script src="{{ asset('js/fullcalendar.min.js') }}"></script>  
     <script src="{{ asset('js/locale/es.js') }}"></script>  
-    @auth      
+    @auth 
+        
     <script src="{{ asset('js/scripts/admonFinanciero.js') }}"></script>
     <script>
         calendarConfig('{{route('HorarioCole')}}');         
