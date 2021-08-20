@@ -45,7 +45,7 @@ class HorariosColecturiaController extends Controller
             'titulo' => 'required|max:255',
             'hora_inicio' => 'required',
             'fecha_inicio' =>'required',
-            'fecha_final' =>'required|after_or_equal:fecha_final',
+            'fecha_final' =>'required|after_or_equal:fecha_inicio',
         ]);         
 
         if($validator->fails())
@@ -59,7 +59,11 @@ class HorariosColecturiaController extends Controller
         $hc->final = $request->fecha_final.' '.$request->hora_inicio;
         $hc->user = auth()->id();
         $hc->save();
-        return  $request->_id !=null ?response()->json(['mensaje'=>'Modificación exitosa']):response()->json(['mensaje'=>'Registro exitoso']);
+
+        return  
+            $request->_id !=null ? 
+            response()->json(['mensaje'=>'Modificación exitosa']):
+            response()->json(['mensaje'=>'Registro exitoso']);
     }
 
     /**

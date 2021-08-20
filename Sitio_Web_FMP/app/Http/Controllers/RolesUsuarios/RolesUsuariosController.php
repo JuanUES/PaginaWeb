@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\RolesUsuarios;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Licencias\Empleado;
 use App\Models\Horarios\Departamento;
 use Illuminate\Support\Facades\Validator;
@@ -11,11 +12,8 @@ class RolesUsuariosController extends Controller
 {
     function index(){
         
-        $empleadoJefe = Empleado::where('jefe',null)->get();
-        $todosLosEmpleados=Empleado::get();
-        $departamentos=Departamento::get();
-
-        return view('Admin.Roles.RolesUsuarios',compact('empleadoJefe','todosLosEmpleados','departamentos'));
+        $usuarios = User::all();
+        return view('Admin.Roles.Usuarios',compact('usuarios'));
     }
 
     function store(Request $request){

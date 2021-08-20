@@ -149,7 +149,7 @@ $("#guardar").click(function() {
 
             $(notificacion).html('<h4 Class = "text-white">Completar Campos:</h4>'
                 +'<div class="row">'
-                +'<div class="col-lg-9 order-firts" style="text-transform: capitalize;">'
+                +'<div class="col-lg-9 order-firts">'
                 +'<ul>'+$errores+'</ul>'
                 +'</div>'
                 +'<div class="col-lg-3 order-last text-center">'

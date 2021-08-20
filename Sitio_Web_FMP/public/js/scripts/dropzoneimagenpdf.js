@@ -13,4 +13,13 @@ $(".dropzonepdf").dropzone({
     parallelUploads: 1,
 });
 
-$('.bs-example-modal-center').on('hidden.bs.modal', function() { location.reload(); });
+$('.modal').on('hidden.bs.modal', function() {
+
+    location.reload(); 
+});
+
+$('.bs-example-modal-lg').on('hidden.bs.modal', function() {
+
+    location.reload(); 
+});
+
