@@ -18,8 +18,8 @@ class UserSeeder extends Seeder
 
         $usu = User::create([
             'name'=>'Liseth Guadalupe Merino de Córdova',
-            'email'=>'12345678',
-            'password'=>Hash::make('liseth'),
+            'email'=>'liseth.merino@ues.edu.sv',
+            'password'=>Hash::make('12345678'),
         ]);
         
         $admin = User::create([
