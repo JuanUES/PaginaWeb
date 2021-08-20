@@ -21,9 +21,6 @@
         <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
         <script src="{{ asset('js/summernote.config.min.js') }}"></script>
         <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
-        
-        
-
         <script>
             // para recargar pagina luego de subir o no imagenes
             $('.bs-example-modal-center').on('hidden.bs.modal', function() { location.reload(); });
@@ -116,7 +113,39 @@
                                                 <img src="images/carrusel/{{$investigacionCarrusel[$i]->imagen}}" class="img-fluid" width="100%" height="60%" alt="{!!$investigacionCarrusel[$i]->imagen!!}">                                
                                             </div>  
                                     @endfor 
-                                    </div>
+                                </div>
+                                @auth
+                                    <div class="row py-3">
+                                        <div class="col-xl-12">
+                                            <form action="{{ route('contenido', ['localizacion'=>'investigacionIndex']) }}" method="POST"  
+                                                class="parsley-examples"  id="indexContenido">
+                                                @csrf
+                                                <div class="alert alert-primary text-white py-1" 
+                                                        role="alert" style="display:none" id="notificacion">                                               
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xl-12">   
+                                                        <div class="form-group">                       
+                                                            <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
+                                                                @if ($contenido!=null)
+                                                                    {{$contenido->contenido}}
+                                                                @endif
+                                                            </textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-12">
+                                                        <div class="form-group">
+                                                            <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
+                                                                onclick="submitForm('#indexContenido','#notificacion')">
+                                                                <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>  
+                                    </div>    
+                                @endauth 
                                     <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                                     <span class="sr-only">Anterior</span>
@@ -127,38 +156,7 @@
                                     </a>
                                 </div>    
 
-                                @auth
-                                <div class="row py-3">
-                                    <div class="col-xl-12">
-                                        <form action="{{ route('contenido', ['localizacion'=>'investigacionIndex']) }}" method="POST"  
-                                            class="parsley-examples"  id="indexContenido">
-                                            @csrf
-                                            <div class="alert alert-primary text-white py-1" 
-                                                    role="alert" style="display:none" id="notificacion">                                               
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-xl-12">   
-                                                    <div class="form-group">                       
-                                                        <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
-                                                            @if ($contenido!=null)
-                                                                {{$contenido->contenido}}
-                                                            @endif
-                                                        </textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-12">
-                                                    <div class="form-group">
-                                                        <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
-                                                            onclick="submitForm('#indexContenido','#notificacion')">
-                                                            <i class="fa fa-save fa-5 ml-3"></i> Guardar
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>  
-                                </div>    
-                                @endauth       
+                                      
                                 <div class="col-xl-12 row">
 
                                     <div class="col order-first">
@@ -197,13 +195,11 @@
                                     @endauth
                                 </div> 
                                 @guest  
-                                
                                 <div class="col-xl-12 py-2">
                                     @if ($contenido!=null)
                                         {!!$contenido->contenido!!}
                                     @endif
-                                </div>                                    
-                                
+                                </div>      
                                 @endguest
                                 <div class="col-xl-12 py-3">
                                     <?php
