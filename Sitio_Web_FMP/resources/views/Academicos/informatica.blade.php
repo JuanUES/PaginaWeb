@@ -3,6 +3,7 @@
 @auth    
     <!-- Este css se carga nada mas cuando esta logeado un usuario-->
     <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
 @endauth    
 @endsection
 
@@ -11,6 +12,10 @@
     <script src=" {{ asset('js/dropzone.min.js') }} "></script>   
     <script src=" {{ asset('js/scripts/dropzonePdf.js') }} "></script>
     <script src=" {{ asset('js/scripts/pdf.js') }} "></script>
+
+    <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
+    <script src="{{ asset('js/summernote.config.min.js') }}"></script>
+    <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
     @endauth
 @endsection
 @section('container')
@@ -25,7 +30,8 @@
         <div class="card-box"> 
             <div class="row">
                 <div class="col-xl-8">
-                    <h4 class="header-title">Ingeniería de Sistemas Informáticos</h4>                            
+                    <h4 class="header-title">Ingeniería de Sistemas Informáticos</h4>   
+                    <!--                         
                             <p class="mb-1 font-weight-bold ">Código:</p>
                             <p class="text-muted font-15 text-justify">I70515</p>
                             <p class="mb-1 font-weight-bold">Descripción:</p>
@@ -118,7 +124,13 @@
                             <p class="text-muted font-15">
                                 Ingeniero (a) de sistemas informáticos
                             </p>
-                            
+                        -->
+                        <div class="col-xl-12">     
+                            <div class="form-group">                                               
+                                <label for="contenido">Contenido <code>*</code></label>
+                                <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
+                            </div>
+                        </div>
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','ingSistemas.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/ingSistemas.pdf')}}"
