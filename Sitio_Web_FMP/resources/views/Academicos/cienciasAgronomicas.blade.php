@@ -3,11 +3,17 @@
 @auth    
     <!-- Este css se carga nada mas cuando esta logeado un usuario-->
     <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
 @endauth    
 @endsection
 
 @section('footer')
     @auth
+
+    <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
+    <script src="{{ asset('js/summernote.config.min.js') }}"></script>
+    <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
+
     <script src=" {{ asset('js/dropzone.min.js') }} "></script>   
     <script src=" {{ asset('js/scripts/dropzonePdf.js') }} "></script>
     <script src=" {{ asset('js/scripts/pdf.js') }} "></script>
@@ -28,7 +34,8 @@
                 <div class="col-xl-8 px-3">
                     <div class="tab-content pt-0" id="v-pills-tabContent">
                         <div class="tab-pane fade active show" id="v-pills-social2" role="tabpanel" aria-labelledby="v-pills-social-tab2">
-                            <h2 class="header-title py-2">Ingeniería Agronómica</h2>                            
+                            <h2 class="header-title py-2">Ingeniería Agronómica</h2>             
+                            <!--               
                             <p class="mb-1 font-weight-bold ">Código:</p>
                             <p class="text-muted font-15 text-justify">I70304</p>
                             <p class="mb-1 font-weight-bold">Descripción:</p>
@@ -64,7 +71,13 @@
                                     <p class="text-muted font-15">
                                         Ingeniero(a) Agrónomo.
                                     </p>
-                                    
+                                --> 
+                                <div class="col-xl-12">     
+                                    <div class="form-group">                                               
+                                        <label for="contenido">Contenido <code>*</code></label>
+                                        <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
+                                    </div>
+                                </div>
                                     <p class="mb-1 font-weight-bold">Pensum:</p>
                                     <a href="{{$pdfs->where('file','ingAgro.pdf')->first()==null 
                                         ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/ingAgro.pdf')}}"
@@ -81,6 +94,7 @@
                         </div>
                         <div class="tab-pane fade" id="v-pills-profile2" role="tabpanel" aria-labelledby="v-pills-profile-tab2">
                             <h2 class="header-title py-2">Ingeniería AgroIndustrial</h2>   
+                            <!--
                             <p class="mb-0 font-weight-bold ">Código</p> 
                                     <p class="text-muted font-15 text-justify">
                                         I70305
@@ -135,6 +149,13 @@
                                     <p class="text-muted font-15">
                                         Ingeniero(a) Agroindustrial
                                     </p>
+                                -->
+                                <div class="col-xl-12">     
+                                    <div class="form-group">                                               
+                                        <label for="contenido">Contenido <code>*</code></label>
+                                        <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
+                                    </div>
+                                </div>
                                     <p class="mb-1 font-weight-bold">Pensum:</p>
                                     <a href="{{$pdfs->where('file','ingIndus.pdf')->first()==null 
                                         ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/ingIndus.pdf')}}"
