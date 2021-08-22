@@ -43,10 +43,10 @@
                     <h3>Proyección Social</h3>
                     <div class="row">
                         <div class="col-xl-8 p-3">
-                            <h4 class="mb-1 font-weight-bold">¿Que es Servicio social?</h4>
+                         <!--   <h4 class="mb-1 font-weight-bold">¿Que es Servicio social?</h4>
                             <p class="text-muted font-15 text-justify">
                                 Es el conjunto de actividades planificadas que persiguen objetivos académicos, de investigación y de servicio; con el fin de poner a los miembros de la comunidad universitaria en contacto con la realidad, para obtener una toma de conciencia ante la problemática social salvadoreña e incidir en la transformación y superación de la sociedad.
-                            </p>
+                            </p>-->
                             <h4 class="mb-1 font-weight-bold">Jefe de la Unidad</h4>
                             @if (count($jefaturas)==0)
                             @guest
@@ -429,11 +429,11 @@
                             </div><!-- /.modal --> 
                             @endauth
                             @endif
-                            
+                            <!--
                             <h4>Contactanos</h4>
                             <p class="text-muted font-15 text-justify">
                                 Correo: proyeccionsocial.fmp@ues.edu.sv    
-                            </p>
+                            </p>-->
                             
                         </div>
                         <div class="col-xl-4 p-2">
