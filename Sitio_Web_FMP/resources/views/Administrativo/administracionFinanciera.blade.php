@@ -1,11 +1,17 @@
 @extends('Pagina/baseOnlyHtml')
 
 @section('header')
+<!-- Summernote css -->
+<link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
     <!-- Plugin css -->
     <link href="{{ asset('css/fullcalendar.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('footer')
+
+<script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
+    <script src="{{ asset('js/summernote.config.min.js') }}"></script>
+    <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
 
     <!-- Calendar init -->
     <script src="{{ asset('js/moment.min.js') }}"></script>
@@ -36,6 +42,7 @@
                 <div class="card-box">
                     <h3 class="text-center">Administración Financiera</h3>
                     <div class="row">
+                        <!--
                         <div class="col-xl-12"> 
 
                             <h4 class="text-center">Personal</h4>
@@ -71,11 +78,21 @@
                             </p>                                
                             
                             
-                        </div><!-- end col -->                              
+                        </div> end colFin del codigo html anterior de informacion de finanaciera -->  
+                        
+                            <div class="col-xl-12">     
+                                <div class="form-group">                                               
+                                    <label for="contenido">Contenido <code>*</code></label>
+                                    <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
+                                </div>
+                            </div>
+                        
                     </div> 
                 </div> 
             </div>
         </div>
+
+      
 
         <div class="row">
             <div class="col-xl-12">

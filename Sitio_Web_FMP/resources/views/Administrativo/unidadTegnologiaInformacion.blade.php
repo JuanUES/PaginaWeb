@@ -1,4 +1,19 @@
 @extends('Pagina/baseOnlyHtml')
+@section('header')
+<!-- Summernote css -->
+<link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
+    
+    
+@endsection
+
+@section('footer')
+
+<script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
+    <script src="{{ asset('js/summernote.config.min.js') }}"></script>
+    <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
+    
+        
+    @endsection
 
 @section('container')
 <div class="wrapper">
@@ -18,6 +33,7 @@
                         Unidad de Tecnología de la Información
                         </h3>
                     <div class="row">
+                        <!--
                         <div class="col-xl-12"> 
                             <br>
                             <h4 class="text-center">Coordinador de la Unidad de Tecnología de la Información</h4>
@@ -55,7 +71,14 @@
                                 soporte.uti@ues.edu.sv
                             </p> 
                             
-                        </div><!-- end col -->       
+                        </div> end col 
+                    -->
+                    <div class="col-xl-12">     
+                        <div class="form-group">                                               
+                            <label for="contenido">Contenido <code>*</code></label>
+                            <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
+                        </div>
+                    </div>       
                     </div> 
                 </div> 
             </div>
