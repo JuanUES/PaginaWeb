@@ -3,6 +3,7 @@
 @auth
 <!-- Este css se carga nada mas cuando esta logeado un usuario-->
 <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
+<link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
 @endauth
 @endsection
 @section('footer')
@@ -12,6 +13,10 @@
 <script src="{{ asset('js/scripts/http.min.js') }}"></script><!--Este es el script que se utiliza para enviar post con un ajax generico-->
 <script src="{{ asset('js/scripts/proyeccionsocial.js')}}"></script>
 <script src="{{ asset('js/scripts/dropzoneimagenpdf.js') }}"></script>
+
+<script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
+    <script src="{{ asset('js/summernote.config.min.js') }}"></script>
+    <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
 <script>
     function modificarD(id){
              json = {!!json_encode($coordinadores)!!}.find(x => x.id==id);
@@ -202,6 +207,7 @@
                                 @endif  
                             </div>
                             <h4 class="mb-1 font-weight-bold">Lineamientos</h4>
+                           <!--
                             <ul>
                                 <li>
                                     <p class="text-muted font-15 text-justify">
@@ -255,6 +261,15 @@
                                 </li>
                                 
                             </ul>
+                        -->
+                        @auth
+                        <div class="col-xl-12">     
+                            <div class="form-group">                                               
+                                <label for="contenido">Contenido <code>*</code></label>
+                                <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
+                            </div>
+                        </div>
+                        @endauth
                             @auth
                             <div id="modalEliminar2" class="modal fade bs-example-modal-center" tabindex="-1" 
                             role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
