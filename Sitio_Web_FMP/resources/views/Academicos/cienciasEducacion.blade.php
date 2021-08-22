@@ -3,6 +3,7 @@
 @auth    
     <!-- Este css se carga nada mas cuando esta logeado un usuario-->
     <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
+    <link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
 @endauth    
 @endsection
 
@@ -11,6 +12,10 @@
     <script src=" {{ asset('js/dropzone.min.js') }} "></script>   
     <script src=" {{ asset('js/scripts/dropzonePdf.js') }} "></script>
     <script src=" {{ asset('js/scripts/pdf.js') }} "></script>
+
+    <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
+    <script src="{{ asset('js/summernote.config.min.js') }}"></script>
+    <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
     @endauth
 @endsection
 @section('container')
@@ -28,7 +33,8 @@
                 <div class="col-xl-8 px-3">
                     <div class="tab-content pt-0" id="v-pills-tabContent">
                         <div class="tab-pane fade active show" id="v-pills-social2" role="tabpanel" aria-labelledby="v-pills-social-tab2">
-                            <h2 class="header-title py-2">Licenciatura en Trabajo Social</h2>                            
+                            <h2 class="header-title py-2">Licenciatura en Trabajo Social</h2>
+                            <!--                            
                             <p class="mb-1 font-weight-bold ">Código:</p>
                             <p class="text-muted font-15 text-justify">L10439</p>
                             <p class="mb-1 font-weight-bold">Descripción:</p>
@@ -49,6 +55,13 @@
                             <p class="text-muted font-15">
                                 Licenciado (a) en trabajo social.
                             </p>
+                        -->
+                        <div class="col-xl-12">     
+                            <div class="form-group">                                               
+                                <label for="contenido">Contenido <code>*</code></label>
+                                <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
+                            </div>
+                        </div>
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','LicSocial.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/LicSocial.pdf')}}" 
@@ -64,6 +77,7 @@
                         </div>
                         <div class="tab-pane fade" id="v-pills-profile2" role="tabpanel" aria-labelledby="v-pills-profile-tab2">
                             <h2 class="header-title py-2">Profesorado en Educación Básica para Primero y Segundo Ciclos</h2>                            
+                            <!--
                             <p class="mb-1 font-weight-bold ">Código:</p>
                             <p class="text-muted font-15 text-justify">P70402</p>
                             <p class="mb-1 font-weight-bold">Descripción:</p>
@@ -88,6 +102,13 @@
                             <p class="text-muted font-15">
                                 Profesor (a) en educación básica para primero y segundo ciclo.
                             </p>
+                        -->
+                        <div class="col-xl-12">     
+                            <div class="form-group">                                               
+                                <label for="contenido">Contenido <code>*</code></label>
+                                <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
+                            </div>
+                        </div>
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','profeBasica.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeBasica.pdf')}}" 
@@ -103,6 +124,7 @@
                         </div>
                         <div class="tab-pane fade" id="v-pills-messages2" role="tabpanel" aria-labelledby="v-pills-messages-tab2">
                             <h2 class="header-title py-2">Profesorado en Matemática para Tercer Ciclo de Educación Básica y Educación Media</h2>                            
+                          <!--
                             <p class="mb-1 font-weight-bold ">Código:</p>
                             <p class="text-muted font-15 text-justify">
                                 P70923
@@ -154,6 +176,13 @@
                             <p class="text-muted font-15">
                                 Profesor  (a)  en matemática para tercer ciclo de educación básica y educación media.
                             </p>
+                        -->
+                        <div class="col-xl-12">     
+                            <div class="form-group">                                               
+                                <label for="contenido">Contenido <code>*</code></label>
+                                <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
+                            </div>
+                        </div>
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','profeMate.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeMate.pdf')}}" 
@@ -169,6 +198,7 @@
                         </div>
                         <div class="tab-pane fade" id="v-pills-settings2" role="tabpanel" aria-labelledby="v-pills-settings-tab2">
                             <h2 class="header-title py-2">Profesorado en Idioma Inglés Para Tercer Ciclo de Educación Básica y Educación Media</h2>                            
+                            <!--
                             <p class="mb-1 font-weight-bold ">Código:</p>
                             <p class="text-muted font-15 text-justify">P70430</p>
                             <p class="mb-1 font-weight-bold">Descripción:</p>
@@ -187,6 +217,13 @@
                             <p class="text-muted font-15">
                                 Profesor (a) en inglés para tercer ciclo de educación básica y educación media.
                             </p>
+                        -->
+                        <div class="col-xl-12">     
+                            <div class="form-group">                                               
+                                <label for="contenido">Contenido <code>*</code></label>
+                                <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
+                            </div>
+                        </div>
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','profeIngles.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeIngles.pdf')}}"
@@ -203,7 +240,8 @@
                         <div class="tab-pane fade" id="v-pills-biologia2" role="tabpanel" aria-labelledby="v-pills-biologia-tab2">
                             <h2 class="header-title py-2">
                                 Profesorado en Biología para Tercer Ciclo en Educación Básica y Educación Media  
-                            </h2>       
+                            </h2>  
+                            <!--     
                             <p class="mb-1 font-weight-bold">Objetivos:</p>
                             <ul>
                                 <li>
@@ -266,7 +304,13 @@
                             <p class="text-muted font-15">
                                 Profesor o profesora de Biología para Tercer Ciclo de Educación Básica y Educación Media. 
                             </p>
-
+                        -->
+                        <div class="col-xl-12">     
+                            <div class="form-group">                                               
+                                <label for="contenido">Contenido <code>*</code></label>
+                                <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
+                            </div>
+                        </div>
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','profeBiolo.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeBiolo.pdf')}}"
@@ -282,6 +326,7 @@
                         </div>                        
                         <div class="tab-pane fade" id="v-pills-parvularia2" role="tabpanel" aria-labelledby="v-pills-parvularia-tab2">
                             <h2 class="header-title py-2">Profesorado en Educación Inicial y Parvularia</h2>                            
+                          <!--
                             <p class="mb-1 font-weight-bold ">Código:</p>
                             <p class="text-muted font-15 text-justify">P70403</p>
                             <p class="mb-1 font-weight-bold">Descripción:</p>
@@ -414,7 +459,13 @@
                             <p class="text-muted font-15">
                                 Profesor (a) en educación inicial y parvularia.
                             </p>
-
+                        -->
+                        <div class="col-xl-12">     
+                            <div class="form-group">                                               
+                                <label for="contenido">Contenido <code>*</code></label>
+                                <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
+                            </div>
+                        </div>
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','profeParvularia.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeParvularia.pdf')}}"
@@ -431,7 +482,7 @@
                         </div>
                         <div class="tab-pane fade" id="v-pills-licenciatura2" role="tabpanel" aria-labelledby="v-pills-licenciatura-tab2">
                             <h2 class="header-title py-2">Licenciatura en Enseñanza de Idiomas Extranjeros, Especialidad Inglés-Francés</h2>                            
-                            
+                            <!--
                             <p class="mb-1 font-weight-bold">Descripción:</p>
                             <p class="text-muted font-15 text-justify">
                                 El plan de estudios ofrece al estudiante una preparación primordialmente lingüística en dos idiomas: ingles y Francés; también ofrece un tronco de materias electivas con dos especialidades menores: en la enseñanza y en las relaciones publicas; la elección de cualquiera de estas especialidades menores dependerá de los objetivos del estudiante. Toda la formación lingüística esta orientada profesionalmente para la inserción laboral de los participantes a través del uso de estas lenguas en por lo menos los dos campos mencionados anteriormente.
@@ -446,6 +497,13 @@
                             <p class="text-muted font-15">
                                 Licenciado (a) en enseñanza de idiomas extranjeros, especialidad inglés-francés.
                             </p>
+                        -->
+                        <div class="col-xl-12">     
+                            <div class="form-group">                                               
+                                <label for="contenido">Contenido <code>*</code></label>
+                                <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
+                            </div>
+                        </div>
 
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','licEspInglesFrances.pdf')->first()==null 
