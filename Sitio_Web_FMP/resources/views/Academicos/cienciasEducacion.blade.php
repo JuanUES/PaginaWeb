@@ -56,12 +56,14 @@
                                 Licenciado (a) en trabajo social.
                             </p>
                         -->
+                        @auth
                         <div class="col-xl-12">     
                             <div class="form-group">                                               
                                 <label for="contenido">Contenido <code>*</code></label>
                                 <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
                             </div>
                         </div>
+                        @endauth
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','LicSocial.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/LicSocial.pdf')}}" 
@@ -103,12 +105,14 @@
                                 Profesor (a) en educación básica para primero y segundo ciclo.
                             </p>
                         -->
+                        @auth
                         <div class="col-xl-12">     
                             <div class="form-group">                                               
                                 <label for="contenido">Contenido <code>*</code></label>
                                 <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
                             </div>
                         </div>
+                        @endauth
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','profeBasica.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeBasica.pdf')}}" 
@@ -177,12 +181,14 @@
                                 Profesor  (a)  en matemática para tercer ciclo de educación básica y educación media.
                             </p>
                         -->
+                        @auth
                         <div class="col-xl-12">     
                             <div class="form-group">                                               
                                 <label for="contenido">Contenido <code>*</code></label>
                                 <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
                             </div>
                         </div>
+                        @endauth
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','profeMate.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeMate.pdf')}}" 
@@ -218,12 +224,14 @@
                                 Profesor (a) en inglés para tercer ciclo de educación básica y educación media.
                             </p>
                         -->
+                        @auth
                         <div class="col-xl-12">     
                             <div class="form-group">                                               
                                 <label for="contenido">Contenido <code>*</code></label>
                                 <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
                             </div>
                         </div>
+                        @endauth
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','profeIngles.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeIngles.pdf')}}"
@@ -305,12 +313,14 @@
                                 Profesor o profesora de Biología para Tercer Ciclo de Educación Básica y Educación Media. 
                             </p>
                         -->
+                        @auth
                         <div class="col-xl-12">     
                             <div class="form-group">                                               
                                 <label for="contenido">Contenido <code>*</code></label>
                                 <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
                             </div>
                         </div>
+                        @endauth
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','profeBiolo.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeBiolo.pdf')}}"
