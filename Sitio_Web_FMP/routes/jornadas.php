@@ -4,11 +4,12 @@ use App\Models\Jornada\Jornada;
 use Illuminate\Support\Facades\Route;
 
 //RUTAS JORNADA
-Route::get('admin/jornada/', 'App\Http\Controllers\JornadaController@index')->name('admin.jornada.index');
-Route::get('admin/jornada/{id}', 'App\Http\Controllers\JornadaController@update')->name('admin.jornada.update');
-Route::get('admin/jornada/create', 'App\Http\Controllers\JornadaController@create')->name('admin.jornada.create');
-Route::post('admin/jornada/store', 'App\Http\Controllers\JornadaController@store')->name('admin.jornada.store');
-Route::get('admin/jornada/edit/{id}', 'App\Http\Controllers\JornadaController@edit')->name('admin.jornada.edit');
+Route::resource('admin/jornada', 'App\Http\Controllers\JornadaController')->names('admin.jornada');
+// Route::get('admin/jornada/', 'App\Http\Controllers\JornadaController@index')->name('admin.jornada.index');
+// Route::get('admin/jornada/{id}', 'App\Http\Controllers\JornadaController@update')->name('admin.jornada.update');
+// Route::get('admin/jornada/create', 'App\Http\Controllers\JornadaController@create')->name('admin.jornada.create');
+// Route::post('admin/jornada/store', 'App\Http\Controllers\JornadaController@store')->name('admin.jornada.store');
+// Route::get('admin/jornada/edit/{id}', 'App\Http\Controllers\JornadaController@edit')->name('admin.jornada.edit');
 //modal
 Route::get("admin/jornada/detalle/{id}", "App\Http\Controllers\JornadaController@getDetalle");
 //obtener departamentos
