@@ -460,12 +460,14 @@
                                 Profesor (a) en educación inicial y parvularia.
                             </p>
                         -->
+                        @auth
                         <div class="col-xl-12">     
                             <div class="form-group">                                               
                                 <label for="contenido">Contenido <code>*</code></label>
                                 <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
                             </div>
                         </div>
+                        @endauth
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','profeParvularia.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeParvularia.pdf')}}"
@@ -498,13 +500,14 @@
                                 Licenciado (a) en enseñanza de idiomas extranjeros, especialidad inglés-francés.
                             </p>
                         -->
+                        @auth
                         <div class="col-xl-12">     
                             <div class="form-group">                                               
                                 <label for="contenido">Contenido <code>*</code></label>
                                 <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
                             </div>
                         </div>
-
+@endauth
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','licEspInglesFrances.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/licEspInglesFrances.pdf')}}"
