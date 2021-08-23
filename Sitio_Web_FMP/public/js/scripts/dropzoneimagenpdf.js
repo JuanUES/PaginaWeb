@@ -14,12 +14,10 @@ $(".dropzonepdf").dropzone({
 });
 
 $('.modal').on('hidden.bs.modal', function() {
-
     location.reload(); 
 });
 
 $('.bs-example-modal-lg').on('hidden.bs.modal', function() {
-
     location.reload(); 
 });
 

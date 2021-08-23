@@ -11,7 +11,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form id="deptoForm" action="{{route('depto.store')}}" method="POST">
+        <form id="registroForm" action="{{route('')}}" method="POST">
             <div class="modal-body">
                 <input type="hidden" id="_id" name="_id"/>
                     @csrf
@@ -28,7 +28,7 @@
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="exampleInputCodigo">Nombre <code>*</code></label>
-                                <input type="text" class="form-control" name="" id="" autocomplete="off" placeholder="Digite el nombre">
+                                <input type="text" class="form-control" name="nombre" id="" autocomplete="off" placeholder="Digite el nombre">
                             </div>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="exampleInputUbicacion">Correo <code>*</code></label>
-                                <input type="email" class="form-control" name="" id="" autocomplete="off" placeholder="Digite el correo">
+                                <input type="email" class="form-control" name="correo" id="" autocomplete="off" placeholder="Digite el correo">
                             </div>
                         </div>
                         
@@ -45,7 +45,7 @@
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="exampleInputNombre">Contraseña <code>*</code></label>
-                                <input type="password" class="form-control" name="" id="" autocomplete="off"  placeholder="Digite la contraseña">
+                                <input type="password" class="form-control" name="contraseña" id="" autocomplete="off"  placeholder="Digite la contraseña">
                             
                             </div>
                         </div>
@@ -53,7 +53,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i> Cerrar</button>
-                <button type="button" class="btn btn-primary" onClick="submitForm('#deptoForm','#notificacion')"><li class="fa fa-save"></li> Guardar</button>
+                <button type="button" class="btn btn-primary" onClick="submitForm('#registroForm','#notificacion')"><li class="fa fa-save"></li> Guardar</button>
             </div>
         </form>
       </div>
@@ -69,7 +69,7 @@
                 <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            <form action="{{ route('estadoDept') }}" method="POST">
+            <form action="{{ route('') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="row py-3">
@@ -109,7 +109,7 @@
                 <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            <form action="{{ route('estadoADept') }}" method="POST">
+            <form action="{{ route('') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="row py-3">
@@ -117,7 +117,7 @@
                         <div class="col-lg-10 text-black">
                             <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se dara de alta este departamento, ¿Desea continuar?</h4>
                         </div>
-                        <input type="hidden" name="E_Activar" id="E_Activar">
+                        <input type="hidden" name="activarId" id="activarId">
                     </div>
                     <div class="row">
                         <div class="col-xl-6">
@@ -175,14 +175,13 @@
                 <thead>
                 <tr>
                     <th data-priority="1">N°</th>
-                    <th data-priority="3">Nombre</th>
+                    <th data-priority="3">Usuario</th>
                     <th data-priority="3">Estado</th>
-                    <th data-priority="1">Acciones</th>
-                  
+                    <th data-priority="3">Roles</th>
+                    <th data-priority="1">Acciones</th>                  
                 </tr>
                 </thead>
-                <tbody>
-                    
+                <tbody>                    
                 @foreach ($usuarios as $item)
                 <tr>
                     <td>{!!$item->id!!}</td>
@@ -195,9 +194,7 @@
                     <button title="Activar Departamento" class="btn btn-outline-primary btn-sm"  data-toggle="modal" data-target="#modalAlta"><i class="fa fa-arrow-up" aria-hidden="true"></i>
                     </button>
                     </td>
-                    @endif
-                       
-                    
+                    @endif                      
                 </tr>
                 @endforeach   
                 </tbody>

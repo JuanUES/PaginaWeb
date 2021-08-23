@@ -18,7 +18,8 @@ class UsuariosController extends Controller
     
     public function index()
     {
-        
+        $usuarios = User::all();
+        return view('Admin.Sesion.Usuarios',compact('usuarios'));
     }
 
     public function store(Request $request)
@@ -45,6 +46,14 @@ class UsuariosController extends Controller
         return $request->_id != null ?
             response()->json(['mensaje'=>'Modificación exitosa.']):
             response()->json(['mensaje'=>'Registro exitoso.']);
+    }
+
+    public function estado(Request $request){
+        
+    }
+
+    public function roles(Request $request){
+        
     }
 
     public function destroy(Request $request)

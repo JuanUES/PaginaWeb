@@ -12,8 +12,7 @@ class RolesUsuariosController extends Controller
 {
     function index(){
         
-        $usuarios = User::all();
-        return view('Admin.Roles.Usuarios',compact('usuarios'));
+        
     }
 
     function store(Request $request){

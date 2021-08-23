@@ -232,7 +232,7 @@
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <li>
-                                        <a href=".">Usuarios</a>
+                                        <a href="{{ route('usuarios') }}">Usuarios</a>
                                     </li>
                                     <li>
                                         <a href=".">Roles</a>
