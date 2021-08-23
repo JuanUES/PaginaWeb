@@ -49,7 +49,7 @@
             <br>
 
 
-            @if(@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano') )
+            @if(@Auth::user()->hasRole('Recurso-Humano') )
                 <form method="POST" action="{{ route('admin.jornada.select', $depto[0]) }}" class="frmSelect" accept-charset="UTF-8" >
                     @csrf
                     <div class="form-group">
