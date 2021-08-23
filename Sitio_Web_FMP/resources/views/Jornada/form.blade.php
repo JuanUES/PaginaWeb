@@ -25,13 +25,13 @@
 <h5 class="mt-3">Detalles</h5>
 <hr>
 <div id="days-table"></div>
-<button type="button" class="btn btn-sm btn-primary mt-3" id="btnNewRow"> <i class="fa fa-plus-square"></i> Nueva Linea </button>
+<button type="button" class="btn btn-sm btn-primary mt-3" name="btnNewRow" id="btnNewRow"> <i class="fa fa-plus-square"></i> Nueva Linea </button>
 
 <br><br>
 
 <div class="form-group float-end">
     <a href="{{ route('admin.jornada.index') }}" title=""><button type="button" class="btn btn-dark btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Retroceder</button></a>
-    <button type="submit" class="btn btn-info btn-sm" title="Guardar Informacion">{!! $formMode === 'edit' ? '<i class="fa fa-edit"></i>' : '<i class="fa fa-save"></i>' !!} {{ $formMode === 'edit' ? 'Modificar' : 'Guardar' }}</button>
+    <button style="display:none;" type="submit" id="btnSave" name="btnSave" class="btn btn-info btn-sm" title="Guardar Informacion">{!! $formMode === 'edit' ? '<i class="fa fa-edit"></i>' : '<i class="fa fa-save"></i>' !!} {{ $formMode === 'edit' ? 'Modificar' : 'Guardar' }}</button>
 </div>
 
 
@@ -44,7 +44,7 @@
 
 <script>
 
-    var items = @json(isset($jornada) ? $jornada->items_enabled(true) : []);//set los items del presupuesto
+    var items = @json(isset($jornada) ? $jornada->items_enabled('activo') : []);//set los items del presupuesto
     // console.log(items);
     if(!items.length){//set dos rows vacias para el agregar
         items = [
@@ -62,14 +62,14 @@
     //Funcion para eliminar fila
     let btncallback = function ( e, cell) {
         Swal.fire({
-            title: "¿Esta seguro?",
-            text: "",
+            title: "Advertencia",
+            text: "Se elimina este registro, ¿Desea continuar?",
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            cancelButtonText: "Cancelar",
-            confirmButtonText: "Si, Borrar"
+            cancelButtonText: "No",
+            confirmButtonText: "Si"
         }).then(result => {
             if (result.isConfirmed) {
                 let row = cell.getRow();
@@ -77,6 +77,17 @@
                
                 let updatehours = updateJornada();
                 $("#_horas").val(''+updatehours);
+                if(updatehours <=0){
+                    alert("Completo sus horas laborales");
+                    $("#btnNewRow").hide();
+                }
+                if(updatehours==0){
+                    $("#btnSave").show();
+                }
+                if(updatehours>0){
+                    $("#btnNewRow").show();
+                    $("#btnSave").hide();
+                }
 
                 /*Toast.fire({
                     icon: "success",
@@ -110,6 +121,18 @@
         console.log(valor);
 
         $("#_horas").val(''+total);
+
+        if(total <=0){
+            alert("Completo sus horas laborales");
+            $("#btnNewRow").hide();
+        }
+        if(total==0){
+            $("#btnSave").show();
+        }
+        if(total>0){
+            $("#btnNewRow").show();
+            $("#btnSave").hide();
+        }
 
     }
 
@@ -153,11 +176,8 @@
         });
 
         function onChange(){
-            if(input.value != cellValue){
-                success(moment(input.value, "HH:mm").format("HH:mm"));
-            }else{
-                cancel();
-            }
+            if(input.value != cellValue){success(moment(input.value, "HH:mm").format("HH:mm"));
+            }else{cancel();}
         }
 
         //submit new value on blur or change
@@ -165,13 +185,9 @@
 
         //submit new value on enter
         input.addEventListener("keydown", function(e){
-            if(e.keyCode == 13){
-                onChange();
-            }
+            if(e.keyCode == 13){onChange();}
 
-            if(e.keyCode == 27){
-                cancel();
-            }
+            if(e.keyCode == 27){cancel();}
         });
 
         return input;
@@ -194,7 +210,7 @@
         columns:[                 //define the table columns
             {title:"", field:"id"},
             {title:"", field:"option", formatter: btn, cellClick: btncallback, width:100},
-            {title:"Dia", field:"dia", editor:"select",validator:"required", width:300, editorParams:{values:["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"]}},
+            {title:"Dia", field:"dia", editor:"select",validator:["required","unique"], width:300, editorParams:{values:["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"]}},
             {
                 title:"Entrada", field:"hora_inicio", hozAlign:"center", sorter:"time", width:240, editor:dateEditor,
                 cellEdited: updateHour
@@ -215,13 +231,14 @@
         table.deleteColumn("id");
     }
 
-
-
+    jQuery.validator.addMethod("notEqual", function(value, element, param) {
+        return this.optional(element) || value != param;
+    }, "Please specify a different (non-default) value");
 
      $("#frmJornada").validate({
         rules: {
             dia: {
-                required: true
+                required: true,
             },
             hora_inicio:{
                 required: true
@@ -272,7 +289,7 @@
         let vat = $("#otro").val();
         let total = parseInt(valor) - parseInt(vat);
 
-        console.log(vat);
+        console.log(vat); 
 
         return total;
     }

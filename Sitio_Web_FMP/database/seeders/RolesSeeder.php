@@ -40,5 +40,8 @@ class RolesSeeder extends Seeder
 
         $role = Role::create(['name' => 'Jefe-Academico']);
         // ->givePermissionTo(['publish horarios', 'unpublish ']);
+
+        $role = Role::create(['name' => 'Recurso-Humano']);
+
     }
 }
