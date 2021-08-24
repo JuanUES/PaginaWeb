@@ -34,3 +34,11 @@ php artisan serve
 
 --Para generar un seeder utilizamos el comando de Artisan make:seeder seguido del nombre del seeder--
 php artisan make:seeder ProfessionSeeder
+
+--Crear nuevos atributos en tablas ya creadas en la base usando tinker---------
+
+php artisan tinker
+
+Illuminate\Support\Facades\Schema::table('users',function (Illuminate\Database\Schema\Blueprint $table) {
+    $table->boolean('estado')->default(0);
+});

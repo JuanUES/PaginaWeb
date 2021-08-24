@@ -19,6 +19,7 @@ class UsuariosController extends Controller
     public function index()
     {
         $usuarios = User::all();
+       // echo dd($usuarios);
         return view('Admin.Sesion.Usuarios',compact('usuarios'));
     }
 

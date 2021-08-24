@@ -22,9 +22,8 @@
 ?>
 
 @auth
-
     <div class="col-xl-12">
-        <form action="{{ route('contenido', ['localizacion'=>'{{$localizacion}}']) }}" method="POST"  
+        <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
             class="parsley-examples"  id="contenido{{$localizacion}}">
             @csrf
             <div class="alert alert-primary text-white py-1" 

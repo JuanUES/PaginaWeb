@@ -2,16 +2,16 @@
 
 @section('content')
 <!-- inicio Modal de registro -->
-<div class="modal fade" id="modalRegistro" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade bs-example-modal-lg" id="modalRegistro" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id=" exampleModalLongTitle"><i class=" mdi mdi-book-open-page-variant mdi-24px" aria-hidden="true" ></i> Departamento</h5>
+          <h4 class="modal-title" id=" exampleModalLongTitle"><i class=" mdi mdi-account-badge-horizontal mdi-24px" aria-hidden="true" ></i> Usuario</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form id="registroForm" action="{{route('')}}" method="POST">
+        <form id="registroForm" action="#" method="POST">
             <div class="modal-body">
                 <input type="hidden" id="_id" name="_id"/>
                     @csrf
@@ -20,20 +20,20 @@
                     </div>
                     <div class="row">
                         <div class="col-xl-12">
-                            <label>Nota: <code>* Campos Obligatorio</code></label>
+                            <div class="form-group">
+                                <label>Nota: <code>* Campos Obligatorio</code></label>
+                            </div>
                         </div>
                     </div>
 
                     <div class="row">
-                        <div class="col-xl-12">
+                        <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputCodigo">Nombre <code>*</code></label>
                                 <input type="text" class="form-control" name="nombre" id="" autocomplete="off" placeholder="Digite el nombre">
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-12">
+                        <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputUbicacion">Correo <code>*</code></label>
                                 <input type="email" class="form-control" name="correo" id="" autocomplete="off" placeholder="Digite el correo">
@@ -41,15 +41,51 @@
                         </div>
                         
                     </div>
+                    
                     <div class="row">
-                        <div class="col-xl-12">
+                        <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputNombre">Contraseña <code>*</code></label>
                                 <input type="password" class="form-control" name="contraseña" id="" autocomplete="off"  placeholder="Digite la contraseña">
                             
                             </div>
                         </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="exampleInputNombre">Repetir Contraseña <code>*</code></label>
+                                <input type="password" class="form-control" name="contraseña" id="" autocomplete="off"  placeholder="Digite la contraseña">
+                            </div>
+                        </div>
                     </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label for="">Roles <code>*</code></label>
+                                <select class="form-control selectpicker" multiple style="background: white;">
+                                    <option>Select</option>
+                                    <option value="AZ">Arizona</option>
+                                    <option value="CO">Colorado</option>
+                                    <option value="ID">Idaho</option>
+                                    <option value="MT">Montana</option>
+                                    <option value="NE">Nebraska</option>
+                                    <option value="NM">New Mexico</option>
+                                    <option value="ND">North Dakota</option>
+                                    <option value="UT">Utah</option>
+                                    <option value="WY">Wyoming</option>
+                                    
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label for="exampleInputNombre">Empleado <code>*</code></label>
+                                <input type="password" class="form-control" name="contraseña" id="" autocomplete="off"  placeholder="Digite la contraseña">
+                            </div>
+                        </div>
+                    </div>
+                    
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i> Cerrar</button>
@@ -69,7 +105,7 @@
                 <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            <form action="{{ route('') }}" method="POST">
+            <form action="#" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="row py-3">
@@ -109,7 +145,7 @@
                 <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            <form action="{{ route('') }}" method="POST">
+            <form action="#" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="row py-3">
@@ -160,39 +196,54 @@
 <div class="row">
     <div class="col-12">
         <div class="card-box">
-            <div class="row">
-                <div class="col-6">
+            <div class="row py-2">
+                <div class="col order-first">
                     <h3>
                         Usuarios
-                    </h3>      
+                    </h3>     
+                     
                 </div>
-                <div class="col-3">
+                <div class="col-lg-1 order-last">
                     <!-- Button trigger modal -->
-                 <button type="button" title="Agregar Departamentos" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#modalRegistro"></button>
+                 <button type="button" title="Agregar Departamentos" 
+                    class="btn btn-primary dripicons-plus" 
+                    data-toggle="modal" data-target="#modalRegistro"></button>
                 </div>
             </div>
-            <table  class="table table-sm" id="table-depto">
+            <table  class="table table-sm table-bordered" id="table-depto">
                 <thead>
                 <tr>
                     <th data-priority="1">N°</th>
                     <th data-priority="3">Usuario</th>
                     <th data-priority="3">Estado</th>
                     <th data-priority="3">Roles</th>
-                    <th data-priority="1">Acciones</th>                  
+                    <th data-priority="1" class="col-sm-1 text-center">Acciones</th>                  
                 </tr>
                 </thead>
                 <tbody>                    
                 @foreach ($usuarios as $item)
                 <tr>
-                    <td>{!!$item->id!!}</td>
-                    <th><span class="co-name">{!!$item->name!!}</span></th>
-                    <td></td>
+                    <th class="align-middle ">{!!$item->id!!}</th>
+                    <td class="align-middle ">{!!$item->name!!}</td>
+                    <td class="align-middle ">Estado</td>
+                    <td class="align-middle ">Roles</td>
                     @if (true)
-                    <td>
-                    <button title="Editar Departamento" class="btn btn-outline-primary btn-sm"    data-toggle="modal" data-target="#form-depto"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                    </button>
-                    <button title="Activar Departamento" class="btn btn-outline-primary btn-sm"  data-toggle="modal" data-target="#modalAlta"><i class="fa fa-arrow-up" aria-hidden="true"></i>
-                    </button>
+                    <td class="align-middle ">
+                        <div class="row">
+                            <div class="col text-center"> 
+                                <div class="btn-group" role="group">
+                                    <button title="Editar" class="btn btn-outline-primary btn-sm"  data-toggle="modal" data-target="#form-depto">
+                                        <i class="mdi mdi-file-document-edit-outline font-18" aria-hidden="true"></i>
+                                    </button>
+                                    <button title="Activar | Desactivar" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modalAlta">
+                                        {!! !$item->estado?'<i class="mdi mdi-eye-off font-18"></i>':'<i class="mdi mdi-eye font-18"></i>'!!}
+                                    </button>
+                                    <button title="Eliminar" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modalAlta">
+                                        <i class="mdi mdi-delete font-18"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                     @endif                      
                 </tr>
@@ -206,14 +257,24 @@
 <!-- end row -->   
 @endsection
 
-@section('plugins-js')
-<script src="{{ asset('js/scripts/http.min.js') }}"></script>
-<script src=" {{ asset('js/scripts/usuariosRoles.js') }}"></script>
+@section('plugins')
+<link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet" />
+@endsection
 
-<script>
-    function editarJson(id){
-        $json = {!!json_encode($usuarios)!!}.find(x => x.id==id);
-        editar($json);
-    }
-</script>
+@section('plugins-js')
+    <script src="{{ asset('js/scripts/http.min.js') }}"></script>
+
+    <script src=" {{ asset('js/scripts/usuariosRoles.js') }}"></script>
+    <script src="{{ asset('/template-admin/dist/assets/libs/select2/select2.min.js') }}"></script>
+
+    <!-- Bootstrap Select -->
+    <script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
+
+    <script>
+        /*function editarJson(id){
+            $json = {!!json_encode($usuarios)!!}.find(x => x.id==id);
+            editar($json);
+        }*/
+    </script>
 @endsection
