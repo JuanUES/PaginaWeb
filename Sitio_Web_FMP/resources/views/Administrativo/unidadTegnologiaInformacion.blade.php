@@ -73,12 +73,53 @@
                             
                         </div> end col 
                     -->
-                    <div class="col-xl-12">     
-                        <div class="form-group">                                               
-                            <label for="contenido">Contenido <code>*</code></label>
-                            <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
-                        </div>
-                    </div>       
+                    <?php
+                    $variableNoTocar = 'localizacion';
+                    $localizacion ='uti';
+                    $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
+                    
+                    ?>
+                    @auth
+                        
+                    
+                    <div class="col-xl-12">
+                        <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
+                            class="parsley-examples"  id="contenido{{$localizacion}}">
+                            @csrf
+                            <div class="alert alert-primary text-white py-1" 
+                                    role="alert" style="display:none" id="notificacion{{$localizacion}}">                                               
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12">   
+                                    <div class="form-group">                       
+                                        <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
+                                            @if ($contenido!=null)
+                                                {{$contenido->contenido}}
+                                            @endif
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12">
+                                    <div class="form-group">
+                                        <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
+                                            onclick="submitForm('#contenido{{$localizacion}}','#notificacion{{$localizacion}}')">
+                                            <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>  
+                    
+                    @endauth 
+                    
+                    @guest  
+                    <div class="col-xl-12 py-2">
+                    @if ($contenido!=null)
+                    {!!$contenido->contenido!!}
+                    @endif
+                    </div>      
+                    @endguest      
                     </div> 
                 </div> 
             </div>

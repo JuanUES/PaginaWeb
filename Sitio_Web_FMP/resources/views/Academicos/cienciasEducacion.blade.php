@@ -56,14 +56,53 @@
                                 Licenciado (a) en trabajo social.
                             </p>
                         -->
+                        <?php
+                        $variableNoTocar = 'localizacion';
+                        $localizacion ='licTrabajoSocial';
+                        $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
+                        
+                        ?>
                         @auth
-                        <div class="col-xl-12">     
-                            <div class="form-group">                                               
-                                <label for="contenido">Contenido <code>*</code></label>
-                                <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
-                            </div>
-                        </div>
-                        @endauth
+                            
+                        
+                        <div class="col-xl-12">
+                            <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
+                                class="parsley-examples"  id="contenido{{$localizacion}}">
+                                @csrf
+                                <div class="alert alert-primary text-white py-1" 
+                                        role="alert" style="display:none" id="notificacion{{$localizacion}}">                                               
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12">   
+                                        <div class="form-group">                       
+                                            <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
+                                                @if ($contenido!=null)
+                                                    {{$contenido->contenido}}
+                                                @endif
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
+                                                onclick="submitForm('#contenido{{$localizacion}}','#notificacion{{$localizacion}}')">
+                                                <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>  
+                        
+                        @endauth 
+                        
+                        @guest  
+                        <div class="col-xl-12 py-2">
+                        @if ($contenido!=null)
+                        {!!$contenido->contenido!!}
+                        @endif
+                        </div>      
+                        @endguest
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','LicSocial.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/LicSocial.pdf')}}" 
@@ -105,14 +144,59 @@
                                 Profesor (a) en educación básica para primero y segundo ciclo.
                             </p>
                         -->
-                        @auth
-                        <div class="col-xl-12">     
-                            <div class="form-group">                                               
-                                <label for="contenido">Contenido <code>*</code></label>
-                                <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
-                            </div>
-                        </div>
-                        @endauth
+
+                        <?php
+$variableNoTocar = 'localizacion';
+$localizacion ='profesoradoBasica';
+$contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
+
+?>
+@auth
+    
+
+<div class="col-xl-12">
+    <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
+        class="parsley-examples"  id="contenido{{$localizacion}}">
+        @csrf
+        <div class="alert alert-primary text-white py-1" 
+                role="alert" style="display:none" id="notificacion{{$localizacion}}">                                               
+        </div>
+        <div class="row">
+            <div class="col-xl-12">   
+                <div class="form-group">                       
+                    <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
+                        @if ($contenido!=null)
+                            {{$contenido->contenido}}
+                        @endif
+                    </textarea>
+                </div>
+            </div>
+            <div class="col-xl-12">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
+                        onclick="submitForm('#contenido{{$localizacion}}','#notificacion{{$localizacion}}')">
+                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>  
+
+@endauth 
+
+@guest  
+<div class="col-xl-12 py-2">
+@if ($contenido!=null)
+{!!$contenido->contenido!!}
+@endif
+</div>      
+@endguest
+                        
+
+
+
+
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','profeBasica.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeBasica.pdf')}}" 
@@ -181,14 +265,59 @@
                                 Profesor  (a)  en matemática para tercer ciclo de educación básica y educación media.
                             </p>
                         -->
-                        @auth
-                        <div class="col-xl-12">     
-                            <div class="form-group">                                               
-                                <label for="contenido">Contenido <code>*</code></label>
-                                <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
-                            </div>
-                        </div>
-                        @endauth
+
+
+                        <?php
+$variableNoTocar = 'localizacion';
+$localizacion ='profesoradoMatematica';
+$contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
+
+?>
+@auth
+    
+
+<div class="col-xl-12">
+    <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
+        class="parsley-examples"  id="contenido{{$localizacion}}">
+        @csrf
+        <div class="alert alert-primary text-white py-1" 
+                role="alert" style="display:none" id="notificacion{{$localizacion}}">                                               
+        </div>
+        <div class="row">
+            <div class="col-xl-12">   
+                <div class="form-group">                       
+                    <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
+                        @if ($contenido!=null)
+                            {{$contenido->contenido}}
+                        @endif
+                    </textarea>
+                </div>
+            </div>
+            <div class="col-xl-12">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
+                        onclick="submitForm('#contenido{{$localizacion}}','#notificacion{{$localizacion}}')">
+                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>  
+
+@endauth 
+
+@guest  
+<div class="col-xl-12 py-2">
+@if ($contenido!=null)
+{!!$contenido->contenido!!}
+@endif
+</div>      
+@endguest
+                     
+
+
+
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','profeMate.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeMate.pdf')}}" 
@@ -224,14 +353,58 @@
                                 Profesor (a) en inglés para tercer ciclo de educación básica y educación media.
                             </p>
                         -->
-                        @auth
-                        <div class="col-xl-12">     
-                            <div class="form-group">                                               
-                                <label for="contenido">Contenido <code>*</code></label>
-                                <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
-                            </div>
-                        </div>
-                        @endauth
+
+                        <?php
+$variableNoTocar = 'localizacion';
+$localizacion ='profesoradoIngles';
+$contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
+
+?>
+@auth
+    
+
+<div class="col-xl-12">
+    <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
+        class="parsley-examples"  id="contenido{{$localizacion}}">
+        @csrf
+        <div class="alert alert-primary text-white py-1" 
+                role="alert" style="display:none" id="notificacion{{$localizacion}}">                                               
+        </div>
+        <div class="row">
+            <div class="col-xl-12">   
+                <div class="form-group">                       
+                    <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
+                        @if ($contenido!=null)
+                            {{$contenido->contenido}}
+                        @endif
+                    </textarea>
+                </div>
+            </div>
+            <div class="col-xl-12">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
+                        onclick="submitForm('#contenido{{$localizacion}}','#notificacion{{$localizacion}}')">
+                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>  
+
+@endauth 
+
+@guest  
+<div class="col-xl-12 py-2">
+@if ($contenido!=null)
+{!!$contenido->contenido!!}
+@endif
+</div>      
+@endguest
+                      
+
+
+
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','profeIngles.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeIngles.pdf')}}"
@@ -313,14 +486,54 @@
                                 Profesor o profesora de Biología para Tercer Ciclo de Educación Básica y Educación Media. 
                             </p>
                         -->
+                        <?php
+                        $variableNoTocar = 'localizacion';
+                        $localizacion ='profesoradoBiologia';
+                        $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
+                        
+                        ?>
                         @auth
-                        <div class="col-xl-12">     
-                            <div class="form-group">                                               
-                                <label for="contenido">Contenido <code>*</code></label>
-                                <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
-                            </div>
-                        </div>
-                        @endauth
+                            
+                        
+                        <div class="col-xl-12">
+                            <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
+                                class="parsley-examples"  id="contenido{{$localizacion}}">
+                                @csrf
+                                <div class="alert alert-primary text-white py-1" 
+                                        role="alert" style="display:none" id="notificacion{{$localizacion}}">                                               
+                                </div>
+                                <div class="row">
+                                    <div class="col-xl-12">   
+                                        <div class="form-group">                       
+                                            <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
+                                                @if ($contenido!=null)
+                                                    {{$contenido->contenido}}
+                                                @endif
+                                            </textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
+                                                onclick="submitForm('#contenido{{$localizacion}}','#notificacion{{$localizacion}}')">
+                                                <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>  
+                        
+                        @endauth 
+                        
+                        @guest  
+                        <div class="col-xl-12 py-2">
+                        @if ($contenido!=null)
+                        {!!$contenido->contenido!!}
+                        @endif
+                        </div>      
+                        @endguest
+
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','profeBiolo.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeBiolo.pdf')}}"
@@ -470,14 +683,55 @@
                                 Profesor (a) en educación inicial y parvularia.
                             </p>
                         -->
-                        @auth
-                        <div class="col-xl-12">     
-                            <div class="form-group">                                               
-                                <label for="contenido">Contenido <code>*</code></label>
-                                <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
-                            </div>
-                        </div>
-                        @endauth
+
+                        <?php
+$variableNoTocar = 'localizacion';
+$localizacion ='parvularia';
+$contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
+
+?>
+@auth
+    
+
+<div class="col-xl-12">
+    <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
+        class="parsley-examples"  id="contenido{{$localizacion}}">
+        @csrf
+        <div class="alert alert-primary text-white py-1" 
+                role="alert" style="display:none" id="notificacion{{$localizacion}}">                                               
+        </div>
+        <div class="row">
+            <div class="col-xl-12">   
+                <div class="form-group">                       
+                    <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
+                        @if ($contenido!=null)
+                            {{$contenido->contenido}}
+                        @endif
+                    </textarea>
+                </div>
+            </div>
+            <div class="col-xl-12">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
+                        onclick="submitForm('#contenido{{$localizacion}}','#notificacion{{$localizacion}}')">
+                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>  
+
+@endauth 
+
+@guest  
+<div class="col-xl-12 py-2">
+@if ($contenido!=null)
+{!!$contenido->contenido!!}
+@endif
+</div>      
+@endguest
+                     
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','profeParvularia.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeParvularia.pdf')}}"
@@ -510,14 +764,59 @@
                                 Licenciado (a) en enseñanza de idiomas extranjeros, especialidad inglés-francés.
                             </p>
                         -->
+                        <?php
+                        $variableNoTocar = 'localizacion';
+                        $localizacion ='licenciaturaInglesFrances';
+                        $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
+
+                        ?>
                         @auth
-                        <div class="col-xl-12">     
-                            <div class="form-group">                                               
-                                <label for="contenido">Contenido <code>*</code></label>
-                                <textarea value="" class="form-control summernote-config" name="contenido" id="contenido"></textarea>
-                            </div>
-                        </div>
-@endauth
+    
+
+    <div class="col-xl-12">
+        <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
+            class="parsley-examples"  id="contenido{{$localizacion}}">
+            @csrf
+                <div class="alert alert-primary text-white py-1" 
+                role="alert" style="display:none" id="notificacion{{$localizacion}}">                                               
+        </div>
+        <div class="row">
+            <div class="col-xl-12">   
+                <div class="form-group">                       
+                    <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
+                        @if ($contenido!=null)
+                            {{$contenido->contenido}}
+                        @endif
+                    </textarea>
+                </div>
+            </div>
+            <div class="col-xl-12">
+                <div class="form-group">
+                    <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
+                        onclick="submitForm('#contenido{{$localizacion}}','#notificacion{{$localizacion}}')">
+                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>  
+
+@endauth 
+
+@guest  
+<div class="col-xl-12 py-2">
+@if ($contenido!=null)
+{!!$contenido->contenido!!}
+@endif
+</div>      
+@endguest
+
+
+
+
+
+              
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','licEspInglesFrances.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/licEspInglesFrances.pdf')}}"

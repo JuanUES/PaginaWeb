@@ -31,7 +31,7 @@
 
 <div class="form-group float-end">
     <a href="{{ route('admin.jornada.index') }}" title=""><button type="button" class="btn btn-dark btn-sm"><i class="fa fa-arrow-left" aria-hidden="true"></i> Retroceder</button></a>
-    <button style="display:none;" type="submit" id="btnSave" name="btnSave" class="btn btn-info btn-sm" title="Guardar Informacion">{!! $formMode === 'edit' ? '<i class="fa fa-edit"></i>' : '<i class="fa fa-save"></i>' !!} {{ $formMode === 'edit' ? 'Modificar' : 'Guardar' }}</button>
+    <button type="submit" id="btnSave" name="btnSave" class="btn btn-info btn-sm" title="Guardar Informacion">{!! $formMode === 'edit' ? '<i class="fa fa-edit"></i>' : '<i class="fa fa-save"></i>' !!} {{ $formMode === 'edit' ? 'Modificar' : 'Guardar' }}</button>
 </div>
 
 
@@ -77,7 +77,7 @@
                
                 let updatehours = updateJornada();
                 $("#_horas").val(''+updatehours);
-                if(updatehours <=0){
+                /*if(updatehours <=0){
                     alert("Completo sus horas laborales");
                     $("#btnNewRow").hide();
                 }
@@ -87,7 +87,7 @@
                 if(updatehours>0){
                     $("#btnNewRow").show();
                     $("#btnSave").hide();
-                }
+                }*/
 
                 /*Toast.fire({
                     icon: "success",
@@ -122,7 +122,7 @@
 
         $("#_horas").val(''+total);
 
-        if(total <=0){
+        /*if(total <=0){
             alert("Completo sus horas laborales");
             $("#btnNewRow").hide();
         }
@@ -132,7 +132,7 @@
         if(total>0){
             $("#btnNewRow").show();
             $("#btnSave").hide();
-        }
+        }*/
 
     }
 
