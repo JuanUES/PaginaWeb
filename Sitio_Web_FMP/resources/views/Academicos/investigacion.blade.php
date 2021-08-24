@@ -107,7 +107,7 @@
                                             <div class="carousel-item {!!$i == 0 ? 'active': null!!}">
                                                 @auth                                                
                                                 <button type="submit" class="btn text-white btn-danger btn-block">
-                                                    <div class=" mdi mdi-delete mdi-16px text-center" data-toggle="modal" data-target="#modalCR" onclick="$('#imagenCR').val({$investigacionCarrusel[$i]->id})">Eliminar</div>
+                                                    <div class=" mdi mdi-delete mdi-16px text-center" data-toggle="modal" data-target="#modalCR" onclick="$('#imagenCR').val({!!$investigacionCarrusel[$i]->id!!})">Eliminar</div>
                                                 </button>
                                                 @endauth  
                                                 <img src="images/carrusel/{{$investigacionCarrusel[$i]->imagen}}" class="img-fluid" width="100%" height="60%" alt="{!!$investigacionCarrusel[$i]->imagen!!}">                                
