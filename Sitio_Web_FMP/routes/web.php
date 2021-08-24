@@ -24,6 +24,8 @@ Route::get('admin', function () {
     ->middleware('auth')
     ->name('admin');
 
+Route::get('admin/bitacora', 'App\Http\Controllers\BitacoraController@index')->name('admin.bitacora');
+
 require __DIR__.'/transparencia.php';
 require __DIR__.'/auth.php';
 require __DIR__.'/pagina.php';

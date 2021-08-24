@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Transparencia;
 
 use App\Http\Controllers\Controller;
+use App\Models\_UTILS\Utilidades;
 use App\Models\Transparencia\Transparencia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Yajra\DataTables\DataTables;
 
-class TransparenciaController extends Controller
-{
+class TransparenciaController extends Controller{
+    public $modulo = 'Transparencia';
     public $categorias = array(
         'Marco Normativo' => 'marco-normativo',
         'Marco de Gestión' => 'marco-gestion',
@@ -95,6 +96,7 @@ class TransparenciaController extends Controller
             $requestData['documento'] = $request->file('documento')->store('uploads/transparencia', 'public');
 
         $doc = Transparencia::create($requestData);
+        Utilidades::fnSaveBitacora('Nuevo documento Titulo: ' . $doc->titulo , 'Registro', $this->modulo);
         return redirect('admin/transparencia/' . $request->categoria)->with('flash_message', 'Documento almacenado con éxito!');
     }
 
@@ -158,19 +160,9 @@ class TransparenciaController extends Controller
         }
 
         $transparencia->update($requestData);
+        Utilidades::fnSaveBitacora('Documento Titulo: ' . $doc->titulo, 'Modificación', $this->modulo);
         return redirect('admin/transparencia/' . $request->categoria)->with('flash_message', 'Documento modificado con éxito!');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    // public function destroy($id)
-    // {
-    //     //
-    // }
 
     public function publicar($categoria, $id, Request $request){
         $transparencia = Transparencia::findOrFail($id);
@@ -179,6 +171,8 @@ class TransparenciaController extends Controller
             'publicar' => $publicar
         ]);
         $categoria = $transparencia->categoria;
+
+        Utilidades::fnSaveBitacora('Cambio de estado público al documento del Titulo: ' . $transparencia->titulo. ' nuevo estado: '.$publicar, 'Modificación', $this->modulo);
         return redirect('admin/transparencia/' . $categoria)->with('flash_message', 'Documento modificado con éxito!');
     }
 

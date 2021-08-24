@@ -3,12 +3,18 @@
 namespace App\Http\Controllers\Transparencia;
 
 use App\Http\Controllers\Controller;
+use App\Models\_UTILS\Utilidades;
 use App\Models\Transparencia\Directorio;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
 class DirectoriosController extends Controller{
 
+    public $modulo = 'Transparencia Directorios';
+    public $rules = [
+        'nombre' => 'required|string',
+        "contacto" => "required|string",
+    ];
 
     public function __construct(){
         $this->middleware('auth');
@@ -54,14 +60,10 @@ class DirectoriosController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        $campos = [
-            'nombre' => 'required|string',
-            "contacto" => "required|string",
-        ];
-        $this->validate($request, $campos);
+        $this->validate($request, $this->rules);
         $requestData = $request->all();
-
         $directorio = Directorio::create($requestData);
+        Utilidades::fnSaveBitacora('Nuevo Directorio Nombre: '.$directorio->nombre.' de Transparencia','Registro', $this->modulo);
         return redirect()->route('admin.transparencia.directorios.index')->with('flash_message', 'Directorio almacenado con éxito!');
     }
 
@@ -85,14 +87,10 @@ class DirectoriosController extends Controller{
      */
     public function update(Request $request, $id){
         $directorio = Directorio::findOrFail($id);
-        $campos = [
-            'nombre' => 'required|string',
-            "contacto" => "required|string",
-        ];
-        $this->validate($request, $campos);
+        $this->validate($request, $this->rules);
         $requestData = $request->all();
-
         $directorio->update($requestData);
+        Utilidades::fnSaveBitacora('Directorio Nombre: ' . $directorio->nombre . ' de Transparencia', 'Modificación', $this->modulo);
         return redirect()->route('admin.transparencia.directorios.index')->with('flash_message', 'Directorio modificado con éxito!');
     }
 
@@ -107,6 +105,7 @@ class DirectoriosController extends Controller{
         $directorio->update([
             'estado' => 'inactivo'
         ]);
+        Utilidades::fnSaveBitacora('Directorio Nombre: ' . $directorio->nombre . ' de Transparencia', 'Eliminación', $this->modulo);
         return redirect()->route('admin.transparencia.directorios.index')->with('flash_message', 'Directorio eliminado con éxito!');
 
     }

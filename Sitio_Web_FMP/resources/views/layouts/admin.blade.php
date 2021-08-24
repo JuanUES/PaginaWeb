@@ -238,7 +238,7 @@
                                         <a href=".">Roles</a>
                                     </li>
                                     <li>
-                                        <a href=".">Bitacora</a>
+                                        <a href="{{ route('admin.bitacora') }}">Bitacora</a>
                                     </li>
                                 </ul>
                             </li>
