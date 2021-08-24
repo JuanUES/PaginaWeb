@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\RolesUsuarios;
 
 use App\Models\User;
+use App\Models\Licencias\Empleado;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
@@ -19,8 +20,8 @@ class UsuariosController extends Controller
     public function index()
     {
         $usuarios = User::all();
-       // echo dd($usuarios);
-        return view('Admin.Sesion.Usuarios',compact('usuarios'));
+        $empleados = Empleado::all();
+        return view('Admin.Sesion.Usuarios',compact('usuarios','empleados'));
     }
 
     public function store(Request $request)

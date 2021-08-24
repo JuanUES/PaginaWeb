@@ -21,13 +21,15 @@
         <!-- Summernote css -->
         <link href="{{ asset('template-admin/dist/assets/libs/summernote/summernote-bs4.css') }}" rel="stylesheet" />
 
+        @yield('plugins')
+
         <!-- App css -->
         <link href="{{ asset('template-admin/dist/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('template-admin/dist/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('template-admin/dist/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
 
-
-        @yield('plugins')
+        <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
+        
 
         {{-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> --}}
 
@@ -336,7 +338,7 @@
                 </div> <!-- content -->
 
                 <!-- Footer Start -->
-                <footer class="footer">
+                <footer class="footer" id="footerbase">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12 text-center">
@@ -356,8 +358,6 @@
 
 
         </div>
-
-
 
         <!-- Vendor js -->
         <script src="{{ asset('template-admin/dist/assets/js/vendor.min.js') }}"></script>
@@ -389,16 +389,14 @@
         <!-- Init js -->
         {{-- <script src="{{ asset('template-admin/dist/assets/js/pages/form-summernote.init.js') }}"></script> --}}
         <!-- App js -->
-        <script src="{{ asset('template-admin/dist/assets/js/app.min.js') }}"></script>
 
         <!-- Sweetalert2 -->
         <script src="{{asset('vendor/sweetalert2/dist/sweetalert2.js') }}"></script>
         <!-- Jquery-Validate -->
         <script src="{{ asset('vendor/jquery-validation/jquery.validate.js') }}"></script>
 
-
-
-
         @yield('plugins-js')
+        <script src="{{ asset('template-admin/dist/assets/js/app.min.js') }}"></script>
+
     </body>
 </html>

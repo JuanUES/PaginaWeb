@@ -11,8 +11,8 @@
 
 $cod_url = urlencode($cadena);
 $deco_url = urldecode($cod_url);
-
-$codifica1 = base64_encode($cadena);
+base64_encode($cadena)
+$codifica1 = ;
 $decodifica2 = base64_decode($codifica1);
 
 $codifica3 = convert_uuencode($cadena);

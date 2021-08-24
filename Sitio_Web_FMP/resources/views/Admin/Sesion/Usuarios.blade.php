@@ -27,21 +27,52 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-xl-6">
+                        <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="exampleInputCodigo">Nombre <code>*</code></label>
                                 <input type="text" class="form-control" name="nombre" id="" autocomplete="off" placeholder="Digite el nombre">
                             </div>
                         </div>
-                        <div class="col-xl-6">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="exampleInputUbicacion">Correo <code>*</code></label>
                                 <input type="email" class="form-control" name="correo" id="" autocomplete="off" placeholder="Digite el correo">
                             </div>
                         </div>
-                        
                     </div>
                     
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label for="">Roles <code>*</code></label>                                
+                                <select class="form-control select2-multiple" data-toggle="select2"
+                                     multiple="multiple" aria-placeholder="Seleccione" style="width: 100%;" name="roles[]">
+                                    <option value="{{base64_encode('Transparencia-Presupuestario')}}">Transparencia Presupuestario</option>
+                                    <option value="{{base64_encode('Transparencia-Secretario')}}">Transparencia Secretario</option>
+                                    <option value="{{base64_encode('Transparencia-Decano')}}">Transparencia Decano</option>
+                                    <option value="{{base64_encode('super-admin')}}">Super Administrador</option>
+                                    <option value="{{base64_encode('Jefe-Academico')}}">Jefe Academico</option>
+                                </select>           
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label for="exampleInputNombre">Empleado <code>*</code></label>
+                                <select class="form-control selectpicker" data-live-search="true"
+                                 style="width: 100%;" >
+                                    <option value="">Seleccione</option>
+                                    @foreach ($empleados as $item)
+                                        <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="form-group">
@@ -57,27 +88,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group">
-                                <label for="">Roles <code>*</code></label>                                
-                                <select class="form-control select2-multiple select2-selection--multiple select2-selection__choice" data-toggle="select2"
-                                     multiple="multiple" aria-placeholder="Seleccione" style="width: 100%;">
-                                    <option value="AK">Alaska</option>
-                                    <option value="HI">Hawaii</option>
-                                </select>                                
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group">
-                                <label for="exampleInputNombre">Empleado <code>*</code></label>
-                                
-                            </div>
-                        </div>
-                    </div>
-                    
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i> Cerrar</button>
@@ -253,10 +263,10 @@
 
 <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.css') }}" rel="stylesheet"/>
 <link href="{{ asset('template-admin/dist/assets/libs/switchery/switchery.min.css') }}" rel="stylesheet"/>
-<link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
 <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet"/>
 <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.css') }}" rel="stylesheet"/>
 <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet"/>
+<link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
 <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-daterangepicker/daterangepicker.css') }}" rel="stylesheet"/>
 <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>
 @endsection
@@ -266,7 +276,6 @@
     <script src="{{ asset('js/scripts/http.min.js') }}"></script>
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.min.js') }}"></script>
     <script src="{{ asset('template-admin/dist/assets/libs/switchery/switchery.min.js') }}"></script>
-    <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}"></script>
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.js') }}"></script>
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js') }}"></script>
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
@@ -275,10 +284,11 @@
 
     <!-- Bootstrap Select -->
     <script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}"></script>
 
     <!-- Init js-->
     <script src="{{ asset('/template-admin/dist/assets/js/pages/form-advanced.init.js') }}"></script>
-
+    <script src="{{ asset('/template-admin/dist/assets/js/app.min.js') }}"></script>
     <script>
         /*function editarJson(id){
             $json = {!!json_encode($usuarios)!!}.find(x => x.id==id);
