@@ -7,4 +7,5 @@ use App\Http\Controllers\RolesUsuarios\UsuariosController;
 Route::get('admin/Usuarios',[UsuariosController::class,'index'])->name('usuarios');
 
 /**Rutas Post */
-Route::post('admin/Usuarios', [UsuariosController::class,'store'])->middleware('auth');
+Route::post('admin/Usuarios/Guardar', [UsuariosController::class,'store'])
+->middleware('auth')->name('guardarUser');

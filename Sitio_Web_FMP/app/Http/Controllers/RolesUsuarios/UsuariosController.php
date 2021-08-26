@@ -5,12 +5,11 @@ namespace App\Http\Controllers\RolesUsuarios;
 use App\Models\User;
 use App\Models\Licencias\Empleado;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rules;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\Registered;
-use App\Providers\RouteServiceProvider;
+use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -26,10 +25,13 @@ class UsuariosController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+       
+        $validator = Validator::make($request->all(),[
             'usuario' => 'required|string|max:255',
-            'correo' => 'required|string|email|max:255|unique:users',
+            'correo' => 'required|string|email|max:255',
             'contraseña' => ['required', 'confirmed', Rules\Password::min(8)],
+            'empleado' => 'required',
+            'repetir_contraseña'=> 'required|same:contraseña',
         ]);
 
         if($validator->fails())
@@ -43,7 +45,6 @@ class UsuariosController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        event(new Registered($user));
 
         return $request->_id != null ?
             response()->json(['mensaje'=>'Modificación exitosa.']):

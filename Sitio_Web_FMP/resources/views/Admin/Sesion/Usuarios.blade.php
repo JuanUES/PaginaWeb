@@ -2,8 +2,8 @@
 
 @section('content')
 <!-- inicio Modal de registro -->
-<div class="modal fade bs-example-modal-lg" id="modalRegistro" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="modalRegistro" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title" id=" exampleModalLongTitle"><i class=" mdi mdi-account-badge-horizontal mdi-24px" aria-hidden="true" ></i> Usuario</h4>
@@ -11,10 +11,9 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form id="registroForm" action="#" method="POST">
+        <form id="registroForm"  action="{{ route('guardarUser') }}" method="POST">
             <div class="modal-body">
-                <input type="hidden" id="_id" name="_id"/>
-                    @csrf
+                    <input type="hidden" id="_id" name="_id"/>
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" 
                         role="alert" style="display:none" id="notificacion">                                               
                     </div>
@@ -27,19 +26,16 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-xl-12">
+                        <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputCodigo">Nombre <code>*</code></label>
-                                <input type="text" class="form-control" name="nombre" id="" autocomplete="off" placeholder="Digite el nombre">
+                                <label for="exampleInputCodigo">Usuario <code>*</code></label>
+                                <input type="text" class="form-control" name="usuario"  autocomplete="off" placeholder="Digite el nombre">
                             </div>
                         </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xl-12">
+                        <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputUbicacion">Correo <code>*</code></label>
-                                <input type="email" class="form-control" name="correo" id="" autocomplete="off" placeholder="Digite el correo">
+                                <input type="email" class="form-control" name="correo"  autocomplete="off" placeholder="Digite el correo">
                             </div>
                         </div>
                     </div>
@@ -63,8 +59,9 @@
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="exampleInputNombre">Empleado <code>*</code></label>
-                                <select class="form-control selectpicker" data-live-search="true"
-                                 style="width: 100%;" >
+
+                                <select class="form-control selectpicker" data-live-search="true" data-style="btn-white"
+                                 style="width: 100%;" name="empleado" >
                                     <option value="">Seleccione</option>
                                     @foreach ($empleados as $item)
                                         <option value="{{$item->id}}">{{$item->nombre}}</option>
@@ -77,21 +74,26 @@
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputNombre">Contraseña <code>*</code></label>
-                                <input type="password" class="form-control" name="contraseña" id="" autocomplete="off"  placeholder="Digite la contraseña">
+                                <input type="password" class="form-control" name="contraseña"  autocomplete="off"  placeholder="Digite la contraseña">
                             
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputNombre">Repetir Contraseña <code>*</code></label>
-                                <input type="password" class="form-control" name="contraseña" id="" autocomplete="off"  placeholder="Digite la contraseña">
+                                <input type="password" class="form-control" name=" repetir_contraseña"  autocomplete="off"  placeholder="Digite la contraseña">
                             </div>
                         </div>
+                        @csrf
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i> Cerrar</button>
-                <button type="button" class="btn btn-primary" onClick="submitForm('#registroForm','#notificacion')"><li class="fa fa-save"></li> Guardar</button>
+                <button type="button" class="btn btn-secondary" 
+                    data-dismiss="modal"><i class="fa fa-ban" 
+                    aria-hidden="true"></i> Cerrar</button>
+                <button type="button" class="btn btn-primary" 
+                    onClick="submitForm('#registroForm','#notificacion')">
+                    <li class="fa fa-save"></li> Guardar</button>
             </div>
         </form>
       </div>
@@ -181,7 +183,7 @@
 <!-- start page title -->
 
 <div class="row">
-    <div class="col-12">
+    <div class="col-xl-12">
         <div class="page-title-box">
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
@@ -189,10 +191,12 @@
                     <li class="breadcrumb-item active">Usuarios</li>
                 </ol>
             </div>
-            <h4 class="page-title">Creación de Usarios</h4>
+            <h4 class="page-title">&nbsp;</h4>
         </div>
     </div>
 </div>
+
+        
 <!-- end page title -->
 
 <div class="row">
@@ -215,20 +219,55 @@
             <table  class="table table-sm table-bordered" id="table-depto">
                 <thead>
                 <tr>
-                    <th data-priority="1">N°</th>
+                    <th data-priority="1" class="col-sm-1">N°</th>
                     <th data-priority="3">Usuario</th>
-                    <th data-priority="3">Estado</th>
-                    <th data-priority="3">Roles</th>
+                    <th data-priority="3" class="col-sm-1 text-center">Estado</th>
+                    <th data-priority="3" class="col-sm-1 text-center">Roles</th>
                     <th data-priority="1" class="col-sm-1 text-center">Acciones</th>                  
                 </tr>
                 </thead>
-                <tbody>                    
+                <tbody>     
+                <?php
+                    $roles = Spatie\Permission\Models\Role::all();                    
+                ?>               
                 @foreach ($usuarios as $item)
                 <tr>
+                    
                     <th class="align-middle ">{!!$item->id!!}</th>
                     <td class="align-middle ">{!!$item->name!!}</td>
-                    <td class="align-middle ">Estado</td>
-                    <td class="align-middle ">Roles</td>
+                    <td class="align-middle font-16">{!! !$item->estado?'<span class="badge badge-danger">Desactivado</span> ' : '<span class="badge badge-success">Activado</span> ' !!}</td>
+                    <td class="align-middle font-16">
+                        @if ($item->hasAllRoles($roles))
+                        <span class="badge badge-success">Todos los roles</span>
+                        @else
+                            @if ($item->hasRole('super-admin'))
+                            <span class="badge badge-primary">Super Admin</span>                             
+                            @else
+                                @if ($item->hasRole('Pagina'))
+                                <span class="badge badge-primary">Pagina</span>                                    
+                                @else
+                                    @if ($item->hasRole('Jefe-Academico'))
+                                    <span class="badge badge-primary">Jefe Academico</span>                                        
+                                    @else
+                                        @if ($item->hasRole('Transparencia-Decanato'))
+                                        <span class="badge badge-primary"> Transparencia Decanato</span>                                            
+                                        @else
+                                            @if ($item->hasRole('Transparencia-Secretario'))
+                                            <span class="badge badge-primary">Transparencia Secretario</span>                                                
+                                            @else
+                                                @if ($item->hasRole('Transparencia-Presupuestario'))
+                                                <span class="badge badge-primary">Transparencia Presupuestario</span>
+                                                @else
+                                                    
+                                                @endif
+                                                    
+                                            @endif
+                                        @endif
+                                    @endif
+                                @endif
+                            @endif
+                        @endif
+                    </td>
                     @if (true)
                     <td class="align-middle ">
                         <div class="row">
@@ -237,8 +276,8 @@
                                     <button title="Editar" class="btn btn-outline-primary btn-sm"  data-toggle="modal" data-target="#form-depto">
                                         <i class="mdi mdi-file-document-edit-outline font-18" aria-hidden="true"></i>
                                     </button>
-                                    <button title="Activar | Desactivar" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modalAlta">
-                                        {!! !$item->estado?'<i class="mdi mdi-eye-off font-18"></i>':'<i class="mdi mdi-eye font-18"></i>'!!}
+                                    <button title="{!! !$item->estado?'Activar' : 'Desactivar' !!}" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modalAlta">
+                                        {!! !$item->estado?'<i class="mdi mdi mdi-checkbox-blank-outline font-18"></i>':'<i class="mdi mdi-checkbox-intermediate font-18"></i>'!!}
                                     </button>
                                     <button title="Eliminar" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modalAlta">
                                         <i class="mdi mdi-delete font-18"></i>
@@ -288,7 +327,6 @@
 
     <!-- Init js-->
     <script src="{{ asset('/template-admin/dist/assets/js/pages/form-advanced.init.js') }}"></script>
-    <script src="{{ asset('/template-admin/dist/assets/js/app.min.js') }}"></script>
     <script>
         /*function editarJson(id){
             $json = {!!json_encode($usuarios)!!}.find(x => x.id==id);
