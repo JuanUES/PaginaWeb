@@ -26,7 +26,7 @@ class PlaComplementarioController extends Controller
         ->get();
 
         $contenido = ContenidoHtml::where('localizacion','complementarioIndex')->first();
-        return view('Academicos.PlanComplementario',compact('complementario','contenido'));
+        return view('Academicos.planComplementario',compact('complementario','contenido'));
     }
 
     public function store(Request $request){
