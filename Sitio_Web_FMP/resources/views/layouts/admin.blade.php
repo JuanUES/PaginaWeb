@@ -338,18 +338,16 @@
                 </div> <!-- content -->
 
                 <!-- Footer Start -->
-                <footer class="footer" id="footerbase">
+                <footer class="footer py-1 text-white" id="footerbase">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-12 text-center">
-                                {{ date('Y') }} &copy; Universidad de El Salvador
-                                {{-- 2018 - 2019 &copy; Greeva theme by <a href="">Coderthemes</a> --}}
+                                {{ date('Y') }} &copy; Facultad Multidisciplinaria Paracentral - <a href="https://www.ues.edu.sv/" class="text-white-50">Universidad de El Salvador</a>.   Todos los derechos reservados.
                             </div>
                         </div>
                     </div>
                 </footer>
                 <!-- end Footer -->
-
             </div>
 
             <!-- ============================================================== -->
