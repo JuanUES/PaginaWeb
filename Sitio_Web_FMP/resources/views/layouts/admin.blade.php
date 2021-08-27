@@ -225,6 +225,27 @@
                                 </li>
                             @endif
 
+                            <li class="menu-title">Jornada</li>
+                            @hasrole('super-admin')
+                                <li>
+                                    <a href="javascript: void(0);"><i class="dripicons-view-list-large"></i><span> Gestión de Jornada </span><span class="menu-arrow"></span></a>
+                                    <ul class="nav-second-level" aria-expanded="false">
+                                            <li>
+                                                <a href="{{ url('admin/periodo') }}">Periodo</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ url('admin/jornada') }}">Jornada</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ url('admin/tcontrato') }}">Tipo Contrato</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ url('admin/tjornada') }}">Tipo Jornada</a>
+                                            </li>
+                                    </ul>
+                                </li>
+                            @endhasrole
+
                             <li class="menu-title">Seguridad</li>
                             <li>
                                 <a href="javascript: void(0);">

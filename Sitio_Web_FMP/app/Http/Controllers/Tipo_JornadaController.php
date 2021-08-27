@@ -7,6 +7,15 @@ use Illuminate\Http\Request;
 
 class Tipo_JornadaController extends Controller
 {
+    public $rules = [
+        'tipo' => 'required|string',
+        'horas_semanales' => 'required|integer'
+    ];
+
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware(['role:super-admin']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -79,9 +88,10 @@ class Tipo_JornadaController extends Controller
      * @param  \App\Models\Tipo_Jornada  $tipo_Jornada
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tipo_Jornada $tipo_Jornada)
+    public function edit($id)
     {
-        //
+        $tjornada = Tipo_Jornada::findOrFail($id);
+        return view('Tipo_Jornada.edit', compact(['tjornada']));
     }
 
     /**
@@ -91,9 +101,14 @@ class Tipo_JornadaController extends Controller
      * @param  \App\Models\Tipo_Jornada  $tipo_Jornada
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tipo_Jornada $tipo_Jornada)
+    public function update(Request $request,$id)
     {
-        //
+        $tjornada = Tipo_Jornada::findOrFail($id);
+        $this->validate($request, $this->rules);
+        $requestData = $request->all();
+        $tjornada->update($requestData);
+        return redirect()->route('admin.tjornada.index')->with('flash_message', 'Tipo Jornada modificado con éxito!');
+
     }
 
     /**

@@ -1,60 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<!-- Modal -->
-<div class="modal fade" id="modalPeriodo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id=" exampleModalLongTitle">Agregar Periodo</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form method="POST" action="{{ route('Admin.Periodo.store') }}" enctype="multipart/form-data" id="periodoForm">
-            <div class="modal-body">
-            @csrf
-                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" 
-                        role="alert" style="display:none" id="notificacion">                                               
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="FechaI">Fecha Inicio</label>
-                                <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio" >
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="FechaF">Fecha Fin</label>
-                                <input type="date" class="form-control" name="fecha_fin" id="fecha_fin"  >
-                            
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="tipoS">Tipo</label>
-                                <select name="tipo" id="tipo">
-                                    <option value="0" selected>Seleccion</option>
-                                    <option value="Administrativo" >Administrativo</option>
-                                    <option value="Docente">Docente</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i>Cerrar</button>
-                <button type="submit" class="btn btn-primary waves-effect waves-light mr-1"><li class="fa fa-save"></li> Guardar</button>
-            </div>
-        </form>
-      </div>
-    </div>
-  </div>
-<!-- start page title -->
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
@@ -70,23 +17,19 @@
 </div>
 <!-- end page title -->
 
-<div class="row">
-    <div class="col-12">
-        <div class="card-box">
-            <div class="row">
-                <div class="col-6">
-                    <h3>Periodos Registrados</h3>   
-                </div>
-                <div class="col-3">
-                    <!-- Button trigger modal -->
-                    <button type="button" title="Agregar nuevo registro" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#modalPeriodo"></button>
-                </div>
-                <!--<div class="col-12 col-sm-4">
-                    <a href="" class="btn btn-success" title="Agregar nuevo registro"  data-toggle="modal" data-target="#modalPeriodo">
-                        <i class="fa fa-plus" aria-hidden="true"></i> Agregar nuevo registro
-                    </a>
-                </div>-->
-            </div>
+
+<div class="card-box">
+    <div class="row">
+        <div class="col-9">
+            <h3>Tipo Contrato Registrados</h3>
+        </div>
+        <div class="col-3" style="text-align:right">
+            <a href="{{ route('admin.periodo.create')}}" class="btn btn-primary" title="Agregar nuevo registro">
+                <i class=" dripicons-plus" aria-hidden="true"></i>
+            </a>
+        </div>
+
+    </div>
             
             <br/>
             <br/>
@@ -110,9 +53,8 @@
                     <td>{{ date('d-m-Y', strtotime( $item->fecha_inicio)) }}</td>
                     <td>{{ date('d-m-Y', strtotime( $item->fecha_fin)) }}</td>
                     <td>{{ $item->estado }}</td>
-                    <td><a href="" title="Editar Periodo">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
+                    <td>
+                    <a href="{{ route('admin.periodo.edit', $item->id) }}" title="Modificar contenido"><button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button></a>
                     </td>
                
                 </tr>
@@ -120,10 +62,8 @@
                 </tbody>
             </table>
 
-        </div> <!-- end card-box -->
-    </div> <!-- end col -->
-</div>
-<!-- end row -->   
+</div> <!-- end card-box -->
+ 
 @endsection
 
 @section('plugins-js')

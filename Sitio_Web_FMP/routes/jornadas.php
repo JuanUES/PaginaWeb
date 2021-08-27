@@ -17,6 +17,8 @@ Route::post('admin/jornada/select{id}", "App\Http\Controllers\JornadaController@
 
 
 //RUTAS PERIODO
-Route::get('admin/periodo/', 'App\Http\Controllers\PeriodoController@index')->name('admin.periodo.index');
-Route::get('admin/periodo/create', 'App\Http\Controllers\PeriodoController@create')->name('admin.periodo.create');
-Route::post('admin/periodo/store', 'App\Http\Controllers\PeriodoController@store')->name('Admin.Periodo.store');
+Route::resource('admin/periodo', 'App\Http\Controllers\PeriodoController')->except(['show'])->names('admin.periodo');
+
+// Route::get('admin/periodo/', 'App\Http\Controllers\PeriodoController@index')->name('admin.periodo.index');
+// Route::get('admin/periodo/create', 'App\Http\Controllers\PeriodoController@create')->name('admin.periodo.create');
+// Route::post('admin/periodo/store', 'App\Http\Controllers\PeriodoController@store')->name('Admin.Periodo.store');
