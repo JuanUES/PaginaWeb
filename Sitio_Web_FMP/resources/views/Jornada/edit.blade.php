@@ -16,8 +16,10 @@
 </div>
 
 <div class="card-box">
-    <div class="card-header lead"><i class="fa fa-edit"></i> Editar Jornada #{{ $jornadas->id }}</div>
-    <hr class="mt-0 pt-0">
+    <div class="card-title">
+        <h4 class="page-title"><i class="fa fa-edit"></i> Modificación de Registro #{{ $jornadas->id }}
+
+    </div>
     <div class="card-body">
         @if ($errors->any())
             <div class="alert alert-danger" role="alert">
