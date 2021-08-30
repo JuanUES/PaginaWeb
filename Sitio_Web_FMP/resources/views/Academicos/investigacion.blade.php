@@ -329,6 +329,9 @@
                                     </p>
                                 </li>
                             </ul>
+                            @auth
+                                
+                            
                             <div class="row my-2">
                                 <div class="col order-first"></div>
                                 <div class="col-lg-3 order-last">
@@ -338,6 +341,7 @@
                                     </button>
                                 </div> 
                             </div>
+                            @endauth
                            
                             <table cellspacing="0" width="100%">
 <thead></thead>
