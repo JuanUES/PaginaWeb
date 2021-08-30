@@ -73,14 +73,15 @@
                                         Ingeniero(a) Agrónomo.
                                     </p>
                                 --> 
-                                @auth
-<!-- Esto va en el content-->
-<?php
+                                <?php
     $variableNoTocar = 'localizacion';
     $localizacion ='ingenieriaAgronomica';
     $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
 
 ?>
+                                @auth
+<!-- Esto va en el content-->
+
     <div class="col-xl-12">
         <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
             class="parsley-examples"  id="contenido{{$localizacion}}">
