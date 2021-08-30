@@ -160,7 +160,7 @@ class TransparenciaController extends Controller{
         }
 
         $transparencia->update($requestData);
-        Utilidades::fnSaveBitacora('Documento Titulo: ' . $doc->titulo, 'Modificación', $this->modulo);
+        Utilidades::fnSaveBitacora('Documento Titulo: ' . $transparencia->titulo, 'Modificación', $this->modulo);
         return redirect('admin/transparencia/' . $request->categoria)->with('flash_message', 'Documento modificado con éxito!');
     }
 

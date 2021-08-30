@@ -17,6 +17,7 @@
         <!-- Plugins js -->
         <script src=" {{ asset('js/dropzone.min.js') }} "></script>   
         <script src=" {{ asset('js/scripts/dropzoneImagenes.js') }} "></script>
+        <script src="{{ asset('js/scripts/http.min.js') }}"></script>
         <!--Summernote js-->
         <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
         <script src="{{ asset('js/summernote.config.min.js') }}"></script>
@@ -328,6 +329,9 @@
                                     </p>
                                 </li>
                             </ul>
+                            @auth
+                                
+                            
                             <div class="row my-2">
                                 <div class="col order-first"></div>
                                 <div class="col-lg-3 order-last">
@@ -337,6 +341,7 @@
                                     </button>
                                 </div> 
                             </div>
+                            @endauth
                            
                             <table cellspacing="0" width="100%">
 <thead></thead>

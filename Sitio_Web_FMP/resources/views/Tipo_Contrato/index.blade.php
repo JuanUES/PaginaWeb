@@ -1,40 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<!-- Modal -->
-<div class="modal fade" id="modalPeriodo" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id=" exampleModalLongTitle">Agregar Tipo Contrato</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <form method="POST" action="{{ route('admin.tcontrato.store') }}" enctype="multipart/form-data" id="tcontratoForm">
-            <div class="modal-body">
-                    @csrf
-                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" 
-                        role="alert" style="display:none" id="notificacion">                                               
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group">
-                                <label for="FechaI">Tipo</label>
-                                <input type="text" class="form-control" name="tipo" id="tipo" >
-                            </div>
-                        </div>
-                    </div>                    
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i>Cerrar</button>
-                <button type="submit" class="btn btn-primary waves-effect waves-light mr-1"><li class="fa fa-save"></li> Guardar</button>
-            </div>
-        </form>
-      </div>
-    </div>
-  </div>
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
@@ -51,18 +18,20 @@
 </div>
 <!-- end page title -->
 
-<div class="row">
-    <div class="col-12">
-        <div class="card-box">
-            <div class="row">
-                <div class="col-12 col-sm-4">
-                    <a href="" class="btn btn-success" title="Agregar nuevo registro"  data-toggle="modal" data-target="#modalPeriodo">
-                        <i class="fa fa-plus" aria-hidden="true"></i> Agregar nuevo registro
-                    </a>
-                </div>
-            </div>
-            
-            <br/>
+
+<div class="card-box">
+    <div class="row">
+        <div class="col-9">
+            <h3>Tipo Contrato Registrados</h3>
+        </div>
+        <div class="col-3" style="text-align:right">
+            <a href="{{ route('admin.tcontrato.create')}}" class="btn btn-primary" title="Agregar nuevo registro">
+                <i class=" dripicons-plus" aria-hidden="true"></i>
+            </a>
+        </div>
+
+    </div>
+    <br/>
             <br/>
             <table  class="table table-sm" id="table-tcontrato">
                 <thead>
@@ -78,9 +47,9 @@
                 <tr>
                     <th>{{ $item->id }}</th>
                     <td>{{ $item->tipo }}</td>
-                    <td><a href="" title="Editar Tipo Copntrato">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
+                    <td>
+                        <a href="{{ route('admin.tcontrato.edit', $item->id) }}" title="Modificar contenido"><button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button></a>
+
                     </td>
                 </tr>
                 @endforeach
@@ -88,9 +57,7 @@
             </table>
 
         </div> <!-- end card-box -->
-    </div> <!-- end col -->
-</div>
-<!-- end row -->   
+  
 @endsection
 
 @section('plugins-js')

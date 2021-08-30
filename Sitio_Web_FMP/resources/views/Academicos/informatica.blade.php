@@ -12,7 +12,7 @@
     <script src=" {{ asset('js/dropzone.min.js') }} "></script>   
     <script src=" {{ asset('js/scripts/dropzonePdf.js') }} "></script>
     <script src=" {{ asset('js/scripts/pdf.js') }} "></script>
-
+    <script src="{{ asset('js/scripts/http.min.js') }}"></script>
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('js/summernote.config.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>

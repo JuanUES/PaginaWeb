@@ -7,6 +7,15 @@ use Illuminate\Http\Request;
 
 class Tipo_ContratoController extends Controller
 {
+
+    public $rules = [
+        'tipo' => 'required|string',
+    ];
+
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware(['role:super-admin']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -78,9 +87,10 @@ class Tipo_ContratoController extends Controller
      * @param  \App\Models\Tipo_Contrato  $tipo_Contrato
      * @return \Illuminate\Http\Response
      */
-    public function edit(Tipo_Contrato $tipo_Contrato)
+    public function edit($id)
     {
-        //
+        $tcontrato = Tipo_Contrato::findOrFail($id);
+        return view('Tipo_Contrato.edit', compact(['tcontrato']));
     }
 
     /**
@@ -90,9 +100,14 @@ class Tipo_ContratoController extends Controller
      * @param  \App\Models\Tipo_Contrato  $tipo_Contrato
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tipo_Contrato $tipo_Contrato)
+    public function update(Request $request,$id)
     {
-        //
+        $tcontrato = Tipo_Contrato::findOrFail($id);
+        $this->validate($request, $this->rules);
+        $requestData = $request->all();
+        $tcontrato->update($requestData);
+        return redirect()->route('admin.tcontrato.index')->with('flash_message', 'Tipo Contrato modificado con éxito!');
+
     }
 
     /**

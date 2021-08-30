@@ -15,11 +15,13 @@ class HoraSeeder extends Seeder
     public function run()
     {
         Hora::create([
-            'horas'=>'08:00-10:00',
+            'inicio'=>'08:00',
+            'fin'=>'10:00',
         ]);
 
         Hora::create([
-            'horas'=>'10:00-12:00',
+            'inicio'=>'10:00',
+            'fin'=>'12:00',
         ]);
     }
 }

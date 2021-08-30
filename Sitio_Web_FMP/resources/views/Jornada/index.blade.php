@@ -36,17 +36,20 @@
 <!-- end page title -->
 
 
-<div class="row">
-    <div class="col-12">
-        <div class="card-box">
-            <div class="row">
-                <div class="col-12 col-sm-4">
-                <a href="{{ route('admin.jornada.create')  }}" class="btn btn-success" title="Agregar">
-                        <i class="fa fa-plus" aria-hidden="true"></i> Agregar Nuevo Registro
-                    </a>
-                </div>
-            </div>
-            <br>
+
+<div class="card-box">
+    <div class="row">
+        <div class="col-9">
+            <h3>Jornadas Registradas</h3>
+        </div>
+        <div class="col-3" style="text-align:right">
+            <a href="{{ route('admin.jornada.create')}}" class="btn btn-primary" title="Agregar nuevo registro">
+                <i class=" dripicons-plus" aria-hidden="true"></i>
+            </a>
+        </div>
+
+    </div>
+    <br/>
 
 
             @if(@Auth::user()->hasRole('Recurso-Humano') )
@@ -122,8 +125,7 @@
             </table>
 
         </div> <!-- end card-box -->
-    </div> <!-- end col -->
-</div>
+
 <!-- end row -->   
 
 @endsection

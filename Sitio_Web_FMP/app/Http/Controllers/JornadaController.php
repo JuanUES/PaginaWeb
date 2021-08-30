@@ -97,8 +97,13 @@ class JornadaController extends Controller
      */
     public function edit($id)
     {
+        $periodos = Periodo::where('estado', 'LIKE','%activo%')->get();
+        $tjornada = Tipo_Jornada::join('empleado', 'tipo_jornada.id','=','empleado.id_tipo_jornada')
+        ->select('empleado.id','tipo_jornada.horas_semanales')
+        ->where('empleado.id', '=',1)
+	    ->get();
         $jornadas = Jornada::findOrFail($id);
-        return view('Jornada.edit', compact('jornadas'));
+        return view('Jornada.edit', compact('jornadas','periodos','tjornada'));
     }
 
     /**
@@ -116,12 +121,10 @@ class JornadaController extends Controller
         $jornadas->update($requestData);
 
 
-        //para comprobar si se ha eliminado algun item
         $items_DB = JornadaItem::select('id')->where('id_jornada', $jornadas->id)->get();
 
 
-        //para actualizar los cambios en los items del presupuesto
-        foreach ($items as $key => $value) { //para guardar los items del presupuesto
+        foreach ($items as $key => $value) { 
 
             $data = [
                 'dia' => $value->dia,
@@ -131,12 +134,11 @@ class JornadaController extends Controller
                 'estado' => 'activo',
             ];
 
-            if(isset($value->id) && !empty($value->id)){// para editar el registro si existe ese dato
+            if(isset($value->id) && !empty($value->id)){
                 $item = JornadaItem::findOrFail($value->id);
                 $item->update($data);
-                //para exluirlo de eliminarlo
                 $items_DB->forget($key);
-            }else{// para crear el registro al no existir el id
+            }else{
                 JornadaItem::create($data);
             }
 

@@ -7,6 +7,16 @@ use Illuminate\Http\Request;
 
 class PeriodoController extends Controller
 {
+    public $rules = [
+        'fecha_inicio' => 'required|date',
+        'fecha_fin' => 'required|date',
+        'tipo' => 'required|string',
+    ];
+
+    public function __construct(){
+        $this->middleware('auth');
+        $this->middleware(['role:super-admin']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -82,9 +92,10 @@ class PeriodoController extends Controller
      * @param  \App\Models\Periodo  $periodo
      * @return \Illuminate\Http\Response
      */
-    public function edit(Periodo $periodo)
+    public function edit($id)
     {
-        //
+        $periodo = Periodo::findOrFail($id);
+        return view('Periodo.edit', compact(['periodo']));
     }
 
     /**
@@ -94,9 +105,14 @@ class PeriodoController extends Controller
      * @param  \App\Models\Periodo  $periodo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Periodo $periodo)
+    public function update(Request $request,$id)
     {
-        //
+        $periodo = Periodo::findOrFail($id);
+        $this->validate($request, $this->rules);
+        $requestData = $request->all();
+        $periodo->update($requestData);
+        return redirect()->route('admin.periodo.index')->with('flash_message', 'Periodo modificado con éxito!');
+
     }
 
     /**
