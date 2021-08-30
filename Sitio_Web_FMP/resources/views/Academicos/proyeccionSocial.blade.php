@@ -13,6 +13,7 @@
 <script src="{{ asset('js/scripts/http.min.js') }}"></script><!--Este es el script que se utiliza para enviar post con un ajax generico-->
 <script src="{{ asset('js/scripts/proyeccionsocial.js')}}"></script>
 <script src="{{ asset('js/scripts/dropzoneimagenpdf.js') }}"></script>
+<script src="{{ asset('js/scripts/http.min.js') }}"></script>
 
 <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('js/summernote.config.min.js') }}"></script>

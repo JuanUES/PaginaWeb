@@ -14,7 +14,7 @@
 @section('footer')
 
 @auth    
-
+<script src="{{ asset('js/scripts/http.min.js') }}"></script>
 <!-- Plugins js -->
 <script src=" {{ asset('js/dropzone.min.js') }} "></script>
 <!--Summernote js-->

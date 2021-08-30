@@ -9,6 +9,9 @@
 
 @section('footer')
     @auth
+
+    <script src="{{ asset('js/scripts/http.min.js') }}"></script>
+
     <script src=" {{ asset('js/dropzone.min.js') }} "></script>   
     <script src=" {{ asset('js/scripts/dropzonePdf.js') }} "></script>
     <script src=" {{ asset('js/scripts/pdf.js') }} "></script>

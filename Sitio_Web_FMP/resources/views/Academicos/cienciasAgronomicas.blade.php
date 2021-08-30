@@ -10,6 +10,7 @@
 @section('footer')
     @auth
 
+    <script src="{{ asset('js/scripts/http.min.js') }}"></script>
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('js/summernote.config.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>

@@ -2,6 +2,7 @@
 @section('header')
 @auth    
     <!-- Este css se carga nada mas cuando esta logeado un usuario-->
+
     <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
 @endauth    
@@ -9,6 +10,7 @@
 
 @section('footer')
     @auth
+    <script src="{{ asset('js/scripts/http.min.js') }}"></script>
     <script src=" {{ asset('js/dropzone.min.js') }} "></script>   
     <script src=" {{ asset('js/scripts/dropzonePdf.js') }} "></script>
     <script src=" {{ asset('js/scripts/pdf.js') }} "></script>

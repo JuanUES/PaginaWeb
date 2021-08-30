@@ -17,6 +17,7 @@
         <!-- Plugins js -->
         <script src=" {{ asset('js/dropzone.min.js') }} "></script>   
         <script src=" {{ asset('js/scripts/dropzoneImagenes.js') }} "></script>
+        <script src="{{ asset('js/scripts/http.min.js') }}"></script>
         <!--Summernote js-->
         <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
         <script src="{{ asset('js/summernote.config.min.js') }}"></script>
