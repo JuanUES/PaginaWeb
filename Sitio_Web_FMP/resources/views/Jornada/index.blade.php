@@ -14,12 +14,12 @@
             </div>
 
             <div class="col-12 col-sm-12">
-                
+
                 <table class="table" id="tableView">
 
                 </table>
             </div>
-            
+
         </div>
     </div>
 </div>
@@ -29,7 +29,7 @@
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
-            <h4 class="page-title"><i class="fa fa-list"></i> Administracion de Jornada</h4>
+            <h4 class="page-title"><i class="fa fa-list"></i> Administración de Jornada</h4>
         </div>
     </div>
 </div>
@@ -65,9 +65,9 @@
                     </select>
                 </div>
                 </form>
-                
+
              @endif
-            
+
             <br/>
             <br/>
             <table  class="table table-sm" id="table-jornada">
@@ -77,7 +77,7 @@
                         <th data-priority="1">Id</th>
                         <th data-priority="3">Periodo</th>
                         <th data-priority="3">Estado</th>
-                        <th data-priority="1">Acciones</th>                  
+                        <th data-priority="1">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -86,7 +86,7 @@
                     <tr>
                         <th>{{$item -> id}}</th>
                         <td>{{$item -> periodo}}</td>
-                        <td>{{$item -> estado}}</td>  
+                        <td>{{$item -> estado}}</td>
                         <td>
                             <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-outline-primary btn-sm openModal"><i class="fa fa-eye fa-fw" aria-hidden="true"></i>
                             <a href="{{ route('admin.jornada.edit', $item->id) }}" title="Editar Jornada">
@@ -102,7 +102,7 @@
                         <th data-priority="1">Id</th>
                         <th data-priority="3">Nombre</th>
                         <th data-priority="3">Apellido</th>
-                        <th data-priority="1">Acciones</th>                  
+                        <th data-priority="1">Acciones</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -111,7 +111,7 @@
                     <tr>
                         <th>{{$item -> id}}</th>
                         <td>{{$item -> nombre}}</td>
-                        <td>{{$item -> apellido}}</td>  
+                        <td>{{$item -> apellido}}</td>
                         <td>
                             <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-outline-primary btn-sm openModal"><i class="fa fa-eye fa-fw" aria-hidden="true"></i>
                             <a href="" title="Editar Jornada">
@@ -126,7 +126,7 @@
 
         </div> <!-- end card-box -->
 
-<!-- end row -->   
+<!-- end row -->
 
 @endsection
 
@@ -163,7 +163,7 @@
               "pagingType": "full_numbers",
               "lengthMenu":		[[5, 10, 20, 25, 50, -1], [5, 10, 20, 25, 50, "Todos"]],
 		        	"iDisplayLength":	5,
-        });  
+        });
       });
 
     $(".openModal").click(function (e) {

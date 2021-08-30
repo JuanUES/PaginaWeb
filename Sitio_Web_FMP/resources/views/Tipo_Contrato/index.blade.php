@@ -1,23 +1,13 @@
 @extends('layouts.admin')
 
 @section('content')
-
-<!-- start page title -->
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
-            <!--<div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);">Inicio</a></li>
-                    <li class="breadcrumb-item active">Aulas</li>
-                </ol>
-            </div>-->
-            <h4 class="page-title"><i class="fa fa-list"></i> Administacion de Tipos de Contratos</h4>
+            <h4 class="page-title"><i class="fa fa-list"></i> Administación de Tipos de Contratos</h4>
         </div>
     </div>
 </div>
-<!-- end page title -->
-
 
 <div class="card-box">
     <div class="row">
@@ -39,7 +29,7 @@
                     <th data-priority="1">Id</th>
                     <th data-priority="3">Tipo</th>
                     <th data-priority="3">Acciones</th>
-                  
+
                 </tr>
                 </thead>
                 <tbody>
@@ -49,15 +39,13 @@
                     <td>{{ $item->tipo }}</td>
                     <td>
                         <a href="{{ route('admin.tcontrato.edit', $item->id) }}" title="Modificar contenido"><button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button></a>
-
                     </td>
                 </tr>
                 @endforeach
                 </tbody>
             </table>
+        </div>
 
-        </div> <!-- end card-box -->
-  
 @endsection
 
 @section('plugins-js')
@@ -93,7 +81,7 @@
               "pagingType": "full_numbers",
               "lengthMenu":		[[5, 10, 20, 25, 50, -1], [5, 10, 20, 25, 50, "Todos"]],
 		        	"iDisplayLength":	5,
-        });  
+        });
       });
 </script>
 @endsection

@@ -14,8 +14,8 @@
         <form id="registroForm"  action="{{ route('guardarUser') }}" method="POST">
             <div class="modal-body">
                     <input type="hidden" id="_id" name="_id"/>
-                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" 
-                        role="alert" style="display:none" id="notificacion">                                               
+                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
+                        role="alert" style="display:none" id="notificacion">
                     </div>
                     <div class="row">
                         <div class="col-xl-12">
@@ -39,11 +39,11 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group">
-                                <label for="">Roles <code>*</code></label>                                
+                                <label for="">Roles <code>*</code></label>
                                 <select class="form-control select2-multiple" data-toggle="select2"
                                      multiple="multiple" aria-placeholder="Seleccione" style="width: 100%;" name="roles[]">
                                     <option value="{{base64_encode('Transparencia-Presupuestario')}}">Transparencia Presupuestario</option>
@@ -51,7 +51,7 @@
                                     <option value="{{base64_encode('Transparencia-Decano')}}">Transparencia Decano</option>
                                     <option value="{{base64_encode('super-admin')}}">Super Administrador</option>
                                     <option value="{{base64_encode('Jefe-Academico')}}">Jefe Academico</option>
-                                </select>           
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                             <div class="form-group">
                                 <label for="exampleInputNombre">Contraseña <code>*</code></label>
                                 <input type="password" class="form-control" name="contraseña"  autocomplete="off"  placeholder="Digite la contraseña">
-                            
+
                             </div>
                         </div>
                         <div class="col-xl-6">
@@ -88,10 +88,10 @@
                     </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" 
-                    data-dismiss="modal"><i class="fa fa-ban" 
+                <button type="button" class="btn btn-secondary"
+                    data-dismiss="modal"><i class="fa fa-ban"
                     aria-hidden="true"></i> Cerrar</button>
-                <button type="button" class="btn btn-primary" 
+                <button type="button" class="btn btn-primary"
                     onClick="submitForm('#registroForm','#notificacion')">
                     <li class="fa fa-save"></li> Guardar</button>
             </div>
@@ -121,7 +121,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xl-6">
-                            <button type="submit" 
+                            <button type="submit"
                                 class="btn p-1 btn-light waves-effect waves-light btn-block font-18">
                                 <i class="mdi mdi-check mdi-24px"></i>
                                 Si
@@ -161,7 +161,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xl-6">
-                            <button type="submit" 
+                            <button type="submit"
                                 class="btn p-1 btn-light waves-effect waves-light btn-block font-18">
                                 <i class="mdi mdi-check mdi-24px"></i>
                                 Si
@@ -196,7 +196,7 @@
     </div>
 </div>
 
-        
+
 <!-- end page title -->
 
 <div class="row">
@@ -206,13 +206,13 @@
                 <div class="col order-first">
                     <h3>
                         Usuarios
-                    </h3>     
-                     
+                    </h3>
+
                 </div>
                 <div class="col-lg-1 order-last">
                     <!-- Button trigger modal -->
-                 <button type="button" title="Agregar Departamentos" 
-                    class="btn btn-primary dripicons-plus" 
+                 <button type="button" title="Agregar Departamentos"
+                    class="btn btn-primary dripicons-plus"
                     data-toggle="modal" data-target="#modalRegistro"></button>
                 </div>
             </div>
@@ -223,16 +223,16 @@
                     <th data-priority="3">Usuario</th>
                     <th data-priority="3" class="col-sm-1 text-center">Estado</th>
                     <th data-priority="3" class="col-sm-1 text-center">Roles</th>
-                    <th data-priority="1" class="col-sm-1 text-center">Acciones</th>                  
+                    <th data-priority="1" class="col-sm-1 text-center">Acciones</th>
                 </tr>
                 </thead>
-                <tbody>     
+                <tbody>
                 <?php
-                    $roles = Spatie\Permission\Models\Role::all();                    
-                ?>               
+                    $roles = Spatie\Permission\Models\Role::all();
+                ?>
                 @foreach ($usuarios as $item)
                 <tr>
-                    
+
                     <th class="align-middle ">{!!$item->id!!}</th>
                     <td class="align-middle ">{!!$item->name!!}</td>
                     <td class="align-middle font-16">{!! !$item->estado?'<span class="badge badge-danger">Desactivado</span> ' : '<span class="badge badge-success">Activado</span> ' !!}</td>
@@ -241,26 +241,26 @@
                         <span class="badge badge-success">Todos los roles</span>
                         @else
                             @if ($item->hasRole('super-admin'))
-                            <span class="badge badge-primary">Super Admin</span>                             
+                            <span class="badge badge-primary">Super Admin</span>
                             @else
                                 @if ($item->hasRole('Pagina'))
-                                <span class="badge badge-primary">Pagina</span>                                    
+                                <span class="badge badge-primary">Pagina</span>
                                 @else
                                     @if ($item->hasRole('Jefe-Academico'))
-                                    <span class="badge badge-primary">Jefe Academico</span>                                        
+                                    <span class="badge badge-primary">Jefe Academico</span>
                                     @else
                                         @if ($item->hasRole('Transparencia-Decanato'))
-                                        <span class="badge badge-primary"> Transparencia Decanato</span>                                            
+                                        <span class="badge badge-primary"> Transparencia Decanato</span>
                                         @else
                                             @if ($item->hasRole('Transparencia-Secretario'))
-                                            <span class="badge badge-primary">Transparencia Secretario</span>                                                
+                                            <span class="badge badge-primary">Transparencia Secretario</span>
                                             @else
                                                 @if ($item->hasRole('Transparencia-Presupuestario'))
                                                 <span class="badge badge-primary">Transparencia Presupuestario</span>
                                                 @else
-                                                    
+
                                                 @endif
-                                                    
+
                                             @endif
                                         @endif
                                     @endif
@@ -271,7 +271,7 @@
                     @if (true)
                     <td class="align-middle ">
                         <div class="row">
-                            <div class="col text-center"> 
+                            <div class="col text-center">
                                 <div class="btn-group" role="group">
                                     <button title="Editar" class="btn btn-outline-primary btn-sm"  data-toggle="modal" data-target="#form-depto">
                                         <i class="mdi mdi-file-document-edit-outline font-18" aria-hidden="true"></i>
@@ -286,16 +286,16 @@
                             </div>
                         </div>
                     </td>
-                    @endif                      
+                    @endif
                 </tr>
-                @endforeach   
+                @endforeach
                 </tbody>
             </table>
 
         </div> <!-- end card-box -->
     </div> <!-- end col -->
 </div>
-<!-- end row -->   
+<!-- end row -->
 @endsection
 
 @section('plugins')

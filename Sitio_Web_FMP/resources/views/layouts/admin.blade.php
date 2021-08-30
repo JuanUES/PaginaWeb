@@ -29,10 +29,10 @@
         <link href="{{ asset('template-admin/dist/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
 
         <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
-        
+
 
         {{-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> --}}
-
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
     </head>
     <body>
         <!-- Begin page -->
@@ -416,6 +416,8 @@
 
         @yield('plugins-js')
         <script src="{{ asset('template-admin/dist/assets/js/app.min.js') }}"></script>
-
+        {{--  Plugin de peticiones http personalizado  --}}
+        <script src="{{ asset('js/scripts/http.min.js') }}"></script>
+        <script src="{{ asset('js/scripts/peticiones.js') }}"></script>
     </body>
 </html>

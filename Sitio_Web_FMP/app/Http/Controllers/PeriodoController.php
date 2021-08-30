@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\_UTILS\Utilidades;
 use App\Models\Jornada\Periodo;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
-class PeriodoController extends Controller
-{
+class PeriodoController extends Controller{
+    public $modulo = 'Transparencia Directorios';
+
     public $rules = [
         'fecha_inicio' => 'required|date',
         'fecha_fin' => 'required|date',
@@ -22,8 +26,7 @@ class PeriodoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request){
         $keyword = $request->get('search');
         $perPage = 25;
 
@@ -39,40 +42,34 @@ class PeriodoController extends Controller
 
         return view('Periodo.index', compact('periodo'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('Periodo.create');
-    }
-
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
         /**Guardo en base de datos */
-        $periodo = new Periodo;
-        $periodo -> fecha_inicio =  $request->fecha_inicio;        
-        $periodo -> fecha_fin    =  $request->fecha_fin;        
-        $periodo -> tipo         =  $request->tipo;
-        $exito = $periodo -> save();
-        if(!$exito){
-            return abort(404);
-        }else{
-            return redirect()->route('admin.periodo.index')
-            ->with('titulo','Exito')
-            ->with('El se guardo el registro en la base de datos.')
-            ->with('success');
+        try {
+            $validator = Validator::make($request->all(), $this->rules);
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()->all()]);
+            }
+            $requestData = $request->except(['_id']);
+            if( strcmp($request->_id, '')==0){
+                $msg = 'Registro exitoso.';
+                $periodo = Periodo::create($requestData);
+                Utilidades::fnSaveBitacora('Nuevo Periodo #: ' . $periodo->id, 'Registro', $this->modulo);
+            }else{
+                $msg = 'Modificación exitoso.';
+                $periodo = Periodo::findOrFail($request->_id);
+                $periodo->update($requestData);
+                Utilidades::fnSaveBitacora('Periodo #: ' . $periodo->id, 'Modificación', $this->modulo);
+            }
+            return response()->json(['mensaje' => $msg]);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
         }
-
     }
 
     /**
@@ -81,48 +78,7 @@ class PeriodoController extends Controller
      * @param  \App\Models\Periodo  $periodo
      * @return \Illuminate\Http\Response
      */
-    public function show(Periodo $periodo)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Periodo  $periodo
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $periodo = Periodo::findOrFail($id);
-        return view('Periodo.edit', compact(['periodo']));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Periodo  $periodo
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request,$id)
-    {
-        $periodo = Periodo::findOrFail($id);
-        $this->validate($request, $this->rules);
-        $requestData = $request->all();
-        $periodo->update($requestData);
-        return redirect()->route('admin.periodo.index')->with('flash_message', 'Periodo modificado con éxito!');
-
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Periodo  $periodo
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Periodo $periodo)
-    {
-        //
+    public function show($id){
+        return Periodo::findOrFail($id);
     }
 }
