@@ -207,7 +207,7 @@
                                 <p class="border p-2 text-center btn-block">No hay datos registrados.</p>
                                 @endif  
                             </div>
-                            <h4 class="mb-1 font-weight-bold">Lineamientos</h4>
+                            
                            <!--
                             <ul>
                                 <li>
@@ -272,7 +272,7 @@
                         @auth
                             
                         
-                        <div class="col-xl-12">
+                        
                             <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
                                 class="parsley-examples"  id="contenido{{$localizacion}}">
                                 @csrf
@@ -299,16 +299,16 @@
                                     </div>
                                 </div>
                             </form>
-                        </div>  
+                        
                         
                         @endauth 
                         
                         @guest  
-                        <div class="col-xl-12 py-2">
+                        
                         @if ($contenido!=null)
                         {!!$contenido->contenido!!}
                         @endif
-                        </div>      
+                            
                         @endguest
                             @auth
                             <div id="modalEliminar2" class="modal fade bs-example-modal-center" tabindex="-1" 
