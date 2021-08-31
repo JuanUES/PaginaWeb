@@ -481,10 +481,10 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                     <div class="col-xl-12" >                        
                         <div class="card-box"> 
                             <h3>Canales Digitales</h3>                    
-                            <a href="https://campus.ues.edu.sv/" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Campus Virtual</a>
-                            <a href="https://eel.ues.edu.sv/" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Expediente en Linea</a>                      
-                            <a href="https://correo.ues.edu.sv/" class="btn btn-danger  btn-block mt-3 text-left"><i class=" mdi mdi-email font-18"></i> Correo Institucional</a>                           
-                            <a href="https://www.facebook.com/EnLineaFMP" class="btn btn-danger  btn-block mt-3 text-left"><i class="mdi mdi-facebook border rounded font-16"></i> Universidad en Linea / Sede Paracentral</a> 
+                            <a href="https://campus.ues.edu.sv/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Campus Virtual</a>
+                            <a href="https://eel.ues.edu.sv/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Expediente en Linea</a>                      
+                            <a href="https://correo.ues.edu.sv/" target="_blank" class="btn btn-danger  btn-block mt-3 text-left"><i class=" mdi mdi-email font-18"></i> Correo Institucional</a>                           
+                            <a href="https://www.facebook.com/EnLineaFMP" target="_blank" class="btn btn-danger  btn-block mt-3 text-left"><i class="mdi mdi-facebook border rounded font-16"></i> Universidad en Linea / Sede Paracentral</a> 
                             <a href="https://www.facebook.com/celeues" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-facebook border rounded font-16"></i> CELEUES</a>
                         </div> <!-- end card-box-->                        
                     </div> <!-- end col-->        
