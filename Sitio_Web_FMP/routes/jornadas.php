@@ -12,6 +12,8 @@ Route::resource('admin/jornada', 'App\Http\Controllers\JornadaController')->name
 // Route::get('admin/jornada/edit/{id}', 'App\Http\Controllers\JornadaController@edit')->name('admin.jornada.edit');
 //modal
 Route::get("admin/jornada/detalle/{id}", "App\Http\Controllers\JornadaController@getDetalle");
+Route::get('admin/jornada/jornadaEmpleado/{id}', 'App\Http\Controllers\JornadaController@getEmpleadoJornada')->name('admin.jornada.empleado');
+
 //obtener departamentos
 Route::post('admin/jornada/select{id}", "App\Http\Controllers\JornadaController@getDepto')->name('admin.jornada.select');
 

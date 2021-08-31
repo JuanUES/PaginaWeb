@@ -33,6 +33,7 @@
             <h3>Jornadas Registradas</h3>
         </div>
         <div class="col-3" style="text-align:right">
+            <button class="btn btn btn-success" title="Generar Reporte" > <i class="dripicons-document-new" aria-hidden="true"></i> </button>
             <button class="btn btn btn-primary" title="Agregar nuevo registro" data-toggle="modal" data-target="#modalRegistro" id="btnNuevoRegistro"> <i class=" dripicons-plus" aria-hidden="true"></i> </button>
             {{--  <a href="{{ route('admin.jornada.create')}}" class="btn btn-primary" title="Agregar nuevo registro">
                 <i class=" dripicons-plus" aria-hidden="true"></i>
@@ -124,7 +125,7 @@
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
-            <form id="registroForm"  action="{{ route('admin.periodo.store') }}" method="POST">
+            <form id="registroForm"  action="{{ route('admin.jornada.store') }}" method="POST">
                 <input type="hidden" name="_id" id="_id">
                 <div class="modal-body">
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
@@ -143,7 +144,8 @@
                             <div class="form-group">
                                 <label for="empleado" class="control-label">{{ 'Empleado' }} <span class="text-danger">*</span> </label>
                                 {{--  <input id="id_emp" class="form-control" name="id_emp" readonly="readonly" value="1"></input>  --}}
-                                <select class="custom-select" name="tipo" id="tipo">
+                                <select class="custom-select" name="id_emp" id="id_emp">
+                                    <option value="">Seleccione un Empleado</option>
                                     @foreach ($empleados as $item)
                                         <option value="{{ $item->id }}">{{ $item->nombre }}</option>
                                     @endforeach
@@ -151,33 +153,44 @@
                             </div>
                         </div>
 
-                        <div class="col-12 col-sm-4">
+                        <div class="col-12 col-sm-8">
                             <div class="form-group">
                                 <label for="periodo" class="control-label">{{ 'Periodo' }} <span class="text-danger">*</span> </label>
-                                <input type="hidden" id="id_periodo" name="id_periodo" readonly="readonly"></input>
-                                <input id="detalle" class="form-control" name="detalle" readonly="readonly"></input>
+                                {{--  <input type="hidden" id="id_periodo" name="id_periodo" readonly="readonly"></input>
+                                <input id="detalle" class="form-control" name="detalle" readonly="readonly"></input>  --}}
+                                <select class="custom-select" name="id_periodo" id="id_periodo">
+                                    @foreach ($periodos as $item)
+                                        <option value="{{ $item->id }}">{{ $item->titulo }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
 
                         <div class="col-12 col-sm-2">
                             <div class="form-group">
                                 <label for="thoras" class="control-label">{{ 'Horas' }} <span class="text-danger"></span></label>
-                                <input id="_horas" class="form-control" for="_horas" readonly="readonly" value="40"></input>
-                                <input type="hidden" id="auxCalhour" for="_horas" readonly="readonly">
-                                <input type="hidden" id="auxJornada" for="_horas" readonly="readonly" value="40">
-                                <input type="hidden" id="otro" for="_horas" readonly="readonly" value="-">
+                                <input type="text" id="_horas" class="form-control total-horas" for="_horas" readonly="readonly" value="40"></input>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-2">
+                            <div class="form-group">
+                                <label for="thoras" class="control-label">{{ 'Actual' }} <span class="text-danger"></span></label>
+                                <input type="text" id="auxJornada" class="form-control total-horas" for="_horas" readonly="readonly" value="40">
                             </div>
                         </div>
                     </div>
 
-                    <h5 class="mt-3">Detalle de la Jornada</h5>
-                    <hr>
+                    <h5 class="mb-3">Detalle de la Jornada
+                        <span class="float-right">
+                            <button type="button" class="btn btn-sm btn-primary" name="btnNewRow" id="btnNewRow"> <i class="fa fa-plus"></i> </button>
+                        </span>
+                    </h5>
+                    {{--  <hr>  --}}
                     <div id="days-table"></div>
-                    <button type="button" class="btn btn-sm btn-primary mt-3" name="btnNewRow" id="btnNewRow"> <i class="fa fa-plus-square"></i> Nueva Linea </button>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban"  aria-hidden="true"></i> Cerrar</button>
-                    <button type="button" class="btn btn-primary" onClick="submitForm('#registroForm','#notificacion')"><li class="fa fa-save"></li> Guardar</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fa fa-ban"  aria-hidden="true"></i> Cerrar</button>
+                    <button type="submit" class="btn btn-primary btn-sm"><li class="fa fa-save"></li> Guardar</button>
                 </div>
             </form>
         </div>
@@ -241,6 +254,18 @@
                 </tr>`;
             $("#tableView").html(contenido);
         });
+    });
+
+    $("#id_emp").on('change', function () {
+        let id = $(this).val();
+        if(id!==''){
+            let data = getData('GET', `{{ url('admin/jornada/jornadaEmpleado/') }}/`+id,'#notificacion');
+            data.then(function(response){
+                $(".total-horas").val(response.horas_semanales);
+                let updatehours = updateJornada();
+                $("#_horas").val('' + updatehours);
+            });
+        }
     });
 
 

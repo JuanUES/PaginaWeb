@@ -2,39 +2,46 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\_UTILS\Utilidades;
 use App\Models\Jornada\Jornada;
 use App\Models\Jornada\JornadaItem;
 use App\Models\Jornada\Periodo;
 use App\Models\Tipo_Jornada;
 use App\Models\Licencias\Empleado;
 use App\Models\Horarios\Departamento;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
-class JornadaController extends Controller
-{
+class JornadaController extends Controller{
+    public $modulo = 'Jornadas';
+
+    public $rules = [
+        'id_emp' => 'required|integer',
+        'id_periodo' => 'required|integer',
+        // 'items' => 'required|array',
+    ];
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-        $jornada = Jornada::join('periodos','jornada.id_periodo','=','periodos.id')
-        ->join('empleado','jornada.id_emp','=','empleado.id')
-        ->select('jornada.id', 'empleado.id AS empleado',
-
-
-        Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"),
-        'jornada.estado')
-        ->where('empleado.id' ,'=', 1)
+        $jornada = Jornada::join('periodos','jornada.id_periodo','periodos.id')
+        ->join('empleado','jornada.id_emp','empleado.id')
+        ->select('jornada.id', 'empleado.id AS empleado', Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"), 'jornada.estado')
+        ->where('empleado.id', 1)
         ->get();
 
 
         $depto = Departamento::get();
         $empJefe = $this->getEmpleJefe();
 
-        $empleados = Empleado::all();
+        $empleados = Empleado::where('estado', true)->get();
+        $periodos = Periodo::where('estado', 'activo')->latest()->get();
 
-        return view('Jornada.index', compact('jornada', 'depto','empJefe', 'empleados'));
+        return view('Jornada.index', compact('jornada', 'depto','empJefe', 'empleados', 'periodos'));
     }
 
     /**
@@ -42,13 +49,12 @@ class JornadaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create(){
         $periodos = Periodo::where('estado', 'LIKE','%activo%')->get();
         $tjornada = Tipo_Jornada::join('empleado', 'tipo_jornada.id','=','empleado.id_tipo_jornada')
-        ->select('empleado.id','tipo_jornada.horas_semanales')
-        ->where('empleado.id', '=',1)
-	    ->get();
+            ->select('empleado.id','tipo_jornada.horas_semanales')
+            ->where('empleado.id',1)
+            ->get();
         return view('Jornada.create', compact('periodos','tjornada'));
     }
 
@@ -58,24 +64,52 @@ class JornadaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        $requestData = $request->except('items');
-        $items = json_decode($request->items);
+    public function store(Request $request){
+        // dd($request);
 
-        $jornada = Jornada::create($requestData);
-        if (is_array($items) || is_object($items)){
-            foreach ($items as $key => $value) { //para guardar los items del jornada
-                JornadaItem::create([
-                    'id_jornada' => $jornada->id,
-                    'dia' => $value->dia,
-                    'hora_inicio' => $value->hora_inicio,
-                    'hora_fin' => $value->hora_fin,
-                ]);
+        try {
+            $validator = Validator::make($request->all(), $this->rules);
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()->all()]);
             }
+            $requestData = $request->except('items');
+            $items = json_decode($request->items);
+
+            $requestData = $request->except(['_id']);
+            if (strcmp($request->_id, '') == 0) {
+                $msg = 'Registro exitoso.';
+                // $periodo = Periodo::create($requestData);
+
+                $jornada = Jornada::create($requestData);
+
+
+                if (is_array($items) || is_object($items)) {
+                    foreach ($items as $key => $value) { //para guardar los items del jornada
+                        JornadaItem::create([
+                            'id_jornada' => $jornada->id,
+                            'dia' => $value->dia,
+                            'hora_inicio' => $value->hora_inicio,
+                            'hora_fin' => $value->hora_fin,
+                        ]);
+                    }
+                }
+
+                Utilidades::fnSaveBitacora('Nueva Jornada #: ' . $jornada->id, 'Registro', $this->modulo);
+            } else {
+                $msg = 'Modificación exitoso.';
+
+                // $periodo = Periodo::findOrFail($request->_id);
+                // $periodo->update($requestData);
+
+
+                // Utilidades::fnSaveBitacora('Jornada #: ' . $periodo->id . ' Título: ' . $periodo->titulo, 'Modificación', $this->modulo);
+            }
+            return response()->json(['mensaje' => $msg]);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
         }
 
-        return redirect('/admin/jornada/')->with('flash_message', 'Agregado');
+
 
     }
 
@@ -96,13 +130,12 @@ class JornadaController extends Controller
      * @param  \App\Models\Jornada  $jornada
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
+    public function edit($id){
         $periodos = Periodo::where('estado', 'LIKE','%activo%')->get();
         $tjornada = Tipo_Jornada::join('empleado', 'tipo_jornada.id','=','empleado.id_tipo_jornada')
-        ->select('empleado.id','tipo_jornada.horas_semanales')
-        ->where('empleado.id', '=',1)
-	    ->get();
+            ->select('empleado.id','tipo_jornada.horas_semanales')
+            ->where('empleado.id', '=',1)
+            ->get();
         $jornadas = Jornada::findOrFail($id);
         return view('Jornada.edit', compact('jornadas','periodos','tjornada'));
     }
@@ -114,16 +147,13 @@ class JornadaController extends Controller
      * @param  \App\Models\Jornada  $jornada
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$id)
-    {
+    public function update(Request $request,$id){
         $requestData = $request->except('items');
         $items = json_decode($request->items);
         $jornadas = Jornada::findOrFail($id);
         $jornadas->update($requestData);
 
-
         $items_DB = JornadaItem::select('id')->where('id_jornada', $jornadas->id)->get();
-
 
         foreach ($items as $key => $value) {
 
@@ -196,5 +226,9 @@ class JornadaController extends Controller
         return $empleadoJefe;
     }
 
+    public function getEmpleadoJornada($id){
+        $empleado = Empleado::findOrFail($id);
+        return $empleado->tipo_jornada_rf;
+    }
 
 }
