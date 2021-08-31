@@ -12,4 +12,5 @@ class Periodo extends Model
     protected $guarded = ['id'];
 
     protected $fillable = ['titulo','fecha_inicio', 'fecha_fin', 'tipo', 'estado', 'observaciones'];
+
 }

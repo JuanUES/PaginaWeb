@@ -29,9 +29,9 @@ class JornadaController extends Controller{
      */
     public function index(Request $request){
         $jornada = Jornada::join('periodos','jornada.id_periodo','periodos.id')
-        ->join('empleado','jornada.id_emp','empleado.id')
-        ->select('jornada.id', 'empleado.id AS empleado', Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"), 'jornada.estado')
-        ->where('empleado.id', 1)
+        // ->join('empleado','jornada.id_emp','empleado.id')
+        ->select('jornada.*',Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"))
+        // ->where('empleado.id', 1)
         ->get();
 
 

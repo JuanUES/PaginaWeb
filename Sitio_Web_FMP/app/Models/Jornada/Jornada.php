@@ -2,6 +2,7 @@
 
 namespace App\Models\Jornada;
 
+use App\Models\Licencias\Empleado;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use Illuminate\Database\Eloquent\Model;

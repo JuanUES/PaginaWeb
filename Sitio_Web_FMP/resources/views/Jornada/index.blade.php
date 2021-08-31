@@ -64,21 +64,27 @@
         <thead>
         @if(@Auth::user()->hasRole('super-admin')  )
             <tr>
+                <th data-priority="1">Registro</th>
                 <th data-priority="1">Id</th>
+                <th data-priority="3">Empleado</th>
                 <th data-priority="3">Periodo</th>
                 <th data-priority="3">Estado</th>
-                <th data-priority="1">Acciones</th>
+                <th data-priority="1" class="text-center">Acciones</th>
             </tr>
             </thead>
             <tbody>
 
             @foreach($jornada as $item)
             <tr>
+                <th>{{ date('d/m/Y', strtotime($item -> created_at)) }}</th>
                 <th>{{$item -> id}}</th>
+                <th>{{ $item -> empleado_rf->nombre }} {{ $item -> empleado_rf->apellido }}</th>
                 <td>{{$item -> periodo}}</td>
-                <td>{{$item -> estado}}</td>
                 <td>
-                    <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-outline-primary btn-sm openModal"><i class="fa fa-eye fa-fw" aria-hidden="true"></i>
+                    <span class="badge badge-{{ strcmp($item->estado, 'activo')==0 ? 'success' : 'secondary' }}">{{ Str::ucfirst($item->estado) }}</span>
+                </td>
+                <td class="text-center">
+                    <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-outline-success btn-sm openModal"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i></button>
                     <a href="{{ route('admin.jornada.edit', $item->id) }}" title="Editar Jornada">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
                     </a>
