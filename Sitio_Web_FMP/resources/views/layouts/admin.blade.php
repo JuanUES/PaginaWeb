@@ -30,6 +30,9 @@
 
         <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
 
+        {{-- DateRangPicker --}}
+        <link rel="stylesheet" href="{{asset('vendor/daterangepicker/daterangepicker.css') }}">
+        {{--  <link rel="stylesheet" href="{{asset('vendor/bootstrap-datepicker/css/bootstrap-datepicker.css') }}">  --}}
 
         {{-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> --}}
         <meta name="csrf-token" content="{{ csrf_token() }}" />
@@ -399,6 +402,13 @@
         <script src="{{ asset('template-admin/dist/assets/libs/datatables/dataTables.responsive.min.js') }}"></script>
         <script src="{{ asset('template-admin/dist/assets/libs/datatables/responsive.bootstrap4.min.js') }}"></script>
 
+        {{-- Moment JS --}}
+        {{--  <script src="{{asset('vendor/moment/moment.min.js') }}"></script>  --}}
+
+        {{-- DateRangPicker --}}
+        <script src="{{asset('vendor/daterangepicker/daterangepicker.js') }}"></script>
+        {{--  <script src="{{asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
+        <script src="{{asset('vendor/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js') }}"></script>  --}}
 
 
         <!--Summernote js-->

@@ -54,9 +54,9 @@
                     @if(strcmp($item->estado, 'finalizado')==0)
                         <span class="small"> <i>Sin Acciones</i> </span>
                     @else
-                        <button type="buttom"  class="btn btn-outline-dark btn-sm" {!! strcmp($item->estado, 'finalizado')==0 ? 'disabled' : 'onclick="fnFinalizar({{$item->id}})" data-toggle="modal" data-target="#modalFinalizar"' !!}  title="Finalizar Periodo"><i class="mdi mdi-close-octagon"></i></button>
-                        <button class="btn btn-outline-primary btn-sm" title="Modificar Periodo" {!! strcmp($item->estado, 'finalizado')==0 ? 'disabled' : 'data-id="{{ $item->id }}" data-toggle="modal" data-target="#modalRegistro" onclick="btnEdit(this);"' !!}><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
-                        <button type="buttom"  class="btn btn-outline-danger btn-sm" title="Eliminar Periodo" {!! strcmp($item->estado, 'finalizado')==0 ? 'disabled' : 'onclick="fnEliminar({{$item->id}})" data-toggle="modal" data-target="#modalEliminar"' !!} ><i class="mdi mdi-delete"></i></button>
+                        <button type="buttom"  class="btn btn-outline-dark btn-sm" {!! strcmp($item->estado, 'finalizado')==0 ? 'disabled' : 'onclick="fnFinalizar('. $item->id .')" data-toggle="modal" data-target="#modalFinalizar"' !!}  title="Finalizar Periodo"><i class="mdi mdi-close-octagon"></i></button>
+                        <button class="btn btn-outline-primary btn-sm" title="Modificar Periodo" {!! strcmp($item->estado, 'finalizado')==0 ? 'disabled' : 'data-id="'. $item->id .'" data-toggle="modal" data-target="#modalRegistro" onclick="btnEdit(this);"' !!}><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
+                        <button type="buttom"  class="btn btn-outline-danger btn-sm" title="Eliminar Periodo" {!! strcmp($item->estado, 'finalizado')==0 ? 'disabled' : 'onclick="fnEliminar('. $item->id .')" data-toggle="modal" data-target="#modalEliminar"' !!} ><i class="mdi mdi-delete"></i></button>
                     @endif
                 </td>
             </tr>
@@ -97,7 +97,24 @@
                                     <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Ingrese el Título">
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-6">
+
+                            <div class="col-12">
+                                <label for="FechaI">Periodo <span class="text-danger">*</span> </label>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                        </div>
+                                        <input class="form-control" data-toggle="daterangepicker" id="rangos" maxlength="23" name="timestamp" data-filter-type="date-range">
+
+                                        {{--  <input type="text" class="form-control float-right" id="rangos">  --}}
+                                        <input type="hidden" name="fecha_inicio" id="fecha_inicio">
+                                        <input type="hidden" name="fecha_fin" id="fecha_fin">
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{--  <div class="col-12 col-sm-6">
                                 <div class="form-group">
                                     <label for="FechaI">Fecha Inicio <span class="text-danger">*</span> </label>
                                     <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio">
@@ -108,7 +125,7 @@
                                     <label for="FechaF">Fecha Fin <span class="text-danger">*</span> </label>
                                     <input type="date" class="form-control" name="fecha_fin" id="fecha_fin">
                                 </div>
-                            </div>
+                            </div>  --}}
                             <div class="col-12 col-sm-12">
                                 <div class="form-group">
                                     <label for="tipo">Tipo <span class="text-danger">*</span> </label>
@@ -199,6 +216,41 @@
 
 @section('plugins-js')
 <script>
+
+    const localCustom = {
+            format: 'DD/MM/YYYY',
+            "separator": " hasta ",
+            "applyLabel": "Aplicar",
+            "cancelLabel": "Cancelar",
+            "fromLabel": "DE",
+            "toLabel": "HASTA",
+            "customRangeLabel": "Custom",
+            "daysOfWeek": [
+                "Dom",
+                "Lun",
+                "Mar",
+                "Mie",
+                "Jue",
+                "Vie",
+                "Sáb"
+            ],
+            "monthNames": [
+                "Enero",
+                "Febrero",
+                "Marzo",
+                "Abril",
+                "Mayo",
+                "Junio",
+                "Julio",
+                "Agosto",
+                "Septiembre",
+                "Octubre",
+                "Noviembre",
+                "Diciembre"
+            ],
+            "firstDay": 1
+    };
+
     $(document).ready(function () {
         $('#table-periodo').DataTable({
             "order": [[ 0, "desc" ]],
@@ -232,13 +284,27 @@
         });
     });
 
+    $('#rangos').daterangepicker({
+        locale: localCustom
+    },function(start, end, label) {
+        $('#fecha_inicio').val(new Date(start).toUTCString());
+        $('#fecha_fin').val(new Date(end).toUTCString());
+    });
+
     function btnEdit(element){
         let id = $(element).data('id');
         let data = getData('GET', `{{ url('admin/periodo') }}/`+id,'#notificacion');
         data.then(function(response){
             $("#registroForm #fecha_inicio").val(response.fecha_inicio);
             $("#registroForm #fecha_fin").val(response.fecha_fin);
-            $("#registroForm #fecha_fin").val(response.fecha_fin);
+            $('#rangos').daterangepicker({
+                startDate: moment(response.fecha_inicio).format('DD/MM/YYYY'),
+                endDate: moment(response.fecha_fin).format('DD/MM/YYYY'),
+                locale: localCustom
+            },function(start, end, label) {
+                $('#fecha_inicio').val(new Date(start).toUTCString());
+                $('#fecha_fin').val(new Date(end).toUTCString());
+            });
             $("#registroForm #observaciones").val(response.observaciones);
             $("#registroForm #titulo").val(response.titulo).trigger('change');
             $("#registroForm #_id").val(response.id);
@@ -251,5 +317,6 @@
     function fnFinalizar(id){
         $("#frmFinalizar").attr('action', `{{ url("admin/periodo/finalizar/") }}/`+id);
     }
+
     </script>
 @endsection
