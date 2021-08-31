@@ -15,9 +15,10 @@ class CreatePeriodosTable extends Migration
     {
         Schema::create('periodos', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha_inicio')->nullable();
-            $table->date('fecha_fin')->nullable();
-            $table->string('tipo')->nullable();
+            $table->string('titulo');
+            $table->date('fecha_inicio');
+            $table->date('fecha_fin');
+            $table->string('tipo');
             $table->enum('estado',['activo','inactivo'])->default('activo');
             $table->timestamps();
         });

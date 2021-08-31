@@ -23,25 +23,28 @@
             <table  class="table table-sm" id="table-periodo">
                 <thead>
                 <tr>
-                    <th data-priority="1">Id</th>
+                    <th data-priority="0">Id</th>
+                    <th data-priority="2">Título</th>
                     <th data-priority="3">Tipo</th>
-                    <th data-priority="3">Inicio</th>
-                    <th data-priority="1">Fin</th>
-                    <th data-priority="3">Estado</th>
-                    <th data-priority="3">Acciones</th>
+                    <th data-priority="4">Inicio</th>
+                    <th data-priority="5">Fin</th>
+                    <th data-priority="6">Estado</th>
+                    <th data-priority="0" class="text-center">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach($periodo as $item)
                 <tr>
                     <th>{{ $item->id }}</th>
+                    <td>{{ $item->titulo }}</td>
                     <td>{{ $item->tipo }}</td>
                     <td>{{ date('d-m-Y', strtotime( $item->fecha_inicio)) }}</td>
                     <td>{{ date('d-m-Y', strtotime( $item->fecha_fin)) }}</td>
                     <td>{{ $item->estado }}</td>
-                    <td>
+                    <td class="text-center">
                         <button class="btn btn-outline-primary btn-sm" title="Modificar contenido" data-id="{{ $item->id }}" data-toggle="modal" data-target="#modalRegistro" onclick="btnEdit(this);"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
                     </td>
+
                 </tr>
                 @endforeach
                 </tbody>
@@ -75,19 +78,25 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-12 col-sm-6 mb-3">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="FechaI">Título <span class="text-danger">*</span> </label>
+                                    <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Ingrese el Título">
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6">
                                 <div class="form-group">
                                     <label for="FechaI">Fecha Inicio <span class="text-danger">*</span> </label>
                                     <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio">
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-6 mb-3">
+                            <div class="col-12 col-sm-6">
                                 <div class="form-group">
                                     <label for="FechaF">Fecha Fin <span class="text-danger">*</span> </label>
                                     <input type="date" class="form-control" name="fecha_fin" id="fecha_fin">
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-12 mb-3">
+                            <div class="col-12 col-sm-12">
                                 <div class="form-group">
                                     <label for="tipo">Tipo <span class="text-danger">*</span> </label>
                                     <select class="custom-select" name="tipo" id="tipo">
@@ -108,15 +117,6 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
 @endsection
 
 @section('plugins-js')
@@ -125,6 +125,7 @@
 <script>
     $(document).ready(function () {
         $('#table-periodo').DataTable({
+            "order": [[ 0, "desc" ]],
             "language": {
                 "decimal":        ".",
                 "emptyTable":     "No hay datos para mostrar",
@@ -155,15 +156,15 @@
         });
     });
 
-
     function btnEdit(element){
         let id = $(element).data('id');
         let data = getData('GET', `{{ url('admin/periodo') }}/`+id,'#notificacion');
         data.then(function(response){
-            $("#registroForm #_id").val(response.id);
             $("#registroForm #fecha_inicio").val(response.fecha_inicio);
             $("#registroForm #fecha_fin").val(response.fecha_fin);
-            $("#registroForm #tipo").val(response.tipo).trigger('chance');
+            $("#registroForm #fecha_fin").val(response.fecha_fin);
+            $("#registroForm #titulo").val(response.titulo).trigger('change');
+            $("#registroForm #_id").val(response.id);
         });
     }
     </script>

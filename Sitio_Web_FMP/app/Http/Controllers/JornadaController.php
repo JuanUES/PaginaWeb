@@ -17,23 +17,24 @@ class JornadaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
-    {
+    public function index(Request $request){
         $jornada = Jornada::join('periodos','jornada.id_periodo','=','periodos.id')
         ->join('empleado','jornada.id_emp','=','empleado.id')
-        ->select('jornada.id', 'empleado.id AS empleado', 
-                 Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"),
-                 'jornada.estado')
+        ->select('jornada.id', 'empleado.id AS empleado',
+
+
+        Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"),
+        'jornada.estado')
         ->where('empleado.id' ,'=', 1)
         ->get();
 
+
         $depto = Departamento::get();
+        $empJefe = $this->getEmpleJefe();
 
-        $empJefe = JornadaController::getEmpleJefe();
+        $empleados = Empleado::all();
 
-
-
-        return view('Jornada.index', compact('jornada', 'depto','empJefe'));
+        return view('Jornada.index', compact('jornada', 'depto','empJefe', 'empleados'));
     }
 
     /**
@@ -73,7 +74,7 @@ class JornadaController extends Controller
                 ]);
             }
         }
-        
+
         return redirect('/admin/jornada/')->with('flash_message', 'Agregado');
 
     }
@@ -124,7 +125,7 @@ class JornadaController extends Controller
         $items_DB = JornadaItem::select('id')->where('id_jornada', $jornadas->id)->get();
 
 
-        foreach ($items as $key => $value) { 
+        foreach ($items as $key => $value) {
 
             $data = [
                 'dia' => $value->dia,
@@ -171,13 +172,13 @@ class JornadaController extends Controller
         $detalle = Jornada::join('jornada_items','jornada.id','=','jornada_items.id_jornada')
         ->join('periodos','jornada.id_periodo','=','periodos.id')
         ->join('empleado','jornada.id_emp','=','empleado.id')
-        ->select('jornada.id', 'empleado.id AS empleado', 
+        ->select('jornada.id', 'empleado.id AS empleado',
                 Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"),
                 JornadaItem::raw("jornada_items.dia as dia, CONCAT(jornada_items.hora_inicio , ' - ' , jornada_items.hora_fin) AS detalle"))
         ->where('jornada.id' ,'=', $id)
         ->get();
         return $detalle;
-    } 
+    }
 
     public function getDepto($id){
         $empleadoDepto = Empleado::join('departamentos','empleado.id_depto','=','departamentos.id')
@@ -195,5 +196,5 @@ class JornadaController extends Controller
         return $empleadoJefe;
     }
 
-    
+
 }

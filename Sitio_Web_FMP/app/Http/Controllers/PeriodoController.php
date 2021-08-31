@@ -12,6 +12,7 @@ class PeriodoController extends Controller{
     public $modulo = 'Transparencia Directorios';
 
     public $rules = [
+        'titulo' => 'required|string',
         'fecha_inicio' => 'required|date',
         'fecha_fin' => 'required|date',
         'tipo' => 'required|string',
@@ -27,19 +28,7 @@ class PeriodoController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-        $keyword = $request->get('search');
-        $perPage = 25;
-
-        if (!empty($keyword)) {
-            $periodo = Periodo::where('fecha_inicio', 'LIKE', "%$keyword%")
-            ->orWhere('fecha_fin', 'LIKE', "%$keyword%")
-            ->orWhere('tipo', 'LIKE', "%$keyword%")
-            ->orWhere('estado', 'LIKE', "%$keyword%")
-            ->latest()->paginate($perPage);
-        } else {
-            $periodo = Periodo::latest()->paginate($perPage);
-        }
-
+        $periodo = Periodo::orderBy('created_at','ASC')->get();
         return view('Periodo.index', compact('periodo'));
     }
     /**
@@ -59,12 +48,12 @@ class PeriodoController extends Controller{
             if( strcmp($request->_id, '')==0){
                 $msg = 'Registro exitoso.';
                 $periodo = Periodo::create($requestData);
-                Utilidades::fnSaveBitacora('Nuevo Periodo #: ' . $periodo->id, 'Registro', $this->modulo);
+                Utilidades::fnSaveBitacora('Nuevo Periodo #: ' . $periodo->id.' Título: '.$periodo->titulo, 'Registro', $this->modulo);
             }else{
                 $msg = 'Modificación exitoso.';
                 $periodo = Periodo::findOrFail($request->_id);
                 $periodo->update($requestData);
-                Utilidades::fnSaveBitacora('Periodo #: ' . $periodo->id, 'Modificación', $this->modulo);
+                Utilidades::fnSaveBitacora('Periodo #: ' . $periodo->id.' Título: '.$periodo->titulo, 'Modificación', $this->modulo);
             }
             return response()->json(['mensaje' => $msg]);
         } catch (Exception $e) {
