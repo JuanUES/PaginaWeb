@@ -19,7 +19,8 @@ class CreatePeriodosTable extends Migration
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
             $table->string('tipo');
-            $table->enum('estado',['activo','inactivo'])->default('activo');
+            $table->text('observaciones')->nullable();
+            $table->enum('estado',['activo','inactivo','finalizado'])->default('activo');
             $table->timestamps();
         });
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\_UTILS\Utilidades;
 use App\Models\Tipo_Contrato;
+use App\Models\Tipo_Jornada;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -24,7 +25,7 @@ class Tipo_ContratoController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-        $tcontrato = Tipo_Contrato::get();
+        $tcontrato = Tipo_Contrato::where('estado', 'activo')->get();
         return view('Tipo_Contrato.index', compact('tcontrato'));
     }
 
@@ -76,5 +77,14 @@ class Tipo_ContratoController extends Controller{
      */
     public function show($id){
         return Tipo_Contrato::findOrFail($id);
+    }
+
+    public function destroy($id){
+        $tipo = Tipo_Contrato::findOrFail($id);
+        $tipo->update([
+            'estado' => 'inactivo'
+        ]);
+        Utilidades::fnSaveBitacora('Tipo #: ' . $tipo->id, 'Eliminación', $this->modulo);
+        return redirect('admin/tcontrato')->with('bandera', 'Registro eliminado con éxito');
     }
 }

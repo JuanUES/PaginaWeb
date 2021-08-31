@@ -21,6 +21,13 @@
         </div>
     </div>
     <br/>
+    @if(Session::has('bandera'))
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <div class="alert-message">
+                <strong> <i class="fa fa-info-circle"></i> Información!</strong> {{ (Session::get('bandera')) }}
+            </div>
+        </div>
+    @endif
     <br/>
     <table  class="table table-sm" id="table-tjornada">
         <thead>
@@ -42,7 +49,7 @@
             <td>{{ $item->estado }}</td>
             <td>
                 <button class="btn btn-outline-primary btn-sm" title="Modificar contenido" data-id="{{ $item->id }}" data-toggle="modal" data-target="#modalRegistro" onclick="btnEdit(this);"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
-            {{--  <a href="{{ route('admin.tjornada.edit', $item->id) }}" title="Modificar contenido"><button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button></a>  --}}
+                <button type="buttom"  class="btn btn-outline-danger btn-sm" onclick="fnEliminar({{$item->id}})" data-toggle="modal" data-target="#modalEliminar"><i class="mdi mdi-delete"></i></button>
             </td>
 
         </tr>
@@ -99,6 +106,36 @@
         </div>
     </div>
 </div>
+<div id="modalEliminar" class="modal fade bs-example-modal-center" tabindex="-1"  role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="frmDelete" action="" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <div class="row py-3">
+                        <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                        <div class="col-lg-10 text-black">
+                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se elimina este registro de manera permanente, ¿Desea continuar?</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <button type="submit" class="btn p-1 btn-light waves-effect waves-light btn-block font-24"> <i class="mdi mdi-check mdi-16px"></i>Si</button>
+                        </div>
+                        <div class="col-xl-6">
+                            <button type="reset" class="btn btn-light p-1 waves-light waves-effect btn-block font-24" data-dismiss="modal" ><i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>No</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('plugins-js')
@@ -143,6 +180,9 @@
             $("#registroForm #horas_semanales").val(response.horas_semanales);
             $("#registroForm #_id").val(response.id);
         });
+    }
+    function fnEliminar(id){
+        $("#frmDelete").attr('action', `{{ url("admin/tjornada/") }}/`+id);
     }
 </script>
 @endsection

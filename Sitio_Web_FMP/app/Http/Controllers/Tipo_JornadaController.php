@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\_UTILS\Utilidades;
+use App\Models\Tipo_Contrato;
 use App\Models\Tipo_Jornada;
 use Exception;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class Tipo_JornadaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-        $tjornada = Tipo_Jornada::get();
+        $tjornada = Tipo_Jornada::where('estado','activo')->get();
         return view('Tipo_Jornada.index', compact('tjornada'));
     }
 
@@ -69,6 +70,15 @@ class Tipo_JornadaController extends Controller{
      */
     public function show($id){
         return Tipo_Jornada::findOrFail($id);
+    }
+
+    public function destroy($id){
+        $tipo = Tipo_Jornada::findOrFail($id);
+        $tipo->update([
+            'estado' => 'inactivo'
+        ]);
+        Utilidades::fnSaveBitacora('Tipo #: ' . $tipo->id, 'Eliminación', $this->modulo);
+        return redirect('admin/tjornada')->with('bandera', 'Registro eliminado con éxito');
     }
 
 

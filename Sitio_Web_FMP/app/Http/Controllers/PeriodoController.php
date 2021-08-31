@@ -28,7 +28,7 @@ class PeriodoController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-        $periodo = Periodo::orderBy('created_at','ASC')->get();
+        $periodo = Periodo::where('estado', '!=' ,'inactivo')->get();
         return view('Periodo.index', compact('periodo'));
     }
     /**
@@ -69,5 +69,23 @@ class PeriodoController extends Controller{
      */
     public function show($id){
         return Periodo::findOrFail($id);
+    }
+
+    public function destroy($id){
+        $tipo = Periodo::findOrFail($id);
+        $tipo->update([
+            'estado' => 'inactivo'
+        ]);
+        Utilidades::fnSaveBitacora('Periodo #: ' . $tipo->id, 'Eliminación', $this->modulo);
+        return redirect('admin/periodo')->with('bandera', 'Registro eliminado con éxito');
+    }
+
+    public function finalizar($id){
+        $tipo = Periodo::findOrFail($id);
+        $tipo->update([
+            'estado' => 'finalizado'
+        ]);
+        Utilidades::fnSaveBitacora('Periodo #: ' . $tipo->id, 'Finalización', $this->modulo);
+        return redirect('admin/periodo')->with('bandera', 'Periodo Finalizado con éxito');
     }
 }
