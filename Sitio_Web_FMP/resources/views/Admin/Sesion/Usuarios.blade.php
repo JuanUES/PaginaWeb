@@ -49,7 +49,7 @@
                                     <option value="{{base64_encode('Transparencia-Presupuestario')}}">Transparencia Presupuestario</option>
                                     <option value="{{base64_encode('Transparencia-Secretario')}}">Transparencia Secretario</option>
                                     <option value="{{base64_encode('Transparencia-Decano')}}">Transparencia Decano</option>
-                                    <option value="{{base64_encode('super-admin')}}">Super Administrador</option>
+                                    <option value="{{base64_encode('super-admin')}}" selected>Super Administrador</option>
                                     <option value="{{base64_encode('Jefe-Academico')}}">Jefe Academico</option>
                                 </select>
                             </div>
