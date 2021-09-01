@@ -31,9 +31,9 @@ class UsuariosController extends Controller
        
         $validator = Validator::make($request->all(),[
             'usuario' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'contraseña' => ['required', 'confirmed', Rules\Password::min(8)],
-            'repetir_contraseña'=> 'required|same:contraseña',
+            'correo' => 'required|string|email|max:255|unique:users,email',
+            'contraseña' => ['required', Rules\Password::min(8)],
+            'repetir_contraseña'=> 'required|same:contraseña'
         ]);
 
         if($validator->fails())

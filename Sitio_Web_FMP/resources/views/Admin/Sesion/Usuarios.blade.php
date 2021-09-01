@@ -35,7 +35,7 @@
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputUbicacion">Correo <code>*</code></label>
-                                <input type="email" class="form-control" name="email"  autocomplete="off" placeholder="Digite el correo">
+                                <input type="email" class="form-control" name="correo"  autocomplete="off" placeholder="Digite el correo">
                             </div>
                         </div>
                     </div>
