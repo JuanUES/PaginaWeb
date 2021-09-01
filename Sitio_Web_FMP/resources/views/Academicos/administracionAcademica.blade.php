@@ -600,10 +600,10 @@
                     <div class="col-xl-12" >                        
                         <div class="card-box"> 
                             <h3>Canales Digitales</h3>                    
-                            <a href="https://campus.ues.edu.sv/" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Campus Virtual</a>
-                            <a href="https://eel.ues.edu.sv/" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Expediente en Linea</a>                      
-                            <a href="https://correo.ues.edu.sv/" class="btn btn-danger  btn-block mt-3 text-left"><i class=" mdi mdi-email font-18"></i> Correo Institucional</a>                           
-                            <a href="https://www.facebook.com/DistanciaFMP" class="btn btn-danger  btn-block mt-3 text-left"><i class="mdi mdi-facebook border rounded font-16"></i> Universidad en Linea / Sede Paracentral</a> 
+                            <a href="https://campus.ues.edu.sv/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Campus Virtual</a>
+                            <a href="https://eel.ues.edu.sv/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Expediente en Linea</a>                      
+                            <a href="https://correo.ues.edu.sv/" target="_blank" class="btn btn-danger  btn-block mt-3 text-left"><i class=" mdi mdi-email font-18"></i> Correo Institucional</a>                           
+                            <a href="https://www.facebook.com/DistanciaFMP" target="_blank" class="btn btn-danger  btn-block mt-3 text-left"><i class="mdi mdi-facebook border rounded font-16"></i> Universidad en Linea / Sede Paracentral</a> 
                             <a href="https://www.facebook.com/celeues" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-facebook border rounded font-16"></i> CELEUES</a>
                             <a href="http://biblio.fmp.ues.edu.sv/biblioteca/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-book-open-variant font-18"></i> Biblioteca</a>
                         </div> <!-- end card-box-->                        
@@ -612,15 +612,15 @@
                     <div class="col-xl-12">
                         <div class="card-box">
                             <h3>Oferta Académica</h3>
-                            <a href="{{ route('Departamento.CienciasEdu') }}" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Ciencias de la Educación</a>
+                            <a href="{{ route('Departamento.CienciasEdu') }}" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Ciencias de la Educación</a>
                                         
-                            <a href="{{ route('Departamento.CienciasAgr') }}" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Ciencias Agronómicas</a>
+                            <a href="{{ route('Departamento.CienciasAgr') }}" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Ciencias Agronómicas</a>
                         
-                            <a href="{{ route('Departamento.CienciasEcon') }}" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Ciencias Económicas</a>
+                            <a href="{{ route('Departamento.CienciasEcon') }}" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Ciencias Económicas</a>
                         
-                            <a href="{{ route('Departamento.Inform') }}" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Informática</a>
+                            <a href="{{ route('Departamento.Inform') }}" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Informática</a>
                         
-                            <a href="{{ route('planComp') }}" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Plan Complementario</a>
+                            <a href="{{ route('planComp') }}" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Plan Complementario</a>
                         </div>
                     </div>                                       
                 </div>
