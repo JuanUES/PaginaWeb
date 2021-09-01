@@ -11,7 +11,8 @@
 //     });
 // }
 
-var items = [{ option:"", Dia: "", Entrada: "", Salida: "", Jornada: "" },];
+// var items = [{ option:"", Dia: "", Entrada: "", Salida: "", Jornada: "" },];
+var items = [];
 
 
 //Funcion para eliminar fila
@@ -29,8 +30,10 @@ let btncallback = function (e, cell) {
         if (result.isConfirmed) {
             let row = cell.getRow();
             row.delete();
-            let updatehours = updateJornada();
-            $("#_horas").val('' + updatehours);
+            updateChangeTable();
+
+
+
             /*if(updatehours <=0){
                 alert("Completo sus horas laborales");
                 $("#btnNewRow").hide();
@@ -43,10 +46,6 @@ let btncallback = function (e, cell) {
                 $("#btnSave").hide();
             }*/
 
-            /*Toast.fire({
-                icon: "success",
-                title: "Operation carried out successfully."
-            });*/
         }
     });
 
@@ -61,24 +60,22 @@ let btn = function (value, data, cell, row, options) {
 function updateHour(cell) {
     let row = cell.getRow();
     let data = cell.getData();
-    row.update({ 'jornada': (parseInt(data.hora_fin) - parseInt(data.hora_inicio)) });
+
+
+    let inicio = (isNaN(parseInt(data.hora_inicio))) ? 0 : parseInt(data.hora_inicio);
+    let fin = (isNaN(parseInt(data.hora_fin))) ? 0 : parseInt(data.hora_fin);
+    console.log(inicio, 'inicio');
+    console.log(fin, 'fin');
+
+    let resul = ((parseInt(fin) - parseInt(inicio) < 0  || inicio<=0 ) ) ? 0 : (parseInt(fin) - parseInt(inicio));
+    console.log(resul, 'resul');
+
+    row.update({ 'jornada': resul });
     let hoursTotal = fnHoras();
     let valor = $("#auxJornada").val();
     let total = parseInt(valor) - parseInt(hoursTotal);
     $("#_horas").val('' + total);
-
-    /*if(total <=0){
-        alert("Completo sus horas laborales");
-        $("#btnNewRow").hide();
-    }
-    if(total==0){
-        $("#btnSave").show();
-    }
-    if(total>0){
-        $("#btnNewRow").show();
-        $("#btnSave").hide();
-    }*/
-
+    validateHoras(valor, total);
 }
 
 //para calcular el total horas por fila
@@ -88,6 +85,7 @@ function fnHoras() {
     $.each(dataColumn.getCells(), function (indexInArray, valueOfElement) {
         hourRow = parseInt(hourRow) + parseInt(valueOfElement._cell.value);
     });
+    hourRow = isNaN(hourRow) ? 0 : hourRow;
     return hourRow;
 }
 
@@ -312,5 +310,47 @@ function updateJornada() {
     let hoursTotal = fnHoras();
     let valor = $("#auxJornada").val();
     let total = parseInt(valor) - parseInt(hoursTotal);
+    validateHoras(valor, total);
     return total;
+}
+
+function validateHoras(valor, total){
+    $(".alert-danger").remove();
+    valor = parseInt(valor);
+    total = parseInt(total);
+    var mensaje = '';
+    let validado = true;
+    let restante = valor-total;
+
+
+    if (restante>valor) {
+        validado = false;
+        mensaje = 'Las horas registradas exceden el número de horas permitidas';
+    }
+
+
+
+    if (mensaje!=='') {
+        let alert = `<div class="alert alert-danger" role="alert">
+                            <div class="alert-message">
+                                <strong> <i class="fa fa-info-circle"></i> Información!</strong>  ${mensaje}
+                            </div>
+                        </div>`;
+
+        $("#days-table").before(alert);
+    }
+
+    return validado;
+}
+
+function updateChangeTable(){
+    let total = $(".total-horas").val();
+    let updatehours = updateJornada();
+    $("#_horas").val(updatehours);
+
+    console.log(total, 'Total horas');
+    console.log(updatehours, 'Horas tabla');
+
+    validateHoras(total, updatehours);
+
 }
