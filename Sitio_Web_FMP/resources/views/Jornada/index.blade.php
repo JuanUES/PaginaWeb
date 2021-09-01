@@ -149,7 +149,6 @@
                         <div class="col-12 col-sm-12">
                             <div class="form-group">
                                 <label for="empleado" class="control-label">{{ 'Empleado' }} <span class="text-danger">*</span> </label>
-                                {{--  <input id="id_emp" class="form-control" name="id_emp" readonly="readonly" value="1"></input>  --}}
                                 <select class="custom-select" name="id_emp" id="id_emp">
                                     <option value="">Seleccione un Empleado</option>
                                     @foreach ($empleados as $item)
@@ -162,8 +161,6 @@
                         <div class="col-12 col-sm-8">
                             <div class="form-group">
                                 <label for="periodo" class="control-label">{{ 'Periodo' }} <span class="text-danger">*</span> </label>
-                                {{--  <input type="hidden" id="id_periodo" name="id_periodo" readonly="readonly"></input>
-                                <input id="detalle" class="form-control" name="detalle" readonly="readonly"></input>  --}}
                                 <select class="custom-select" name="id_periodo" id="id_periodo">
                                     @foreach ($periodos as $item)
                                         <option value="{{ $item->id }}">{{ $item->titulo }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
@@ -175,24 +172,27 @@
                         <div class="col-12 col-sm-2">
                             <div class="form-group">
                                 <label for="thoras" class="control-label">{{ 'Horas' }} <span class="text-danger"></span></label>
-                                <input type="text" id="_horas" class="form-control total-horas" for="_horas" readonly="readonly" value="40"></input>
+                                <input type="text" id="auxJornada" class="form-control total-horas" for="auxJornada" readonly="readonly" value="0">
                             </div>
                         </div>
                         <div class="col-12 col-sm-2">
                             <div class="form-group">
-                                <label for="thoras" class="control-label">{{ 'Actual' }} <span class="text-danger"></span></label>
-                                <input type="text" id="auxJornada" class="form-control total-horas" for="_horas" readonly="readonly" value="40">
+                                <label for="thoras" class="control-label">{{ 'Disponibles' }} <span class="text-danger"></span></label>
+                                <input type="text" id="_horas" class="form-control" for="_horas" readonly="readonly" value="0"></input>
                             </div>
                         </div>
                     </div>
 
-                    <h5 class="mb-3">Detalle de la Jornada
-                        <span class="float-right">
-                            <button type="button" class="btn btn-sm btn-primary" name="btnNewRow" id="btnNewRow"> <i class="fa fa-plus"></i> </button>
-                        </span>
-                    </h5>
-                    {{--  <hr>  --}}
-                    <div id="days-table"></div>
+                    <div class="row" id="jornada-div">
+                        <div class="col-12">
+                            <h5 class="mb-3">Detalle de la Jornada
+                                <span class="float-right">
+                                    <button type="button" class="btn btn-sm btn-primary" name="btnNewRow" id="btnNewRow"> <i class="fa fa-plus"></i> </button>
+                                </span>
+                            </h5>
+                            <div id="days-table"></div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fa fa-ban"  aria-hidden="true"></i> Cerrar</button>
@@ -211,6 +211,9 @@
 <script src="{{ asset('js/scripts/jornadas.js') }}"></script>
 <script>
     $(document).ready(function () {
+        $("#jornada-div :input").prop("disabled", true);//para deshabilitar los botones cuando no este seleccionado ningun empleado
+
+
         $('#table-jornada').DataTable({
             "language": {
                 "decimal":        ".",
@@ -265,12 +268,16 @@
     $("#id_emp").on('change', function () {
         let id = $(this).val();
         if(id!==''){
+            // $("#jornada-div").show('slow');
+            $("#jornada-div :input").prop("disabled", false);
             let data = getData('GET', `{{ url('admin/jornada/jornadaEmpleado/') }}/`+id,'#notificacion');
             data.then(function(response){
                 $(".total-horas").val(response.horas_semanales);
-                let updatehours = updateJornada();
-                $("#_horas").val('' + updatehours);
+                updateChangeTable();
             });
+        }else{
+            $("#jornada-div :input").prop("disabled", true);
+            // $("#jornada-div").hide('slow');
         }
     });
 
