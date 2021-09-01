@@ -32,7 +32,7 @@ class UsuariosController extends Controller
         $validator = Validator::make($request->all(),[
             'usuario' => 'required|string|max:255',
             'correo' => 'required|string|email|max:255|unique:users,email',
-            'contraseña' => ['required', Rules\Password::min(8)],
+            'contraseña' =>'required|min:8',
             'repetir_contraseña'=> 'required|same:contraseña'
         ]);
 
@@ -41,12 +41,12 @@ class UsuariosController extends Controller
             return response()->json(['error'=>$validator->errors()->all()]);                
         }
 
-        $user = new App\Models\User();
+        $user = new User();
         $user -> name     = $request -> usuario;
         $user -> email    = $request -> correo;
         $user -> password = Hash::make($request->contraseña);
         $user -> save();
-        echo dd($user);
+        //echo dd($user);
 
         return $request->_id != null ?
             response()->json(['mensaje'=>'Modificación exitosa.']):
