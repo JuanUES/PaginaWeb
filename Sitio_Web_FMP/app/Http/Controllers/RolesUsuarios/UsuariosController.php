@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Validator;
 
@@ -25,12 +24,15 @@ class UsuariosController extends Controller
 
     public function store(Request $request)
     {
+        for ($i=0; $i < count($request->roles); $i++) { 
+            $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+            $out->writeln(base64_decode($request->roles[$i]));
+        }
        
         $validator = Validator::make($request->all(),[
             'usuario' => 'required|string|max:255',
             'correo' => 'required|string|email|max:255|unique:users',
             'contraseña' => ['required', 'confirmed', Rules\Password::min(8)],
-            'empleado' => 'required',
             'repetir_contraseña'=> 'required|same:contraseña',
         ]);
 
@@ -39,12 +41,12 @@ class UsuariosController extends Controller
             return response()->json(['error'=>$validator->errors()->all()]);                
         }
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
+        $user = new App\Models\User();
+        $user -> name     = $request -> usuario;
+        $user -> email    = $request -> correo;
+        $user -> password = Hash::make($request->contraseña);
+        $user -> save();
+        echo dd($user);
 
         return $request->_id != null ?
             response()->json(['mensaje'=>'Modificación exitosa.']):

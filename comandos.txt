@@ -12,7 +12,7 @@
 $cod_url = urlencode($cadena);
 $deco_url = urldecode($cod_url);
 base64_encode($cadena)
-$codifica1 = ;
+$codifica1 =  base64_encode($codifica1);
 $decodifica2 = base64_decode($codifica1);
 
 $codifica3 = convert_uuencode($cadena);
@@ -41,4 +41,8 @@ php artisan tinker
 
 Illuminate\Support\Facades\Schema::table('users',function (Illuminate\Database\Schema\Blueprint $table) {
     $table->boolean('estado')->default(0);
+    $table->bigInteger('empleado') -> nullable();;
+            $table->foreign('empleado')
+            ->references('id')
+            ->on('empleado');
 });
