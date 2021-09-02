@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\JornadaExport;
 use App\Models\_UTILS\Utilidades;
 use App\Models\Jornada\Jornada;
 use App\Models\Jornada\JornadaItem;
@@ -12,6 +13,7 @@ use App\Models\Horarios\Departamento;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class JornadaController extends Controller{
     public $modulo = 'Jornadas';
@@ -28,11 +30,20 @@ class JornadaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-        $jornada = Jornada::join('periodos','jornada.id_periodo','periodos.id')
+
+        $periodo = isset($request->periodo) ? $request->periodo : false;
+
+        $query = Jornada::join('periodos','jornada.id_periodo','periodos.id')
         // ->join('empleado','jornada.id_emp','empleado.id')
-        ->select('jornada.*',Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"))
+                ->select('jornada.*',Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"));
         // ->where('empleado.id', 1)
-        ->get();
+
+
+        ($periodo!=false && strcmp($periodo, 'all')!=0)
+                            ? $query->where('jornada.id_periodo', $periodo)
+                            : $periodo = 'all';
+
+        $jornada = $query->get();
 
 
         $depto = Departamento::get();
@@ -41,7 +52,7 @@ class JornadaController extends Controller{
         $empleados = Empleado::where('estado', true)->get();
         $periodos = Periodo::where('estado', 'activo')->latest()->get();
 
-        return view('Jornada.index', compact('jornada', 'depto','empJefe', 'empleados', 'periodos'));
+        return view('Jornada.index', compact('periodo','jornada', 'depto','empJefe', 'empleados', 'periodos'));
     }
 
     /**
@@ -231,4 +242,11 @@ class JornadaController extends Controller{
         return $empleado->tipo_jornada_rf;
     }
 
+    public function export(){
+        $periodo = 4;
+        return Excel::download(new JornadaExport($periodo), 'jornada.xlsx');
+
+        // $jornadas = Jornada::all();
+        // return view('Jornada.exports.jornadas', compact('jornadas', 'periodo'));
+    }
 }

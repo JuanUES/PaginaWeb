@@ -29,12 +29,32 @@
 
 <div class="card-box">
     <div class="row">
-        <div class="col-9">
+        <div class="col-12 col-sm-5">
             <h3>Jornadas Registradas</h3>
         </div>
-        <div class="col-3" style="text-align:right">
-            <button class="btn btn btn-success" title="Generar Reporte" > <i class="dripicons-document-new" aria-hidden="true"></i> </button>
-            <button class="btn btn btn-primary" title="Agregar nuevo registro" data-toggle="modal" data-target="#modalRegistro" id="btnNuevoRegistro"> <i class=" dripicons-plus" aria-hidden="true"></i> </button>
+        <div class="col-12 col-sm-7" style="text-align:right">
+            <div class="row">
+                <div class="col-12 col-sm-9">
+                    <form action="{{ route('admin.jornada.index') }}" method="get">
+                        <span class="float-left">
+                            <div class="form-group">
+                                <select class="custom-select" name="periodo">
+                                    <option value="all" selected> Todos los periodos </option>
+                                    @foreach ($periodos as $item)
+                                        <option value="{{ $item->id }}" {{ strcmp($item->id, $periodo)==0 ? 'selected' : '' }}>{{ $item->titulo }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </span>
+                        <button class="btn btn btn-dark" title="Recargar" type="submit"> <i class="dripicons-clockwise" aria-hidden="true"></i> </button>
+                    </form>
+                </div>
+                <div class="col-12 col-sm-3">
+                    <a class="btn btn btn-success" title="Generar Reporte" href="{{ route('admin.jornada.export') }}" > <i class="dripicons-export" aria-hidden="true"></i> </a>
+                    <button class="btn btn btn-primary" title="Agregar nuevo registro" data-toggle="modal" data-target="#modalRegistro" id="btnNuevoRegistro"> <i class=" dripicons-plus" aria-hidden="true"></i> </button>
+                </div>
+            </div>
+
             {{--  <a href="{{ route('admin.jornada.create')}}" class="btn btn-primary" title="Agregar nuevo registro">
                 <i class=" dripicons-plus" aria-hidden="true"></i>
             </a>  --}}
@@ -58,7 +78,7 @@
                 </form>
             @endif  --}}
 
-    <br/>
+    {{--  <br/>  --}}
     <br/>
     <table  class="table table-sm" id="table-jornada">
         <thead>

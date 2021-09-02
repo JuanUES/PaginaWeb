@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 //RUTAS JORNADA
 Route::resource('admin/jornada', 'App\Http\Controllers\JornadaController')->names('admin.jornada');
+Route::get('admin/jornada-export', 'App\Http\Controllers\JornadaController@export')->name('admin.jornada.export');
 // Route::get('admin/jornada/', 'App\Http\Controllers\JornadaController@index')->name('admin.jornada.index');
 // Route::get('admin/jornada/{id}', 'App\Http\Controllers\JornadaController@update')->name('admin.jornada.update');
 // Route::get('admin/jornada/create', 'App\Http\Controllers\JornadaController@create')->name('admin.jornada.create');
