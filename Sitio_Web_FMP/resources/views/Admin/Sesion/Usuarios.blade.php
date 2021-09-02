@@ -2,7 +2,9 @@
 
 @section('content')
 <!-- inicio Modal de registro -->
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="modalRegistro" tabindex="-1" aria-hidden="true">
+<div class="modal fade bs-example-modal-lg" tabindex="-1" 
+role="dialog" aria-labelledby="myLargeModalLabel" 
+id="modalRegistro" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -30,13 +32,13 @@
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputCodigo">Usuario <code>*</code></label>
-                                <input type="text" class="form-control" name="usuario"  autocomplete="off" placeholder="Digite el nombre">
+                                <input type="text" class="form-control" id='usuario' name="usuario"  autocomplete="off" placeholder="Digite el nombre">
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputUbicacion">Correo <code>*</code></label>
-                                <input type="email" class="form-control" name="correo"  autocomplete="off" placeholder="Digite el correo">
+                                <input type="email" class="form-control" id="correo" name="correo"  autocomplete="off" placeholder="Digite el correo">
                             </div>
                         </div>
                     </div>
@@ -45,7 +47,7 @@
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="">Roles <code>*</code></label>
-                                <select class="form-control select2-multiple" data-toggle="select2"
+                                <select class="form-control select2-multiple" data-toggle="select2" id="roles"
                                      multiple="multiple" aria-placeholder="Seleccione" style="width: 100%;" name="roles[]">
                                     <option value="{{base64_encode('Transparencia-Presupuestario')}}">Transparencia Presupuestario</option>
                                     <option value="{{base64_encode('Transparencia-Secretario')}}">Transparencia Secretario</option>
@@ -60,9 +62,8 @@
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="exampleInputNombre">Empleado <code>*</code></label>
-
                                 <select class="form-control selectpicker" data-live-search="true" data-style="btn-white"
-                                 style="width: 100%;" name="empleado" >
+                                 style="width: 100%;" name="empleado" id="empleado">
                                     <option value="">Seleccione</option>
                                     @foreach ($empleados as $item)
                                         <option value="{{$item->id}}">{{$item->nombre}}</option>
@@ -75,14 +76,14 @@
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputNombre">Contraseña <code>*</code></label>
-                                <input type="password" class="form-control" name="contraseña"  autocomplete="off"  placeholder="Digite la contraseña">
+                                <input type="password" class="form-control" name="contraseña" id="contraseña"  autocomplete="off"  placeholder="Digite la contraseña">
 
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputNombre">Repetir Contraseña <code>*</code></label>
-                                <input type="password" class="form-control" name=" repetir_contraseña"  autocomplete="off"  placeholder="Digite la contraseña">
+                                <input type="password" class="form-control" name="repetir_contraseña" id="repetir_contraseña"  autocomplete="off"  placeholder="Digite la contraseña">
                             </div>
                         </div>
                     </div>
@@ -100,46 +101,6 @@
     </div>
 </div>
 <!--fin modal de registro-->
-
-<!--inicio modal para eliminar-->
-<div id="modalEliminar" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            </div>
-            <form action="#" method="POST">
-                @csrf
-                <div class="modal-body">
-                    <div class="row py-3">
-                        <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
-                        <div class="col-lg-10 text-black">
-                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se dara de baja este departamento, ¿Desea continuar?</h4>
-                        </div>
-                        <input type="hidden" name="E_depto" id="E_depto">
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <button type="submit"
-                                class="btn p-1 btn-light waves-effect waves-light btn-block font-18">
-                                <i class="mdi mdi-check mdi-24px"></i>
-                                Si
-                            </button>
-                        </div>
-                        <div class="col-xl-6">
-                            <button type="reset" class="btn btn-light p-1 waves-effect btn-block font-18" data-dismiss="modal" >
-                                <i class="mdi mdi-block-helper mdi-16Spx  ml-auto" aria-hidden="true"></i>
-                                No
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<!--fin modal para eliminar-->
 
 <!--modal para dar alta-->
 <div id="modalAlta" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
@@ -221,20 +182,26 @@
                 <tr>
                     <th data-priority="1" class="col-sm-1">N°</th>
                     <th data-priority="3">Usuario</th>
+                    <th data-priority="3">Correo</th>
                     <th data-priority="3" class="col-sm-1 text-center">Estado</th>
                     <th data-priority="3" class="col-sm-1 text-center">Roles</th>
                     <th data-priority="1" class="col-sm-1 text-center">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
-                <?php
+                @php
                     $roles = Spatie\Permission\Models\Role::all();
-                ?>
+                    $i=0;
+                @endphp
+               
                 @foreach ($usuarios as $item)
                 <tr>
-
-                    <th class="align-middle ">{!!$item->id!!}</th>
+                    @php
+                        $i++;
+                    @endphp
+                    <th class="align-middle ">{!!$i!!}</th>
                     <td class="align-middle ">{!!$item->name!!}</td>
+                    <td class="align-middle ">{!!$item->email!!}</td>
                     <td class="align-middle font-16">{!! !$item->estado?'<span class="badge badge-danger">Desactivado</span> ' : '<span class="badge badge-success">Activado</span> ' !!}</td>
                     <td class="align-middle font-16">
                         @if ($item->hasAllRoles($roles))
@@ -266,25 +233,20 @@
                             
                         @endif
                     </td>
-                    @if (true)
                     <td class="align-middle ">
                         <div class="row">
                             <div class="col text-center">
                                 <div class="btn-group" role="group">
-                                    <button title="Editar" class="btn btn-outline-primary btn-sm rounded"  data-toggle="modal" data-target="#form-depto">
+                                    <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="editarJson({!!$item->id!!})">
                                         <i class="mdi mdi-file-document-edit-outline font-18" aria-hidden="true"></i>
                                     </button>
-                                    <button title="{!! !$item->estado?'Activar' : 'Desactivar' !!}" class="btn btn-outline-primary btn-sm mx-1 rounded" data-toggle="modal" data-target="#modalAlta">
-                                        {!! !$item->estado?'<i class="mdi mdi mdi-checkbox-blank-outline font-18"></i>':'<i class="mdi mdi-checkbox-intermediate font-18"></i>'!!}
-                                    </button>
-                                    <button title="Eliminar" class="btn btn-outline-danger btn-sm rounded" data-toggle="modal" data-target="#modalAlta">
-                                        <i class="mdi mdi-delete font-18"></i>
-                                    </button>
+                                    <button title="{!! !$item->estado?'Activar' : 'Desactivar' !!}" class="btn btn-outline-primary btn-sm mx-1 rounded {!! $item->estado?'btn-outline-danger' : 'btn-outline-success' !!}" data-toggle="modal" data-target="#modalAlta">
+                                        {!! !$item->estado?'<i class="mdi mdi  mdi mdi-arrow-up-bold font-18"></i>':'<i class="mdi  mdi mdi-arrow-down-bold font-18"></i>'!!}
+                                    </button>                                   
                                 </div>
                             </div>
                         </div>
-                    </td>
-                    @endif
+                    </td>                    
                 </tr>
                 @endforeach
                 </tbody>
@@ -297,7 +259,6 @@
 @endsection
 
 @section('plugins')
-
 <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-tagsinput/bootstrap-tagsinput.css') }}" rel="stylesheet"/>
 <link href="{{ asset('template-admin/dist/assets/libs/switchery/switchery.min.css') }}" rel="stylesheet"/>
 <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet"/>
@@ -323,12 +284,32 @@
     <script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
     <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}"></script>
 
-    <!-- Init js-->
+    <!-- Init js--> 
     <script src="{{ asset('/template-admin/dist/assets/js/pages/form-advanced.init.js') }}"></script>
+    {{ route('routeName', ) }}
     <script>
-        /*function editarJson(id){
-            $json = {!!json_encode($usuarios)!!}.find(x => x.id==id);
-            editar($json);
-        }*/
+        function editarJson(id){
+            //$json = {!!json_encode($usuarios)!!}.find(x => x.id==id);
+            editar('{{ route('usuario') }}',id);
+        }
+        
+        function editar(url,id){
+            $.post(
+                url,
+                "id":id,
+                function(data){
+                    var content = JSON.parse(data);
+                    console.log(content)
+                }
+            );
+            /*$('#_idUser').val(json.id);
+            $('#usuario').val(json.name);
+            $('#correo').val(json.email);
+            $('#empleado').val(json.empleado);
+            $('#roles').val();
+            $('#contraseña').val(json.password);
+            $('#repetir_contraseña').val(json.password);
+            $('#modalRegistro').modal();*/
+        }
     </script>
 @endsection

@@ -17,6 +17,7 @@ class CreateMaestriasTable extends Migration
             $table->id();
             $table->string('nombre');
             $table->string('titulo');
+            $table->Integer('categoria');
             $table->string('modalidad')->nullable();;
             $table->string('duracion')->nullable();;
             $table->string('numero_asignatura')->nullable();;

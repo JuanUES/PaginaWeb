@@ -21,6 +21,10 @@ class UsuariosController extends Controller
         return view('Admin.Sesion.Usuarios',compact('usuarios','empleados'));
     }
 
+    public function usuario(Request $request){        
+        return User::findOrFail($request->id);
+    }
+
     public function store(Request $request)
     {       
         $validator = Validator::make($request->all(),[
@@ -49,7 +53,7 @@ class UsuariosController extends Controller
         $b = $user -> save(); 
 
         $roles = $request -> roles;
-        
+
         if($b)
             for ($i=0; $i < count($roles); $i++){
                 $user -> assignRole(base64_decode($roles[$i]));
