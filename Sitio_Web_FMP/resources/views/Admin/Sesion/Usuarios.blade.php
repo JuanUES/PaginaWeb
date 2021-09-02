@@ -12,8 +12,9 @@
           </button>
         </div>
         <form id="registroForm"  action="{{ route('guardarUser') }}" method="POST">
+            @csrf
             <div class="modal-body">
-                    <input type="hidden" id="_id" name="_id"/>
+                    <input type="hidden" id="idUser" name="idUser" value=""/>
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
                         role="alert" style="display:none" id="notificacion">
                     </div>
@@ -49,7 +50,7 @@
                                     <option value="{{base64_encode('Transparencia-Presupuestario')}}">Transparencia Presupuestario</option>
                                     <option value="{{base64_encode('Transparencia-Secretario')}}">Transparencia Secretario</option>
                                     <option value="{{base64_encode('Transparencia-Decano')}}">Transparencia Decano</option>
-                                    <option value="{{base64_encode('super-admin')}}" selected>Super Administrador</option>
+                                    <option value="{{base64_encode('super-admin')}}">Super Administrador</option>
                                     <option value="{{base64_encode('Jefe-Academico')}}">Jefe Academico</option>
                                 </select>
                             </div>
@@ -84,7 +85,6 @@
                                 <input type="password" class="form-control" name=" repetir_contraseña"  autocomplete="off"  placeholder="Digite la contraseña">
                             </div>
                         </div>
-                        @csrf
                     </div>
             </div>
             <div class="modal-footer">
@@ -242,30 +242,28 @@
                         @else
                             @if ($item->hasRole('super-admin'))
                             <span class="badge badge-primary">Super Admin</span>
-                            @else
-                                @if ($item->hasRole('Pagina'))
-                                <span class="badge badge-primary">Pagina</span>
-                                @else
-                                    @if ($item->hasRole('Jefe-Academico'))
-                                    <span class="badge badge-primary">Jefe Academico</span>
-                                    @else
-                                        @if ($item->hasRole('Transparencia-Decanato'))
-                                        <span class="badge badge-primary"> Transparencia Decanato</span>
-                                        @else
-                                            @if ($item->hasRole('Transparencia-Secretario'))
-                                            <span class="badge badge-primary">Transparencia Secretario</span>
-                                            @else
-                                                @if ($item->hasRole('Transparencia-Presupuestario'))
-                                                <span class="badge badge-primary">Transparencia Presupuestario</span>
-                                                @else
-
-                                                @endif
-
-                                            @endif
-                                        @endif
-                                    @endif
-                                @endif
                             @endif
+                            
+                            @if ($item->hasRole('Pagina'))
+                            <span class="badge badge-primary">Pagina</span>
+                            @endif
+                            
+                            @if ($item->hasRole('Jefe-Academico'))
+                            <span class="badge badge-primary">Jefe Academico</span>
+                            @endif
+                            
+                            @if ($item->hasRole('Transparencia-Decanato'))
+                            <span class="badge badge-primary"> Transparencia Decanato</span>
+                            @endif
+                            
+                            @if ($item->hasRole('Transparencia-Secretario'))
+                            <span class="badge badge-primary">Transparencia Secretario</span>
+                            @endif
+                           
+                            @if ($item->hasRole('Transparencia-Presupuestario'))
+                            <span class="badge badge-primary">Transparencia Presupuestario</span>
+                            @endif
+                            
                         @endif
                     </td>
                     @if (true)
@@ -273,13 +271,13 @@
                         <div class="row">
                             <div class="col text-center">
                                 <div class="btn-group" role="group">
-                                    <button title="Editar" class="btn btn-outline-primary btn-sm"  data-toggle="modal" data-target="#form-depto">
+                                    <button title="Editar" class="btn btn-outline-primary btn-sm rounded"  data-toggle="modal" data-target="#form-depto">
                                         <i class="mdi mdi-file-document-edit-outline font-18" aria-hidden="true"></i>
                                     </button>
-                                    <button title="{!! !$item->estado?'Activar' : 'Desactivar' !!}" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#modalAlta">
+                                    <button title="{!! !$item->estado?'Activar' : 'Desactivar' !!}" class="btn btn-outline-primary btn-sm mx-1 rounded" data-toggle="modal" data-target="#modalAlta">
                                         {!! !$item->estado?'<i class="mdi mdi mdi-checkbox-blank-outline font-18"></i>':'<i class="mdi mdi-checkbox-intermediate font-18"></i>'!!}
                                     </button>
-                                    <button title="Eliminar" class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modalAlta">
+                                    <button title="Eliminar" class="btn btn-outline-danger btn-sm rounded" data-toggle="modal" data-target="#modalAlta">
                                         <i class="mdi mdi-delete font-18"></i>
                                     </button>
                                 </div>

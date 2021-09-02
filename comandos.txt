@@ -46,3 +46,5 @@ Illuminate\Support\Facades\Schema::table('users',function (Illuminate\Database\S
             ->references('id')
             ->on('empleado');
 });
+
+php artisan storage:link

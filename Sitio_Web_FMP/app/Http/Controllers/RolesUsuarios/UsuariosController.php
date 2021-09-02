@@ -7,10 +7,9 @@ use App\Models\Licencias\Empleado;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Validator;
-
+use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\Hash;
 
 class UsuariosController extends Controller
 {
@@ -23,16 +22,12 @@ class UsuariosController extends Controller
     }
 
     public function store(Request $request)
-    {
-        for ($i=0; $i < count($request->roles); $i++) { 
-            $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-            $out->writeln(base64_decode($request->roles[$i]));
-        }
-       
+    {       
         $validator = Validator::make($request->all(),[
             'usuario' => 'required|string|max:255',
             'correo' => 'required|string|email|max:255|unique:users,email',
             'contraseña' =>'required|min:8',
+            //'empleado' => 'required|unique:users,empleado',
             'repetir_contraseña'=> 'required|same:contraseña'
         ]);
 
@@ -41,12 +36,24 @@ class UsuariosController extends Controller
             return response()->json(['error'=>$validator->errors()->all()]);                
         }
 
-        $user = new User();
+        if($request -> idUser == null)
+            $user = new User();
+        else{
+            $user = User::findOrFail($request -> idUser);
+            $user -> roles() -> detach();
+        }
+        
         $user -> name     = $request -> usuario;
         $user -> email    = $request -> correo;
         $user -> password = Hash::make($request->contraseña);
-        $user -> save();
-        //echo dd($user);
+        $b = $user -> save(); 
+
+        $roles = $request -> roles;
+        
+        if($b)
+            for ($i=0; $i < count($roles); $i++){
+                $user -> assignRole(base64_decode($roles[$i]));
+            }
 
         return $request->_id != null ?
             response()->json(['mensaje'=>'Modificación exitosa.']):
