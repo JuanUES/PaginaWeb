@@ -47,4 +47,10 @@ Illuminate\Support\Facades\Schema::table('users',function (Illuminate\Database\S
             ->on('empleado');
 });
 
+Illuminate\Support\Facades\Schema::table('maestrias',function (Illuminate\Database\Schema\Blueprint $table) {
+    $table->Integer('categoria');
+
+});
+quit
+
 php artisan storage:link
