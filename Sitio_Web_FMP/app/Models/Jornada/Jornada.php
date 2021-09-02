@@ -21,7 +21,7 @@ class Jornada extends Model
     }
 
     public function items_enabled($estado){
-        return $this->items()->select('dia', 'hora_inicio', 'hora_fin', 'id_jornada')->where('estado', '=', $estado)->get();
+        return $this->items()->select('dia', 'hora_inicio', 'hora_fin', 'id_jornada')->where('estado', $estado)->get();
     }
 
     public function periodo_rf(){
@@ -30,6 +30,19 @@ class Jornada extends Model
 
     public function empleado_rf(){
         return $this->hasOne(Empleado::class, 'id', 'id_emp');
+    }
+
+    public function horas($dia, $empleado, $periodo = 1){
+        $query = $this->items()
+                    ->join('jornada', 'jornada.id', 'jornada_items.id_jornada')
+                    ->join('empleado' , 'empleado.id', 'jornada.id_emp')
+                    ->where('jornada_items.dia', $dia)
+                    ->where('empleado.id', $empleado)
+                    ->where('jornada.id_periodo', $periodo)
+                    ->where('jornada.estado', 'activo')
+                    ->where('jornada_items.estado', 'activo')
+                    ->first();
+        return $query;
     }
 
 }

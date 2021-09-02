@@ -17,9 +17,9 @@ class CreateJornadaTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->integer('id_emp');
+            $table->foreign('id_emp')->references('id')->on('empleado');
             $table->integer('id_periodo')->unsigned();
             $table->foreign('id_periodo')->references('id')->on('periodos');
-            $table->foreign('id_emp')->references('id')->on('empleado');
             $table->enum('estado',['activo','inactivo'])->default('activo');
             $table->timestamps();
         });
