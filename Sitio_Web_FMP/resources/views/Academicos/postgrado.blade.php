@@ -457,7 +457,7 @@
                                         
                                             <input type="hidden" id="_id" name="_id"/>
                                             @csrf
-                                            
+                                           
                                             <div class="alert alert-primary text-white" 
                                                 role="alert" style="display:none" id="notificacionMaestrias">                                               
                                             </div>
@@ -472,6 +472,16 @@
                                                 </div>
                                             </div>-->
                                             <div class="row">
+                                                <div class="col-xl-12">
+                                                    <select class="form-control" name="categoriaPostgrados" id="catPostgrado">
+                                                        <option value="1">Maestria</option>
+                                                        <option value="2">Diplomado</option>
+                                                        <option value="3">Docotorado</option>
+    
+    
+                                                    </select>
+                                                </div>
+
                                                 <div class="col-xl-6">
                                                     <div class="form-group">
                                                         <label for="nombre" >Nombre <code>*</code></label>
