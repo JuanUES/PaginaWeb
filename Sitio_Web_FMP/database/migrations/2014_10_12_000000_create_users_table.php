@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->bigInteger('empleado');
+            $table->bigInteger('empleado')->nullable();
             $table->foreign('empleado')
             ->references('id')
             ->on('empleado');

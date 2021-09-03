@@ -230,7 +230,7 @@ id="modalRegistro" tabindex="-1" aria-hidden="true">
                         <div class="row">
                             <div class="col text-center">
                                 <div class="btn-group" role="group">
-                                    <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="editar('{{ route('usuarios') }}'+'/Usuario/'+{!!$item->id!!})">
+                                    <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="editar('{{ route('usuarios') }}',{!!$item->id!!})">
                                         <i class="mdi mdi-file-document-edit-outline font-18" aria-hidden="true"></i>
                                     </button>
                                     <button title="{!! !$item->estado?'Activar' : 'Desactivar' !!}" class="btn btn-outline-primary btn-sm mx-1 rounded {!! $item->estado?'btn-outline-danger' : 'btn-outline-success' !!}" data-toggle="modal" data-target="#modalAlta">
@@ -280,8 +280,8 @@ id="modalRegistro" tabindex="-1" aria-hidden="true">
     <!-- Init js--> 
     <script src="{{ asset('/template-admin/dist/assets/js/pages/form-advanced.init.js') }}"></script>
     <script>
-        function editar(url){
-            $.get(url,function(json){
+        function editar(url,id){
+            $.get(url+'/Usuario/'+id,function(json){
                 console.log(json);
                     json=JSON.parse(json);
                     console.log(json)
@@ -289,12 +289,17 @@ id="modalRegistro" tabindex="-1" aria-hidden="true">
                     $('#usuario').val(json.name);
                     $('#correo').val(json.email);
                     $('#empleado').val(json.empleado);
-                    $('#roles').val();
-                    $('#contraseña').val(json.password);
-                    $('#repetir_contraseña').val(json.password);
-                    $('#modalRegistro').modal();
                 }
             );
+            $.get(url+'/UsuarioRol/'+id,function(json){
+                    json=JSON.parse(json);  
+                    var result = [];
+                    for(var i in json){result.push(json[i].name);}   
+                               
+                    console.log($('#roles').select2('val'));           
+                }
+            );
+            $('#modalRegistro').modal();
         }
     </script>
 @endsection

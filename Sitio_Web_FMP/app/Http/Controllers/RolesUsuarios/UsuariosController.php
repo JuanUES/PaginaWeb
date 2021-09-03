@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class UsuariosController extends Controller
 {
@@ -21,11 +22,26 @@ class UsuariosController extends Controller
         return view('Admin.Sesion.Usuarios',compact('usuarios','empleados'));
     }
 
-    public function usuario($usuario){        
+    public function usuarioRol($usuario){
+        $roles = DB::table('model_has_roles')
+        ->select('name')
+        ->join('roles','roles.id','=','model_has_roles.role_id')
+        ->where('model_has_roles.model_id','=',$usuario)
+        ->get();
+
+        for ($i=0; $i < count($roles); $i++) { 
+            $roles[$i]->name = base64_encode($roles[$i]->name);
+        }
+
+        return $roles->toJson();
+    }
+
+    public function usuario($usuario){ 
+        
         return User::where('id',$usuario)
-            ->select('id','name','email','empleado')
-            ->first()
-            ->toJson();
+        ->select('id','name','email','empleado')
+        ->first()
+        ->toJson();
     }
 
     public function store(Request $request)
