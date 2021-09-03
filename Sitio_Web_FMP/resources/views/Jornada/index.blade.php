@@ -46,6 +46,18 @@
                                 </select>
                             </div>
                         </span>
+                        @if(@Auth::user()->hasRole('Recurso-Humano') )
+                        <span class="float-left">
+                            <div class="form-group">
+                                <select class="custom-select" name="depto">
+                                    <option value="all" selected> Departamento </option>
+                                    @foreach ($deptos as $item)
+                                        <option value="{{ $item->id }}" {{ strcmp($item->id, $depto)==0 ? 'selected' : '' }}>{!!$item->nombre_departamento!!}</option>
+                                    @endforeach
+                                </select>    
+                            </div>
+                        </span>
+                        @endif 
                         <button class="btn btn btn-dark" title="Recargar" type="submit"> <i class="dripicons-clockwise" aria-hidden="true"></i> </button>
                     </form>
                 </div>
@@ -61,24 +73,6 @@
         </div>
     </div>
     <br/>
-
-
-            {{--  @if(@Auth::user()->hasRole('Recurso-Humano') )
-                <form method="POST" action="{{ route('admin.jornada.select', $depto[0]) }}" class="frmSelect" accept-charset="UTF-8" >
-                    @csrf
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Departamento</label>
-                        <select class="custom-select" id="id_depto" name="id_depto">
-                            <option value="0">Seleccione</option>
-                            @foreach ($depto as $dep)
-                            <option for="{{ $dep->id }}" value="{{ $dep->id }}">{!!$dep->nombre_departamento!!}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </form>
-            @endif  --}}
-
-    {{--  <br/>  --}}
     <br/>
     <table  class="table table-sm" id="table-jornada">
         <thead>
@@ -115,22 +109,28 @@
 
         @if( @Auth::user()->hasRole('Recurso-Humano') )
             <tr>
+                <th data-priority="1">Registro</th>
                 <th data-priority="1">Id</th>
-                <th data-priority="3">Nombre</th>
-                <th data-priority="3">Apellido</th>
-                <th data-priority="1">Acciones</th>
+                <th data-priority="3">Empleado</th>
+                <th data-priority="3">Periodo</th>
+                <th data-priority="3">Estado</th>
+                <th data-priority="1" class="text-center">Acciones</th>
             </tr>
             </thead>
             <tbody>
 
-            @foreach($empJefe as $item)
+            @foreach($jornada as $item)
             <tr>
+                <th>{{ date('d/m/Y', strtotime($item -> created_at)) }}</th>
                 <th>{{$item -> id}}</th>
-                <td>{{$item -> nombre}}</td>
-                <td>{{$item -> apellido}}</td>
+                <th>{{ $item -> empleado_rf->nombre }} {{ $item -> empleado_rf->apellido }}</th>
+                <td>{{$item -> periodo}}</td>
                 <td>
-                    <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-outline-primary btn-sm openModal"><i class="fa fa-eye fa-fw" aria-hidden="true"></i>
-                    <a href="" title="Editar Jornada">
+                    <span class="badge badge-{{ strcmp($item->estado, 'activo')==0 ? 'success' : 'secondary' }}">{{ Str::ucfirst($item->estado) }}</span>
+                </td>
+                <td class="text-center">
+                    <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-outline-success btn-sm openModal"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i></button>
+                    <a href="{{ route('admin.jornada.edit', $item->id) }}" title="Editar Jornada">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
                     </a>
                 </td>

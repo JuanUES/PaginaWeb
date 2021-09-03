@@ -32,27 +32,29 @@ class JornadaController extends Controller{
     public function index(Request $request){
 
         $periodo = isset($request->periodo) ? $request->periodo : false;
+        $depto = isset($request->depto) ? $request->depto : false;
 
         $query = Jornada::join('periodos','jornada.id_periodo','periodos.id')
-        // ->join('empleado','jornada.id_emp','empleado.id')
-                ->select('jornada.*',Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"));
-        // ->where('empleado.id', 1)
+                ->join('empleado','jornada.id_emp','empleado.id')
+                ->select('jornada.*',Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"),'empleado.id');
 
 
         ($periodo!=false && strcmp($periodo, 'all')!=0)
                             ? $query->where('jornada.id_periodo', $periodo)
                             : $periodo = 'all';
+        
+        ($depto!=false && strcmp($depto, 'all')!=0)
+                            ? $query->where('empleado.id', $depto)
+                            : $depto = 'all';
 
         $jornada = $query->get();
 
 
-        $depto = Departamento::get();
-        $empJefe = $this->getEmpleJefe();
-
+        $deptos = Departamento::where('estado', true)->latest()->get();
         $empleados = Empleado::where('estado', true)->get();
         $periodos = Periodo::where('estado', 'activo')->latest()->get();
 
-        return view('Jornada.index', compact('periodo','jornada', 'depto','empJefe', 'empleados', 'periodos'));
+        return view('Jornada.index', compact('periodo','jornada', 'depto', 'deptos', 'empleados','periodos'));
     }
 
     /**
@@ -108,9 +110,36 @@ class JornadaController extends Controller{
                 Utilidades::fnSaveBitacora('Nueva Jornada #: ' . $jornada->id, 'Registro', $this->modulo);
             } else {
                 $msg = 'Modificación exitoso.';
+                $jornada = Jornada::findOrFail($id);
+                $jornada->update($requestData);
 
-                // $periodo = Periodo::findOrFail($request->_id);
-                // $periodo->update($requestData);
+                $items_DB = JornadaItem::select('id')->where('id_jornada', $jornada->id)->get();
+
+                foreach ($items as $key => $value) {
+
+                    $data = [
+                        'dia' => $value->dia,
+                        'hora_inicio' => $value->hora_inicio,
+                        'hora_fin' => $value->hora_fin,
+                        'id_jornada' => $jornada->id,
+                        'estado' => 'activo',
+                    ];
+
+                    if(isset($value->id) && !empty($value->id)){
+                        $item = JornadaItem::findOrFail($value->id);
+                        $item->update($data);
+                        $items_DB->forget($key);
+                    }else{
+                        JornadaItem::create($data);
+                    }
+
+                }
+
+                //para eliminar los items que no vienen y que han sio elimnados por el usuario
+                foreach ($items_DB as $key => $value) {
+                    $item = JornadaItem::findOrFail($value->id);
+                    $item->delete();
+                }
 
 
                 // Utilidades::fnSaveBitacora('Jornada #: ' . $periodo->id . ' Título: ' . $periodo->titulo, 'Modificación', $this->modulo);
@@ -189,13 +218,11 @@ class JornadaController extends Controller{
         //para eliminar los items que no vienen y que han sio elimnados por el usuario
         foreach ($items_DB as $key => $value) {
             $item = JornadaItem::findOrFail($value->id);
-            $item->update([
-                'estado' => 'inactivo'
-            ]);
+            $item->delete();
         }
 
 
-        return redirect('Jornada.index')->with('flash_message', 'Jornada Actualizada!');
+        return redirect('admin/jornada/')->with('flash_message', 'Jornada Actualizada!');
     }
 
     /**
