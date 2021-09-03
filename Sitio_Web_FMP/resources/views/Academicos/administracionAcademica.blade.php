@@ -62,8 +62,8 @@
                                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <form  method="post" action="{{ route('academicaImagen', base64_encode('imagenAcademica')) }}"
-                                                            class="dropzone" id="my-awesome-dropzone">
+                                                        <form  method="post" action="{{ route('ImagenCarrusel', ['tipo'=>10]) }}"
+                                                            class="dropzone dropzoneimagen" >
                                                             @csrf                                 
                                                             <div class="dz-message needsclick">
                                                                 <i class="h1 text-muted dripicons-cloud-upload"></i>
@@ -80,10 +80,85 @@
                                 </div>
                                 @endauth
                             </div>
-                            @if ($imagenAcademica!=null)
-                                <img  width="100%" height="550px" src="{{ asset('/files/image') }}/{!!$imagenAcademica->file!!}" alt="{!!$imagenAcademica->file!!}">
+                            @php
+                                
+                            @endphp
+                            @if (count($carrusel) == '0')
+                                    <p class="p-2 mx-2 border text-center btn-block"> No hay imagenes para mostrar.</p>
                             @else
-                                <p class="border p-2 text-center">No hay imagen.</p>
+                            <div id="carouselExampleCaptions" class="carousel slide rounded col-xl-12" data-ride="carousel">
+                                <ol class="carousel-indicators">  
+                                    @for ($i = 0; $i < count($carrusel); $i++)
+                                        @if ($i == 0 )
+                                            <li data-target="#carouselExampleCaptions" data-slide-to="{{$i}}" class="active"></li>
+                                        @else                                        
+                                            <li data-target="#carouselExampleCaptions" data-slide-to="{{$i}}" ></li>
+                                        @endif
+                                    @endfor                               
+                                </ol>
+                                <div class="carousel-inner">
+                                    @for ($i = 0; $i < count($carrusel); $i++)            
+                                                                            
+                                        <div class="carousel-item {!!$i == 0 ? 'active': null!!}">
+                                            @auth                                                
+                                            <button type="submit" class="btn text-white btn-danger btn-block">
+                                                <div class=" mdi mdi-delete mdi-16px text-center" 
+                                                data-toggle="modal" data-target="#modalCR" 
+                                                onclick="$('#imagenCR').val({!!$carrusel[$i]->id!!})">Eliminar</div>
+                                            </button>
+                                            @endauth  
+                                            <img src="images/carrusel/{{$carrusel[$i]->imagen}}" class="img-fluid" width="100%" height="60%" alt="{!!$carrusel[$i]->imagen!!}">                                
+                                        </div>  
+                                @endfor 
+                                <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Anterior</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Siguiente</span>
+                                    </a>
+                            </div>  
+                            @auth
+                            <div id ="modalCR" class="modal fade bs-example-modal-center" tabindex="-1" 
+                            role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{route('imagenCAborrar', ['url'=> 'admonAcademica'])}}" method="POST">
+                                                @csrf
+                                                <div class="row py-3">
+                                                    <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                                                    <div class="col-lg-10 text-black">
+                                                        <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se elimina este registro de manera permanente, ¿Desea continuar?</h4>
+                                                    </div>
+                                                    <input type="hidden" name="_id" id="imagenCR">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xl-6">
+                                                        <button type="submit" 
+                                                            class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
+                                                            <i class="mdi mdi-check mdi-16px"></i>
+                                                            Si
+                                                        </button>
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <button type="reset" class="btn btn-light p-1 waves-light waves-effect btn-block font-24" data-dismiss="modal" >
+                                                            <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
+                                                            No
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal --> 
+                            @endauth                             
                             @endif
                         </div>
                     </div> <!-- end col -->
@@ -232,7 +307,7 @@
                                                 <div class="row">   
                                                     <div class="col-xl-12">
                                                         <div class="card-box">
-                                                            <h4 class="text-center">Zona para subir PDF</h4>                             
+                                                            <h4 class="text-center">Zona para subir arhivos</h4>                             
                                                             <form action="{{ route('Mpdf', ['localizacion'=>'academicaMallas']) }}" method="post"
                                                                 class="dropzone dropzonepdf" >
                                                                 @csrf                                 
@@ -379,7 +454,7 @@
                                                         <div class="card-box">
                                                             <h4 class="text-center">Zona para subir imagen</h4>                     
                                                             <form  method="post" action="{{ route('academicaImagen', base64_encode('calendarioAca')) }}"
-                                                                class="dropzone">
+                                                                class="dropzone dropzoneimagen">
                                                                 @csrf            
                                                                 <div class="dz-message needsclick">
                                                                     <i class="h1 text-muted dripicons-cloud-upload"></i>

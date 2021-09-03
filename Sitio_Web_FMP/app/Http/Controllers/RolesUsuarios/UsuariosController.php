@@ -21,8 +21,11 @@ class UsuariosController extends Controller
         return view('Admin.Sesion.Usuarios',compact('usuarios','empleados'));
     }
 
-    public function usuario(Request $request){        
-        return User::findOrFail($request->id);
+    public function usuario($usuario){        
+        return User::where('id',$usuario)
+            ->select('id','name','email','empleado')
+            ->first()
+            ->toJson();
     }
 
     public function store(Request $request)

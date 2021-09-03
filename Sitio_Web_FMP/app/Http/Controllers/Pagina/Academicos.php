@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Pagina;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Pagina\PDF;
+use App\Models\Pagina\ImagenesCarrusel;
 use App\Models\Pagina\ContenidoHtml;
 
 class Academicos extends Controller
@@ -36,7 +37,8 @@ class Academicos extends Controller
     public function indexAdmonAcademica(){
         $calendarioAcaIMG = PDF::where('localizacion','calendarioAca')->first();
         $imagenAcademica = PDF::where('localizacion','imagenAcademica')->first();
-        return view('Academicos.administracionAcademica',compact('imagenAcademica','calendarioAcaIMG'));
+        $carrusel = ImagenesCarrusel::where('tipo',10)->get();
+        return view('Academicos.administracionAcademica',compact('imagenAcademica','calendarioAcaIMG','carrusel'));
     }
     
 }

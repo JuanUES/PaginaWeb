@@ -168,14 +168,7 @@ id="modalRegistro" tabindex="-1" aria-hidden="true">
                     <h3>
                         Usuarios
                     </h3>
-
-                </div>
-                <div class="col-lg-1 order-last">
-                    <!-- Button trigger modal -->
-                 <button type="button" title="Agregar Departamentos"
-                    class="btn btn-primary dripicons-plus"
-                    data-toggle="modal" data-target="#modalRegistro"></button>
-                </div>
+                </div>                
             </div>
             <table  class="table table-sm table-bordered" id="table-depto">
                 <thead>
@@ -237,7 +230,7 @@ id="modalRegistro" tabindex="-1" aria-hidden="true">
                         <div class="row">
                             <div class="col text-center">
                                 <div class="btn-group" role="group">
-                                    <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="editarJson({!!$item->id!!})">
+                                    <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="editar('{{ route('usuarios') }}'+'/Usuario/'+{!!$item->id!!})">
                                         <i class="mdi mdi-file-document-edit-outline font-18" aria-hidden="true"></i>
                                     </button>
                                     <button title="{!! !$item->estado?'Activar' : 'Desactivar' !!}" class="btn btn-outline-primary btn-sm mx-1 rounded {!! $item->estado?'btn-outline-danger' : 'btn-outline-success' !!}" data-toggle="modal" data-target="#modalAlta">
@@ -286,30 +279,22 @@ id="modalRegistro" tabindex="-1" aria-hidden="true">
 
     <!-- Init js--> 
     <script src="{{ asset('/template-admin/dist/assets/js/pages/form-advanced.init.js') }}"></script>
-    {{ route('routeName', ) }}
     <script>
-        function editarJson(id){
-            //$json = {!!json_encode($usuarios)!!}.find(x => x.id==id);
-            editar('{{ route('usuario') }}',id);
-        }
-        
-        function editar(url,id){
-            $.post(
-                url,
-                "id":id,
-                function(data){
-                    var content = JSON.parse(data);
-                    console.log(content)
+        function editar(url){
+            $.get(url,function(json){
+                console.log(json);
+                    json=JSON.parse(json);
+                    console.log(json)
+                    $('#idUser').val(json.id);
+                    $('#usuario').val(json.name);
+                    $('#correo').val(json.email);
+                    $('#empleado').val(json.empleado);
+                    $('#roles').val();
+                    $('#contraseña').val(json.password);
+                    $('#repetir_contraseña').val(json.password);
+                    $('#modalRegistro').modal();
                 }
             );
-            /*$('#_idUser').val(json.id);
-            $('#usuario').val(json.name);
-            $('#correo').val(json.email);
-            $('#empleado').val(json.empleado);
-            $('#roles').val();
-            $('#contraseña').val(json.password);
-            $('#repetir_contraseña').val(json.password);
-            $('#modalRegistro').modal();*/
         }
     </script>
 @endsection

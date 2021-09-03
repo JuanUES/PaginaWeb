@@ -113,8 +113,18 @@
                                                 @endauth  
                                                 <img src="images/carrusel/{{$investigacionCarrusel[$i]->imagen}}" class="img-fluid" width="100%" height="60%" alt="{!!$investigacionCarrusel[$i]->imagen!!}">                                
                                             </div>  
-                                    @endfor 
+                                        @endfor 
+                                        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Anterior</span>
+                                            </a>
+                                            <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Siguiente</span>
+                                            </a>
+                                    </div>  
                                 </div>
+                                @endif  
                                 @auth
                                     <div class="row py-3">
                                         <div class="col-xl-12">
@@ -147,15 +157,7 @@
                                         </div>  
                                     </div>    
                                 @endauth 
-                                    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Anterior</span>
-                                    </a>
-                                    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                    <span class="sr-only">Siguiente</span>
-                                    </a>
-                                </div>    
+                                      
 
                                       
                                 <div class="col-xl-12 row">
@@ -289,9 +291,8 @@
                                             </div><!-- /.modal-content -->
                                         </div><!-- /.modal-dialog -->
                                     </div><!-- /.modal --> 
-                                @endauth
-                                 
-                                @endif                                
+                                @endauth                                
+                                                             
                                 <!-- end col -->
                             </div> <!-- end row-->
 
