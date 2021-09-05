@@ -46,7 +46,7 @@
                 <ul class="list-unstyled topnav-menu float-right mb-0">
                     <li class="dropdown notification-list">
                         <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                            <i class="dripicons-bell noti-icon"></i>
+                            <i class="font-18 dripicons-bell noti-icon"></i>
                             <span class="badge badge-info noti-icon-badge">21</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-lg">
@@ -107,25 +107,25 @@
 
                             <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i class="dripicons-user"></i>
+                                <i class="font-18 dripicons-user"></i>
                                 <span>Perfil</span>
                             </a>
 
                             <!-- item-->
                             {{-- <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i class="dripicons-gear"></i>
+                                <i class="font-18 dripicons-gear"></i>
                                 <span>Settings</span>
                             </a> --}}
 
                             <!-- item-->
                             {{-- <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i class="dripicons-help"></i>
+                                <i class="font-18 dripicons-help"></i>
                                 <span>Support</span>
                             </a> --}}
 
                             <!-- item-->
                             {{-- <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i class="dripicons-lock"></i>
+                                <i class="font-18 dripicons-lock"></i>
                                 <span>Lock Screen</span>
                             </a> --}}
 
@@ -134,11 +134,11 @@
                             <!-- item-->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <a href="route('logout')" class="dropdown-item notify-item" onclick="event.preventDefault(); this.closest('form').submit();"><i class="dripicons-power"></i> {{ __('Cerrar sesión') }}</a>
+                                <a href="route('logout')" class="dropdown-item notify-item" onclick="event.preventDefault(); this.closest('form').submit();"><i class="font-18 dripicons-power"></i> {{ __('Cerrar sesión') }}</a>
                             </form>
 
                             {{-- <a href="javascript:void(0);" class="dropdown-item notify-item">
-                                <i class="dripicons-power"></i>
+                                <i class="font-18 dripicons-power"></i>
                                 <span>Logout</span>
                             </a> --}}
 
@@ -183,15 +183,22 @@
                             <li class="menu-title">Administración</li>
                             <li>
                                 <a href="{{ url('admin/') }}">
-                                    <i class="dripicons-meter"></i>
+                                    <i class="font-18 dripicons-meter"></i>
                                     <span> Tablero </span>
                                 </a>
                             </li>
-                            <li class="menu-title">Transparencia</li>
-
-                            @hasrole('super-admin|Transparencia-Decano|Transparencia-Secretario|Transparencia-Presupuestario')
+                            @hasrole('super-admin')
+                            <li class="menu-title">General</li>
                                 <li>
-                                    <a href="javascript: void(0);"><i class="dripicons-view-list-large"></i><span> Marcos </span><span class="menu-arrow"></span></a>
+                                    <a href="#">
+                                        <i class="font-18 dripicons-user "></i> <span> Empleados </span>
+                                    </a>
+                                </li>
+                            @endhasrole
+                            @hasrole('super-admin|Transparencia-Decano|Transparencia-Secretario|Transparencia-Presupuestario')
+                            <li class="menu-title">Transparencia</li>
+                                <li>
+                                    <a href="javascript: void(0);"><i class="font-18 dripicons-view-list-large"></i><span> Marcos </span><span class="menu-arrow"></span></a>
                                     <ul class="nav-second-level" aria-expanded="false">
                                         @hasrole('super-admin|Transparencia-Decano|Transparencia-Secretario')
                                             <li>
@@ -218,20 +225,20 @@
                             @if(@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Transparencia-Secretario') )
                                 <li>
                                     <a href="{{ url('admin/transparencia/repositorios') }}">
-                                        <i class="dripicons-graph-bar "></i> <span> Repositorios </span>
+                                        <i class="font-18 dripicons-graph-bar "></i> <span> Repositorios </span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{ url('admin/transparencia/documentos-JD') }}">
-                                        <i class="dripicons-document"></i> <span> Doc. de Junta Directiva </span>
+                                        <i class="font-18 dripicons-document"></i> <span> Doc. de Junta Directiva </span>
                                     </a>
                                 </li>
                             @endif
-
-                            <li class="menu-title">Jornada</li>
                             @hasrole('super-admin')
+                            <li class="menu-title">Jornada</li>
+                           
                                 <li>
-                                    <a href="javascript: void(0);"><i class="dripicons-view-list-large"></i><span> Gestión de Jornada </span><span class="menu-arrow"></span></a>
+                                    <a href="javascript: void(0);"><i class="font-18 dripicons-view-list-large"></i><span> Gestión de Jornada </span><span class="menu-arrow"></span></a>
                                     <ul class="nav-second-level" aria-expanded="false">
                                             <li>
                                                 <a href="{{ url('admin/periodo') }}">Periodo</a>
@@ -248,11 +255,11 @@
                                     </ul>
                                 </li>
                             @endhasrole
-
+                            @if (@Auth::user()->hasRole('super-admin'))
                             <li class="menu-title">Seguridad</li>
                             <li>
                                 <a href="javascript: void(0);">
-                                    <i class="dripicons-toggles "></i>
+                                    <i class="font-20 mdi mdi-security mdi "></i>
                                     <span> Gestión de Seguridad </span>
                                     <span class="menu-arrow"></span>
                                 </a>
@@ -261,19 +268,17 @@
                                         <a href="{{ route('usuarios') }}">Usuarios</a>
                                     </li>
                                     <li>
-                                        <a href=".">Roles</a>
-                                    </li>
-                                    <li>
                                         <a href="{{ route('admin.bitacora') }}">Bitacora</a>
                                     </li>
                                 </ul>
                             </li>
+                            @endif
                             @if (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Jefe-Academico'))
                             <!--para los horarios-->
                             <li class="menu-title">Horarios</li>
                             <li>
                                 <a href="javascript: void(0);">
-                                    <i class="dripicons-clipboard"></i>
+                                    <i class="font-18 dripicons-clipboard"></i>
                                     <span> Gestión de Horarios </span>
                                     <span class="menu-arrow"></span>
                                 </a>
@@ -302,7 +307,7 @@
                             </li>
                             <li>
                                 <a href="javascript: void(0);">
-                                    <i class="dripicons-briefcase"></i>
+                                    <i class="font-18 dripicons-briefcase"></i>
                                     <span> Asignación de carga Administrativa </span>
                                     <span class="menu-arrow"></span>
                                 </a>
@@ -317,7 +322,7 @@
                             </li>
                             <li>
                                 <a href="javascript: void(0);">
-                                    <i class="dripicons-folder-open"></i>
+                                    <i class="font-18 dripicons-folder-open"></i>
                                     <span>Reportes</span>
                                     <span class="menu-arrow"></span>
                                 </a>

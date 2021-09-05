@@ -29,15 +29,12 @@ class UsuariosController extends Controller
         ->where('model_has_roles.model_id','=',$usuario)
         ->get();
 
-        for ($i=0; $i < count($roles); $i++) { 
-            $roles[$i]->name = base64_encode($roles[$i]->name);
-        }
+        for ($i=0; $i < count($roles); $i++) {$roles[$i]->name = base64_encode($roles[$i]->name);}
 
         return $roles->toJson();
     }
 
-    public function usuario($usuario){ 
-        
+    public function usuario($usuario){         
         return User::where('id',$usuario)
         ->select('id','name','email','empleado')
         ->first()
@@ -45,10 +42,10 @@ class UsuariosController extends Controller
     }
 
     public function store(Request $request)
-    {       
+    {   
         $validator = Validator::make($request->all(),[
             'usuario' => 'required|string|max:255',
-            'correo' => 'required|string|email|max:255|unique:users,email',
+            'correo' => 'required|string|email|max:255|unique:users,email,'.$request -> idUser,
             'contraseña' =>'required|min:8',
             //'empleado' => 'required|unique:users,empleado',
             'repetir_contraseña'=> 'required|same:contraseña'
@@ -68,19 +65,18 @@ class UsuariosController extends Controller
         
         $user -> name     = $request -> usuario;
         $user -> email    = $request -> correo;
+        $user -> empleado = $request -> empleado;
         $user -> password = Hash::make($request->contraseña);
         $b = $user -> save(); 
 
         $roles = $request -> roles;
 
         if($b)
-            for ($i=0; $i < count($roles); $i++){
-                $user -> assignRole(base64_decode($roles[$i]));
-            }
+            for ($i=0; $i < count($roles); $i++){$user -> assignRole(base64_decode($roles[$i]));}
 
         return $request->_id != null ?
-            response()->json(['mensaje'=>'Modificación exitosa.']):
-            response()->json(['mensaje'=>'Registro exitoso.']);
+        response()->json(['mensaje'=>'Modificación exitosa.']):
+        response()->json(['mensaje'=>'Registro exitoso.']);
     }
 
     public function estado(Request $request){
@@ -93,6 +89,6 @@ class UsuariosController extends Controller
 
     public function destroy(Request $request)
     {
-        User::destroy($request->_id);
+        //User::destroy($request->_id);
     }
 }

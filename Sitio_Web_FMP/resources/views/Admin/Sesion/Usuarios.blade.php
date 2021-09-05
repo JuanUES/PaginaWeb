@@ -49,11 +49,16 @@ id="modalRegistro" tabindex="-1" aria-hidden="true">
                                 <label for="">Roles <code>*</code></label>
                                 <select class="form-control select2-multiple" data-toggle="select2" id="roles"
                                      multiple="multiple" aria-placeholder="Seleccione" style="width: 100%;" name="roles[]">
-                                    <option value="{{base64_encode('Transparencia-Presupuestario')}}">Transparencia Presupuestario</option>
-                                    <option value="{{base64_encode('Transparencia-Secretario')}}">Transparencia Secretario</option>
-                                    <option value="{{base64_encode('Transparencia-Decano')}}">Transparencia Decano</option>
-                                    <option value="{{base64_encode('super-admin')}}">Super Administrador</option>
-                                    <option value="{{base64_encode('Jefe-Academico')}}">Jefe Academico</option>
+                                    <optgroup  label="General">
+                                        <option value="{{base64_encode('super-admin')}}">Super Administrador</option>
+                                        <option value="{{base64_encode('Jefe-Academico')}}">Jefe Academico</option>
+                                        <option value="{{base64_encode('Pagina')}}">Pagina</option>
+                                    </optgroup>
+                                    <optgroup label="Transparencia">
+                                        <option value="{{base64_encode('Transparencia-Presupuestario')}}">Presupuestario</option>
+                                        <option value="{{base64_encode('Transparencia-Secretario')}}">Secretario</option>
+                                        <option value="{{base64_encode('Transparencia-Decano')}}">Decano</option>
+                                    </optgroup>                                    
                                 </select>
                             </div>
                         </div>
@@ -168,6 +173,12 @@ id="modalRegistro" tabindex="-1" aria-hidden="true">
                     <h3>
                         Usuarios
                     </h3>
+                </div>
+                <div class="col-lg-1 order-last">
+                    <!-- Button trigger modal -->
+                 <button type="button" title="Agregar Usuario"
+                    class="btn btn-primary dripicons-plus"
+                    data-toggle="modal" data-target="#modalRegistro"></button>
                 </div>                
             </div>
             <table  class="table table-sm table-bordered" id="table-depto">
@@ -202,28 +213,25 @@ id="modalRegistro" tabindex="-1" aria-hidden="true">
                         @else
                             @if ($item->hasRole('super-admin'))
                             <span class="badge badge-primary">Super Admin</span>
-                            @endif
-                            
+                            @endif                            
                             @if ($item->hasRole('Pagina'))
                             <span class="badge badge-primary">Pagina</span>
-                            @endif
-                            
+                            @endif                            
                             @if ($item->hasRole('Jefe-Academico'))
                             <span class="badge badge-primary">Jefe Academico</span>
-                            @endif
-                            
+                            @endif                            
                             @if ($item->hasRole('Transparencia-Decanato'))
                             <span class="badge badge-primary"> Transparencia Decanato</span>
-                            @endif
-                            
+                            @endif                            
                             @if ($item->hasRole('Transparencia-Secretario'))
                             <span class="badge badge-primary">Transparencia Secretario</span>
-                            @endif
-                           
+                            @endif                           
                             @if ($item->hasRole('Transparencia-Presupuestario'))
                             <span class="badge badge-primary">Transparencia Presupuestario</span>
                             @endif
-                            
+                            @if ($item->hasRole('Transparencia-Decano'))
+                            <span class="badge badge-primary">Transparencia Decano</span>
+                            @endif                            
                         @endif
                     </td>
                     <td class="align-middle ">
@@ -231,7 +239,7 @@ id="modalRegistro" tabindex="-1" aria-hidden="true">
                             <div class="col text-center">
                                 <div class="btn-group" role="group">
                                     <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="editar('{{ route('usuarios') }}',{!!$item->id!!})">
-                                        <i class="mdi mdi-file-document-edit-outline font-18" aria-hidden="true"></i>
+                                        <i class="fa fa-edit font-16" aria-hidden="true"></i>
                                     </button>
                                     <button title="{!! !$item->estado?'Activar' : 'Desactivar' !!}" class="btn btn-outline-primary btn-sm mx-1 rounded {!! $item->estado?'btn-outline-danger' : 'btn-outline-success' !!}" data-toggle="modal" data-target="#modalAlta">
                                         {!! !$item->estado?'<i class="mdi mdi  mdi mdi-arrow-up-bold font-18"></i>':'<i class="mdi  mdi mdi-arrow-down-bold font-18"></i>'!!}
@@ -280,26 +288,6 @@ id="modalRegistro" tabindex="-1" aria-hidden="true">
     <!-- Init js--> 
     <script src="{{ asset('/template-admin/dist/assets/js/pages/form-advanced.init.js') }}"></script>
     <script>
-        function editar(url,id){
-            $.get(url+'/Usuario/'+id,function(json){
-                console.log(json);
-                    json=JSON.parse(json);
-                    console.log(json)
-                    $('#idUser').val(json.id);
-                    $('#usuario').val(json.name);
-                    $('#correo').val(json.email);
-                    $('#empleado').val(json.empleado);
-                }
-            );
-            $.get(url+'/UsuarioRol/'+id,function(json){
-                    json=JSON.parse(json);  
-                    var result = [];
-                    for(var i in json){result.push(json[i].name);}   
-                               
-                    console.log($('#roles').select2('val'));           
-                }
-            );
-            $('#modalRegistro').modal();
-        }
+       
     </script>
 @endsection
