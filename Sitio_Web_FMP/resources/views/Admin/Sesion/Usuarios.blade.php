@@ -192,14 +192,14 @@
                     data-toggle="modal" data-target="#modalRegistro"></button>
                 </div>                
             </div>
-            <table  class="table table-bordered table-responsive" id="table-depto">
+            <table  class="table table-bordered">
                 <thead>
                 <tr>
                     <th data-priority="1" class="col-sm-1">N°</th>
-                    <th data-priority="3">Usuario</th>
-                    <th data-priority="3">Correo</th>
+                    <th data-priority="2">Usuario</th>
+                    <th data-priority="2">Correo</th>
                     <th data-priority="3" class="col-sm-1 text-center">Estado</th>
-                    <th data-priority="3" class="col-sm-1 text-center">Roles</th>
+                    <th data-priority="2" class="col-sm-1 text-center">Roles</th>
                     <th data-priority="1" class="col-sm-1 text-center">Acciones</th>
                 </tr>
                 </thead>
@@ -217,7 +217,8 @@
                     <th class="align-middle ">{!!$i!!}</th>
                     <td class="align-middle ">{!!$item->name!!}</td>
                     <td class="align-middle ">{!!$item->email!!}</td>
-                    <td class="align-middle font-16">{!! !$item->estado?'<span class="badge badge-danger">Desactivado</span> ' : '<span class="badge badge-success">Activado</span> ' !!}</td>
+                    <td class="align-middle font-16">{!! !$item->estado?'<span class="badge badge-danger">Desactivado</span> ' :
+                     '<span class="badge badge-success">Activado</span> ' !!}</td>
                     <td class="align-middle font-16">
                         @if ($item->hasAllRoles($roles))
                         <span class="badge badge-success">Todos los roles</span>
@@ -253,9 +254,12 @@
                                         <i class="fa fa-edit font-16" aria-hidden="true"></i>
                                     </button>
                                     <button title="{!! !$item->estado?'Activar' : 'Desactivar' !!}" 
-                                        class="btn btn-outline-primary btn-sm mx-1 rounded {!! $item->estado?'btn-outline-danger' : 'btn-outline-success' !!}" 
-                                        data-toggle="modal" data-target="#modalAlta" onclick="$('#activarId').val({!!$item->id!!});">
-                                        {!! !$item->estado?'<i class="mdi mdi  mdi mdi-arrow-up-bold font-18"></i>':'<i class="mdi  mdi mdi-arrow-down-bold font-18"></i>'!!}
+                                        class="btn btn-outline-primary btn-sm mx-1 rounded 
+                                            {!! $item->estado?'btn-outline-danger' : 'btn-outline-success' !!}" 
+                                        data-toggle="modal" data-target="#modalAlta" 
+                                        onclick="$('#activarId').val({!!$item->id!!});">
+                                        {!! !$item->estado?'<i class="mdi mdi-arrow-up-bold font-18"></i>':
+                                                           '<i class="mdi mdi-arrow-down-bold font-18"></i>'!!}
                                     </button>                                   
                                 </div>
                             </div>

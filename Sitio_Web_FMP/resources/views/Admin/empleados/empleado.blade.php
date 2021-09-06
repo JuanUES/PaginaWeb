@@ -167,7 +167,7 @@
                     data-toggle="modal" data-target="#modalRegistro"></button>
                 </div>                
             </div>
-            <table  class="table table-bordered table-responsive">
+            <table  class="table table-bordered">
                 <thead>
                 <tr>
                     <th data-priority="1" class="col-sm-1">N°</th>
@@ -195,10 +195,11 @@
                                     <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="">
                                         <i class="fa fa-edit font-16" aria-hidden="true"></i>
                                     </button>
-                                    <button title="{!! !$item->estado?'Activar' : 'Desactivar' !!}" 
+                                    <button title="{!! !$item->estado ? 'Activar' : 'Desactivar' !!}" 
                                         class="btn btn-outline-primary btn-sm mx-1 rounded {!! $item->estado?'btn-outline-danger' : 'btn-outline-success' !!}" 
-                                        data-toggle="modal" data-target="#modalAlta" onclick="">
-                                        {!! !$item->estado?'<i class="mdi mdi  mdi mdi-arrow-up-bold font-18"></i>':'<i class="mdi  mdi mdi-arrow-down-bold font-18"></i>'!!}
+                                        data-toggle="modal" data-target="#modalAlta">
+                                        {!! !$item->estado ? '<i class="mdi  mdi mdi-arrow-up-bold   font-18"></i>'
+                                                            :'<i class="mdi  mdi mdi-arrow-down-bold font-18"></i>'!!}
                                     </button>                                   
                                 </div>
                             </div>
