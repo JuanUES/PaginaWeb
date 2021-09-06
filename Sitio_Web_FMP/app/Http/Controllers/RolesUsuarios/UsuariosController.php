@@ -17,9 +17,9 @@ class UsuariosController extends Controller
     
     public function index()
     {
-        $usuarios = User::all();
-        $empleados = Empleado::all();
-        return view('Admin.Sesion.Usuarios',compact('usuarios','empleados'));
+        $usuarios = User::orderBy('id')->get();
+        $empleados = Empleado::where('estado',true)->get();
+        return view('admin.sesion.Usuarios',compact('usuarios','empleados'));
     }
 
     public function usuarioRol($usuario){
@@ -47,7 +47,7 @@ class UsuariosController extends Controller
             'usuario' => 'required|string|max:255',
             'correo' => 'required|string|email|max:255|unique:users,email,'.$request -> idUser,
             'contraseña' =>'required|min:8',
-            //'empleado' => 'required|unique:users,empleado',
+            'empleado' => 'required|unique:users,empleado',
             'repetir_contraseña'=> 'required|same:contraseña'
         ]);
 
@@ -80,11 +80,14 @@ class UsuariosController extends Controller
     }
 
     public function estado(Request $request){
-        
-    }
-
-    public function roles(Request $request){
-        
+        $u = User::findOrFail($request->_id);
+        $u -> estado = !$u -> estado;
+        $estado = $u -> save();
+        if ($estado) {
+            return response()->json(['mensaje'=>'Modificacion exitosa']);
+        }else{
+            return response()->json(['error'=>'Error']);
+        }
     }
 
     public function destroy(Request $request)

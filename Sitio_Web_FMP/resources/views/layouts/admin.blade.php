@@ -190,7 +190,7 @@
                             @hasrole('super-admin')
                             <li class="menu-title">General</li>
                                 <li>
-                                    <a href="#">
+                                    <a href="{{ route('empleado') }}">
                                         <i class="font-18 dripicons-user "></i> <span> Empleados </span>
                                     </a>
                                 </li>

@@ -21,7 +21,7 @@ class CreateEmpleadosTable extends Migration
             $table->string('nit');
             $table->string('telefono');
             $table->string('urlfoto')->nullable();
-            $table->boolean("estado");
+            $table->boolean("estado")->default(0);
             $table->integer('tipo_jefe');
             $table->bigInteger('jefe')->nullable();
             $table->bigInteger('id_depto');

@@ -47,7 +47,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('secretario'),
             'estado' => true,
         ]);
-        $user = User::create([
+        $pg = User::create([
             'name' => 'Pagina Admin',
             'email' => 'Pagina@ues.edu.sv',
             'password' => Hash::make('Pagina'),
@@ -71,10 +71,11 @@ class UserSeeder extends Seeder
         $usu->assignRole('super-admin');
         $admin->assignRole('super-admin');
         $user->assignRole('super-admin');
+        $pg->assignRole('super-admin');
         $presupuestario->assignRole('Transparencia-Presupuestario');
         $decano->assignRole('Transparencia-Decano');
         $secretario->assignRole('Transparencia-Secretario');
-        $user->assignRole('Pagina');
+        $pg->assignRole('Pagina');
         $user->assignRole('Jefe-Academico');
         $rrhh->assignRole('Recurso-Humano');
 

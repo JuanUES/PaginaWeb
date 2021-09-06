@@ -34,6 +34,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $user = Auth::user();
+
         if($user->hasRole('Pagina')){
             return(redirect()->route('index'));
         }else{

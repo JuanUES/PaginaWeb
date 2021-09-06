@@ -54,3 +54,8 @@ Illuminate\Support\Facades\Schema::table('maestrias',function (Illuminate\Databa
 quit
 
 php artisan storage:link
+
+/** Limpiar Cache*/
+php artisan cache:clear
+php artisan config:clear
+php artisan config:cache

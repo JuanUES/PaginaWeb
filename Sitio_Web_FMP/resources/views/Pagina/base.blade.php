@@ -151,7 +151,7 @@
                             </a>
                         </li>
 
-                        <li class="has-submenu float-right p-1">
+                        <li class="has-submenu p-1" id="sesion">
 
                             @auth
                                 <a href="#"  class="rounded btn text-left">
@@ -179,22 +179,7 @@
                         </li>
 
                     </ul>
-                    <!-- End navigation menu -->
-                    <ul class="list-unstyled topnav-menu  mb-0">
-
-                        <li class="dropdown notification-list">
-                            <!-- Mobile menu toggle-->
-                            <a class="navbar-toggle nav-link">
-                                <div class="lines">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </div>
-                            </a>
-                            <!-- End mobile menu toggle-->
-                        </li>
-                    </ul>
-
+                   
                     <div class="clearfix"></div>
 
                 </div>

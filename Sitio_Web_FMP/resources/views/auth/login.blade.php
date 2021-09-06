@@ -5,13 +5,13 @@
                 <img src="{{ asset('/images/ues-logo.svg') }}" alt="logo" height="100">
             </a>
         </x-slot>
-        <h3 class="block mt-1 w-full text-center">Facultad Multidisciplinaria Paracentral</h3>
         <!-- Session Status -->
         <x-auth-session-status class="mb-4" :status="session('status')" />
 
         <!-- Validation Errors -->
-        <x-auth-validation-errors class="mb-4" :errors="$errors" />
-
+        <x-auth-validation-errors class="mb-4 border rounded p-2" :errors="$errors" />
+        
+        <h3 class="block mt-1 my-3 font-40 text-center block mt-1 w-full">Facultad Multidisciplinaria Paracentral</h3>
         <form method="POST" action="{{ route('login') }}">
             @csrf
 
@@ -45,12 +45,12 @@
                     <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
                         {{ __('Forgot your password?') }}
                     </a>
-                @endif-->
-
-                <x-button class="ml-3 btn btn-block">
-                    {{ __('Iniciar Sesión') }}
-                </x-button>
-            </div>
+                @endif-->     
+                <x-button class="items-center">
+                    Iniciar Sesión
+                </x-button>           
+            </div>           
+            
         </form>
     </x-auth-card>
 </x-guest-layout>
