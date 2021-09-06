@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTipoEmpleadosTable extends Migration
+class CreateCategoriaEmpleadosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateTipoEmpleadosTable extends Migration
      */
     public function up()
     {
-        Schema::create('tipo_empleados', function (Blueprint $table) {
+        Schema::create('categoria_empleados', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('tipo');
+            $table->text('categoria')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateTipoEmpleadosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tipo_empleados');
+        Schema::dropIfExists('categoria_empleados');
     }
 }

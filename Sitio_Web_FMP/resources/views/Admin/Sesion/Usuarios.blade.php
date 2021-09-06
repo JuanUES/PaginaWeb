@@ -135,14 +135,14 @@
                     </div>
                     
                     <div class="row">
-                        <div class="col-xl-6">
+                        <div class="col-xl-6 p-1">
                             <button  type="button" onclick="submitForm('#altaBajaForm','#notificacion1')"
                                 class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
                                 <i class="mdi mdi-check mdi-16px"></i>
                                 Si
                             </button>
                         </div>
-                        <div class="col-xl-6">
+                        <div class="col-xl-6 p-1">
                             <button type="reset" 
                                 class="btn btn-light p-1 waves-light waves-effect btn-block font-24" 
                                 data-dismiss="modal" >
@@ -195,12 +195,12 @@
             <table  class="table table-bordered">
                 <thead>
                 <tr>
-                    <th data-priority="1" class="col-sm-1">N°</th>
-                    <th data-priority="2">Usuario</th>
-                    <th data-priority="2">Correo</th>
-                    <th data-priority="3" class="col-sm-1 text-center">Estado</th>
-                    <th data-priority="2" class="col-sm-1 text-center">Roles</th>
-                    <th data-priority="1" class="col-sm-1 text-center">Acciones</th>
+                    <th class="col-sm-1">N°</th>
+                    <th  >Usuario</th>
+                    <th  >Correo</th>
+                    <th  class="col-sm-1 text-center">Estado</th>
+                    <th  class="col-sm-1 text-center">Roles</th>
+                    <th  class="col-sm-1 text-center">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
