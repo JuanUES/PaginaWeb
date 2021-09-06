@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\EmpleadoController;
+use App\Http\Controllers\General\EmpleadoController;
 use Illuminate\Support\Facades\Route;
 
 /**Metodos Get */

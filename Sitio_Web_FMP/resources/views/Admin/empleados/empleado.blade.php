@@ -1,129 +1,144 @@
 @extends('layouts.admin')
-
-@section('plugins')
-<link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" /> 
-@endsection
-@section('plugins-js')
-   <!--Librerias js para datatable
-    <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('js/index/index.datatable.js') }}"></script>-->
-    <script src="{{ asset('template-admin/dist/assets/js/licencia/httpLicencia.min.js') }}"></script>
-@endsection
-
 @section('content')
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+<!-- inicio Modal de registro -->
+<div class="modal fade bs-example-modal-lg" tabindex="-1" 
+    role="dialog" aria-labelledby="myLargeModalLabel" 
+    id="modalRegistro" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id=" exampleModalLongTitle">Agregar empleado</h5>
+            <h3 class="modal-title" id=" exampleModalLongTitle"><i class=" mdi mdi-account-badge-horizontal mdi-36px"></i> Empleado</h3>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form id="empleadoForm" action="{{ route('Empleado.empleado') }}" method="POST">
+        <form id="registroForm"  action="{{ route('guardarUser') }}" method="POST">
+            @csrf
             <div class="modal-body">
-                    @csrf
-                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" 
-                        role="alert" style="display:none" id="notificacion">                                               
+                    <input type="hidden" id="_id" name="_id" value=""/>
+                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
+                        role="alert" style="display:none" id="notificacion">
                     </div>
-                    <div class="form-group">
-                        <label for="Departamento">Departamento</label>
-                       <select class="custom-select" id="id_depto" name="id_depto">
-                        @foreach ($departamentos as $depto)
-                        <option value="{!!$depto->id!!}">{!!$depto->nombre_departamento!!}</option>
-                        @endforeach
-                       </select>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label>Nota: <code>* Campos Obligatorio</code></label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="Departamento">Tipo Contrato</label>
-                       <select class="custom-select" id="id_tipo_contrato" name="id_tipo_contrato">
-                        @foreach ($tcontrato as $contrato)
-                        <option value="{!!$contrato->id!!}">{!!$contrato->tipo!!}</option>
-                        @endforeach
-                       </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="Departamento">Tipo Jornada</label>
-                       <select class="custom-select" id="id_tipo_jornada" name="id_tipo_jornada">
-                        @foreach ($tjornada as $jornada)
-                        <option value="{!!$jornada->id!!}">{!!$jornada->tipo!!} - {!!$jornada->horas_semanales!!} horas</option>
-                        @endforeach
-                       </select>
-                    </div>
+
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Nombre</label>
-                                <input type="text" class="form-control" name="nombre" placeholder="Digite el nombre">
+                                <label for="exampleInputCodigo">Nombre <code>*</code></label>
+                                <input type="text" class="form-control" id='nombre' name="usuario"  autocomplete="off" placeholder="Digite el nombre">
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Apellido</label>
-                                <input type="text" class="form-control" name="apellido"  placeholder="Digite el apellido">
-                            
+                                <label for="exampleInputUbicacion">Apellido <code>*</code></label>
+                                <input type="text" class="form-control" id="apellido" name="correo"  autocomplete="off" placeholder="Digite el apellido">
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputPassword1">D.U.I.</label>
+                                <label for="">D.U.I. <code>*</code></label>
                                 <input type="text" class="form-control" name="dui" placeholder="Digite el número de D.U.I.">
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputPassword1">N.I.T.</label>
+                                <label for="">N.I.T. <code>*</code></label>
                                 <input type="text" class="form-control" name="nit" placeholder="Digite el número de N.I.T.">
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Teléfono</label>
-                        <input type="tel" class="form-control" name="telefono" placeholder="Digite el número de teléfono">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Tipo empleado</label>
-                    <select class="custom-select" name="tipo_jefe">
-                        <option value="1">Decano</option>
-                        <option value="2">Vice-decano</option>
-                        <option value="3">Administrativo</option>
-                        <option value="4">Académico</option>
-                    </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputPassword1">Jefe</label>
                         
-                            @if (count($empleadoJefe))
-                            <select class="custom-select" name="jefe">
-                                @foreach ($empleadoJefe as $item)
-                                <option value="{!!$item->id!!}">{!!$item->nombre.' '.$item->apellido!!}</option>
-                                @endforeach
-                            @else
-                            <select class="custom-select" name="jefe" disabled>
-                                <option value="">Sin datos</option>
-                            @endif          
-                        </select>
                     </div>
+
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="">Teléfono <code>*</code></label>
+                                <input type="tel" class="form-control" name="telefono" placeholder="Digite el número de teléfono">
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="">Tipo empleado <code>*</code></label>
+                                <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
+                                style="width: 100%;" name="tipo_jefe">
+                                    <option value="1">Decano</option>
+                                    <option value="2">Vice-decano</option>
+                                    <option value="3">Administrativo</option>
+                                    <option value="4">Académico</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="Departamento">Tipo Contrato <code>*</code></label>
+                               <select  class="form-group selectpicker" data-live-search="true" data-style="btn-white"
+                                    style="width: 100%;" id="id_tipo_contrato" name="id_tipo_contrato">
+                                @foreach ($tcontrato as $contrato)
+                                    <option value="{!!$contrato->id!!}">{!!$contrato->tipo!!}</option>
+                                @endforeach
+                               </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="Departamento">Tipo Jornada <code>*</code></label>
+                               <select  class="form-group selectpicker" data-live-search="true" data-style="btn-white"
+                                    style="width: 100%;" id="id_tipo_jornada" name="id_tipo_jornada">
+                                    @foreach ($tjornada as $jornada)
+                                        <option value="{!!$jornada->id!!}">{!!$jornada->tipo!!} - {!!$jornada->horas_semanales!!} horas</option>
+                                    @endforeach
+                               </select>
+                            </div>
+                        </div>
+                    </div>    
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <label for="Departamento">Departamento <code>*</code></label>
+                            <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
+                            style="width: 100%;"  id="id_depto" name="id_depto">
+                                @foreach ($departamentos as $depto)
+                                    <option value="{!!$depto->id!!}">{!!$depto->nombre_departamento!!}</option>
+                                @endforeach
+                            </select>
+                        </div>                       
+                        <div class="col-xl-6">
+                            <label for="Departamento">Jefes <code>*</code></label>
+                            <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
+                            style="width: 100%;"  id="jefes" name="jefes">
+                                @foreach ($departamentos as $depto)
+                                    <option value="{!!$depto->id!!}">{!!$depto->nombre_departamento!!}</option>
+                                @endforeach
+                            </select>
+                        </div> 
+                    </div>                 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" onClick="submitForm('#empleadoForm','#notificacion')">Guardar empleado</button>
+                <button type="button" class="btn btn-secondary"
+                    data-dismiss="modal"><i class="fa fa-ban"
+                    aria-hidden="true"></i> Cerrar</button>
+                <button type="button" class="btn btn-primary"
+                    onClick="submitForm('#registroForm','#notificacion')">
+                    <li class="fa fa-save"></li> Guardar</button>
             </div>
         </form>
       </div>
     </div>
-  </div>
-<!-- start page title -->
+</div>
+<!--fin modal de registro-->
+
 <div class="row">
-    <div class="col-12">
+    <div class="col-xl-12">
         <div class="page-title-box">
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
@@ -131,75 +146,89 @@
                     <li class="breadcrumb-item active">Empleados</li>
                 </ol>
             </div>
-            <h4 class="page-title">Empleados</h4>
+            <h4 class="page-title">&nbsp;</h4>
         </div>
     </div>
 </div>
-<!-- end page title -->
 
 <div class="row">
     <div class="col-12">
         <div class="card-box">
-            <div class="row">
-                <div class="col-6">
+            <div class="row py-2">
+                <div class="col order-first">
                     <h3>
                         Empleados
-                    </h3>      
+                    </h3>
                 </div>
-                <div class="col-3">   
-                    <button class="btn btn-info" style="float: right">Subir excel</button>  
-                </div>
-                <div class="col-3">
+                <div class="col-lg-1 order-last">
                     <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-    Agregar empleado
-  </button>
-                </div>
+                 <button type="button" title="Agregar Usuario"
+                    class="btn btn-primary dripicons-plus"
+                    data-toggle="modal" data-target="#modalRegistro"></button>
+                </div>                
             </div>
-
- 
-            <div class="responsive-table-plugin">
-                <div class="table-rep-plugin">
-                    <div class="table table-borderless  btn-table table-sm table-responsive-md" data-pattern="priority-columns">
-                        <table id="tech-companies-1" class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>Apellido</th>
-                                <th data-priority="1">Nombre</th>
-                                <th data-priority="3">D.U.I.</th>
-                                <th data-priority="1">N.I.T.</th>
-                                <th data-priority="3">Teléfono</th>
-                                <th data-priority="3">Estado</th>
-                                <th data-priority="6">Foto</th>
-                              
-                            </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($todosLosEmpleados as $empleado)
-                            <tr>
-                                
-                                <td>{!!$empleado->apellido!!}</td>
-                                <td>{!!$empleado->nombre!!}</td>
-                                <td>{!!$empleado->dui!!}</td>
-                                <td>{!!$empleado->nit!!}</td>
-                                <td>{!!$empleado->telefono!!}</td>
-                                <td>{!!$empleado->estado!!}</td>
-                           
-                            </tr>
-                            @endforeach
-                            
-                            
-                            
-                            
-                            </tbody>
-                        </table>
-                    </div> <!-- end table-responsive-->
-
-                </div> <!-- table-rep-plugin-->
-            </div>
+            <table  class="table table-bordered table-responsive">
+                <thead>
+                <tr>
+                    <th data-priority="1" class="col-sm-1">N°</th>
+                    <th data-priority="3">Nombre</th>
+                    <th data-priority="3">Correo</th>
+                    <th data-priority="3" class="col-sm-1 text-center">Estado</th>
+                    <th data-priority="1" class="col-sm-1 text-center">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+               
+                @foreach ($empleados as $item)
+                <tr>
+                    @php
+                        $i++;
+                    @endphp
+                    <th class="align-middle ">{!!$i!!}</th>
+                    <td class="align-middle ">{!!$item->apellido.','.$item->nombre!!}</td>
+                    <td class="align-middle ">{!!$item->nit!!}</td>
+                    <td class="align-middle font-16">{!! !$item->estado?'<span class="badge badge-danger">Desactivado</span> ' : '<span class="badge badge-success">Activado</span> ' !!}</td>
+                    <td class="align-middle ">
+                        <div class="row">
+                            <div class="col text-center">
+                                <div class="btn-group" role="group">
+                                    <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="">
+                                        <i class="fa fa-edit font-16" aria-hidden="true"></i>
+                                    </button>
+                                    <button title="{!! !$item->estado?'Activar' : 'Desactivar' !!}" 
+                                        class="btn btn-outline-primary btn-sm mx-1 rounded {!! $item->estado?'btn-outline-danger' : 'btn-outline-success' !!}" 
+                                        data-toggle="modal" data-target="#modalAlta" onclick="">
+                                        {!! !$item->estado?'<i class="mdi mdi  mdi mdi-arrow-up-bold font-18"></i>':'<i class="mdi  mdi mdi-arrow-down-bold font-18"></i>'!!}
+                                    </button>                                   
+                                </div>
+                            </div>
+                        </div>
+                    </td>                    
+                </tr>
+                @endforeach
+                </tbody>
+            </table>
 
         </div> <!-- end card-box -->
     </div> <!-- end col -->
 </div>
-<!-- end row -->   
+
+@endsection
+
+@section('plugins')
+<link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
+<link href="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>
+@endsection
+
+@section('plugins-js')
+
+<!-- Bootstrap Select -->
+<script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" defer></script>
+
+<script src="{{ asset('js/scripts/http.min.js') }} " defer></script>
+<script src="{{ asset('js/scripts/data-table.js') }}" defer></script>
+
+<script>
+    
+</script>
 @endsection

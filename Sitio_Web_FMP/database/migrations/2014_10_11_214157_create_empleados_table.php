@@ -22,17 +22,25 @@ class CreateEmpleadosTable extends Migration
             $table->string('telefono');
             $table->string('urlfoto')->nullable();
             $table->boolean("estado")->default(0);
-            $table->integer('tipo_jefe');
             $table->bigInteger('jefe')->nullable();
             $table->bigInteger('id_depto');
+            $table->bigInteger('id_tipo');
+
             $table->foreign('jefe')
             ->references('id')
             ->on('empleado')
             ->onDelete('cascade');
+            
             $table->foreign('id_depto')
             ->references('id')
             ->on('departamentos')
             ->onDelete('cascade');
+            
+            $table->foreign('id_tipo')
+            ->references('id')
+            ->on('tipo_empleados')
+            ->onDelete('cascade');
+
             $table->timestamps();         
         });
     }

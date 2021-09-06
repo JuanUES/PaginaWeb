@@ -1,7 +1,7 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\General;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Tipo_Contrato;
 use App\Models\Tipo_Jornada;
@@ -13,13 +13,13 @@ class EmpleadoController extends Controller
 {
     function index(){
         
-        $empleadoJefe = Empleado::where('jefe',null)->get();
-        $todosLosEmpleados=Empleado::get();
+        $empleados=Empleado::all();
         $departamentos=Departamento::get();
         $tcontrato=Tipo_Contrato::get();
         $tjornada=Tipo_Jornada::get();
 
-        return view('Admin.empleados.empleado',compact('empleadoJefe','todosLosEmpleados','departamentos','tjornada','tcontrato'));
+        return view('Admin.empleados.empleado',
+        compact('empleados','departamentos','tjornada','tcontrato'));
     }
 
     public function store (Request $request){

@@ -278,20 +278,11 @@
 @endsection
 
 @section('plugins-js')
-    
-    <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.js') }}"></script>
-    <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-colorpicker/bootstrap-colorpicker.min.js') }}"></script>
-    <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-maxlength/bootstrap-maxlength.min.js') }}"></script>
-    <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
-    <script src="{{ asset('js/scripts/usuariosRoles.js') }}" defer></script>
-    <script src="{{ asset('js/scripts/http.min.js') }} " defer></script>
-    <script src="{{ asset('js/scripts/data-table.js') }}" defer></script>
-
     <!-- Bootstrap Select -->
     <script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" defer></script>
     <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" defer></script>
 
-    <!-- Init js--> 
-    <script src="{{ asset('/template-admin/dist/assets/js/pages/form-advanced.init.js') }}" defer></script>
+    <script src="{{ asset('js/scripts/usuariosRoles.js') }}" defer></script>
+    <script src="{{ asset('js/scripts/http.min.js') }} " defer></script>
+    <script src="{{ asset('js/scripts/data-table.js') }}" defer></script>
 @endsection
