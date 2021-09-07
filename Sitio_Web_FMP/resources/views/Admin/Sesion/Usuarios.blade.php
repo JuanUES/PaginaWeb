@@ -192,15 +192,15 @@
                     data-toggle="modal" data-target="#modalRegistro"></button>
                 </div>                
             </div>
-            <table  class="table table-bordered">
+            <table  class="table table-bordered ">
                 <thead>
                 <tr>
-                    <th class="col-sm-1">N°</th>
-                    <th  >Usuario</th>
-                    <th  >Correo</th>
-                    <th  class="col-sm-1 text-center">Estado</th>
-                    <th  class="col-sm-1 text-center">Roles</th>
-                    <th  class="col-sm-1 text-center">Acciones</th>
+                    <th class="col-sm-1" style="width: 5%;">N°</th>
+                    <th>Usuario</th>
+                    <th class="col-xs-1">Correo</th>
+                    <th class="col-xs-1" style="width: 10%;">Estado</th>
+                    <th>Roles</th>
+                    <th class="col-sm-1 text-center">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -287,6 +287,5 @@
     <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" defer></script>
 
     <script src="{{ asset('js/scripts/usuariosRoles.js') }}" defer></script>
-    <script src="{{ asset('js/scripts/http.min.js') }} " defer></script>
     <script src="{{ asset('js/scripts/data-table.js') }}" defer></script>
 @endsection

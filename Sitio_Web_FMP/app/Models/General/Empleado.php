@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Licencias;
+namespace App\Models\General;
 
 use App\Models\Tipo_Jornada;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,7 +20,7 @@ class Empleado extends Model
         'telefono',
         'urlfoto',
         'estado',
-        'tipo_jefe',
+        'categoria',
         'jefe',
         'id_tipo_jornada',
         'id_tipo_contrato',

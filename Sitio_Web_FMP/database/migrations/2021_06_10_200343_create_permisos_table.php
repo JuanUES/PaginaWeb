@@ -24,12 +24,15 @@ class CreatePermisosTable extends Migration
             $table->integer('representantes') -> nullable();
             $table->bigInteger('jefatura') -> nullable();
             $table->bigInteger('gestor_rrhh') ->nullable();
+
             $table->foreign('jefatura')
-            ->references('id')
-            ->on('users');
+                ->references('id')
+                ->on('empleado');
+
             $table->foreign('gestor_rrhh')
-            ->references('id')
-            ->on('users');
+                ->references('id')
+                ->on('empleado');
+                
             $table->timestamps();
         });
     }
