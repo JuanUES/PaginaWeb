@@ -16,7 +16,7 @@ class CreateTransparenciaTable extends Migration
         Schema::create('transparencia', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
-            $table->text('descripcion');
+            $table->text('descripcion')->nullable();
             $table->string('documento');
             $table->enum('publicar',['publicado', 'sin publicar'])->default('sin publicar');
             $table->enum('categoria', ['marco-normativo', 'marco-gestion', 'marco-presupuestario', 'repositorios', 'documentos-JD']);
