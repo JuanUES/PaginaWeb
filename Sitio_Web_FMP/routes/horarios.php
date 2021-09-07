@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('Aulas',[AulaController::class,'index'])->name('aulas');
 Route::post('Aulas/create',[AulaController::class,'store'])->name('aulas.store');
 Route::post('Aulas/estado', [AulaController::class,'estado'])->name('estadoAula');
-Route::post('Aula/estadoActivar', [AulaController::class,'activarAula'])->name('estadoA_aula');
 //fin de para las aulas
 //para departamentos
 Route::get('Departamentos',[DepartamentoController::class,'index'])->name('depto');
