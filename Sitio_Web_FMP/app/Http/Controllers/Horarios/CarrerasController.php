@@ -56,22 +56,15 @@ class CarrerasController extends Controller
         }
     }//fin create
 
-    public function estado(Request $request)
-    {
-       //echo dd($request);
-
-        $depto = Carrera::where('id',$request->B_carrera)->first();
-        $depto-> estado = $depto -> estado ? false:true;
-        $depto -> save();        
-        return redirect()->route('carreras');
+    public function estado(Request $request){
+       $c  = Carrera::findOrFail($request->_id);
+       $c-> estado = !$c -> estado;
+        $estado = $c-> save();
+        if ($estado) {
+            return response()->json(['mensaje'=>'Modificacion exitosa']);
+        }else{
+            return response()->json(['error'=>'Error']);
+        }
     }
-    public function activarCarrera(Request $request)
-    {
-       //echo dd($request);
-
-        $depto = Carrera::where('id',$request->C_Activar)->first();
-        $depto-> estado = $depto -> estado ? false:true;
-        $depto -> save();        
-        return redirect()->route('carreras');
-    }
+   
 }

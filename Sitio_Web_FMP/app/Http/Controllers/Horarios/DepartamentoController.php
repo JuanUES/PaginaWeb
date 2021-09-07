@@ -40,22 +40,17 @@ class DepartamentoController extends Controller
             return response()->json(['error'=>$e->getMessage()]);
         }
     }
+    
     public function estado(Request $request){
-       //echo dd($request);
-
-        $depto = Departamento::where('id',$request->E_depto)->first();
-        $depto-> estado = $depto -> estado ? false:true;
-        $depto -> save();        
-        return redirect()->route('depto');
+        $d = Departamento::findOrFail($request->_id);
+        $d -> estado = !$d -> estado;
+        $estado = $d -> save();
+        if ($estado) {
+            return response()->json(['mensaje'=>'Modificacion exitosa']);
+        }else{
+            return response()->json(['error'=>'Error']);
+        }
     }
     
-    public function activarDepto(Request $request)
-    {
-       //echo dd($request);
-
-        $depto = Departamento::where('id',$request->E_Activar)->first();
-        $depto-> estado = $depto -> estado ? false:true;
-        $depto -> save();        
-        return redirect()->route('depto');
-    }
+  
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Jornada\Periodo;
 use App\Models\Pagina\Maestria;
 use App\Models\Transparencia\Transparencia;
 use Illuminate\Database\Seeder;
@@ -30,6 +31,9 @@ class DatabaseSeeder extends Seeder
             AulaSeeder::class,
             CargaAdminSeeder::class,
             ComplementarioSeeder::class,
+            PeriodoSeeder::class,
+            Tipo_ContratoSeeder::class,
+            Tipo_JornadaSeeder::class,
         ]);
     }
 }

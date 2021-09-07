@@ -63,21 +63,13 @@ class MateriaController extends Controller
     }//para crear y modificar la materia
 
     public function estado(Request $request){
-        //echo dd($request);
- 
-         $materia = Materia::where('id',$request->B_materia)->first();
-         $materia-> estado = $materia -> estado ? false:true;
-         $materia -> save();        
-         return redirect()->route('materias');
-     }
-
-     public function activarMateria(Request $request)
-    {
-      // echo dd($request);
-
-        $materia = Materia::where('id',$request->M_Activar)->first();
-        $materia-> estado = $materia -> estado ? false:true;
-        $materia -> save();        
-        return redirect()->route('materias');
+        $m = Materia::findOrFail($request->_id);
+        $m -> estado = !$m -> estado;
+        $estado = $m -> save();
+        if ($estado) {
+            return response()->json(['mensaje'=>'Modificacion exitosa']);
+        }else{
+            return response()->json(['error'=>'Error']);
+        }
     }
 }

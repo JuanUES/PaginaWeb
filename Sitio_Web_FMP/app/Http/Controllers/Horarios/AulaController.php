@@ -50,23 +50,16 @@ class AulaController extends Controller
 
     //para dar de baja a la aula
     public function estado(Request $request){
-        //echo dd($request);
- 
-         $au = Aula::where('id',$request->E_Aula)->first();
-         $au-> estado = $au-> estado ? false:true;
-         $au -> save();        
-         return redirect()->route('aulas');
-     }
+        $a = Aula::findOrFail($request->_id);
+        $a -> estado = !$a -> estado;
+        $estado = $a -> save();
+        if ($estado) {
+            return response()->json(['mensaje'=>'Modificacion exitosa']);
+        }else{
+            return response()->json(['error'=>'Error']);
+        }
+    }
     //fin de para dar de baja aula
     //para dar de alta a la aula
-    public function activarAula(Request $request)
-    {
-       //echo dd($request);
-
-        $a = Aula::where('id',$request->A_Activar)->first();
-        $a-> estado = $a -> estado ? false:true;
-        $a -> save();        
-        return redirect()->route('aulas');
-    }
-    //para dar de baja a la aula
+    
 }
