@@ -197,15 +197,17 @@ id="modal-materias" aria-hidden="true">
 <div class="row">
     <div class="col-12">
         <div class="card-box">
-            <div class="row">
-                <div class="col-6">
+            <div class="row py-2">
+                <div class="col order-first">
                     <h3>
                         Materias Registradas
                     </h3>      
                 </div>
-                <div class="col-3">
+                <div class="col-lg-1 order-last">
                     <!-- Button trigger modal -->
-                 <button type="button" title="Agregar Materias" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#modal-materias"></button>
+                 <button type="button" title="Agregar Materias" 
+                 class="btn btn-primary dripicons-plus"
+                  data-toggle="modal" data-target="#modal-materias"></button>
                 </div>
             </div>
             <table  class="table table-sm" id="table-materias">

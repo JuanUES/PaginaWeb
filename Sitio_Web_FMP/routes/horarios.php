@@ -20,7 +20,6 @@ Route::post('Aula/estadoActivar', [AulaController::class,'activarAula'])->name('
 Route::get('Departamentos',[DepartamentoController::class,'index'])->name('depto');
 Route::post('Departamentos/create',[DepartamentoController::class,'store'])->name('depto.store');
 Route::post('Departamentos/estado', [DepartamentoController::class,'estado'])->name('estadoDept');
-Route::post('Departamentos/estadoActivar', [DepartamentoController::class,'activarDepto'])->name('estadoADept');
 //fin de departamentos
 //para carreras
 Route::get('Carreras',[CarrerasController::class,'index'])->name('carreras');
