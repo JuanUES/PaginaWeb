@@ -35,6 +35,8 @@
         <div class="col-12 col-sm-7" style="text-align:right">
             <div class="row">
                 <div class="col-12 col-sm-9">
+                    @if(@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano') )
+
                     <form action="{{ route('admin.jornada.index') }}" method="get">
                         <span class="float-left">
                             <div class="form-group">
@@ -46,6 +48,7 @@
                                 </select>
                             </div>
                         </span>
+                        
                         @if(@Auth::user()->hasRole('Recurso-Humano') )
                         <span class="float-left">
                             <div class="form-group">
@@ -60,6 +63,7 @@
                         @endif 
                         <button class="btn btn btn-dark" title="Recargar" type="submit"> <i class="dripicons-clockwise" aria-hidden="true"></i> </button>
                     </form>
+                    @endif 
                 </div>
                 <div class="col-12 col-sm-3">
                     <a class="btn btn btn-success" title="Generar Reporte" href="{{ route('admin.jornada.export') }}" > <i class="dripicons-export" aria-hidden="true"></i> </a>
@@ -76,7 +80,7 @@
     <br/>
     <table  class="table table-sm" id="table-jornada">
         <thead>
-        @if(@Auth::user()->hasRole('super-admin')  )
+        @if(@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano') )
             <tr>
                 <th data-priority="1">Registro</th>
                 <th data-priority="1">Id</th>
@@ -91,7 +95,7 @@
             @foreach($jornada as $item)
             <tr>
                 <th>{{ date('d/m/Y', strtotime($item -> created_at)) }}</th>
-                <th>{{$item -> id}}</th>
+                <th>{{$item -> idEmp}}</th>
                 <th>{{ $item -> empleado_rf->nombre }} {{ $item -> empleado_rf->apellido }}</th>
                 <td>{{$item -> periodo}}</td>
                 <td>
@@ -107,10 +111,9 @@
             @endforeach
         @endif
 
-        @if( @Auth::user()->hasRole('Recurso-Humano') )
+        @if( @Auth::user()->hasRole('Docente') )
             <tr>
                 <th data-priority="1">Registro</th>
-                <th data-priority="1">Id</th>
                 <th data-priority="3">Empleado</th>
                 <th data-priority="3">Periodo</th>
                 <th data-priority="3">Estado</th>
@@ -119,10 +122,9 @@
             </thead>
             <tbody>
 
-            @foreach($jornada as $item)
+            @foreach($jornadaDocente as $item)
             <tr>
                 <th>{{ date('d/m/Y', strtotime($item -> created_at)) }}</th>
-                <th>{{$item -> id}}</th>
                 <th>{{ $item -> empleado_rf->nombre }} {{ $item -> empleado_rf->apellido }}</th>
                 <td>{{$item -> periodo}}</td>
                 <td>
@@ -169,12 +171,22 @@
                         <div class="col-12 col-sm-12">
                             <div class="form-group">
                                 <label for="empleado" class="control-label">{{ 'Empleado' }} <span class="text-danger">*</span> </label>
+                                @if( @Auth::user()->hasRole('Docente')  )
+                                    <select class="custom-select" name="id_emp" id="id_emp">
+                                        <option value="">Seleccione un Empleado</option>
+                                        @foreach ($docente as $item)
+                                            <option value="{{ $item->id }}" selected>{{  $item->apellido }}, {{ $item->nombre }}</option>
+                                        @endforeach
+                                    </select>
+                                @endif 
+                                @if( @Auth::user()->hasRole('Recurso-Humano') || @Auth::user()->hasRole('super-admin') )
                                 <select class="custom-select" name="id_emp" id="id_emp">
                                     <option value="">Seleccione un Empleado</option>
                                     @foreach ($empleados as $item)
-                                        <option value="{{ $item->id }}">{{ $item->nombre }}</option>
+                                        <option value="{{ $item->id }}">{{ $item->apellido }}, {{ $item->nombre }}</option>
                                     @endforeach
                                 </select>
+                                @endif
                             </div>
                         </div>
 

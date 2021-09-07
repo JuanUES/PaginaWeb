@@ -53,6 +53,8 @@
                                         <option value="{{base64_encode('super-admin')}}">Super Administrador</option>
                                         <option value="{{base64_encode('Jefe-Academico')}}">Jefe Academico</option>
                                         <option value="{{base64_encode('Pagina')}}">Pagina</option>
+                                        <option value="{{base64_encode('Recurso-Humano')}}">Recurso Humano</option>
+                                        <option value="{{base64_encode('Docente')}}">Docente</option>
                                     </optgroup>
                                     <optgroup label="Transparencia">
                                         <option value="{{base64_encode('Transparencia-Presupuestario')}}">Presupuestario</option>
@@ -243,7 +245,13 @@
                             @endif
                             @if ($item->hasRole('Transparencia-Decano'))
                             <span class="badge badge-primary">Transparencia Decano</span>
-                            @endif                            
+                            @endif        
+                            @if ($item->hasRole('Recurso-Humano'))
+                            <span class="badge badge-primary">Recurso Humano</span>
+                            @endif  
+                            @if ($item->hasRole('Docente'))
+                            <span class="badge badge-primary">Docente</span>
+                            @endif                      
                         @endif
                     </td>
                     <td class="align-middle ">
