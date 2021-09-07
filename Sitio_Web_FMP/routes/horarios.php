@@ -30,7 +30,6 @@ Route::post('Carreras/estado', [CarrerasController::class,'estado'])->name('esta
 Route::get('Materias',[MateriaController::class,'index'])->name('materias');
 Route::post('Materias/create',[MateriaController::class,'administrar'])->name('materias/create');
 Route::post('Materia/estado', [MateriaController::class,'estado'])->name('estadoMateria');
-Route::post('Materia/estadoActivar', [MateriaController::class,'activarMateria'])->name('estadoActi');
 //fin de para materia
 Route::get('Horarios',[HorarioController::class,'index'])->name('horarios');
 Route::get('Create/Carga',[CargaController::class,'index'])->name('crear-carga');

@@ -78,56 +78,6 @@
 </div>
 <!--fin modal de registro-->
 
-<!--modal para dar alta-->
-<div id="modalAlta" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" 
-    aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="myCenterModalLabel">
-                    <i class="mdi mdi-arrow-up-bold  mdi-24px" style="margin: none; padding: none;"></i>
-                    <i class="mdi-arrow-down-bold mdi mdi-24px" style="margin: 0px;"></i> Dar Baja/Alta</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            </div>
-            <form action="{{ route('estadoCarrera') }}" method="POST" id="altaBajaForm">
-                @csrf
-                <div class="modal-body">
-                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
-                        role="alert" style="display:none" id="notificacion1">
-                    </div>
-                    <input type="hidden" name="_id" id="activarId">
-                    <div class="row py-3">
-                        <div class="col-xl-2 fa fa-exclamation-triangle text-warning fa-4x mr-1"></div>
-                        <div class="col-xl-9 text-black"> 
-                            <h4 class="font-17 text-justify font-weight-bold">
-                                Advertencia: Se dara de alta/baja este usuario, ¿Desea continuar?
-                            </h4>
-                        </div>
-                    </div>
-                    
-                    <div class="row">
-                        <div class="col-xl-6 p-1">
-                            <button  type="button" onclick="submitForm('#altaBajaForm','#notificacion1')"
-                                class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
-                                <i class="mdi mdi-check mdi-16px"></i>
-                                Si
-                            </button>
-                        </div>
-                        <div class="col-xl-6 p-1">
-                            <button type="reset" 
-                                class="btn btn-light p-1 waves-light waves-effect btn-block font-24" 
-                                data-dismiss="modal" >
-                                <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
-                                No
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<!--Modal para dar alta fin-->
 
 <!--modal para dar alta-->
 <div id="modalAlta" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" 
@@ -243,8 +193,8 @@
                             <div class="row">
                                 <div class="col text-center">
                                     <div class="btn-group" role="group">
-                                        <button title="Editar" class="btn btn-outline-primary btn-sm rounded"  onclick="editarDepto({!!$item->id!!})">
-                                            <i class="fa fa-edit font-16" aria-hidden="true"></i>
+                                        <button title="Editar" class="btn btn-outline-primary btn-sm rounded"  onclick="editarDepto({!!$item->id!!})"
+                                        data-toggle="modal" data-target="#form-carreras"><i class="fa fa-edit font-16" aria-hidden="true"></i>
                                         </button>
                                         <button title="{!! !$item->estado?'Activar' : 'Desactivar' !!}" 
                                             class="btn btn-outline-primary btn-sm mx-1 rounded 
