@@ -66,6 +66,13 @@ class UserSeeder extends Seeder
             'password'=>Hash::make('rrhh'),
             'estado' => true,
         ]);
+
+        $docente = User::create([
+            'name'=>'Docente',
+            'email'=> 'docente@ues.edu.sv',
+            'password'=>Hash::make('docente'),
+            'estado' => true,
+        ]);
         
         //Asignar el role usuario
         $usu->assignRole('super-admin');
@@ -78,6 +85,7 @@ class UserSeeder extends Seeder
         $pg->assignRole('Pagina');
         $user->assignRole('Jefe-Academico');
         $rrhh->assignRole('Recurso-Humano');
+        $docente->assignRole('Docente');
 
         
     }

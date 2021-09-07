@@ -60,75 +60,47 @@
     </div>
 </div>
 <!--fin modal de agregar aulas-->
-<!--inicio modal para eliminar-->
-<div id="modalEliminar" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            </div>
-            <form action="{{ route('estadoAula') }}" method="POST">
-                @csrf
-                <div class="modal-body">
-                    <div class="row py-3">
-                        <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
-                        <div class="col-lg-10 text-black">
-                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se dara de baja está aula, ¿Desea continuar?</h4>
-                        </div>
-                        <input type="hidden" name="E_Aula" id="E_Aula">
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <button type="submit" 
-                                class="btn p-1 btn-light waves-effect waves-light btn-block font-18">
-                                <i class="mdi mdi-check mdi-24px"></i>
-                                Si
-                            </button>
-                        </div>
-                        <div class="col-xl-6">
-                            <button type="reset" class="btn btn-light p-1 waves-effect btn-block font-18" data-dismiss="modal" >
-                                <i class="mdi mdi-block-helper mdi-16Spx  ml-auto" aria-hidden="true"></i>
-                                No
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-<!--fin modal para eliminar-->
 
 <!--modal para dar alta-->
-<div id="modalAlta" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+<div id="modalAlta" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" 
+    aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                <h3 class="modal-title" id="myCenterModalLabel">
+                    <i class="mdi mdi-arrow-up-bold  mdi-24px" style="margin: none; padding: none;"></i>
+                    <i class="mdi-arrow-down-bold mdi mdi-24px" style="margin: 0px;"></i> Dar Baja/Alta</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            <form action="{{ route('estadoA_aula') }}" method="POST">
+            <form action="{{ route('estadoAula') }}" method="POST" id="altaBajaForm">
                 @csrf
                 <div class="modal-body">
-                    <div class="row py-3">
-                        <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
-                        <div class="col-lg-10 text-black">
-                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se dara de alta está aula, ¿Desea continuar?</h4>
-                        </div>
-                        <input type="hidden" name="A_Activar" id="A_Activar">
+                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
+                        role="alert" style="display:none" id="notificacion1">
                     </div>
+                    <input type="hidden" name="_id" id="activarId">
+                    <div class="row py-3">
+                        <div class="col-xl-2 fa fa-exclamation-triangle text-warning fa-4x mr-1"></div>
+                        <div class="col-xl-9 text-black"> 
+                            <h4 class="font-17 text-justify font-weight-bold">
+                                Advertencia: Se dara de alta/baja este usuario, ¿Desea continuar?
+                            </h4>
+                        </div>
+                    </div>
+                    
                     <div class="row">
-                        <div class="col-xl-6">
-                            <button type="submit" 
-                                class="btn p-1 btn-light waves-effect waves-light btn-block font-18">
-                                <i class="mdi mdi-check mdi-24px"></i>
+                        <div class="col-xl-6 p-1">
+                            <button  type="button" onclick="submitForm('#altaBajaForm','#notificacion1')"
+                                class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
+                                <i class="mdi mdi-check mdi-16px"></i>
                                 Si
                             </button>
                         </div>
-                        <div class="col-xl-6">
-                            <button type="reset" class="btn btn-light p-1 waves-effect btn-block font-18" data-dismiss="modal" >
-                                <i class="mdi mdi-block-helper mdi-16Spx  ml-auto" aria-hidden="true"></i>
+                        <div class="col-xl-6 p-1">
+                            <button type="reset" 
+                                class="btn btn-light p-1 waves-light waves-effect btn-block font-24" 
+                                data-dismiss="modal" >
+                                <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
                                 No
                             </button>
                         </div>
@@ -139,6 +111,7 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!--Modal para dar alta fin-->
+
 <!-- start page title -->
 <div class="row">
     <div class="col-12">
@@ -158,20 +131,23 @@
 <div class="row">
     <div class="col-12">
         <div class="card-box">
-            <div class="row">
-                <div class="col-6">
+            <div class="row py-2">
+                <div class="col order-first">
                     <h3>
                         Aulas Registradas
                     </h3>      
                 </div>
-                <div class="col-3">
+                <div class="col-lg-1 order-last">
                     <!-- Button trigger modal -->
-                 <button type="button" title="Agregar Aula" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#aula-modal"></button>
+                 <button type="button" title="Agregar Aula"
+                 class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#aula-modal">
+                </button>
                 </div>
             </div>
             <table  class="table table-sm" id="table-aulas">
                 <thead>
                 <tr>
+                    <th data-priority="1">N°</th>
                     <th data-priority="1">Código</th>
                     <th data-priority="3">Nombre</th>
                     <th data-priority="1">Ubicación</th>
@@ -182,31 +158,42 @@
                 </tr>
                 </thead>
                 <tbody>
+                    @php
+                    $i=0;
+                @endphp
                     @foreach ($aulas as $item)
                     <tr>
+                        @php
+                        $i++;
+                        @endphp
+                         <td>{!!$i!!}</td>
                         <td><span class="co-name">{!!$item->codigo_aula!!}</span></td>
                         <th><span class="co-name">{!!$item->nombre_aula!!}</span></th>
                         <td><span class="co-name">{!!$item->ubicacion_aula!!}</span></td>
                         <td><span class="co-name">{!!$item->capacidad_aula!!}</span></td>
-                        {!!$item->estado?' <th><span class="co-name">Activo</span></th>':'<th><span class="co-name">Inactivo</span></th>'!!}
-                        @if ($item->estado==true)
-                       
-                        <td>
-                        <button title="Editar Aula" class="btn btn-outline-primary btn-sm"   onclick="editarAula({!!$item->id!!})" data-toggle="modal" data-target="#aula-modal"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button>
-                        <button title="Desactivar Aula" class="btn btn-outline-primary btn-sm" onclick="eliminarAula('{!!$item->id!!}')" data-toggle="modal" data-target="#modalEliminar"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                        </button>
-                        </td>
-                        @endif
-                        @if ($item->estado==false)
-                        <td>
-                        <button title="Editar Aula" class="btn btn-outline-primary btn-sm"   onclick="editarAula({!!$item->id!!})" data-toggle="modal" data-target="#aula-modal"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button>
-                        <button title="Activar Aula" class="btn btn-outline-primary btn-sm" onclick="ActivarAula('{!!$item->id!!}')" data-toggle="modal" data-target="#modalAlta"><i class="fa fa-arrow-up" aria-hidden="true"></i>
-                        </button>
-                        </td>
-                        @endif
-                           
+                        <td class="align-middle font-16">{!! !$item->estado?'<span class="badge badge-danger">Desactivado</span> ' :
+                            '<span class="badge badge-success">Activado</span> ' !!}</td>
+                         <td class="align-middle ">
+                            <div class="row">
+                                <div class="col text-center">
+                                    <div class="btn-group" role="group">
+                                        <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="editarAula({!!$item->id!!})"
+                                             data-toggle="modal" data-target="#aula-modal">
+                                            <i class="fa fa-edit font-16" aria-hidden="true"></i>
+                                        </button>
+                                        <button title="{!! !$item->estado?'Activar' : 'Desactivar' !!}" 
+                                            class="btn btn-outline-primary btn-sm mx-1 rounded 
+                                                {!! $item->estado?'btn-outline-danger' : 'btn-outline-success' !!}" 
+                                            data-toggle="modal" data-target="#modalAlta" 
+                                            onclick="$('#activarId').val({!!$item->id!!});">
+                                            {!! !$item->estado?'<i class="mdi mdi-arrow-up-bold font-18"></i>':
+                                                               '<i class="mdi mdi-arrow-down-bold font-18"></i>'!!}
+                                        </button>                                   
+                                    </div>
+                                </div>
+                            </div>
+                        </td>  
+                      
                         
                     </tr>
                     @endforeach

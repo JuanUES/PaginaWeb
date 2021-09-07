@@ -234,24 +234,31 @@
                                     </a>
                                 </li>
                             @endif
-                            @hasrole('super-admin')
+                            @hasrole('super-admin|Docente')
                             <li class="menu-title">Jornada</li>
-                           
                                 <li>
                                     <a href="javascript: void(0);"><i class="font-18 dripicons-view-list-large"></i><span> Gestión de Jornada </span><span class="menu-arrow"></span></a>
                                     <ul class="nav-second-level" aria-expanded="false">
+                                            @hasrole('super-admin')
                                             <li>
                                                 <a href="{{ url('admin/periodo') }}">Periodo</a>
                                             </li>
+                                            @endhasrole
+                                            @hasrole('super-admin|Docente')
                                             <li>
                                                 <a href="{{ url('admin/jornada') }}">Jornada</a>
                                             </li>
+                                            @endhasrole
+                                            @hasrole('super-admin')
                                             <li>
                                                 <a href="{{ url('admin/tcontrato') }}">Tipo Contrato</a>
                                             </li>
+                                            @endhasrole
+                                            @hasrole('super-admin')
                                             <li>
                                                 <a href="{{ url('admin/tjornada') }}">Tipo Jornada</a>
                                             </li>
+                                            @endhasrole
                                     </ul>
                                 </li>
                             @endhasrole

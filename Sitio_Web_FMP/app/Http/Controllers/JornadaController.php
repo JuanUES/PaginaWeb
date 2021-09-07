@@ -8,6 +8,7 @@ use App\Models\Jornada\Jornada;
 use App\Models\Jornada\JornadaItem;
 use App\Models\Jornada\Periodo;
 use App\Models\Tipo_Jornada;
+use App\Models\User;
 use App\Models\Licencias\Empleado;
 use App\Models\Horarios\Departamento;
 use Exception;
@@ -33,28 +34,38 @@ class JornadaController extends Controller{
 
         $periodo = isset($request->periodo) ? $request->periodo : false;
         $depto = isset($request->depto) ? $request->depto : false;
+        $idDocente = User::findOrFail(auth()->id());
 
         $query = Jornada::join('periodos','jornada.id_periodo','periodos.id')
                 ->join('empleado','jornada.id_emp','empleado.id')
-                ->select('jornada.*',Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"),'empleado.id');
+                ->select('jornada.*',Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"),'empleado.id as idEmp');
 
+        $query2 = Jornada::join('periodos','jornada.id_periodo','periodos.id')
+                ->join('empleado','jornada.id_emp','empleado.id')
+                ->select('jornada.*',Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"),'empleado.id as idEmp')
+                ->where('empleado.id', $idDocente->empleado);
+        
+        
 
         ($periodo!=false && strcmp($periodo, 'all')!=0)
                             ? $query->where('jornada.id_periodo', $periodo)
                             : $periodo = 'all';
         
         ($depto!=false && strcmp($depto, 'all')!=0)
-                            ? $query->where('empleado.id', $depto)
+                            ? $query->where('empleado.id_depto', $depto)
                             : $depto = 'all';
 
         $jornada = $query->get();
-
+        $jornadaDocente = $query2->get();
 
         $deptos = Departamento::where('estado', true)->latest()->get();
+        $docente = Empleado::join('users','empleado.id','users.empleado')
+                            ->select('empleado.nombre as nombre','empleado.apellido as apellido','empleado.id as id')
+                            ->where('users.empleado', $idDocente->empleado )->get();
         $empleados = Empleado::where('estado', true)->get();
         $periodos = Periodo::where('estado', 'activo')->latest()->get();
 
-        return view('Jornada.index', compact('periodo','jornada', 'depto', 'deptos', 'empleados','periodos'));
+        return view('Jornada.index', compact('periodo','jornada','jornadaDocente', 'depto', 'deptos', 'empleados','periodos','docente'));
     }
 
     /**
