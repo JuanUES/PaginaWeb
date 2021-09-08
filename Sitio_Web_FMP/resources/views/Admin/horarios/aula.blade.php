@@ -144,7 +144,7 @@
                 </button>
                 </div>
             </div>
-            <table  class="table table-sm" id="table-aulas">
+            <table  class="table table-bordered">
                 <thead>
                 <tr>
                     <th data-priority="1">N°</th>
@@ -220,7 +220,7 @@
 <script src="{{ asset('template-admin/dist/assets/js/pages/dashboard.init.js') }}"></script>
 <script>
     $(document).ready(function () {
-        $('#table-aulas').DataTable({
+        $('.table').DataTable({
           "language": {
               "decimal":        ".",
               "emptyTable":     "No hay datos para mostrar",

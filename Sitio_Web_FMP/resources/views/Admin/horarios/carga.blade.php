@@ -2,26 +2,27 @@
 
 @section('content')
 <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="carga" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id=" exampleModalLongTitle">Agregar Carga Administrativa</h5>
+          <h5 class="modal-title" id=" exampleModalLongTitle"><i class=" mdi mdi-bank-minus mdi-24px"></i> Carga Administrativa</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form id="empleadoForm" action="" method="POST">
+        <form id="cargaForm" action="{{route('carga.create')}}" method="POST">
             <div class="modal-body">
+                <input type="hidden" id="_id" name="_id"/>
                     @csrf
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" 
-                        role="alert" style="display:none" id="notificacion">                                               
+                        role="alert" style="display:none" id="notificacionCarga">                                               
                     </div>
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="exampleInputNombre">Nombre</label>
-                                <input type="text" class="form-control" name="nombre_carga"  placeholder="Digite el nombre de la carga">
+                                <input type="text" class="form-control" name="nombre_carga" id="nombre_carga"  placeholder="Digite el nombre de la carga">
                             
                             </div>
                         </div>
@@ -30,13 +31,65 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i>Cerrar</button>
-                <button type="button" class="btn btn-primary" onClick="submitForm('#empleadoForm','#notificacion')"><li class="fa fa-save"></li>Guardar</button>
+                <button type="button" class="btn btn-primary" onClick="submitForm('#cargaForm','#notificacionCarga')"><li class="fa fa-save"></li>Guardar</button>
             </div>
         </form>
       </div>
     </div>
   </div>
-<!-- start page title -->
+<!-- start page title -->}
+
+<!--modal para dar alta-->
+<div id="modalAlta" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" 
+    aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myCenterModalLabel">
+                    <i class="mdi mdi-arrow-up-bold  mdi-24px" style="margin: none; padding: none;"></i>
+                    <i class="mdi-arrow-down-bold mdi mdi-24px" style="margin: 0px;"></i> Dar Baja/Alta</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <form action="{{ route('estadoCarga') }}" method="POST" id="altaBajaForm">
+                @csrf
+                <div class="modal-body">
+                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
+                        role="alert" style="display:none" id="notificacion1">
+                    </div>
+                    <input type="hidden" name="_id" id="activarId">
+                    <div class="row py-3">
+                        <div class="col-xl-2 fa fa-exclamation-triangle text-warning fa-4x mr-1"></div>
+                        <div class="col-xl-9 text-black"> 
+                            <h4 class="font-17 text-justify font-weight-bold">
+                                Advertencia: Se dara de alta/baja este usuario, ¿Desea continuar?
+                            </h4>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-xl-6 p-1">
+                            <button  type="button" onclick="submitForm('#altaBajaForm','#notificacion1')"
+                                class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
+                                <i class="mdi mdi-check mdi-16px"></i>
+                                Si
+                            </button>
+                        </div>
+                        <div class="col-xl-6 p-1">
+                            <button type="reset" 
+                                class="btn btn-light p-1 waves-light waves-effect btn-block font-24" 
+                                data-dismiss="modal" >
+                                <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--Modal para dar alta fin-->
+
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
@@ -55,96 +108,66 @@
 <div class="row">
     <div class="col-12">
         <div class="card-box">
-            <div class="row">
-                <div class="col-6">
+            <div class="row py-2">
+                <div class="col order-first">
                     <h3>
                         Carga Administrativa Registrada
                     </h3>      
                 </div>
-                <div class="col-3">
+                <div class="col-lg-1 order-last">
                     <!-- Button trigger modal -->
-                 <button type="button" title="Agregar Carga Administrativa" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#exampleModalCenter"></button>
+                 <button type="button" title="Agregar Carga Administrativa"
+                 class="btn btn-primary dripicons-plus"
+                  data-toggle="modal" data-target="#carga"></button>
                 </div>
             </div>
-            <table  class="table table-sm" id="table-carga">
+            <table  class="table table-bordered">
                 <thead>
                 <tr>
-                    <th data-priority="1">N°</th>
-                    <th data-priority="3">Carga Administrativa</th>
+                    <th data-priority="1" style="width: 5%;">N°</th>
+                    <th data-priority="1" style="width: 50%;">Carga Administrativa</th>
+                    <th data-priority="1" style="20%">Estado</th>
                     <th data-priority="1">Acciones</th>
                   
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <th>GOOG <span class="co-name">Google Inc.</span></th>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
-                    </td>
-               
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <th>AAPL <span class="co-name">Apple Inc.</span></th>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <th>AMZN <span class="co-name">Amazon.com Inc.</span></th>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <th>ORCL <span class="co-name">Oracle Corporation</span></th>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                        </button></a>
-                    </td>
-                  
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <th>MSFT <span class="co-name">Microsoft Corporation</span></th>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Aula">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
-                    </td>
-                </tr>
-                
-                <tr>
-                    <td>6</td>
-                    <th>YHOO <span class="co-name">Yahoo! Inc.</span></th>
-                    <td><a href="" title="Editar Aula">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                    </td>
-                </tr>
-                
-                
-                
+                    @php
+                        $i=0;
+                    @endphp
+                    @foreach ($carga as $item)
+                    @php
+                        $i++;
+                    @endphp
+                    <tr>
+                        <td>{!!$i!!}</td>
+                        <th><span class="co-name">{!!$item->nombre_carga!!}</span></th>
+                        <td class="align-middle font-16">{!! !$item->estado?'<span class="badge badge-danger">Desactivado</span> ' :
+                            '<span class="badge badge-success">Activado</span> ' !!}</td>
+                        <td class="align-middle ">
+                            <div class="row">
+                                <div class="col text-center">
+                                    <div class="btn-group" role="group">
+                                        <button title="Editar Carga" class="btn btn-outline-primary btn-sm rounded"  onclick="editarCarga({!!$item->id!!})"
+                                        data-toggle="modal" data-target="#carga"><i class="fa fa-edit font-16" aria-hidden="true"></i>
+                                        </button>
+                                        <button title="{!! !$item->estado?'Activar' : 'Desactivar' !!}" 
+                                            class="btn btn-outline-primary btn-sm mx-1 rounded 
+                                                {!! $item->estado?'btn-outline-danger' : 'btn-outline-success' !!}" 
+                                            data-toggle="modal" data-target="#modalAlta" 
+                                            onclick="$('#activarId').val({!!$item->id!!});">
+                                            {!! !$item->estado?'<i class="mdi mdi-arrow-up-bold font-18"></i>':
+                                                               '<i class="mdi mdi-arrow-down-bold font-18"></i>'!!}
+                                        </button>   
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                   
+                    </tr>
+                        
+                    @endforeach
+   
                 </tbody>
             </table>
 
@@ -155,39 +178,14 @@
 @endsection
 
 @section('plugins-js')
-<!-- Dashboard Init JS -->
-<script src="{{ asset('template-admin/dist/assets/js/pages/dashboard.init.js') }}"></script>
+<script src="{{ asset('js/scripts/http.min.js') }}"></script>
+<script src="{{ asset('js/horariosJs/carga.js') }}"></script>
 <script>
-    $(document).ready(function () {
-        $('#table-carga').DataTable({
-          "language": {
-              "decimal":        ".",
-              "emptyTable":     "No hay datos para mostrar",
-              "info":           "Del _START_ al _END_ (_TOTAL_ total)",
-              "infoEmpty":      "Del 0 al 0 (0 total)",
-              "infoFiltered":   "(Filtrado de todas las _MAX_ entradas)",
-              "infoPostFix":    "",
-              "thousands":      "'",
-              "lengthMenu":     "Mostrar _MENU_ entradas",
-              "loadingRecords": "Cargando...",
-              "processing":     "Procesando...",
-              "search":         "Buscar:",
-              "zeroRecords":    "No hay resultados",
-              "paginate": {
-                "first":      "Primero",
-                "last":       "Último",
-                "next":       "Siguiente",
-                "previous":   "Anterior"
-              },
-              "aria": {
-                "sortAscending":  ": Ordenar de manera Ascendente",
-                "sortDescending": ": Ordenar de manera Descendente ",
-              }
-            },
-              "pagingType": "full_numbers",
-              "lengthMenu":		[[5, 10, 20, 25, 50, -1], [5, 10, 20, 25, 50, "Todos"]],
-		        	"iDisplayLength":	5,
-        });  
-      });
+    function editarCarga(id){
+        $json = {!!json_encode($carga)!!}.find(x => x.id==id);
+        editar($json);
+        }
 </script>
+
+<script src="{{ asset('js/scripts/data-table.js') }}" defer></script>
 @endsection

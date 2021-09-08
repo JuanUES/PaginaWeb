@@ -35,7 +35,11 @@ Route::post('Materia/estado', [MateriaController::class,'estado'])->name('estado
 //fin de para materia
 
 Route::get('Horarios',[HorarioController::class,'index'])->name('horarios');
-Route::get('Create/Carga',[CargaController::class,'index'])->name('crear-carga');
+//para ingresar la carga administrativa
+Route::get('Administrativa/Carga',[CargaController::class,'index'])->name('crear-carga');
+Route::post('Administrativa/create',[CargaController::class,'create'])->name('carga.create');
+Route::post('Administrativa/estado', [CargaController::class,'estado'])->name('estadoCarga');
+//fin de ingresar la carga administrativa
 Route::get('Asigar/Carga',[AsignacionCargaController::class,'index'])->name('asignar-carga');
 
 //para las horas
