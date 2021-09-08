@@ -234,7 +234,7 @@
                                     </a>
                                 </li>
                             @endif
-                            @hasrole('super-admin|Docente')
+                            @hasrole('super-admin|Docente|Recurso-Humano|Jefe-Departamento')
                             <li class="menu-title">Jornada</li>
                                 <li>
                                     <a href="javascript: void(0);"><i class="font-18 dripicons-view-list-large"></i><span> Gestión de Jornada </span><span class="menu-arrow"></span></a>
@@ -244,7 +244,7 @@
                                                 <a href="{{ url('admin/periodo') }}">Periodo</a>
                                             </li>
                                             @endhasrole
-                                            @hasrole('super-admin|Docente')
+                                            @hasrole('super-admin|Docente|Recurso-Humano|Jefe-Departamento')
                                             <li>
                                                 <a href="{{ url('admin/jornada') }}">Jornada</a>
                                             </li>

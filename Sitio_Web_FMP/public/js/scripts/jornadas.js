@@ -1,17 +1,8 @@
 // var items = @json(isset($jornada) ? $jornada -> items_enabled('activo') : []);//set los items del presupuesto
-// // console.log(items);
-// if (!items.length) {//set dos rows vacias para el agregar
-//     items = [
-//         { Dia: "", Entrada: "", Salida: "", Jornada: "" },
-//     ];
-// } else {
-//     //para calcular el monto total por fila al actualizar
-//     $.each(items, function (index, value) {
-//         value.jornada = parseInt(value.hora_fin) - parseInt(value.hora_inicio);
-//     });
-// }
+// console.log(items);
 
-// var items = [{ option:"", Dia: "", Entrada: "", Salida: "", Jornada: "" },];
+
+
 var items = [];
 
 
