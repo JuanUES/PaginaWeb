@@ -53,10 +53,19 @@ class EmpleadoController extends Controller
             'jefe'=>$request->jefe,
         ]);
         
-        return response()->json(['code'=>200, 'mensaje'=>'Empleado añadido correctamente','data' => $empleado], 200);
+        return response()->json(['code'=>200, 'mensaje'=>'Registro exitoso','data' => $empleado], 200);
     }
 
     public function categoriaStore(Request $request){
+        $validator = Validator::make($request->all(),[
+            'categoria' => 'required|min:2|unique:categoria_empleados,categoria,'.$request->_id,
+        ]);         
+
+        if($validator->fails())
+        {            
+            return response()->json(['error'=>$validator->errors()->all()]);
+            
+        }
         
         $cat = $request->_id != null ? CategoriaEmpleado::findOrFail($request->_id):new CategoriaEmpleado;
         $cat -> categoria = $request->categoria;
@@ -74,7 +83,7 @@ class EmpleadoController extends Controller
     }
 
     public function categoriaGet(){
-        return CategoriaEmpleado::all()->toJSON();
+        return CategoriaEmpleado::select('id','categoria')->get()->toJSON();
     }
 
 }

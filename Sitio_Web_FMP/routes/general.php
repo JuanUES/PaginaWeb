@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('Empleado',[EmpleadoController::class, 'index'])
 ->name('empleado')->middleware(['auth']);
 
-Route::get('Empleado/Categoria',[EmpleadoController::class, 'cagetoriaGet'])
+Route::get('Empleado/Categoria',[EmpleadoController::class, 'categoriaGet'])
 ->name('empleadoCat')->middleware(['auth']);
 
 /**Metodos Post */

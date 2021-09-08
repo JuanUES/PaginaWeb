@@ -128,7 +128,7 @@
                     data-dismiss="modal"><i class="fa fa-ban"
                     aria-hidden="true"></i> Cerrar</button>
                 <button type="button" class="btn btn-primary"
-                    onClick="guardarCategoria('#registroForm','#notificacion','{{ route('empleadoCat') }}')">
+                    onClick="submitForm('#registroForm','#notificacion')">
                     <li class="fa fa-save"></li> Guardar
                 </button>
             </div>
@@ -174,7 +174,7 @@
                             <div class="form-group">
                                 <label for="">&nbsp;</label>
                                 <button type="button" class="btn btn-primary form-control"
-                                    onClick="submitForm('#empleadoCatReg','#notificacionCat')">
+                                    onClick="guardarCategoria('#empleadoCatReg','#notificacionCat','{{ route('empleadoCat') }}')">
                                     <li class="fa fa-save"></li> Guardar
                                 </button>
                             </div>
@@ -183,7 +183,7 @@
                 </form>
                 <div class="row p-3">
                     <div class="col-xl-12">
-                        <table class="table table-bordered" style="width: 100%">
+                        <table class="table table-bordered" style="width: 100%" id="categoriaTb">
                             <thead>
                                 <tr>
                                     <th class="col-sm-1 text-center">#</th>
@@ -202,7 +202,16 @@
                                     <tr>
                                         <td>{{$i}}</td>
                                         <td>{!!$item->categoria!!}</td>
-                                        <td>Acciones</td>
+                                        <td>
+                                            <div class="btn-group" role="group">
+                                                <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="">
+                                                    <i class="fa fa-edit font-18" aria-hidden="true"></i>
+                                                </button>
+                                                <button title="Eliminar" class="btn btn-outline-danger btn-sm rounded" onclick="">
+                                                    <i class="fa fa-trash font-18" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach                                
                             </tbody>
@@ -322,15 +331,13 @@
 
 <script>
     function cargarCategoria(url){
-        $('#catbody').html();
         $.get(url,function(json){
             json=JSON.parse(json); 
-            $html = '';
-            for(var i in json){
-                $html = <td></td>json[i].categoria;
-            }
-            
-            $('#roles').trigger('change');
+            var categoria = $('#categoriaTb').DataTable();
+            categoria.clear();
+            for (var i in json) {
+                categoria.row.add([i,json[i].categoria+'','']).draw(false);                      
+            }            
         });
     }
     
@@ -423,6 +430,7 @@
                         +'</div>'
                     ).show();
                     $(formulario)[0].reset();
+                    enableform(formulario);
                     cargarCategoria(url);
                 }
             }
