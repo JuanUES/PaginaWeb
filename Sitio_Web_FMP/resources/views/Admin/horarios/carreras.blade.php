@@ -223,8 +223,6 @@
 @section('plugins-js')
 <script src="{{ asset('js/scripts/http.min.js') }}"></script>
 <script src="{{ asset('js/horariosJs/carreras.js') }}"></script>
-<!-- Dashboard Init JS -->
-<script src="{{ asset('template-admin/dist/assets/js/pages/dashboard.init.js') }}"></script>
 <script>
     function editarDepto(id){
         $json = {!!json_encode($ver)!!}.find(x => x.id==id);
