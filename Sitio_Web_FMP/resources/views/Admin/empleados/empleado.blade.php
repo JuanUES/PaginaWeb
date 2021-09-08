@@ -153,8 +153,29 @@
                     method="POST" class="px-3">
                     @csrf
                     <input type="hidden" id="_idCat" name="_id" value=""/>
-                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
+                    <div class="alert alert-primary alert-dismissible bg-danger text-white border-0 fade show"
                         role="alert" style="display:none" id="notificacionCat">
+                    </div>
+                    <div class="alert alert-warning alert-dismissible bg-danger text-white border-0 fade show"
+                        role="alert"  id="notificacionEliminar">
+                        <div class="row">
+                            <div class="col-lg-9 order-firts">
+                                <h4></h4>El elemento de eliminara de nuestros registros
+                                    
+                                        <div class="btn-group text-center" role="group">
+                                            <button title="Editar" class="btn btn-outline-primary mr-1 btn-lg rounded" onclick="">
+                                                <i class="fa fa-edit font-15" aria-hidden="true"></i>
+                                            </button>
+                                            <button title="Eliminar" class="btn btn-outline-danger btn-lg rounded" onclick="">
+                                                <i class=" mdi mdi-trash-can-outline font-18" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    
+                            </div>
+                            <div class="col-lg-3 order-last text-center">
+                                <li class="fa fa-exclamation-triangle fa-5x"></li>
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-xl-12">
@@ -183,39 +204,41 @@
                 </form>
                 <div class="row p-3">
                     <div class="col-xl-12">
-                        <table class="table table-bordered" style="width: 100%" id="categoriaTb">
-                            <thead>
-                                <tr>
-                                    <th class="col-sm-1 text-center">#</th>
-                                    <th>Categoria</th>
-                                    <th class="col-sm-1 text-center">Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody id="catbody">
-                                @php
-                                    $i=0;
-                                @endphp
-                                @foreach ($categorias as $item)
-                                    @php
-                                        $i++;
-                                    @endphp
+                        <div class="table-responsive">
+                            <table class="table table-bordered" style="width: 100%" id="categoriaTb">
+                                <thead>
                                     <tr>
-                                        <td>{{$i}}</td>
-                                        <td>{!!$item->categoria!!}</td>
-                                        <td>
-                                            <div class="btn-group" role="group">
-                                                <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="">
-                                                    <i class="fa fa-edit font-18" aria-hidden="true"></i>
-                                                </button>
-                                                <button title="Eliminar" class="btn btn-outline-danger btn-sm rounded" onclick="">
-                                                    <i class="fa fa-trash font-18" aria-hidden="true"></i>
-                                                </button>
-                                            </div>
-                                        </td>
+                                        <th class="col-sm-1 text-center">#</th>
+                                        <th>Categoria</th>
+                                        <th class="col-sm-1 text-center">Acciones</th>
                                     </tr>
-                                @endforeach                                
-                            </tbody>
-                        </table>    
+                                </thead>
+                                <tbody id="catbody">
+                                    @php
+                                        $i=0;
+                                    @endphp
+                                    @foreach ($categorias as $item)
+                                        @php
+                                            $i++;
+                                        @endphp
+                                        <tr>
+                                            <td>{{$i}}</td>
+                                            <td>{!!$item->categoria!!}</td>
+                                            <td>
+                                                <div class="btn-group text-center" role="group">
+                                                    <button title="Editar" class="btn btn-outline-primary mr-1 btn-sm rounded" onclick="">
+                                                        <i class="fa fa-edit font-15" aria-hidden="true"></i>
+                                                    </button>
+                                                    <button title="Eliminar" class="btn btn-outline-danger btn-sm rounded" onclick="">
+                                                        <i class=" mdi mdi-trash-can-outline font-18" aria-hidden="true"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach                                
+                                </tbody>
+                            </table>    
+                        </div>
                     </div>
                 </div>
             </div>

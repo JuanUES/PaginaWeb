@@ -16,6 +16,7 @@ class CreateCargaAdminsTable extends Migration
         Schema::create('carga_admins', function (Blueprint $table) {
             $table->id();
             $table->string('nombre_carga');
+            $table->boolean('estado')->default(true);
             $table->timestamps();
         });
     }
