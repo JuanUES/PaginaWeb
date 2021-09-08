@@ -15,9 +15,9 @@
         <div class="form-group col-12 col-sm-6 offset-sm-6 mb-3 {{ $errors->has('start') ? 'is-invalid' : ''}}">
             <label for="thoras" class="control-label">{{ 'Horas' }} <span class="text-danger"></span></label>
             <input id="_horas" for="_horas" readonly="readonly" value="{{ $tjornada[0]['horas_semanales'] }}" style="border-width:0px; border:none; outline:none;"></input>
-            <input type="hidden" id="auxCalhour" for="_horas" readonly="readonly" >
-            <input type="hidden" id="auxJornada" for="_horas" readonly="readonly" value="{{ $tjornada[0]['horas_semanales'] }}">
-            <input type="hidden" id="otro" for="_horas" readonly="readonly" value="-">
+            <input type="hidden" id="auxCalhour" for="auxCalhour" readonly="readonly" >
+            <input type="hidden" id="auxJornada" for="auxJornada" readonly="readonly" value="{{ $tjornada[0]['horas_semanales'] }}">
+            <input type="hidden" id="otro" for="otro" readonly="readonly" value="-">
         </div>
     </div>
 </div>
@@ -44,14 +44,14 @@
 
 <script>
 
-    var items = @json(isset($jornadas) ? $jornadas->items_enabled('activo') : []);//set los items del presupuesto
+    var items = @json(isset($jornadas) ? $jornadas->items_enabled('activo') : []);//set los items 
     console.log(items);
     if(!items.length){//set dos rows vacias para el agregar
         items = [
             {Dia:"", Entrada:"", Salida:"", Jornada:""},
         ];
     }else{
-        //para calcular el monto total por fila al actualizar
+        //para calcular por fila al actualizar
         $.each(items, function( index, value ) {
             value.jornada = parseInt(value.hora_fin)-parseInt(value.hora_inicio);
         });
@@ -77,22 +77,6 @@
                
                 let updatehours = updateJornada();
                 $("#_horas").val(''+updatehours);
-                /*if(updatehours <=0){
-                    alert("Completo sus horas laborales");
-                    $("#btnNewRow").hide();
-                }
-                if(updatehours==0){
-                    $("#btnSave").show();
-                }
-                if(updatehours>0){
-                    $("#btnNewRow").show();
-                    $("#btnSave").hide();
-                }*/
-
-                /*Toast.fire({
-                    icon: "success",
-                    title: "Operation carried out successfully."
-                });*/
             }
         });
 

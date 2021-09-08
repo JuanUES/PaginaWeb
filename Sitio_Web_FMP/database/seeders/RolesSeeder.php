@@ -34,6 +34,7 @@ class RolesSeeder extends Seeder
         $role = Role::create(['name' => 'Jefe-Academico']);
         $role = Role::create(['name' => 'Recurso-Humano']);
         $role = Role::create(['name' => 'Docente']);
+        $role = Role::create(['name' => 'Jefe-Departamento']);
 
         // $role->givePermissionTo('edit articles');
 
