@@ -162,15 +162,16 @@
                   data-target="#form-carreras"></button>
                 </div>
             </div>
-            <table  class="table table-bordered">
+            <table  class="table table-bordered" style="width: 100%">
                 <thead>
                 <tr>
-                    <th data-priority="1">Código</th>
-                    <th data-priority="3">Nombre</th>
-                    <th data-priority="3">Modalidad</th>
-                    <th data-priority="3">Departamento</th>
-                    <th data-priority="3">Estado</th>
-                    <th data-priority="1">Acciones</th>
+                    <th data-priority="1" >N°</th>
+                    <th data-priority="2" >Código</th>
+                    <th data-priority="2" >Nombre</th>
+                    <th data-priority="2" >Modalidad</th>
+                    <th data-priority="1" >Departamento</th>
+                    <th data-priority="3" >Estado</th>
+                    <th data-priority="2" >Acciones</th>
                   
                 </tr>
                 </thead>
@@ -184,6 +185,7 @@
                         $i++;
                         @endphp
                         <td>{!!$i!!}</td>
+                        <td>{!!$item->codigo_carrera!!}</td>
                         <td><span class="co-name">{!!$item->nombre_carrera!!}</span></td>
                         <td><span class="co-name">{!!$item->modalidad_carrera!!}</span></td>
                         <td><span class="co-name">{!!$item->nombre_departamento!!}</span></td>
@@ -229,37 +231,5 @@
         editar($json);
         }
 </script>
-<script>
-    $(document).ready(function () {
-        $('.table').DataTable({
-          "language": {
-              "decimal":        ".",
-              "emptyTable":     "No hay datos para mostrar",
-              "info":           "Del _START_ al _END_ (_TOTAL_ total)",
-              "infoEmpty":      "Del 0 al 0 (0 total)",
-              "infoFiltered":   "(Filtrado de todas las _MAX_ entradas)",
-              "infoPostFix":    "",
-              "thousands":      "'",
-              "lengthMenu":     "Mostrar _MENU_ entradas",
-              "loadingRecords": "Cargando...",
-              "processing":     "Procesando...",
-              "search":         "Buscar:",
-              "zeroRecords":    "No hay resultados",
-              "paginate": {
-                "first":      "Primero",
-                "last":       "Último",
-                "next":       "Siguiente",
-                "previous":   "Anterior"
-              },
-              "aria": {
-                "sortAscending":  ": Ordenar de manera Ascendente",
-                "sortDescending": ": Ordenar de manera Descendente ",
-              }
-            },
-              "pagingType": "full_numbers",
-              "lengthMenu":		[[5, 10, 20, 25, 50, -1], [5, 10, 20, 25, 50, "Todos"]],
-		        	"iDisplayLength":	5,
-        });  
-      });
-</script>
+<script src="{{ asset('js/scripts/data-table.js') }}" defer></script>
 @endsection

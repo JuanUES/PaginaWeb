@@ -126,9 +126,9 @@
             <table  class="table table-bordered">
                 <thead>
                 <tr>
-                    <th>N°</th>
-                    <th>Nombre</th>
-                    <th>Estado</th>
+                    <th style="width: 5%;">N°</th>
+                    <th style="width: 50%;">Nombre</th>
+                    <th style="width: 20%;">Estado</th>
                     <th >Acciones</th>
                   
                 </tr>
@@ -151,8 +151,8 @@
                         <div class="row">
                             <div class="col text-center">
                                 <div class="btn-group" role="group">
-                                    <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="editarDepto({!!$item->id!!})"">
-                                        <i class="fa fa-edit font-16" aria-hidden="true"></i>
+                                    <button title="Editar Departamento" class="btn btn-outline-primary btn-sm rounded" onclick="editarDepto({!!$item->id!!})"
+                                        data-toggle="modal" data-target="#form-depto"><i class="fa fa-edit font-16" aria-hidden="true"></i>
                                     </button>
                                     <button title="{!! !$item->estado?'Activar' : 'Desactivar' !!}" 
                                         class="btn btn-outline-primary btn-sm mx-1 rounded 
@@ -183,46 +183,11 @@
 @section('plugins-js')
 <script src="{{ asset('js/scripts/http.min.js') }}"></script>
 <script src="{{ asset('js/horariosJs/depto.js') }}"></script>
-<!-- Dashboard Init JS -->
-<script src="{{ asset('template-admin/dist/assets/js/pages/dashboard.init.js') }}"></script>
-
 <script>
     function editarDepto(id){
         $json = {!!json_encode($deptos)!!}.find(x => x.id==id);
         editar($json);
         }
 </script>
-<script>
-    $(document).ready(function () {
-        $('.table').DataTable({
-          "language": {
-              "decimal":        ".",
-              "emptyTable":     "No hay datos para mostrar",
-              "info":           "Del _START_ al _END_ (_TOTAL_ total)",
-              "infoEmpty":      "Del 0 al 0 (0 total)",
-              "infoFiltered":   "(Filtrado de todas las _MAX_ entradas)",
-              "infoPostFix":    "",
-              "thousands":      "'",
-              "lengthMenu":     "Mostrar _MENU_ entradas",
-              "loadingRecords": "Cargando...",
-              "processing":     "Procesando...",
-              "search":         "Buscar:",
-              "zeroRecords":    "No hay resultados",
-              "paginate": {
-                "first":      "Primero",
-                "last":       "Último",
-                "next":       "Siguiente",
-                "previous":   "Anterior"
-              },
-              "aria": {
-                "sortAscending":  ": Ordenar de manera Ascendente",
-                "sortDescending": ": Ordenar de manera Descendente ",
-              }
-            },
-              "pagingType": "full_numbers",
-              "lengthMenu":		[[5, 10, 20, 25, 50, -1], [5, 10, 20, 25, 50, "Todos"]],
-		        	"iDisplayLength":	5,
-        });  
-      });
-</script>
+<script src="{{ asset('js/scripts/data-table.js') }}" defer></script>
 @endsection
