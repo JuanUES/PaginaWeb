@@ -47,7 +47,7 @@
                     <li class="dropdown notification-list">
                         <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             <i class="font-18 dripicons-bell noti-icon"></i>
-                            <span class="badge badge-info noti-icon-badge">{{ count(notificaciones()) }}</span>
+                            <span class="badge badge-info noti-icon-badge">21</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-lg">
 
@@ -55,22 +55,37 @@
                             <div class="dropdown-item noti-title">
                                 <h5 class="m-0">
                                     <span class="float-right">
-                                        <a href="{{ url('admin/notificaciones') }}" class="text-dark"><small>Ver todas</small></a>
+                                        <a href="" class="text-dark">
+                                            <small>Ver todas</small>
+                                        </a>
                                     </span>Notificaciones
                                 </h5>
                             </div>
 
                             <div class="slimscroll noti-scroll">
-                                @foreach (notificaciones() as $key => $value)
-                                    <a href="javascript:void(0);" class="dropdown-item notify-item {{ $loop->index==0 ? 'active' : '' }} ">
-                                        <div class="notify-icon bg-success"><i class="mdi mdi-account-clock-outline"></i> </div>
-                                        <p class="notify-details"> {{ $value->mensaje }}<small class="text-muted"> {{ $value->created_at->diffForHumans() }}</small></p>
-                                    </a>
-                                @endforeach
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item active">
+                                    <div class="notify-icon bg-warning"><i class="mdi mdi-comment-account-outline"></i> </div>
+                                    <p class="notify-details">Caleb Flakelar commented on Admin<small class="text-muted">1 min ago</small></p>
+                                </a>
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <div class="notify-icon bg-primary">
+                                        <i class="mdi mdi-heart"></i>
+                                    </div>
+                                    <p class="notify-details">Carlos Crouch liked
+                                        <b>Admin</b>
+                                        <small class="text-muted">13 days ago</small>
+                                    </p>
+                                </a>
                             </div>
 
                             <!-- All-->
-                            <a href="{{ url('admin/notificaciones') }}" class="dropdown-item text-center text-primary notify-item notify-all">Ver todas<i class="fi-arrow-right"></i></a>
+                            <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
+                                Ver todas
+                                <i class="fi-arrow-right"></i>
+                            </a>
 
                         </div>
                     </li>

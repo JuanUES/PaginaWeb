@@ -12,7 +12,6 @@ use App\Models\Tipo_Jornada;
 use App\Models\User;
 use App\Models\General\Empleado;
 use App\Models\Horarios\Departamento;
-use App\Models\Notificaciones;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -26,14 +25,6 @@ class JornadaController extends Controller{
         'id_periodo' => 'required|integer',
         // 'items' => 'required|array',
     ];
-
-    public $messages = [
-        'id_emp.requiered' => 'Seleccione un empleado'
-    ];
-
-    public function __construct(){
-        $this->middleware('auth');
-    }
 
     /**
      * Display a listing of the resource.
@@ -54,13 +45,13 @@ class JornadaController extends Controller{
                 ->join('empleado','jornada.id_emp','empleado.id')
                 ->select('jornada.*',Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"),'empleado.id as idEmp')
                 ->where('empleado.id', $idDocente->empleado);
-
+        
         $query3 = Jornada::join('periodos','jornada.id_periodo','periodos.id')
                 ->join('empleado','jornada.id_emp','empleado.id')
                 ->select('jornada.*',Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"),'empleado.id as idEmp')
                 ->where('empleado.jefe', $idDocente->empleado);
 
-
+        
         if( Auth::user()->hasRole('Jefe-Departamento') ){
             ($periodo!=false && strcmp($periodo, 'all')!=0)
             ? $query3->where('jornada.id_periodo', $periodo)
@@ -70,7 +61,7 @@ class JornadaController extends Controller{
             ? $query->where('jornada.id_periodo', $periodo)
             : $periodo = 'all';
         }
-
+        
         ($depto!=false && strcmp($depto, 'all')!=0)
                             ? $query->where('empleado.id_depto', $depto)
                             : $depto = 'all';
@@ -114,7 +105,7 @@ class JornadaController extends Controller{
         // dd($request);
 
         try {
-            $validator = Validator::make($request->all(), $this->rules, $this->messages);
+            $validator = Validator::make($request->all(), $this->rules);
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()->all()]);
             }
@@ -126,26 +117,7 @@ class JornadaController extends Controller{
                 $msg = 'Registro exitoso.';
                 // $periodo = Periodo::create($requestData);
 
-                // dd($request);
-                $periodo = Periodo::findOrFail($request->id_periodo);
-                $empleado = Empleado::findOrFail($request->id_emp);
-                $jefe = $empleado->jefe_rf;
-
-                if(!is_null($jefe)){
-                    $usuario_jefe = $jefe->usuario_rf->email;
-                }
-
                 $jornada = Jornada::create($requestData);
-
-                // dd(Auth::user()->id);
-
-                //notificacion de jornada enviada al mismo empleado
-
-                Notificaciones::create([
-                    'usuario_id' => Auth::user()->id,
-                    'mensaje' => 'La jornada para el período '. $periodo->titulo .' ha sido enviada a la Jefatura',
-                    'tipo' => 'Jornada',
-                ]);
 
 
                 if (is_array($items) || is_object($items)) {

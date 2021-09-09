@@ -5,7 +5,6 @@ namespace App\Models\General;
 use App\Models\Tipo_Jornada;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Auth\User;
 
 class Empleado extends Model
 {
@@ -37,10 +36,6 @@ class Empleado extends Model
 
     public function jefe_rf(){
         return $this->hasOne(Empleado::class, 'id', 'jefe');
-    }
-
-    public function usuario_rf(){
-        return $this->hasOne(User::class, 'empleado', 'id');
     }
 }
 
