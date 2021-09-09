@@ -17,6 +17,7 @@ class CreateCargaAdminsTable extends Migration
             $table->id();
             $table->string('nombre_carga');
             $table->boolean('estado')->default(true);
+            $table->string('categoria');
             $table->timestamps();
         });
     }
