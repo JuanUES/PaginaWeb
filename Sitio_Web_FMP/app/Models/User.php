@@ -25,7 +25,7 @@ class User extends Authenticatable
         'password',
         'empleado'
     ];
-
+    protected $guarded = ['id'];
     /**
      * The attributes that should be hidden for arrays.
      *
