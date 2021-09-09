@@ -26,6 +26,9 @@ Route::get('admin', function () {
 
 Route::get('admin/bitacora', 'App\Http\Controllers\BitacoraController@index')->name('admin.bitacora');
 
+Route::get('admin/notificaciones', 'App\Http\Controllers\NotificacionesController@index')->name('admin.notificaciones');
+Route::get('admin/notificaciones/check/{id}', 'App\Http\Controllers\NotificacionesController@check')->name('admin.notificaciones.check');
+
 require __DIR__.'/transparencia.php';
 require __DIR__.'/auth.php';
 require __DIR__.'/pagina.php';

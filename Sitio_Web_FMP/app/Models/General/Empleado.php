@@ -37,5 +37,8 @@ class Empleado extends Model
     public function jefe_rf(){
         return $this->hasOne(Empleado::class, 'id', 'jefe');
     }
+    public function usuario_rf(){
+        return $this->hasOne(User::class, 'empleado', 'id');
+    }
 }
 

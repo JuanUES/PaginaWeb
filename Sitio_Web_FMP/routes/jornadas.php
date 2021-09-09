@@ -17,6 +17,7 @@ Route::get('admin/jornada/jornadaEmpleado/{id}', 'App\Http\Controllers\JornadaCo
 
 //obtener departamentos
 Route::post('admin/jornada/select{id}", "App\Http\Controllers\JornadaController@getDepto')->name('admin.jornada.select');
+Route::post('admin/jornada-procedimiento/store", "App\Http\Controllers\JornadaController@procedimiento')->name('admin.jornada.procedimiento');
 
 
 //RUTAS PERIODO
