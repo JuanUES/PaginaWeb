@@ -297,12 +297,15 @@
                     </div>
                 </div>                
             </div>
-            <table class="table table-bordered">
+            <table class="table table-bordered" style="width: 100%;">
                 <thead>
                 <tr>
                     <th data-priority="1" class="col-sm-1">#</th>
                     <th data-priority="3">Nombre</th>
-                    <th data-priority="3">Correo</th>
+                    <th data-priority="3" class="col-sm-1 text-center">Categoria</th>
+                    <th data-priority="3" class="col-sm-1 text-center">Contrato</th>
+                    <th data-priority="3" class="col-sm-1 text-center">Jornada</th>
+                    <th data-priority="3" class="col-sm-1 text-center">Departamento</th>
                     <th data-priority="3" class="col-sm-1 text-center">Estado</th>
                     <th data-priority="1" class="col-sm-1 text-center">Acciones</th>
                 </tr>
@@ -316,7 +319,10 @@
                     @endphp
                     <th class="align-middle " style="width: 10%">{!!$i!!}</th>
                     <td class="align-middle ">{!!$item->apellido.','.$item->nombre!!}</td>
-                    <td class="align-middle ">{!!$item->nit!!}</td>
+                    <td class="align-middle ">{!!$categorias.find($item->categoria)->categoria!!}</td>
+                    <td class="align-middle ">{!!$tcontrato.find($item->id_tipo_contrato)->tipo!!}</td>
+                    <td class="align-middle ">{!!$tjornada.find($item->id_tipo_jornada)->tipo!!}</td>
+                    <td class="align-middle ">{!!$departamentos.find($item->id_depto)->nombre_departamento!!}</td>
                     <td class="align-middle font-16">{!! !$item->estado?'<span class="badge badge-danger">Desactivado</span> ' : '<span class="badge badge-success">Activado</span> ' !!}</td>
                     <td class="align-middle ">
                         <div class="row">
