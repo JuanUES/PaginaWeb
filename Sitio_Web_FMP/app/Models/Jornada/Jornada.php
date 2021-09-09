@@ -14,7 +14,7 @@ class Jornada extends Model
 
     protected $guarded = 'id';
 
-    protected $fillable = ['id_emp', 'id_periodo','estado'];
+    protected $fillable = ['id_emp', 'id_periodo', 'procedimiento','estado'];
 
     public function items(){
         return $this->hasMany(JornadaItem::class, 'id_jornada', 'id');

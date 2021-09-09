@@ -33,5 +33,9 @@ class Empleado extends Model
     public function tipo_contrato_rf(){
         return $this->hasOne(Tipo_Contrato::class, 'id', 'id_tipo_contrato');
     }
+
+    public function jefe_rf(){
+        return $this->hasOne(Empleado::class, 'id', 'jefe');
+    }
 }
 

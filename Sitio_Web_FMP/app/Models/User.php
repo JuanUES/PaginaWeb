@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\General\Empleado;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -22,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'empleado'
     ];
 
     /**
@@ -42,4 +44,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function empleado_rf(){
+        return $this->hasOne(Empleado::class, 'id', 'empleado');
+    }
 }
