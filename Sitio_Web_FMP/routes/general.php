@@ -16,3 +16,6 @@ Route::post('admin/Empleado/empleado', [EmpleadoController::class, 'store'])
 
 Route::post('admin/Empleado/Categoria/Registrar',[EmpleadoController::class, 'categoriaStore'])
 ->name('empleadoCatReg')->middleware(['auth']);
+
+Route::post('admin/Empleado/Categoria/Borrar',[EmpleadoController::class, 'categoriaDestroy'])
+->name('empleadoCatDest')->middleware(['auth']);

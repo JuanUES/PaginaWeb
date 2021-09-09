@@ -31,13 +31,13 @@
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputCodigo">Nombre <code>*</code></label>
-                                <input type="text" class="form-control" id='nombre' name="usuario"  autocomplete="off" placeholder="Digite el nombre">
+                                <input type="text" class="form-control" id='nombre' name="nombre"  autocomplete="off" placeholder="Digite el nombre">
                             </div>
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputUbicacion">Apellido <code>*</code></label>
-                                <input type="text" class="form-control" id="apellido" name="correo"  autocomplete="off" placeholder="Digite el apellido">
+                                <input type="text" class="form-control" id="apellido" name="apellido"  autocomplete="off" placeholder="Digite el apellido">
                             </div>
                         </div>
                     </div>
@@ -67,13 +67,14 @@
                         </div>
                         <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="">Tipo empleado <code>*</code></label>
-                                <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                                style="width: 100%;" name="tipo_jefe">
-                                    <option value="1">Decano</option>
-                                    <option value="2">Vice-decano</option>
-                                    <option value="3">Administrativo</option>
-                                    <option value="4">Académico</option>
+                                <label for="">Categoria <code>*</code></label>
+                                <select class="form-group selectpicker"
+                                    data-live-search="true" data-style="btn-white" 
+                                    name="categoria">
+                                <option value="" selected>Seleccione</option>
+                                 @foreach ($categorias as $item)
+                                    <option value="{!!$item->id!!}">{!!$item->categoria!!}</option>
+                                 @endforeach
                                 </select>
                             </div>
                         </div>
@@ -83,7 +84,7 @@
                             <div class="form-group">
                                 <label for="Departamento">Tipo Contrato <code>*</code></label>
                                <select  class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                                    style="width: 100%;" id="id_tipo_contrato" name="id_tipo_contrato">
+                                     id="id_tipo_contrato" name="tipo_contrato">
                                 @foreach ($tcontrato as $contrato)
                                     <option value="{!!$contrato->id!!}">{!!$contrato->tipo!!}</option>
                                 @endforeach
@@ -94,7 +95,7 @@
                             <div class="form-group">
                                 <label for="Departamento">Tipo Jornada <code>*</code></label>
                                <select  class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                                    style="width: 100%;" id="id_tipo_jornada" name="id_tipo_jornada">
+                                    id="id_tipo_jornada" name="tipo_jornada">
                                     @foreach ($tjornada as $jornada)
                                         <option value="{!!$jornada->id!!}">{!!$jornada->tipo!!} - {!!$jornada->horas_semanales!!} horas</option>
                                     @endforeach
@@ -106,7 +107,7 @@
                         <div class="col-xl-6">
                             <label for="Departamento">Departamento <code>*</code></label>
                             <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                            style="width: 100%;"  id="id_depto" name="id_depto">
+                              id="id_depto" name="departamento">
                                 @foreach ($departamentos as $depto)
                                     <option value="{!!$depto->id!!}">{!!$depto->nombre_departamento!!}</option>
                                 @endforeach
@@ -114,11 +115,9 @@
                         </div>                       
                         <div class="col-xl-6">
                             <label for="Departamento">Jefes <code>*</code></label>
-                            <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                            style="width: 100%;"  id="jefes" name="jefes">
-                                @foreach ($departamentos as $depto)
-                                    <option value="{!!$depto->id!!}">{!!$depto->nombre_departamento!!}</option>
-                                @endforeach
+                            <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" disabled
+                              id="jefes" name="jefe">
+                                <option name="" selected>Seleccione</option>
                             </select>
                         </div> 
                     </div>                 
@@ -149,34 +148,46 @@
           </button>
         </div>
             <div class="modal-body">
+                <div class="alert alert-primary alert-dismissible bg-danger text-white border-0 fade show"
+                        role="alert" style="display:none" id="notificacionCat">
+                </div>
+                <div class="alert  alert-primary alert-dismissible bg-danger  border-0 fade show"
+                    role="alert" id="notificacionEliminar" style="display:none" >
+                    <div class="row">
+                        <div class="col-lg-10 order-firts">
+                            <h4 class="text-white">El elemento de eliminara de nuestros registros, ¿continuar?.</h4>     
+                            <form action="{{ route('empleadoCatDest') }}" method="POST" id="eliminarCatForm"> 
+                                @csrf
+                                <input type="hidden" name="_id" id="idCat">                          
+                                <div class="row">
+                                    <div class="col-xl-6 p-1">
+                                        <button  type="button" onclick="$('#notificacionEliminar').hide();
+                                        httpCategoria('#eliminarCatForm','#notificacionCat','{{ route('empleadoCat') }}')"
+                                            class="btn my-1 mr-1 btn-danger border rounded waves-effect waves-light btn-block font-24">
+                                            <i class="mdi mdi-check mdi-16px"></i>
+                                            Si
+                                        </button>
+                                    </div>
+                                    <div class="col-xl-6 p-1">
+                                        <button type="button" onclick="$('#notificacionEliminar').hide();"
+                                            class="btn my-1 btn-danger p-1 border rounded waves-light waves-effect btn-block font-24">
+                                            <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
+                                            No
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-lg-2 order-last text-center text-white">
+                            <li class="fa fa-exclamation-triangle fa-6x"></li>
+                        </div>
+                    </div>
+                </div>
                 <form action="{{ route('empleadoCatReg') }}" id="empleadoCatReg" 
                     method="POST" class="px-3">
                     @csrf
-                    <input type="hidden" id="_idCat" name="_id" value=""/>
-                    <div class="alert alert-primary alert-dismissible bg-danger text-white border-0 fade show"
-                        role="alert" style="display:none" id="notificacionCat">
-                    </div>
-                    <div class="alert alert-warning alert-dismissible bg-danger text-white border-0 fade show"
-                        role="alert"  id="notificacionEliminar">
-                        <div class="row">
-                            <div class="col-lg-9 order-firts">
-                                <h4></h4>El elemento de eliminara de nuestros registros
-                                    
-                                        <div class="btn-group text-center" role="group">
-                                            <button title="Editar" class="btn btn-outline-primary mr-1 btn-lg rounded" onclick="">
-                                                <i class="fa fa-edit font-15" aria-hidden="true"></i>
-                                            </button>
-                                            <button title="Eliminar" class="btn btn-outline-danger btn-lg rounded" onclick="">
-                                                <i class=" mdi mdi-trash-can-outline font-18" aria-hidden="true"></i>
-                                            </button>
-                                        </div>
-                                    
-                            </div>
-                            <div class="col-lg-3 order-last text-center">
-                                <li class="fa fa-exclamation-triangle fa-5x"></li>
-                            </div>
-                        </div>
-                    </div>
+                    <input type="hidden" id="_idCat" name="_id"/>
+                    
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group">
@@ -188,14 +199,14 @@
                         <div class="col-xl-10">
                             <div class="form-group">
                                 <label for="">Categoria <code>*</code></label>
-                                <input type="text" class="form-control" name="categoria" placeholder="Digite la categoria">
+                                <input type="text" class="form-control" id="categoria" name="categoria" placeholder="Digite la categoria">
                             </div>
                         </div>
                         <div class="col-xl-2">
                             <div class="form-group">
                                 <label for="">&nbsp;</label>
                                 <button type="button" class="btn btn-primary form-control"
-                                    onClick="guardarCategoria('#empleadoCatReg','#notificacionCat','{{ route('empleadoCat') }}')">
+                                    onClick="httpCategoria('#empleadoCatReg','#notificacionCat','{{ route('empleadoCat') }}')">
                                     <li class="fa fa-save"></li> Guardar
                                 </button>
                             </div>
@@ -208,9 +219,9 @@
                             <table class="table table-bordered" style="width: 100%" id="categoriaTb">
                                 <thead>
                                     <tr>
-                                        <th class="col-sm-1 text-center">#</th>
-                                        <th>Categoria</th>
-                                        <th class="col-sm-1 text-center">Acciones</th>
+                                        <th class="col-sm-1" style="width: 5%;">#</th>
+                                        <th class="col-xs-1" style="width: 90%;">Categoria</th>
+                                        <th class="col-sm-1" style="width: 5%;">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody id="catbody">
@@ -226,10 +237,12 @@
                                             <td>{!!$item->categoria!!}</td>
                                             <td>
                                                 <div class="btn-group text-center" role="group">
-                                                    <button title="Editar" class="btn btn-outline-primary mr-1 btn-sm rounded" onclick="">
+                                                    <button onclick="editarCat({!!$item->id!!},'{!!$item->categoria!!}');"
+                                                     title="Editar" class="btn btn-outline-primary mr-1 btn-sm rounded" onclick="">
                                                         <i class="fa fa-edit font-15" aria-hidden="true"></i>
                                                     </button>
-                                                    <button title="Eliminar" class="btn btn-outline-danger btn-sm rounded" onclick="">
+                                                    <button title="Eliminar" class="btn btn-outline-danger btn-sm rounded" 
+                                                        onclick="eliminarCat({!!$item->id!!});">
                                                         <i class=" mdi mdi-trash-can-outline font-18" aria-hidden="true"></i>
                                                     </button>
                                                 </div>
@@ -285,8 +298,7 @@
                         <button type="button" title="Agregar Empleado"
                             class="btn btn-primary dripicons-plus rounded"
                             data-toggle="modal" data-target="#modalRegistro">
-                        </button>
-                        
+                        </button>                        
                     </div>
                 </div>                
             </div>
@@ -353,18 +365,39 @@
 <script src="{{ asset('js/scripts/data-table.js') }}" defer></script>
 
 <script>
+    function editarCat(id,categoria){
+        $('#_idCat').val(id);
+        $('#categoria').val(categoria);
+    }
+    function eliminarCat(id){
+        $('#idCat').val(id);
+        $('#notificacionEliminar').show();
+    }
     function cargarCategoria(url){
         $.get(url,function(json){
             json=JSON.parse(json); 
             var categoria = $('#categoriaTb').DataTable();
             categoria.clear();
+            var id=1;
             for (var i in json) {
-                categoria.row.add([i,json[i].categoria+'','']).draw(false);                      
+                var html = '';
+                html += '<div class="btn-group text-center" role="group">';
+                html += '<button onclick="editarCat('+json[i].id+','+json[i].categoria+');"';
+                html += '    title="Editar" class="btn btn-outline-primary mr-1 btn-sm rounded" onclick="">';
+                html += '    <i class="fa fa-edit font-15" aria-hidden="true"></i>';
+                html += ' </button>';
+                html += '  <button title="Eliminar" class="btn btn-outline-danger btn-sm rounded" ';
+                html += '       onclick="eliminarCat('+json[i].id+');">';
+                html += '       <i class=" mdi mdi-trash-can-outline font-18" aria-hidden="true"></i>';
+                html += '  </button>';
+                html += '</div>';
+                categoria.row.add([id,json[i].categoria,html]).draw(false);   
+                id++;                   
             }            
         });
     }
     
-    function guardarCategoria(formulario,notificacion,url){
+    function httpCategoria(formulario,notificacion,url){
         $.ajax({
             type: $(formulario).attr('method'),
             url: $(formulario).attr('action'),

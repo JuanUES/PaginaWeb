@@ -28,11 +28,16 @@ class EmpleadoController extends Controller
   
 
         $validator = Validator::make($request->all(),[
-            'apellido' => 'required|max:20',
             'nombre' => 'required|max:25',
+            'apellido' => 'required|max:20',
             'dui' => 'required|max:10',
             'nit' => 'required|max:40',
             'telefono' => 'required|max:9',
+            'categoria' => 'required',
+            'tipo_contrato' => 'required',
+            'tipo_jornada' => 'required',
+            'departamento' => 'required',
+            //'jefe' => 'required',
         ]);         
 
         echo dd($request);
@@ -44,13 +49,17 @@ class EmpleadoController extends Controller
         }
 
         $empleado = Empleado::updateOrCreate([
-            'apellido'=>$request->apellido,
             'nombre'=>$request->nombre,
+            'apellido'=>$request->apellido,
             'dui'=>$request->dui,
             'nit'=>$request->nit,
             'telefono'=>$request->telefono,
+            'categoria'=>$request->categoria,
+            'id_tipo_contrato'=>$request->tipo_contrato,
+            'id_tipo_jornada'=>$request->tipo_jornada,
+            'id_depto'=>$request->departamento,
+            //'jefe'=>$request->jefe,
             'estado' =>true,
-            'jefe'=>$request->jefe,
         ]);
         
         return response()->json(['code'=>200, 'mensaje'=>'Registro exitoso','data' => $empleado], 200);
@@ -58,7 +67,7 @@ class EmpleadoController extends Controller
 
     public function categoriaStore(Request $request){
         $validator = Validator::make($request->all(),[
-            'categoria' => 'required|min:2|unique:categoria_empleados,categoria,'.$request->_id,
+            'categoria' => 'required|min:2',
         ]);         
 
         if($validator->fails())
@@ -73,12 +82,13 @@ class EmpleadoController extends Controller
         return response()->json(['code'=>200, 'mensaje'=>'Categoria añadido correctamente','data' => $cat], 200);        
     }
 
-    public function categoriaDestroy($id){
-        $emp = Empleado::where('categoria',$id)->get();
+    public function categoriaDestroy(Request $request){
+        $emp = Empleado::where('categoria',$request->_id)->get();
         if(count($emp)>0){
             return response()->json(['error'=>[0,'No se puede eliminar esta categoria']]);
         }else{
-            return response()->json(['code'=>200, 'mensaje'=>'Categoria eliminada']);
+            $cat = CategoriaEmpleado::destroy($request->_id);
+            return response()->json(['code'=>200, 'mensaje'=>'Categoria eliminada ']);
         }
     }
 
