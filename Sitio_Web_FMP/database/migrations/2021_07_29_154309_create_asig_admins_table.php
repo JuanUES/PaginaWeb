@@ -18,6 +18,8 @@ class CreateAsigAdminsTable extends Migration
             $table->string('dias');
             $table->bigInteger('id_empleado');
             $table->bigInteger('id_carga');
+            $table->bigInteger('id_ciclo');
+
             $table->foreign('id_empleado')
             ->references('id')
             ->on('empleado')
@@ -25,6 +27,11 @@ class CreateAsigAdminsTable extends Migration
             $table->foreign('id_carga')
             ->references('id')
             ->on('carga_admins')
+            ->onDelete('cascade');
+
+            $table->foreign('id_ciclo')
+            ->references('id')
+            ->on('ciclos')
             ->onDelete('cascade');
             $table->timestamps();
         });
