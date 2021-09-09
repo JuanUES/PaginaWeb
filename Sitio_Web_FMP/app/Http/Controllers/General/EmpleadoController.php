@@ -14,11 +14,19 @@ class EmpleadoController extends Controller
 {
     function index(){
         
-        $empleados=Empleado::all();
+        $categorias=CategoriaEmpleado::all();
         $departamentos=Departamento::get();
         $tcontrato=Tipo_Contrato::get();
         $tjornada=Tipo_Jornada::get();
-        $categorias = CategoriaEmpleado::all();
+
+        $empleados = Empleado::
+          join('categoria_empleados','categoria_empleados.id','=','empleado.categoria')
+        ->join('tipo_contrato','tipo_contrato.id','=','empleado.id_tipo_contrato')
+        ->join('tipo_jornada','tipo_jornada.id','=','empleado.id_tipo_jornada')
+        ->join('departamentos','departamentos.id','=','empleado.id_depto')
+        ->select('*')
+        ->get();
+        echo dd($empleados);
 
         return view('Admin.empleados.empleado',
         compact('empleados','departamentos','tjornada','tcontrato','categorias'));
