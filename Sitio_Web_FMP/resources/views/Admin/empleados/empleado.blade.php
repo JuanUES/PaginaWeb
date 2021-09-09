@@ -319,7 +319,9 @@
                     @endphp
                     <th class="align-middle " style="width: 10%">{!!$i!!}</th>
                     <td class="align-middle ">{!!$item->apellido.','.$item->nombre!!}</td>
-                    <td class="align-middle ">{!!$categorias.find($item->categoria)->categoria!!}</td>
+                    ->select('empleado.*', 'categoria_empleados.categorias','tipo_contrato.tipo'
+                ,'tipo_jornada.tipo','departamentos.nombre_departamento')
+                    <td class="align-middle ">{!!$item->categoria_empleados.categorias!!}</td>
                     <td class="align-middle ">{!!$tcontrato.find($item->id_tipo_contrato)->tipo!!}</td>
                     <td class="align-middle ">{!!$tjornada.find($item->id_tipo_jornada)->tipo!!}</td>
                     <td class="align-middle ">{!!$departamentos.find($item->id_depto)->nombre_departamento!!}</td>

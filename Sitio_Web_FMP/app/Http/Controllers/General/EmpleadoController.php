@@ -24,7 +24,7 @@ class EmpleadoController extends Controller
         ->join('tipo_contrato','tipo_contrato.id','=','empleado.id_tipo_contrato')
         ->join('tipo_jornada','tipo_jornada.id','=','empleado.id_tipo_jornada')
         ->join('departamentos','departamentos.id','=','empleado.id_depto')
-        ->select('empleado.*', 'categoria_empleados.categorias','tipo_contrato.tipo'
+        ->select('empleado.*', 'categoria_empleados.categoria','tipo_contrato.tipo'
                 ,'tipo_jornada.tipo','departamentos.nombre_departamento')
         ->get();
         echo dd($empleados);
