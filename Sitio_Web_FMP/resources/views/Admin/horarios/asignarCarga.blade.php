@@ -6,7 +6,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id=" exampleModalLongTitle">Asignar Carga Administrativa</h5>
+          <h5 class="modal-title" id=" exampleModalLongTitle"><i class="mdi mdi-briefcase-edit-outline mdi-24px"></i> Asignar Carga Administrativa</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -18,15 +18,42 @@
                         role="alert" style="display:none" id="notificacion">                                               
                     </div>
                     <div class="row">
-                        <div class="col-xl-6">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label for="exampleInputCarga">Asignar</label>
+                                <select class="custom-select" name="A_carga" id="A_carga"/>
+                                    <option value="">Seleccione</option>
+                                    <option value="Carga Administrativa">Carga Administrativa</option>
+                                    <option value="Investigacion">Investigación</option>
+                                    <option value="Proyeccion Social">Proyección Social</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="exampleInputDocente">Docente</label>
                                 <select class="custom-select" name="id_empleado">
                                     <option value="">Seleccione</option>
                                 </select>
                             </div>
+                        </div> 
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label for="exampleInputDocente">Carga Administrativa</label>
+                                <select class="custom-select" name="id_carga">
+                                    <option value="">Seleccione</option>
+                                </select>
+                            </div>
                         </div>
 
+                    </div>
+
+                    <div class="row">
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputDias">Día</label>
@@ -40,17 +67,12 @@
                                 </select>
                             </div>
                         </div>
-                        
-                    </div>
 
-                    <div class="row">
-                        <div class="col-xl-12">
+                        <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="exampleInputDocente">Carga Administrativa</label>
-                                <select class="custom-select" name="id_carga">
-                                    <option value="">Seleccione</option>
-                                </select>
-                            </div>
+                              <label for="exampleInputCantidad">Cantidad</label>
+                              <input type="number" min="1" name="cantidad" id="cantidad" class="form-control" placeholder="Ingrese la cantidad">
+                              </div>
                         </div>
 
                     </div>
@@ -94,7 +116,7 @@
                  <button type="button" title="Agregar Carga Asignar Administrativa" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#exampleModalCenter"></button>
                 </div>
             </div>
-            <table  class="table table-sm" id="table-cargaAsig">
+            <table  class="table table-bordered" style="width:100%;">
                 <thead>
                 <tr>
                     <th data-priority="1">Personal</th>
@@ -107,7 +129,14 @@
                 <tbody>
                 <tr>
                     <th>GOOG <span class="co-name">Google Inc.</span></th>
-                    <th>GOOG</th>
+
+                    <th>
+                    @for ($i = 1; $i <=10; $i++)
+                    GOOooooodfosdf
+                        <br>
+                        @endfor
+                    </th>
+                  
                     <th>Lunes</th>
                     <td><a href="" title="Editar Asignación">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
@@ -190,39 +219,6 @@
 @endsection
 
 @section('plugins-js')
-<!-- Dashboard Init JS -->
-<script src="{{ asset('template-admin/dist/assets/js/pages/dashboard.init.js') }}"></script>
-<script>
-    $(document).ready(function () {
-        $('#table-cargaAsig').DataTable({
-          "language": {
-              "decimal":        ".",
-              "emptyTable":     "No hay datos para mostrar",
-              "info":           "Del _START_ al _END_ (_TOTAL_ total)",
-              "infoEmpty":      "Del 0 al 0 (0 total)",
-              "infoFiltered":   "(Filtrado de todas las _MAX_ entradas)",
-              "infoPostFix":    "",
-              "thousands":      "'",
-              "lengthMenu":     "Mostrar _MENU_ entradas",
-              "loadingRecords": "Cargando...",
-              "processing":     "Procesando...",
-              "search":         "Buscar:",
-              "zeroRecords":    "No hay resultados",
-              "paginate": {
-                "first":      "Primero",
-                "last":       "Último",
-                "next":       "Siguiente",
-                "previous":   "Anterior"
-              },
-              "aria": {
-                "sortAscending":  ": Ordenar de manera Ascendente",
-                "sortDescending": ": Ordenar de manera Descendente ",
-              }
-            },
-              "pagingType": "full_numbers",
-              "lengthMenu":		[[5, 10, 20, 25, 50, -1], [5, 10, 20, 25, 50, "Todos"]],
-		        	"iDisplayLength":	5,
-        });  
-      });
-</script>
+
+<script src="{{ asset('js/scripts/data-table.js') }}" defer></script>
 @endsection

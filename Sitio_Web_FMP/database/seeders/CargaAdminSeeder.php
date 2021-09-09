@@ -17,6 +17,7 @@ class CargaAdminSeeder extends Seeder
         //
         CargaAdmin::create([
             'nombre_carga'=>'Decano',
+            'categoria'=>'ad'
         ]);
     }
 }
