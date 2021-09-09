@@ -15,112 +15,107 @@
         <form id="registroForm"  action="{{ route('guardarUser') }}" method="POST">
             @csrf
             <div class="modal-body">
-                    <input type="hidden" id="_id" name="_id" value=""/>
-                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
-                        role="alert" style="display:none" id="notificacion">
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group">
-                                <label>Nota: <code>* Campos Obligatorio</code></label>
-                            </div>
+                <input type="hidden" id="_id" name="_id" value=""/>
+                <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
+                    role="alert" style="display:none" id="notificacion">
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group">
+                            <label>Nota: <code>* Campos Obligatorio</code></label>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="exampleInputCodigo">Nombre <code>*</code></label>
-                                <input type="text" class="form-control" id='nombre' name="nombre"  autocomplete="off" placeholder="Digite el nombre">
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="exampleInputUbicacion">Apellido <code>*</code></label>
-                                <input type="text" class="form-control" id="apellido" name="apellido"  autocomplete="off" placeholder="Digite el apellido">
-                            </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="exampleInputCodigo">Nombre <code>*</code></label>
+                            <input type="text" class="form-control" id='nombre' name="nombre"  autocomplete="off" placeholder="Digite el nombre">
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="">D.U.I. <code>*</code></label>
-                                <input type="text" class="form-control" name="dui" placeholder="Digite el número de D.U.I.">
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="">N.I.T. <code>*</code></label>
-                                <input type="text" class="form-control" name="nit" placeholder="Digite el número de N.I.T.">
-                            </div>
-                        </div>
-                        
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="">Teléfono <code>*</code></label>
-                                <input type="tel" class="form-control" name="telefono" placeholder="Digite el número de teléfono">
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="">Categoria <code>*</code></label>
-                                <select class="form-group selectpicker"
-                                    data-live-search="true" data-style="btn-white" 
-                                    name="categoria">
-                                <option value="" selected>Seleccione</option>
-                                 @foreach ($categorias as $item)
-                                    <option value="{!!$item->id!!}">{!!$item->categoria!!}</option>
-                                 @endforeach
-                                </select>
-                            </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="exampleInputUbicacion">Apellido <code>*</code></label>
+                            <input type="text" class="form-control" id="apellido" name="apellido"  autocomplete="off" placeholder="Digite el apellido">
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="Departamento">Tipo Contrato <code>*</code></label>
-                               <select  class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                                     id="id_tipo_contrato" name="tipo_contrato">
-                                @foreach ($tcontrato as $contrato)
-                                    <option value="{!!$contrato->id!!}">{!!$contrato->tipo!!}</option>
-                                @endforeach
-                               </select>
-                            </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="">D.U.I. <code>*</code></label>
+                            <input type="text" class="form-control" name="dui" placeholder="Digite el número de D.U.I.">
                         </div>
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="Departamento">Tipo Jornada <code>*</code></label>
-                               <select  class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                                    id="id_tipo_jornada" name="tipo_jornada">
-                                    @foreach ($tjornada as $jornada)
-                                        <option value="{!!$jornada->id!!}">{!!$jornada->tipo!!} - {!!$jornada->horas_semanales!!} horas</option>
-                                    @endforeach
-                               </select>
-                            </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="">N.I.T. <code>*</code></label>
+                            <input type="text" class="form-control" name="nit" placeholder="Digite el número de N.I.T.">
                         </div>
-                    </div>    
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <label for="Departamento">Departamento <code>*</code></label>
-                            <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                              id="id_depto" name="departamento">
-                                @foreach ($departamentos as $depto)
-                                    <option value="{!!$depto->id!!}">{!!$depto->nombre_departamento!!}</option>
+                    </div>                        
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="">Teléfono <code>*</code></label>
+                            <input type="tel" class="form-control" name="telefono" placeholder="Digite el número de teléfono">
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="">Categoria <code>*</code></label>
+                            <select class="form-group selectpicker"
+                                data-live-search="true" data-style="btn-white" name="categoria">
+                            <option value="" selected>Seleccione</option>
+                                @foreach ($categorias as $item)
+                                <option value="{!!$item->id!!}">{!!$item->categoria!!}</option>
                                 @endforeach
                             </select>
-                        </div>                       
-                        <div class="col-xl-6">
-                            <label for="Departamento">Jefes <code>*</code></label>
-                            <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" disabled
-                              id="jefes" name="jefe">
-                                <option name="" selected>Seleccione</option>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="Departamento">Tipo Contrato <code>*</code></label>
+                            <select  class="form-group selectpicker" data-live-search="true" data-style="btn-white"
+                                    id="id_tipo_contrato" name="tipo_contrato">
+                            @foreach ($tcontrato as $contrato)
+                                <option value="{!!$contrato->id!!}">{!!$contrato->tipo!!}</option>
+                            @endforeach
                             </select>
-                        </div> 
-                    </div>                 
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="Departamento">Tipo Jornada <code>*</code></label>
+                            <select  class="form-group selectpicker" data-live-search="true" data-style="btn-white"
+                                id="id_tipo_jornada" name="tipo_jornada">
+                                @foreach ($tjornada as $jornada)
+                                    <option value="{!!$jornada->id!!}">{!!$jornada->tipo!!} - {!!$jornada->horas_semanales!!} horas</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>    
+                <div class="row">
+                    <div class="col-xl-6">
+                        <label for="Departamento">Departamento <code>*</code></label>
+                        <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
+                            id="id_depto" name="departamento">
+                            @foreach ($departamentos as $depto)
+                                <option value="{!!$depto->id!!}">{!!$depto->nombre_departamento!!}</option>
+                            @endforeach
+                        </select>
+                    </div>                       
+                    <div class="col-xl-6">
+                        <label for="Departamento">Jefes <code>*</code></label>
+                        <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" disabled
+                            id="jefes" name="jefe">
+                            <option name="" selected>Seleccione</option>
+                        </select>
+                    </div> 
+                </div>                 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary"
