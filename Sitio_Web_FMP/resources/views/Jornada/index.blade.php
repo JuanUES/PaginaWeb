@@ -33,49 +33,57 @@
             <h3>Jornadas Registradas</h3>
         </div>
         <div class="col-12 col-sm-7" style="text-align:right">
-            <div class="row">
-                <div class="col-12 col-sm-9">
-                    @if(@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano') )
+            {{--  <div class="row">  --}}
 
-                    <form action="{{ route('admin.jornada.index') }}" method="get">
-                        <span class="float-left">
-                            <div class="form-group">
-                                <select class="custom-select" name="periodo">
-                                    <option value="all" selected> Todos los periodos </option>
-                                    @foreach ($periodos as $item)
-                                        <option value="{{ $item->id }}" {{ strcmp($item->id, $periodo)==0 ? 'selected' : '' }}>{{ $item->titulo }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </span>
-                        
-                        @if(@Auth::user()->hasRole('Recurso-Humano') )
-                        <span class="float-left">
-                            <div class="form-group">
-                                <select class="custom-select" name="depto">
-                                    <option value="all" selected> Departamento </option>
-                                    @foreach ($deptos as $item)
-                                        <option value="{{ $item->id }}" {{ strcmp($item->id, $depto)==0 ? 'selected' : '' }}>{!!$item->nombre_departamento!!}</option>
-                                    @endforeach
-                                </select>    
-                            </div>
-                        </span>
-                        @endif 
-                        <button class="btn btn btn-dark" title="Recargar" type="submit"> <i class="dripicons-clockwise" aria-hidden="true"></i> </button>
-                    </form>
-                    @endif 
-                </div>
-                <div class="col-12 col-sm-3">
+                {{--  <div class="col-12 col-sm-3">  --}}
                     <a class="btn btn btn-success" title="Generar Reporte" href="{{ route('admin.jornada.export') }}" > <i class="dripicons-export" aria-hidden="true"></i> </a>
                     <button class="btn btn btn-primary" title="Agregar nuevo registro" data-toggle="modal" data-target="#modalRegistro" id="btnNuevoRegistro"> <i class=" dripicons-plus" aria-hidden="true"></i> </button>
-                </div>
-            </div>
+                {{--  </div>  --}}
+            {{--  </div>  --}}
 
             {{--  <a href="{{ route('admin.jornada.create')}}" class="btn btn-primary" title="Agregar nuevo registro">
                 <i class=" dripicons-plus" aria-hidden="true"></i>
             </a>  --}}
         </div>
     </div>
+
+        {{--  <div class="col-12 col-sm-9">  --}}
+            @if(@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano') )
+            <hr>
+            <form action="{{ route('admin.jornada.index') }}" method="get">
+                <div class="row">
+                    <div class="col-12 col-sm-1">
+                        <button class="btn btn btn-dark btn-block" title="Filtrar Contenido" type="submit"> <i class="dripicons-clockwise" aria-hidden="true"></i> </button>
+                    </div>
+                    <div class="col-12 col-sm-3">
+                        <div class="form-group">
+                            <select class="custom-select" name="periodo">
+                                <option value="all" selected> Todos los periodos </option>
+                                @foreach ($periodos as $item)
+                                    <option value="{{ $item->id }}" {{ strcmp($item->id, $periodo)==0 ? 'selected' : '' }}>{{ $item->titulo }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    {{--  @if(@Auth::user()->hasRole('Recurso-Humano') )  --}}
+                    <div class="col-12 col-sm-3">
+                        <div class="form-group">
+                            <select class="custom-select" name="depto">
+                                <option value="all" selected> Departamento </option>
+                                @foreach ($deptos as $item)
+                                    <option value="{{ $item->id }}" {{ strcmp($item->id, $depto)==0 ? 'selected' : '' }}>{!!$item->nombre_departamento!!}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    {{--  @endif  --}}
+                </div>
+            </form>
+
+            @endif
+        {{--  </div>  --}}
+
     <br/>
     <br/>
     <table  class="table table-sm" id="table-jornada">
@@ -128,7 +136,7 @@
                 </tr>
                 @endforeach
             @endif
-            
+
         @endif
 
         @if( @Auth::user()->hasRole('Docente') )
@@ -198,7 +206,7 @@
                                             <option value="{{ $item->id }}" selected>{{  $item->apellido }}, {{ $item->nombre }}</option>
                                         @endforeach
                                     </select>
-                                @endif  
+                                @endif
                                 @if( @Auth::user()->hasRole('Recurso-Humano') || @Auth::user()->hasRole('super-admin') )
                                 <select class="custom-select" name="id_emp" id="id_emp">
                                     <option value="">Seleccione un Empleado</option>
