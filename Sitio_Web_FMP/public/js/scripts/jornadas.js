@@ -163,7 +163,7 @@ jQuery.validator.addMethod("notEqual", function (value, element, param) {
     return this.optional(element) || value != param;
 }, "Please specify a different (non-default) value");
 
-$("#registroForm").validate({
+$("#frmJornada").validate({
     rules: {
         id_emp: {
             required: true,
@@ -188,7 +188,7 @@ $("#registroForm").validate({
             type: 'hidden',
             name: 'items',
             value: JSON.stringify(table.getData())
-        }).appendTo('#registroForm');
+        }).appendTo('#frmJornada');
 
         var valid = table.validate();
         if (valid != true) {
@@ -206,10 +206,10 @@ $("#registroForm").validate({
                 }
             });
             $.ajax({
-                type: $('#registroForm').attr('method'),
-                url: $('#registroForm').attr('action'),
+                type: $('#frmJornada').attr('method'),
+                url: $('#frmJornada').attr('action'),
                 dataType: "JSON",
-                data: new FormData(document.getElementById('#registroForm'.replace('#', ''))),
+                data: new FormData(document.getElementById('#frmJornada'.replace('#', ''))),
                 processData: false,
                 contentType: false,
                 error: function (jqXHR, textStatus) {
@@ -241,7 +241,7 @@ $("#registroForm").validate({
                         + '</div>'
                     ).show();
                     $('.modal').scrollTop(0);
-                    disableform('#registroForm');
+                    disableform('#frmJornada');
                 },
             }).then(function (data) {
                 if (data.error != null) {
@@ -262,7 +262,7 @@ $("#registroForm").validate({
                         + '</div>'
                         + '</div>'
                     ).show();
-                    enableform('#registroForm');
+                    enableform('#frmJornada');
 
                 } else {
                     if (data.mensaje != null && data.error == null) {
@@ -276,7 +276,7 @@ $("#registroForm").validate({
                             + '</div>'
                             + '</div>'
                         ).show();
-                        $('#registroForm')[0].reset();
+                        $('#frmJornada')[0].reset();
                         location.reload();
                     }
                 }
@@ -339,8 +339,8 @@ function updateChangeTable(){
     let updatehours = updateJornada();
     $("#_horas").val(updatehours);
 
-    console.log(total, 'Total horas');
-    console.log(updatehours, 'Horas tabla');
+    // console.log(total, 'Total horas');
+    // console.log(updatehours, 'Horas tabla');
 
     validateHoras(total, updatehours);
 

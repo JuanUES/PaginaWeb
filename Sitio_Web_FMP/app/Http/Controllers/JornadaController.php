@@ -12,6 +12,7 @@ use App\Models\Tipo_Jornada;
 use App\Models\User;
 use App\Models\General\Empleado;
 use App\Models\Horarios\Departamento;
+use App\Models\Jornada\Seguimiento;
 use App\Models\Notificaciones;
 use Exception;
 use Illuminate\Http\Request;
@@ -129,23 +130,23 @@ class JornadaController extends Controller{
                 // dd($request);
                 $periodo = Periodo::findOrFail($request->id_periodo);
                 $empleado = Empleado::findOrFail($request->id_emp);
-                $jefe = $empleado->jefe_rf;
+                // $jefe = $empleado->jefe_rf;
 
-                if(!is_null($jefe)){
-                    $usuario_jefe = $jefe->usuario_rf->email;
-                }
+                // if(!is_null($jefe)){
+                //     $usuario_jefe = $jefe->usuario_rf->email;
+                // }
 
                 $jornada = Jornada::create($requestData);
 
-                // dd(Auth::user()->id);
+                // // dd(Auth::user()->id);
 
-                //notificacion de jornada enviada al mismo empleado
+                // //notificacion de jornada enviada al mismo empleado
 
-                Notificaciones::create([
-                    'usuario_id' => Auth::user()->id,
-                    'mensaje' => 'La jornada para el período '. $periodo->titulo .' ha sido enviada a la Jefatura',
-                    'tipo' => 'Jornada',
-                ]);
+                // Notificaciones::create([
+                //     'usuario_id' => Auth::user()->id,
+                //     'mensaje' => 'La jornada para el período '. $periodo->titulo .' ha sido enviada a la Jefatura',
+                //     'tipo' => 'Jornada',
+                // ]);
 
 
                 if (is_array($items) || is_object($items)) {
@@ -161,37 +162,37 @@ class JornadaController extends Controller{
 
                 Utilidades::fnSaveBitacora('Nueva Jornada #: ' . $jornada->id, 'Registro', $this->modulo);
             } else {
-                $msg = 'Modificación exitoso.';
-                $jornadas = Jornada::findOrFail($id);
-                $jornadas->update($requestData);
+                // $msg = 'Modificación exitoso.';
+                // $jornadas = Jornada::findOrFail($id);
+                // $jornadas->update($requestData);
 
-                $items_DB = JornadaItem::select('id')->where('id_jornada', $jornadas->id)->get();
+                // $items_DB = JornadaItem::select('id')->where('id_jornada', $jornadas->id)->get();
 
-                foreach ($items as $key => $value) {
+                // foreach ($items as $key => $value) {
 
-                    $data = [
-                        'dia' => $value->dia,
-                        'hora_inicio' => $value->hora_inicio,
-                        'hora_fin' => $value->hora_fin,
-                        'id_jornada' => $jornadas->id,
-                        'estado' => 'activo',
-                    ];
+                //     $data = [
+                //         'dia' => $value->dia,
+                //         'hora_inicio' => $value->hora_inicio,
+                //         'hora_fin' => $value->hora_fin,
+                //         'id_jornada' => $jornadas->id,
+                //         'estado' => 'activo',
+                //     ];
 
-                    if(isset($value->id) && !empty($value->id)){
-                        $item = JornadaItem::findOrFail($value->id);
-                        $item->update($data);
-                        $items_DB->forget($key);
-                    }else{
-                        JornadaItem::create($data);
-                    }
+                //     if(isset($value->id) && !empty($value->id)){
+                //         $item = JornadaItem::findOrFail($value->id);
+                //         $item->update($data);
+                //         $items_DB->forget($key);
+                //     }else{
+                //         JornadaItem::create($data);
+                //     }
 
-                }
+                // }
 
-                //para eliminar los items que no vienen y que han sio elimnados por el usuario
-                foreach ($items_DB as $key => $value) {
-                    $item = JornadaItem::findOrFail($value->id);
-                    $item->delete();
-                }
+                // //para eliminar los items que no vienen y que han sio elimnados por el usuario
+                // foreach ($items_DB as $key => $value) {
+                //     $item = JornadaItem::findOrFail($value->id);
+                //     $item->delete();
+                // }
 
 
                 // Utilidades::fnSaveBitacora('Jornada #: ' . $periodo->id . ' Título: ' . $periodo->titulo, 'Modificación', $this->modulo);
@@ -323,6 +324,48 @@ class JornadaController extends Controller{
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()->all()]);
             }
+
+
+            // dd($request);
+            $jornada = Jornada::findOrFail($request->jornada_id);
+
+            $jornada->update([
+                'procedimiento' => $request->proceso,
+            ]);
+
+            $periodo = $jornada->periodo_rf;
+            $empleado = $jornada->empleado_rf;
+            $jefe = $empleado->jefe_rf;
+
+            if (!is_null($jefe)) {
+                $usuario = $jefe->usuario_rf;
+                if(!is_null($usuario)){
+                    Notificaciones::create([
+                        'usuario_id' => Auth::user()->id,
+                        'mensaje' => $empleado->nombre.' '.$empleado->apellido.' ha enviado la jornada para el período ' . $periodo->titulo,
+                        'tipo' => 'Jornada'
+                    ]);
+
+                }
+                // $usuario_jefe = $jefe->usuario_rf;
+            }
+
+
+
+            // dd(Auth::user()->id);
+
+            //notificacion de jornada enviada al mismo empleado
+
+            Notificaciones::create([
+                'usuario_id' => Auth::user()->id,
+                'mensaje' => 'La jornada para el período ' . $periodo->titulo . ' ha sido enviada a la Jefatura',
+                'tipo' => 'Jornada',
+            ]);
+
+
+            Seguimiento::create($request->all());
+
+
 
             // Utilidades::fnSaveBitacora('Nuevo Tipo #: ' . $tipo->id, 'Registro', $this->modulo);
 

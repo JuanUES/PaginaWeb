@@ -28,12 +28,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="registroForm" action="{{ url('admin/jornada-procedimiento/store') }}" method="POST">
-                @csrf
+            <form id="registroForm" action="{{ url('admin/jornada-procedimiento') }}" method="POST">
+                {{--  @csrf  --}}
                 <input type="hidden" name="jornada_id" id="jornada_id">
                 <div class="modal-body">
-                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
-                        role="alert" style="display:none" id="notificacion">
+                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" role="alert" style="display:none" id="notificacion">
                     </div>
                     <div class="row">
                         <div class="col-12">
@@ -46,7 +45,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="tip">Proceso <span class="text-danger">*</span> </label>
-                                <select class="custom-select" name="proceso" required>
+                                <select class="custom-select" name="proceso" >
                                     <option value="" selected> Seleccione una opción </option>
                                     <option value="enviado a jefatura">Enviar a Jefatura</option>
                                     <option value="enviado a recursos humanos">Enviar a Recursos Humanos</option>
@@ -66,7 +65,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fa fa-ban"  aria-hidden="true"></i> Cerrar</button>
-                    <button type="submit" class="btn btn-primary btn-sm"><li class="fa fa-save"></li> Guardar</button>
+                    <button type="button" class="btn btn-primary btn-sm" onClick="submitForm('#registroForm','#notificacion')"><li class="fa fa-save"></li> Guardar</button>
                 </div>
             </form>
         </div>
@@ -96,10 +95,10 @@
             <hr>
             <form action="{{ route('admin.jornada.index') }}" method="get">
                 <div class="row">
-                    <div class="col-12 col-sm-1">
+                    <div class="col-12 col-sm-2 col-md-1">
                         <button class="btn btn btn-dark btn-block" title="Filtrar Contenido" type="submit"> <i class="dripicons-clockwise" aria-hidden="true"></i> </button>
                     </div>
-                    <div class="col-12 col-sm-3">
+                    <div class="col-12 col-sm-5 col-md-3">
                         <div class="form-group">
                             <select class="custom-select" name="periodo">
                                 <option value="all" selected> Todos los periodos </option>
@@ -109,7 +108,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-3">
+                    <div class="col-12 col-sm-5 col-md-3">
                         <div class="form-group">
                             <select class="custom-select" name="depto">
                                 <option value="all" selected> Departamento </option>
@@ -237,12 +236,11 @@
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
-            <form id="registroForm"  action="{{ route('admin.jornada.store') }}" method="POST">
+            <form id="frmJornada"  action="{{ route('admin.jornada.store') }}" method="POST">
+                @csrf
                 <input type="hidden" name="_id" id="_id">
                 <div class="modal-body">
-                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
-                        role="alert" style="display:none" id="notificacion">
-                    </div>
+                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" role="alert" style="display:none" id="notificacion_jornada"></div>
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group">
@@ -395,7 +393,7 @@
         if(id!==''){
             // $("#jornada-div").show('slow');
             $("#jornada-div :input").prop("disabled", false);
-            let data = getData('GET', `{{ url('admin/jornada/jornadaEmpleado/') }}/`+id,'#notificacion');
+            let data = getData('GET', `{{ url('admin/jornada/jornadaEmpleado/') }}/`+id,'#notificacion_jornada');
             data.then(function(response){
                 $(".total-horas").val(response.horas_semanales);
                 updateChangeTable();

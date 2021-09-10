@@ -5,6 +5,7 @@ namespace App\Models\General;
 use App\Models\Tipo_Jornada;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User;
 
 class Empleado extends Model
 {

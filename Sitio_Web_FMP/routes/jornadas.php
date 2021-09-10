@@ -15,9 +15,10 @@ Route::get('admin/jornada-export', 'App\Http\Controllers\JornadaController@expor
 Route::get("admin/jornada/detalle/{id}", "App\Http\Controllers\JornadaController@getDetalle");
 Route::get('admin/jornada/jornadaEmpleado/{id}', 'App\Http\Controllers\JornadaController@getEmpleadoJornada')->name('admin.jornada.empleado');
 
+Route::post("admin/jornada-procedimiento", "App\Http\Controllers\JornadaController@procedimiento")->name('admin.jornada.procedimiento');
+
 //obtener departamentos
-Route::post('admin/jornada/select{id}", "App\Http\Controllers\JornadaController@getDepto')->name('admin.jornada.select');
-Route::post('admin/jornada-procedimiento/store", "App\Http\Controllers\JornadaController@procedimiento')->name('admin.jornada.procedimiento');
+Route::post('admin/jornada/select{id}', 'App\Http\Controllers\JornadaController@getDepto')->name('admin.jornada.select');
 
 
 //RUTAS PERIODO
