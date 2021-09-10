@@ -27,6 +27,19 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label for="exampleInputCategoria">Categoria</label>
+                                <select class="custom-select" name="categoria" id="categoria">
+                                    <option value="">Seleccione</option>
+                                    <option value="ad">Carga Administrativa</option>
+                                    <option value="ps">Proyección Social</option>
+                                    <option value="tg">Trabajo de Grado</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
                     
             </div>
             <div class="modal-footer">
@@ -37,7 +50,7 @@
       </div>
     </div>
   </div>
-<!-- start page title -->}
+<!-- start page title -->
 
 <!--modal para dar alta-->
 <div id="modalAlta" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" 
@@ -121,12 +134,12 @@
                   data-toggle="modal" data-target="#carga"></button>
                 </div>
             </div>
-            <table  class="table table-bordered">
+            <table  class="table table-bordered" style="width: 100%">
                 <thead>
                 <tr>
-                    <th data-priority="1" style="width: 5%;">N°</th>
-                    <th data-priority="1" style="width: 50%;">Carga Administrativa</th>
-                    <th data-priority="1" style="20%">Estado</th>
+                    <th data-priority="1">N°</th>
+                    <th data-priority="1">Carga Administrativa</th>
+                    <th data-priority="1">Estado</th>
                     <th data-priority="1">Acciones</th>
                   
                 </tr>

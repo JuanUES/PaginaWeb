@@ -23,9 +23,9 @@
                                 <label for="exampleInputCarga">Asignar</label>
                                 <select class="custom-select" name="A_carga" id="A_carga"/>
                                     <option value="">Seleccione</option>
-                                    <option value="Carga Administrativa">Carga Administrativa</option>
-                                    <option value="Investigacion">Investigación</option>
-                                    <option value="Proyeccion Social">Proyección Social</option>
+                                    <option value="ad">Carga Administrativa</option>
+                                    <option value="tg">Investigación</option>
+                                    <option value="ps">Proyección Social</option>
                                 </select>
                             </div>
                         </div>
@@ -45,9 +45,10 @@
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="exampleInputDocente">Carga Administrativa</label>
-                                <select class="custom-select" name="id_carga">
-                                    <option value="">Seleccione</option>
-                                </select>
+                                <select class="form-control select2-multiple" data-toggle="select2" id="carga"
+                                multiple="multiple" aria-placeholder="Seleccione" style="width: 100%;" name="carga[]">
+                                                               
+                           </select>
                             </div>
                         </div>
 
@@ -218,7 +219,20 @@
 <!-- end row -->   
 @endsection
 
+@section('plugins')
+<link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
+<link href="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>
+@endsection
+
 @section('plugins-js')
 
+<!-- Bootstrap Select -->
+<script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
+<script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}"></script>
+<script>
+    $('#roles').select2();
+</script>
+
+<script src="{{ asset('js/horariosJs/asignacionCarga.js') }}"></script>
 <script src="{{ asset('js/scripts/data-table.js') }}" defer></script>
 @endsection

@@ -1,7 +1,8 @@
 function editar(json){
 
     $("#_id").val(json.id);
-    $("#nombre_carga").val(json.nombre_carga);  
+    $("#nombre_carga").val(json.nombre_carga); 
+    $("#categoria").val(json.categoria);
     };
 
 

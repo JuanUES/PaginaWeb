@@ -21,6 +21,7 @@ class CargaController extends Controller
 
             $validator = Validator::make($request->all(),[
                 'nombre_carga'      => 'required|max:255|unique:carga_admins,nombre_carga',
+                'categoria'         =>'required'
             ]);         
 
             if($validator->fails())
