@@ -45,6 +45,7 @@ class EmpleadoController extends Controller
             'tipo_contrato' => 'required',
             'tipo_jornada' => 'required',
             'departamento' => 'required',
+            'tipo_empleado'=>'required',
         ]);         
 
 
@@ -65,6 +66,7 @@ class EmpleadoController extends Controller
             'id_tipo_contrato'=>$request->tipo_contrato,
             'id_tipo_jornada'=>$request->tipo_jornada,
             'id_depto'=>$request->departamento,
+            'tipo_empleado'=>$request->tipo_empleado,
         ]);
         
         return response()->json(['code'=>200, 'mensaje'=>'Registro exitoso','data' => $empleado], 200);

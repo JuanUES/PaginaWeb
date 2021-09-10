@@ -109,6 +109,18 @@
                         </select>
                     </div>                       
                     <div class="col-xl-6">
+                        <label for="Departamento">Tipo Empleado </label>
+                        <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" 
+                            id="tipo_empleado" name="tipo_empleado">
+                            <option name="" selected>Seleccione</option>
+                           <option value="Administrativo">Administrativo</option>
+                           <option value="Académico">Académico</option>
+                        </select>
+                    </div> 
+
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
                         <label for="Departamento">Jefes y Empleados </label>
                         <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" 
                             id="jefes" name="jefe">
