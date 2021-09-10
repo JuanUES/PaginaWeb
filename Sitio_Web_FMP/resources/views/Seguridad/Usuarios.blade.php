@@ -73,7 +73,7 @@
                                  style="width: 100%;" name="empleado" id="empleado">
                                     <option value="">Seleccione</option>
                                     @foreach ($empleados as $item)
-                                        <option value="{{$item->id}}">{{$item->nombre}}</option>
+                                        <option value="{{$item->id}}">{{$item->nombre.' '.$item->apellido}}</option>
                                     @endforeach
                                 </select>
                             </div>
