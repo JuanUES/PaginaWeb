@@ -24,12 +24,11 @@ class EmpleadoController extends Controller
         ->join('tipo_contrato','tipo_contrato.id','=','empleado.id_tipo_contrato')
         ->join('tipo_jornada','tipo_jornada.id','=','empleado.id_tipo_jornada')
         ->join('departamentos','departamentos.id','=','empleado.id_depto')
-        ->select('empleado.*', 'categoria_empleados.categoria','tipo_contrato.tipo'
-                ,'tipo_jornada.tipo','departamentos.nombre_departamento')
+        ->select('empleado.*', 'categoria_empleados.categoria as categoria','tipo_contrato.tipo as contrato'
+                ,'tipo_jornada.tipo as jornada','departamentos.nombre_departamento as departamento')
         ->get();
-        echo dd($empleados);
 
-        return view('Admin.empleados.empleado',
+        return view('General.Empleado',
         compact('empleados','departamentos','tjornada','tcontrato','categorias'));
     }
 
@@ -46,10 +45,8 @@ class EmpleadoController extends Controller
             'tipo_contrato' => 'required',
             'tipo_jornada' => 'required',
             'departamento' => 'required',
-            //'jefe' => 'required',
         ]);         
 
-        echo dd($request);
 
         if($validator->fails())
         {            
@@ -58,6 +55,7 @@ class EmpleadoController extends Controller
         }
 
         $empleado = Empleado::updateOrCreate([
+            'id'=>$request->_id,
             'nombre'=>$request->nombre,
             'apellido'=>$request->apellido,
             'dui'=>$request->dui,
@@ -67,8 +65,6 @@ class EmpleadoController extends Controller
             'id_tipo_contrato'=>$request->tipo_contrato,
             'id_tipo_jornada'=>$request->tipo_jornada,
             'id_depto'=>$request->departamento,
-            //'jefe'=>$request->jefe,
-            'estado' =>true,
         ]);
         
         return response()->json(['code'=>200, 'mensaje'=>'Registro exitoso','data' => $empleado], 200);
@@ -84,11 +80,11 @@ class EmpleadoController extends Controller
             return response()->json(['error'=>$validator->errors()->all()]);
             
         }
-        
+
         $cat = $request->_id != null ? CategoriaEmpleado::findOrFail($request->_id):new CategoriaEmpleado;
         $cat -> categoria = $request->categoria;
         $cat -> save();
-        return response()->json(['code'=>200, 'mensaje'=>'Categoria añadido correctamente','data' => $cat], 200);        
+        return response()->json(['code'=>200, 'mensaje'=>'Categoria registrada','data' => $cat], 200);        
     }
 
     public function categoriaDestroy(Request $request){

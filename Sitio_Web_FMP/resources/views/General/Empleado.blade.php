@@ -12,7 +12,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form id="registroForm"  action="{{ route('guardarUser') }}" method="POST">
+        <form id="registroForm"  action="{{ route('EmpleadoReg') }}" method="POST">
             @csrf
             <div class="modal-body">
                 <input type="hidden" id="_id" name="_id" value=""/>
@@ -64,9 +64,9 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="">Categoria <code>*</code></label>
-                            <select class="form-group selectpicker"
+                            <select class="selectpicker"
                                 data-live-search="true" data-style="btn-white" name="categoria">
-                            <option value="" selected>Seleccione</option>
+                                <option value="" selected>Seleccione</option>
                                 @foreach ($categorias as $item)
                                 <option value="{!!$item->id!!}">{!!$item->categoria!!}</option>
                                 @endforeach
@@ -109,7 +109,7 @@
                         </select>
                     </div>                       
                     <div class="col-xl-6">
-                        <label for="Departamento">Jefes <code>*</code></label>
+                        <label for="Departamento">Jefes </label>
                         <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" disabled
                             id="jefes" name="jefe">
                             <option name="" selected>Seleccione</option>
@@ -311,20 +311,20 @@
                 </tr>
                 </thead>
                 <tbody>
-               
+               @php
+                   $i=0;
+               @endphp
                 @foreach ($empleados as $item)
                 <tr>
                     @php
                         $i++;
                     @endphp
                     <th class="align-middle " style="width: 10%">{!!$i!!}</th>
-                    <td class="align-middle ">{!!$item->apellido.','.$item->nombre!!}</td>
-                    ->select('empleado.*', 'categoria_empleados.categorias','tipo_contrato.tipo'
-                ,'tipo_jornada.tipo','departamentos.nombre_departamento')
-                    <td class="align-middle ">{!!$item->categoria_empleados.categorias!!}</td>
-                    <td class="align-middle ">{!!$tcontrato.find($item->id_tipo_contrato)->tipo!!}</td>
-                    <td class="align-middle ">{!!$tjornada.find($item->id_tipo_jornada)->tipo!!}</td>
-                    <td class="align-middle ">{!!$departamentos.find($item->id_depto)->nombre_departamento!!}</td>
+                    <td class="align-middle ">{!!$item->nombre.' '.$item->apellido!!}</td>
+                    <td class="align-middle ">{!!$item->categoria!!}</td>
+                    <td class="align-middle ">{!!$item->contrato!!}</td>
+                    <td class="align-middle ">{!!$item->jornada!!}</td>
+                    <td class="align-middle ">{!!$item->departamento!!}</td>
                     <td class="align-middle font-16">{!! !$item->estado?'<span class="badge badge-danger">Desactivado</span> ' : '<span class="badge badge-success">Activado</span> ' !!}</td>
                     <td class="align-middle ">
                         <div class="row">

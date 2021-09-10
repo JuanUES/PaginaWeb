@@ -12,7 +12,7 @@ Route::get('admin/Empleado/Categoria',[EmpleadoController::class, 'categoriaGet'
 
 /**Metodos Post */
 Route::post('admin/Empleado/empleado', [EmpleadoController::class, 'store'])
-->name('Empleado.empleado')->middleware(['auth']);
+->name('EmpleadoReg')->middleware(['auth']);
 
 Route::post('admin/Empleado/Categoria/Registrar',[EmpleadoController::class, 'categoriaStore'])
 ->name('empleadoCatReg')->middleware(['auth']);

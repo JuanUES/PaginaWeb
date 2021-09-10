@@ -19,7 +19,7 @@ class UsuariosController extends Controller
     {
         $usuarios = User::orderBy('id')->get();
         $empleados = Empleado::where('estado',true)->get();
-        return view('admin.sesion.Usuarios',compact('usuarios','empleados'));
+        return view('Seguridad.Usuarios',compact('usuarios','empleados'));
     }
 
     public function usuarioRol($usuario){
