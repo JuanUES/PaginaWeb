@@ -22,6 +22,7 @@ class CreateEmpleadosTable extends Migration
             $table->string('telefono')->nullable();
             $table->string('urlfoto')->nullable();
             $table->boolean("estado")->default(true);
+            $table->enum('tipo_empleado',['Administrativo','Académico']);
             $table->bigInteger('jefe')->nullable();
             $table->bigInteger('id_depto');
             $table->bigInteger('categoria');
