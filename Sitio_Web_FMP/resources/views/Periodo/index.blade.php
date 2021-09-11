@@ -91,12 +91,23 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-12 col-sm-12">
+                                <div class="form-group">
+                                    <label for="ciclo_id">Ciclo <span class="text-danger">*</span> </label>
+                                    <select class="custom-select" name="ciclo_id" id="ciclo_id">
+                                        <option value="">Selecione un ciclo</option>
+                                        @foreach ($ciclos as $item)
+                                            <option value="{{ $item->id }}"> {{ $item->nombre }} <strong>{{ $item->año }}</strong></option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            {{--  <div class="col-12">
                                 <div class="form-group">
                                     <label for="FechaI">Título <span class="text-danger">*</span> </label>
                                     <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Ingrese el Título">
                                 </div>
-                            </div>
+                            </div>  --}}
 
                             <div class="col-12">
                                 <label for="FechaI">Periodo <span class="text-danger">*</span> </label>
@@ -306,7 +317,7 @@
                 $('#fecha_fin').val(new Date(end).toUTCString());
             });
             $("#registroForm #observaciones").val(response.observaciones);
-            $("#registroForm #titulo").val(response.titulo).trigger('change');
+            $("#registroForm #ciclo_id").val(response.ciclo_id).change();
             $("#registroForm #_id").val(response.id);
         });
     }

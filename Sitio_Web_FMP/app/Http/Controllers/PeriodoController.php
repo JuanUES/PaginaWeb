@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\_UTILS\Utilidades;
+use App\Models\Ciclo;
 use App\Models\Jornada\Periodo;
 use Exception;
 use Illuminate\Http\Request;
@@ -12,15 +13,18 @@ class PeriodoController extends Controller{
     public $modulo = 'Transparencia Directorios';
 
     public $rules = [
-        'titulo' => 'required|string',
+        'ciclo_id' => 'required|integer',
         'fecha_inicio' => 'required|date',
         'fecha_fin' => 'required|date',
         'tipo' => 'required|string',
     ];
 
+    public $messages = [
+        'ciclo_id.required' => 'Seleccione un ciclo'
+    ];
+
     public function __construct(){
-        $this->middleware('auth');
-        $this->middleware(['role:super-admin']);
+        $this->middleware(['auth','role:super-admin']);
     }
     /**
      * Display a listing of the resource.
@@ -29,7 +33,8 @@ class PeriodoController extends Controller{
      */
     public function index(Request $request){
         $periodo = Periodo::where('estado', '!=' ,'inactivo')->get();
-        return view('Periodo.index', compact('periodo'));
+        $ciclos = Ciclo::where('estado', true)->orderBy('id', 'DESC')->get();
+        return view('Periodo.index', compact(['periodo','ciclos']));
     }
     /**
      * Store a newly created resource in storage.
@@ -40,7 +45,7 @@ class PeriodoController extends Controller{
     public function store(Request $request){
         /**Guardo en base de datos */
         try {
-            $validator = Validator::make($request->all(), $this->rules);
+            $validator = Validator::make($request->all(), $this->rules, $this->messages);
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()->all()]);
             }

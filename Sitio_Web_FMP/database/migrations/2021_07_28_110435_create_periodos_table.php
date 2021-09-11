@@ -14,8 +14,10 @@ class CreatePeriodosTable extends Migration
     public function up()
     {
         Schema::create('periodos', function (Blueprint $table) {
-            $table->id();
-            $table->string('titulo');
+            $table->engine = 'InnoDB';
+            $table->increments('id');
+            $table->integer('ciclo_id');
+            $table->foreign('ciclo_id')->references('id')->on('ciclos');
             $table->date('fecha_inicio');
             $table->date('fecha_fin');
             $table->string('tipo');

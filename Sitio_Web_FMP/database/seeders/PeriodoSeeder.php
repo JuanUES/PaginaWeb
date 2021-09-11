@@ -14,12 +14,12 @@ class PeriodoSeeder extends Seeder
      */
     public function run()
     {
-        Periodo::create([
-          'titulo'=>'Primero',
-          'fecha_inicio'=>'2021-02-06',
-          'fecha_fin'=>'2021-07-06',
-          'tipo'=>'Docente',
-          'estado'=>'activo',
-        ]);
+        // Periodo::create([
+        //   'titulo'=>'Primero',
+        //   'fecha_inicio'=>'2021-02-06',
+        //   'fecha_fin'=>'2021-07-06',
+        //   'tipo'=>'Docente',
+        //   'estado'=>'activo',
+        // ]);
     }
 }

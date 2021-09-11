@@ -11,10 +11,10 @@ class CreateCiclosTable extends Migration
      *
      * @return void
      */
-    public function up()
-    {
+    public function up(){
         Schema::create('ciclos', function (Blueprint $table) {
-            $table->id();
+            $table->engine = 'InnoDB';
+            $table->increments('id');
             $table->string('nombre');
             $table->string('año');
             $table->boolean('estado')->default(true);
