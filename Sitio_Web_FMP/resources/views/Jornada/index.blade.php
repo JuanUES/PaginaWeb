@@ -2,75 +2,6 @@
 
 @section('content')
 
-<div class="modal fade" id="modalView" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="lead"> <i class="fa fa-info-circle"></i> Detalle Jornada </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="col-12 col-sm-12">
-                <table class="table" id="tableView">
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="modalProcedimiento" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="lead"> <i class="fa fa-check-circle"></i> Procedimiento de Validación </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form id="registroForm" action="{{ url('admin/jornada-procedimiento') }}" method="POST">
-                {{--  @csrf  --}}
-                <input type="hidden" name="jornada_id" id="jornada_id">
-                <div class="modal-body">
-                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" role="alert" style="display:none" id="notificacion">
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label>Nota: <code>* Campos Obligatorio</code></label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label for="tip">Proceso <span class="text-danger">*</span> </label>
-                                <select class="custom-select" name="proceso" >
-                                    <option value="" selected> Seleccione una opción </option>
-                                    <option value="enviado a jefatura">Enviar a Jefatura</option>
-                                    <option value="enviado a recursos humanos">Enviar a Recursos Humanos</option>
-                                    <option value="la jefatura lo ha regresado por problemas">Retornar al empleado</option>
-                                    <option value="aceptado">Aceptar</option>
-                                    <option value="invalidado">Invalidar</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="form-group">
-                                <label for="FechaI">Observaciones</label>
-                                <textarea type="text" class="form-control" name="observaciones" id="observaciones" placeholder="Ingrese las observaciones necesarias" rows="2"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fa fa-ban"  aria-hidden="true"></i> Cerrar</button>
-                    <button type="button" class="btn btn-primary btn-sm" onClick="submitForm('#registroForm','#notificacion')"><li class="fa fa-save"></li> Guardar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
 <div class="row">
     <div class="col-12">
@@ -86,28 +17,30 @@
             <h3>Jornadas Registradas</h3>
         </div>
         <div class="col-12 col-sm-7" style="text-align:right">
-            <a class="btn btn btn-success" title="Generar Reporte" href="{{ route('admin.jornada.export') }}" > <i class="dripicons-export" aria-hidden="true"></i> </a>
-            <button class="btn btn btn-primary" title="Agregar nuevo registro" data-toggle="modal" data-target="#modalRegistro" id="btnNuevoRegistro"> <i class=" dripicons-plus" aria-hidden="true"></i> </button>
+            @hasanyrole('super-admin|Jefe-Academico|Jefe-Departamento|Recurso-Humano')
+                <button class="btn btn btn-success" title="Generar Reporte" data-toggle="modal" data-target="#modalExport"> <i class="fa fa-file-excel" aria-hidden="true"></i> </button>
+            @endhasanyrole
+            <button class="btn btn btn-primary" title="Agregar nuevo registro" data-toggle="modal" data-target="#modalRegistro" id="btnNuevoRegistro"> <i class="dripicons-plus" aria-hidden="true"></i> </button>
         </div>
     </div>
 
-            @if(@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano') )
-            <hr>
-            <form action="{{ route('admin.jornada.index') }}" method="get">
-                <div class="row">
-                    <div class="col-12 col-sm-2 col-md-1">
-                        <button class="btn btn btn-dark btn-block" title="Filtrar Contenido" type="submit"> <i class="dripicons-clockwise" aria-hidden="true"></i> </button>
+        <hr>
+        <form action="{{ route('admin.jornada.index') }}" method="get">
+            <div class="row">
+                <div class="col-12 col-sm-2 col-md-1">
+                    <button class="btn btn btn-dark btn-block" title="Filtrar Contenido" type="submit"> <i class="dripicons-clockwise" aria-hidden="true"></i> </button>
+                </div>
+                <div class="col-12 col-sm-5 col-md-3">
+                    <div class="form-group">
+                        <select class="custom-select" name="periodo">
+                            <option value="all" selected> Todos los periodos </option>
+                            @foreach ($periodos as $item)
+                                <option value="{{ $item->id }}" {{ strcmp($item->id, $periodo)==0 ? 'selected' : '' }}>{{ $item->ciclo_rf->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
+                            @endforeach
+                        </select>
                     </div>
-                    <div class="col-12 col-sm-5 col-md-3">
-                        <div class="form-group">
-                            <select class="custom-select" name="periodo">
-                                <option value="all" selected> Todos los periodos </option>
-                                @foreach ($periodos as $item)
-                                    <option value="{{ $item->id }}" {{ strcmp($item->id, $periodo)==0 ? 'selected' : '' }}>{{ $item->titulo }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+                </div>
+                @hasanyrole('super-admin|Recurso-Humano')
                     <div class="col-12 col-sm-5 col-md-3">
                         <div class="form-group">
                             <select class="custom-select" name="depto">
@@ -118,9 +51,9 @@
                             </select>
                         </div>
                     </div>
-                </div>
-            </form>
-            @endif
+                @endhasanyrole
+            </div>
+        </form>
     <br/>
     <br/>
     <table  class="table table-sm" id="table-jornada">
@@ -226,104 +159,8 @@
     </table>
 </div>
 
-<!-- inicio Modal de registro -->
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="modalRegistro" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h4 class="modal-title"><i class=" mdi mdi-account-badge-horizontal mdi-24px" aria-hidden="true" ></i> Jornada</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div>
-            <form id="frmJornada"  action="{{ route('admin.jornada.store') }}" method="POST">
-                @csrf
-                <input type="hidden" name="_id" id="_id">
-                <div class="modal-body">
-                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" role="alert" style="display:none" id="notificacion_jornada"></div>
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group">
-                                <label>Nota: <code>* Campos Obligatorio</code></label>
-                            </div>
-                        </div>
-                    </div>
+@include('Jornada._components.modals')
 
-                    <div class="row justify-content-between">
-                        <div class="col-12 col-sm-12">
-                            <div class="form-group">
-                                <label for="empleado" class="control-label">{{ 'Empleado' }} <span class="text-danger">*</span> </label>
-                                @if( @Auth::user()->hasRole('Docente')  )
-                                    <select class="custom-select" name="id_emp" id="id_emp">
-                                        <option value="">Seleccione un Empleado</option>
-                                        @foreach ($docente as $item)
-                                            <option value="{{ $item->id }}" selected>{{  $item->apellido }}, {{ $item->nombre }}</option>
-                                        @endforeach
-                                    </select>
-                                @endif
-                                @if( @Auth::user()->hasRole('Recurso-Humano') || @Auth::user()->hasRole('super-admin') )
-                                <select class="custom-select" name="id_emp" id="id_emp">
-                                    <option value="">Seleccione un Empleado</option>
-                                    @foreach ($empleados as $item)
-                                        <option value="{{ $item->id }}">{{ $item->apellido }}, {{ $item->nombre }}</option>
-                                    @endforeach
-                                </select>
-                                @endif
-                                @if( @Auth::user()->hasRole('Jefe-Departamento') )
-                                <select class="custom-select" name="id_emp" id="id_emp">
-                                    <option value="">Seleccione un Empleado</option>
-                                    @foreach ($empleadosJefe as $item)
-                                        <option value="{{ $item->id }}">{{ $item->apellido }}, {{ $item->nombre }}</option>
-                                    @endforeach
-                                </select>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-8">
-                            <div class="form-group">
-                                <label for="periodo" class="control-label">{{ 'Periodo' }} <span class="text-danger">*</span> </label>
-                                <select class="custom-select" name="id_periodo" id="id_periodo">
-                                    @foreach ($periodos as $item)
-                                        <option value="{{ $item->id }}">{{ $item->titulo }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-2">
-                            <div class="form-group">
-                                <label for="thoras" class="control-label">{{ 'Horas' }} <span class="text-danger"></span></label>
-                                <input type="text" id="auxJornada" class="form-control total-horas" for="auxJornada" readonly="readonly" value="0">
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-2">
-                            <div class="form-group">
-                                <label for="thoras" class="control-label">{{ 'Disponibles' }} <span class="text-danger"></span></label>
-                                <input type="text" id="_horas" class="form-control" for="_horas" readonly="readonly" value="0"></input>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row" id="jornada-div">
-                        <div class="col-12">
-                            <h5 class="mb-3">Detalle de la Jornada
-                                <span class="float-right">
-                                    <button type="button" class="btn btn-sm btn-primary" name="btnNewRow" id="btnNewRow"> <i class="fa fa-plus"></i> </button>
-                                </span>
-                            </h5>
-                            <div id="days-table"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fa fa-ban"  aria-hidden="true"></i> Cerrar</button>
-                    <button type="submit" class="btn btn-primary btn-sm"><li class="fa fa-save"></li> Guardar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 @endsection
 
 @section('plugins-js')
@@ -388,7 +225,7 @@
         });
     });
 
-    $("#id_emp").on('change', function () {
+    $("#id_emp").on('change', function () {//para cargar el total de horas por empleados
         let id = $(this).val();
         if(id!==''){
             // $("#jornada-div").show('slow');
@@ -403,6 +240,27 @@
             // $("#jornada-div").hide('slow');
         }
     });
+
+
+    $("#id_periodo").on('change', function () {//para cargar los empleados dependiendo del periodo
+        let id = $(this).val();
+        if(id!==''){
+            // $("#jornada-div").show('slow');
+            $("#jornada-div :input").prop("disabled", false);
+            let data = getData('GET', `{{ url('admin/jornada/periodoEmpleados/') }}/`+id,'#notificacion_jornada');
+            data.then(function(response){
+
+                console.log(response);
+
+                // $(".total-horas").val(response.horas_semanales);
+                // updateChangeTable();
+            });
+        }else{
+            $("#jornada-div :input").prop("disabled", true);
+            // $("#jornada-div").hide('slow');
+        }
+    });
+
 
     function fnProcedimiento(componet){
         let jornada = $(componet).data('key');

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Validator;
 class EmpleadoController extends Controller
 {
     function index(){
-        
+
         $categorias=CategoriaEmpleado::all();
         $departamentos=Departamento::get();
         $tcontrato=Tipo_Contrato::get();
@@ -33,7 +33,7 @@ class EmpleadoController extends Controller
     }
 
     public function store (Request $request){
-  
+
 
         $validator = Validator::make($request->all(),[
             'nombre' => 'required|max:25',
@@ -46,13 +46,13 @@ class EmpleadoController extends Controller
             'tipo_jornada' => 'required',
             'departamento' => 'required',
             'tipo_empleado'=>'required',
-        ]);         
+        ]);
 
 
         if($validator->fails())
-        {            
+        {
             return response()->json(['error'=>$validator->errors()->all()]);
-            
+
         }
 
         $empleado = Empleado::updateOrCreate([
@@ -68,25 +68,25 @@ class EmpleadoController extends Controller
             'id_depto'=>$request->departamento,
             'tipo_empleado'=>$request->tipo_empleado,
         ]);
-        
+
         return response()->json(['code'=>200, 'mensaje'=>'Registro exitoso','data' => $empleado], 200);
     }
 
     public function categoriaStore(Request $request){
         $validator = Validator::make($request->all(),[
             'categoria' => 'required|min:2',
-        ]);         
+        ]);
 
         if($validator->fails())
-        {            
+        {
             return response()->json(['error'=>$validator->errors()->all()]);
-            
+
         }
 
         $cat = $request->_id != null ? CategoriaEmpleado::findOrFail($request->_id):new CategoriaEmpleado;
         $cat -> categoria = $request->categoria;
         $cat -> save();
-        return response()->json(['code'=>200, 'mensaje'=>'Categoria registrada','data' => $cat], 200);        
+        return response()->json(['code'=>200, 'mensaje'=>'Categoria registrada','data' => $cat], 200);
     }
 
     public function categoriaDestroy(Request $request){

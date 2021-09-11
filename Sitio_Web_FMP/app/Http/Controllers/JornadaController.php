@@ -16,6 +16,8 @@ use App\Models\Jornada\Seguimiento;
 use App\Models\Notificaciones;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -42,14 +44,32 @@ class JornadaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
+        $user = @FacadesAuth::user();
 
-        $periodo = isset($request->periodo) ? $request->periodo : false;
+        // dd($roles = $user->getRoleNames());
+
+
+        // dd($user);
+
+        $periodo = isset($request->periodo) ? $request->periodo : Periodo::select('id')->OrderBy('id', 'DESC')->first()->id;
         $depto = isset($request->depto) ? $request->depto : false;
         // $idDocente = User::findOrFail(auth()->id());
 
+
+        // dd($periodo);
+
+
         $query = Jornada::join('periodos','jornada.id_periodo','periodos.id')
                 ->join('empleado','jornada.id_emp','empleado.id')
-                ->select('jornada.*',Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"),'empleado.id as idEmp');
+                ->select('jornada.*',Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"),'empleado.id as idEmp')
+                ->where('id_periodo', $periodo);
+
+        if(!$user->hasRole('super-admin')){ // si no es jefe filtramos la informacion dependiendo de si es jefe o empleado normal
+            $empleado = $user->empleado_rf;
+
+            dd($empleado);
+        }
+
 
         // $query2 = Jornada::join('periodos','jornada.id_periodo','periodos.id')
         //         ->join('empleado','jornada.id_emp','empleado.id')
@@ -72,6 +92,7 @@ class JornadaController extends Controller{
         //     : $periodo = 'all';
         // }
 
+
         ($depto!=false && strcmp($depto, 'all')!=0)
                             ? $query->where('empleado.id_depto', $depto)
                             : $depto = 'all';
@@ -84,11 +105,15 @@ class JornadaController extends Controller{
         // $docente = Empleado::join('users','empleado.id','users.empleado')
         //                     ->select('empleado.nombre as nombre','empleado.apellido as apellido','empleado.id as id')
         //                     ->where('users.empleado', $idDocente->empleado )->get();
-        $empleados = Empleado::where('estado', true)->get();
+
+
+
+
+
         // $empleadosJefe = Empleado::where('empleado.jefe', $idDocente->empleado)->get();
         $periodos = Periodo::where('estado', 'activo')->latest()->get();
-
-        return view('Jornada.index', compact('periodos','jornadas', 'deptos',  'empleados','periodos', 'periodo', 'depto'));
+        $empleados = $this->fnEmpleadosSegunPeriodo($periodo);
+        return view('Jornada.index', compact('periodos','jornadas', 'deptos',  'periodos', 'periodo', 'depto', 'empleados'));
     }
 
     /**
@@ -305,12 +330,17 @@ class JornadaController extends Controller{
         return $empleado->tipo_jornada_rf;
     }
 
-    public function export(){
-        $periodo = 4;
-        return Excel::download(new JornadaExport($periodo), 'jornada.xlsx');
+    public function getEmpleadoPeriodo($id){
+        $empleados = $this->fnEmpleadosSegunPeriodo($id);
+        return $empleados;
+    }
 
-        // $jornadas = Jornada::all();
-        // return view('Jornada.exports.jornadas', compact('jornadas', 'periodo'));
+    public function export(Request $request){
+        $periodo = Periodo::findOrFail($request->periodo);
+        $titulo = 'jornada_'. preg_replace('/\s+/', '', ($periodo->ciclo_rf->nombre).'_generado_'.date('d_m_Y_H_m_s'));
+
+        //FALTA DETERMINAR SI ES ADMIN O UN JEFE
+        return Excel::download(new JornadaExport($periodo->id), $titulo.'.xlsx');
     }
 
     public function procedimiento(Request $request){
@@ -328,15 +358,12 @@ class JornadaController extends Controller{
 
             // dd($request);
             $jornada = Jornada::findOrFail($request->jornada_id);
-
             $jornada->update([
                 'procedimiento' => $request->proceso,
             ]);
-
             $periodo = $jornada->periodo_rf;
             $empleado = $jornada->empleado_rf;
             $jefe = $empleado->jefe_rf;
-
             if (!is_null($jefe)) {
                 $usuario = $jefe->usuario_rf;
                 if(!is_null($usuario)){
@@ -347,25 +374,15 @@ class JornadaController extends Controller{
                     ]);
 
                 }
-                // $usuario_jefe = $jefe->usuario_rf;
             }
 
-
-
-            // dd(Auth::user()->id);
-
             //notificacion de jornada enviada al mismo empleado
-
             Notificaciones::create([
                 'usuario_id' => Auth::user()->id,
                 'mensaje' => 'La jornada para el período ' . $periodo->titulo . ' ha sido enviada a la Jefatura',
                 'tipo' => 'Jornada',
             ]);
-
-
             Seguimiento::create($request->all());
-
-
 
             // Utilidades::fnSaveBitacora('Nuevo Tipo #: ' . $tipo->id, 'Registro', $this->modulo);
 
@@ -373,6 +390,19 @@ class JornadaController extends Controller{
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }
+    }
+
+
+
+    public function fnEmpleadosSegunPeriodo($periodo){
+        $empleados = Empleado::where('estado', true)
+        ->whereNotExists(function ($query) use ($periodo) {
+            $query->select(DB::raw(1))
+                ->from('jornada as j')
+                ->where('j.id_periodo', $periodo)
+                ->whereRaw('j.id_emp = empleado.id');
+        })->get();
+        return $empleados;
     }
 
 }

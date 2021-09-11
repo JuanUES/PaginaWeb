@@ -23,6 +23,7 @@ class Empleado extends Model
         'estado',
         'categoria',
         'jefe',
+        'tipo_empleado',
         'id_tipo_jornada',
         'id_tipo_contrato',
     ];

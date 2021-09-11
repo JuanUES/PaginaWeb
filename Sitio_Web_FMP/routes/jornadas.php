@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 //RUTAS JORNADA
 Route::resource('admin/jornada', 'App\Http\Controllers\JornadaController')->names('admin.jornada');
-Route::get('admin/jornada-export', 'App\Http\Controllers\JornadaController@export')->name('admin.jornada.export');
+Route::post('admin/jornada-export', 'App\Http\Controllers\JornadaController@export')->name('admin.jornada.export');
 // Route::get('admin/jornada/', 'App\Http\Controllers\JornadaController@index')->name('admin.jornada.index');
 // Route::get('admin/jornada/{id}', 'App\Http\Controllers\JornadaController@update')->name('admin.jornada.update');
 // Route::get('admin/jornada/create', 'App\Http\Controllers\JornadaController@create')->name('admin.jornada.create');
@@ -13,7 +13,8 @@ Route::get('admin/jornada-export', 'App\Http\Controllers\JornadaController@expor
 // Route::get('admin/jornada/edit/{id}', 'App\Http\Controllers\JornadaController@edit')->name('admin.jornada.edit');
 //modal
 Route::get("admin/jornada/detalle/{id}", "App\Http\Controllers\JornadaController@getDetalle");
-Route::get('admin/jornada/jornadaEmpleado/{id}', 'App\Http\Controllers\JornadaController@getEmpleadoJornada')->name('admin.jornada.empleado');
+Route::get( 'admin/jornada/jornadaEmpleado/{id}', 'App\Http\Controllers\JornadaController@getEmpleadoJornada')->name('admin.jornada.empleado');
+Route::get('admin/jornada/periodoEmpleados/{id}', 'App\Http\Controllers\JornadaController@getEmpleadoPeriodo')->name('admin.jornada.periodo.empleados');
 
 Route::post("admin/jornada-procedimiento", "App\Http\Controllers\JornadaController@procedimiento")->name('admin.jornada.procedimiento');
 
