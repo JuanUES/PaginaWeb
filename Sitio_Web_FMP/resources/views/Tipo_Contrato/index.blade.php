@@ -27,7 +27,7 @@
         </div>
     @endif
     <br/>
-    <table  class="table table-sm" id="table-tcontrato">
+    <table  class="table table-sm dt-responsive nowrap" style="width:100%" id="table-tcontrato">
         <thead>
             <tr>
                 <th data-priority="1">Id</th>
@@ -129,6 +129,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $('#table-tcontrato').DataTable({
+            'responsive':true,
             "order": [[ 0, "desc" ]],
             "language": {
                 "decimal":        ".",

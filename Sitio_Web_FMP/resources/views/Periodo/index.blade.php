@@ -27,11 +27,11 @@
         </div>
     @endif
     <br/>
-    <table  class="table table-sm" id="table-periodo">
+    <table  class="table table-sm dt-responsive nowrap" style="width:100%" id="table-periodo">
         <thead>
             <tr>
                 <th data-priority="0">Id</th>
-                <th data-priority="2">Título</th>
+                <th data-priority="2">Ciclo</th>
                 <th data-priority="3">Tipo</th>
                 <th data-priority="4">Inicio</th>
                 <th data-priority="5">Fin</th>
@@ -43,7 +43,7 @@
             @foreach($periodo as $item)
             <tr>
                 <th>{{ $item->id }}</th>
-                <td>{{ $item->titulo }}</td>
+                <td>{{ $item->ciclo_rf->nombre }}</td>
                 <td>{{ $item->tipo }}</td>
                 <td>{{ date('d-m-Y', strtotime( $item->fecha_inicio)) }}</td>
                 <td>{{ date('d-m-Y', strtotime( $item->fecha_fin)) }}</td>
@@ -94,7 +94,7 @@
                             <div class="col-12 col-sm-12">
                                 <div class="form-group">
                                     <label for="ciclo_id">Ciclo <span class="text-danger">*</span> </label>
-                                    <select class="custom-select" name="ciclo_id" id="ciclo_id">
+                                    <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" name="ciclo_id" id="ciclo_id">
                                         <option value="">Selecione un ciclo</option>
                                         @foreach ($ciclos as $item)
                                             <option value="{{ $item->id }}"> {{ $item->nombre }} <strong>{{ $item->año }}</strong></option>
@@ -138,7 +138,7 @@
                                 </div>
                             </div>  --}}
                             <div class="col-12 col-sm-12">
-                                <div class="form-group">
+                                <div class="form-group selectpicker" data-live-search="true" data-style="btn-white">
                                     <label for="tipo">Tipo <span class="text-danger">*</span> </label>
                                     <select class="custom-select" name="tipo" id="tipo">
                                         <option value="Administrativo" >Administrativo</option>
@@ -264,6 +264,7 @@
 
     $(document).ready(function () {
         $('#table-periodo').DataTable({
+            'responsive': true,
             "order": [[ 0, "desc" ]],
             "language": {
                 "decimal":        ".",

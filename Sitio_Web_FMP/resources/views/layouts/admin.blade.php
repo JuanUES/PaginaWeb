@@ -28,6 +28,8 @@
         <link href="{{ asset('template-admin/dist/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('template-admin/dist/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
 
+        <link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>
         <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
 
         {{-- DateRangPicker --}}
@@ -418,10 +420,17 @@
         <!-- Jquery-Validate -->
         <script src="{{ asset('vendor/jquery-validation/jquery.validate.js') }}"></script>
 
-        @yield('plugins-js')
+        <script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" defer></script>
+        {{-- <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}"></script> --}}
+        {{--  Plugin de peticiones http personalizado  --}}
+
+
         <script src="{{ asset('template-admin/dist/assets/js/app.min.js') }}"></script>
         {{--  Plugin de peticiones http personalizado  --}}
         <script src="{{ asset('js/scripts/http.min.js') }}"></script>
         <script src="{{ asset('js/scripts/peticiones.js') }}"></script>
+
+        @yield('plugins-js')
+
     </body>
 </html>

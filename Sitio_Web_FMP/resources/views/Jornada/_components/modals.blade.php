@@ -147,7 +147,7 @@
                         <div class="col-12 col-sm-12">
                             <div class="form-group">
                                 <label for="periodo" class="control-label">{{ 'Periodo' }} <span class="text-danger">*</span> </label>
-                                <select class="custom-select" name="id_periodo" id="id_periodo">
+                                <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" name="id_periodo" id="id_periodo">
                                     @foreach ($periodos as $item)
                                         <option value="{{ $item->id }}">{{ $item->ciclo_rf->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
                                     @endforeach
@@ -179,7 +179,7 @@
 
 
                                 {{-- @hasanyrole('super-admin|Jefe-Academico|Jefe-Departamento|Recurso-Humano') --}}
-                                    <select class="custom-select" name="id_emp" id="id_emp">
+                                    <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" name="id_emp" id="id_emp">
                                         <option value="">Seleccione un Empleado</option>
                                         @foreach ($empleados as $item)
                                             <option value="{{ $item->id }}">{{ $item->apellido }}, {{ $item->nombre }}</option>

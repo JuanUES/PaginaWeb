@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-12 col-sm-5 col-md-3">
                     <div class="form-group">
-                        <select class="custom-select" name="periodo">
+                        <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"  name="periodo">
                             <option value="all" selected> Todos los periodos </option>
                             @foreach ($periodos as $item)
                                 <option value="{{ $item->id }}" {{ strcmp($item->id, $periodo)==0 ? 'selected' : '' }}>{{ $item->ciclo_rf->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
@@ -43,7 +43,7 @@
                 @hasanyrole('super-admin|Recurso-Humano')
                     <div class="col-12 col-sm-5 col-md-3">
                         <div class="form-group">
-                            <select class="custom-select" name="depto">
+                            <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"  name="depto">
                                 <option value="all" selected> Departamento </option>
                                 @foreach ($deptos as $item)
                                     <option value="{{ $item->id }}" {{ strcmp($item->id, $depto)==0 ? 'selected' : '' }}>{!!$item->nombre_departamento!!}</option>
@@ -56,7 +56,7 @@
         </form>
     <br/>
     <br/>
-    <table  class="table table-sm" id="table-jornada">
+    <table  class="table table-sm dt-responsive nowrap" style="width:100%" id="table-jornada">
         <thead>
         {{--  @if(@Auth::user()->hasRole('admin') || @Auth::user()->hasRole('Recurso-Humano') || @Auth::user()->hasRole('Jefe-Departamento') )  --}}
             <tr>
@@ -174,6 +174,7 @@
 
 
         $('#table-jornada').DataTable({
+            'responsive': true,
             "order": [[ 0, "desc" ]],
             "language": {
                 "decimal":        ".",
@@ -249,15 +250,17 @@
             $("#jornada-div :input").prop("disabled", false);
             let data = getData('GET', `{{ url('admin/jornada/periodoEmpleados/') }}/`+id,'#notificacion_jornada');
             data.then(function(response){
+                $("#id_emp").val(null).trigger('change');
+                $('#id_emp').empty();
+                $('#id_emp').append('<option selected value="">Seleccione un Empleado</option>');
+                $(response).each(function (index, element) {
+                    $("#id_emp").append('<option value="'+element.id+'">'+element.apellido+', '+element.nombre+'</option>');
+                });
+                $('#id_emp').selectpicker('refresh');
 
-                console.log(response);
-
-                // $(".total-horas").val(response.horas_semanales);
-                // updateChangeTable();
             });
         }else{
             $("#jornada-div :input").prop("disabled", true);
-            // $("#jornada-div").hide('slow');
         }
     });
 

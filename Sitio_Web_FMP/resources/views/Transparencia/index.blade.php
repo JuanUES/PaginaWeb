@@ -44,7 +44,7 @@
 
     <br/>
     <br/>
-    <table class="table table-sm">
+    <table class="table table-sm dt-responsive nowrap" style="width:100%">
         <thead>
             <tr>
                 <th>Fecha</th>
@@ -80,6 +80,7 @@
 <script type="text/javascript">
      $(function () {
         let tabla = $('table').DataTable({
+            responsive: true,
             processing: true,
             serverSide: true,
             ajax: "{{ route('admin.transparencia.index', $categoria) }}",

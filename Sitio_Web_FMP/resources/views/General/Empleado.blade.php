@@ -1,8 +1,8 @@
 @extends('layouts.admin')
 @section('content')
 <!-- inicio Modal de registro -->
-<div class="modal fade bs-example-modal-lg" tabindex="-1" 
-    role="dialog" aria-labelledby="myLargeModalLabel" 
+<div class="modal fade bs-example-modal-lg" tabindex="-1"
+    role="dialog" aria-labelledby="myLargeModalLabel"
     id="modalRegistro" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
@@ -52,7 +52,7 @@
                             <label for="">N.I.T. <code>*</code></label>
                             <input type="text" class="form-control" name="nit" placeholder="Digite el número de N.I.T.">
                         </div>
-                    </div>                        
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-xl-6">
@@ -97,7 +97,7 @@
                             </select>
                         </div>
                     </div>
-                </div>    
+                </div>
                 <div class="row">
                     <div class="col-xl-6">
                         <label for="Departamento">Departamento <code>*</code></label>
@@ -107,30 +107,30 @@
                                 <option value="{!!$depto->id!!}">{!!$depto->nombre_departamento!!}</option>
                             @endforeach
                         </select>
-                    </div>                       
+                    </div>
                     <div class="col-xl-6">
                         <label for="Departamento">Tipo Empleado </label>
-                        <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" 
+                        <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
                             id="tipo_empleado" name="tipo_empleado">
                             <option name="" selected>Seleccione</option>
                            <option value="Administrativo">Administrativo</option>
                            <option value="Académico">Académico</option>
                         </select>
-                    </div> 
+                    </div>
 
                 </div>
                 <div class="row">
                     <div class="col-xl-12">
                         <label for="Departamento">Jefes y Empleados </label>
-                        <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" 
+                        <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
                             id="jefes" name="jefe">
                             <option name="" selected>Seleccione</option>
                             @foreach ($empleados as $item)
                                 <option name="{!!$item->id!!}">{!!$item->nombre.' '.$item->apellido!!}</option>
                             @endforeach
                         </select>
-                    </div> 
-                </div>                 
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary"
@@ -146,8 +146,8 @@
     </div>
 </div>
 
-<div class="modal fade bs-example-modal-lg" tabindex="-1" 
-    role="dialog" aria-labelledby="myLargeModalLabel" 
+<div class="modal fade bs-example-modal-lg" tabindex="-1"
+    role="dialog" aria-labelledby="myLargeModalLabel"
     id="modalCategoria" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
@@ -165,10 +165,10 @@
                     role="alert" id="notificacionEliminar" style="display:none" >
                     <div class="row">
                         <div class="col-lg-10 order-firts">
-                            <h4 class="text-white">El elemento de eliminara de nuestros registros, ¿continuar?.</h4>     
-                            <form action="{{ route('empleadoCatDest') }}" method="POST" id="eliminarCatForm"> 
+                            <h4 class="text-white">El elemento de eliminara de nuestros registros, ¿continuar?.</h4>
+                            <form action="{{ route('empleadoCatDest') }}" method="POST" id="eliminarCatForm">
                                 @csrf
-                                <input type="hidden" name="_id" id="idCat">                          
+                                <input type="hidden" name="_id" id="idCat">
                                 <div class="row">
                                     <div class="col-xl-6 p-1">
                                         <button  type="button" onclick="$('#notificacionEliminar').hide();
@@ -193,11 +193,11 @@
                         </div>
                     </div>
                 </div>
-                <form action="{{ route('empleadoCatReg') }}" id="empleadoCatReg" 
+                <form action="{{ route('empleadoCatReg') }}" id="empleadoCatReg"
                     method="POST" class="px-3">
                     @csrf
                     <input type="hidden" id="_idCat" name="_id"/>
-                    
+
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group">
@@ -251,16 +251,16 @@
                                                      title="Editar" class="btn btn-outline-primary mr-1 btn-sm rounded" onclick="">
                                                         <i class="fa fa-edit font-15" aria-hidden="true"></i>
                                                     </button>
-                                                    <button title="Eliminar" class="btn btn-outline-danger btn-sm rounded" 
+                                                    <button title="Eliminar" class="btn btn-outline-danger btn-sm rounded"
                                                         onclick="eliminarCat({!!$item->id!!});">
                                                         <i class=" mdi mdi-trash-can-outline font-18" aria-hidden="true"></i>
                                                     </button>
                                                 </div>
                                             </td>
                                         </tr>
-                                    @endforeach                                
+                                    @endforeach
                                 </tbody>
-                            </table>    
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -308,9 +308,9 @@
                         <button type="button" title="Agregar Empleado"
                             class="btn btn-primary dripicons-plus rounded"
                             data-toggle="modal" data-target="#modalRegistro">
-                        </button>                        
+                        </button>
                     </div>
-                </div>                
+                </div>
             </div>
             <table class="table table-bordered" style="width: 100%;">
                 <thead>
@@ -348,16 +348,16 @@
                                     <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="">
                                         <i class="fa fa-edit font-16" aria-hidden="true"></i>
                                     </button>
-                                    <button title="{!! !$item->estado ? 'Activar' : 'Desactivar' !!}" 
-                                        class="btn btn-outline-primary btn-sm mx-1 rounded {!! $item->estado?'btn-outline-danger' : 'btn-outline-success' !!}" 
+                                    <button title="{!! !$item->estado ? 'Activar' : 'Desactivar' !!}"
+                                        class="btn btn-outline-primary btn-sm mx-1 rounded {!! $item->estado?'btn-outline-danger' : 'btn-outline-success' !!}"
                                         data-toggle="modal" data-target="#modalAlta">
                                         {!! !$item->estado ? '<i class="mdi  mdi mdi-arrow-up-bold   font-18"></i>'
                                                             :'<i class="mdi  mdi mdi-arrow-down-bold font-18"></i>'!!}
-                                    </button>                                   
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                    </td>                    
+                    </td>
                 </tr>
                 @endforeach
                 </tbody>
@@ -369,15 +369,10 @@
 
 @endsection
 
-@section('plugins')
-<link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
-<link href="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>
-@endsection
 
 @section('plugins-js')
 
 <!-- Bootstrap Select -->
-<script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" defer></script>
 
 <script src="{{ asset('js/scripts/http.min.js') }} " defer></script>
 <script src="{{ asset('js/scripts/data-table.js') }}" defer></script>
@@ -393,7 +388,7 @@
     }
     function cargarCategoria(url){
         $.get(url,function(json){
-            json=JSON.parse(json); 
+            json=JSON.parse(json);
             var categoria = $('#categoriaTb').DataTable();
             categoria.clear();
             var id=1;
@@ -409,12 +404,12 @@
                 html += '       <i class=" mdi mdi-trash-can-outline font-18" aria-hidden="true"></i>';
                 html += '  </button>';
                 html += '</div>';
-                categoria.row.add([id,json[i].categoria,html]).draw(false);   
-                id++;                   
-            }            
+                categoria.row.add([id,json[i].categoria,html]).draw(false);
+                id++;
+            }
         });
     }
-    
+
     function httpCategoria(formulario,notificacion,url){
         $.ajax({
             type: $(formulario).attr('method'),
