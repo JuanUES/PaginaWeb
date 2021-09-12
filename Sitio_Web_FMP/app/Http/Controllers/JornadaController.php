@@ -112,7 +112,7 @@ class JornadaController extends Controller{
             $jornadas = [];
             $deptos = [];
             $periodos = [];
-            $empleados = [];
+            // $empleados = [];
         }else{
             ($depto != false && strcmp($depto, 'all') != 0)
                 ? $query->where('empleado.id_depto', $depto)
@@ -122,7 +122,7 @@ class JornadaController extends Controller{
             $jornadas = $query->get();
             $deptos = Departamento::where('estado', true)->latest()->get();
             $periodos = Periodo::where('estado', 'activo')->latest()->get();
-            $empleados = $this->fnEmpleadosSegunPeriodo($periodo);
+            // $empleados = $this->fnEmpleadosSegunPeriodo($periodo);
 
         }
 
@@ -142,7 +142,7 @@ class JornadaController extends Controller{
 
         // $empleadosJefe = Empleado::where('empleado.jefe', $idDocente->empleado)->get();
 
-        return view('Jornada.index', compact('emp','cargar','periodos','jornadas', 'deptos',  'periodos', 'periodo', 'depto', 'empleados'));
+        return view('Jornada.index', compact('emp','cargar','periodos','jornadas', 'deptos',  'periodos', 'periodo', 'depto'));
     }
 
     /**
@@ -453,6 +453,12 @@ class JornadaController extends Controller{
 
         $empleados = $query->get();
         return $empleados;
+    }
+
+
+    public function checkDia(Request $request){
+        dd($request);
+        $empleado = Empleado::findOrFail($request->empleado);
     }
 
 }

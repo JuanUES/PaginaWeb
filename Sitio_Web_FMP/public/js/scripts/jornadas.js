@@ -1,10 +1,7 @@
 // var items = @json(isset($jornada) ? $jornada -> items_enabled('activo') : []);//set los items del presupuesto
 // console.log(items);
 
-
-
 var items = [];
-
 
 //Funcion para eliminar fila
 let btncallback = function (e, cell) {
@@ -22,24 +19,8 @@ let btncallback = function (e, cell) {
             let row = cell.getRow();
             row.delete();
             updateChangeTable();
-
-
-
-            /*if(updatehours <=0){
-                alert("Completo sus horas laborales");
-                $("#btnNewRow").hide();
-            }
-            if(updatehours==0){
-                $("#btnSave").show();
-            }
-            if(updatehours>0){
-                $("#btnNewRow").show();
-                $("#btnSave").hide();
-            }*/
-
         }
     });
-
 };
 
 //funciona para gregar el boton de eliminar fila
@@ -66,6 +47,29 @@ function updateHour(cell) {
     let valor = $("#auxJornada").val();
     let total = parseInt(valor) - parseInt(hoursTotal);
     $("#_horas").val('' + total);
+
+    //para validar el horario segun horario de carga academica
+    if(parseInt(inicio)>0 && parseInt(fin)>0 && data.dia!==null){
+        $.ajax({
+            type: "POST",
+            url: '/admin/jornada-check-dia',
+            data: {
+                empleado: $("#id_emp").val(),
+                inicio: inicio,
+                fin: fin,
+                dia: data.dia
+            },
+            success: function (data) {
+                console.log(data);
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr);
+            }
+        });
+    }
+
+
+    // para validar el total de las horas
     validateHoras(valor, total);
 }
 
@@ -318,13 +322,10 @@ function validateHoras(valor, total){
     let validado = true;
     let restante = valor-total;
 
-
     if (restante>valor) {
         validado = false;
         mensaje = 'Las horas registradas exceden el número de horas permitidas';
     }
-
-
 
     if (mensaje!=='') {
         let alert = `<div class="alert alert-danger" role="alert">
@@ -335,7 +336,6 @@ function validateHoras(valor, total){
 
         $("#days-table").before(alert);
     }
-
     return validado;
 }
 
@@ -343,10 +343,5 @@ function updateChangeTable(){
     let total = $(".total-horas").val();
     let updatehours = updateJornada();
     $("#_horas").val(updatehours);
-
-    // console.log(total, 'Total horas');
-    // console.log(updatehours, 'Horas tabla');
-
     validateHoras(total, updatehours);
-
 }
