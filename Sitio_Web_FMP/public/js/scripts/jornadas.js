@@ -284,16 +284,21 @@ $("#frmJornada").validate({
             });
         }
     },
-    errorElement: "label",
-    errorPlacement: function (error, element) {
-        error.addClass("invalid-feedback");
-        element.closest(".form-group").append(error);
-    },
+    errorClass: "invalid-feedback",
+    validClass: "state-success",
+    errorElement: "em",
     highlight: function (element, errorClass, validClass) {
-        $(element).addClass("is-invalid");
+        $(element).closest('.field').addClass(errorClass).removeClass(validClass);
     },
     unhighlight: function (element, errorClass, validClass) {
-        $(element).removeClass("is-invalid");
+        $(element).closest('.field').removeClass(errorClass).addClass(validClass);
+    },
+    errorPlacement: function (error, element) {
+        if (element.is(":radio") || element.is(":checkbox")) {
+            element.closest('.option-group').after(error);
+        } else {
+            error.insertAfter(element.parent());
+        }
     }
 });
 

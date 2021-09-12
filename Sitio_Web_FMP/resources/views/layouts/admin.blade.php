@@ -179,34 +179,33 @@
                                     </a>
                                 </li>
                             @endhasrole
-                            @hasrole('super-admin|Transparencia-Decano|Transparencia-Secretario|Transparencia-Presupuestario')
+                            @hasanyrole('super-admin|Transparencia-Decano|Transparencia-Secretario|Transparencia-Presupuestario')
                             <li class="menu-title">Transparencia</li>
                                 <li>
                                     <a href="javascript: void(0);"><i class="font-18 dripicons-view-list-large"></i><span> Marcos </span><span class="menu-arrow"></span></a>
                                     <ul class="nav-second-level" aria-expanded="false">
-                                        @hasrole('super-admin|Transparencia-Decano|Transparencia-Secretario')
+                                        @hasanyrole('super-admin|Transparencia-Decano|Transparencia-Secretario')
                                             <li>
                                                 <a href="{{ url('admin/transparencia/marco-normativo') }}">Normativo</a>
                                             </li>
-                                        @endhasrole
-                                        @hasrole('super-admin|Transparencia-Decano')
+                                        @endhasanyrole
+                                        @hasanyrole('super-admin|Transparencia-Decano')
                                             <li>
                                                 <a href="{{ url('admin/transparencia/marco-gestion') }}">De Gestión</a>
                                             </li>
                                             <li>
                                                 <a href="{{ url('admin/transparencia-directorios') }}">Directorios</a>
                                             </li>
-                                        @endhasrole
-                                        @hasrole('super-admin|Transparencia-Presupuestario')
+                                        @endhasanyrole
+                                        @hasanyrole('super-admin|Transparencia-Presupuestario')
                                             <li>
                                                 <a href="{{ url('admin/transparencia/marco-presupuestario') }}">Presupuestario</a>
                                             </li>
-                                        @endhasrole
+                                        @endhasanyrole
                                     </ul>
                                 </li>
-                            @endhasrole
-
-                            @if(@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Transparencia-Secretario') )
+                            @endhasanyrole
+                            @hasanyrole('super-admin|Transparencia-DecaSecretariono')
                                 <li>
                                     <a href="{{ url('admin/transparencia/repositorios') }}">
                                         <i class="font-18 dripicons-graph-bar "></i> <span> Repositorios </span>
@@ -217,36 +216,32 @@
                                         <i class="font-18 dripicons-document"></i> <span> Doc. de Junta Directiva </span>
                                     </a>
                                 </li>
-                            @endif
-                            @hasrole('super-admin|Docente|Recurso-Humano|Jefe-Departamento')
+                            @endhasanyrole
+                            @hasrole('super-admin|Docente|Recurso-Humano|Jefe-Departamento|Jefe-Academico|Empleado')
                             <li class="menu-title">Jornada</li>
                                 <li>
                                     <a href="javascript: void(0);"><i class="font-18 dripicons-view-list-large"></i><span> Gestión de Jornada </span><span class="menu-arrow"></span></a>
                                     <ul class="nav-second-level" aria-expanded="false">
-                                            @hasrole('super-admin')
+                                        @hasanyrole('super-admin|Recurso-Humano')
                                             <li>
                                                 <a href="{{ url('admin/periodo') }}">Periodo</a>
                                             </li>
-                                            @endhasrole
-                                            @hasrole('super-admin|Docente|Recurso-Humano|Jefe-Departamento')
+                                        @endhasanyrole
                                             <li>
                                                 <a href="{{ url('admin/jornada') }}">Jornada</a>
                                             </li>
-                                            @endhasrole
-                                            @hasrole('super-admin')
+                                        @hasanyrole('super-admin|Recurso-Humano')
                                             <li>
                                                 <a href="{{ url('admin/tcontrato') }}">Tipo Contrato</a>
                                             </li>
-                                            @endhasrole
-                                            @hasrole('super-admin')
                                             <li>
                                                 <a href="{{ url('admin/tjornada') }}">Tipo Jornada</a>
                                             </li>
-                                            @endhasrole
+                                        @endhasanyrole
                                     </ul>
                                 </li>
                             @endhasrole
-                            @if (@Auth::user()->hasRole('super-admin'))
+                            @hasrole('super-admin')
                             <li class="menu-title">Seguridad</li>
                             <li>
                                 <a href="javascript: void(0);">
@@ -263,7 +258,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            @endif
+                            @endhasrole
                             @if (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Jefe-Academico'))
                             <!--para los horarios-->
                             <li class="menu-title">Horarios</li>

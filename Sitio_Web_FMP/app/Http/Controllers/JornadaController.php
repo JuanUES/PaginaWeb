@@ -16,7 +16,6 @@ use App\Models\Jornada\Seguimiento;
 use App\Models\Notificaciones;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
@@ -44,7 +43,9 @@ class JornadaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-        $user = @FacadesAuth::user();
+        $user = Auth::user();
+        $cargar = true;
+        $emp = null; //para terminar que es solo un empleado y poder determinar el tipo
 
         // dd($roles = $user->getRoleNames());
 
@@ -64,10 +65,23 @@ class JornadaController extends Controller{
                 ->select('jornada.*',Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"),'empleado.id as idEmp')
                 ->where('id_periodo', $periodo);
 
-        if(!$user->hasRole('super-admin')){ // si no es jefe filtramos la informacion dependiendo de si es jefe o empleado normal
+        if(!$user->hasRole('super-admin') && !$user->hasRole('Recurso-Humano')){ // si no es jefe filtramos la informacion dependiendo de si es jefe o empleado normal
+
+            //determinamos si tiene un empleado relacionado
             $empleado = $user->empleado_rf;
 
-            dd($empleado);
+            if(is_null($empleado)){//para que muestre una alerta de que no existe un empleado relacionado con el usuario
+                $query = null;
+            }else{
+                if($user->hasRole('Jefe-Academico')|| $user->hasRole('Jefe-Departamento')){//para filtrar por tipo de departamento
+                    $depto = $empleado->id_depto;// id que servira para filtrar los empleados por departemento
+                }else{ // con esto determinamos que es un empleado sin cargos de jefatura por lo cual solo se mostrara ese empleado
+                    $query->where('empleado.id', $empleado->id);
+                    $emp = $empleado;
+                }
+
+            }
+            // dd($empleado);
         }
 
 
@@ -93,15 +107,31 @@ class JornadaController extends Controller{
         // }
 
 
-        ($depto!=false && strcmp($depto, 'all')!=0)
-                            ? $query->where('empleado.id_depto', $depto)
-                            : $depto = 'all';
+        if(is_null($query)){
+            $cargar = false;
+            $jornadas = [];
+            $deptos = [];
+            $periodos = [];
+            $empleados = [];
+        }else{
+            ($depto != false && strcmp($depto, 'all') != 0)
+                ? $query->where('empleado.id_depto', $depto)
+                : $depto = 'all';
 
-        $jornadas = $query->get();
+
+            $jornadas = $query->get();
+            $deptos = Departamento::where('estado', true)->latest()->get();
+            $periodos = Periodo::where('estado', 'activo')->latest()->get();
+            $empleados = $this->fnEmpleadosSegunPeriodo($periodo);
+
+        }
+
+
+
+
         // $jornadaDocente = $query2->get();
         // $jornadaJefe = $query3->get();
 
-        $deptos = Departamento::where('estado', true)->latest()->get();
         // $docente = Empleado::join('users','empleado.id','users.empleado')
         //                     ->select('empleado.nombre as nombre','empleado.apellido as apellido','empleado.id as id')
         //                     ->where('users.empleado', $idDocente->empleado )->get();
@@ -111,9 +141,8 @@ class JornadaController extends Controller{
 
 
         // $empleadosJefe = Empleado::where('empleado.jefe', $idDocente->empleado)->get();
-        $periodos = Periodo::where('estado', 'activo')->latest()->get();
-        $empleados = $this->fnEmpleadosSegunPeriodo($periodo);
-        return view('Jornada.index', compact('periodos','jornadas', 'deptos',  'periodos', 'periodo', 'depto', 'empleados'));
+
+        return view('Jornada.index', compact('emp','cargar','periodos','jornadas', 'deptos',  'periodos', 'periodo', 'depto', 'empleados'));
     }
 
     /**
@@ -142,6 +171,9 @@ class JornadaController extends Controller{
         try {
             $validator = Validator::make($request->all(), $this->rules, $this->messages);
             if ($validator->fails()) {
+
+                // dd($validator->errors()->all());
+
                 return response()->json(['error' => $validator->errors()->all()]);
             }
             $requestData = $request->except('items');
@@ -150,30 +182,7 @@ class JornadaController extends Controller{
             $requestData = $request->except(['_id']);
             if (strcmp($request->_id, '') == 0) {
                 $msg = 'Registro exitoso.';
-                // $periodo = Periodo::create($requestData);
-
-                // dd($request);
-                $periodo = Periodo::findOrFail($request->id_periodo);
-                $empleado = Empleado::findOrFail($request->id_emp);
-                // $jefe = $empleado->jefe_rf;
-
-                // if(!is_null($jefe)){
-                //     $usuario_jefe = $jefe->usuario_rf->email;
-                // }
-
                 $jornada = Jornada::create($requestData);
-
-                // // dd(Auth::user()->id);
-
-                // //notificacion de jornada enviada al mismo empleado
-
-                // Notificaciones::create([
-                //     'usuario_id' => Auth::user()->id,
-                //     'mensaje' => 'La jornada para el período '. $periodo->titulo .' ha sido enviada a la Jefatura',
-                //     'tipo' => 'Jornada',
-                // ]);
-
-
                 if (is_array($items) || is_object($items)) {
                     foreach ($items as $key => $value) { //para guardar los items del jornada
                         JornadaItem::create([
@@ -184,7 +193,6 @@ class JornadaController extends Controller{
                         ]);
                     }
                 }
-
                 Utilidades::fnSaveBitacora('Nueva Jornada #: ' . $jornada->id, 'Registro', $this->modulo);
             } else {
                 // $msg = 'Modificación exitoso.';
@@ -326,8 +334,10 @@ class JornadaController extends Controller{
     }
 
     public function getEmpleadoJornada($id){
-        $empleado = Empleado::findOrFail($id);
-        return $empleado->tipo_jornada_rf;
+        $empleado = Empleado::join('tipo_jornada as tj', 'tj.id', 'empleado.id_tipo_jornada')
+                            ->where('empleado.id', $id)
+                            ->first();
+        return $empleado;
     }
 
     public function getEmpleadoPeriodo($id){
@@ -336,11 +346,27 @@ class JornadaController extends Controller{
     }
 
     public function export(Request $request){
+        $user = Auth::user();
+        $depto = null;
+
+        //FALTA DETERMINAR SI ES ADMIN O UN JEFE
+        if (!$user->hasRole('super-admin') && !$user->hasRole('Recurso-Humano')) { // si no es jefe filtramos la informacion dependiendo de si es jefe o empleado normal
+            //determinamos si tiene un empleado relacionado
+            $empleado = $user->empleado_rf;
+            if (!is_null($empleado)) { //para que muestre una alerta de que no existe un empleado relacionado con el usuario
+                if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Departamento')) { //para filtrar por tipo de departamento
+                    $depto = $empleado->id_depto; // id que servira para filtrar los empleados por departemento
+                }
+            }
+        }
+
         $periodo = Periodo::findOrFail($request->periodo);
         $titulo = 'jornada_'. preg_replace('/\s+/', '', ($periodo->ciclo_rf->nombre).'_generado_'.date('d_m_Y_H_m_s'));
 
-        //FALTA DETERMINAR SI ES ADMIN O UN JEFE
-        return Excel::download(new JornadaExport($periodo->id), $titulo.'.xlsx');
+
+
+
+        return Excel::download(new JornadaExport($periodo->id, $depto), $titulo.'.xlsx');
     }
 
     public function procedimiento(Request $request){
@@ -395,13 +421,37 @@ class JornadaController extends Controller{
 
 
     public function fnEmpleadosSegunPeriodo($periodo){
-        $empleados = Empleado::where('estado', true)
-        ->whereNotExists(function ($query) use ($periodo) {
-            $query->select(DB::raw(1))
-                ->from('jornada as j')
-                ->where('j.id_periodo', $periodo)
-                ->whereRaw('j.id_emp = empleado.id');
-        })->get();
+
+        $user = Auth::user();
+
+        $query = Empleado::where('estado', true)
+                ->whereNotExists(function ($query) use ($periodo) {
+                    $query->select(DB::raw(1))
+                        ->from('jornada as j')
+                        ->where('j.id_periodo', $periodo)
+                        ->whereRaw('j.id_emp = empleado.id');
+                });
+
+
+        if (!$user->hasRole('super-admin') && !$user->hasRole('Recurso-Humano')) { // si no es jefe filtramos la informacion dependiendo de si es jefe o empleado normal
+
+            //determinamos si tiene un empleado relacionado
+            $empleado = $user->empleado_rf;
+
+            if (is_null($empleado)) { //para que muestre una alerta de que no existe un empleado relacionado con el usuario
+                $query = null;
+            } else {
+                if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Departamento')) { //para filtrar por tipo de departamento
+                    $depto = $empleado->id_depto; // id que servira para filtrar los empleados por departemento
+                    $query->where('empleado.id_depto', $depto);
+                } else { // con esto determinamos que es un empleado sin cargos de jefatura por lo cual solo se mostrara ese empleado
+                    $query->where('empleado.id', $empleado->id);
+                }
+            }
+            // dd($empleado);
+        }
+
+        $empleados = $query->get();
         return $empleados;
     }
 

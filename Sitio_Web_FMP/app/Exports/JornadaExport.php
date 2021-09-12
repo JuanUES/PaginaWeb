@@ -13,9 +13,11 @@ use Maatwebsite\Excel\Concerns\FromView;
 
 class JornadaExport implements FromView{
     public $periodo;
+    public $depto;
 
-    public function __construct($periodo){
-        $this->periodo = $periodo; // errro en en linea
+    public function __construct($periodo, $depto){
+        $this->periodo = $periodo;
+        $this->depto = $depto;
     }
     /**
     * @return \Illuminate\Support\Collection
@@ -26,10 +28,16 @@ class JornadaExport implements FromView{
 
     public function view(): View{
 
-        $jornadas = Jornada::where('id_periodo', $this->periodo)
+        $query = Jornada::where('id_periodo', $this->periodo)
+                            ->join('empleado', 'empleado.id', 'jornada.id_emp')
                             ->join('periodos as p', 'p.id', 'jornada.id_periodo')
-                            ->where('tipo', 'Docente')
-                            ->get();
+                            ->where('tipo', 'Docente');
+
+        if(!is_null($this->depto)){
+            $query->where('empleado.id_depto', $this->depto);
+        }
+
+        $jornadas = $query->get();
 
         return view('Jornada.exports.jornadas', [
             'jornadas' => $jornadas,
