@@ -9,8 +9,49 @@
                 </button>
             </div>
             <div class="col-12 col-sm-12">
-                <table class="table" id="tableView">
-                </table>
+
+                <span class="float-right">
+                    <p class="lead" style="font-size: 13px;">Fecha de Registro: <span class="badge badge-dark" id="fechaRegistroDetalle"></span></p>
+                </span>
+                <br>
+
+                {{--  <div class="card-box">
+                    <h4 class="header-title mb-4">Información y Seguimiento</h4>  --}}
+
+                    <ul class="nav nav-pills navtab-bg nav-justified mt-3">
+                        <li class="nav-item">
+                            <a href="#detalle" data-toggle="tab" aria-expanded="false" class="nav-link active">
+                                <i class="fa fa-info-circle"></i> Detalle
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#seguimiento" data-toggle="tab" aria-expanded="true" class="nav-link">
+                                <i class="fa fa-list-alt"></i> Seguimiento
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="detalle">
+                            <table class="table table-hover table-sm" id="tableView">
+                                <thead>
+                                    <th>Dia</th>
+                                    <th>Inicio</th>
+                                    <th>Fin</th>
+                                    <th>Total</th>
+                                </thead>
+                                <tbody id="bodyView">
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane show" id="seguimiento">
+
+                        </div>
+                    </div>
+                {{--  </div>  --}}
+
+
+
             </div>
         </div>
     </div>

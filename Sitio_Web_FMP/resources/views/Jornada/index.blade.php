@@ -2,7 +2,6 @@
 
 @section('content')
 
-
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
@@ -10,7 +9,6 @@
         </div>
     </div>
 </div>
-
 <div class="card-box">
     <div class="row">
         <div class="col-12 col-sm-5">
@@ -28,16 +26,14 @@
         @endif
     </div>
         <hr>
-
         {{--  @dd($emp)  --}}
-
     @if($cargar)
         <form action="{{ route('admin.jornada.index') }}" method="get">
             <div class="row">
-                <div class="col-12 col-sm-2 col-md-1">
+                <div class="col-12 col-sm-2 col-md-2">
                     <button class="btn btn btn-outline-info btn-block" title="Filtrar Contenido" type="submit"> <i class="fa fa-filter" aria-hidden="true"></i> </button>
                 </div>
-                <div class="col-12 col-sm-5 col-md-3">
+                <div class="col-12 col-sm-5 col-md-5">
                     <div class="form-group">
                         <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"  name="periodo">
                             {{--  <option value="all" selected> Todos los periodos </option>  --}}
@@ -48,7 +44,7 @@
                     </div>
                 </div>
                 @hasanyrole('super-admin|Recurso-Humano')
-                    <div class="col-12 col-sm-5 col-md-3">
+                    <div class="col-12 col-sm-5 col-md-5">
                         <div class="form-group">
                             <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"  name="depto">
                                 <option value="all" selected> Todos los Departamentos </option>
@@ -101,14 +97,19 @@
                         </td>
                         <td class="text-center">
                             <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
-                            <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-outline-success btn-sm openModal"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i></button>
-
-                            @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
-                                <a href="{{ route('admin.jornada.edit', $item->id) }}" title="Editar Jornada">
-                                    <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
-                                </a>
-                            @endif
-
+                            <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-outline-success btn-sm" onclick="fnDetalleJornada(this);"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i></button>
+                            @hasexactroles('Empleado');
+                                @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
+                                    {{--  <a href="{{ route('admin.jornada.edit', $item->id) }}" title="Editar Jornada">  --}}
+                                        <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
+                                    {{--  </a>  --}}
+                                @endif
+                            @endhasexactroles
+                            @hasanyrole('super-admin|Jefe-Academico|Jefe-Departamento')
+                                {{--  <a href="{{ route('admin.jornada.edit', $item->id) }}" title="Editar Jornada">  --}}
+                                    <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
+                                {{--  </a>  --}}
+                            @endrole
                         </td>
                     </tr>
                     @endforeach
@@ -260,7 +261,7 @@
                             </div>
                             <div class="col-12 col-sm-2">
                                 <div class="form-group">
-                                    <label for="thoras" class="control-label">{{ 'Disponibles' }} <span class="text-danger"></span></label>
+                                    <label for="thoras" class="control-label text-primary">{{ 'Libres' }} <span class="text-danger"></span></label>
                                     <input type="text" id="_horas" class="form-control" for="_horas" readonly="readonly" value="0"></input>
                                 </div>
                             </div>
@@ -338,56 +339,66 @@
         });
     });
 
-
-
-
-    $(".openModal").click(function (e) {
-        e.preventDefault();
+    function fnDetalleJornada(element) {
         $('#modalView').modal('show');
-        let key = $(this).data('key');
+        let key = $(element).data('key');
         $.get( "{{ url('admin/jornada/detalle/') }}/"+key+"/", function(data) {
-            const horario = data.map(function(datas){return datas.detalle;});
-            const dia = data.map(function(datas){return datas.dia;});
-            let contenido = `
-                <tr>
-                    <th>Días</th>
-                    <th>Horario</th>
-                </tr>
-                <tr>
-                    <td>${dia.join('<br>')}</td>
-                    <td>${horario.join('<br>')}</td>
-                </tr>`;
-            $("#tableView").html(contenido);
+
+
+            var fecha = new Date(data.jornada.created_at);
+            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+
+            $('#fechaRegistroDetalle').html(fecha.toLocaleDateString("es-ES", options));
+
+            let contenido = '';
+            $.each(data.items, function (indexInArray, valueOfElement) {
+                console.log(valueOfElement);
+                contenido +=`<tr>
+                                <td>${valueOfElement.dia}</td>
+                                <td>${valueOfElement.hora_inicio}</td>
+                                <td>${valueOfElement.hora_fin}</td>
+                                <td>${valueOfElement.jornada}</td>
+                            </tr>`;
+            });
+
+            // const horario = data.map(function(datas){return datas.detalle;});
+            // const dia = data.map(function(datas){return datas.dia;});
+            // let contenido = `
+            //     <tr>
+            //         <th>Días</th>
+            //         <th>Horario</th>
+            //     </tr>
+            //     <tr>
+            //         <td>${dia.join('<br>')}</td>
+            //         <td>${horario.join('<br>')}</td>
+            //     </tr>`;
+
+
+            $("#bodyView").html(contenido);
         });
-    });
+    }
 
     $("#btnNewJornada").click(function () {
         $("#modalNewJonarda").modal('show');
-        $("#id_periodo").val(periodo_registro).trigger('change');
+        $("#id_periodo").val(null).trigger('change');
         $('#id_periodo').selectpicker('refresh');
-        $("#id_emp").val(empleado_registro).trigger('change');
+        $("#id_emp").val(null).trigger('change');
         $('#id_emp').selectpicker('refresh');
     });
 
     $("#id_emp").on('change', function () {//para cargar el total de horas por empleados
         let id = $(this).val();
-        if(id!==''){
-            // $("#jornada-div").show('slow');
+        if(id!=='' && id!==null){
             $("#jornada-div :input").prop("disabled", false);
             let data = getData('GET', `{{ url('admin/jornada/jornadaEmpleado/') }}/`+id,'#notificacion_jornada');
             data.then(function(response){
                 $(".total-horas").val(response.horas_semanales);
                 updateChangeTable();
                 empleado_registro = $('#id_emp').val();
-
-                console.log(response);
-
-
-
             });
         }else{
             $("#jornada-div :input").prop("disabled", true);
-            // $("#jornada-div").hide('slow');
         }
     });
 
@@ -395,29 +406,57 @@
     $("#id_periodo").on('change', function () {//para cargar los empleados dependiendo del periodo
         let id = $(this).val();
         if(id!==''){
-            // $("#jornada-div").show('slow');
             $("#jornada-div :input").prop("disabled", false);
-            let data = getData('GET', `{{ url('admin/jornada/periodoEmpleados/') }}/`+id,'#notificacion_jornada');
-            data.then(function(response){
-                $("#id_emp").val(null).trigger('change');
-                $('#id_emp').empty();
-                $('#id_emp').append('<option selected value="">Seleccione un Empleado</option>');
-                $(response).each(function (index, element) {
-                    $("#id_emp").append('<option value="'+element.id+'">'+element.apellido+', '+element.nombre+'</option>');
-                });
-                $('#id_emp').selectpicker('refresh');
-                $('#id_periodo').selectpicker('refresh');
-                periodo_registro = $('#id_periodo').val();
-            });
+            fnUpdatePeriodoSelect(id);
         }else{
             $("#jornada-div :input").prop("disabled", true);
         }
     });
 
+    function fnUpdatePeriodoSelect(id, updateEmpleado = false, empleado = null, setPeriodo = false, periodo = null){
+        // console.log(id);
+        let data = getData('GET', `{{ url('admin/jornada/periodoEmpleados/') }}/`+id+'?updateEmpleado='+updateEmpleado,'#notificacion_jornada');
+        data.then(function(response){
+            $("#id_emp").val(null).trigger('change');
+            $('#id_emp').empty();
+            $('#id_emp').append('<option selected value="">Seleccione un Empleado</option>');
+            $(response).each(function (index, element) {
+                $("#id_emp").append('<option value="'+element.id+'">'+element.apellido+', '+element.nombre+'</option>');
+            });
+
+            if(setPeriodo && periodo!==null){
+                $("#id_periodo").val(periodo);
+                $('#id_periodo').selectpicker('refresh');
+            }
+
+            if(updateEmpleado && empleado!==null){//para uctualizar el dato del empleado
+                $("#id_emp").val(empleado).trigger('change');
+            }
+
+            $('#id_emp').selectpicker('refresh');
+            periodo_registro = $('#id_periodo').val();
+        });
+    }
+
 
     function fnProcedimiento(componet){
         let jornada = $(componet).data('key');
         $("#registroForm #jornada_id").val(jornada);
+    }
+
+
+    //Para editar la jornada
+    function fnEditJornada(element) {
+        $("#modalNewJonarda").modal('show');
+        let id = $(element).data('id');
+        let data = getData('GET', `{{ url('admin/jornada') }}/`+id,'#notificacion_jornada');
+        data.then(function(response){
+            fnUpdatePeriodoSelect(response.jornada.id_periodo, true, response.jornada.id_emp, true, response.jornada.id_periodo);
+
+
+            // table.updateData([{id:1, name:"bob", gender:"male"}, {id:2, name:"Jenny", gender:"female"}]);
+
+        });
     }
 
 
