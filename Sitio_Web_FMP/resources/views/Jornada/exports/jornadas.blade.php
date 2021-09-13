@@ -42,7 +42,7 @@
             @endphp
             @foreach ($dias as $value)
                 @php
-                    $valores = $item->horas($value, $item->id_emp , $periodo);
+                    $valores = $item->horas($value, $item->id_emp , $periodo, $item->id);
                     $horas_diarias[$value] = is_null($valores) ? 0 : intval($valores->hora_fin)-intval($valores->hora_inicio);
                     $total += is_null($valores) ? 0 : intval($valores->hora_fin)-intval($valores->hora_inicio);
                 @endphp

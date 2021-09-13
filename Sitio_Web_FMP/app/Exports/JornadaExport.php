@@ -27,11 +27,11 @@ class JornadaExport implements FromView{
     // }
 
     public function view(): View{
-
-        $query = Jornada::where('id_periodo', $this->periodo)
-                            ->join('empleado', 'empleado.id', 'jornada.id_emp')
-                            ->join('periodos as p', 'p.id', 'jornada.id_periodo')
-                            ->where('tipo', 'Docente');
+        $query = Jornada::select('jornada.*')
+                        ->where('id_periodo', $this->periodo)
+                        ->join('empleado', 'empleado.id', 'jornada.id_emp')
+                        // ->join('periodos as p', 'p.id', 'jornada.id_periodo')
+                        ->where('tipo_empleado', 'Académico');
 
         if(!is_null($this->depto)){
             $query->where('empleado.id_depto', $this->depto);

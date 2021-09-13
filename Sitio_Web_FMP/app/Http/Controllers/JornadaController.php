@@ -229,6 +229,8 @@ class JornadaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function show($id){
+        $user = Auth::user();
+
         $jornada = Jornada::select('jornada.id', 'jornada.id_emp', 'jornada.id_periodo', 'jornada.created_at')
                         ->where('jornada.id', $id)
                         ->first();
@@ -245,6 +247,7 @@ class JornadaController extends Controller{
             $jornadas[$key]['jornada'] = intval($dateInterval->format('%H'));
         }
         $seguimiento = $jornada->seguimiento;
+
         return array('jornada' => $jornada, 'items' => $jornadas, 'seguimiento' => $seguimiento);
     }
 
@@ -350,10 +353,13 @@ class JornadaController extends Controller{
     // }
 
     public function getEmpleadoJornada($id){
+        $user = Auth::user();
         $empleado = Empleado::join('tipo_jornada as tj', 'tj.id', 'empleado.id_tipo_jornada')
                             ->where('empleado.id', $id)
                             ->first();
-        return $empleado;
+        $permiso = ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano') || $user->hasRole('Jefe-Depatamento') || $user->hasRole('Jefe-Academico') || strcmp($empleado->tipo_empleado, 'Académico') == 0);
+
+        return array('empleado' => $empleado, 'permiso' => $permiso);
     }
 
     public function getEmpleadoPeriodo($id, Request $request){
@@ -375,7 +381,7 @@ class JornadaController extends Controller{
             }
         } else if ($user->hasRole('super-admin') && $user->hasRole('Recurso-Humano')) {
             if(isset($request->depto)){
-                $depto = $empleado->id_depto; // id que servira para filtrar los empleados por departemento
+                $depto = $request->depto; // id que servira para filtrar los empleados por departemento
             }
         }
         $periodo = Periodo::findOrFail($request->periodo);

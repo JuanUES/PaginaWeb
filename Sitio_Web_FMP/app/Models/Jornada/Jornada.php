@@ -36,12 +36,13 @@ class Jornada extends Model
         return $this->hasOne(Empleado::class, 'id', 'id_emp');
     }
 
-    public function horas($dia, $empleado, $periodo = 1){
+    public function horas($dia, $empleado, $periodo = 1, $jornada){
         $query = $this->items()
                     ->join('jornada', 'jornada.id', 'jornada_items.id_jornada')
                     ->join('empleado' , 'empleado.id', 'jornada.id_emp')
                     ->where('jornada_items.dia', $dia)
                     ->where('empleado.id', $empleado)
+                    ->where('jornada.id', $jornada)
                     ->where('jornada.id_periodo', $periodo)
                     ->where('jornada.estado', 'activo')
                     ->where('jornada_items.estado', 'activo')
