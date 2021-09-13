@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder
             Tipo_JornadaSeeder::class,
             CategoriaEmpleadoSeeder::class,
             EmpleadoSeeder::class,
+            CicloSeeder::class,
             
         ]);
     }
