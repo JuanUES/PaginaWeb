@@ -20,7 +20,8 @@ class CreateJornadaTable extends Migration
             $table->foreign('id_emp')->references('id')->on('empleado');
             $table->integer('id_periodo')->unsigned();
             $table->foreign('id_periodo')->references('id')->on('periodos');
-            $table->string('procedimiento')->default('enviado a jefatura');
+            $table->string('procedimiento')->default('guardado');
+            $table->text('observaciones')->nullable();
             $table->enum('estado',['activo','inactivo'])->default('activo');
             $table->timestamps();
         });

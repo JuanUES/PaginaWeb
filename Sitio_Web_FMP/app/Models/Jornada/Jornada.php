@@ -14,10 +14,14 @@ class Jornada extends Model
 
     protected $guarded = 'id';
 
-    protected $fillable = ['id_emp', 'id_periodo', 'procedimiento','estado'];
+    protected $fillable = ['id_emp', 'id_periodo', 'procedimiento','estado', 'observaciones'];
 
     public function items(){
         return $this->hasMany(JornadaItem::class, 'id_jornada', 'id');
+    }
+
+    public function seguimiento(){
+        return $this->hasMany(Seguimiento::class, 'jornada_id', 'id')->orderBy('id','DESC');
     }
 
     public function items_enabled($estado){

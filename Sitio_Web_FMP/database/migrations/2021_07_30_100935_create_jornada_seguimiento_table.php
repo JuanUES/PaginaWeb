@@ -19,7 +19,7 @@ class CreateJornadaSeguimientoTable extends Migration
             $table->integer('jornada_id');
             $table->foreign('jornada_id')->references('id')->on('jornada');
             $table->string('proceso');
-            $table->text('observaciones');
+            $table->text('observaciones')->nullable();
             $table->boolean('estado')->default(true);
             $table->timestamps();
         });

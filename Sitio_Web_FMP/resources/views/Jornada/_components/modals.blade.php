@@ -45,7 +45,17 @@
                             </table>
                         </div>
                         <div class="tab-pane show" id="seguimiento">
+                            <table class="table table-hover table-sm">
+                                <thead>
+                                    <th>Registro</th>
+                                    <th>Proceso</th>
+                                    <th>observaciones</th>
+                                    {{--  <th>Total</th>  --}}
+                                </thead>
+                                <tbody id="bodySeguimiento">
 
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 {{--  </div>  --}}
@@ -149,7 +159,17 @@
                                     </select>
                                 </div>
                             </div>
-
+                            @hasanyrole('super-admin|Recurso-Humano')
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"  name="depto">
+                                            @foreach ($deptos as $item)
+                                                <option value="{{ $item->id }}">{!!$item->nombre_departamento!!}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            @endhasanyrole
                         </div>
                         <div class="row">
                             <button type="submit" class="btn p-1 btn-light waves-effect waves-light btn-block font-24 btn-block"> <i class="mdi mdi-check mdi-16px"></i>Exportar</button>

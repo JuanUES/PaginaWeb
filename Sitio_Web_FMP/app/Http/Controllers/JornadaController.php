@@ -167,21 +167,19 @@ class JornadaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
-        // dd($request);
+
+        // dd($request->_id);
 
         try {
             $validator = Validator::make($request->all(), $this->rules, $this->messages);
             if ($validator->fails()) {
-
-                // dd($validator->errors()->all());
-
                 return response()->json(['error' => $validator->errors()->all()]);
             }
-            $requestData = $request->except('items');
-            $items = json_decode($request->items);
 
-            $requestData = $request->except(['_id']);
-            if (strcmp($request->_id, '') == 0) {
+            $items = json_decode($request->items);
+            $requestData = $request->except(['_id', 'items']);
+
+            if (strcmp(trim($request->_id), '') == 0 ) {
                 $msg = 'Registro exitoso.';
                 $jornada = Jornada::create($requestData);
                 if (is_array($items) || is_object($items)) {
@@ -194,42 +192,26 @@ class JornadaController extends Controller{
                         ]);
                     }
                 }
-                Utilidades::fnSaveBitacora('Nueva Jornada #: ' . $jornada->id, 'Registro', $this->modulo);
+                Utilidades::fnSaveBitacora('Nueva Jornada #: ' . $jornada->id. ' Ciclo: '. $jornada->periodo_rf->ciclo_rf->nombre, 'Registro', $this->modulo);
             } else {
-                // $msg = 'Modificación exitoso.';
-                // $jornadas = Jornada::findOrFail($id);
-                // $jornadas->update($requestData);
-
-                // $items_DB = JornadaItem::select('id')->where('id_jornada', $jornadas->id)->get();
-
-                // foreach ($items as $key => $value) {
-
-                //     $data = [
-                //         'dia' => $value->dia,
-                //         'hora_inicio' => $value->hora_inicio,
-                //         'hora_fin' => $value->hora_fin,
-                //         'id_jornada' => $jornadas->id,
-                //         'estado' => 'activo',
-                //     ];
-
-                //     if(isset($value->id) && !empty($value->id)){
-                //         $item = JornadaItem::findOrFail($value->id);
-                //         $item->update($data);
-                //         $items_DB->forget($key);
-                //     }else{
-                //         JornadaItem::create($data);
-                //     }
-
-                // }
-
-                // //para eliminar los items que no vienen y que han sio elimnados por el usuario
-                // foreach ($items_DB as $key => $value) {
-                //     $item = JornadaItem::findOrFail($value->id);
-                //     $item->delete();
-                // }
+                $id = $request->_id;
+                $jornada = Jornada::findOrFail($id);
+                $msg = 'Modificación exitoso.';
 
 
-                // Utilidades::fnSaveBitacora('Jornada #: ' . $periodo->id . ' Título: ' . $periodo->titulo, 'Modificación', $this->modulo);
+                $jornada->update($requestData);
+                $jornada->items()->delete();
+                if (is_array($items) || is_object($items)) {
+                    foreach ($items as $key => $value) { //para guardar los items del jornada
+                        JornadaItem::create([
+                            'id_jornada' => $jornada->id,
+                            'dia' => $value->dia,
+                            'hora_inicio' => $value->hora_inicio,
+                            'hora_fin' => $value->hora_fin,
+                        ]);
+                    }
+                }
+                Utilidades::fnSaveBitacora('Jornada #: ' . $jornada->id . ' Ciclo: ' . $jornada->periodo_rf->ciclo_rf->nombre, 'Modificación', $this->modulo);
             }
             return response()->json(['mensaje' => $msg]);
         } catch (Exception $e) {
@@ -247,13 +229,23 @@ class JornadaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function show($id){
-        $jornada = Jornada::select('jornada.id_emp', 'jornada.id_periodo')
+        $jornada = Jornada::select('jornada.id', 'jornada.id_emp', 'jornada.id_periodo', 'jornada.created_at')
                         ->where('jornada.id', $id)
                         ->first();
-
         $items = $jornada->items;
-
-        return array('jornada'=>$jornada, 'items'=>$items);
+        $jornadas = [];
+        foreach ($items as $key => $value) {
+            $fechaUno = new DateTime($value->hora_fin);
+            $fechaDos = new DateTime($value->hora_inicio);
+            $dateInterval = $fechaUno->diff($fechaDos);
+            $jornadas[$key]['option'] = '<button type="button" class="btn btn-sm btn-secondary" title="Eliminar Fila"> <i class="fa fa-times"></i> </button>';
+            $jornadas[$key]['dia'] = $value->dia;
+            $jornadas[$key]['hora_inicio'] = $value->hora_inicio;
+            $jornadas[$key]['hora_fin'] = $value->hora_fin;
+            $jornadas[$key]['jornada'] = intval($dateInterval->format('%H'));
+        }
+        $seguimiento = $jornada->seguimiento;
+        return array('jornada' => $jornada, 'items' => $jornadas, 'seguimiento' => $seguimiento);
     }
 
     /**
@@ -324,35 +316,38 @@ class JornadaController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function destroy(Jornada $jornada){
-        //
+
     }
 
-    public function getDetalle($id){
-        // $detalle = Jornada::join('jornada_items','jornada.id','=','jornada_items.id_jornada')
-        // ->join('periodos','jornada.id_periodo','=','periodos.id')
-        // ->join('empleado','jornada.id_emp','=','empleado.id')
-        // ->select('jornada.id', 'empleado.id AS empleado',
-        //         Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"),
-        //         JornadaItem::raw("jornada_items.dia as dia, CONCAT(jornada_items.hora_inicio , ' - ' , jornada_items.hora_fin) AS detalle"))
-        // ->where('jornada.id' ,'=', $id)
-        // ->get();
-        // return $detalle;
-        $jornada = Jornada::select('jornada.id','jornada.id_emp', 'jornada.id_periodo', 'jornada.created_at')
-                        ->where('jornada.id', $id)
-                        ->first();
-        $items = $jornada->items;
-        $jornadas = [];
-        foreach ($items as $key => $value) {
-            $fechaUno = new DateTime($value->hora_fin);
-            $fechaDos = new DateTime($value->hora_inicio);
-            $dateInterval = $fechaUno->diff($fechaDos);
-            $jornadas[$key]['dia'] = $value->dia;
-            $jornadas[$key]['hora_inicio'] = $value->hora_inicio;
-            $jornadas[$key]['hora_fin'] = $value->hora_fin;
-            $jornadas[$key]['jornada'] = intval($dateInterval->format('%H'));
-        }
-        return array('jornada'=>$jornada, 'items'=> $jornadas, 'seguimiento' => null);
-    }
+    // public function getDetalle($id){
+    //     // $detalle = Jornada::join('jornada_items','jornada.id','=','jornada_items.id_jornada')
+    //     // ->join('periodos','jornada.id_periodo','=','periodos.id')
+    //     // ->join('empleado','jornada.id_emp','=','empleado.id')
+    //     // ->select('jornada.id', 'empleado.id AS empleado',
+    //     //         Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"),
+    //     //         JornadaItem::raw("jornada_items.dia as dia, CONCAT(jornada_items.hora_inicio , ' - ' , jornada_items.hora_fin) AS detalle"))
+    //     // ->where('jornada.id' ,'=', $id)
+    //     // ->get();
+    //     // return $detalle;
+    //     $jornada = Jornada::select('jornada.id','jornada.id_emp', 'jornada.id_periodo', 'jornada.created_at')
+    //                     ->where('jornada.id', $id)
+    //                     ->first();
+    //     $items = $jornada->items;
+    //     $jornadas = [];
+    //     foreach ($items as $key => $value) {
+    //         $fechaUno = new DateTime($value->hora_fin);
+    //         $fechaDos = new DateTime($value->hora_inicio);
+    //         $dateInterval = $fechaUno->diff($fechaDos);
+    //         $jornadas[$key]['dia'] = $value->dia;
+    //         $jornadas[$key]['hora_inicio'] = $value->hora_inicio;
+    //         $jornadas[$key]['hora_fin'] = $value->hora_fin;
+    //         $jornadas[$key]['jornada'] = intval($dateInterval->format('%H'));
+    //     }
+
+    //     $seguimiento = $jornada->seguimiento;
+
+    //     return array('jornada'=>$jornada, 'items'=> $jornadas, 'seguimiento' => $seguimiento);
+    // }
 
     public function getEmpleadoJornada($id){
         $empleado = Empleado::join('tipo_jornada as tj', 'tj.id', 'empleado.id_tipo_jornada')
@@ -377,6 +372,10 @@ class JornadaController extends Controller{
                 if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Departamento')) { //para filtrar por tipo de departamento
                     $depto = $empleado->id_depto; // id que servira para filtrar los empleados por departemento
                 }
+            }
+        } else if ($user->hasRole('super-admin') && $user->hasRole('Recurso-Humano')) {
+            if(isset($request->depto)){
+                $depto = $empleado->id_depto; // id que servira para filtrar los empleados por departemento
             }
         }
         $periodo = Periodo::findOrFail($request->periodo);
@@ -466,7 +465,6 @@ class JornadaController extends Controller{
 
 
     public function checkDia(Request $request){
-        dd($request);
         $empleado = Empleado::findOrFail($request->empleado);
     }
 

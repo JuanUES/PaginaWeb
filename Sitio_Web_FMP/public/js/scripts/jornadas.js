@@ -145,166 +145,16 @@ var table = new Tabulator("#days-table", {
     initialSort: [             //set the initial sort order of the data
     ],
 
-    columns: [                 //define the table columns
+    columns: [//define the table columns
         // { title: "", field: "id" },
         { title: "", field: "option", formatter: btn, cellClick: btncallback },
         { title: "Dia", field: "dia", editor: "select", validator: ["required", "unique"],  editorParams: { values: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"] } },
-        {title: "Entrada", field: "hora_inicio", hozAlign: "center", sorter: "time", editor: dateEditor,cellEdited: updateHour},
-        {title: "Salida", field: "hora_fin", hozAlign: "center", sorter: "time", editor: dateEditor, cellEdited: updateHour},
+        { title: "Entrada", field: "hora_inicio", hozAlign: "center", sorter: "time", editor: dateEditor,cellEdited: updateHour},
+        { title: "Salida", field: "hora_fin", hozAlign: "center", sorter: "time", editor: dateEditor, cellEdited: updateHour},
         { title: "Jornada", field: "jornada", editor: false, validator: "numeric"},
-
     ],
 });
 
-
-// if (items.length) {//para ocultar la culumna del id
-//     table.hideColumn("id");
-// } else {//para eliminar la columna cuando se este creando un nuevo presupuesto
-//     table.deleteColumn("id");
-// }
-
-jQuery.validator.addMethod("notEqual", function (value, element, param) {
-    return this.optional(element) || value != param;
-}, "Please specify a different (non-default) value");
-
-$("#frmJornada").validate({
-    rules: {
-        id_emp: {
-            required: true,
-        },
-        id_periodo: {
-            required: true
-        }
-    },
-    messages:{
-        id_emp:{
-            required: 'Seleccione un Empleado'
-        },
-        id_periodo:{
-            required: 'Seleccione un Periodo Valido'
-        }
-    },
-    submitHandler: function (form, event) {
-        event.preventDefault();
-
-        $(".alert-danger").remove();
-        $('<input>', {
-            type: 'hidden',
-            name: 'items',
-            value: JSON.stringify(table.getData())
-        }).appendTo('#frmJornada');
-
-        var valid = table.validate();
-        if (valid != true) {
-            let alert = `<div class="alert alert-danger" role="alert">
-                            <div class="alert-message">
-                                <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Complete el contenido de la tabla
-                            </div>
-                        </div>`;
-
-            $("#days-table").before(alert);
-        }else{
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type: $('#frmJornada').attr('method'),
-                url: $('#frmJornada').attr('action'),
-                dataType: "JSON",
-                data: new FormData(document.getElementById('#frmJornada'.replace('#', ''))),
-                processData: false,
-                contentType: false,
-                error: function (jqXHR, textStatus) {
-                    if (jqXHR.status === 0) {
-                        errorServer('#notificacion', 'No conectar: ​​Verifique la red.');
-                    } else if (jqXHR.status == 404) {
-                        errorServer('#notificacion', 'No se encontró la página solicitada [404]');
-                    } else if (jqXHR.status == 500) {
-                        errorServer('#notificacion', 'Error interno del servidor [500].');
-                    } else if (textStatus === 'parsererror') {
-                        errorServer('#notificacion', 'Error al analizar JSON solicitado.');
-                    } else if (textStatus === 'timeout') {
-                        errorServer('#notificacion', 'Error de tiempo de espera.');
-                    } else if (textStatus === 'abort') {
-                        errorServer('#notificacion', 'Solicitud de Ajax cancelada.');
-                    } else {
-                        errorServer('#notificacion', 'Error no detectado: ' + jqXHR.responseText);
-                    }
-                    $('.modal').scrollTop($('.modal').height());
-                }, beforeSend: function (jqXHR, textStatus) {
-                    $('#notificacion').removeClass().addClass('alert alert-info bg-info text-white border-0').html(''
-                        + '<div class="row">'
-                        + '    <div class="col-lg-1 px-2">'
-                        + '        <div class="spinner-border text-white m-2" role="status"></div>'
-                        + '    </div>'
-                        + '    <div class="col-lg-11 align-self-center" >'
-                        + '      <h3 class="col-xl text-white">Cargando...</h3>'
-                        + '    </div>'
-                        + '</div>'
-                    ).show();
-                    $('.modal').scrollTop(0);
-                    disableform('#frmJornada');
-                },
-            }).then(function (data) {
-                if (data.error != null) {
-                    $('#notificacion').removeClass().addClass('alert alert-danger bg-danger text-white border-0');
-                    $errores = '';
-                    for (let index = 0; index < data.error.length; index++) {
-                        $error = '<li>' + data.error[index] + '</li>';
-                        $errores += $error;
-                    }
-
-                    $('#notificacion').html('<h4 Class = "text-white">Completar Campos:</h4>'
-                        + '<div class="row">'
-                        + '<div class="col-lg-9 order-firts">'
-                        + '<ul>' + $errores + '</ul>'
-                        + '</div>'
-                        + '<div class="col-lg-3 order-last text-center">'
-                        + '<li class="fa fa-exclamation-triangle fa-5x"></li>'
-                        + '</div>'
-                        + '</div>'
-                    ).show();
-                    enableform('#frmJornada');
-
-                } else {
-                    if (data.mensaje != null && data.error == null) {
-                        $('#notificacion').removeClass().addClass('alert alert-success bg-success text-white ').html(''
-                            + '<div class="row">'
-                            + '<div class="col-xl-11 order-last">'
-                            + ' <h3 class="col-xl text-white">' + data.mensaje + '</h3>'
-                            + '</div>'
-                            + '<div class="col-xl-1 order-firts">'
-                            + '<i class="fa fa-check  fa-3x"></i>'
-                            + '</div>'
-                            + '</div>'
-                        ).show();
-                        $('#frmJornada')[0].reset();
-                        location.reload();
-                    }
-                }
-                $('.modal').scrollTop(0);
-            });
-        }
-    },
-    errorClass: "invalid-feedback",
-    validClass: "state-success",
-    errorElement: "em",
-    highlight: function (element, errorClass, validClass) {
-        $(element).closest('.field').addClass(errorClass).removeClass(validClass);
-    },
-    unhighlight: function (element, errorClass, validClass) {
-        $(element).closest('.field').removeClass(errorClass).addClass(validClass);
-    },
-    errorPlacement: function (error, element) {
-        if (element.is(":radio") || element.is(":checkbox")) {
-            element.closest('.option-group').after(error);
-        } else {
-            error.insertAfter(element.parent());
-        }
-    }
-});
 
 function updateJornada() {
     let hoursTotal = fnHoras();
@@ -345,3 +195,164 @@ function updateChangeTable(){
     $("#_horas").val(updatehours);
     validateHoras(total, updatehours);
 }
+
+
+// if (items.length) {//para ocultar la culumna del id
+//     table.hideColumn("id");
+// } else {//para eliminar la columna cuando se este creando un nuevo presupuesto
+//     table.deleteColumn("id");
+// }
+
+jQuery.validator.addMethod("notEqual", function (value, element, param) {
+    return this.optional(element) || value != param;
+}, "Please specify a different (non-default) value");
+
+$("#frmJornada").validate({
+    rules: {
+        id_emp: {
+            required: true,
+        },
+        id_periodo: {
+            required: true
+        }
+    },
+    messages:{
+        id_emp:{
+            required: 'Seleccione un Empleado'
+        },
+        id_periodo:{
+            required: 'Seleccione un Periodo Valido'
+        }
+    },
+    submitHandler: function (form, event) {
+        event.preventDefault();
+
+        $(".alert-danger").hide();
+        $('<input>', {
+            type: 'hidden',
+            name: 'items',
+            value: JSON.stringify(table.getData())
+        }).appendTo('#frmJornada');
+
+        var valid = table.validate();
+        if (valid != true) {
+            let alert = `<div class="alert alert-danger" role="alert">
+                            <div class="alert-message">
+                                <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Complete el contenido de la tabla
+                            </div>
+                        </div>`;
+
+            $("#days-table").before(alert);
+        }else{
+
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+
+            $.ajax({
+                type: $('#frmJornada').attr('method'),
+                url: $('#frmJornada').attr('action'),
+                dataType: "JSON",
+                data: new FormData(document.getElementById('#frmJornada'.replace('#', ''))),
+                processData: false,
+                contentType: false,
+                error: function (jqXHR, textStatus) {
+                    if (jqXHR.status === 0) {
+                        errorServer('#notificacion_jornada', 'No conectar: ​​Verifique la red.');
+                    } else if (jqXHR.status == 404) {
+                        errorServer('#notificacion_jornada', 'No se encontró la página solicitada [404]');
+                    } else if (jqXHR.status == 500) {
+                        errorServer('#notificacion_jornada', 'Error interno del servidor [500].');
+                    } else if (textStatus === 'parsererror') {
+                        errorServer('#notificacion_jornada', 'Error al analizar JSON solicitado.');
+                    } else if (textStatus === 'timeout') {
+                        errorServer('#notificacion_jornada', 'Error de tiempo de espera.');
+                    } else if (textStatus === 'abort') {
+                        errorServer('#notificacion_jornada', 'Solicitud de Ajax cancelada.');
+                    } else {
+                        errorServer('#notificacion_jornada', 'Error no detectado: ' + jqXHR.responseText);
+                    }
+                    $('.modal').scrollTop($('.modal').height());
+                }, beforeSend: function (jqXHR, textStatus) {
+                    $('#notificacion_jornada').removeClass().addClass('alert alert-info bg-info text-white border-0').html(''
+                        + '<div class="row">'
+                        + '    <div class="col-lg-1 px-2">'
+                        + '        <div class="spinner-border text-white m-2" role="status"></div>'
+                        + '    </div>'
+                        + '    <div class="col-lg-11 align-self-center" >'
+                        + '      <h3 class="col-xl text-white">Cargando...</h3>'
+                        + '    </div>'
+                        + '</div>'
+                    ).show();
+                    $('.modal').scrollTop(0);
+                    // disableform('#frmJornada');
+                },
+            }).then(function (data) {
+                if (data.error != null) {
+                    $('#notificacion_jornada').removeClass().addClass('alert alert-danger bg-danger text-white border-0');
+                    $errores = '';
+
+                    let tipo = $.type(data.error);
+                    if(tipo==='string'){
+                        $errores = data.error;
+                    }else{
+                        for (let index = 0; index < data.error.length; index++) {
+                            $error = '<li>' + data.error[index] + '</li>';
+                            $errores += $error;
+                        }
+                    }
+
+                    $('#notificacion_jornada').html('<h4 Class = "text-white">Completar Campos:</h4>'
+                        + '<div class="row">'
+                        + '<div class="col-lg-9 order-firts">'
+                        + '<ul>' + $errores + '</ul>'
+                        + '</div>'
+                        + '<div class="col-lg-3 order-last text-center">'
+                        + '<li class="fa fa-exclamation-triangle fa-5x"></li>'
+                        + '</div>'
+                        + '</div>'
+                    ).show();
+                    enableform('#frmJornada');
+
+                } else {
+                    if (data.mensaje != null && data.error == null) {
+                        $('#notificacion_jornada').removeClass().addClass('alert alert-success bg-success text-white ').html(''
+                            + '<div class="row">'
+                            + '<div class="col-xl-11 order-last">'
+                            + ' <h3 class="col-xl text-white">' + data.mensaje + '</h3>'
+                            + '</div>'
+                            + '<div class="col-xl-1 order-firts">'
+                            + '<i class="fa fa-check  fa-3x"></i>'
+                            + '</div>'
+                            + '</div>'
+                        ).show();
+                        $('#frmJornada')[0].reset();
+                        location.reload();
+                    }
+                }
+                $('.modal').scrollTop(0);
+            });
+        }
+    },
+    errorClass: "invalid-feedback",
+    validClass: "state-success",
+    errorElement: "em",
+    highlight: function (element, errorClass, validClass) {
+        $(element).closest('.field').addClass(errorClass).removeClass(validClass);
+    },
+    unhighlight: function (element, errorClass, validClass) {
+        $(element).closest('.field').removeClass(errorClass).addClass(validClass);
+    },
+    errorPlacement: function (error, element) {
+        if (element.is(":radio") || element.is(":checkbox")) {
+            element.closest('.option-group').after(error);
+        } else {
+            error.insertAfter(element.parent());
+        }
+    }
+});
+

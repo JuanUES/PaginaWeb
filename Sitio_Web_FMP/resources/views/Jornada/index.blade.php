@@ -342,18 +342,14 @@
     function fnDetalleJornada(element) {
         $('#modalView').modal('show');
         let key = $(element).data('key');
-        $.get( "{{ url('admin/jornada/detalle/') }}/"+key+"/", function(data) {
-
-
+        $.get( "{{ url('admin/jornada/') }}/"+key, function(data) {
             var fecha = new Date(data.jornada.created_at);
             var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-
 
             $('#fechaRegistroDetalle').html(fecha.toLocaleDateString("es-ES", options));
 
             let contenido = '';
             $.each(data.items, function (indexInArray, valueOfElement) {
-                console.log(valueOfElement);
                 contenido +=`<tr>
                                 <td>${valueOfElement.dia}</td>
                                 <td>${valueOfElement.hora_inicio}</td>
@@ -361,29 +357,29 @@
                                 <td>${valueOfElement.jornada}</td>
                             </tr>`;
             });
-
-            // const horario = data.map(function(datas){return datas.detalle;});
-            // const dia = data.map(function(datas){return datas.dia;});
-            // let contenido = `
-            //     <tr>
-            //         <th>Días</th>
-            //         <th>Horario</th>
-            //     </tr>
-            //     <tr>
-            //         <td>${dia.join('<br>')}</td>
-            //         <td>${horario.join('<br>')}</td>
-            //     </tr>`;
-
-
             $("#bodyView").html(contenido);
+
+            contenido = '';
+            $.each(data.seguimiento, function (indexInArray, valueOfElement) {
+                let options = { year: 'numeric', month: 'long', day: 'numeric' };
+                contenido +=`<tr>
+                                <td>${ new Date(valueOfElement.created_at).toLocaleDateString("es-ES", options) }</td>
+                                <td class="text-dark">${valueOfElement.proceso}</td>
+                                <td>${valueOfElement.observaciones}</td>
+                            </tr>`;
+            });
+            $("#bodySeguimiento").html(contenido);
         });
     }
 
     $("#btnNewJornada").click(function () {
+        $("#_id").val('');
         $("#modalNewJonarda").modal('show');
         $("#id_periodo").val(null).trigger('change');
         $('#id_periodo').selectpicker('refresh');
+
         $("#id_emp").val(null).trigger('change');
+        $('#id_emp').empty();
         $('#id_emp').selectpicker('refresh');
     });
 
@@ -414,7 +410,6 @@
     });
 
     function fnUpdatePeriodoSelect(id, updateEmpleado = false, empleado = null, setPeriodo = false, periodo = null){
-        // console.log(id);
         let data = getData('GET', `{{ url('admin/jornada/periodoEmpleados/') }}/`+id+'?updateEmpleado='+updateEmpleado,'#notificacion_jornada');
         data.then(function(response){
             $("#id_emp").val(null).trigger('change');
@@ -428,7 +423,6 @@
                 $("#id_periodo").val(periodo);
                 $('#id_periodo').selectpicker('refresh');
             }
-
             if(updateEmpleado && empleado!==null){//para uctualizar el dato del empleado
                 $("#id_emp").val(empleado).trigger('change');
             }
@@ -444,21 +438,17 @@
         $("#registroForm #jornada_id").val(jornada);
     }
 
-
     //Para editar la jornada
     function fnEditJornada(element) {
         $("#modalNewJonarda").modal('show');
         let id = $(element).data('id');
         let data = getData('GET', `{{ url('admin/jornada') }}/`+id,'#notificacion_jornada');
         data.then(function(response){
+            $("#_id").val(id);
             fnUpdatePeriodoSelect(response.jornada.id_periodo, true, response.jornada.id_emp, true, response.jornada.id_periodo);
-
-
-            // table.updateData([{id:1, name:"bob", gender:"male"}, {id:2, name:"Jenny", gender:"female"}]);
-
+            table.replaceData(response.items);
         });
     }
-
 
 </script>
 @endsection
