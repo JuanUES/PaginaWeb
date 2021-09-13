@@ -58,7 +58,7 @@
                         <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="exampleInputDias">Día</label>
-                                <select class="custom-select" name="dias">
+                                <select class="custom-select" name="dias" id="dias">
                                     <option value="">Seleccione</option>
                                     <option value="Lunes">Lunes</option>
                                     <option value="Martes">Martes</option>

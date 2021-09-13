@@ -44,13 +44,15 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="">D.U.I. <code>*</code></label>
-                            <input type="text" class="form-control" name="dui" placeholder="Digite el número de D.U.I.">
+                            <input type="text" class="form-control" name="dui" placeholder="00000000-0" 
+                                data-mask="00000000-0">
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="">N.I.T. <code>*</code></label>
-                            <input type="text" class="form-control" name="nit" placeholder="Digite el número de N.I.T.">
+                            <input type="text" class="form-control" name="nit" data-mask="0000-000000-000-0"
+                            placeholder="0000-000000-000-0">
                         </div>
                     </div>
                 </div>
@@ -58,7 +60,8 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="">Teléfono <code>*</code></label>
-                            <input type="tel" class="form-control" name="telefono" placeholder="Digite el número de teléfono">
+                            <input type="tel" class="form-control" name="telefono" data-mask="0000-0000"
+                            placeholder="0000-0000">
                         </div>
                     </div>
                     <div class="col-xl-6">
@@ -80,6 +83,7 @@
                             <label for="Departamento">Tipo Contrato <code>*</code></label>
                             <select  class="form-group selectpicker" data-live-search="true" data-style="btn-white"
                                     id="id_tipo_contrato" name="tipo_contrato">
+                            <option value="" selected>Seleccione</option>
                             @foreach ($tcontrato as $contrato)
                                 <option value="{!!$contrato->id!!}">{!!$contrato->tipo!!}</option>
                             @endforeach
@@ -91,6 +95,7 @@
                             <label for="Departamento">Tipo Jornada <code>*</code></label>
                             <select  class="form-group selectpicker" data-live-search="true" data-style="btn-white"
                                 id="id_tipo_jornada" name="tipo_jornada">
+                                <option value="" selected>Seleccione</option>
                                 @foreach ($tjornada as $jornada)
                                     <option value="{!!$jornada->id!!}">{!!$jornada->tipo!!} - {!!$jornada->horas_semanales!!} horas</option>
                                 @endforeach
@@ -103,13 +108,14 @@
                         <label for="Departamento">Departamento <code>*</code></label>
                         <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
                             id="id_depto" name="departamento">
+                            <option value="" selected>Seleccione</option>
                             @foreach ($departamentos as $depto)
                                 <option value="{!!$depto->id!!}">{!!$depto->nombre_departamento!!}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-xl-6">
-                        <label for="Departamento">Tipo Empleado </label>
+                        <label for="Departamento">Tipo Empleado <code>*</code></label>
                         <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
                             id="tipo_empleado" name="tipo_empleado">
                             <option name="" selected>Seleccione</option>
@@ -152,7 +158,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-            <h3 class="modal-title" id=" exampleModalLongTitle"><i class="dripicons-briefcase  mdi-36px"></i> Empleado Categoria</h3>
+            <h3 class="modal-title" id=" exampleModalLongTitle"><i class="dripicons-briefcase  mdi-36px"></i> Categoria</h3>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -171,15 +177,15 @@
                                 <input type="hidden" name="_id" id="idCat">
                                 <div class="row">
                                     <div class="col-xl-6 p-1">
-                                        <button  type="button" onclick="$('#notificacionEliminar').hide();
-                                        httpCategoria('#eliminarCatForm','#notificacionCat','{{ route('empleadoCat') }}')"
+                                        <button  type="button" onclick="$('.alert').hide();
+                                        httpCategoria('#eliminarCatForm','#notificacionCat');"
                                             class="btn my-1 mr-1 btn-danger border rounded waves-effect waves-light btn-block font-24">
                                             <i class="mdi mdi-check mdi-16px"></i>
                                             Si
                                         </button>
                                     </div>
                                     <div class="col-xl-6 p-1">
-                                        <button type="button" onclick="$('#notificacionEliminar').hide();"
+                                        <button type="button" onclick="$('.alert').hide();"
                                             class="btn my-1 btn-danger p-1 border rounded waves-light waves-effect btn-block font-24">
                                             <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
                                             No
@@ -247,7 +253,7 @@
                                             <td>{!!$item->categoria!!}</td>
                                             <td>
                                                 <div class="btn-group text-center" role="group">
-                                                    <button onclick="editarCat({!!$item->id!!},'{!!$item->categoria!!}');"
+                                                    <button onclick="editarCat({!!$item->id!!});"
                                                      title="Editar" class="btn btn-outline-primary mr-1 btn-sm rounded" onclick="">
                                                         <i class="fa fa-edit font-15" aria-hidden="true"></i>
                                                     </button>
@@ -370,24 +376,34 @@
 @endsection
 
 
+@section('plugins')
+<link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
+<link href="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>
+<link href="{{ asset('css/select2.css') }}" rel="stylesheet"/>
+
+@endsection
+
 @section('plugins-js')
-
 <!-- Bootstrap Select -->
-
-<script src="{{ asset('js/scripts/http.min.js') }} " defer></script>
-<script src="{{ asset('js/scripts/data-table.js') }}" defer></script>
+<script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
+<script src="{{ asset('js/scripts/http.min.js') }} " ></script>
+<script src="{{ asset('js/scripts/data-table.js') }}" ></script>
+<script src="{{ asset('js/jquery.mask.js') }}" ></script>
 
 <script>
-    function editarCat(id,categoria){
-        $('#_idCat').val(id);
-        $('#categoria').val(categoria);
+    function editarCat(id){
+        $.get('Empleado/categoriaGetObjeto/'+id,function(json){
+            json=JSON.parse(json);
+            $('#_idCat').val(json.id);
+            $('#categoria').val(json.categoria);
+        });
     }
     function eliminarCat(id){
         $('#idCat').val(id);
         $('#notificacionEliminar').show();
     }
-    function cargarCategoria(url){
-        $.get(url,function(json){
+    function cargarCategoria(){
+        $.get('Empleado/Categoria',function(json){
             json=JSON.parse(json);
             var categoria = $('#categoriaTb').DataTable();
             categoria.clear();
@@ -395,14 +411,14 @@
             for (var i in json) {
                 var html = '';
                 html += '<div class="btn-group text-center" role="group">';
-                html += '<button onclick="editarCat('+json[i].id+','+json[i].categoria+');"';
-                html += '    title="Editar" class="btn btn-outline-primary mr-1 btn-sm rounded" onclick="">';
-                html += '    <i class="fa fa-edit font-15" aria-hidden="true"></i>';
-                html += ' </button>';
-                html += '  <button title="Eliminar" class="btn btn-outline-danger btn-sm rounded" ';
-                html += '       onclick="eliminarCat('+json[i].id+');">';
-                html += '       <i class=" mdi mdi-trash-can-outline font-18" aria-hidden="true"></i>';
-                html += '  </button>';
+                html += '<button onclick="editarCat('+json[i].id+');"';
+                html += '    title="Editar" class="btn btn-outline-primary mr-1 btn-sm rounded">';
+                html += '   <i class="fa fa-edit font-15" aria-hidden="true"></i>';
+                html += '</button>';
+                html += '<button title="Eliminar" class="btn btn-outline-danger btn-sm rounded" ';
+                html += '    onclick="eliminarCat('+json[i].id+');">';
+                html += '    <i class=" mdi mdi-trash-can-outline font-18" aria-hidden="true"></i>';
+                html += '</button>';
                 html += '</div>';
                 categoria.row.add([id,json[i].categoria,html]).draw(false);
                 id++;
@@ -410,7 +426,7 @@
         });
     }
 
-    function httpCategoria(formulario,notificacion,url){
+    function httpCategoria(formulario,notificacion){
         $.ajax({
             type: $(formulario).attr('method'),
             url: $(formulario).attr('action'),
@@ -500,7 +516,7 @@
                     ).show();
                     $(formulario)[0].reset();
                     enableform(formulario);
-                    cargarCategoria(url);
+                    cargarCategoria();
                 }
             }
             $('.modal').scrollTop(0);

@@ -92,7 +92,7 @@ class EmpleadoController extends Controller
     public function categoriaDestroy(Request $request){
         $emp = Empleado::where('categoria',$request->_id)->get();
         if(count($emp)>0){
-            return response()->json(['error'=>[0,'No se puede eliminar esta categoria']]);
+            return response()->json(['error'=>['No se puede eliminar esta categoria']]);
         }else{
             $cat = CategoriaEmpleado::destroy($request->_id);
             return response()->json(['code'=>200, 'mensaje'=>'Categoria eliminada ']);
@@ -101,6 +101,10 @@ class EmpleadoController extends Controller
 
     public function categoriaGet(){
         return CategoriaEmpleado::select('id','categoria')->get()->toJSON();
+    }
+
+    public function categoriaGetObjeto($id){
+        return CategoriaEmpleado::select('id','categoria')->where('id',$id)->first()->toJSON();
     }
 
 }

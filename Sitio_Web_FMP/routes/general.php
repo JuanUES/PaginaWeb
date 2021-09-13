@@ -10,6 +10,9 @@ Route::get('admin/Empleado',[EmpleadoController::class, 'index'])
 Route::get('admin/Empleado/Categoria',[EmpleadoController::class, 'categoriaGet'])
 ->name('empleadoCat')->middleware(['auth']);
 
+Route::get('admin/Empleado/categoriaGetObjeto/{id}',[EmpleadoController::class, 'categoriaGetObjeto'])
+->middleware(['auth']);
+
 /**Metodos Post */
 Route::post('admin/Empleado/empleado', [EmpleadoController::class, 'store'])
 ->name('EmpleadoReg')->middleware(['auth']);
