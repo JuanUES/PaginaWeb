@@ -13,7 +13,9 @@ class CargaController extends Controller
 {
     public function index(){
         $carga = DB::table('carga_admins')->get();
-        return view('Admin.horarios.carga',compact('carga'));
+        $empleados = DB::table('empleado')->get();
+      //  echo dd($empleados);
+        return view('Admin.horarios.carga',compact('carga','empleados'));
     }
 
     public function create(Request $request){
