@@ -40,6 +40,20 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <label for="Departamento">Jefes y Empleados </label>
+                            <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
+                                id="jefes" name="jefe">
+                                <option name="" selected>Seleccione</option>
+                                @foreach ($empleados as $item)
+                                    <option name="{!!$item->id!!}">{!!$item->nombre." ".$item->apellido!!}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                   
                     
             </div>
             <div class="modal-footer">
@@ -190,7 +204,15 @@
 <!-- end row -->   
 @endsection
 
+@section('plugins')
+<link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
+<link href="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>
+<link href="{{ asset('css/select2.css') }}" rel="stylesheet"/>
+
+@endsection
+
 @section('plugins-js')
+<script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
 <script src="{{ asset('js/scripts/http.min.js') }}"></script>
 <script src="{{ asset('js/horariosJs/carga.js') }}"></script>
 <script>
