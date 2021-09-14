@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Horarios;
 
 use App\Http\Controllers\Controller;
+use App\Models\General\Empleado;
 use App\Models\Horarios\CargaAdmin;
 use Exception;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class CargaController extends Controller
             {            
                 return response()->json(['error'=>$validator->errors()->all()]);                
             }
-
+            echo dd($request);
             $carga = $request->_id ==null ? new CargaAdmin():CargaAdmin::findOrFail($request->_id);
             $carga -> nombre_carga   = $request->nombre_carga;
             $carga -> save();         
@@ -51,5 +52,12 @@ class CargaController extends Controller
         }else{
             return response()->json(['error'=>'Error']);
         }
+    }
+
+    public function EmpleadoCombobox(){         
+        return DB::table('empleado')
+        ->select('id','nombre','apellido')
+        ->get()
+        ->toJson();
     }
 }

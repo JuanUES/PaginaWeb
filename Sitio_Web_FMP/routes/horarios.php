@@ -39,9 +39,11 @@ Route::get('Horarios',[HorarioController::class,'index'])->name('horarios');
 Route::get('Administrativa/Carga',[CargaController::class,'index'])->name('crear-carga');
 Route::post('Administrativa/create',[CargaController::class,'create'])->name('carga.create');
 Route::post('Administrativa/estado', [CargaController::class,'estado'])->name('estadoCarga');
+Route::get('Administrativa/Empleado',[CargaController::class,'EmpleadoCombobox']);
 //fin de ingresar la carga administrativa
 Route::get('Asigar/Carga',[AsignacionCargaController::class,'index'])->name('asignar-carga');
 Route::get('Asigar/ver/{carga}',[AsignacionCargaController::class,'cargaCombobox']);
+Route::get('Asigar/Empleado',[AsignacionCargaController::class,'EmpleadoCombobox']);
 //para las horas
 Route::get('Horas',[HoraController::class,'index'])->name('horas');
 Route::post('Horas/create',[HoraController::class,'create'])->name('horas/create');

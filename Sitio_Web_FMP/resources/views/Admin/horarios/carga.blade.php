@@ -42,17 +42,17 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-xl-12">
-                            <label for="Departamento">Jefes y Empleados </label>
-                            <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                                id="jefes" name="jefe">
-                                <option name="" selected>Seleccione</option>
-                                @foreach ($empleados as $item)
-                                    <option name="{!!$item->id!!}">{!!$item->nombre." ".$item->apellido!!}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                    <div class="col-xl-12">
+                        <label for="Departamento">Jefes y Empleados </label>
+                        <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
+                            id="jefes" name="jefe">
+                            <option name="" selected>Seleccione</option>
+                            @foreach ($empleados as $item)
+                                <option name="{!!$item->id!!}">{!!$item->nombre.' '.$item->apellido!!}</option>
+                            @endforeach
+                        </select>
                     </div>
+                </div>
                    
                     
             </div>
