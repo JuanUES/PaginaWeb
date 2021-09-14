@@ -97,7 +97,7 @@
                                 <select class="custom-select" name="proceso" >
                                     <option value="" selected> Seleccione una opción </option>
 
-                                    @hasexactroles(['Empleado'])
+                                    @hasexactroles(['Docente'])
                                     <option value="enviado a jefatura">Enviar a Jefatura</option>
                                     @endhasexactroles
                                     @hasanyrole('super-admin|Jefe-Academico|Jefe-Departamento|Recurso-Humano')

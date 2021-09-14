@@ -36,10 +36,6 @@ class JornadaController extends Controller{
         'items.array' => 'La Jornada no puede ir vacia'
     ];
 
-    public function __construct(){
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -67,9 +63,11 @@ class JornadaController extends Controller{
             }else{
                 if($user->hasRole('Jefe-Academico')|| $user->hasRole('Jefe-Departamento')){//para filtrar por tipo de departamento
                     $depto = $empleado->id_depto;// id que servira para filtrar los empleados por departemento
-                }else{ // con esto determinamos que es un empleado sin cargos de jefatura por lo cual solo se mostrara ese empleado
+                }else if($user->hasRole('Docente') && strcmp($empleado->tipo_empleado,'Académico')==0){ // con esto determinamos que es un empleado sin cargos de jefatura por lo cual solo se mostrara ese empleado
                     $query->where('empleado.id', $empleado->id);
                     $emp = $empleado;
+                }else{
+                    $query = null;
                 }
 
             }
@@ -255,8 +253,6 @@ class JornadaController extends Controller{
                 return response()->json(['error' => $validator->errors()->all()]);
             }
 
-
-            // dd($request);
             $jornada = Jornada::findOrFail($request->jornada_id);
             $jornada->update([
                 'procedimiento' => $request->proceso,
@@ -326,9 +322,10 @@ class JornadaController extends Controller{
         $empleado = Empleado::findOrFail($request->empleado);
         $periodo = Periodo::findOrFail($request->periodo);
         $ciclo = $periodo->ciclo_rf;
+        $horarios = $ciclo->horarios_rf->where('id_empleado', $empleado->id);
 
 
-        dd($ciclo);
+        // dd($horarios);
     }
 
 }

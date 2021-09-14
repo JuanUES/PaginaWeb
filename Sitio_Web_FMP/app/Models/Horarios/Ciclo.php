@@ -11,7 +11,7 @@ class Ciclo extends Model{
     protected $guarded = ['id'];
     protected $fillable = ['nombre', 'estado', 'año'];
 
-    public function seguimiento(){
+    public function horarios_rf(){
         return $this->hasMany(Horarios::class, 'id_ciclo', 'id')->orderBy('id', 'DESC');
     }
 }

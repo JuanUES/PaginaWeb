@@ -217,20 +217,18 @@
                                     </a>
                                 </li>
                             @endhasanyrole
-                            @hasrole('super-admin|Docente|Recurso-Humano|Jefe-Departamento|Jefe-Academico|Empleado')
+                            @hasrole('super-admin|Recurso-Humano|Jefe-Departamento|Jefe-Academico|Docente')
                             <li class="menu-title">Jornada</li>
                                 <li>
                                     <a href="javascript: void(0);"><i class="font-18 dripicons-view-list-large"></i><span> Gestión de Jornada </span><span class="menu-arrow"></span></a>
                                     <ul class="nav-second-level" aria-expanded="false">
-                                        @hasanyrole('super-admin|Recurso-Humano')
-                                            <li>
-                                                <a href="{{ url('admin/periodo') }}">Periodo</a>
-                                            </li>
-                                        @endhasanyrole
                                             <li>
                                                 <a href="{{ url('admin/jornada') }}">Jornada</a>
                                             </li>
                                         @hasanyrole('super-admin|Recurso-Humano')
+                                            <li>
+                                                <a href="{{ url('admin/periodo') }}">Periodo</a>
+                                            </li>
                                             <li>
                                                 <a href="{{ url('admin/tcontrato') }}">Tipo Contrato</a>
                                             </li>

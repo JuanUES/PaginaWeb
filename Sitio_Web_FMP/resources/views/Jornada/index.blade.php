@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
@@ -26,7 +25,6 @@
         @endif
     </div>
         <hr>
-        {{--  @dd($emp)  --}}
     @if($cargar)
         <form action="{{ route('admin.jornada.index') }}" method="get">
             <div class="row">
@@ -36,7 +34,6 @@
                 <div class="col-12 col-sm-5 col-md-5">
                     <div class="form-group">
                         <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"  name="periodo">
-                            {{--  <option value="all" selected> Todos los periodos </option>  --}}
                             @foreach ($periodos as $item)
                                 <option value="{{ $item->id }}" {{ strcmp($item->id, $periodo)==0 ? 'selected' : '' }}>{{ $item->ciclo_rf->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
                             @endforeach
@@ -61,11 +58,8 @@
         <br/>
         <table  class="table table-sm dt-responsive nowrap" style="width:100%" id="table-jornada">
             <thead>
-            {{--  @if(@Auth::user()->hasRole('admin') || @Auth::user()->hasRole('Recurso-Humano') || @Auth::user()->hasRole('Jefe-Departamento') )  --}}
                 <tr>
                     <th>Registro</th>
-                    {{--  <th data-priority="1">Id</th>  --}}
-                    <th>Empleado</th>
                     <th>Departamento</th>
                     <th>Tipo</th>
                     <th>Periodo</th>
@@ -74,99 +68,44 @@
                 </tr>
                 </thead>
                 <tbody>
-                {{--  @if(@Auth::user()->hasRole('Jefe-Departamento') )  --}}
                     @foreach($jornadas as $item)
-                    <tr>
-                        <th  data-sort="{{ strtotime($item->created_at) }}">{{ date('d/m/Y H:m', strtotime($item -> created_at)) }}</th>
-                        {{--  <th>{{$item -> idEmp}}</th>  --}}
-                        <th>{{ $item -> empleado_rf->nombre }} {{ $item -> empleado_rf->apellido }}</th>
-                        <td>{{ $item->empleado_rf->departamento_rf->nombre_departamento }}</td>
-                        <td>{{ $item->empleado_rf->tipo_jornada_rf->tipo }}</td>
-                        <td>{{ $item -> periodo }}</td>
-                        <td>
-                            @php
-                                $color = 'secondary';
-                                if($item->procedimiento=='enviado a jefatura')
-                                    $color = 'info';
-                                else if($item->procedimiento=='enviado a recursos humanos')
-                                    $color = 'primary';
-                                else if($item->procedimiento=='la jefatura lo ha regresado por problemas')
-                                    $color = 'warnign';
-                                else if($item->procedimiento=='aceptado')
-                                    $color = 'success';
-                                else if($item->procedimiento=='invalidado')
-                                    $color = 'danger';
-                            @endphp
-                            <span class="badge badge-{{ $color }}">{{ Str::ucfirst($item->procedimiento) }}</span>
-                        </td>
-                        <td class="text-center">
-                            <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
-                            <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-outline-success btn-sm" onclick="fnDetalleJornada(this);"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i></button>
-                            @hasexactroles('Empleado');
-                                @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
-                                    {{--  <a href="{{ route('admin.jornada.edit', $item->id) }}" title="Editar Jornada">  --}}
+                        <tr>
+                            <th  data-sort="{{ strtotime($item->created_at) }}">{{ date('d/m/Y H:m', strtotime($item -> created_at)) }}</th>
+                            {{--  <th>{{$item -> idEmp}}</th>  --}}
+                            <th>{{ $item -> empleado_rf->nombre }} {{ $item -> empleado_rf->apellido }}</th>
+                            <td>{{ $item->empleado_rf->departamento_rf->nombre_departamento }}</td>
+                            <td>{{ $item->empleado_rf->tipo_jornada_rf->tipo }}</td>
+                            <td>{{ $item -> periodo }}</td>
+                            <td>
+                                @php
+                                    $color = 'secondary';
+                                    if($item->procedimiento=='enviado a jefatura')
+                                        $color = 'info';
+                                    else if($item->procedimiento=='enviado a recursos humanos')
+                                        $color = 'primary';
+                                    else if($item->procedimiento=='la jefatura lo ha regresado por problemas')
+                                        $color = 'warnign';
+                                    else if($item->procedimiento=='aceptado')
+                                        $color = 'success';
+                                    else if($item->procedimiento=='invalidado')
+                                        $color = 'danger';
+                                @endphp
+                                <span class="badge badge-{{ $color }}">{{ Str::ucfirst($item->procedimiento) }}</span>
+                            </td>
+                            <td class="text-center">
+                                <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
+                                <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-outline-success btn-sm" onclick="fnDetalleJornada(this);"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i></button>
+                                @hasexactroles('Docente');
+                                    @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
                                         <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
-                                    {{--  </a>  --}}
-                                @endif
-                            @endhasexactroles
-                            @hasanyrole('super-admin|Jefe-Academico|Jefe-Departamento')
-                                {{--  <a href="{{ route('admin.jornada.edit', $item->id) }}" title="Editar Jornada">  --}}
+                                    @endif
+                                @endhasexactroles
+                                @hasanyrole('super-admin|Jefe-Academico|Jefe-Departamento')
                                     <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
-                                {{--  </a>  --}}
-                            @endrole
-                        </td>
-                    </tr>
+                                @endrole
+                            </td>
+                        </tr>
                     @endforeach
-                {{--  @elseif(@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano'))
-                    @foreach($jornada as $item)
-                    <tr>
-                        <th>{{ date('d/m/Y', strtotime($item -> created_at)) }}</th>
-                        <th>{{$item -> idEmp}}</th>
-                        <th>{{ $item -> empleado_rf->nombre }} {{ $item -> empleado_rf->apellido }}</th>
-                        <td>{{$item -> periodo}}</td>
-                        <td>
-                            <span class="badge badge-{{ strcmp($item->estado, 'activo')==0 ? 'success' : 'secondary' }}">{{ Str::ucfirst($item->estado) }}</span>
-                        </td>
-                        <td class="text-center">
-                            <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-outline-success btn-sm openModal"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i></button>
-                            <a href="{{ route('admin.jornada.edit', $item->id) }}" title="Editar Jornada">
-                                <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
-                            </a>
-                        </td>
-                    </tr>
-                    @endforeach
-                @endif  --}}
-
-            {{--  @endif  --}}
-
-            {{--  @if( @Auth::user()->hasRole('Docente') )
-                <tr>
-                    <th data-priority="1">Registro</th>
-                    <th data-priority="3">Empleado</th>
-                    <th data-priority="3">Periodo</th>
-                    <th data-priority="3">Estado</th>
-                    <th data-priority="1" class="text-center">Acciones</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                @foreach($jornadaDocente as $item)
-                <tr>
-                    <th>{{ date('d/m/Y', strtotime($item -> created_at)) }}</th>
-                    <th>{{ $item -> empleado_rf->nombre }} {{ $item -> empleado_rf->apellido }}</th>
-                    <td>{{$item -> periodo}}</td>
-                    <td>
-                        <span class="badge badge-{{ strcmp($item->estado, 'activo')==0 ? 'success' : 'secondary' }}">{{ Str::ucfirst($item->estado) }}</span>
-                    </td>
-                    <td class="text-center">
-                        <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-outline-success btn-sm openModal"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i></button>
-                        <a href="{{ route('admin.jornada.edit', $item->id) }}" title="Editar Jornada">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
-                        </a>
-                    </td>
-                </tr>
-                @endforeach
-            @endif  --}}
             </tbody>
         </table>
     @else
@@ -174,20 +113,19 @@
             <div class="col-12">
                 <div class="card-box p-2 border">
                     <p> <i class="fa fa-info-circle"></i> No es posible cargar la información perteneciente a <strong> {{ @Auth::user()->name }} </strong>.</p>
-                    <label> Posibles causas </label>
+                    <label> A continuación se detallan las posibles causas: </label>
                     <ul>
-                        <li>El Usuario no se encuentra vinculado con ningun Empleado registrado en el sistema</li>
+                        <li>El Usuario no se encuentra vinculado con ningun <strong>Empleado</strong> registrado en el sistema.</li>
+                        <li>El Usuario no tiene los permisos necesarios.</li>
+                        <li>El Usuario no es tipo <strong>Docente</strong>.</li>
                     </ul>
                 </div>
             </div>
         </div>
     @endif
 </div>
-
 @include('Jornada._components.modals')
-
 @endsection
-
 @section('plugins-js')
 <link rel="stylesheet" href="{{ asset('vendor/tabulator/dist/css/tabulator_simple.css') }}">
 <script src="{{ asset('vendor/tabulator/dist/js/tabulator.js') }}"></script>
