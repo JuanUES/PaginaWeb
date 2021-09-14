@@ -41,16 +41,18 @@
                         </div>
                     </div>
 
-                    <div class="row">
+            <div class="row">
                     <div class="col-xl-12">
+                        <div class="form-group">
                         <label for="Departamento">Jefes y Empleados </label>
                         <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                            id="jefes" name="jefe">
+                            id="jefe" name="jefe">
                             <option name="" selected>Seleccione</option>
-                            @foreach ($empleados as $item)
-                                <option name="{!!$item->id!!}">{!!$item->nombre.' '.$item->apellido!!}</option>
+                            @foreach ($empleados as $i)
+                                <option value="{!!$i->id!!}">{!!$i->nombre.' '.$i->apellido!!}</option>
                             @endforeach
                         </select>
+                        </div>
                     </div>
                 </div>
                    
@@ -203,7 +205,6 @@
 </div>
 <!-- end row -->   
 @endsection
-
 @section('plugins')
 <link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
 <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>

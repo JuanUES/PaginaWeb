@@ -15,44 +15,35 @@ class CategoriaEmpleadoSeeder extends Seeder
     public function run()
     {
         CategoriaEmpleado::create([
-            'id'=>1,
             'categoria'=>'PUI'
        
             
         ]);
         //
         CategoriaEmpleado::create([
-            'id'=>2,
             'categoria'=>'PUII'
        
             
         ]);
         //
         CategoriaEmpleado::create([
-            'id'=>3,
             'categoria'=>'PUIII'
-       
-            
         ]);
 
         //
         CategoriaEmpleado::create([
-            'id'=>4,
-            'categoria'=>'TECNICO I'
-       
-            
+            'categoria'=>'TECNICO I'     
         ]);
 
         //
         CategoriaEmpleado::create([
-            'id'=>5,
+
             'categoria'=>'TECNICO Ii'
        
             
         ]);
         //
         CategoriaEmpleado::create([
-            'id'=>6,
             'categoria'=>'TECNICO III'
        
             

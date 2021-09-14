@@ -35,34 +35,4 @@ function editar(json){
         };
     })(window);
 //llenare el select con js
-    $(document).ready(function() {
-
-        $.ajax({
-            url: 'Empleado',
-            type: "GET",
-            success: function(data){
-                document.getElementById("jefe").disabled=false;
-               data=JSON.parse(data);
-    
-                let $select = $('#jefe');
-                $('#jefe').empty();
-                for (let index = 0; index < data.length; index++) {
-                    //console.log( data[index]);
-                    $select.append('<option value=' + data[index].id + '>' + data[index].nombre+' '+data[index].apellido+
-                    '</option>');
-                    
-                }
-               
-    
-            }, 
-            error: function(){
-                document.getElementById("jefe").disabled=true;
-                let $select = $('#jefe');
-                $('#jefe').empty();
-                    $select.append('<option value="" selected>No hay datos</option>');
-                    
-             }
-    
-            }); 
-
-    });
+   
