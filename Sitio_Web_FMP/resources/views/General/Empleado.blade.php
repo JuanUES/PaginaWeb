@@ -222,7 +222,7 @@
                             <div class="form-group">
                                 <label for="">&nbsp;</label>
                                 <button type="button" class="btn btn-primary form-control"
-                                    onClick="httpCategoria('#empleadoCatReg','#notificacionCat','{{ route('empleadoCat') }}')">
+                                    onClick="httpCategoria('#empleadoCatReg','#notificacionCat'')">
                                     <li class="fa fa-save"></li> Guardar
                                 </button>
                             </div>
