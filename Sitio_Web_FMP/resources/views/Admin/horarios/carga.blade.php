@@ -44,10 +44,10 @@
             <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group">
-                        <label for="Departamento">Jefes y Empleados </label>
+                        <label for="Departamento">Jefe </label>
                         <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
                             id="jefe" name="jefe">
-                            <option name="" selected>Seleccione</option>
+                            <option value="" selected>Seleccione</option>
                             @foreach ($empleados as $i)
                                 <option value="{!!$i->id!!}">{!!$i->nombre.' '.$i->apellido!!}</option>
                             @endforeach
@@ -155,6 +155,7 @@
                 <tr>
                     <th data-priority="1">N°</th>
                     <th data-priority="1">Carga Administrativa</th>
+                    <th data-priority="1">Jefe</th>
                     <th data-priority="1">Estado</th>
                     <th data-priority="1">Acciones</th>
                   
@@ -171,6 +172,7 @@
                     <tr>
                         <td>{!!$i!!}</td>
                         <th><span class="co-name">{!!$item->nombre_carga!!}</span></th>
+                        <th>{!!$item->nombre!!}</th>
                         <td class="align-middle font-16">{!! !$item->estado?'<span class="badge badge-danger">Desactivado</span> ' :
                             '<span class="badge badge-success">Activado</span> ' !!}</td>
                         <td class="align-middle ">

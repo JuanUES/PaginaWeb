@@ -15,7 +15,7 @@ class EmpleadoSeeder extends Seeder
     {
         Empleado::create([
             'id_depto'=>1,
-            'nombre'=>'Juan Carlos',
+            'nombre'=>'Martín',
             'apellido'=>'Moz Montoya',
             'dui'=>'0987896-4',
             'nit'=>'0614-180560-020-6',

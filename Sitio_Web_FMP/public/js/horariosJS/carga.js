@@ -3,6 +3,9 @@ function editar(json){
     $("#_id").val(json.id);
     $("#nombre_carga").val(json.nombre_carga); 
     $("#categoria").val(json.categoria);
+    $('select[name=jefe]').val(json.id_jefe);
+    $('.selectpicker').selectpicker('refresh');
+   // $("#jefe").val(json.id_jefe);
     };
 
 
@@ -34,5 +37,3 @@ function editar(json){
             }
         };
     })(window);
-//llenare el select con js
-   

@@ -18,7 +18,7 @@ class CreateCargaAdminsTable extends Migration
             $table->string('nombre_carga');
             $table->boolean('estado')->default(true);
             $table->string('categoria');
-            $table->bigInteger('id_jefe')->nullable();
+            $table->bigInteger('id_jefe')->unsigned()->nullable();
 
             $table->foreign('id_jefe')
             ->references('id')
