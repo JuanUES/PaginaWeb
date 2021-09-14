@@ -97,8 +97,9 @@
                                 <select class="custom-select" name="proceso" >
                                     <option value="" selected> Seleccione una opción </option>
 
+                                    @hasexactroles(['Empleado'])
                                     <option value="enviado a jefatura">Enviar a Jefatura</option>
-
+                                    @endhasexactroles
                                     @hasanyrole('super-admin|Jefe-Academico|Jefe-Departamento|Recurso-Humano')
                                         <option value="enviado a recursos humanos">Enviar a Recursos Humanos</option>
                                     @endhasanyrole
@@ -205,7 +206,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row justify-content-between">
                             <div class="col-12 col-sm-12">
                                 <div class="form-group">
@@ -218,43 +218,15 @@
                                     </select>
                                 </div>
                             </div>
-
                             <div class="col-12 col-sm-8">
                                 <div class="form-group">
 
                                     <label for="empleado" class="control-label">{{ 'Empleado' }} <span class="text-danger">*</span> </label>
-                                    {{-- @if( @Auth::user()->hasRole('Docente')  ) --}}
-                                        {{-- <select class="custom-select" name="id_emp" id="id_emp">
-                                            <option value="">Seleccione un Empleado</option> --}}
-                                            {{-- @foreach ($docente as $item)
-                                                <option value="{{ $item->id }}" selected>{{  $item->apellido }}, {{ $item->nombre }}</option>
-                                            @endforeach --}}
-                                        {{-- </select> --}}
-                                    {{-- @endif --}}
-
-                                    {{-- @hasanyrole('super-admin|Jefe-Academico|Jefe-Departamento|Recurso-Humano') --}}
-                                        {{-- <select class="custom-select" name="id_emp" id="id_emp">
-                                            <option value="">Seleccione un Empleado</option>
-                                            @foreach ($empleados as $item)
-                                                <option value="{{ $item->id }}">{{ $item->apellido }}, {{ $item->nombre }}</option>
-                                            @endforeach
-                                        </select> --}}
-                                    {{-- @endhasanyrole --}}
-
-
-                                    {{-- @hasanyrole('super-admin|Jefe-Academico|Jefe-Departamento|Recurso-Humano') --}}
                                         <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" name="id_emp" id="id_emp">
                                             <option value="">Seleccione un Empleado</option>
-                                            {{--  @foreach ($empleados as $item)
-                                                <option value="{{ $item->id }}">{{ $item->apellido }}, {{ $item->nombre }}</option>
-                                            @endforeach  --}}
                                         </select>
-                                    {{-- @endhasanyrole --}}
-
                                 </div>
-
                             </div>
-
                             <div class="col-12 col-sm-2">
                                 <div class="form-group">
                                     <label for="thoras" class="control-label">{{ 'Horas' }} <span class="text-danger"></span></label>
@@ -268,7 +240,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row" id="jornada-div">
                             <div class="col-12">
                                 <h5 class="mb-3">Detalle de la Jornada

@@ -66,6 +66,8 @@
                     <th>Registro</th>
                     {{--  <th data-priority="1">Id</th>  --}}
                     <th>Empleado</th>
+                    <th>Departamento</th>
+                    <th>Tipo</th>
                     <th>Periodo</th>
                     <th>Proceso</th>
                     <th class="text-center">Acciones</th>
@@ -78,7 +80,9 @@
                         <th  data-sort="{{ strtotime($item->created_at) }}">{{ date('d/m/Y H:m', strtotime($item -> created_at)) }}</th>
                         {{--  <th>{{$item -> idEmp}}</th>  --}}
                         <th>{{ $item -> empleado_rf->nombre }} {{ $item -> empleado_rf->apellido }}</th>
-                        <td>{{$item -> periodo}}</td>
+                        <td>{{ $item->empleado_rf->departamento_rf->nombre_departamento }}</td>
+                        <td>{{ $item->empleado_rf->tipo_jornada_rf->tipo }}</td>
+                        <td>{{ $item -> periodo }}</td>
                         <td>
                             @php
                                 $color = 'secondary';

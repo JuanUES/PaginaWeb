@@ -2,6 +2,7 @@
 
 namespace App\Models\General;
 
+use App\Models\Horarios\Departamento;
 use App\Models\Tipo_Jornada;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -41,6 +42,10 @@ class Empleado extends Model
     }
     public function usuario_rf(){
         return $this->hasOne(User::class, 'empleado', 'id');
+    }
+
+    public function departamento_rf(){
+        return $this->hasOne(Departamento::class, 'id', 'id_depto');
     }
 }
 

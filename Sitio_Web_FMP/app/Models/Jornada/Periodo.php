@@ -2,7 +2,7 @@
 
 namespace App\Models\Jornada;
 
-use App\Models\Ciclo;
+use App\Models\Horarios\Ciclo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

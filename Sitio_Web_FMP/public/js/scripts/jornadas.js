@@ -66,12 +66,13 @@ function updateHour(cell) {
         } else if (Boolean((data.dia).trim())) {
             $.ajax({
                 type: "POST",
-                url: 'admin/jornada-check-dia',
+                url: '/admin/jornada-check-dia',
                 data: {
                     empleado: $("#id_emp").val(),
                     inicio: inicio,
                     fin: fin,
-                    dia: data.dia
+                    dia: data.dia,
+                    periodo: $("#id_periodo").val()
                 },
                 success: function (data) {
                     console.log(data);
@@ -279,33 +280,26 @@ $("#frmJornada").validate({
         horas = parseFloat(horas);
         libres = parseFloat(libres);
         // console.log(libres);
-        if (libres>=0){
+        let extra_valid = true;
+        if (libres>0){
             alert = `<div class="alert alert-danger mt-3" role="alert">
                             <div class="alert-message">
                                 <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Complete las <strong>${  horas }</strong> horas de la jornada
                             </div>
                         </div>`;
-        }else{
+            extra_valid = false;
+        }else if(libres<0){
             alert = `<div class="alert alert-danger mt-3" role="alert">
                             <div class="alert-message">
                                 <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Ha excedido las <strong>${horas}</strong> horas de la jornada
                             </div>
                         </div>`;
+            extra_valid = false;
         }
         $("#days-table").after(alert);
 
         var valid = table.validate();
-        if (valid != true) {
-            alert = `<div class="alert alert-danger mt-3" role="alert">
-                            <div class="alert-message">
-                                <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Complete el contenido de la tabla
-                            </div>
-                        </div>`;
-
-            $("#days-table").after(alert);
-        }else{
-
-
+        if (valid && extra_valid) {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -357,9 +351,9 @@ $("#frmJornada").validate({
                     $errores = '';
 
                     let tipo = $.type(data.error);
-                    if(tipo==='string'){
+                    if (tipo === 'string') {
                         $errores = data.error;
-                    }else{
+                    } else {
                         for (let index = 0; index < data.error.length; index++) {
                             $error = '<li>' + data.error[index] + '</li>';
                             $errores += $error;
@@ -396,6 +390,15 @@ $("#frmJornada").validate({
                 }
                 $('.modal').scrollTop(0);
             });
+
+        }else{
+            alert = `<div class="alert alert-danger mt-3" role="alert">
+                            <div class="alert-message">
+                                <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Complete o verifique el contenido de la tabla
+                            </div>
+                        </div>`;
+
+            $("#days-table").after(alert);
         }
     },
     errorClass: "invalid-feedback",
