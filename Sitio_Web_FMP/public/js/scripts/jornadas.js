@@ -1,6 +1,3 @@
-// var items = @json(isset($jornada) ? $jornada -> items_enabled('activo') : []);//set los items del presupuesto
-// console.log(items);
-
 var items = [];
 
 //Funcion para eliminar fila
@@ -30,17 +27,18 @@ let btn = function (value, data, cell, row, options) {
 
 //funciont para actualizar el monto por fila
 function updateHour(cell) {
+    var alert = '';
     let row = cell.getRow();
     let data = cell.getData();
 
 
     let inicio = (isNaN(parseInt(data.hora_inicio))) ? 0 : parseInt(data.hora_inicio);
     let fin = (isNaN(parseInt(data.hora_fin))) ? 0 : parseInt(data.hora_fin);
-    console.log(inicio, 'inicio');
-    console.log(fin, 'fin');
+    // console.log(inicio, 'inicio');
+    // console.log(fin, 'fin');
 
     let resul = ((parseInt(fin) - parseInt(inicio) < 0  || inicio<=0 ) ) ? 0 : (parseInt(fin) - parseInt(inicio));
-    console.log(resul, 'resul');
+    // console.log(resul, 'resul');
 
     row.update({ 'jornada': resul });
     let hoursTotal = fnHoras();
@@ -48,29 +46,46 @@ function updateHour(cell) {
     let total = parseInt(valor) - parseInt(hoursTotal);
     $("#_horas").val('' + total);
 
-    //para validar el horario segun horario de carga academica
-    if(parseInt(inicio)>0 && parseInt(fin)>0 && data.dia!==null){
-        $.ajax({
-            type: "POST",
-            url: '/admin/jornada-check-dia',
-            data: {
-                empleado: $("#id_emp").val(),
-                inicio: inicio,
-                fin: fin,
-                dia: data.dia
-            },
-            success: function (data) {
-                console.log(data);
-            },
-            error: function (xhr, status, error) {
-                console.error(xhr);
-            }
-        });
-    }
 
+    //para validar el horario segun horario de carga academica
+    if (parseInt(inicio) > 0 && parseInt(fin) > 0){
+        if(parseInt(inicio)>=parseInt(fin)){
+            alert += `<div class="alert alert-danger mt-3" role="alert">
+                            <div class="alert-message">
+                                <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Horas inválidas, la hora de entrada no puede ser mayor que la hora de salida
+                            </div>
+                        </div>`;
+            row.update({ 'hora_inicio': null });
+            row.update({ 'hora_fin': null });
+        } else if (!Boolean((data.dia).trim())) {//para validar que este selecciona un Dia por fila
+            alert += `<div class="alert alert-danger mt-3" role="alert">
+                            <div class="alert-message">
+                                <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Seleccione un dia para continuar con el registro
+                            </div>
+                        </div>`;
+        } else if (Boolean((data.dia).trim())) {
+            $.ajax({
+                type: "POST",
+                url: 'admin/jornada-check-dia',
+                data: {
+                    empleado: $("#id_emp").val(),
+                    inicio: inicio,
+                    fin: fin,
+                    dia: data.dia
+                },
+                success: function (data) {
+                    console.log(data);
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr);
+                }
+            });
+        }
+    }
 
     // para validar el total de las horas
     validateHoras(valor, total);
+    $("#days-table").after(alert);
 }
 
 //para calcular el total horas por fila
@@ -115,8 +130,32 @@ var dateEditor = function (cell, onRendered, success, cancel) {
 
     function onChange() {
         if (input.value != cellValue) {
-            success(moment(input.value, "HH:mm").format("HH:mm"));
-        } else { cancel(); }
+
+            if(input.value!==''){
+                let alert = '';
+                if (parseInt(input.value) >= 18) {
+                    alert += `<div class="alert alert-danger mt-3" role="alert">
+                            <div class="alert-message">
+                                <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Ingrese un Hora enferior a las <strong>18:00</strong>
+                            </div>
+                        </div>`;
+
+                    cancel();
+                } else if (parseInt(input.value) <= 6) {
+                    alert += `<div class="alert alert-danger mt-3" role="alert">
+                            <div class="alert-message">
+                                <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Ingrese un Hora mayor a las <strong>6:00</strong>
+                            </div>
+                        </div>`;
+                    cancel();
+                } else {
+                    success(moment(input.value, "HH:mm").format("HH:mm"));
+                }
+                $("#days-table").after(alert);
+            }
+        } else {
+            cancel();
+        }
     }
 
     //submit new value on blur or change
@@ -148,7 +187,7 @@ var table = new Tabulator("#days-table", {
     columns: [//define the table columns
         // { title: "", field: "id" },
         { title: "", field: "option", formatter: btn, cellClick: btncallback },
-        { title: "Dia", field: "dia", editor: "select", validator: ["required", "unique"],  editorParams: { values: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"] } },
+        { title: "Dia", field: "dia", editor: "select", validator: ["required", "unique"], editorParams: { values: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"] }, cellEdited: updateHour},
         { title: "Entrada", field: "hora_inicio", hozAlign: "center", sorter: "time", editor: dateEditor,cellEdited: updateHour},
         { title: "Salida", field: "hora_fin", hozAlign: "center", sorter: "time", editor: dateEditor, cellEdited: updateHour},
         { title: "Jornada", field: "jornada", editor: false, validator: "numeric"},
@@ -178,13 +217,13 @@ function validateHoras(valor, total){
     }
 
     if (mensaje!=='') {
-        let alert = `<div class="alert alert-danger" role="alert">
+        let alert = `<div class="alert alert-danger mt-3" role="alert">
                             <div class="alert-message">
                                 <strong> <i class="fa fa-info-circle"></i> Información!</strong>  ${mensaje}
                             </div>
                         </div>`;
 
-        $("#days-table").before(alert);
+        $("#days-table").after(alert);
     }
     return validado;
 }
@@ -226,6 +265,7 @@ $("#frmJornada").validate({
     },
     submitHandler: function (form, event) {
         event.preventDefault();
+        let alert = '';
 
         $(".alert-danger").hide();
         $('<input>', {
@@ -234,15 +274,35 @@ $("#frmJornada").validate({
             value: JSON.stringify(table.getData())
         }).appendTo('#frmJornada');
 
+        let libres = $("#_horas").val();
+        let horas = $("#auxJornada").val();
+        horas = parseFloat(horas);
+        libres = parseFloat(libres);
+        // console.log(libres);
+        if (libres>=0){
+            alert = `<div class="alert alert-danger mt-3" role="alert">
+                            <div class="alert-message">
+                                <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Complete las <strong>${  horas }</strong> horas de la jornada
+                            </div>
+                        </div>`;
+        }else{
+            alert = `<div class="alert alert-danger mt-3" role="alert">
+                            <div class="alert-message">
+                                <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Ha excedido las <strong>${horas}</strong> horas de la jornada
+                            </div>
+                        </div>`;
+        }
+        $("#days-table").after(alert);
+
         var valid = table.validate();
         if (valid != true) {
-            let alert = `<div class="alert alert-danger" role="alert">
+            alert = `<div class="alert alert-danger mt-3" role="alert">
                             <div class="alert-message">
                                 <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Complete el contenido de la tabla
                             </div>
                         </div>`;
 
-            $("#days-table").before(alert);
+            $("#days-table").after(alert);
         }else{
 
 

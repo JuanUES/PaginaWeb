@@ -27,11 +27,13 @@ class JornadaController extends Controller{
     public $rules = [
         'id_emp' => 'required|integer',
         'id_periodo' => 'required|integer',
+        'items' => 'required|array|min:1'
         // 'items' => 'required|array',
     ];
 
     public $messages = [
-        'id_emp.requiered' => 'Seleccione un empleado'
+        'id_emp.requiered' => 'Seleccione un empleado',
+        'items.array' => 'La Jornada no puede ir vacia'
     ];
 
     public function __construct(){
