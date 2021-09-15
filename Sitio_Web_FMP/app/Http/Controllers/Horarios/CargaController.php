@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Horarios;
 
 use App\Http\Controllers\Controller;
+use App\Models\General\Empleado;
 use App\Models\Horarios\CargaAdmin;
 use Exception;
 use Illuminate\Http\Request;
@@ -12,7 +13,10 @@ use Illuminate\Support\Facades\Validator;
 class CargaController extends Controller
 {
     public function index(){
-        $carga = DB::table('carga_admins')->get();
+        $carga = DB::table('carga_admins')
+        ->join('empleado', 'carga_admins.id_jefe', '=', 'empleado.id')
+        ->select('carga_admins.*', 'empleado.nombre','empleado.apellido')
+        ->get();
         $empleados = DB::table('empleado')->get();
       //  echo dd($empleados);
         return view('Admin.horarios.carga',compact('carga','empleados'));
@@ -22,7 +26,7 @@ class CargaController extends Controller
         try{
 
             $validator = Validator::make($request->all(),[
-                'nombre_carga'      => 'required|max:255|unique:carga_admins,nombre_carga',
+                'nombre_carga'      => 'required|max:255',
                 'categoria'         =>'required'
             ]);         
 
@@ -30,9 +34,11 @@ class CargaController extends Controller
             {            
                 return response()->json(['error'=>$validator->errors()->all()]);                
             }
-
+        //echo dd($request);
             $carga = $request->_id ==null ? new CargaAdmin():CargaAdmin::findOrFail($request->_id);
             $carga -> nombre_carga   = $request->nombre_carga;
+            $carga -> categoria        = $request->categoria;
+            $carga -> id_jefe        = $request->jefe;
             $carga -> save();         
         
             return $request->_id != null?response()->json(['mensaje'=>'Modificación exitosa.']):response()->json(['mensaje'=>'Registro exitoso.']);
@@ -52,4 +58,5 @@ class CargaController extends Controller
             return response()->json(['error'=>'Error']);
         }
     }
+
 }

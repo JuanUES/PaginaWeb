@@ -41,18 +41,20 @@
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <label for="Departamento">Jefes y Empleados </label>
-                            <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                                id="jefes" name="jefe">
-                                <option name="" selected>Seleccione</option>
-                                @foreach ($empleados as $item)
-                                    <option name="{!!$item->id!!}">{!!$item->nombre." ".$item->apellido!!}</option>
-                                @endforeach
-                            </select>
+            <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group">
+                        <label for="Departamento">Jefe </label>
+                        <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
+                            id="jefe" name="jefe">
+                            <option value="" selected>Seleccione</option>
+                            @foreach ($empleados as $i)
+                                <option value="{!!$i->id!!}">{!!$i->nombre.' '.$i->apellido!!}</option>
+                            @endforeach
+                        </select>
                         </div>
                     </div>
+                </div>
                    
                     
             </div>
@@ -153,6 +155,7 @@
                 <tr>
                     <th data-priority="1">N°</th>
                     <th data-priority="1">Carga Administrativa</th>
+                    <th data-priority="1">Jefe</th>
                     <th data-priority="1">Estado</th>
                     <th data-priority="1">Acciones</th>
                   
@@ -169,6 +172,7 @@
                     <tr>
                         <td>{!!$i!!}</td>
                         <th><span class="co-name">{!!$item->nombre_carga!!}</span></th>
+                        <th>{!!$item->nombre!!}</th>
                         <td class="align-middle font-16">{!! !$item->estado?'<span class="badge badge-danger">Desactivado</span> ' :
                             '<span class="badge badge-success">Activado</span> ' !!}</td>
                         <td class="align-middle ">
@@ -203,7 +207,6 @@
 </div>
 <!-- end row -->   
 @endsection
-
 @section('plugins')
 <link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
 <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>

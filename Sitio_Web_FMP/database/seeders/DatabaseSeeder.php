@@ -33,9 +33,10 @@ class DatabaseSeeder extends Seeder
             CargaAdminSeeder::class,
             ComplementarioSeeder::class,
             PeriodoSeeder::class,
+            CategoriaEmpleadoSeeder::class,
             Tipo_ContratoSeeder::class,
             Tipo_JornadaSeeder::class,
-            CategoriaEmpleadoSeeder::class,
+            
             EmpleadoSeeder::class,
             CicloSeeder::class,
             

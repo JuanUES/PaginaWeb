@@ -28,8 +28,9 @@ class EmpleadoController extends Controller
                 ,'tipo_jornada.tipo as jornada','departamentos.nombre_departamento as departamento')
         ->get();
 
-        return view('General.Empleado',
-        compact('empleados','departamentos','tjornada','tcontrato','categorias'));
+        //$jefesEmpleados = Empleado::join 
+
+        return view('General.Empleado',compact('empleados','departamentos','tjornada','tcontrato','categorias'));
     }
 
     public function store (Request $request){
