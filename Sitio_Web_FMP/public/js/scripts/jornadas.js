@@ -30,15 +30,10 @@ function updateHour(cell) {
     var alert = '';
     let row = cell.getRow();
     let data = cell.getData();
-
-
     let inicio = (isNaN(parseInt(data.hora_inicio))) ? 0 : parseInt(data.hora_inicio);
     let fin = (isNaN(parseInt(data.hora_fin))) ? 0 : parseInt(data.hora_fin);
-    // console.log(inicio, 'inicio');
-    // console.log(fin, 'fin');
 
     let resul = ((parseInt(fin) - parseInt(inicio) < 0  || inicio<=0 ) ) ? 0 : (parseInt(fin) - parseInt(inicio));
-    // console.log(resul, 'resul');
 
     row.update({ 'jornada': resul });
     let hoursTotal = fnHoras();
@@ -236,13 +231,6 @@ function updateChangeTable(){
     validateHoras(total, updatehours);
 }
 
-
-// if (items.length) {//para ocultar la culumna del id
-//     table.hideColumn("id");
-// } else {//para eliminar la columna cuando se este creando un nuevo presupuesto
-//     table.deleteColumn("id");
-// }
-
 jQuery.validator.addMethod("notEqual", function (value, element, param) {
     return this.optional(element) || value != param;
 }, "Please specify a different (non-default) value");
@@ -418,4 +406,145 @@ $("#frmJornada").validate({
         }
     }
 });
+
+
+function fnDetalleJornada(element) {
+    $('#modalView').modal('show');
+    let key = $(element).data('key');
+    $.get( "/admin/jornada/"+key, function(data) {
+        var fecha = new Date(data.jornada.created_at);
+        var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+        $('#fechaRegistroDetalle').html(fecha.toLocaleDateString("es-ES", options));
+
+        let contenido = '';
+        $.each(data.items, function (indexInArray, valueOfElement) {
+            contenido +=`<tr>
+                            <td>${valueOfElement.dia}</td>
+                            <td>${valueOfElement.hora_inicio}</td>
+                            <td>${valueOfElement.hora_fin}</td>
+                            <td>${valueOfElement.jornada}</td>
+                        </tr>`;
+        });
+        $("#bodyView").html(contenido);
+
+        contenido = '';
+        $.each(data.seguimiento, function (indexInArray, valueOfElement) {
+            let options = { year: 'numeric', month: 'long', day: 'numeric' };
+            contenido +=`<tr>
+                            <td>${ new Date(valueOfElement.created_at).toLocaleDateString("es-ES", options) }</td>
+                            <td class="text-dark">${valueOfElement.proceso}</td>
+                            <td>${valueOfElement.observaciones}</td>
+                        </tr>`;
+        });
+        $("#bodySeguimiento").html(contenido);
+    });
+}
+
+$('.select-filter').on('change', function () {
+    $("#frmFiltrar").submit();
+});
+
+$("#btnNewJornada").click(function () {
+    $("#_id").val('');
+    $("#modalNewJonarda").modal('show');
+    $("#id_periodo").val(null).trigger('change');
+    $('#id_periodo').selectpicker('refresh');
+
+    $("#id_emp").val(null).trigger('change');
+    $('#id_emp').empty();
+    $('#id_emp').selectpicker('refresh');
+});
+
+$("#id_emp").on('change', function () {//para cargar el total de horas por empleados
+    let id = $(this).val();
+    $("#jornada-div").show('slow');
+    $("#btnSaveJornada").show('slow');
+    $(".alert-error").remove();
+
+    if(id!=='' && id!==null){
+        $("#jornada-div :input").prop("disabled", false);
+        let data = getData('GET', `/admin/jornada/jornadaEmpleado/`+id,'#notificacion_jornada');
+        data.then(function(response){
+            $(".total-horas").val(response.empleado.horas_semanales);
+            updateChangeTable();
+
+            if(!response.permiso){
+                $("#jornada-div").hide('slow');
+                $("#btnSaveJornada").hide('slow');
+                let alert = `<div class="alert alert-danger alert-error" role="alert">
+                        <div class="alert-message">
+                            <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Usted no cuenta con los permisos suficientes para poder realizar este proceso.
+                        </div>
+                    </div>`;
+                $("#jornada-div").before(alert);
+            }
+
+
+        });
+    }else{
+        $("#jornada-div :input").prop("disabled", true);
+    }
+});
+
+
+$("#id_periodo").on('change', function () {//para cargar los empleados dependiendo del periodo
+    let id = $(this).val();
+    if(id!==''){
+        $("#jornada-div :input").prop("disabled", false);
+        fnUpdatePeriodoSelect(id);
+    }else{
+        $("#jornada-div :input").prop("disabled", true);
+    }
+});
+
+function fnUpdatePeriodoSelect(id, updateEmpleado = false, empleado = null, setPeriodo = false, periodo = null){
+    let data = getData('GET', `/admin/jornada/periodoEmpleados/`+id+'?updateEmpleado='+updateEmpleado,'#notificacion_jornada');
+    data.then(function(response){
+        $("#id_emp").val(null).trigger('change');
+        $('#id_emp').empty();
+        $('#id_emp').append('<option selected value="">Seleccione un Empleado</option>');
+        $(response).each(function (index, element) {
+            $("#id_emp").append('<option value="'+element.id+'">'+element.apellido+', '+element.nombre+'</option>');
+        });
+
+        if(setPeriodo && periodo!==null){
+            $("#id_periodo").val(periodo);
+            $('#id_periodo').selectpicker('refresh');
+        }
+        if(updateEmpleado && empleado!==null){//para uctualizar el dato del empleado
+            $("#id_emp").val(empleado).trigger('change');
+        }
+
+        $('#id_emp').selectpicker('refresh');
+    });
+}
+
+//Para cargar las opciones del seguimiento
+function fnProcedimiento(componet){
+    let jornada = $(componet).data('key');
+    $("#formSeguimiento #jornada_id").val(jornada);
+    let data = getData('GET', `/admin/jornada-seguimiento-opciones/`, '#notificacion_seguimiento');
+    data.then(function (response) {
+        $("#formSeguimiento #procesoSeguimiento").val(null).trigger('change');
+        $('#formSeguimiento #procesoSeguimiento').empty();
+        $.each(response, function (index, element) {
+            $("#formSeguimiento #procesoSeguimiento").append('<option value="' + element.value + '">' + element.text + '</option>');
+        });
+        $('#formSeguimiento #procesoSeguimiento').selectpicker('refresh');
+    });
+}
+
+//Para editar la jornada
+function fnEditJornada(element) {
+    $("#modalNewJonarda").modal('show');
+    let id = $(element).data('id');
+    let data = getData('GET', `/admin/jornada/`+id,'#notificacion_jornada');
+    data.then(function(response){
+        $("#_id").val(id);
+        fnUpdatePeriodoSelect(response.jornada.id_periodo, true, response.jornada.id_emp, true, response.jornada.id_periodo);
+        table.replaceData(response.items);
+    });
+}
+
 

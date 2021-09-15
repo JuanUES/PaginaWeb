@@ -72,16 +72,15 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="lead"> <i class="fa fa-check-circle"></i> Procedimiento de Validación </h5>
+                <h5 class="lead"> <i class="fa fa-check-circle"></i> Seguimiento para la Jornada </h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="registroForm" action="{{ url('admin/jornada-procedimiento') }}" method="POST">
-                {{--  @csrf  --}}
+            <form id="formSeguimiento" action="{{ url('admin/jornada-procedimiento') }}" method="POST">
                 <input type="hidden" name="jornada_id" id="jornada_id">
                 <div class="modal-body">
-                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" role="alert" style="display:none" id="notificacion">
+                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" role="alert" style="display:none" id="notificacion_seguimiento">
                     </div>
                     <div class="row">
                         <div class="col-12">
@@ -94,24 +93,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="tip">Proceso <span class="text-danger">*</span> </label>
-                                <select class="custom-select" name="proceso" >
-                                    <option value="" selected> Seleccione una opción </option>
-
-                                    @hasexactroles(['Docente'])
-                                    <option value="enviado a jefatura">Enviar a Jefatura</option>
-                                    @endhasexactroles
-                                    @hasanyrole('super-admin|Jefe-Academico|Jefe-Departamento|Recurso-Humano')
-                                        <option value="enviado a recursos humanos">Enviar a Recursos Humanos</option>
-                                    @endhasanyrole
-
-                                    @hasanyrole('super-admin|Jefe-Academico|Jefe-Departamento')
-                                        <option value="la jefatura lo ha regresado por problemas">Retornar al empleado</option>
-                                    @endhasanyrole
-
-                                    @hasanyrole('super-admin|Recurso-Humano')
-                                        <option value="aceptado">Aceptar</option>
-                                        <option value="invalidado">Invalidar</option>
-                                    @endhasanyrole
+                                <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" name="proceso" id="procesoSeguimiento">
                                 </select>
                             </div>
                         </div>
@@ -125,7 +107,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fa fa-ban"  aria-hidden="true"></i> Cerrar</button>
-                    <button type="button" class="btn btn-primary btn-sm" onClick="submitForm('#registroForm','#notificacion')"><li class="fa fa-save"></li> Guardar</button>
+                    <button type="button" class="btn btn-primary btn-sm" onClick="submitForm('#formSeguimiento','#notificacion')"><li class="fa fa-save"></li> Guardar</button>
                 </div>
             </form>
         </div>
@@ -149,7 +131,8 @@
                             <div class="col-lg-10 text-black">
                                 <h4 class="font-17 text-justify font-weight-bold">Información: Se exportaran todas las jornadas de los emplead@s docentes</h4>
                             </div>
-
+                        </div>
+                        <div class="row">
                             <div class="col-12 mt-2">
                                 <div class="form-group">
                                     <label for="periodo">Seleccione un Periodo <span class="text-danger">*</span> </label>
@@ -163,6 +146,7 @@
                             @hasanyrole('super-admin|Recurso-Humano')
                                 <div class="col-12">
                                     <div class="form-group">
+                                    <label for="depto">Seleccione un Departamento <span class="text-danger">*</span> </label>
                                         <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"  name="depto">
                                             @foreach ($deptos as $item)
                                                 <option value="{{ $item->id }}">{!!$item->nombre_departamento!!}</option>

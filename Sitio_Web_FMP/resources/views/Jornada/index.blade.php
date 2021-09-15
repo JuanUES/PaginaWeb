@@ -26,14 +26,14 @@
     </div>
         <hr>
     @if($cargar)
-        <form action="{{ route('admin.jornada.index') }}" method="get">
+        <form action="{{ route('admin.jornada.index') }}" method="get" id="frmFiltrar">
             <div class="row">
-                <div class="col-12 col-sm-2 col-md-2">
+                {{--  <div class="col-12 col-sm-2 col-md-2">
                     <button class="btn btn btn-outline-info btn-block" title="Filtrar Contenido" type="submit"> <i class="fa fa-filter" aria-hidden="true"></i> </button>
-                </div>
-                <div class="col-12 col-sm-5 col-md-5">
+                </div>  --}}
+                <div class="col-12 col-sm-6 col-md-6">
                     <div class="form-group">
-                        <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"  name="periodo">
+                        <select class="form-group selectpicker select-filter" data-live-search="true" data-style="btn-white"  name="periodo">
                             @foreach ($periodos as $item)
                                 <option value="{{ $item->id }}" {{ strcmp($item->id, $periodo)==0 ? 'selected' : '' }}>{{ $item->ciclo_rf->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
                             @endforeach
@@ -41,9 +41,9 @@
                     </div>
                 </div>
                 @hasanyrole('super-admin|Recurso-Humano')
-                    <div class="col-12 col-sm-5 col-md-5">
+                    <div class="col-12 col-sm-6 col-md-6">
                         <div class="form-group">
-                            <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"  name="depto">
+                            <select class="form-group selectpicker select-filter" data-live-search="true" data-style="btn-white"  name="depto">
                                 <option value="all" selected> Todos los Departamentos </option>
                                 @foreach ($deptos as $item)
                                     <option value="{{ $item->id }}" {{ strcmp($item->id, $depto)==0 ? 'selected' : '' }}>{!!$item->nombre_departamento!!}</option>
@@ -60,52 +60,58 @@
             <thead>
                 <tr>
                     <th>Registro</th>
+                    <th>Empleado</th>
                     <th>Departamento</th>
                     <th>Tipo</th>
                     <th>Periodo</th>
                     <th>Proceso</th>
                     <th class="text-center">Acciones</th>
                 </tr>
-                </thead>
-                <tbody>
-                    @foreach($jornadas as $item)
-                        <tr>
-                            <th  data-sort="{{ strtotime($item->created_at) }}">{{ date('d/m/Y H:m', strtotime($item -> created_at)) }}</th>
-                            {{--  <th>{{$item -> idEmp}}</th>  --}}
-                            <th>{{ $item -> empleado_rf->nombre }} {{ $item -> empleado_rf->apellido }}</th>
-                            <td>{{ $item->empleado_rf->departamento_rf->nombre_departamento }}</td>
-                            <td>{{ $item->empleado_rf->tipo_jornada_rf->tipo }}</td>
-                            <td>{{ $item -> periodo }}</td>
-                            <td>
-                                @php
-                                    $color = 'secondary';
-                                    if($item->procedimiento=='enviado a jefatura')
-                                        $color = 'info';
-                                    else if($item->procedimiento=='enviado a recursos humanos')
-                                        $color = 'primary';
-                                    else if($item->procedimiento=='la jefatura lo ha regresado por problemas')
-                                        $color = 'warnign';
-                                    else if($item->procedimiento=='aceptado')
-                                        $color = 'success';
-                                    else if($item->procedimiento=='invalidado')
-                                        $color = 'danger';
-                                @endphp
-                                <span class="badge badge-{{ $color }}">{{ Str::ucfirst($item->procedimiento) }}</span>
-                            </td>
-                            <td class="text-center">
-                                <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
-                                <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-outline-success btn-sm" onclick="fnDetalleJornada(this);"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i></button>
-                                @hasexactroles('Docente');
-                                    @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
-                                        <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
-                                    @endif
-                                @endhasexactroles
-                                @hasanyrole('super-admin|Jefe-Academico|Jefe-Departamento')
+            </thead>
+            <tbody>
+                @foreach($jornadas as $item)
+                    <tr {!! ($item->empleado_rf->id == Auth::user()->empleado_rf->id) ? 'style="background-color: rgba(21, 174, 234, 0.1);"' : '' !!} >
+                        <th  data-sort="{{ strtotime($item->created_at) }}">{{ date('d/m/Y H:m', strtotime($item -> created_at)) }}</th>
+                        <th>{{ $item -> empleado_rf->nombre }} {{ $item -> empleado_rf->apellido }}</th>
+                        <td>{{ $item->empleado_rf->departamento_rf->nombre_departamento }}</td>
+                        <td>{{ $item->empleado_rf->tipo_jornada_rf->tipo }}</td>
+                        <td>{{ $item -> periodo }}</td>
+                        <td>
+                            @php
+                                $color = 'secondary';
+                                if($item->procedimiento=='enviado a jefatura')
+                                    $color = 'info';
+                                else if($item->procedimiento=='enviado a recursos humanos')
+                                    $color = 'primary';
+                                else if($item->procedimiento=='la jefatura lo ha regresado por problemas')
+                                    $color = 'warnign';
+                                else if($item->procedimiento=='aceptado')
+                                    $color = 'success';
+                                else if($item->procedimiento=='invalidado')
+                                    $color = 'danger';
+                            @endphp
+                            <span class="badge badge-{{ $color }}">{{ Str::ucfirst($item->procedimiento) }}</span>
+                        </td>
+                        <td class="text-center">
+                            <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-outline-success btn-sm" onclick="fnDetalleJornada(this);"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i></button>
+                            <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
+
+                            @if (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano'))
+                                @if($item->procedimiento=='enviado a recursos humanos' || $item->procedimiento=='aceptado')
                                     <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
-                                @endrole
-                            </td>
-                        </tr>
-                    @endforeach
+                                @endif
+                            @elseif(@Auth::user()->hasRole('Jefe-Departamento') || @Auth::user()->hasRole('Jefe-Academico'))
+                                @if($item->procedimiento=='enviado a jefatura' || $item->procedimiento=='recursos humanos lo ha regresado a jefatura')
+                                    <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
+                                @endif
+                            @elseif(@Auth::user()->hasRole('Docente'))
+                                @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
+                                    <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
+                                @endif
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     @else
@@ -169,131 +175,7 @@
         });
     });
 
-    function fnDetalleJornada(element) {
-        $('#modalView').modal('show');
-        let key = $(element).data('key');
-        $.get( "{{ url('admin/jornada/') }}/"+key, function(data) {
-            var fecha = new Date(data.jornada.created_at);
-            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-            $('#fechaRegistroDetalle').html(fecha.toLocaleDateString("es-ES", options));
-
-            let contenido = '';
-            $.each(data.items, function (indexInArray, valueOfElement) {
-                contenido +=`<tr>
-                                <td>${valueOfElement.dia}</td>
-                                <td>${valueOfElement.hora_inicio}</td>
-                                <td>${valueOfElement.hora_fin}</td>
-                                <td>${valueOfElement.jornada}</td>
-                            </tr>`;
-            });
-            $("#bodyView").html(contenido);
-
-            contenido = '';
-            $.each(data.seguimiento, function (indexInArray, valueOfElement) {
-                let options = { year: 'numeric', month: 'long', day: 'numeric' };
-                contenido +=`<tr>
-                                <td>${ new Date(valueOfElement.created_at).toLocaleDateString("es-ES", options) }</td>
-                                <td class="text-dark">${valueOfElement.proceso}</td>
-                                <td>${valueOfElement.observaciones}</td>
-                            </tr>`;
-            });
-            $("#bodySeguimiento").html(contenido);
-        });
-    }
-
-    $("#btnNewJornada").click(function () {
-        $("#_id").val('');
-        $("#modalNewJonarda").modal('show');
-        $("#id_periodo").val(null).trigger('change');
-        $('#id_periodo').selectpicker('refresh');
-
-        $("#id_emp").val(null).trigger('change');
-        $('#id_emp').empty();
-        $('#id_emp').selectpicker('refresh');
-    });
-
-    $("#id_emp").on('change', function () {//para cargar el total de horas por empleados
-        let id = $(this).val();
-        $("#jornada-div").show('slow');
-        $("#btnSaveJornada").show('slow');
-        $(".alert-error").remove();
-
-        if(id!=='' && id!==null){
-            $("#jornada-div :input").prop("disabled", false);
-            let data = getData('GET', `{{ url('admin/jornada/jornadaEmpleado/') }}/`+id,'#notificacion_jornada');
-            data.then(function(response){
-                $(".total-horas").val(response.empleado.horas_semanales);
-                updateChangeTable();
-
-                if(!response.permiso){
-                    $("#jornada-div").hide('slow');
-                    $("#btnSaveJornada").hide('slow');
-                    let alert = `<div class="alert alert-danger alert-error" role="alert">
-                            <div class="alert-message">
-                                <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Usted no cuenta con los permisos suficientes para poder realizar este proceso.
-                            </div>
-                        </div>`;
-                    $("#jornada-div").before(alert);
-                }
-
-
-            });
-        }else{
-            $("#jornada-div :input").prop("disabled", true);
-        }
-    });
-
-
-    $("#id_periodo").on('change', function () {//para cargar los empleados dependiendo del periodo
-        let id = $(this).val();
-        if(id!==''){
-            $("#jornada-div :input").prop("disabled", false);
-            fnUpdatePeriodoSelect(id);
-        }else{
-            $("#jornada-div :input").prop("disabled", true);
-        }
-    });
-
-    function fnUpdatePeriodoSelect(id, updateEmpleado = false, empleado = null, setPeriodo = false, periodo = null){
-        let data = getData('GET', `{{ url('admin/jornada/periodoEmpleados/') }}/`+id+'?updateEmpleado='+updateEmpleado,'#notificacion_jornada');
-        data.then(function(response){
-            $("#id_emp").val(null).trigger('change');
-            $('#id_emp').empty();
-            $('#id_emp').append('<option selected value="">Seleccione un Empleado</option>');
-            $(response).each(function (index, element) {
-                $("#id_emp").append('<option value="'+element.id+'">'+element.apellido+', '+element.nombre+'</option>');
-            });
-
-            if(setPeriodo && periodo!==null){
-                $("#id_periodo").val(periodo);
-                $('#id_periodo').selectpicker('refresh');
-            }
-            if(updateEmpleado && empleado!==null){//para uctualizar el dato del empleado
-                $("#id_emp").val(empleado).trigger('change');
-            }
-
-            $('#id_emp').selectpicker('refresh');
-        });
-    }
-
-
-    function fnProcedimiento(componet){
-        let jornada = $(componet).data('key');
-        $("#registroForm #jornada_id").val(jornada);
-    }
-
-    //Para editar la jornada
-    function fnEditJornada(element) {
-        $("#modalNewJonarda").modal('show');
-        let id = $(element).data('id');
-        let data = getData('GET', `{{ url('admin/jornada') }}/`+id,'#notificacion_jornada');
-        data.then(function(response){
-            $("#_id").val(id);
-            fnUpdatePeriodoSelect(response.jornada.id_periodo, true, response.jornada.id_emp, true, response.jornada.id_periodo);
-            table.replaceData(response.items);
-        });
-    }
 
 </script>
 @endsection

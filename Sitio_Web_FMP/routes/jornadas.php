@@ -4,9 +4,9 @@ use App\Models\Jornada\Jornada;
 use Illuminate\Support\Facades\Route;
 
 
-Route::group(['middleware' => ['auth','role:super-admin|Docente|Jefe-Departamento|Jefe-Academico']], function () {
+Route::group(['middleware' => ['auth','role:super-admin|Docente|Jefe-Departamento|Jefe-Academico|Recurso-Humano']], function () {
     //RUTAS JORNADA
-    Route::resource('admin/jornada', 'App\Http\Controllers\JornadaController')->names('admin.jornada');
+    Route::resource('admin/jornada', 'App\Http\Controllers\JornadaController')->only(['index','show','store','destroy'])->names('admin.jornada');
     Route::post('admin/jornada-export', 'App\Http\Controllers\JornadaController@export')->name('admin.jornada.export');
 
     //modal
@@ -15,15 +15,22 @@ Route::group(['middleware' => ['auth','role:super-admin|Docente|Jefe-Departament
     Route::get('admin/jornada/periodoEmpleados/{id}', 'App\Http\Controllers\JornadaController@getEmpleadoPeriodo')->name('admin.jornada.periodo.empleados');
 
     Route::post("admin/jornada-procedimiento", "App\Http\Controllers\JornadaController@procedimiento")->name('admin.jornada.procedimiento');
+    Route::get("admin/jornada-seguimiento-opciones", "App\Http\Controllers\JornadaController@getOpcionesSeguimiento")->name('admin.jornada.seguimiento.opciones');
     Route::post("admin/jornada-check-dia", "App\Http\Controllers\JornadaController@checkDia")->name('admin.jornada.check-dia');
 
     //obtener departamentos
     Route::post('admin/jornada/select{id}', 'App\Http\Controllers\JornadaController@getDepto')->name('admin.jornada.select');
+});
 
 
+
+
+Route::group(['middleware' => ['auth','role:super-admin|Recurso-Humano']], function () {
     //RUTAS PERIODO
     Route::resource('admin/periodo', 'App\Http\Controllers\PeriodoController')->only(['index', 'store', 'show', 'destroy'])->names('admin.periodo');
     Route::get('admin/periodo/finalizar/{id}', 'App\Http\Controllers\PeriodoController@finalizar')->name('admin.periodo.finalizar');
-
-
+    //RUTAS TIPO CONTRATO
+    Route::resource('admin/tcontrato', 'App\Http\Controllers\Tipo_ContratoController')->only(['index', 'store', 'show', 'destroy'])->names('admin.tcontrato');
+    //RUTAS TIPO JORNADA
+    Route::resource('admin/tjornada', 'App\Http\Controllers\Tipo_JornadaController')->only(['index', 'store', 'show', 'destroy'])->names('admin.tjornada');
 });

@@ -30,6 +30,7 @@
     <table  class="table table-sm dt-responsive nowrap" style="width:100%" id="table-periodo">
         <thead>
             <tr>
+                <th>Registro</th>
                 <th data-priority="0">Id</th>
                 <th data-priority="2">Ciclo</th>
                 <th data-priority="3">Tipo</th>
@@ -42,6 +43,7 @@
         <tbody>
             @foreach($periodo as $item)
             <tr>
+                <th  data-sort="{{ strtotime($item->created_at) }}">{{ date('d/m/Y H:m', strtotime($item -> created_at)) }}</th>
                 <th>{{ $item->id }}</th>
                 <td>{{ $item->ciclo_rf->nombre }}</td>
                 <td>{{ $item->tipo }}</td>
@@ -102,12 +104,6 @@
                                     </select>
                                 </div>
                             </div>
-                            {{--  <div class="col-12">
-                                <div class="form-group">
-                                    <label for="FechaI">Título <span class="text-danger">*</span> </label>
-                                    <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Ingrese el Título">
-                                </div>
-                            </div>  --}}
 
                             <div class="col-12">
                                 <label for="FechaI">Periodo <span class="text-danger">*</span> </label>
@@ -117,26 +113,11 @@
                                             <span class="input-group-text"><i class="far fa-clock"></i></span>
                                         </div>
                                         <input class="form-control" data-toggle="daterangepicker" id="rangos" maxlength="23" name="timestamp" data-filter-type="date-range">
-
-                                        {{--  <input type="text" class="form-control float-right" id="rangos">  --}}
                                         <input type="hidden" name="fecha_inicio" id="fecha_inicio">
                                         <input type="hidden" name="fecha_fin" id="fecha_fin">
                                     </div>
                                 </div>
                             </div>
-
-                            {{--  <div class="col-12 col-sm-6">
-                                <div class="form-group">
-                                    <label for="FechaI">Fecha Inicio <span class="text-danger">*</span> </label>
-                                    <input type="date" class="form-control" name="fecha_inicio" id="fecha_inicio">
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6">
-                                <div class="form-group">
-                                    <label for="FechaF">Fecha Fin <span class="text-danger">*</span> </label>
-                                    <input type="date" class="form-control" name="fecha_fin" id="fecha_fin">
-                                </div>
-                            </div>  --}}
                             <div class="col-12 col-sm-12">
                                 <div class="form-group selectpicker" data-live-search="true" data-style="btn-white">
                                     <label for="tipo">Tipo <span class="text-danger">*</span> </label>

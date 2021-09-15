@@ -30,6 +30,7 @@
     <table  class="table table-sm dt-responsive nowrap" style="width:100%" id="table-tcontrato">
         <thead>
             <tr>
+                <th>Registro</th>
                 <th data-priority="1">Id</th>
                 <th data-priority="3">Tipo</th>
                 <th data-priority="3" class="text-center">Acciones</th>
@@ -39,6 +40,7 @@
         <tbody>
             @foreach($tcontrato as $item)
             <tr>
+                <th  data-sort="{{ strtotime($item->created_at) }}">{{ date('d/m/Y H:m', strtotime($item -> created_at)) }}</th>
                 <th>{{ $item->id }}</th>
                 <td>{{ $item->tipo }}</td>
                 <td class="text-center">

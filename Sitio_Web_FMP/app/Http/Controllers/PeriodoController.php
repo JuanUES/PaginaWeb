@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\_UTILS\Utilidades;
-use App\Models\Ciclo;
+use App\Models\Horarios\Ciclo;
 use App\Models\Jornada\Periodo;
 use Exception;
 use Illuminate\Http\Request;
@@ -23,9 +23,6 @@ class PeriodoController extends Controller{
         'ciclo_id.required' => 'Seleccione un ciclo'
     ];
 
-    public function __construct(){
-        $this->middleware(['auth','role:super-admin']);
-    }
     /**
      * Display a listing of the resource.
      *

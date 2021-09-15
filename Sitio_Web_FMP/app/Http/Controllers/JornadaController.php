@@ -36,6 +36,15 @@ class JornadaController extends Controller{
         'items.array' => 'La Jornada no puede ir vacia'
     ];
 
+    public $estado_procedimiento = [
+        0 => ['value' => 'guardado', 'text' => 'Guardado'],
+        1 => ['value' => 'enviado a jefatura', 'text' => 'Enviar a Jefatura'],
+        2 => ['value' => 'la jefatura lo ha regresado por problemas', 'text' => 'Retornar con observaciones (Jefatura)'],
+        3 => ['value' => 'enviado a recursos humanos', 'text' => 'Enviar a recursos humanos'],
+        4 => ['value' => 'recursos humanos lo ha regresado a jefatura', 'text' => 'Retornar con observaciones (Recursos Humanos)'],
+        5 => ['value' => 'aceptado', 'text' => 'Aceptado'],
+    ];
+
     /**
      * Display a listing of the resource.
      *
@@ -43,8 +52,10 @@ class JornadaController extends Controller{
      */
     public function index(Request $request){
         $user = Auth::user();
+        $estados = $this->estado_procedimiento;
         $cargar = true;
         $emp = null; //para terminar que es solo un empleado y poder determinar el tipo
+        $add_jornada = false;
 
         $periodo = isset($request->periodo) ? $request->periodo : Periodo::select('id')->OrderBy('id', 'DESC')->first()->id;
         $depto = isset($request->depto) ? $request->depto : false;
@@ -52,26 +63,46 @@ class JornadaController extends Controller{
 
         $query = Jornada::join('periodos','jornada.id_periodo','periodos.id')
                 ->join('empleado','jornada.id_emp','empleado.id')
-                ->select('jornada.*',Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"),'empleado.id as idEmp')
-                ->where('id_periodo', $periodo);
+                ->select('jornada.*',Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"))
+                ->where('jornada.id_periodo', $periodo);
 
-        if(!$user->hasRole('super-admin') && !$user->hasRole('Recurso-Humano')){ // si no es jefe filtramos la informacion dependiendo de si es jefe o empleado normal
             //determinamos si tiene un empleado relacionado
             $empleado = $user->empleado_rf;
             if(is_null($empleado)){//para que muestre una alerta de que no existe un empleado relacionado con el usuario
                 $query = null;
-            }else{
-                if($user->hasRole('Jefe-Academico')|| $user->hasRole('Jefe-Departamento')){//para filtrar por tipo de departamento
-                    $depto = $empleado->id_depto;// id que servira para filtrar los empleados por departemento
-                }else if($user->hasRole('Docente') && strcmp($empleado->tipo_empleado,'Académico')==0){ // con esto determinamos que es un empleado sin cargos de jefatura por lo cual solo se mostrara ese empleado
-                    $query->where('empleado.id', $empleado->id);
-                    $emp = $empleado;
-                }else{
-                    $query = null;
+            }else {
+
+                if(!$user->hasRole('super-admin') && !$user->hasRole('Recurso-Humano')){ // si no es jefe filtramos la informacion dependiendo de si es jefe o empleado normal
+                    if($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Departamento')){//para filtrar por tipo de departamento
+                        $depto = $empleado->id_depto;// id que servira para filtrar los empleados por departemento
+                        $query->whereIn('jornada.procedimiento', [$estados[1]['value'], $estados[2]['value'], $estados[3]['value'], $estados[4]['value'], $estados[5]['value']]);
+
+                    }else if($user->hasRole('Docente') && strcmp($empleado->tipo_empleado,'Académico')==0){ // con esto determinamos que es un empleado sin cargos de jefatura por lo cual solo se mostrara ese empleado
+                        $query->where('empleado.id', $empleado->id);
+                        $emp = $empleado;
+                    }else{
+                        $query = null;
+                    }
+                } else if ($user->hasRole('Recurso-Humano')) {
+                    $query->whereIn('jornada.procedimiento', [$estados[3]['value'], $estados[4]['value'], $estados[5]['value']]);
+                }
+
+
+                //PARA AGREGAR LA FILA DE LA JORNADA DEL JEFES Y DE RECURSO HUMANO
+                if($user->hasRole('Recurso-Humano') || $user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Departamento')){
+                    $add_jornada = true;
+                    $jornada_query = Jornada::join('periodos', 'jornada.id_periodo', 'periodos.id')
+                        ->join('empleado', 'jornada.id_emp', 'empleado.id')
+                        ->select('jornada.*', Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"))
+                        ->where('jornada.id_periodo', $periodo)
+                        ->where('empleado.id', $empleado->id);
+                    ($depto != false && strcmp($depto, 'all') != 0)
+                        ? $jornada_query->where('empleado.id_depto', $depto)
+                        : $depto = 'all';
+                    $jornada = $jornada_query->first();
                 }
 
             }
-        }
 
         if(is_null($query)){
             $cargar = false;
@@ -87,6 +118,13 @@ class JornadaController extends Controller{
             $deptos = Departamento::where('estado', true)->latest()->get();
             $periodos = Periodo::where('estado', 'activo')->latest()->get();
 
+            if($add_jornada && !is_null($jornada)){
+
+                // dd($jornada);
+
+                if(!$jornadas->contains($jornada))
+                    $jornadas->prepend($jornada);
+            }
         }
 
         return view('Jornada.index', compact('emp','cargar','periodos','jornadas', 'deptos',  'periodos', 'periodo', 'depto'));
@@ -231,7 +269,7 @@ class JornadaController extends Controller{
                     $depto = $empleado->id_depto; // id que servira para filtrar los empleados por departemento
                 }
             }
-        } else if ($user->hasRole('super-admin') && $user->hasRole('Recurso-Humano')) {
+        } else if ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano')) {
             if(isset($request->depto)){
                 $depto = $request->depto; // id que servira para filtrar los empleados por departemento
             }
@@ -257,30 +295,36 @@ class JornadaController extends Controller{
             $jornada->update([
                 'procedimiento' => $request->proceso,
             ]);
+
+
+
             $periodo = $jornada->periodo_rf;
             $empleado = $jornada->empleado_rf;
             $jefe = $empleado->jefe_rf;
             if (!is_null($jefe)) {
-                $usuario = $jefe->usuario_rf;
-                if(!is_null($usuario)){
+                $usuario_jefe = $jefe->usuario_rf;
+                if(!is_null($usuario_jefe)){
                     Notificaciones::create([
-                        'usuario_id' => Auth::user()->id,
-                        'mensaje' => $empleado->nombre.' '.$empleado->apellido.' ha enviado la jornada para el período ' . $periodo->titulo,
-                        'tipo' => 'Jornada'
+                        'usuario_id' => $usuario_jefe->id,
+                        'mensaje' => $request->proceso . ' ' . $empleado->nombre . ' ' . $empleado->apellido . ' ha enviado la jornada para el período ' . $periodo->titulo,
+                        'tipo' => 'Jornada',
+                        'observaciones' => $request->observaciones
                     ]);
-
                 }
             }
 
-            //notificacion de jornada enviada al mismo empleado
+
+            Seguimiento::create($request->all());
+            //Notificacion de que ha sido enviado a jefatura la
             Notificaciones::create([
                 'usuario_id' => Auth::user()->id,
-                'mensaje' => 'La jornada para el período ' . $periodo->titulo . ' ha sido enviada a la Jefatura',
+                'mensaje' => $request->proceso . ' ' . $empleado->nombre . ' ' . $empleado->apellido . ' ha enviado la jornada para el período ' . $periodo->titulo,
                 'tipo' => 'Jornada',
+                'observaciones' => $request->observaciones
             ]);
-            Seguimiento::create($request->all());
 
-            // Utilidades::fnSaveBitacora('Nuevo Tipo #: ' . $tipo->id, 'Registro', $this->modulo);
+
+            Utilidades::fnSaveBitacora('Seguimiento para la Jornada del Empleado #: ' . $empleado->nombre.' '.$empleado->apellido, 'Registro', $this->modulo);
 
             return response()->json(['mensaje' => 'Registro exitoso']);
         } catch (Exception $e) {
@@ -326,6 +370,34 @@ class JornadaController extends Controller{
 
 
         // dd($horarios);
+    }
+
+    public function getOpcionesSeguimiento(){
+        $user = Auth::user();
+        $estados = $this->estado_procedimiento;
+        unset($estados[0]);
+
+
+        // $estado_procedimiento = [
+        //     0 => ['value' => 'guardado', 'text' => 'Guardado'],
+        //     1 => ['value' => 'enviado a jefatura', 'text' => 'Enviar a Jefatura'],
+        //     2 => ['value' => 'la jefatura lo ha regresado por problemas', 'text' => 'Retornar con observaciones (Jefatura)'],
+        //     3 => ['value' => 'enviado a recursos humanos', 'text' => 'Enviar a recursos humanos'],
+        //     4 => ['value' => 'recursos humanos lo ha regresado a jefatura', 'text' => 'Retornar con observaciones (Recursos Humanos)'],
+        //     5 => ['value' => 'aceptado', 'text' => 'Aceptado'],
+        // ];
+
+
+
+
+        if ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano')){
+            unset($estados[1], $estados[2], $estados[3]);
+        } else if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Departamento')){
+            unset($estados[5], $estados[4], $estados[1]);
+        } else if($user->hasRole('Docente')){
+            unset($estados[5], $estados[4], $estados[3], $estados[2]);
+        }
+        return $estados;
     }
 
 }
