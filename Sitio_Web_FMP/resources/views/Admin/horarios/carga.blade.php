@@ -256,6 +256,7 @@
         $json = {!!json_encode($carga)!!}.find(x => x.id==id);
         editar($json);
         }
+        //funcion para actualizar los datos que traen jefes
     function editarCargajefe(id){
         $json = {!!json_encode($empleados)!!}.find(x => x.id==id);
         editar($json);
