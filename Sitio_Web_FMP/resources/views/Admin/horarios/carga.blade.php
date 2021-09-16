@@ -205,7 +205,7 @@
                     <tr>
                         <td>{!!$i!!}</td>
                         <th><span class="co-name">{!!$ix->nombre_carga!!}</span></th>
-                        <th>{!!$ix->nombre!!}</th>
+                        <th>{!!$ix->nombre.' '.$ix->apellido!!}</th>
                         <td class="align-middle font-16">{!! !$ix->estado?'<span class="badge badge-danger">Desactivado</span> ' :
                             '<span class="badge badge-success">Activado</span> ' !!}</td>
                         <td class="align-middle ">

@@ -33,9 +33,13 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group">
-                                <label for="exampleInputDocente">Docente</label>
-                                <select class="custom-select" name="id_empleado">
-                                    <option value="">Seleccione</option>
+                                <label for="Departamento">Empleado</label>
+                                <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
+                                    id="id_empleado" name="id_empleado">
+                                    <option value="" selected>Seleccione</option>
+                                    @foreach ($empleados as $index)
+                                        <option value="{!!$index->id!!}">{!!$index->nombre.' '.$index->apellido!!}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div> 
@@ -132,7 +136,7 @@
                     <th>GOOG <span class="co-name">Google Inc.</span></th>
 
                     <th>
-                    @for ($i = 1; $i <=10; $i++)
+                    @for ($index = 1; $index <=10; $index++)
                     GOOooooodfosdf
                         <br>
                         @endfor
