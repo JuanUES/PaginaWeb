@@ -296,9 +296,11 @@
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
+                                    @hasrole('super-admin')
                                     <li>
                                         <a href="{{route('crear-carga')}}">Ingresar carga</a>
                                     </li>
+                                    @endhasrole
                                     <li>
                                         <a href="{{route('asignar-carga')}}">Asignar Carga</a>
                                     </li>
