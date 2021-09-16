@@ -73,6 +73,12 @@ class EmpleadoController extends Controller
         return response()->json(['code'=>200, 'mensaje'=>'Registro exitoso','data' => $empleado], 200);
     }
 
+    public function empleado($id){
+        return Empleado::select('nombre','apellido','dui','nit','telefono as tel','urlfoto','tipo_empleado as tipo','jefe',
+        'id_depto as depto','categoria','id_tipo_jornada as jornada','id_tipo_contrato as contrato')
+        ->findOrFail($id)->toJSON();
+    }
+
     public function categoriaStore(Request $request){
         $validator = Validator::make($request->all(),[
             'categoria' => 'required|min:2',

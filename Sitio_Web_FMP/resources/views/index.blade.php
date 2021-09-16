@@ -84,16 +84,17 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                     <div class="col-xl-12">
                         <div class="card-box">
                             <div class="row py-1">
-                                <div class="col order-first "><h3>Facultad Multidisciplinaria Paracentral</h3></div>
+                                <div class="col order-first ">
+                                    <h3>Facultad Multidisciplinaria Paracentral</h3></div>
                                 @auth
                                 <div class="col-lg-3 order-last ">
                                     <a href="" class="btn btn-block btn-info tex-left" 
-                                    data-toggle="modal" data-target=".bs-example-modal-center">
+                                    data-toggle="modal" data-target="#agregarImagenCarrusel">
                                         <div class="mdi mdi-upload mdi-16px text-center"> Agregar Imagen</div>
                                     </a>
                                 </div>                            
                                       
-                                <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal fade bs-example-modal-center" id='agregarImagenCarrusel'tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -311,7 +312,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                                                     <div>
                                                                         <input parsley-type="url" type="url" class="form-control"
                                                                                 placeholder="URL Fuente (Opcional)"
-                                                                                name="urlfuente" id="urlfuente"/>
+                                                                                name="urlfuente" id="urlfuente" />
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -451,12 +452,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                             </div>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->  
-                                 
-                                
-
-
-                   
+                                </div><!-- /.modal -->                     
                                 @endauth 
                                 @else
                                 <p class="p-2 border text-center">No hay noticias para mostrar.</p>
@@ -464,7 +460,6 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                         </div> <!-- end card-box -->
                     </div><!-- end col -->
                 </div>
-
             </div>
             <div class="col-xl-4">
                 <div class="row">

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8" />
         <title>Administración FMP</title>
@@ -7,10 +7,9 @@
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
         <meta content="Coderthemes" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
         <!-- App favicon -->
         <link rel="shortcut icon" href="{{ asset('/images/ues_logo3.svg') }}">
-        <!-- vectormap -->
-        <link href="{{ asset('template-admin/dist/assets/libs/jqvmap/jqvmap.min.css') }}" rel="stylesheet" />
         <!-- DataTables -->
         <link href="{{ asset('template-admin/dist/assets/libs/datatables/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('template-admin/dist/assets/libs/datatables/responsive.bootstrap4.min.css') }}" rel="stylesheet" type="text/css"/>
@@ -24,20 +23,20 @@
         @yield('plugins')
 
         <!-- App css -->
+        <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
+        <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
         <link href="{{ asset('template-admin/dist/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('template-admin/dist/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('template-admin/dist/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
-
-        <link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
-        <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>
-        <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
+        
 
         {{-- DateRangPicker --}}
         <link rel="stylesheet" href="{{asset('vendor/daterangepicker/daterangepicker.css') }}">
         {{--  <link rel="stylesheet" href="{{asset('vendor/bootstrap-datepicker/css/bootstrap-datepicker.css') }}">  --}}
 
         {{-- <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script> --}}
-        <meta name="csrf-token" content="{{ csrf_token() }}" />
+
     </head>
     <body>
         <!-- Begin page -->
@@ -173,11 +172,11 @@
                             </li>
                             @hasrole('super-admin')
                             <li class="menu-title">General</li>
-                                <li>
-                                    <a href="{{ route('empleado') }}">
-                                        <i class="font-18 dripicons-user "></i> <span> Empleados </span>
-                                    </a>
-                                </li>
+                            <li>
+                                <a href="{{ route('empleado') }}">
+                                    <i class="font-18 dripicons-user "></i> <span> Empleados </span>
+                                </a>
+                            </li>
                             @endhasrole
                             @hasanyrole('super-admin|Transparencia-Decano|Transparencia-Secretario|Transparencia-Presupuestario')
                             <li class="menu-title">Transparencia</li>
@@ -378,12 +377,8 @@
         <!-- Chart JS -->
         <script src="{{ asset('template-admin/dist/assets/libs/chart-js/Chart.bundle.min.js') }}"></script>
 
-        <!-- Jvector map -->
-        <script src="{{ asset('template-admin/dist/assets/libs/jqvmap/jquery.vmap.min.js') }}"></script>
-        <script src="{{ asset('template-admin/dist/assets/libs/jqvmap/jquery.vmap.usa.js') }}"></script>
 
         <script src="{{ asset('template-admin/dist/assets/libs/moment/moment.min.js') }}"></script>
-
 
         <!-- Datatable js -->
         <script src="{{ asset('template-admin/dist/assets/libs/datatables/jquery.dataTables.min.js') }}"></script>

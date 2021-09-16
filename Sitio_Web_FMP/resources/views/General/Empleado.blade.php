@@ -26,32 +26,35 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="row">
                     <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="exampleInputCodigo">Nombre <code>*</code></label>
-                            <input type="text" class="form-control" id='nombre' name="nombre"  autocomplete="off" placeholder="Digite el nombre">
+                            <label for="fileE">Foto <code>*</code></label>
+                            <label for="fileE">
+                                <img  class="border rounded img-fluid" id="fotoE" >
+                            </label>
+                            <label for="fileE" class="centrado"><i class="mdi mdi-mouse font-20"></i> Click para subir foto</label>
+                            <input type="file" id="fileE" accept="image/*">
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="exampleInputUbicacion">Apellido <code>*</code></label>
-                            <input type="text" class="form-control" id="apellido" name="apellido"  autocomplete="off" placeholder="Digite el apellido">
+                            <label for="nombreE">Nombre <code>*</code></label>
+                            <input type="text" class="form-control" id='nombreE' name="nombre"  autocomplete="off" placeholder="Digite el nombre">
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="">D.U.I. <code>*</code></label>
-                            <input type="text" class="form-control" name="dui" placeholder="00000000-0" 
+                            <label for="apellidoE">Apellido <code>*</code></label>
+                            <input type="text" class="form-control" id="apellidoE" name="apellido"  autocomplete="off" placeholder="Digite el apellido">
+                        </div>
+                        <div class="form-group">
+                            <label for="duiE">DUI <code>*</code></label>
+                            <input type="text" class="form-control" name="dui" id="duiE" placeholder="00000000-0" 
                                 data-mask="00000000-0">
                         </div>
-                    </div>
-                    <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="">N.I.T. <code>*</code></label>
-                            <input type="text" class="form-control" name="nit" data-mask="0000-000000-000-0"
+                            <label for="nitE">NIT <code>*</code></label>
+                            <input type="text" class="form-control" name="nit" id="nitE" data-mask="0000-000000-000-0"
                             placeholder="0000-000000-000-0">
                         </div>
                     </div>
@@ -60,14 +63,14 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="">Teléfono <code>*</code></label>
-                            <input type="tel" class="form-control" name="telefono" data-mask="0000-0000"
+                            <input type="tel" class="form-control" id="telE" name="telefono" data-mask="0000-0000"
                             placeholder="0000-0000">
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="">Categoria <code>*</code></label>
-                            <select class="selectpicker"
+                            <select class="selectpicker" id="categoriaE"
                                 data-live-search="true" data-style="btn-white" name="categoria">
                                 <option value="" selected>Seleccione</option>
                                 @foreach ($categorias as $item)
@@ -82,7 +85,7 @@
                         <div class="form-group">
                             <label for="Departamento">Tipo Contrato <code>*</code></label>
                             <select  class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                                    id="id_tipo_contrato" name="tipo_contrato">
+                                    id="tipo_contratoE" name="tipo_contrato">
                             <option value="" selected>Seleccione</option>
                             @foreach ($tcontrato as $contrato)
                                 <option value="{!!$contrato->id!!}">{!!$contrato->tipo!!}</option>
@@ -94,7 +97,7 @@
                         <div class="form-group">
                             <label for="Departamento">Tipo Jornada <code>*</code></label>
                             <select  class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                                id="id_tipo_jornada" name="tipo_jornada">
+                                id="tipo_jornadaE" name="tipo_jornada">
                                 <option value="" selected>Seleccione</option>
                                 @foreach ($tjornada as $jornada)
                                     <option value="{!!$jornada->id!!}">{!!$jornada->tipo!!} - {!!$jornada->horas_semanales!!} horas</option>
@@ -107,7 +110,7 @@
                     <div class="col-xl-6">
                         <label for="Departamento">Departamento <code>*</code></label>
                         <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                            id="id_depto" name="departamento">
+                            id="deptoE" name="departamento">
                             <option value="" selected>Seleccione</option>
                             @foreach ($departamentos as $depto)
                                 <option value="{!!$depto->id!!}">{!!$depto->nombre_departamento!!}</option>
@@ -117,7 +120,7 @@
                     <div class="col-xl-6">
                         <label for="Departamento">Tipo Empleado <code>*</code></label>
                         <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                            id="tipo_empleado" name="tipo_empleado">
+                            id="tipo_empleadoE" name="tipo_empleado">
                             <option name="" selected>Seleccione</option>
                            <option value="Administrativo">Administrativo</option>
                            <option value="Académico">Académico</option>
@@ -129,7 +132,7 @@
                     <div class="col-xl-12">
                         <label for="Departamento">Jefes y Empleados </label>
                         <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                            id="jefes" name="jefe">
+                            id="jefe_empleadoE" name="jefe">
                             <option name="" selected>Seleccione</option>
                             @foreach ($empleados as $item)
                                 <option name="{!!$item->id!!}">{!!$item->nombre.' '.$item->apellido!!}</option>
@@ -351,7 +354,7 @@
                         <div class="row">
                             <div class="col text-center">
                                 <div class="btn-group" role="group">
-                                    <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="">
+                                    <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="editar({{$item->id}})">
                                         <i class="fa fa-edit font-16" aria-hidden="true"></i>
                                     </button>
                                     <button title="{!! !$item->estado ? 'Activar' : 'Desactivar' !!}"
@@ -377,16 +380,26 @@
 
 
 @section('plugins')
-<link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
-<link href="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>
-<link href="{{ asset('css/select2.css') }}" rel="stylesheet"/>
-
+<style>
+#fileE{
+  display: none;
+}
+.contenedor{
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+.centrado{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+</style>
 @endsection
 
 @section('plugins-js')
 <!-- Bootstrap Select -->
-<script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}"></script>
-<script src="{{ asset('js/scripts/http.min.js') }} " ></script>
 <script src="{{ asset('js/scripts/data-table.js') }}" ></script>
 <script src="{{ asset('js/jquery.mask.js') }}" ></script>
 
@@ -425,7 +438,6 @@
             }
         });
     }
-
     function httpCategoria(formulario,notificacion){
         $.ajax({
             type: $(formulario).attr('method'),
@@ -522,5 +534,51 @@
             $('.modal').scrollTop(0);
         });
     }
+    function editar(id){
+        $.get('Empleado/'+id,
+            function(json){
+                $('#nombreE').val();
+                $('#apellidoE').val();
+                $('#duiE').val();
+                $('#nitE').val();
+                $('#telE').val();
+                $('#categoriaE').val();
+                $('#tipo_contratoE').val();
+                $('#tipo_jornadaE').val();
+                $('#deptoE').val();
+                $('#tipo_empleadoE').val();
+                $('#jefe_empleadoE').val();
+            }
+        );
+    }
 </script>
+
+<script>
+    // Obtener referencia al input y a la imagen
+    const $fileE = document.querySelector("#fileE"),
+    $fotoE = document.querySelector("#fotoE");
+    const ancho = 370;
+    const alto = 285;
+    $('#fotoE').width(ancho); 
+    $('#fotoE').height(alto);
+    // Escuchar cuando cambie
+    $fileE.addEventListener("change", () => {
+        // Los archivos seleccionados, pueden ser muchos o uno
+        const archivos = $fileE.files;
+        // Si no hay archivos salimos de la función y quitamos la imagen
+        if (!archivos || !archivos.length) {
+            $fotoE.src = "";
+            return;
+        }
+        // Ahora tomamos el primer archivo, el cual vamos a previsualizar
+        const primerArchivo = archivos[0];
+        // Lo convertimos a un objeto de tipo objectURL
+        const objectURL = URL.createObjectURL(primerArchivo);
+        // Y a la fuente de la imagen le ponemos el objectURL
+        $('#fotoE').width(ancho); // Unidades que se asumen en pixeles
+        $('#fotoE').height(alto);
+        $fotoE.src = objectURL;
+    });
+</script>
+
 @endsection
