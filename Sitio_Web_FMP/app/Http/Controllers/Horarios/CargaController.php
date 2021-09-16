@@ -14,12 +14,17 @@ class CargaController extends Controller
 {
     public function index(){
         $carga = DB::table('carga_admins')
-        ->join('empleado', 'carga_admins.id_jefe', '=', 'empleado.id')
-        ->select('carga_admins.*', 'empleado.nombre','empleado.apellido')
+        ->where('id_jefe','=',null)
         ->get();
-        $empleados = DB::table('empleado')->get();
-      //  echo dd($empleados);
-        return view('Admin.horarios.carga',compact('carga','empleados'));
+        $empleadosC=DB::table('empleado')->get();
+        $empleados = DB::table('carga_admins')
+        ->leftJoin('empleado', 'carga_admins.id_jefe', '=', 'empleado.id')
+        ->select('carga_admins.*','empleado.nombre','empleado.apellido')
+        ->where('carga_admins.id_jefe','!=',null)
+        ->get();
+        //echo dd($empleados);
+        //echo dd($carga);
+        return view('Admin.horarios.carga',compact('carga','empleados','empleadosC'));
     }
 
     public function create(Request $request){

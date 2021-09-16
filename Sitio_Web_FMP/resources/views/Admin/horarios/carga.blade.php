@@ -48,7 +48,7 @@
                         <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
                             id="jefe" name="jefe">
                             <option value="" selected>Seleccione</option>
-                            @foreach ($empleados as $i)
+                            @foreach ($empleadosC as $i)
                                 <option value="{!!$i->id!!}">{!!$i->nombre.' '.$i->apellido!!}</option>
                             @endforeach
                         </select>
@@ -172,14 +172,14 @@
                     <tr>
                         <td>{!!$i!!}</td>
                         <th><span class="co-name">{!!$item->nombre_carga!!}</span></th>
-                        <th>{!!$item->nombre!!}</th>
+                        <th>Sin Jefe</th>
                         <td class="align-middle font-16">{!! !$item->estado?'<span class="badge badge-danger">Desactivado</span> ' :
                             '<span class="badge badge-success">Activado</span> ' !!}</td>
                         <td class="align-middle ">
                             <div class="row">
                                 <div class="col text-center">
                                     <div class="btn-group" role="group">
-                                        <button title="Editar Carga" class="btn btn-outline-primary btn-sm rounded"  onclick="editarCarga({!!$item->id!!})"
+                                        <button title="Editar Carga {!!$item->id!!}" class="btn btn-outline-primary btn-sm rounded"  onclick="editarCarga({!!$item->id!!})"
                                         data-toggle="modal" data-target="#carga"><i class="fa fa-edit font-16" aria-hidden="true"></i>
                                         </button>
                                         <button title="{!! !$item->estado?'Activar' : 'Desactivar' !!}" 
@@ -188,6 +188,39 @@
                                             data-toggle="modal" data-target="#modalAlta" 
                                             onclick="$('#activarId').val({!!$item->id!!});">
                                             {!! !$item->estado?'<i class="mdi mdi-arrow-up-bold font-18"></i>':
+                                                               '<i class="mdi mdi-arrow-down-bold font-18"></i>'!!}
+                                        </button>   
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                   
+                    </tr>
+                        
+                    @endforeach
+                    @foreach ($empleados as $ix)
+                    @php
+                        $i++;
+                    @endphp
+                    <tr>
+                        <td>{!!$i!!}</td>
+                        <th><span class="co-name">{!!$ix->nombre_carga!!}</span></th>
+                        <th>{!!$ix->nombre!!}</th>
+                        <td class="align-middle font-16">{!! !$ix->estado?'<span class="badge badge-danger">Desactivado</span> ' :
+                            '<span class="badge badge-success">Activado</span> ' !!}</td>
+                        <td class="align-middle ">
+                            <div class="row">
+                                <div class="col text-center">
+                                    <div class="btn-group" role="group">
+                                        <button title="Editar Carga {!!$ix->id!!}" class="btn btn-outline-primary btn-sm rounded"  onclick="editarCargajefe({!!$ix->id!!})"
+                                        data-toggle="modal" data-target="#carga"><i class="fa fa-edit font-16" aria-hidden="true"></i>
+                                        </button>
+                                        <button title="{!! !$ix->estado?'Activar' : 'Desactivar' !!}" 
+                                            class="btn btn-outline-primary btn-sm mx-1 rounded 
+                                                {!! $ix->estado?'btn-outline-danger' : 'btn-outline-success' !!}" 
+                                            data-toggle="modal" data-target="#modalAlta" 
+                                            onclick="$('#activarId').val({!!$ix->id!!});">
+                                            {!! !$ix->estado?'<i class="mdi mdi-arrow-up-bold font-18"></i>':
                                                                '<i class="mdi mdi-arrow-down-bold font-18"></i>'!!}
                                         </button>   
                                     </div>
@@ -223,6 +256,10 @@
         $json = {!!json_encode($carga)!!}.find(x => x.id==id);
         editar($json);
         }
+    function editarCargajefe(id){
+        $json = {!!json_encode($empleados)!!}.find(x => x.id==id);
+        editar($json);
+    }
 </script>
 
 <script src="{{ asset('js/scripts/data-table.js') }}" defer></script>
