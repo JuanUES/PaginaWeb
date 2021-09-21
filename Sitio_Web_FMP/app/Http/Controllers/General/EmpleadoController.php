@@ -79,6 +79,17 @@ class EmpleadoController extends Controller
         ->findOrFail($id)->toJSON();
     }
 
+    public function empleadoEstado(Request $request){
+        $u = Empleado::findOrFail($request->_id);
+        $u -> estado = !$u -> estado;
+        $estado = $u -> save();
+        if ($estado) {
+            return response()->json(['mensaje'=>'Modificacion exitosa']);
+        }else{
+            return response()->json(['error'=>'Error']);
+        }
+    }
+
     public function categoriaStore(Request $request){
         $validator = Validator::make($request->all(),[
             'categoria' => 'required|min:2',

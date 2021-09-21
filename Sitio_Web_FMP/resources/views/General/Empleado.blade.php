@@ -34,7 +34,7 @@
                             <label for="fileE">
                                 <img  class="border rounded img-fluid" id="fotoE" >
                             </label>
-                            <label for="fileE" class="centrado"><i class="mdi mdi-mouse font-20"></i> Click para subir foto</label>
+                            <label for="fileE" class="centrado text-black"><i class="mdi mdi-mouse font-20"></i> Click para subir foto</label>
                             <input type="file" id="fileE" accept="image/*">
                         </div>
                     </div>
@@ -284,6 +284,57 @@
 </div>
 <!--fin modal de registro-->
 
+<!--modal para dar alta-->
+<div id="modalAlta" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" 
+    aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myCenterModalLabel">
+                    <i class="mdi mdi-arrow-up-bold  mdi-24px" style="margin: none; padding: none;"></i>
+                    <i class="mdi-arrow-down-bold mdi mdi-24px" style="margin: 0px;"></i> Dar Baja/Alta</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <form action="{{ route('empEstado') }}" method="POST" id="altaBajaForm">
+                @csrf
+                <div class="modal-body">
+                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
+                        role="alert" style="display:none" id="notificacion1">
+                    </div>
+                    <input type="hidden" name="_id" id="activarId">
+                    <div class="row py-3">
+                        <div class="col-xl-2 fa fa-exclamation-triangle text-warning fa-4x mr-1"></div>
+                        <div class="col-xl-9 text-black"> 
+                            <h4 class="font-17 text-justify font-weight-bold">
+                                Advertencia: Se dara de alta/baja este usuario, ¿Desea continuar?
+                            </h4>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-xl-6 p-1">
+                            <button  type="button" onclick="submitForm('#altaBajaForm','#notificacion1')"
+                                class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
+                                <i class="mdi mdi-check mdi-16px"></i>
+                                Si
+                            </button>
+                        </div>
+                        <div class="col-xl-6 p-1">
+                            <button type="reset" 
+                                class="btn btn-light p-1 waves-light waves-effect btn-block font-24" 
+                                data-dismiss="modal" >
+                                <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--Modal para dar alta fin-->
+
 <div class="row">
     <div class="col-xl-12">
         <div class="page-title-box">
@@ -354,12 +405,11 @@
                         <div class="row">
                             <div class="col text-center">
                                 <div class="btn-group" role="group">
-                                    <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="editar({{$item->id}})">
+                                    <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="editar({{$item->id}},this)">
                                         <i class="fa fa-edit font-16" aria-hidden="true"></i>
                                     </button>
-                                    <button title="{!! !$item->estado ? 'Activar' : 'Desactivar' !!}"
-                                        class="btn btn-outline-primary btn-sm mx-1 rounded {!! $item->estado?'btn-outline-danger' : 'btn-outline-success' !!}"
-                                        data-toggle="modal" data-target="#modalAlta">
+                                    <button title="{!! !$item->estado ? 'Activar' : 'Desactivar' !!}" onclick="AltaBaja({{$item->id}})"
+                                        class="btn btn-outline-primary btn-sm mx-1 rounded {!! $item->estado?'btn-outline-danger' : 'btn-outline-success' !!}">
                                         {!! !$item->estado ? '<i class="mdi  mdi mdi-arrow-up-bold   font-18"></i>'
                                                             :'<i class="mdi  mdi mdi-arrow-down-bold font-18"></i>'!!}
                                     </button>
@@ -381,20 +431,20 @@
 
 @section('plugins')
 <style>
-#fileE{
-  display: none;
-}
-.contenedor{
-    position: relative;
-    display: inline-block;
-    text-align: center;
-}
-.centrado{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
+    #fileE{
+    display: none;
+    }
+    .contenedor{
+        position: relative;
+        display: inline-block;
+        text-align: center;
+    }
+    .centrado{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 </style>
 @endsection
 
@@ -414,6 +464,10 @@
     function eliminarCat(id){
         $('#idCat').val(id);
         $('#notificacionEliminar').show();
+    }
+    function AltaBaja(id){
+      $("#activarId").val(id);
+      $("#modalAlta").modal();
     }
     function cargarCategoria(){
         $.get('Empleado/Categoria',function(json){
@@ -534,9 +588,13 @@
             $('.modal').scrollTop(0);
         });
     }
-    function editar(id){
+    function editar(id,boton){
+        $(boton).prop('disabled', true).html(''
+                +'<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
+        );
         $.get('Empleado/'+id,
             function(json){
+                console.log(json);
                 $('#nombreE').val();
                 $('#apellidoE').val();
                 $('#duiE').val();
@@ -549,6 +607,9 @@
                 $('#tipo_empleadoE').val();
                 $('#jefe_empleadoE').val();
             }
+        );
+        $(boton).prop('disabled', false).html(''
+                +'<i class="fa fa-edit font-16" aria-hidden="true"></i>'
         );
     }
 </script>

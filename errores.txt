@@ -1,0 +1,33 @@
+ ERROR-> SQLSTATE[HY000] [2002] No se puede establecer una conexin ya que el equipo de destino deneg expresamente dicha conexin.
+ 	 (SQL: SHOW FULL TABLES WHERE table_type = 'BASE TABLE')
+ SOLUCION -> CONFIGURAR CORRECTAMENTE EL ARCHIVO ".env"
+--------------------------------------------------------------------------------------------------------------------------------------------
+ ERROR-> could not find driver (SQL: select tablename from pg_catalog.pg_tables where schemaname in ('public'))
+ SOLUCION -> DESCOMENTARIAR LOS DRIVER PARA POSTGREE EN "php.ini"
+--------------------------------------------------------------------------------------------------------------------------------------------
+ ERROR-> SQLSTATE[08006] [7] SCRAM authentication requires libpq version 10 or above (SQL: select tablename from pg_catalog.pg_tables where schemaname in ('public'))
+ SOLUCION -> 
+ 		 - MODIFICAR LAS LINEAS DEL ARCHIVO "postgresql.conf" => "password_encryption = md5"
+	     - MODIFICAR LAS LINEAS DEL ARCHIVO "pg_hba.conf"     => "METHOD = md5"
+	     - RENICIAR "PostgreSQL", Y LUEGO CREAR UN NUEVO USUARIO PARA NUESTRO PROYECTO
+--------------------------------------------------------------------------------------------------------------------------------------------
+ ERROR->
+ SOLUCION ->
+--------------------------------------------------------------------------------------------------------------------------------------------
+ ERROR->
+ SOLUCION ->
+--------------------------------------------------------------------------------------------------------------------------------------------
+ ERROR->
+ SOLUCION ->
+--------------------------------------------------------------------------------------------------------------------------------------------
+ ERROR->
+ SOLUCION ->
+--------------------------------------------------------------------------------------------------------------------------------------------
+ ERROR->
+ SOLUCION ->
+--------------------------------------------------------------------------------------------------------------------------------------------
+ ERROR->
+ SOLUCION ->
+--------------------------------------------------------------------------------------------------------------------------------------------
+ ERROR->
+ SOLUCION ->

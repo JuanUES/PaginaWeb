@@ -14,8 +14,9 @@ Route::group(['middleware' => ['role:super-admin','auth']], function () {
 
     /**Metodos Post */
     Route::post('admin/Empleado/Registrar', [EmpleadoController::class, 'store'])->name('EmpleadoReg');
-
     Route::post('admin/Empleado/Categoria/Registrar',[EmpleadoController::class, 'categoriaStore'])->name('empleadoCatReg');
     Route::post('admin/Empleado/Categoria/Borrar',[EmpleadoController::class, 'categoriaDestroy'])->name('empleadoCatDest');
+    Route::post('admin/Empleado/DarAltaBaja', [EmpleadoController::class, 'empleadoEstado'])->name('empEstado');
+
 
 });
