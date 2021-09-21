@@ -34,9 +34,14 @@ class EmpleadoController extends Controller
     }
 
     public function store (Request $request){
-
+        //asset('/'); -> localhost:8000/
+        
+        $path = public_path() . '/images/noticias';
+        $foto = $request->file('imagen'); 
+        echo dd($path.'---'.$foto);
 
         $validator = Validator::make($request->all(),[
+            'foto' => 'required',
             'nombre' => 'required|max:25',
             'apellido' => 'required|max:20',
             'dui' => 'required|max:10',
@@ -53,6 +58,12 @@ class EmpleadoController extends Controller
         if($validator->fails())
         {
             return response()->json(['error'=>$validator->errors()->all()]);
+
+        }
+        $foto = $request->file('imagen'); 
+        $urlFoto ='';
+
+        if($request->foto=!null){
 
         }
 
