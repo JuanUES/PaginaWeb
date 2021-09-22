@@ -15,7 +15,7 @@
         <form id="registroForm"  action="{{ route('EmpleadoReg') }}" method="POST">
             @csrf
             <div class="modal-body">
-                <input type="hidden" id="_id" name="_id" value=""/>
+                <input type="hidden" id="idE" name="_id" value=""/>
                 <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
                     role="alert" style="display:none" id="notificacion">
                 </div>
@@ -33,9 +33,11 @@
                             <label for="fileE">Foto <code>*</code></label>
                             <label for="fileE">
                                 <img  class="border rounded img-fluid" id="fotoE" >
-                            </label>
+                            </label>                            
+                        </div>
+                        <div class="form-group">
                             <label for="fileE" class="centrado text-black"><i class="mdi mdi-mouse font-20"></i> Click para subir foto</label>
-                            <input type="file" id="fileE" accept="image/*">
+                            <input type="file" id="fileE" name="fotoE" accept="image/*">
                         </div>
                     </div>
                     <div class="col-xl-6">
@@ -121,7 +123,7 @@
                         <label for="Departamento">Tipo Empleado <code>*</code></label>
                         <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
                             id="tipo_empleadoE" name="tipo_empleado">
-                            <option name="" selected>Seleccione</option>
+                            <option name="" value="" selected>Seleccione</option>
                            <option value="Administrativo">Administrativo</option>
                            <option value="Académico">Académico</option>
                         </select>
@@ -133,7 +135,7 @@
                         <label for="Departamento">Jefes y Empleados </label>
                         <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
                             id="jefe_empleadoE" name="jefe">
-                            <option name="" selected>Seleccione</option>
+                            <option name="" value="">Seleccione</option>
                             @foreach ($empleados as $item)
                                 <option name="{!!$item->id!!}">{!!$item->nombre.' '.$item->apellido!!}</option>
                             @endforeach
@@ -454,6 +456,13 @@
 <script src="{{ asset('js/jquery.mask.js') }}" ></script>
 
 <script>
+
+    $('#modalRegistro').on('hidden.bs.modal',function(){
+        $(".alert").hide();
+        $("form").trigger("reset");
+        $(".selectpicker").val(null).trigger("change");
+    });
+
     function editarCat(id){
         $.get('Empleado/categoriaGetObjeto/'+id,function(json){
             json=JSON.parse(json);
@@ -592,20 +601,21 @@
         $(boton).prop('disabled', true).html(''
                 +'<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
         );
-        $.get('Empleado/'+id,
-            function(json){
-                console.log(json);
-                $('#nombreE').val();
-                $('#apellidoE').val();
-                $('#duiE').val();
-                $('#nitE').val();
-                $('#telE').val();
-                $('#categoriaE').val();
-                $('#tipo_contratoE').val();
-                $('#tipo_jornadaE').val();
-                $('#deptoE').val();
-                $('#tipo_empleadoE').val();
-                $('#jefe_empleadoE').val();
+        $.get('Empleado/'+id, function(json){
+                json=JSON.parse(json);
+                $("#idE").val(id);
+                $('#nombreE').val(json.nombre);
+                $('#apellidoE').val(json.apellido);
+                $('#duiE').val(json.dui);
+                $('#nitE').val(json.nit);
+                $('#telE').val(json.tel);
+                $('#categoriaE').val(json.categoria).trigger("change");
+                $('#tipo_contratoE').val(json.contrato).trigger("change");
+                $('#tipo_jornadaE').val(json.jornada).trigger("change");
+                $('#deptoE').val(json.depto).trigger("change");
+                $('#tipo_empleadoE').val(json.tipo).trigger("change");
+                $('#jefe_empleadoE').val(json.jefe).trigger("change");
+                $("#modalRegistro").modal();
             }
         );
         $(boton).prop('disabled', false).html(''

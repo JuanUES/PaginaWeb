@@ -178,6 +178,27 @@
                                 </a>
                             </li>
                             @endhasrole
+                            @hasrole('super-admin')
+                            <li class="menu-title">Licencias</li>
+                            @hasanyrole('super-admin')
+                                <li>
+                                    <a href="{{ url('admin/transparencia/marco-normativo') }}">
+                                        <i class="mdi mdi-file-document-box-multiple-outline font-18"></i>Administración Licencia Decanato</a>
+                                </li>
+                            @endhasanyrole
+                            @hasanyrole('super-admin')                                        
+                                <li>
+                                    <a href="{{ url('admin/transparencia-directorios') }}">
+                                        <i class=" mdi mdi-file-document-box-multiple-outline font-18"></i>Administración Licencia RRHH</a>
+                                </li>
+                            @endhasanyrole
+                            @hasanyrole('super-admin')
+                                <li>
+                                    <a href="{{ url('admin/transparencia/marco-presupuestario') }}">
+                                        <i class="mdi  mdi-file-document-box-outline font-18"></i>Mis Licencias</a>
+                                </li>
+                            @endhasanyrole
+                            @endhasrole
                             @hasanyrole('super-admin|Transparencia-Decano|Transparencia-Secretario|Transparencia-Presupuestario')
                             <li class="menu-title">Transparencia</li>
                                 <li>

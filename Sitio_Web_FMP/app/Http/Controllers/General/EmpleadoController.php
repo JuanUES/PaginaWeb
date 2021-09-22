@@ -34,14 +34,10 @@ class EmpleadoController extends Controller
     }
 
     public function store (Request $request){
-        //asset('/'); -> localhost:8000/
         
-        $path = public_path() . '/images/noticias';
-        $foto = $request->file('imagen'); 
-        echo dd($path.'---'.$foto);
 
         $validator = Validator::make($request->all(),[
-            'foto' => 'required',
+            'fotoE' => 'required',
             'nombre' => 'required|max:25',
             'apellido' => 'required|max:20',
             'dui' => 'required|max:10',
@@ -60,16 +56,12 @@ class EmpleadoController extends Controller
             return response()->json(['error'=>$validator->errors()->all()]);
 
         }
-        $foto = $request->file('imagen'); 
-        $urlFoto ='';
+        $foto = $request->file('fotoE'); 
+        //Nuevo registro
 
-        if($request->foto=!null){
-
-        }
-
-        $empleado = Empleado::updateOrCreate([
-            'id'=>$request->_id,
-            'nombre'=>$request->nombre,
+        $empleado = Empleado::updateOrCreate(
+            ['id'=>$request->_id],
+            ['nombre'=>$request->nombre,
             'apellido'=>$request->apellido,
             'dui'=>$request->dui,
             'nit'=>$request->nit,
@@ -78,10 +70,20 @@ class EmpleadoController extends Controller
             'id_tipo_contrato'=>$request->tipo_contrato,
             'id_tipo_jornada'=>$request->tipo_jornada,
             'id_depto'=>$request->departamento,
-            'tipo_empleado'=>$request->tipo_empleado,
-        ]);
+            'tipo_empleado'=>$request->tipo_empleado,]
+        );
 
-        return response()->json(['code'=>200, 'mensaje'=>'Registro exitoso','data' => $empleado], 200);
+        if($request->foto=!null){
+            $nombreUnico = uniqid().$foto->getClientOriginalName();
+            if (\Storage::disk('fotos')->exists($empleado->urlfoto))
+            {
+                \Storage::disk('fotos')->delete($empleado->urlfoto);
+            }
+            \Storage::disk('fotos')->put($nombreUnico,  \File::get($foto));
+            $empleado->urlfoto = $nombreUnico;
+            $empleado->save();
+        }
+ 
     }
 
     public function empleado($id){
