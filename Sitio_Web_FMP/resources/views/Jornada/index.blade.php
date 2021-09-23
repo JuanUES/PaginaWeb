@@ -93,20 +93,20 @@
                             <span class="badge badge-{{ $color }}">{{ Str::ucfirst($item->procedimiento) }}</span>
                         </td>
                         <td class="text-center">
-                            <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-outline-success btn-sm" onclick="fnDetalleJornada(this);"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i></button>
-                            <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
+                            <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-outline-success btn-sm" onclick="fnDetalleJornada(this);" title="Detalle"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i></button>
+                            <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)" title="Seguimiento"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
 
                             @if (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano'))
                                 @if($item->procedimiento=='enviado a recursos humanos' || $item->procedimiento=='aceptado')
-                                    <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
+                                    <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}" title="Editar">><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
                                 @endif
                             @elseif(@Auth::user()->hasRole('Jefe-Departamento') || @Auth::user()->hasRole('Jefe-Academico'))
                                 @if($item->procedimiento=='enviado a jefatura' || $item->procedimiento=='recursos humanos lo ha regresado a jefatura')
-                                    <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
+                                    <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}" title="Editar"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
                                 @endif
                             @elseif(@Auth::user()->hasRole('Docente'))
                                 @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
-                                    <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
+                                    <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}" title="Editar"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
                                 @endif
                             @endif
                         </td>

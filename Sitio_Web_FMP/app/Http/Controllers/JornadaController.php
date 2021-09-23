@@ -12,6 +12,7 @@ use App\Models\Tipo_Jornada;
 use App\Models\User;
 use App\Models\General\Empleado;
 use App\Models\Horarios\Departamento;
+use App\Models\Horarios\Horarios;
 use App\Models\Jornada\Seguimiento;
 use App\Models\Notificaciones;
 use DateTime;
@@ -225,7 +226,7 @@ class JornadaController extends Controller{
             $jornadas[$key]['dia'] = $value->dia;
             $jornadas[$key]['hora_inicio'] = $value->hora_inicio;
             $jornadas[$key]['hora_fin'] = $value->hora_fin;
-            $jornadas[$key]['jornada'] = intval($dateInterval->format('%H'));
+            $jornadas[$key]['jornada'] = $dateInterval->format('%H:%I');
         }
         $seguimiento = $jornada->seguimiento;
 
@@ -398,6 +399,29 @@ class JornadaController extends Controller{
             unset($estados[5], $estados[4], $estados[3], $estados[2]);
         }
         return $estados;
+    }
+
+    public function fnCargaSegunEmpleado($id){
+        $user = Auth::user();
+        $query = Horarios::join('horas','horarios.id_hora','horas.id')
+        ->join('materias','horarios.id_materia','materias.id')
+        ->join('empleado','horarios.id_empleado','empleado.id')
+        ->select ('horarios.id_empleado','horarios.dias as dias','materias.nombre_materia as nombre_materia','horas.inicio as inicio','horas.fin as fin');
+        
+        if ($user->hasRole('Docente')) {
+            $empleado = $user->empleado_rf;
+            $query->where('horarios.id_empleado', $empleado->id)
+                  ->orderby('horarios.dias');
+        }else if ($user->hasRole('Jefe-Academico') ) { 
+            $query->where('horarios.id_empleado', $id)
+                ->orderby('horarios.dias');
+        } else if ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano')) {
+            $query->where('horarios.id_empleado', $id)
+                ->orderby('horarios.dias');
+        } 
+        
+        $horarios = $query->get();
+        return $horarios;
     }
 
 }

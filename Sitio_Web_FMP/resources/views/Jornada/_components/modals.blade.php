@@ -224,6 +224,22 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row" id="horario-div">
+                            <div class="col-12">
+                                <h5 class="mb-3">Carga Academica</h5>
+                                <table class="table table-hover table-sm" id="tableViewH">
+                                    <thead>
+                                        <th>Dia</th>
+                                        <th>Materia</th>
+                                        <th>Inicio</th>
+                                        <th>Fin</th>
+                                    </thead>
+                                    <tbody id="bodyViewH">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
                         <div class="row" id="jornada-div">
                             <div class="col-12">
                                 <h5 class="mb-3">Detalle de la Jornada

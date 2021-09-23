@@ -30,17 +30,50 @@ function updateHour(cell) {
     var alert = '';
     let row = cell.getRow();
     let data = cell.getData();
-    let inicio = (isNaN(parseInt(data.hora_inicio))) ? 0 : parseInt(data.hora_inicio);
-    let fin = (isNaN(parseInt(data.hora_fin))) ? 0 : parseInt(data.hora_fin);
-
-    let resul = ((parseInt(fin) - parseInt(inicio) < 0  || inicio<=0 ) ) ? 0 : (parseInt(fin) - parseInt(inicio));
+    let inicio = data.hora_inicio;
+    let fin = data.hora_fin;
+    let resul = CalcularHoras(inicio,fin);
 
     row.update({ 'jornada': resul });
-    let hoursTotal = fnHoras();
+    
     let valor = $("#auxJornada").val();
-    let total = parseInt(valor) - parseInt(hoursTotal);
+    let hoursTotal = fnHoras();
+
+    let total = CalcularHoras(hoursTotal,valor);
+    validateHoras(valor, total);
+    console.log('T ' + total);
     $("#_horas").val('' + total);
 
+    //Valores de Carga Academica
+    let id = $("#id_emp").val();
+    let datas = getData('GET', `/admin/jornada/detalleCarga/`+id);
+        datas.then(function(response){
+            $(response).each(function (index, element) {
+                if(element.dias == data.dia){
+                    console.log(element.dias + ' ----- '+data.dia);
+                    if(parseInt(inicio) >= parseInt(element.inicio)){
+                        console.log(inicio + ' ----- '+ element.inicio);
+
+                        //No salen alertas de comparacion entre carga academica y jornada
+                        alert += `<div class="alert alert-danger mt-3" role="alert">
+                            <div class="alert-message">
+                            <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Horas no permitida, la hora de entrada no puede ser mayor a la hora de inicio de clase
+                            </div>
+                        </div>`;
+                        row.update({ 'hora_inicio': null });
+                    }else{
+                        if(parseInt(fin) < parseInt(element.fin) ){
+                            alert += `<div class="alert alert-danger mt-3" role="alert">
+                                    <div class="alert-message">
+                                        <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Horas no permitida, la hora de salida no puede ser menor a la hora de finalizacion de clase
+                                    </div>
+                                </div>`;
+                            row.update({ 'hora_fin': null });
+                        }
+                    }
+                }        
+            });                
+        });
 
     //para validar el horario segun horario de carga academica
     if (parseInt(inicio) > 0 && parseInt(fin) > 0){
@@ -52,7 +85,7 @@ function updateHour(cell) {
                         </div>`;
             row.update({ 'hora_inicio': null });
             row.update({ 'hora_fin': null });
-        } else if (!Boolean((data.dia).trim())) {//para validar que este selecciona un Dia por fila
+        }else if (!Boolean((data.dia).trim())) {//para validar que este selecciona un Dia por fila
             alert += `<div class="alert alert-danger mt-3" role="alert">
                             <div class="alert-message">
                                 <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Seleccione un dia para continuar con el registro
@@ -88,11 +121,30 @@ function updateHour(cell) {
 function fnHoras() {
     let dataColumn = table.getColumn('jornada');
     let hourRow = 0;
+    let minuteRow = 0;
+
     $.each(dataColumn.getCells(), function (indexInArray, valueOfElement) {
-        hourRow = parseInt(hourRow) + parseInt(valueOfElement._cell.value);
+        let cellVall = valueOfElement._cell.value;
+        let fieldCell = cellVall.split(':');
+        let HourCell = isNaN(parseFloat(fieldCell[0])) ? 0 : parseFloat(fieldCell[0]); let MinuteCell = isNaN(parseFloat(fieldCell[1])) ? 0 : parseFloat(fieldCell[1]);
+        var horas_Cell = HourCell * 3600; var minutos_Cell = MinuteCell * 60; var segundosC = minutos_Cell + horas_Cell;
+        var hoursCe = Math.floor( segundosC / 3600 ); var minutesCe = Math.floor( (segundosC % 3600) / 60 );
+        
+        //Anteponiendo un 0 a los minutos y horas si son menos de 10 
+        minutesCe = minutesCe < 10 ? '0' + minutesCe : minutesCe;
+        hoursCe = hoursCe < 10 ? '0' + hoursCe : hoursCe;
+
+        hourRow += parseInt(hoursCe);
+        minuteRow += parseInt(minutesCe);
+        console.log('Hora row' + hoursCe + ":" + minutesCe);
     });
-    hourRow = isNaN(hourRow) ? 0 : hourRow;
-    return hourRow;
+    hourRow = hourRow;
+    minuteRow = minuteRow;
+    console.log('Hora AA ' + hourRow + ':' + minuteRow);
+
+    let timeT =hourRow + ':' + minuteRow;
+
+    return timeT;
 }
 
 //funcion para gregar una nueva fila
@@ -129,10 +181,10 @@ var dateEditor = function (cell, onRendered, success, cancel) {
 
             if(input.value!==''){
                 let alert = '';
-                if (parseInt(input.value) >= 18) {
+                /*if (parseInt(input.value) >= 18) {
                     alert += `<div class="alert alert-danger mt-3" role="alert">
                             <div class="alert-message">
-                                <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Ingrese un Hora enferior a las <strong>18:00</strong>
+                                <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Ingrese un Hora inferior a las <strong>18:00</strong>
                             </div>
                         </div>`;
 
@@ -144,9 +196,9 @@ var dateEditor = function (cell, onRendered, success, cancel) {
                             </div>
                         </div>`;
                     cancel();
-                } else {
+                } else {*/
                     success(moment(input.value, "HH:mm").format("HH:mm"));
-                }
+               // }
                 $("#days-table").after(alert);
             }
         } else {
@@ -183,7 +235,7 @@ var table = new Tabulator("#days-table", {
     columns: [//define the table columns
         // { title: "", field: "id" },
         { title: "", field: "option", formatter: btn, cellClick: btncallback },
-        { title: "Dia", field: "dia", editor: "select", validator: ["required", "unique"], editorParams: { values: ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"] }, cellEdited: updateHour},
+        { title: "Dia", field: "dia", editor: "select", validator: ["required", "unique"], editorParams: { values: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"] }, cellEdited: updateHour},
         { title: "Entrada", field: "hora_inicio", hozAlign: "center", sorter: "time", editor: dateEditor,cellEdited: updateHour},
         { title: "Salida", field: "hora_fin", hozAlign: "center", sorter: "time", editor: dateEditor, cellEdited: updateHour},
         { title: "Jornada", field: "jornada", editor: false, validator: "numeric"},
@@ -192,9 +244,10 @@ var table = new Tabulator("#days-table", {
 
 
 function updateJornada() {
-    let hoursTotal = fnHoras();
     let valor = $("#auxJornada").val();
-    let total = parseInt(valor) - parseInt(hoursTotal);
+    let hoursTotal = fnHoras();
+    let total = CalcularHoras(hoursTotal,valor);
+    console.log('anted de validar '+ total);
     validateHoras(valor, total);
     return total;
 }
@@ -227,8 +280,79 @@ function validateHoras(valor, total){
 function updateChangeTable(){
     let total = $(".total-horas").val();
     let updatehours = updateJornada();
-    $("#_horas").val(updatehours);
+    console.log('anted de updateChangeTable '+updatehours);
+
+    $("#_horas").val(updatehours  + ':00');
     validateHoras(total, updatehours);
+}
+
+function CalcularHoras(inicio, fin) {
+    //fin
+    let hoursF = fin;
+    let fieldF = hoursF.split(':');
+    let HourF = isNaN(parseFloat(fieldF[0])) ? 0 : parseFloat(fieldF[0]); let MinuteF = isNaN(parseFloat(fieldF[1])) ? 0 : parseFloat(fieldF[1]);
+    var horas_F = HourF * 3600; var minutos_F = MinuteF * 60; var segundosF = minutos_F + horas_F;
+    var hoursFi = Math.floor( segundosF / 3600 ); var minutesFi = Math.floor( (segundosF % 3600) / 60 );
+    
+    //Anteponiendo un 0 a los minutos y horas si son menos de 10 
+    hoursFi = hoursFi < 10 ? '0' + hoursFi : hoursFi;
+    minutesFi = minutesFi < 10 ? '0' + minutesFi : minutesFi;
+    console.log('valor (FIN) ' + hoursFi + ":" + minutesFi);
+
+    //inicio
+    let hoursI = inicio;
+    let fieldI = hoursI.toString().split(':');
+    console.log('Horas Tot (INICIO) ' + hoursI);
+
+    let HourI = isNaN(parseFloat(fieldI[0])) ? 0 : parseFloat(fieldI[0]); let MinuteI = isNaN(parseFloat(fieldI[1])) ? 0 : parseFloat(fieldI[1]);
+    var horas_I = HourI * 3600; var minutos_I = MinuteI * 60; var segundosI = minutos_I + horas_I;
+    var hoursIn = Math.floor( segundosI / 3600 ); var minutesIn = Math.floor( (segundosI % 3600) / 60 );
+    
+    //Anteponiendo un 0 a los minutos y horas si son menos de 10 
+    hoursIn = hoursIn < 10 ? '0' + hoursIn : hoursIn;
+    minutesIn = minutesIn < 10 ? '0' + minutesIn : minutesIn;
+    console.log('Total CalcularHoras' +hoursIn + ":" + minutesIn);
+
+    var diffMTotal = 0;
+    var diffHTotal = 0;
+
+    if(minutesIn > minutesFi ){
+        console.log(minutesIn + ' '+ minutesFi);
+        diffMTotal = 60 - parseInt(minutesIn);
+        diffHTotal = -1;
+        if(parseInt(diffMTotal) < 10){
+            diffMTotal = '0' + diffMTotal;
+        }
+    }else if(parseInt(minutesFi) - parseInt(minutesIn) < 10){
+        diffMTotal = '0' + ( parseInt(minutesFi) - parseInt(minutesIn));
+    } else{
+        diffMTotal = parseInt(minutesFi) - parseInt(minutesIn);
+    }
+
+    if(parseInt(hoursIn) > parseInt(hoursFi)){
+        console.log('condicicon 0 ' + hoursIn + ' '+ hoursIn);
+        diffHTotal = parseInt(hoursIn);
+
+        //diffHTotal = ('-'+parseInt(hoursIn) );
+    } else 
+    if(parseInt(hoursFi) - parseInt(hoursIn) < 10){
+        console.log('condicicon < 10 ' + hoursIn + ' '+ hoursIn);
+
+        if(parseInt(diffHTotal) == -1 ){
+            diffHTotal = parseInt(0) + ( parseInt(diffHTotal) + ( parseInt(hoursFi) - (parseInt(hoursIn) ) ));
+        }else{
+            diffHTotal = '0' + ( parseInt(diffHTotal) + ( parseInt(hoursFi) - (parseInt(hoursIn) ) ));
+        }
+    } else{
+        console.log('condicicon ' + hoursIn + ' '+ hoursIn);
+        diffHTotal = parseInt(diffHTotal) + ( parseInt(hoursFi) - (parseInt(hoursIn)));
+    }    
+
+    console.log('_horas CalcularHoras'+ diffHTotal + ':' + diffMTotal);
+    let total  = ((parseInt(hoursF) - parseInt(hoursI) < 0  ||  parseInt(hoursI)<=0 ) ) ? ( parseInt(hoursF) - parseInt(hoursI) ) : ( diffHTotal + ':' + diffMTotal);
+    console.log('To CalcularHoras'+ total);
+
+    return total;
 }
 
 jQuery.validator.addMethod("notEqual", function (value, element, param) {
@@ -466,7 +590,7 @@ $("#id_emp").on('change', function () {//para cargar el total de horas por emple
         $("#jornada-div :input").prop("disabled", false);
         let data = getData('GET', `/admin/jornada/jornadaEmpleado/`+id,'#notificacion_jornada');
         data.then(function(response){
-            $(".total-horas").val(response.empleado.horas_semanales);
+            $(".total-horas").val(response.empleado.horas_semanales + ':00');
             updateChangeTable();
 
             if(!response.permiso){
@@ -479,11 +603,26 @@ $("#id_emp").on('change', function () {//para cargar el total de horas por emple
                     </div>`;
                 $("#jornada-div").before(alert);
             }
-
-
         });
+        $("#horario-div").prop("hidden", false);
+
+        let datas = getData('GET', `/admin/jornada/detalleCarga/`+id,'#notificacion_jornada');
+        datas.then(function(response){
+            let contenidox = '';
+            $(response).each(function (index, element) {
+                contenidox +=`<tr>
+                    <td>${element.dias}</td>
+                    <td>${element.nombre_materia}</td>
+                    <td>${element.inicio}</td>
+                    <td>${element.fin}</td>
+                </tr>`;            
+            });                
+            $("#bodyViewH").html(contenidox);
+        });
+        
     }else{
         $("#jornada-div :input").prop("disabled", true);
+        $("#horario-div").prop("hidden", true);
     }
 });
 
@@ -514,6 +653,7 @@ function fnUpdatePeriodoSelect(id, updateEmpleado = false, empleado = null, setP
         }
         if(updateEmpleado && empleado!==null){//para uctualizar el dato del empleado
             $("#id_emp").val(empleado).trigger('change');
+            //$("#id_emp").prop('disabled', 'disabled');
         }
 
         $('#id_emp').selectpicker('refresh');
@@ -546,5 +686,3 @@ function fnEditJornada(element) {
         table.replaceData(response.items);
     });
 }
-
-
