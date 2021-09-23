@@ -390,11 +390,10 @@ class JornadaController extends Controller{
 
 
 
-
-        if ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano')){
-            unset($estados[1], $estados[2], $estados[3]);
-        } else if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Departamento')){
+        if ($user->hasRole('Jefe-Academico') && $user->hasRole('super-admin')){
             unset($estados[5], $estados[4], $estados[1]);
+        } else  if ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano')){
+            unset($estados[1], $estados[2], $estados[3]);
         } else if($user->hasRole('Docente')){
             unset($estados[5], $estados[4], $estados[3], $estados[2]);
         }
