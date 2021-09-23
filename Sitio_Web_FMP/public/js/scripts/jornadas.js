@@ -138,11 +138,11 @@ function fnHoras() {
         minuteRow += parseInt(minutesCe);
         console.log('Hora row' + hoursCe + ":" + minutesCe);
     });
-    hourRow = hourRow;
-    minuteRow = minuteRow;
+    hourRow =  isNaN(hourRow) ? 0 : parseInt(hourRow);
+    minuteRow =  isNaN(minuteRow) ? 0 : parseInt(minuteRow); 
     console.log('Hora AA ' + hourRow + ':' + minuteRow);
 
-    let timeT =hourRow + ':' + minuteRow;
+    let timeT = hourRow + ':' + minuteRow;
 
     return timeT;
 }
@@ -282,7 +282,7 @@ function updateChangeTable(){
     let updatehours = updateJornada();
     console.log('anted de updateChangeTable '+updatehours);
 
-    $("#_horas").val(updatehours  + ':00');
+    $("#_horas").val(updatehours);
     validateHoras(total, updatehours);
 }
 
@@ -332,20 +332,18 @@ function CalcularHoras(inicio, fin) {
     if(parseInt(hoursIn) > parseInt(hoursFi)){
         console.log('condicicon 0 ' + hoursIn + ' '+ hoursIn);
         diffHTotal = parseInt(hoursIn);
-
-        //diffHTotal = ('-'+parseInt(hoursIn) );
     } else 
     if(parseInt(hoursFi) - parseInt(hoursIn) < 10){
         console.log('condicicon < 10 ' + hoursIn + ' '+ hoursIn);
 
         if(parseInt(diffHTotal) == -1 ){
-            diffHTotal = parseInt(0) + ( parseInt(diffHTotal) + ( parseInt(hoursFi) - (parseInt(hoursIn) ) ));
+            diffHTotal = parseInt(0) + ( parseInt(diffHTotal) + parseInt(hoursFi) -  (parseInt(hoursIn) ) );
         }else{
-            diffHTotal = '0' + ( parseInt(diffHTotal) + ( parseInt(hoursFi) - (parseInt(hoursIn) ) ));
+            diffHTotal = '0' + ( parseInt(diffHTotal) + (parseInt(hoursFi) - parseInt(hoursIn) ));
         }
     } else{
         console.log('condicicon ' + hoursIn + ' '+ hoursIn);
-        diffHTotal = parseInt(diffHTotal) + ( parseInt(hoursFi) - (parseInt(hoursIn)));
+        diffHTotal =  parseInt(diffHTotal) + ( parseInt(hoursFi) - (parseInt(hoursIn)));
     }    
 
     console.log('_horas CalcularHoras'+ diffHTotal + ':' + diffMTotal);
