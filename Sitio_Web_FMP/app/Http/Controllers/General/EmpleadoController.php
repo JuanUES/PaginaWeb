@@ -9,7 +9,7 @@ use App\Models\General\Empleado;
 use App\Models\General\CategoriaEmpleado;
 use App\Models\Horarios\Departamento;
 use Illuminate\Support\Facades\Validator;
-
+use File;
 class EmpleadoController extends Controller
 {
     function index(){
@@ -19,8 +19,8 @@ class EmpleadoController extends Controller
         $tcontrato=Tipo_Contrato::get();
         $tjornada=Tipo_Jornada::get();
 
-        $empleados = Empleado::
-          join('categoria_empleados','categoria_empleados.id','=','empleado.categoria')
+        $empleados = Empleado::orderBy('id')
+        ->join('categoria_empleados','categoria_empleados.id','=','empleado.categoria')
         ->join('tipo_contrato','tipo_contrato.id','=','empleado.id_tipo_contrato')
         ->join('tipo_jornada','tipo_jornada.id','=','empleado.id_tipo_jornada')
         ->join('departamentos','departamentos.id','=','empleado.id_depto')
@@ -29,15 +29,15 @@ class EmpleadoController extends Controller
         ->get();
 
         //$jefesEmpleados = Empleado::join 
-
-        return view('General.Empleado',compact('empleados','departamentos','tjornada','tcontrato','categorias'));
+        
+        return view('General.Empleado',compact(
+            'empleados','departamentos','tjornada','tcontrato','categorias'));
     }
 
     public function store (Request $request){
         
 
         $validator = Validator::make($request->all(),[
-            'fotoE' => 'required',
             'nombre' => 'required|max:25',
             'apellido' => 'required|max:20',
             'dui' => 'required|max:10',
@@ -72,24 +72,30 @@ class EmpleadoController extends Controller
             'id_depto'=>$request->departamento,
             'tipo_empleado'=>$request->tipo_empleado,]
         );
-
-        if($request->foto=!null){
-            $nombreUnico = uniqid().$foto->getClientOriginalName();
-            if (\Storage::disk('fotos')->exists($empleado->urlfoto))
-            {
-                \Storage::disk('fotos')->delete($empleado->urlfoto);
-            }
-            \Storage::disk('fotos')->put($nombreUnico,  \File::get($foto));
+    
+        if($request->fotoE=!null){
+            $ruta=public_path() . '/images/fotos';
+            $nombreUnico = uniqid().$request->file('fotoE')->getClientOriginalName();
+            File::delete($ruta.'/'.$empleado->urlfoto);
+            $request->file('fotoE')->move($ruta,$nombreUnico);
             $empleado->urlfoto = $nombreUnico;
             $empleado->save();
         }
+
+        return $request->_id != null ?
+        response()->json(['mensaje'=>'Modificación exitosa.']):
+        response()->json(['mensaje'=>'Registro exitoso.']);
  
     }
 
     public function empleado($id){
-        return Empleado::select('nombre','apellido','dui','nit','telefono as tel','urlfoto','tipo_empleado as tipo','jefe',
+        $e = Empleado::select('nombre','apellido','dui','nit','telefono as tel',
+        'urlfoto','tipo_empleado as tipo','jefe',
         'id_depto as depto','categoria','id_tipo_jornada as jornada','id_tipo_contrato as contrato')
-        ->findOrFail($id)->toJSON();
+        ->findOrFail($id);
+        if($e->urlfoto!=null)
+            $e->urlfoto = asset('/images/fotos/'.$e->urlfoto);
+        return $e->toJSON();
     }
 
     public function empleadoEstado(Request $request){

@@ -456,6 +456,32 @@
 <script src="{{ asset('js/jquery.mask.js') }}" ></script>
 
 <script>
+    const ancho = 370;
+    const alto = 285;
+    // Obtener referencia al input y a la imagen
+    const $fileE = document.querySelector("#fileE"),
+    $fotoE = document.querySelector("#fotoE");
+    
+    $('#fotoE').width(ancho); 
+    $('#fotoE').height(alto);
+    // Escuchar cuando cambie
+    $fileE.addEventListener("change", () => {
+        // Los archivos seleccionados, pueden ser muchos o uno
+        const archivos = $fileE.files;
+        // Si no hay archivos salimos de la función y quitamos la imagen
+        if (!archivos || !archivos.length) {
+            $fotoE.src = "";
+            return;
+        }
+        // Ahora tomamos el primer archivo, el cual vamos a previsualizar
+        const primerArchivo = archivos[0];
+        // Lo convertimos a un objeto de tipo objectURL
+        const objectURL = URL.createObjectURL(primerArchivo);
+        // Y a la fuente de la imagen le ponemos el objectURL
+        $('#fotoE').width(ancho); // Unidades que se asumen en pixeles
+        $('#fotoE').height(alto);
+        $fotoE.src = objectURL;
+    });
 
     $('#modalRegistro').on('hidden.bs.modal',function(){
         $(".alert").hide();
@@ -615,6 +641,11 @@
                 $('#deptoE').val(json.depto).trigger("change");
                 $('#tipo_empleadoE').val(json.tipo).trigger("change");
                 $('#jefe_empleadoE').val(json.jefe).trigger("change");
+
+                $('#fotoE').width(ancho); 
+                $('#fotoE').height(alto);
+                $fotoE.src = json.urlfoto;
+
                 $("#modalRegistro").modal();
             }
         );
@@ -622,34 +653,7 @@
                 +'<i class="fa fa-edit font-16" aria-hidden="true"></i>'
         );
     }
-</script>
-
-<script>
-    // Obtener referencia al input y a la imagen
-    const $fileE = document.querySelector("#fileE"),
-    $fotoE = document.querySelector("#fotoE");
-    const ancho = 370;
-    const alto = 285;
-    $('#fotoE').width(ancho); 
-    $('#fotoE').height(alto);
-    // Escuchar cuando cambie
-    $fileE.addEventListener("change", () => {
-        // Los archivos seleccionados, pueden ser muchos o uno
-        const archivos = $fileE.files;
-        // Si no hay archivos salimos de la función y quitamos la imagen
-        if (!archivos || !archivos.length) {
-            $fotoE.src = "";
-            return;
-        }
-        // Ahora tomamos el primer archivo, el cual vamos a previsualizar
-        const primerArchivo = archivos[0];
-        // Lo convertimos a un objeto de tipo objectURL
-        const objectURL = URL.createObjectURL(primerArchivo);
-        // Y a la fuente de la imagen le ponemos el objectURL
-        $('#fotoE').width(ancho); // Unidades que se asumen en pixeles
-        $('#fotoE').height(alto);
-        $fotoE.src = objectURL;
-    });
+    
 </script>
 
 @endsection
