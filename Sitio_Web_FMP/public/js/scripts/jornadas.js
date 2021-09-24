@@ -46,34 +46,7 @@ function updateHour(cell) {
 
     //Valores de Carga Academica
     let id = $("#id_emp").val();
-    let datas = getData('GET', `/admin/jornada/detalleCarga/`+id);
-        datas.then(function(response){
-            $(response).each(function (index, element) {
-                if(element.dias == data.dia){
-                    console.log(element.dias + ' ----- '+data.dia);
-                    if(parseInt(inicio) >= parseInt(element.inicio)){
-                        console.log(inicio + ' ----- '+ element.inicio);
-
-                        //No salen alertas de comparacion entre carga academica y jornada
-                        alert += `<div class="alert alert-danger mt-3" role="alert">
-                            <div class="alert-message">
-                            <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Horas no permitida, la hora de entrada no puede ser mayor a la hora de inicio de clase
-                            </div>
-                        </div>`;
-                        row.update({ 'hora_inicio': null });
-                    }else{
-                        if(parseInt(fin) < parseInt(element.fin) ){
-                            alert += `<div class="alert alert-danger mt-3" role="alert">
-                                    <div class="alert-message">
-                                        <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Horas no permitida, la hora de salida no puede ser menor a la hora de finalizacion de clase
-                                    </div>
-                                </div>`;
-                            row.update({ 'hora_fin': null });
-                        }
-                    }
-                }        
-            });                
-        });
+    validarCarga_Jornada(id,row,data,inicio,fin);
 
     //para validar el horario segun horario de carga academica
     if (parseInt(inicio) > 0 && parseInt(fin) > 0){
@@ -115,6 +88,38 @@ function updateHour(cell) {
     // para validar el total de las horas
     validateHoras(valor, total);
     $("#days-table").after(alert);
+}
+
+function validarCarga_Jornada(id,row,data,inicio,fin) {
+    var alert = '';
+    let datas = getData('GET', `/admin/jornada/detalleCarga/`+id);
+        datas.then(function(response){
+            $(response).each(function (index, element) {
+                if(element.dias == data.dia){
+                    console.log(element.dias + ' ----- '+data.dia);
+                    if(parseInt(inicio) >= parseInt(element.inicio)){
+                        console.log(inicio + ' ----- '+ element.inicio);
+
+                        //No salen alertas de comparacion entre carga academica y jornada
+                        alert += `<div class="alert alert-danger mt-3" role="alert">
+                            <div class="alert-message">
+                            <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Horas no permitida, la hora de entrada no puede ser mayor a la hora de inicio de clase
+                            </div>
+                        </div>`;
+                        row.update({ 'hora_inicio': null });
+                    }else{
+                        if(parseInt(fin) < parseInt(element.fin) ){
+                            alert += `<div class="alert alert-danger mt-3" role="alert">
+                                    <div class="alert-message">
+                                        <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Horas no permitida, la hora de salida no puede ser menor a la hora de finalizacion de clase
+                                    </div>
+                                </div>`;
+                            row.update({ 'hora_fin': null });
+                        }
+                    }
+                }        
+            });                
+        });
 }
 
 //para calcular el total horas por fila
@@ -176,12 +181,12 @@ var dateEditor = function (cell, onRendered, success, cancel) {
         input.style.height = "100%";
     });
 
-    function onChange() {
+    /*function onChange() {
         if (input.value != cellValue) {
 
             if(input.value!==''){
                 let alert = '';
-                /*if (parseInt(input.value) >= 18) {
+                if (parseInt(input.value) >= 18) {
                     alert += `<div class="alert alert-danger mt-3" role="alert">
                             <div class="alert-message">
                                 <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Ingrese un Hora inferior a las <strong>18:00</strong>
@@ -196,15 +201,14 @@ var dateEditor = function (cell, onRendered, success, cancel) {
                             </div>
                         </div>`;
                     cancel();
-                } else {*/
-                    success(moment(input.value, "HH:mm").format("HH:mm"));
-               // }
+                } else {
+                success(moment(input.value, "HH:mm").format("HH:mm"));
                 $("#days-table").after(alert);
             }
         } else {
             cancel();
         }
-    }
+    }*/
 
     //submit new value on blur or change
     input.addEventListener("blur", onChange);
@@ -604,19 +608,7 @@ $("#id_emp").on('change', function () {//para cargar el total de horas por emple
         });
         $("#horario-div").prop("hidden", false);
 
-        let datas = getData('GET', `/admin/jornada/detalleCarga/`+id,'#notificacion_jornada');
-        datas.then(function(response){
-            let contenidox = '';
-            $(response).each(function (index, element) {
-                contenidox +=`<tr>
-                    <td>${element.dias}</td>
-                    <td>${element.nombre_materia}</td>
-                    <td>${element.inicio}</td>
-                    <td>${element.fin}</td>
-                </tr>`;            
-            });                
-            $("#bodyViewH").html(contenidox);
-        });
+        fnCargaAcademica(id);
         
     }else{
         $("#jornada-div :input").prop("disabled", true);
@@ -670,6 +662,23 @@ function fnProcedimiento(componet){
             $("#formSeguimiento #procesoSeguimiento").append('<option value="' + element.value + '">' + element.text + '</option>');
         });
         $('#formSeguimiento #procesoSeguimiento').selectpicker('refresh');
+    });
+}
+
+//Para obtener la carga academica del docente
+function fnCargaAcademica(id){
+    let datas = getData('GET', `/admin/jornada/detalleCarga/`+id,'#notificacion_jornada');
+    datas.then(function(response){
+        let contenidox = '';
+        $(response).each(function (index, element) {
+            contenidox +=`<tr>
+                <td>${element.dias}</td>
+                <td>${element.nombre_materia}</td>
+                <td>${element.inicio}</td>
+                <td>${element.fin}</td>
+            </tr>`;            
+        });                
+        $("#bodyViewH").html(contenidox);
     });
 }
 
