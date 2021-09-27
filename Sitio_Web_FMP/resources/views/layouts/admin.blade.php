@@ -163,15 +163,14 @@
                     <!--- Sidemenu -->
                     <div id="sidebar-menu">
                         <ul class="metismenu" id="side-menu">
-                            <li class="menu-title">Administración</li>
+                            <li class="menu-title"> General</li>
                             <li>
                                 <a href="{{ url('admin/') }}">
-                                    <i class="font-18 dripicons-meter"></i>
-                                    <span> Tablero </span>
+                                    <i class="font-18 mdi mdi-home-outline"></i>
+                                    <span> Inicio </span>
                                 </a>
                             </li>
                             @hasrole('super-admin')
-                            <li class="menu-title">General</li>
                             <li>
                                 <a href="{{ route('empleado') }}">
                                     <i class="font-18 dripicons-user "></i> <span> Empleados </span>
