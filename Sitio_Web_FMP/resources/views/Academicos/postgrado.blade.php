@@ -435,7 +435,7 @@
                             </blockquote>
                         </div>
                         @if (count($maestrias)>0)
-                        <h4>Maestrias</h4>
+                        <h4>Carreras</h4>
                         @endif            
                         @auth
                         <a class="btn btn-info btn-block text-white text-left  mb-2" data-toggle="modal" data-target="#myModalMaestria"><i class="dripicons-document"></i> Nuevo Registro</a>
