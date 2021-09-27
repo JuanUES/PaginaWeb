@@ -209,10 +209,12 @@
                                                 <a href="{{ url('admin/transparencia/marco-normativo') }}">Normativo</a>
                                             </li>
                                         @endhasanyrole
-                                        @hasanyrole('super-admin|Transparencia-Decano')
+                                        @hasanyrole('super-admin|Transparencia-Decano|Transparencia-Secretario')
                                             <li>
                                                 <a href="{{ url('admin/transparencia/marco-gestion') }}">De Gestión</a>
                                             </li>
+                                        @endhasanyrole
+                                        @hasanyrole('super-admin|Transparencia-Decano')
                                             <li>
                                                 <a href="{{ url('admin/transparencia-directorios') }}">Directorios</a>
                                             </li>
@@ -225,7 +227,7 @@
                                     </ul>
                                 </li>
                             @endhasanyrole
-                            @hasanyrole('super-admin|Transparencia-DecaSecretariono')
+                            @hasanyrole('super-admin|Transparencia-DecaSecretariono|Transparencia-Secretario')
                                 <li>
                                     <a href="{{ url('admin/transparencia/repositorios') }}">
                                         <i class="font-18 dripicons-graph-bar "></i> <span> Repositorios </span>
