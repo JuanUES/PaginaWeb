@@ -47,6 +47,14 @@ class UserSeeder extends Seeder
             'password' => Hash::make('secretario'),
             'estado' => true,
         ]);
+
+        $repositorio = User::create([
+            'name' => 'Repositorio',
+            'email' => 'repositorio@gmail.com',
+            'password' => Hash::make('repositorio'),
+            'estado' => true,
+        ]);
+
         $pg = User::create([
             'name' => 'Pagina Admin',
             'email' => 'Pagina@ues.edu.sv',
@@ -74,10 +82,10 @@ class UserSeeder extends Seeder
             'estado' => true,
         ]);
 
-        $jefed = User::create([
-            'name'=>'Jefe Departamento',
-            'email'=> 'jefed@ues.edu.sv',
-            'password'=>Hash::make('jefed'),
+        $jefea = User::create([
+            'name'=>'Jefe Administrativo',
+            'email'=> 'jefea@ues.edu.sv',
+            'password'=>Hash::make('jefea'),
             'estado' => true,
         ]);
         
@@ -87,11 +95,12 @@ class UserSeeder extends Seeder
         $user->assignRole('super-admin');
         $pg->assignRole('super-admin');
         $presupuestario->assignRole('Transparencia-Presupuestario');
+        $repositorio->assignRole('Transparencia-Repositorio');
         $decano->assignRole('Transparencia-Decano');
         $secretario->assignRole('Transparencia-Secretario');
         $pg->assignRole('Pagina');
         $user->assignRole('Jefe-Academico');
-        $jefed->assignRole('Jefe-Departamento');
+        $jefea->assignRole('Jefe-Administrativo');
         $rrhh->assignRole('Recurso-Humano');
         $docente->assignRole('Docente');
 

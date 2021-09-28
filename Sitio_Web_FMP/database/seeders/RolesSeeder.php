@@ -29,12 +29,13 @@ class RolesSeeder extends Seeder
         $role = Role::create(['name' => 'Transparencia-Presupuestario']);
         $role = Role::create(['name' => 'Transparencia-Secretario']);
         $role = Role::create(['name' => 'Transparencia-Decano']);
+        $role = Role::create(['name' => 'Transparencia-Repositorio']);
         $role = Role::create(['name' => 'Pagina']);
         $role = Role::create(['name' => 'super-admin']);
         $role = Role::create(['name' => 'Jefe-Academico']);
         $role = Role::create(['name' => 'Recurso-Humano']);
         $role = Role::create(['name' => 'Docente']);
-        $role = Role::create(['name' => 'Jefe-Departamento']);
+        $role = Role::create(['name' => 'Jefe-Administrativo']);
         // $role = Role::create(['name' => 'Empleado']);// Rol por default para todos los usuarios
 
         // $role->givePermissionTo('edit articles');
