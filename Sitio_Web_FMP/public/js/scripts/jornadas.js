@@ -46,10 +46,10 @@ function updateHour(cell) {
 
     //Valores de Carga Academica
     let id = $("#id_emp").val();
-    validarCarga_Jornada(id,row,data,inicio,fin);
+    //validarCarga_Jornada(id,row,data,inicio,fin);
 
     //para validar el horario segun horario de carga academica
-    if (parseInt(inicio) > 0 && parseInt(fin) > 0){
+    /*if (parseInt(inicio) > 0 && parseInt(fin) > 0){
         if(parseInt(inicio)>=parseInt(fin)){
             alert += `<div class="alert alert-danger mt-3" role="alert">
                             <div class="alert-message">
@@ -83,14 +83,14 @@ function updateHour(cell) {
                 }
             });
         }
-    }
+    } */
 
     // para validar el total de las horas
     validateHoras(valor, total);
     $("#days-table").after(alert);
 }
 
-function validarCarga_Jornada(id,row,data,inicio,fin) {
+/*function validarCarga_Jornada(id,row,data,inicio,fin) {
     var alert = '';
     let datas = getData('GET', `/admin/jornada/detalleCarga/`+id);
         datas.then(function(response){
@@ -120,7 +120,7 @@ function validarCarga_Jornada(id,row,data,inicio,fin) {
                 }        
             });                
         });
-}
+}*/
 
 //para calcular el total horas por fila
 function fnHoras() {
@@ -181,34 +181,18 @@ var dateEditor = function (cell, onRendered, success, cancel) {
         input.style.height = "100%";
     });
 
-    /*function onChange() {
+    function onChange() {
         if (input.value != cellValue) {
 
             if(input.value!==''){
                 let alert = '';
-                if (parseInt(input.value) >= 18) {
-                    alert += `<div class="alert alert-danger mt-3" role="alert">
-                            <div class="alert-message">
-                                <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Ingrese un Hora inferior a las <strong>18:00</strong>
-                            </div>
-                        </div>`;
-
-                    cancel();
-                } else if (parseInt(input.value) <= 6) {
-                    alert += `<div class="alert alert-danger mt-3" role="alert">
-                            <div class="alert-message">
-                                <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Ingrese un Hora mayor a las <strong>6:00</strong>
-                            </div>
-                        </div>`;
-                    cancel();
-                } else {
                 success(moment(input.value, "HH:mm").format("HH:mm"));
                 $("#days-table").after(alert);
             }
         } else {
             cancel();
         }
-    }*/
+    }
 
     //submit new value on blur or change
     input.addEventListener("blur", onChange);
@@ -364,6 +348,9 @@ jQuery.validator.addMethod("notEqual", function (value, element, param) {
 $("#frmJornada").validate({
     rules: {
         id_emp: {
+            required: true,
+        },
+        _idaux: {
             required: true,
         },
         id_periodo: {
@@ -582,7 +569,7 @@ $("#btnNewJornada").click(function () {
     $('#id_emp').selectpicker('refresh');
 });
 
-$("#id_emp").on('change', function () {//para cargar el total de horas por empleados
+$("#id_emp").on('change', function () {//para cargar el total de horas por empleados 
     let id = $(this).val();
     $("#jornada-div").show('slow');
     $("#btnSaveJornada").show('slow');
@@ -606,13 +593,13 @@ $("#id_emp").on('change', function () {//para cargar el total de horas por emple
                 $("#jornada-div").before(alert);
             }
         });
-        $("#horario-div").prop("hidden", false);
+        //$("#horario-div").prop("hidden", false);
 
-        fnCargaAcademica(id);
+        //fnCargaAcademica(id);
         
     }else{
         $("#jornada-div :input").prop("disabled", true);
-        $("#horario-div").prop("hidden", true);
+        //$("#horario-div").prop("hidden", true);
     }
 });
 
@@ -643,7 +630,8 @@ function fnUpdatePeriodoSelect(id, updateEmpleado = false, empleado = null, setP
         }
         if(updateEmpleado && empleado!==null){//para uctualizar el dato del empleado
             $("#id_emp").val(empleado).trigger('change');
-            //$("#id_emp").prop('disabled', 'disabled');
+            $("#_idaux").val(empleado).trigger('change');
+            $("#id_emp").prop('disabled', 'disabled');
         }
 
         $('#id_emp').selectpicker('refresh');
@@ -666,7 +654,7 @@ function fnProcedimiento(componet){
 }
 
 //Para obtener la carga academica del docente
-function fnCargaAcademica(id){
+/*function fnCargaAcademica(id){
     let datas = getData('GET', `/admin/jornada/detalleCarga/`+id,'#notificacion_jornada');
     datas.then(function(response){
         let contenidox = '';
@@ -680,7 +668,7 @@ function fnCargaAcademica(id){
         });                
         $("#bodyViewH").html(contenidox);
     });
-}
+}*/
 
 //Para editar la jornada
 function fnEditJornada(element) {

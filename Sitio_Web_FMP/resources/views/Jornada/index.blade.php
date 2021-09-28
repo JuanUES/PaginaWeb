@@ -15,7 +15,7 @@
         </div>
         @if($cargar)
             <div class="col-12 col-sm-7" style="text-align:right">
-                @hasanyrole('super-admin|Jefe-Academico|Jefe-Departamento|Recurso-Humano')
+                @hasanyrole('super-admin|Jefe-Academico|Jefe-Administrativo|Recurso-Humano')
                     <button class="btn btn btn-success" title="Generar Reporte" data-toggle="modal" data-target="#modalExport"> <i class="fa fa-file-excel" aria-hidden="true"></i> </button>
                 @endhasanyrole
                 @if(is_null($emp) || $emp->tipo_empleado=='Académico')
@@ -34,9 +34,13 @@
                 <div class="col-12 col-sm-6 col-md-6">
                     <div class="form-group">
                         <select class="form-group selectpicker select-filter" data-live-search="true" data-style="btn-white"  name="periodo">
-                            @foreach ($periodos as $item)
-                                <option value="{{ $item->id }}" {{ strcmp($item->id, $periodo)==0 ? 'selected' : '' }}>{{ $item->ciclo_rf->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
-                            @endforeach
+                            @if(isset($periodos))
+                                @foreach ($periodos as $item)
+                                    <option value="{{ $item->id }}" {{ strcmp($item->id, $periodo)==0 ? 'selected' : '' }}>{{ $item->ciclo_rf->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
+                                @endforeach
+                            @else 
+                                <script>window.location = "/admin/periodo";</script>
+                            @endif
                         </select>
                     </div>
                 </div>
@@ -98,14 +102,14 @@
                                 <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)" title="Seguimiento"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
                             @endif    
 
-                            @if(@Auth::user()->hasRole(['super-admin','Jefe-Academico']))
+                            @if(@Auth::user()->hasRole('Jefe-Academico') || @Auth::user()->hasRole('Jefe-Administrativo'))
                                 @if($item->procedimiento=='enviado a recursos humanos' || $item->procedimiento=='aceptado')
                                 @endif    
                             @elseif (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano'))
                                 @if($item->procedimiento=='enviado a recursos humanos' || $item->procedimiento=='aceptado')
                                     <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}" title="Editar">><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
                                 @endif
-                            @elseif(@Auth::user()->hasRole('Jefe-Academico'))
+                            @elseif(@Auth::user()->hasRole('Jefe-Academico') || @Auth::user()->hasRole('Jefe-Administrativo'))
                                 @if($item->procedimiento=='enviado a jefatura' || $item->procedimiento=='recursos humanos lo ha regresado a jefatura')
                                     <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}" title="Editar"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
                                 @endif

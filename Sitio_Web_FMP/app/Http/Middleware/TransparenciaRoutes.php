@@ -45,7 +45,7 @@ class TransparenciaRoutes{
                     ? $next($request)
                     : abort(404);
         }else if(in_array('Transparencia-Secretario', $roles)){
-            return (strcmp($categoria, 'repositorios')==0 || strcmp($categoria, 'marco-normativo')==0 || strcmp($categoria, 'documentos-JD')==0 || strcmp($categoria, 'repositorios')==0)
+            return (strcmp($categoria, 'repositorios')==0 || strcmp($categoria, 'marco-normativo')==0 || strcmp($categoria, 'documentos-JD')==0 || strcmp($categoria, 'marco-gestion')==0)
                     ? $next($request)
                     : abort(404);
         }else if(in_array('Transparencia-Repositorio', $roles)){

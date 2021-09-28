@@ -74,7 +74,7 @@ class JornadaController extends Controller{
             }else {
 
                 if(!$user->hasRole('super-admin') && !$user->hasRole('Recurso-Humano')){ // si no es jefe filtramos la informacion dependiendo de si es jefe o empleado normal
-                    if($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Departamento')){//para filtrar por tipo de departamento
+                    if($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo')){//para filtrar por tipo de departamento
                         $depto = $empleado->id_depto;// id que servira para filtrar los empleados por departemento
                         $query->whereIn('jornada.procedimiento', [$estados[1]['value'], $estados[2]['value'], $estados[3]['value'], $estados[4]['value'], $estados[5]['value']]);
 
@@ -90,7 +90,7 @@ class JornadaController extends Controller{
 
 
                 //PARA AGREGAR LA FILA DE LA JORNADA DEL JEFES Y DE RECURSO HUMANO
-                if($user->hasRole('Recurso-Humano') || $user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Departamento')){
+                if($user->hasRole('Recurso-Humano') || $user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo')){
                     $add_jornada = true;
                     $jornada_query = Jornada::join('periodos', 'jornada.id_periodo', 'periodos.id')
                         ->join('empleado', 'jornada.id_emp', 'empleado.id')
@@ -248,7 +248,7 @@ class JornadaController extends Controller{
         $empleado = Empleado::join('tipo_jornada as tj', 'tj.id', 'empleado.id_tipo_jornada')
                             ->where('empleado.id', $id)
                             ->first();
-        $permiso = ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano') || $user->hasRole('Jefe-Depatamento') || $user->hasRole('Jefe-Academico') || strcmp($empleado->tipo_empleado, 'Académico') == 0);
+        $permiso = ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano') || $user->hasRole('Jefe-Administrativo') || $user->hasRole('Jefe-Academico') || strcmp($empleado->tipo_empleado, 'Académico') == 0);
 
         return array('empleado' => $empleado, 'permiso' => $permiso);
     }
@@ -266,7 +266,7 @@ class JornadaController extends Controller{
             //determinamos si tiene un empleado relacionado
             $empleado = $user->empleado_rf;
             if (!is_null($empleado)) { //para que muestre una alerta de que no existe un empleado relacionado con el usuario
-                if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Departamento')) { //para filtrar por tipo de departamento
+                if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo')) { //para filtrar por tipo de departamento
                     $depto = $empleado->id_depto; // id que servira para filtrar los empleados por departemento
                 }
             }
@@ -350,7 +350,7 @@ class JornadaController extends Controller{
             if (is_null($empleado)) { //para que muestre una alerta de que no existe un empleado relacionado con el usuario
                 $query = null;
             } else {
-                if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Departamento')) { //para filtrar por tipo de departamento
+                if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo')) { //para filtrar por tipo de departamento
                     $depto = $empleado->id_depto; // id que servira para filtrar los empleados por departemento
                     $query->where('empleado.id_depto', $depto);
                 } else { // con esto determinamos que es un empleado sin cargos de jefatura por lo cual solo se mostrara ese empleado
@@ -390,17 +390,17 @@ class JornadaController extends Controller{
 
 
 
-        if ($user->hasRole('Jefe-Academico') && $user->hasRole('super-admin')){
+        if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo')  ){
             unset($estados[5], $estados[4], $estados[1]);
         } else  if ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano')){
             unset($estados[1], $estados[2], $estados[3]);
         } else if($user->hasRole('Docente')){
-            unset($estados[5], $estados[4], $estados[3], $estados[2]);
+            unset($estados[5], $estados[4], $estados[3]);
         }
         return $estados;
     }
 
-    public function fnCargaSegunEmpleado($id){
+    /*public function fnCargaSegunEmpleado($id){
         $user = Auth::user();
         $query = Horarios::join('horas','horarios.id_hora','horas.id')
         ->join('materias','horarios.id_materia','materias.id')
@@ -411,7 +411,7 @@ class JornadaController extends Controller{
             $empleado = $user->empleado_rf;
             $query->where('horarios.id_empleado', $empleado->id)
                   ->orderby('horarios.dias');
-        }else if ($user->hasRole('Jefe-Academico') ) { 
+        }else if ($user->hasRole('Jefe-Academico')  || $user->hasRole('Jefe-Administrativo')) { 
             $query->where('horarios.id_empleado', $id)
                 ->orderby('horarios.dias');
         } else if ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano')) {
@@ -421,6 +421,6 @@ class JornadaController extends Controller{
         
         $horarios = $query->get();
         return $horarios;
-    }
+    }*/
 
 }
