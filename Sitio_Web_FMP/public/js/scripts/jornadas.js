@@ -45,7 +45,7 @@ function updateHour(cell) {
     $("#_horas").val('' + total);
 
     //Valores de Carga Academica
-    let id = $("#id_emp").val();
+    //let id = $("#id_emp").val();
     //validarCarga_Jornada(id,row,data,inicio,fin);
 
     //para validar el horario segun horario de carga academica
@@ -247,8 +247,9 @@ function validateHoras(valor, total){
     var mensaje = '';
     let validado = true;
     let restante = valor-total;
+    //console.log(restante);
 
-    if (restante>valor) {
+    if (total>valor) {
         validado = false;
         mensaje = 'Las horas registradas exceden el número de horas permitidas';
     }
