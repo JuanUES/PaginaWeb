@@ -275,11 +275,7 @@
                             @endif   
                             @if ($item->hasRole('Jefe-Administrativo'))
                             <span class="badge badge-primary">Jefe Administrativo</span>
-<<<<<<< HEAD
                             @endif                   
-=======
-                            @endif                      
->>>>>>> 1eee38ea0faeac083ca1d382ffa7a89054705134
                         @endif
                     </td>
                     <td class="align-middle ">
