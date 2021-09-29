@@ -29,7 +29,7 @@
         <link href="{{ asset('template-admin/dist/assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('template-admin/dist/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('template-admin/dist/assets/css/app.min.css') }}" rel="stylesheet" type="text/css" />
-        
+
 
         {{-- DateRangPicker --}}
         <link rel="stylesheet" href="{{asset('vendor/daterangepicker/daterangepicker.css') }}">
@@ -185,7 +185,7 @@
                                         <i class="mdi mdi-file-document-box-multiple-outline font-18"></i>Administración Licencia Decanato</a>
                                 </li>
                             @endhasanyrole
-                            @hasanyrole('super-admin')                                        
+                            @hasanyrole('super-admin')
                                 <li>
                                     <a href="{{ url('admin/transparencia-directorios') }}">
                                         <i class=" mdi mdi-file-document-box-multiple-outline font-18"></i>Administración Licencia RRHH</a>
@@ -226,12 +226,14 @@
                                     </ul>
                                 </li>
                             @endhasanyrole
-                            @hasanyrole('super-admin|Transparencia-DecaSecretariono|Transparencia-Secretario')
+                            @hasanyrole('super-admin|Transparencia-Secretario|Transparencia-Repositorio')
                                 <li>
                                     <a href="{{ url('admin/transparencia/repositorios') }}">
                                         <i class="font-18 dripicons-graph-bar "></i> <span> Repositorios </span>
                                     </a>
                                 </li>
+                            @endhasanyrole
+                            @hasanyrole('super-admin|Transparencia-Secretario')
                                 <li>
                                     <a href="{{ url('admin/transparencia/documentos-JD') }}">
                                         <i class="font-18 dripicons-document"></i> <span> Doc. de Junta Directiva </span>
