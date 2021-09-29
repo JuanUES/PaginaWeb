@@ -22,5 +22,18 @@ class DepartamentoSeeder extends Seeder
             'nombre_departamento'=>'Ciencias Económicas',
             'estado'=>true,
         ]);
+        Departamento::create([
+            'nombre_departamento'=>'Agronomia',
+            'estado'=>true,
+        ]);
+        Departamento::create([
+            'nombre_departamento'=>'Unidad Financiera',
+            'estado'=>true,
+        ]);
+
+        Departamento::create([
+            'nombre_departamento'=>'Unidad de Tecnologia',
+            'estado'=>true,
+        ]);
     }
 }
