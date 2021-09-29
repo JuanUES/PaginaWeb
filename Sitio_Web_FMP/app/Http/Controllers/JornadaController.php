@@ -33,7 +33,8 @@ class JornadaController extends Controller{
     ];
 
     public $messages = [
-        'id_emp.requiered' => 'Seleccione un empleado',
+        'id_emp.required' => 'Seleccione un empleado',
+        'id_periodo.required' => 'Seleccione un periodo',
         'items.array' => 'La Jornada no puede ir vacia'
     ];
 
@@ -58,11 +59,8 @@ class JornadaController extends Controller{
         $emp = null; //para terminar que es solo un empleado y poder determinar el tipo
         $add_jornada = false;
 
-        $periodo = isset($request->periodo) ? $request->periodo : Periodo::select('id')->OrderBy('id', 'DESC')->first();
+        $periodo = isset($request->periodo) ? Periodo::findOrFail($request->periodo) : Periodo::select('id')->OrderBy('id', 'DESC')->first();
         $depto = isset($request->depto) ? $request->depto : false;
-
-        // dd($periodo);
-
 
 
         $query = null;
@@ -125,10 +123,28 @@ class JornadaController extends Controller{
 
             $jornadas = $query->get();
             $deptos = Departamento::where('estado', true)->latest()->get();
-            $periodos = Periodo::where('estado', 'activo')->latest()->get();
 
-            if($add_jornada && !is_null($jornada)){
+            //filtrar periodos por tipo de usuarios
 
+            $periodos_query = Periodo::select('periodos.id', 'ciclos.nombre', 'periodos.tipo', 'periodos.fecha_inicio', 'periodos.fecha_fin')
+                                ->join('ciclos', 'ciclos.id', 'periodos.ciclo_id')
+                                ->where('periodos.estado', 'activo');
+
+
+            if (!$user->hasRole('super-admin') && !$user->hasRole('Recurso-Humano')) {
+                if ($user->hasRole('Jefe-Academico')) { //para filtrar por tipo de empleado en los periodos
+                    $periodos_query->where('periodos.tipo', 'Académico');
+                } else if($user->hasRole('Jefe-Administrativo')){
+                    $periodos_query->where('periodos.tipo', 'Administrativo');
+                }else if ($user->hasRole('Docente') && strcmp($empleado->tipo_empleado, 'Académico') == 0) { // con esto determinamos que es un empleado sin cargos de jefatura por lo cual solo se mostrara ese empleado
+                    $query->where('empleado.id', $empleado->id);
+                    $emp = $empleado;
+                }
+            }
+            $periodos = $periodos_query->orderBy('periodos.id', 'DESC')->get();
+
+
+            if($add_jornada && !is_null($jornada)){//agregar la jornada del usuario activo
                 if(!$jornadas->contains($jornada))
                     $jornadas->prepend($jornada);
             }
@@ -142,14 +158,14 @@ class JornadaController extends Controller{
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(){
-        $periodos = Periodo::where('estado', 'LIKE','%activo%')->get();
-        $tjornada = Tipo_Jornada::join('empleado', 'tipo_jornada.id','=','empleado.id_tipo_jornada')
-            ->select('empleado.id','tipo_jornada.horas_semanales')
-            ->where('empleado.id',1)
-            ->get();
-        return view('Jornada.create', compact('periodos','tjornada'));
-    }
+    // public function create(){
+    //     $periodos = Periodo::where('estado', 'LIKE','%activo%')->get();
+    //     $tjornada = Tipo_Jornada::join('empleado', 'tipo_jornada.id','=','empleado.id_tipo_jornada')
+    //         ->select('empleado.id','tipo_jornada.horas_semanales')
+    //         ->where('empleado.id',1)
+    //         ->get();
+    //     return view('Jornada.create', compact('periodos','tjornada'));
+    // }
 
     /**
      * Store a newly created resource in storage.
@@ -245,9 +261,9 @@ class JornadaController extends Controller{
      * @param  \App\Models\Jornada  $jornada
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Jornada $jornada){
+    // public function destroy(Jornada $jornada){
 
-    }
+    // }
 
     public function getEmpleadoJornada($id){
         $user = Auth::user();
@@ -340,13 +356,19 @@ class JornadaController extends Controller{
     }
 
     public function fnEmpleadosSegunPeriodo($periodo, $is_edit){
+
+
         $user = Auth::user();
+        $periodo = Periodo::findOrFail($periodo);
+
+        // dd($periodo);
+
         $query = Empleado::where('estado', true);
         if($is_edit!='true'){
             $query->whereNotExists(function ($query) use ($periodo) {
                 $query->select(DB::raw(1))
                     ->from('jornada as j')
-                    ->where('j.id_periodo', $periodo)
+                    ->where('j.id_periodo', $periodo->id)
                     ->whereRaw('j.id_emp = empleado.id');
             });
         }
@@ -364,6 +386,9 @@ class JornadaController extends Controller{
                 }
             }
         }
+
+        //para filtrar los empleados segun el tipo de periodo (Administrativo|Academico)
+        $query->where('empleado.tipo_empleado', $periodo->tipo);
         $empleados = $query->get();
         return $empleados;
     }

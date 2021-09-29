@@ -10,9 +10,12 @@
         <th colspan="2" style="text-align: center; vertical-align: middle;">JUEVES</th>
         <th colspan="2" style="text-align: center; vertical-align: middle;">VERNES</th>
         <th colspan="2" style="text-align: center; vertical-align: middle;">SABADO</th>
+        <th colspan="2" style="text-align: center; vertical-align: middle;">DOMINGO</th>
         <th  rowspan="2" style="text-align: center; vertical-align: middle;">TOTAL</th>
     </tr>
     <tr>
+        <th style="text-align: center; vertical-align: middle;">ENTRADA</th>
+        <th style="text-align: center; vertical-align: middle;">SALIDA</th>
         <th style="text-align: center; vertical-align: middle;">ENTRADA</th>
         <th style="text-align: center; vertical-align: middle;">SALIDA</th>
         <th style="text-align: center; vertical-align: middle;">ENTRADA</th>
@@ -36,7 +39,7 @@
             <td style="text-align: center; vertical-align: middle;" rowspan="2">{{ $item->empleado_rf->tipo_jornada_rf->tipo }}</td>
 
             @php
-                $dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado'];
+                $dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
                 $horas_diarias = [];
                 $total = 0;
             @endphp

@@ -36,7 +36,7 @@
                         <select class="form-group selectpicker select-filter" data-live-search="true" data-style="btn-white"  name="periodo">
                             @if(isset($periodos))
                                 @foreach ($periodos as $item)
-                                    <option value="{{ $item->id }}" {{ strcmp($item->id, $periodo)==0 ? 'selected' : '' }}>{{ $item->ciclo_rf->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
+                                    <option value="{{ $item->id }}" {{ strcmp($item->id, $periodo->id)==0 ? 'selected' : '' }}> {{ $item->tipo }} -> {{ $item->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
                                 @endforeach
                             @else
                                 <script>window.location = "/admin/periodo";</script>
@@ -65,6 +65,7 @@
                 <tr>
                     <th>Registro</th>
                     <th>Empleado</th>
+                    <th>Tipo</th>
                     <th>Departamento</th>
                     <th>Tipo</th>
                     <th>Periodo</th>
@@ -77,6 +78,7 @@
                     <tr {!! ($item->empleado_rf->id == Auth::user()->empleado_rf->id) ? 'style="background-color: rgba(21, 174, 234, 0.1);"' : '' !!} >
                         <th  data-sort="{{ strtotime($item->created_at) }}">{{ date('d/m/Y H:m', strtotime($item -> created_at)) }}</th>
                         <th>{{ $item -> empleado_rf->nombre }} {{ $item -> empleado_rf->apellido }}</th>
+                        <td>{{ $item->empleado_rf->tipo_empleado }}</td>
                         <td>{{ $item->empleado_rf->departamento_rf->nombre_departamento }}</td>
                         <td>{{ $item->empleado_rf->tipo_jornada_rf->tipo }}</td>
                         <td>{{ $item -> periodo }}</td>
@@ -102,20 +104,26 @@
                                 <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)" title="Seguimiento"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
                             @endif
 
-                            @if(@Auth::user()->hasRole('Jefe-Academico') || @Auth::user()->hasRole('Jefe-Administrativo'))
-                                @if($item->procedimiento=='enviado a recursos humanos' || $item->procedimiento=='aceptado')
-                                @endif
-                            @elseif (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano'))
-                                @if($item->procedimiento=='enviado a recursos humanos' || $item->procedimiento=='aceptado')
-                                    <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}" title="Editar">><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
-                                @endif
-                            @elseif(@Auth::user()->hasRole('Jefe-Academico') || @Auth::user()->hasRole('Jefe-Administrativo'))
-                                @if($item->procedimiento=='enviado a jefatura' || $item->procedimiento=='recursos humanos lo ha regresado a jefatura')
-                                    <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}" title="Editar"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
-                                @endif
-                            @elseif(@Auth::user()->hasRole('Docente'))
+                            @if (($item->empleado_rf->id == Auth::user()->empleado_rf->id))
                                 @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
                                     <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}" title="Editar"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
+                                @endif
+                            @else
+                                @if(@Auth::user()->hasRole('Jefe-Academico') || @Auth::user()->hasRole('Jefe-Administrativo'))
+                                    @if($item->procedimiento=='enviado a recursos humanos' || $item->procedimiento=='aceptado')
+                                    @endif
+                                @elseif (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano'))
+                                    @if($item->procedimiento=='enviado a recursos humanos' || $item->procedimiento=='aceptado')
+                                        <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}" title="Editar"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
+                                    @endif
+                                @elseif(@Auth::user()->hasRole('Jefe-Academico') || @Auth::user()->hasRole('Jefe-Administrativo'))
+                                    @if($item->procedimiento=='enviado a jefatura' || $item->procedimiento=='recursos humanos lo ha regresado a jefatura')
+                                        <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}" title="Editar"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
+                                    @endif
+                                @elseif(@Auth::user()->hasRole('Docente'))
+                                    @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
+                                        <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}" title="Editar"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
+                                    @endif
                                 @endif
                             @endif
                         </td>

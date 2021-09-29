@@ -35,7 +35,7 @@ function updateHour(cell) {
     let resul = CalcularHoras(inicio,fin);
 
     row.update({ 'jornada': resul });
-    
+
     let valor = $("#auxJornada").val();
     let hoursTotal = fnHoras();
 
@@ -117,8 +117,8 @@ function updateHour(cell) {
                             row.update({ 'hora_fin': null });
                         }
                     }
-                }        
-            });                
+                }
+            });
         });
 }*/
 
@@ -134,8 +134,8 @@ function fnHoras() {
         let HourCell = isNaN(parseFloat(fieldCell[0])) ? 0 : parseFloat(fieldCell[0]); let MinuteCell = isNaN(parseFloat(fieldCell[1])) ? 0 : parseFloat(fieldCell[1]);
         var horas_Cell = HourCell * 3600; var minutos_Cell = MinuteCell * 60; var segundosC = minutos_Cell + horas_Cell;
         var hoursCe = Math.floor( segundosC / 3600 ); var minutesCe = Math.floor( (segundosC % 3600) / 60 );
-        
-        //Anteponiendo un 0 a los minutos y horas si son menos de 10 
+
+        //Anteponiendo un 0 a los minutos y horas si son menos de 10
         minutesCe = minutesCe < 10 ? '0' + minutesCe : minutesCe;
         hoursCe = hoursCe < 10 ? '0' + hoursCe : hoursCe;
 
@@ -144,7 +144,7 @@ function fnHoras() {
         console.log('Hora row' + hoursCe + ":" + minutesCe);
     });
     hourRow =  isNaN(hourRow) ? 0 : parseInt(hourRow);
-    minuteRow =  isNaN(minuteRow) ? 0 : parseInt(minuteRow); 
+    minuteRow =  isNaN(minuteRow) ? 0 : parseInt(minuteRow);
     console.log('Hora AA ' + hourRow + ':' + minuteRow);
 
     let timeT = hourRow + ':' + minuteRow;
@@ -281,8 +281,8 @@ function CalcularHoras(inicio, fin) {
     let HourF = isNaN(parseFloat(fieldF[0])) ? 0 : parseFloat(fieldF[0]); let MinuteF = isNaN(parseFloat(fieldF[1])) ? 0 : parseFloat(fieldF[1]);
     var horas_F = HourF * 3600; var minutos_F = MinuteF * 60; var segundosF = minutos_F + horas_F;
     var hoursFi = Math.floor( segundosF / 3600 ); var minutesFi = Math.floor( (segundosF % 3600) / 60 );
-    
-    //Anteponiendo un 0 a los minutos y horas si son menos de 10 
+
+    //Anteponiendo un 0 a los minutos y horas si son menos de 10
     hoursFi = hoursFi < 10 ? '0' + hoursFi : hoursFi;
     minutesFi = minutesFi < 10 ? '0' + minutesFi : minutesFi;
     console.log('valor (FIN) ' + hoursFi + ":" + minutesFi);
@@ -290,16 +290,16 @@ function CalcularHoras(inicio, fin) {
     //inicio
     let hoursI = inicio;
     let fieldI = hoursI.toString().split(':');
-    console.log('Horas Tot (INICIO) ' + hoursI);
+    // console.log('Horas Tot (INICIO) ' + hoursI);
 
     let HourI = isNaN(parseFloat(fieldI[0])) ? 0 : parseFloat(fieldI[0]); let MinuteI = isNaN(parseFloat(fieldI[1])) ? 0 : parseFloat(fieldI[1]);
     var horas_I = HourI * 3600; var minutos_I = MinuteI * 60; var segundosI = minutos_I + horas_I;
     var hoursIn = Math.floor( segundosI / 3600 ); var minutesIn = Math.floor( (segundosI % 3600) / 60 );
-    
-    //Anteponiendo un 0 a los minutos y horas si son menos de 10 
+
+    //Anteponiendo un 0 a los minutos y horas si son menos de 10
     hoursIn = hoursIn < 10 ? '0' + hoursIn : hoursIn;
     minutesIn = minutesIn < 10 ? '0' + minutesIn : minutesIn;
-    console.log('Total CalcularHoras' +hoursIn + ":" + minutesIn);
+    // console.log('Total CalcularHoras' +hoursIn + ":" + minutesIn);
 
     var diffMTotal = 0;
     var diffHTotal = 0;
@@ -318,11 +318,11 @@ function CalcularHoras(inicio, fin) {
     }
 
     if(parseInt(hoursIn) > parseInt(hoursFi)){
-        console.log('condicicon 0 ' + hoursIn + ' '+ hoursIn);
+        // console.log('condicicon 0 ' + hoursIn + ' '+ hoursIn);
         diffHTotal = parseInt(hoursIn);
-    } else 
+    } else
     if(parseInt(hoursFi) - parseInt(hoursIn) < 10){
-        console.log('condicicon < 10 ' + hoursIn + ' '+ hoursIn);
+        // console.log('condicicon < 10 ' + hoursIn + ' '+ hoursIn);
 
         if(parseInt(diffHTotal) == -1 ){
             diffHTotal = parseInt(0) + ( parseInt(diffHTotal) + parseInt(hoursFi) -  (parseInt(hoursIn) ) );
@@ -330,13 +330,13 @@ function CalcularHoras(inicio, fin) {
             diffHTotal = '0' + ( parseInt(diffHTotal) + (parseInt(hoursFi) - parseInt(hoursIn) ));
         }
     } else{
-        console.log('condicicon ' + hoursIn + ' '+ hoursIn);
+        // console.log('condicicon ' + hoursIn + ' '+ hoursIn);
         diffHTotal =  parseInt(diffHTotal) + ( parseInt(hoursFi) - (parseInt(hoursIn)));
-    }    
+    }
 
-    console.log('_horas CalcularHoras'+ diffHTotal + ':' + diffMTotal);
+    // console.log('_horas CalcularHoras'+ diffHTotal + ':' + diffMTotal);
     let total  = ((isNaN(hoursF) - isNaN(hoursI) < 0  ||  isNaN(hoursI)<=0 ) ) ? ( parseInt(hoursF) - parseInt(hoursI) ) : ( diffHTotal + ':' + diffMTotal);
-    console.log('To CalcularHoras'+ total);
+    // console.log('To CalcularHoras'+ total);
 
     return total;
 }
@@ -561,15 +561,25 @@ $('.select-filter').on('change', function () {
 $("#btnNewJornada").click(function () {
     $("#_id").val('');
     $("#modalNewJonarda").modal('show');
+
+    //limpiar el combo select por si se ha editado antes
+    $("#id_periodo_text").prop('disabled', true);
+    $("#id_periodo").prop('disabled', false);
+
     $("#id_periodo").val(null).trigger('change');
     $('#id_periodo').selectpicker('refresh');
+
+    //limpiar el combo select por si se ha editado antes
+    $("#id_emp_text").prop('disabled', true);
+    $("#id_emp").prop('disabled', false);
+
 
     $("#id_emp").val(null).trigger('change');
     $('#id_emp').empty();
     $('#id_emp').selectpicker('refresh');
 });
 
-$("#id_emp").on('change', function () {//para cargar el total de horas por empleados 
+$("#id_emp").on('change', function () {//para cargar el total de horas por empleados
     let id = $(this).val();
     $("#jornada-div").show('slow');
     $("#btnSaveJornada").show('slow');
@@ -596,7 +606,7 @@ $("#id_emp").on('change', function () {//para cargar el total de horas por emple
         //$("#horario-div").prop("hidden", false);
 
         //fnCargaAcademica(id);
-        
+
     }else{
         $("#jornada-div :input").prop("disabled", true);
         //$("#horario-div").prop("hidden", true);
@@ -627,10 +637,18 @@ function fnUpdatePeriodoSelect(id, updateEmpleado = false, empleado = null, setP
         if(setPeriodo && periodo!==null){
             $("#id_periodo").val(periodo);
             $('#id_periodo').selectpicker('refresh');
+
+            $("#id_periodo_text").prop('disabled', false);
+            $("#id_periodo_text").val($("#id_periodo").val());
+            $("#id_periodo").prop('disabled', 'disabled');
+
+
         }
         if(updateEmpleado && empleado!==null){//para uctualizar el dato del empleado
             $("#id_emp").val(empleado).trigger('change');
             $("#_idaux").val(empleado).trigger('change');
+            $("#id_emp_text").prop('disabled', false);
+            $("#id_emp_text").val($("#id_emp").val());
             $("#id_emp").prop('disabled', 'disabled');
         }
 
@@ -664,8 +682,8 @@ function fnProcedimiento(componet){
                 <td>${element.nombre_materia}</td>
                 <td>${element.inicio}</td>
                 <td>${element.fin}</td>
-            </tr>`;            
-        });                
+            </tr>`;
+        });
         $("#bodyViewH").html(contenidox);
     });
 }*/
