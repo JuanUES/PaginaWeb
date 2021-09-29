@@ -123,7 +123,7 @@
                                     <label for="tipo">Tipo <span class="text-danger">*</span> </label>
                                     <select class="custom-select" name="tipo" id="tipo">
                                         <option value="Administrativo" >Administrativo</option>
-                                        <option value="Docente">Docente</option>
+                                        <option value="Académico">Académico</option>
                                     </select>
                                 </div>
                             </div>
@@ -300,6 +300,7 @@
             });
             $("#registroForm #observaciones").val(response.observaciones);
             $("#registroForm #ciclo_id").val(response.ciclo_id).change();
+            $("#registroForm #tipo").val(response.tipo).change();
             $("#registroForm #_id").val(response.id);
         });
     }

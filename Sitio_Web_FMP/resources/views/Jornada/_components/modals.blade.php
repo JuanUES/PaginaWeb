@@ -115,7 +115,7 @@
 </div>
 
 {{--  Modal para exportar a Excel las Jornadas  --}}
-@hasanyrole('super-admin|Jefe-Academico|Jefe-Departamento|Recurso-Humano')
+@hasanyrole('super-admin|Jefe-Academico|Jefe-Administrativo|Recurso-Humano')
     <div id="modalExport" class="modal fade bs-example-modal-center" tabindex="-1"  role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -129,7 +129,7 @@
                         <div class="row py-3 text-center">
                             <div class="col-lg-2 fa fa-file-export text-success fa-4x"></div>
                             <div class="col-lg-10 text-black">
-                                <h4 class="font-17 text-justify font-weight-bold">Información: Se exportaran todas las jornadas de los emplead@s docentes</h4>
+                                <h4 class="font-17 text-justify font-weight-bold">Información: Se exportaran todas las jornadas de los empleados tipo Académicos</h4>
                             </div>
                         </div>
                         <div class="row">
@@ -138,7 +138,9 @@
                                     <label for="periodo">Seleccione un Periodo <span class="text-danger">*</span> </label>
                                     <select class="custom-select" name="periodo">
                                         @foreach ($periodos as $item)
-                                            <option value="{{ $item->id }}">{{ $item->ciclo_rf->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
+                                            @if(strcmp('Académico', $item->tipo)==0)
+                                                <option value="{{ $item->id }}">{{ $item->tipo }} -> {{ $item->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
@@ -181,6 +183,7 @@
                 <form id="frmJornada"  action="{{ route('admin.jornada.store') }}" method="POST">
                     @csrf
                     <input type="hidden" name="_id" id="_id">
+                    <input type="hidden" name="_idaux" id="_idaux">
                     <div class="modal-body">
                         <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" role="alert" style="display:none" id="notificacion_jornada"></div>
                         <div class="row">
@@ -193,18 +196,19 @@
                         <div class="row justify-content-between">
                             <div class="col-12 col-sm-12">
                                 <div class="form-group">
+                                    <input type="hidden" name="id_periodo" id="id_periodo_text" disabled>
                                     <label for="periodo" class="control-label">{{ 'Periodo' }} <span class="text-danger">*</span> </label>
                                     <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" name="id_periodo" id="id_periodo">
                                         <option value="">Seleccione un Periodo</option>
                                         @foreach ($periodos as $item)
-                                            <option value="{{ $item->id }}">{{ $item->ciclo_rf->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
+                                            <option value="{{ $item->id }}">{{ $item->tipo }} -> {{ $item->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-8">
+                                <input type="hidden" name="id_emp" id="id_emp_text" disabled>
                                 <div class="form-group">
-
                                     <label for="empleado" class="control-label">{{ 'Empleado' }} <span class="text-danger">*</span> </label>
                                         <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" name="id_emp" id="id_emp">
                                             <option value="">Seleccione un Empleado</option>
@@ -224,7 +228,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row" id="horario-div">
+                        <!--<div class="row" id="horario-div">
                             <div class="col-12">
                                 <h5 class="mb-3">Carga Academica</h5>
                                 <table class="table table-hover table-sm" id="tableViewH">
@@ -238,8 +242,8 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                        
+                        </div>-->
+
                         <div class="row" id="jornada-div">
                             <div class="col-12">
                                 <h5 class="mb-3">Detalle de la Jornada

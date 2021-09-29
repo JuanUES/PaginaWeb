@@ -52,6 +52,7 @@
                                     <optgroup  label="General">
                                         <option value="{{base64_encode('super-admin')}}">Super Administrador</option>
                                         <option value="{{base64_encode('Jefe-Academico')}}">Jefe Academico</option>
+                                        <option value="{{base64_encode('Jefe-Administrativo')}}">Jefe Administrativo</option>
                                         <option value="{{base64_encode('Pagina')}}">Pagina</option>
                                         <option value="{{base64_encode('Recurso-Humano')}}">Recurso Humano</option>
                                         <option value="{{base64_encode('Docente')}}">Docente</option>
@@ -274,7 +275,11 @@
                             @endif   
                             @if ($item->hasRole('Jefe-Administrativo'))
                             <span class="badge badge-primary">Jefe Administrativo</span>
+<<<<<<< HEAD
                             @endif                   
+=======
+                            @endif                      
+>>>>>>> 1eee38ea0faeac083ca1d382ffa7a89054705134
                         @endif
                     </td>
                     <td class="align-middle ">

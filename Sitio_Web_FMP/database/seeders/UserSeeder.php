@@ -92,7 +92,6 @@ class UserSeeder extends Seeder
         //Asignar el role usuario
         $usu->assignRole('super-admin');
         $admin->assignRole('super-admin');
-        $user->assignRole('super-admin');
         $pg->assignRole('super-admin');
         $presupuestario->assignRole('Transparencia-Presupuestario');
         $repositorio->assignRole('Transparencia-Repositorio');
@@ -103,6 +102,7 @@ class UserSeeder extends Seeder
         $jefea->assignRole('Jefe-Administrativo');
         $rrhh->assignRole('Recurso-Humano');
         $docente->assignRole('Docente');
+        $docente->assignRole('Jefe-Academico');
 
         
     }
