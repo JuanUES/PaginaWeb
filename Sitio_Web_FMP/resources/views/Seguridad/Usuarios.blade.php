@@ -82,7 +82,7 @@
                                         @foreach ($usuarios as $u)
                                             @if ($u->empleado==$item->id)
                                                 @php
-                                                    $b=true;
+                                                    $b=$u->empleado==$item->id;
                                                 @endphp
                                                 @break
                                             @endif
