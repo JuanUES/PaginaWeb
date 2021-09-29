@@ -58,14 +58,19 @@ class JornadaController extends Controller{
         $emp = null; //para terminar que es solo un empleado y poder determinar el tipo
         $add_jornada = false;
 
-        $periodo = isset($request->periodo) ? $request->periodo : Periodo::select('id')->OrderBy('id', 'DESC')->first()->id;
+        $periodo = isset($request->periodo) ? $request->periodo : Periodo::select('id')->OrderBy('id', 'DESC')->first();
         $depto = isset($request->depto) ? $request->depto : false;
 
+        // dd($periodo);
 
+
+
+        $query = null;
+        if(!is_null($periodo)){//verificamos si existe un periodo regitrado
         $query = Jornada::join('periodos','jornada.id_periodo','periodos.id')
                 ->join('empleado','jornada.id_emp','empleado.id')
                 ->select('jornada.*',Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"))
-                ->where('jornada.id_periodo', $periodo);
+                ->where('jornada.id_periodo', $periodo->id);
 
             //determinamos si tiene un empleado relacionado
             $empleado = $user->empleado_rf;
@@ -95,15 +100,18 @@ class JornadaController extends Controller{
                     $jornada_query = Jornada::join('periodos', 'jornada.id_periodo', 'periodos.id')
                         ->join('empleado', 'jornada.id_emp', 'empleado.id')
                         ->select('jornada.*', Periodo::raw("concat(to_char(periodos.fecha_inicio, 'dd/TMMonth/yy') , ' - ', to_char(periodos.fecha_fin, 'dd/TMMonth/yy')) as periodo"))
-                        ->where('jornada.id_periodo', $periodo)
+                        ->where('jornada.id_periodo', $periodo->id)
                         ->where('empleado.id', $empleado->id);
+
                     ($depto != false && strcmp($depto, 'all') != 0)
                         ? $jornada_query->where('empleado.id_depto', $depto)
                         : $depto = 'all';
+
                     $jornada = $jornada_query->first();
                 }
 
             }
+        }
 
         if(is_null($query)){
             $cargar = false;
@@ -120,8 +128,6 @@ class JornadaController extends Controller{
             $periodos = Periodo::where('estado', 'activo')->latest()->get();
 
             if($add_jornada && !is_null($jornada)){
-
-                // dd($jornada);
 
                 if(!$jornadas->contains($jornada))
                     $jornadas->prepend($jornada);
@@ -406,19 +412,19 @@ class JornadaController extends Controller{
         ->join('materias','horarios.id_materia','materias.id')
         ->join('empleado','horarios.id_empleado','empleado.id')
         ->select ('horarios.id_empleado','horarios.dias as dias','materias.nombre_materia as nombre_materia','horas.inicio as inicio','horas.fin as fin');
-        
+
         if ($user->hasRole('Docente')) {
             $empleado = $user->empleado_rf;
             $query->where('horarios.id_empleado', $empleado->id)
                   ->orderby('horarios.dias');
-        }else if ($user->hasRole('Jefe-Academico')  || $user->hasRole('Jefe-Administrativo')) { 
+        }else if ($user->hasRole('Jefe-Academico')  || $user->hasRole('Jefe-Administrativo')) {
             $query->where('horarios.id_empleado', $id)
                 ->orderby('horarios.dias');
         } else if ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano')) {
             $query->where('horarios.id_empleado', $id)
                 ->orderby('horarios.dias');
-        } 
-        
+        }
+
         $horarios = $query->get();
         return $horarios;
     }*/

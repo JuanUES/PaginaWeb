@@ -38,7 +38,7 @@
                                 @foreach ($periodos as $item)
                                     <option value="{{ $item->id }}" {{ strcmp($item->id, $periodo)==0 ? 'selected' : '' }}>{{ $item->ciclo_rf->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
                                 @endforeach
-                            @else 
+                            @else
                                 <script>window.location = "/admin/periodo";</script>
                             @endif
                         </select>
@@ -100,11 +100,11 @@
                             <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-outline-success btn-sm" onclick="fnDetalleJornada(this);" title="Detalle"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i></button>
                             @if(!($item->procedimiento=='aceptado'))
                                 <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)" title="Seguimiento"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
-                            @endif    
+                            @endif
 
                             @if(@Auth::user()->hasRole('Jefe-Academico') || @Auth::user()->hasRole('Jefe-Administrativo'))
                                 @if($item->procedimiento=='enviado a recursos humanos' || $item->procedimiento=='aceptado')
-                                @endif    
+                                @endif
                             @elseif (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano'))
                                 @if($item->procedimiento=='enviado a recursos humanos' || $item->procedimiento=='aceptado')
                                     <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}" title="Editar">><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
@@ -130,6 +130,7 @@
                     <p> <i class="fa fa-info-circle"></i> No es posible cargar la información perteneciente a <strong> {{ @Auth::user()->name }} </strong>.</p>
                     <label> A continuación se detallan las posibles causas: </label>
                     <ul>
+                        <li>No existen <strong>Periodos</strong> registrados en el sistema.</li>
                         <li>El Usuario no se encuentra vinculado con ningun <strong>Empleado</strong> registrado en el sistema.</li>
                         <li>El Usuario no tiene los permisos necesarios.</li>
                         <li>El Usuario no es tipo <strong>Docente</strong>.</li>
