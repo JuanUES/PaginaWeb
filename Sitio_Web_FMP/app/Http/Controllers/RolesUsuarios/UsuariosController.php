@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
 class UsuariosController extends Controller
@@ -18,7 +19,8 @@ class UsuariosController extends Controller
     public function index()
     {
         $usuarios = User::orderBy('id')->get();
-        $empleados = Empleado::where('estado',true)->get();
+        $empleados = Empleado::where('estado',true)->orderBy('nombre')->orderBy('apellido')->get();
+        
         return view('Seguridad.Usuarios',compact('usuarios','empleados'));
     }
 
@@ -41,28 +43,27 @@ class UsuariosController extends Controller
         ->toJson();
     }
 
-    public function store(Request $request)
-    {   
+    public function store(Request $request){
+        $id = $request->_id;
         $validator = Validator::make($request->all(),[
             'usuario' => 'required|string|max:255',
-            'correo' => 'required|string|email|max:255|unique:users,email,'.$request -> idUser,
+            'correo' => ['required','email','max:50','string','unique:users,email'.(!is_null($id) ? ','.$id : null)],
             'contraseña' =>'required|min:8',
-            'empleado' => 'required|unique:users,empleado',
+            'empleado' => ['required','unique:users,empleado'.(!is_null($id) ? ','.$id : null)],
             'repetir_contraseña'=> 'required|same:contraseña'
         ]);
-
         if($validator->fails())
         {            
             return response()->json(['error'=>$validator->errors()->all()]);                
         }
 
-        if($request -> idUser == null)
+        if(is_null($request -> _id))
             $user = new User();
         else{
-            $user = User::findOrFail($request -> idUser);
+            $user = User::findOrFail($request -> _id);
             $user -> roles() -> detach();
         }
-        
+
         $user -> name     = $request -> usuario;
         $user -> email    = $request -> correo;
         $user -> empleado = $request -> empleado;
@@ -71,12 +72,13 @@ class UsuariosController extends Controller
 
         $roles = $request -> roles;
 
-        if($b)
+        if($b){
             for ($i=0; $i < count($roles); $i++){$user -> assignRole(base64_decode($roles[$i]));}
+        }
 
-        return $request->_id != null ?
-        response()->json(['mensaje'=>'Modificación exitosa.']):
-        response()->json(['mensaje'=>'Registro exitoso.']);
+        return !is_null($request->_id)?
+        response()->json(['mensaje'=>'Modificación exitosa']):
+        response()->json(['mensaje'=>'Registro exitoso']);
     }
 
     public function estado(Request $request){

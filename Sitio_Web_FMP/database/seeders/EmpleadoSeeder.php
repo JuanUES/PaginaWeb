@@ -41,5 +41,48 @@ class EmpleadoSeeder extends Seeder
             'id_tipo_contrato'=>2
             
         ]);
+
+        Empleado::create([
+            'id_depto'=>2,
+            'nombre'=>' Jonathan Adrian1',
+            'apellido'=>'Aguilar Garcia1',
+            'dui'=>'03379875-5',
+            'nit'=>'0614-130985-125-5',
+            'telefono'=>'7696-6969',
+            'categoria'=>2,
+            'tipo_empleado'=>'Administrativo',
+            'id_tipo_jornada'=>2,
+            'id_tipo_contrato'=>2
+            
+        ]);
+
+        Empleado::create([
+            'id_depto'=>2,
+            'nombre'=>' Jonathan Adrian1',
+            'apellido'=>'Aguilar Garcia1',
+            'dui'=>'03379875-5',
+            'nit'=>'0614-130985-125-5',
+            'telefono'=>'7696-6969',
+            'categoria'=>2,
+            'tipo_empleado'=>'Administrativo',
+            'id_tipo_jornada'=>2,
+            'id_tipo_contrato'=>2
+            
+        ]);
+
+
+        Empleado::create([
+            'id_depto'=>2,
+            'nombre'=>' Jonathan Adrian',
+            'apellido'=>'Aguilar Garcia',
+            'dui'=>'03379875-5',
+            'nit'=>'0614-130985-125-5',
+            'telefono'=>'7696-6969',
+            'categoria'=>2,
+            'tipo_empleado'=>'Administrativo',
+            'id_tipo_jornada'=>2,
+            'id_tipo_contrato'=>2
+            
+        ]);
     }
 }

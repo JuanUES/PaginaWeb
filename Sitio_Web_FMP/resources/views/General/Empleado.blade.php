@@ -31,11 +31,11 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="fileE">Foto <code>*</code></label>
-                            <label for="fileE">
-                                <img  class="border rounded img-fluid" id="fotoE" >
+                            <label for="fileE" class="text-center">
+                                <img  class="border centradoA rounded img-fluid img-thumbnail" id="fotoE" >
                             </label>                            
                         </div>
-                        <div class="form-group">
+                        <div class="form-group text-center">
                             <label for="fileE" class="centrado text-black"><i class="mdi mdi-mouse font-20"></i> Click para subir foto</label>
                             <input type="file" id="fileE" name="fotoE" accept="image/*">
                         </div>
@@ -439,14 +439,14 @@
     .contenedor{
         position: relative;
         display: inline-block;
-        text-align: center;
+        text-align: auto;
     }
     .centrado{
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-    }
+    }    
 </style>
 @endsection
 

@@ -16,7 +16,7 @@
         <form id="registroForm"  action="{{ route('guardarUser') }}" method="POST">
             @csrf
             <div class="modal-body">
-                    <input type="hidden" id="idUser" name="idUser" value=""/>
+                    <input type="hidden" id="idUser" name="_id"/>
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
                         role="alert" style="display:none" id="notificacion">
                     </div>
@@ -55,8 +55,10 @@
                                         <option value="{{base64_encode('Pagina')}}">Pagina</option>
                                         <option value="{{base64_encode('Recurso-Humano')}}">Recurso Humano</option>
                                         <option value="{{base64_encode('Docente')}}">Docente</option>
+                                        <option value="{{base64_encode('Jefe-Administrativo')}}">Jefe Administrativo</option>
                                     </optgroup>
                                     <optgroup label="Transparencia">
+                                        <option value="{{base64_encode('Transparencia-Repositorio')}}">Repositorio</option>
                                         <option value="{{base64_encode('Transparencia-Presupuestario')}}">Presupuestario</option>
                                         <option value="{{base64_encode('Transparencia-Secretario')}}">Secretario</option>
                                         <option value="{{base64_encode('Transparencia-Decano')}}">Decano</option>
@@ -73,7 +75,22 @@
                                  style="width: 100%;" name="empleado" id="empleado">
                                     <option value="">Seleccione</option>
                                     @foreach ($empleados as $item)
-                                        <option value="{{$item->id}}">{{$item->nombre.' '.$item->apellido}}</option>
+                                        @php
+                                            $b=false;
+                                        @endphp
+                                        @foreach ($usuarios as $u)
+                                            @if ($u->empleado==$item->id)
+                                                @php
+                                                    $b=true;
+                                                @endphp
+                                                @break
+                                            @endif
+                                        @endforeach
+                                        @if ($b)
+                                            <option data-icon="mdi mdi-account-remove-outline font-18" class="text-danger" value="{{$item->id}}">{{$item->nombre.' '.$item->apellido}}</option>
+                                        @else
+                                            <option data-icon="mdi mdi-account-plus-outline font-18" text-success value="{{$item->id}}">{{$item->nombre.' '.$item->apellido}}</option>
+                                        @endif                                        
                                     @endforeach
                                 </select>
                             </div>
@@ -251,14 +268,20 @@
                             @endif  
                             @if ($item->hasRole('Docente'))
                             <span class="badge badge-primary">Docente</span>
-                            @endif                      
+                            @endif   
+                            @if ($item->hasRole('Transparencia-Repositorio'))
+                            <span class="badge badge-primary">Transparencia Repositorio</span>
+                            @endif   
+                            @if ($item->hasRole('Jefe-Administrativo'))
+                            <span class="badge badge-primary">Jefe Administrativo</span>
+                            @endif                   
                         @endif
                     </td>
                     <td class="align-middle ">
                         <div class="row">
                             <div class="col text-center">
                                 <div class="btn-group" role="group">
-                                    <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="editar('{{ route('usuarios') }}',{!!$item->id!!})">
+                                    <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="editar('{{ route('usuarios') }}',{!!$item->id!!},this)">
                                         <i class="fa fa-edit font-16" aria-hidden="true"></i>
                                     </button>
                                     <button title="{!! !$item->estado?'Activar' : 'Desactivar' !!}" 
@@ -291,9 +314,9 @@
 
 @section('plugins-js')
     <!-- Bootstrap Select -->
-    <script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" defer></script>
-    <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" defer></script>
+    <script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
+    <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
 
-    <script src="{{ asset('js/scripts/usuariosRoles.js') }}" defer></script>
-    <script src="{{ asset('js/scripts/data-table.js') }}" defer></script>
+    <script src="{{ asset('js/scripts/usuariosRoles.js') }}" ></script>
+    <script src="{{ asset('js/scripts/data-table.js') }}" ></script>
 @endsection

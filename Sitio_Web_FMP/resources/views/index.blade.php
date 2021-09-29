@@ -475,14 +475,17 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                     </div><!-- end col-->
                     <div class="col-xl-12" >                        
                         <div class="card-box"> 
-                            <h3>Canales Digitales</h3>                    
-                            <a href="https://campus.ues.edu.sv/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Campus Virtual</a>
+                            <h3>Canales Digitales</h3>    
+                            <a href="https://www.facebook.com/celeues" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> CELEUES</a>
+                            <a href="https://campus.ues.edu.sv/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Campus Virtual Central</a>
                             <a href="https://eel.ues.edu.sv/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Expediente en Linea</a>                      
                             <a href="https://correo.ues.edu.sv/" target="_blank" class="btn btn-danger  btn-block mt-3 text-left"><i class=" mdi mdi-email font-18"></i> Correo Institucional</a>                           
-                            <a href="https://www.facebook.com/EnLineaFMP" target="_blank" class="btn btn-danger  btn-block mt-3 text-left"><i class="mdi mdi-facebook border rounded font-16"></i> Universidad en Linea / Sede Paracentral</a> 
-                            <a href="https://www.facebook.com/celeues" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-facebook border rounded font-16"></i> CELEUES</a>
+                            <a href="https://www.facebook.com/DistanciaFMP" target="_blank" class="btn btn-danger  btn-block mt-3 text-left"><i class="mdi mdi-facebook border rounded font-16"></i> Universidad en Linea / Sede Paracentral</a> 
+                            <a href="http://biblio.fmp.ues.edu.sv/biblioteca/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-book-open-variant font-18"></i> Biblioteca</a>
+                            <!-- <a href="#" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-book-open-variant font-18"></i> Recurso LMS-FMP</a>-->
+                            <!-- <a href="#" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-book-open-variant font-18"></i> Campus Virtual FMP</a>-->
                         </div> <!-- end card-box-->                        
-                    </div> <!-- end col-->        
+                    </div> <!-- end col-->    
                 </div>
             </div>
         </div>
@@ -517,7 +520,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                             <div class="p-1"><a href="http://www.ues.edu.sv/secretaria-de-relaciones-nacionales-e-internacionales/" target="_blank">Secretaría de Relaciones</a></div>
                             <div class="p-1"><a href="https://secplan.ues.edu.sv/" target="_blank">Secretaría de Planificación</a></div>
                             <div class="p-1"><a href="https://sic.ues.edu.sv/" target="_blank">Secretaría de Investigaciones Científicas</a></div>
-                            <div class="p-1"><a href="http://saa.ues.edu.sv/portal/" target="_blank">Secretaría de Asuntos Académicos</a></div>
+                            <div class="p-1"><a href="http://saa.ues.edu.sv/" target="_blank">Secretaría de Asuntos Académicos</a></div>
                         </div>
                         <div class="col order-last">
                             <p class="header-title">Institución</p>
