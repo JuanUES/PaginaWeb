@@ -2,9 +2,9 @@
 
 @section('content')
 <!-- inicio Modal de registro -->
-<div class="modal fade bs-example-modal-lg" tabindex="-1" 
+<div class="modal fade bs-example-modal-lg" 
     role="dialog" aria-labelledby="myLargeModalLabel" 
-    id="modalRegistro" tabindex="-1" aria-hidden="true">
+    id="modalRegistro">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -47,17 +47,28 @@
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="">Roles <code>*</code></label>
-                                <select class="form-control select2-multiple" data-toggle="select2" id="roles"
-                                     multiple="multiple" aria-placeholder="Seleccione" style="width: 100%;" name="roles[]">
+                                <select class="form-control select2-multiple" data-toggle="select2" id="roles" placeholder="sddf"
+                                     multiple="multiple" aria-placeholder="Seleccione" style="width: 100%;" name="roles[]" id="roles">
                                     <optgroup  label="General">
                                         <option value="{{base64_encode('super-admin')}}">Super Administrador</option>
                                         <option value="{{base64_encode('Jefe-Academico')}}">Jefe Academico</option>
                                         <option value="{{base64_encode('Jefe-Administrativo')}}">Jefe Administrativo</option>
-                                        <option value="{{base64_encode('Pagina')}}">Pagina</option>
                                         <option value="{{base64_encode('Recurso-Humano')}}">Recurso Humano</option>
                                         <option value="{{base64_encode('Docente')}}">Docente</option>
                                         <option value="{{base64_encode('Jefe-Administrativo')}}">Jefe Administrativo</option>
                                     </optgroup>
+                                    <optgroup label="Pagina">
+                                        <option value="{{base64_encode('Pagina-Inicio-Imagenes')}}">Inicio - Imagenes</option>
+                                        <option value="{{base64_encode('Pagina-Inicio-Noticias')}}">Inicio - Noticias</option>
+                                        <option value="{{base64_encode('Pagina-Directorio')}}">Directorio</option>
+                                        <option value="{{base64_encode('Pagina-EstructuraOrganizativa')}}">Estructura Organizativa</option>
+                                        <option value="{{base64_encode('Pagina-AdminAcademica')}}">Administración Académica</option>
+
+                                        <option value="{{base64_encode('Pagina-Depto-')}}"></option>
+                                        <option value="{{base64_encode('Pagina-Depto-')}}"></option>
+                                        <option value="{{base64_encode('Pagina-Depto-')}}"></option>
+
+                                    </optgroup>   
                                     <optgroup label="Transparencia">
                                         <option value="{{base64_encode('Transparencia-Repositorio')}}">Repositorio</option>
                                         <option value="{{base64_encode('Transparencia-Presupuestario')}}">Presupuestario</option>
@@ -68,12 +79,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row ">
                         <div class="col-xl-12">
-                            <div class="form-group">
+                            <div class="form-group" id="form-id">
                                 <label for="exampleInputNombre">Empleado <code>*</code></label>
-                                <select class="form-control selectpicker" data-live-search="true" data-style="btn-white"
-                                 style="width: 100%;" name="empleado" id="empleado">
+                                <select class="form-control selectpicker"  data-live-search="true" 
+                                    data-style="btn-white" data-width="100%"  name="empleado" id="empleado">
                                     <option value="">Seleccione</option>
                                     @foreach ($empleados as $item)
                                         @php
@@ -88,9 +99,17 @@
                                             @endif
                                         @endforeach
                                         @if ($b)
-                                            <option data-icon="mdi mdi-account-remove-outline font-18" class="text-danger" value="{{$item->id}}">{{$item->nombre.' '.$item->apellido}}</option>
+                                            <option data-icon="mdi mdi-account-remove-outline font-18" class="text-danger" value="{{$item->id}}">                                                
+                                                <span>
+                                                    {{$item->nombre.' '.$item->apellido}}
+                                                </span>
+                                            </option>
                                         @else
-                                            <option data-icon="mdi mdi-account-plus-outline font-18" text-success value="{{$item->id}}">{{$item->nombre.' '.$item->apellido}}</option>
+                                            <option data-icon="mdi mdi-account-plus-outline font-18" value="{{$item->id}}">
+                                                <span>
+                                                {{$item->nombre.' '.$item->apellido}}
+                                                </span>
+                                            </option>
                                         @endif                                        
                                     @endforeach
                                 </select>
@@ -245,10 +264,22 @@
                         @else
                             @if ($item->hasRole('super-admin'))
                             <span class="badge badge-primary">Super Administrador</span>
+                            @endif   
+                             @if ($item->hasRole('Pagina-Inicio-Imagenes'))
+                            <span class="badge badge-primary">Pagina Inicio-Imagenes</span>
+                            @endif                        
+                            @if ($item->hasRole('Pagina-Inicio-Noticias'))
+                            <span class="badge badge-primary">Pagina Inicio-Noticias</span>
                             @endif                            
-                            @if ($item->hasRole('Pagina'))
-                            <span class="badge badge-primary">Pagina</span>
-                            @endif                            
+                            @if ($item->hasRole('Pagina-Directorio'))
+                            <span class="badge badge-primary">Pagina Directorio</span>
+                            @endif
+                            @if ($item->hasRole('Pagina-EstructuraOrganizativa'))
+                            <span class="badge badge-primary">Pagina Estructura Organizativa</span>
+                            @endif
+                            @if ($item->hasRole('Pagina-AdminAcademica'))
+                            <span class="badge badge-primary">Pagina Administración Académica</span>
+                            @endif                           
                             @if ($item->hasRole('Jefe-Academico'))
                             <span class="badge badge-primary">Jefe Academico</span>
                             @endif                            
@@ -264,15 +295,15 @@
                             @if ($item->hasRole('Transparencia-Decano'))
                             <span class="badge badge-primary">Transparencia Decano</span>
                             @endif        
+                            @if ($item->hasRole('Transparencia-Repositorio'))
+                            <span class="badge badge-primary">Transparencia Repositorio</span>
+                            @endif 
                             @if ($item->hasRole('Recurso-Humano'))
                             <span class="badge badge-primary">Recurso Humano</span>
                             @endif  
                             @if ($item->hasRole('Docente'))
                             <span class="badge badge-primary">Docente</span>
-                            @endif   
-                            @if ($item->hasRole('Transparencia-Repositorio'))
-                            <span class="badge badge-primary">Transparencia Repositorio</span>
-                            @endif   
+                            @endif                                 
                             @if ($item->hasRole('Jefe-Administrativo'))
                             <span class="badge badge-primary">Jefe Administrativo</span>
                             @endif                   
@@ -311,6 +342,9 @@
 @section('plugins')
 <link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
 <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>
+<style>
+
+</style>
 @endsection
 
 @section('plugins-js')

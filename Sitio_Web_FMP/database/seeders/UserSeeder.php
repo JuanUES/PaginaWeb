@@ -97,7 +97,6 @@ class UserSeeder extends Seeder
         $repositorio->assignRole('Transparencia-Repositorio');
         $decano->assignRole('Transparencia-Decano');
         $secretario->assignRole('Transparencia-Secretario');
-        $pg->assignRole('Pagina');
         $user->assignRole('Jefe-Academico');
         $jefea->assignRole('Jefe-Administrativo');
         $rrhh->assignRole('Recurso-Humano');

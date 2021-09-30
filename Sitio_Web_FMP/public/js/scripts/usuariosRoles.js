@@ -44,6 +44,13 @@ function editar(url,id,boton){
 }
 
 $('.select2-multiple').select2();
+/*$('#empleado').selectpicker({
+    dropdownParent: $('#modalRegistro')
+}).selectpicker();*/
+
+/*$('#modalRegistro').on('shown', function(){
+    $('.selectpicker').selectpicker('refresh');
+});*/
 
 $('.modal').on('hidden.bs.modal',function(){
     $('.selectpicker').val(null).trigger('change');

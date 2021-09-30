@@ -30,7 +30,20 @@ class RolesSeeder extends Seeder
         $role = Role::create(['name' => 'Transparencia-Secretario']);
         $role = Role::create(['name' => 'Transparencia-Decano']);
         $role = Role::create(['name' => 'Transparencia-Repositorio']);
-        $role = Role::create(['name' => 'Pagina']);
+
+        /**Roles para la Pagina */
+        $role = Role::create(['name' => 'Pagina-Inicio-Imagenes']);
+        $role = Role::create(['name' => 'Pagina-Inicio-Noticias']);
+        $role = Role::create(['name' => 'Pagina-Directorio']);
+        $role = Role::create(['name' => 'Pagina-EstructuraOrganizativa']);
+        $role = Role::create(['name' => 'Pagina-AdminAcademica']);
+        $role = Role::create(['name' => 'Pagina-Depto-CDE']);//Ciencias de la educacion
+        $role = Role::create(['name' => 'Pagina-Depto-CA']);//Ciencias Agronomicas
+        $role = Role::create(['name' => 'Pagina-Depto-CE']);//Ciencias Economicas
+        $role = Role::create(['name' => 'Pagina-Depto-I']);//Informatica
+        $role = Role::create(['name' => 'Pagina-Depto-PC']);//Plan Complementario
+        /**------------------------------------------------------------------------------*/
+        
         $role = Role::create(['name' => 'super-admin']);
         $role = Role::create(['name' => 'Jefe-Academico']);
         $role = Role::create(['name' => 'Recurso-Humano']);

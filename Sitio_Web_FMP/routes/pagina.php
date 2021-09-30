@@ -24,9 +24,8 @@ Route::post('PDFS/{localizacion}',[PDFImageController::class,'storeAll'])->middl
 Route::post('PDF/{localizacion}',[PDFImageController::class,'store'])->middleware(['auth'])->name('PDF');
 
 /**Carrusel */
-
 Route::post('/subirCarrusel/{tipo}', [ImagenesCarruselController::class, 'store'])
-->middleware(['auth'])->name('ImagenCarrusel');
+->middleware(['auth','role:super-admin'])->name('ImagenCarrusel');
 
 /**ContenidoHTML */
 

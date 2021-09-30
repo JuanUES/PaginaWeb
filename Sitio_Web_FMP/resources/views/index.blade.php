@@ -165,7 +165,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                             <div class="col-xl order-first">
                                 <h3>Noticias</h3>
                             </div>                     
-                            @auth
+                            @if ()
                                 <div class="col-lg-3 order-last btn-block">
                                     <!-- Button trigger modal noticia-->
                                     <button type="button" class="btn btn-block btn-info waves-effect waves-light" 

@@ -32,7 +32,7 @@
                         <div class="form-group">
                             <label for="fileE">Foto <code>*</code></label>
                             <label for="fileE" class="text-center">
-                                <img  class="border centradoA rounded img-fluid img-thumbnail" id="fotoE" >
+                                <img  class="rounded img-fluid img-thumbnail" id="fotoE" >
                             </label>                            
                         </div>
                         <div class="form-group text-center">
@@ -72,8 +72,8 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="">Categoria <code>*</code></label>
-                            <select class="selectpicker" id="categoriaE"
-                                data-live-search="true" data-style="btn-white" name="categoria">
+                            <select class="select2 form-group" id="categoriaE"
+                                data-live-search="true" style="width: 100%;" name="categoria">
                                 <option value="" selected>Seleccione</option>
                                 @foreach ($categorias as $item)
                                 <option value="{!!$item->id!!}">{!!$item->categoria!!}</option>
@@ -86,7 +86,7 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="Departamento">Tipo Contrato <code>*</code></label>
-                            <select  class="form-group selectpicker" data-live-search="true" data-style="btn-white"
+                            <select  style="width: 100%;" class="form-group select2" data-live-search="true" data-style="btn-white"
                                     id="tipo_contratoE" name="tipo_contrato">
                             <option value="" selected>Seleccione</option>
                             @foreach ($tcontrato as $contrato)
@@ -98,7 +98,7 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="Departamento">Tipo Jornada <code>*</code></label>
-                            <select  class="form-group selectpicker" data-live-search="true" data-style="btn-white"
+                            <select  class=" form-group select2" style="width: 100%;" data-live-search="true" 
                                 id="tipo_jornadaE" name="tipo_jornada">
                                 <option value="" selected>Seleccione</option>
                                 @foreach ($tjornada as $jornada)
@@ -110,36 +110,41 @@
                 </div>
                 <div class="row">
                     <div class="col-xl-6">
-                        <label for="Departamento">Departamento <code>*</code></label>
-                        <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                            id="deptoE" name="departamento">
-                            <option value="" selected>Seleccione</option>
-                            @foreach ($departamentos as $depto)
-                                <option value="{!!$depto->id!!}">{!!$depto->nombre_departamento!!}</option>
-                            @endforeach
-                        </select>
+                        <div class="form-group">
+                            <label for="Departamento">Departamento <code>*</code></label>
+                            <select style="width: 100%;" class="form-group select2" data-live-search="true" data-style="btn-white"
+                                id="deptoE" name="departamento">
+                                <option value="" selected>Seleccione</option>
+                                @foreach ($departamentos as $depto)
+                                    <option value="{!!$depto->id!!}">{!!$depto->nombre_departamento!!}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="col-xl-6">
-                        <label for="Departamento">Tipo Empleado <code>*</code></label>
-                        <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                            id="tipo_empleadoE" name="tipo_empleado">
-                            <option name="" value="" selected>Seleccione</option>
-                           <option value="Administrativo">Administrativo</option>
-                           <option value="Académico">Académico</option>
-                        </select>
+                        <div class="form-group">
+                            <label for="Departamento">Tipo Empleado <code>*</code></label>
+                            <select style="width: 100%;" class="form-group select2" data-live-search="true"
+                                id="tipo_empleadoE" name="tipo_empleado">
+                                <option name="" value="" selected>Seleccione</option>
+                                <option value="Administrativo">Administrativo</option>
+                                <option value="Académico">Académico</option>
+                            </select>
+                        </div>
                     </div>
-
                 </div>
                 <div class="row">
                     <div class="col-xl-12">
-                        <label for="Departamento">Jefes y Empleados </label>
-                        <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                            id="jefe_empleadoE" name="jefe">
-                            <option name="" value="">Seleccione</option>
-                            @foreach ($empleados as $item)
-                                <option name="{!!$item->id!!}">{!!$item->nombre.' '.$item->apellido!!}</option>
-                            @endforeach
-                        </select>
+                        <div class="form-group">
+                            <label for="Departamento">Jefes y Empleados </label>
+                            <select class="select2 form-group " data-live-search="true"  data-style="btn-white"
+                                id="jefe_empleadoE" name="jefe" style="width: 100%;">
+                                <option name="" value="">Seleccione</option>
+                                @foreach ($empleados as $item)
+                                    <option name="{!!$item->id!!}">{!!$item->nombre.' '.$item->apellido!!}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -448,212 +453,16 @@
         transform: translate(-50%, -50%);
     }    
 </style>
+<link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
+<link href="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>
 @endsection
 
 @section('plugins-js')
 <!-- Bootstrap Select -->
+<script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
+<script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
+<!-- Bootstrap Select -->
 <script src="{{ asset('js/scripts/data-table.js') }}" ></script>
+<script src="{{ asset('js/scripts/empleados.js') }}" ></script>
 <script src="{{ asset('js/jquery.mask.js') }}" ></script>
-
-<script>
-    const ancho = 370;
-    const alto = 285;
-    // Obtener referencia al input y a la imagen
-    const $fileE = document.querySelector("#fileE"),
-    $fotoE = document.querySelector("#fotoE");
-    
-    $('#fotoE').width(ancho); 
-    $('#fotoE').height(alto);
-    // Escuchar cuando cambie
-    $fileE.addEventListener("change", () => {
-        // Los archivos seleccionados, pueden ser muchos o uno
-        const archivos = $fileE.files;
-        // Si no hay archivos salimos de la función y quitamos la imagen
-        if (!archivos || !archivos.length) {
-            $fotoE.src = "";
-            return;
-        }
-        // Ahora tomamos el primer archivo, el cual vamos a previsualizar
-        const primerArchivo = archivos[0];
-        // Lo convertimos a un objeto de tipo objectURL
-        const objectURL = URL.createObjectURL(primerArchivo);
-        // Y a la fuente de la imagen le ponemos el objectURL
-        $('#fotoE').width(ancho); // Unidades que se asumen en pixeles
-        $('#fotoE').height(alto);
-        $fotoE.src = objectURL;
-    });
-
-    $('#modalRegistro').on('hidden.bs.modal',function(){
-        $(".alert").hide();
-        $("form").trigger("reset");
-        $(".selectpicker").val(null).trigger("change");
-    });
-
-    function editarCat(id){
-        $.get('Empleado/categoriaGetObjeto/'+id,function(json){
-            json=JSON.parse(json);
-            $('#_idCat').val(json.id);
-            $('#categoria').val(json.categoria);
-        });
-    }
-    function eliminarCat(id){
-        $('#idCat').val(id);
-        $('#notificacionEliminar').show();
-    }
-    function AltaBaja(id){
-      $("#activarId").val(id);
-      $("#modalAlta").modal();
-    }
-    function cargarCategoria(){
-        $.get('Empleado/Categoria',function(json){
-            json=JSON.parse(json);
-            var categoria = $('#categoriaTb').DataTable();
-            categoria.clear();
-            var id=1;
-            for (var i in json) {
-                var html = '';
-                html += '<div class="btn-group text-center" role="group">';
-                html += '<button onclick="editarCat('+json[i].id+');"';
-                html += '    title="Editar" class="btn btn-outline-primary mr-1 btn-sm rounded">';
-                html += '   <i class="fa fa-edit font-15" aria-hidden="true"></i>';
-                html += '</button>';
-                html += '<button title="Eliminar" class="btn btn-outline-danger btn-sm rounded" ';
-                html += '    onclick="eliminarCat('+json[i].id+');">';
-                html += '    <i class=" mdi mdi-trash-can-outline font-18" aria-hidden="true"></i>';
-                html += '</button>';
-                html += '</div>';
-                categoria.row.add([id,json[i].categoria,html]).draw(false);
-                id++;
-            }
-        });
-    }
-    function httpCategoria(formulario,notificacion){
-        $.ajax({
-            type: $(formulario).attr('method'),
-            url: $(formulario).attr('action'),
-            dataType: "html",
-            data: new FormData(document.getElementById(formulario.replace('#',''))),
-            processData: false,
-            contentType: false,
-            error : function(jqXHR, textStatus){
-                if (jqXHR.status === 0) {
-
-                    errorServer(notificacion,'No conectar: ​​Verifique la red.');
-
-                } else if (jqXHR.status == 404) {
-
-                    errorServer(notificacion,'No se encontró la página solicitada [404]');
-
-                } else if (jqXHR.status == 500) {
-
-                    errorServer(notificacion,'Error interno del servidor [500].');
-
-                } else if (textStatus === 'parsererror') {
-
-                    errorServer(notificacion,'Error al analizar JSON solicitado.');
-
-                } else if (textStatus === 'timeout') {
-
-                    errorServer(notificacion,'Error de tiempo de espera.');
-
-                } else if (textStatus === 'abort') {
-
-                    errorServer(notificacion,'Solicitud de Ajax cancelada.');
-
-                } else {
-
-                    errorServer(notificacion,'Error no detectado: ' + jqXHR.responseText);
-                }
-                $('.modal').scrollTop($('.modal').height());
-            },beforeSend:function(jqXHR, textStatus){
-                $(notificacion).removeClass().addClass('alert alert-info bg-info text-white border-0').html(''
-                        +'<div class="row">'
-                        +'    <div class="col-lg-1 px-2">'
-                        +'        <div class="spinner-border text-white m-2" role="status"></div>'
-                        +'    </div>'
-                        +'    <div class="col-lg-11 align-self-center" >'
-                        +'      <h3 class="col-xl text-white">Cargando...</h3>'
-                        +'    </div>'
-                        +'</div>'
-                    ).show();
-                    $('.modal').scrollTop(0);
-                    disableform(formulario);
-            },
-        }).then(function(data) {
-
-            data = JSON.parse(data);
-            if(data.error!=null){
-
-                $(notificacion).removeClass().addClass('alert alert-danger bg-danger text-white border-0');
-                $errores = '';
-                for (let index = 0; index < data.error.length; index++) {
-                    $error = '<li>'+data.error[index]+'</li>';
-                    $errores +=$error;
-                }
-
-                $(notificacion).html('<h4 Class = "text-white">Completar Campos:</h4>'
-                    +'<div class="row">'
-                    +'<div class="col-lg-9 order-firts">'
-                    +'<ul>'+$errores+'</ul>'
-                    +'</div>'
-                    +'<div class="col-lg-3 order-last text-center">'
-                    +'<li class="fa fa-exclamation-triangle fa-5x"></li>'
-                    +'</div>'
-                    +'</div>'
-                ).show();
-                enableform(formulario);
-
-            }else{
-                if(data.mensaje!=null && data.error==null){
-                    $(notificacion).removeClass().addClass('alert alert-success bg-success text-white ').html(''
-                        +'<div class="row">'
-                            +'<div class="col-xl-11 order-last">'
-                                +' <h3 class="col-xl text-white">'+data.mensaje+'</h3>'
-                            +'</div>'
-                            +'<div class="col-xl-1 order-firts">'
-                                +'<i class="fa fa-check  fa-3x"></i>'
-                            +'</div>'
-                        +'</div>'
-                    ).show();
-                    $(formulario)[0].reset();
-                    enableform(formulario);
-                    cargarCategoria();
-                }
-            }
-            $('.modal').scrollTop(0);
-        });
-    }
-    function editar(id,boton){
-        $(boton).prop('disabled', true).html(''
-                +'<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
-        );
-        $.get('Empleado/'+id, function(json){
-                json=JSON.parse(json);
-                $("#idE").val(id);
-                $('#nombreE').val(json.nombre);
-                $('#apellidoE').val(json.apellido);
-                $('#duiE').val(json.dui);
-                $('#nitE').val(json.nit);
-                $('#telE').val(json.tel);
-                $('#categoriaE').val(json.categoria).trigger("change");
-                $('#tipo_contratoE').val(json.contrato).trigger("change");
-                $('#tipo_jornadaE').val(json.jornada).trigger("change");
-                $('#deptoE').val(json.depto).trigger("change");
-                $('#tipo_empleadoE').val(json.tipo).trigger("change");
-                $('#jefe_empleadoE').val(json.jefe).trigger("change");
-
-                $('#fotoE').width(ancho); 
-                $('#fotoE').height(alto);
-                $fotoE.src = json.urlfoto;
-
-                $("#modalRegistro").modal();
-            }
-        );
-        $(boton).prop('disabled', false).html(''
-                +'<i class="fa fa-edit font-16" aria-hidden="true"></i>'
-        );
-    }
-    
-</script>
-
 @endsection
