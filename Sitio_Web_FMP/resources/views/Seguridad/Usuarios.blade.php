@@ -279,7 +279,25 @@
                             @endif
                             @if ($item->hasRole('Pagina-AdminAcademica'))
                             <span class="badge badge-primary">Pagina Administración Académica</span>
-                            @endif                           
+                            @endif 
+                            @if ($item->hasRole('Pagina-Depto-CDE'))
+                            <span class="badge badge-primary">Pagina Departamento Ciencias de la Educación</span>
+                            @endif
+                            @if ($item->hasRole('Pagina-Depto-CA'))
+                            <span class="badge badge-primary">Pagina Departamento Ciencias Agronómicas</span>
+                            @endif 
+                            @if ($item->hasRole('Pagina-Depto-CE'))
+                            <span class="badge badge-primary">Pagina Departamento Ciencias Ecónomicas</span>
+                            @endif
+                            @if ($item->hasRole('Pagina-Depto-I'))
+                            <span class="badge badge-primary">Pagina Departamento Informóíó</span>
+                            @endif
+                            
+        $role = Role::create(['name' => 'Pagina-Depto-CDE']);//Ciencias de la educacion
+        $role = Role::create(['name' => 'Pagina-Depto-CA']);//Ciencias Agronomicas
+        $role = Role::create(['name' => 'Pagina-Depto-CE']);//Ciencias Economicas
+        $role = Role::create(['name' => 'Pagina-Depto-I']);//Informatica
+        $role = Role::create(['name' => 'Pagina-Depto-PC']);//Plan Complementario                          
                             @if ($item->hasRole('Jefe-Academico'))
                             <span class="badge badge-primary">Jefe Academico</span>
                             @endif                            

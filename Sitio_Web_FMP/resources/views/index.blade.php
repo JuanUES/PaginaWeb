@@ -27,7 +27,7 @@
 
 @section('container')
 
-@auth
+@if (@Auth::user()->hasRole('Pagina-Inicio-Imagenes'))
 <div id="modalCR2" class="modal fade bs-example-modal-center" tabindex="-1" 
 role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
 <div class="modal-dialog modal-dialog-centered">
@@ -66,7 +66,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
     </div><!-- /.modal-content -->
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal --> 
-@endauth
+@endif
 
 
 <div class="wrapper">
@@ -86,7 +86,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                             <div class="row py-1">
                                 <div class="col order-first ">
                                     <h3>Facultad Multidisciplinaria Paracentral</h3></div>
-                                @auth
+                                @if (@Auth::user()->hasRole('Pagina-Inicio-Imagenes'))
                                 <div class="col-lg-3 order-last ">
                                     <a href="" class="btn btn-block btn-info tex-left" 
                                     data-toggle="modal" data-target="#agregarImagenCarrusel">
@@ -116,7 +116,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal -->
-                                @endauth  
+                                @endif  
                             </div>
                             <div class="row">                        
                                 @if (count($imgCarrusel) == '0')
@@ -136,11 +136,11 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                         @for ($i = 0; $i < count($imgCarrusel); $i++)            
                                         
                                             <div class="carousel-item {{($i == 0 )?'active':''}}">
-                                                @auth                                                                                                       
+                                                @if (@Auth::user()->hasRole('Pagina-Inicio-Imagenes'))                                                                                                    
                                                     <button type="submit" class="btn text-white btn-danger btn-block" data-toggle="modal" data-target="#modalCR2" onclick="$('#imagenCR').val({!!$imgCarrusel[$i]->id!!})">
                                                         <div class=" mdi mdi-delete mdi-16px text-center" data-toggle="modal" data-target="#modalCR2" onclick="$('#imagenCR').val({!!$imgCarrusel[$i]->id!!})">Eliminar</div>
                                                     </button>
-                                                @endauth                                              
+                                                @endif                                            
                                                 <img src="images/carrusel/{{$imgCarrusel[$i]->imagen}}" class="img-fluid" width="100%" alt="{!!$imgCarrusel[$i]->imagen!!}">                      
                                             </div>
                                     @endfor 

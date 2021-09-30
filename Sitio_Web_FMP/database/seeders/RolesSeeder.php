@@ -32,6 +32,7 @@ class RolesSeeder extends Seeder
         $role = Role::create(['name' => 'Transparencia-Repositorio']);
 
         /**Roles para la Pagina */
+        $role = Role::create(['name' => 'Pagina-Admin']);
         $role = Role::create(['name' => 'Pagina-Inicio-Imagenes']);
         $role = Role::create(['name' => 'Pagina-Inicio-Noticias']);
         $role = Role::create(['name' => 'Pagina-Directorio']);
@@ -43,7 +44,7 @@ class RolesSeeder extends Seeder
         $role = Role::create(['name' => 'Pagina-Depto-I']);//Informatica
         $role = Role::create(['name' => 'Pagina-Depto-PC']);//Plan Complementario
         /**------------------------------------------------------------------------------*/
-        
+
         $role = Role::create(['name' => 'super-admin']);
         $role = Role::create(['name' => 'Jefe-Academico']);
         $role = Role::create(['name' => 'Recurso-Humano']);
