@@ -26,7 +26,7 @@
 @endsection
 
 @section('container')
-
+@auth
 @if (@Auth::user()->hasRole('Pagina-Inicio-Imagenes'))
 <div id="modalCR2" class="modal fade bs-example-modal-center" tabindex="-1" 
 role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
@@ -67,6 +67,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
 </div><!-- /.modal-dialog -->
 </div><!-- /.modal --> 
 @endif
+@endauth
 
 
 <div class="wrapper">
@@ -86,14 +87,15 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                             <div class="row py-1">
                                 <div class="col order-first ">
                                     <h3>Facultad Multidisciplinaria Paracentral</h3></div>
+                                @auth
                                 @if (@Auth::user()->hasRole('Pagina-Inicio-Imagenes'))
                                 <div class="col-lg-3 order-last ">
                                     <a href="" class="btn btn-block btn-info tex-left" 
                                     data-toggle="modal" data-target="#agregarImagenCarrusel">
                                         <div class="mdi mdi-upload mdi-16px text-center"> Agregar Imagen</div>
                                     </a>
-                                </div>                            
-                                      
+                                </div>                           
+                                   
                                 <div class="modal fade bs-example-modal-center" id='agregarImagenCarrusel'tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
@@ -116,7 +118,8 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal -->
-                                @endif  
+                                @endif 
+                                @endauth 
                             </div>
                             <div class="row">                        
                                 @if (count($imgCarrusel) == '0')
@@ -136,11 +139,13 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                         @for ($i = 0; $i < count($imgCarrusel); $i++)            
                                         
                                             <div class="carousel-item {{($i == 0 )?'active':''}}">
+                                                @auth
                                                 @if (@Auth::user()->hasRole('Pagina-Inicio-Imagenes'))                                                                                                    
                                                     <button type="submit" class="btn text-white btn-danger btn-block" data-toggle="modal" data-target="#modalCR2" onclick="$('#imagenCR').val({!!$imgCarrusel[$i]->id!!})">
                                                         <div class=" mdi mdi-delete mdi-16px text-center" data-toggle="modal" data-target="#modalCR2" onclick="$('#imagenCR').val({!!$imgCarrusel[$i]->id!!})">Eliminar</div>
                                                     </button>
-                                                @endif                                            
+                                                @endif    
+                                                @endauth                                        
                                                 <img src="images/carrusel/{{$imgCarrusel[$i]->imagen}}" class="img-fluid" width="100%" alt="{!!$imgCarrusel[$i]->imagen!!}">                      
                                             </div>
                                     @endfor 
@@ -368,13 +373,13 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                                     @if ($n->tipo)
                                                         <a href="{{ asset('/noticias') }}/{!!base64_encode($n->id)!!}/{!!base64_encode($n->titulo)!!}"
                                                            
-                                                        class="btn btn-light waves-effect width-md  @guest mt-4 @endguest" target="_blank">
+                                                        class="btn btn-light waves-effect width-md  @if(is_null(@Auth::user()->hasRole('Pagina-Inicio-Noticias')))  mt-4 @endif" target="_blank">
                                                         @auth
                                                             <i class="mdi mdi-send"></i>
                                                         @endauth Leer más 
-                                                        @guest
+                                                        @if(is_null(@Auth::user()->hasRole('Pagina-Inicio-Noticias')))
                                                         <i class="mdi mdi-send"></i>
-                                                        @endguest
+                                                        @endif
                                                         </a>
                                                         @auth                                                        
                                                         <button type="button"  class="btn btn-light waves-effect width-md"

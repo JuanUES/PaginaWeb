@@ -58,16 +58,17 @@
                                         <option value="{{base64_encode('Jefe-Administrativo')}}">Jefe Administrativo</option>
                                     </optgroup>
                                     <optgroup label="Pagina">
+                                        <option value="{{base64_encode('Pagina-Admin')}}">Administrador</option>
                                         <option value="{{base64_encode('Pagina-Inicio-Imagenes')}}">Inicio - Imagenes</option>
                                         <option value="{{base64_encode('Pagina-Inicio-Noticias')}}">Inicio - Noticias</option>
                                         <option value="{{base64_encode('Pagina-Directorio')}}">Directorio</option>
                                         <option value="{{base64_encode('Pagina-EstructuraOrganizativa')}}">Estructura Organizativa</option>
                                         <option value="{{base64_encode('Pagina-AdminAcademica')}}">Administración Académica</option>
-
-                                        <option value="{{base64_encode('Pagina-Depto-')}}"></option>
-                                        <option value="{{base64_encode('Pagina-Depto-')}}"></option>
-                                        <option value="{{base64_encode('Pagina-Depto-')}}"></option>
-
+                                        <option value="{{base64_encode('Pagina-Depto-CDE')}}">Departamento-Ciencias de la Educación</option>
+                                        <option value="{{base64_encode('Pagina-Depto-CA')}}">Departamento-Ciencias Agronómicas</option>
+                                        <option value="{{base64_encode('Pagina-Depto-CE')}}">Departamento-Ciencias Ecónomicas</option>
+                                        <option value="{{base64_encode('Pagina-Depto-I')}}">Departamento-Informática</option>
+                                        <option value="{{base64_encode('Pagina-Depto-PC')}}">Departamento-Plan Complementario</option>
                                     </optgroup>   
                                     <optgroup label="Transparencia">
                                         <option value="{{base64_encode('Transparencia-Repositorio')}}">Repositorio</option>
@@ -265,8 +266,11 @@
                             @if ($item->hasRole('super-admin'))
                             <span class="badge badge-primary">Super Administrador</span>
                             @endif   
-                             @if ($item->hasRole('Pagina-Inicio-Imagenes'))
+                            @if ($item->hasRole('Pagina-Inicio-Imagenes'))
                             <span class="badge badge-primary">Pagina Inicio-Imagenes</span>
+                            @endif
+                            @if ($item->hasRole('Pagina-Admin'))
+                            <span class="badge badge-primary">Pagina Administrador</span>
                             @endif                        
                             @if ($item->hasRole('Pagina-Inicio-Noticias'))
                             <span class="badge badge-primary">Pagina Inicio-Noticias</span>
@@ -290,14 +294,11 @@
                             <span class="badge badge-primary">Pagina Departamento Ciencias Ecónomicas</span>
                             @endif
                             @if ($item->hasRole('Pagina-Depto-I'))
-                            <span class="badge badge-primary">Pagina Departamento Informóíó</span>
+                            <span class="badge badge-primary">Pagina Departamento Informática</span>
                             @endif
-                            
-        $role = Role::create(['name' => 'Pagina-Depto-CDE']);//Ciencias de la educacion
-        $role = Role::create(['name' => 'Pagina-Depto-CA']);//Ciencias Agronomicas
-        $role = Role::create(['name' => 'Pagina-Depto-CE']);//Ciencias Economicas
-        $role = Role::create(['name' => 'Pagina-Depto-I']);//Informatica
-        $role = Role::create(['name' => 'Pagina-Depto-PC']);//Plan Complementario                          
+                            @if ($item->hasRole('Pagina-Depto-PC'))
+                            <span class="badge badge-primary">Plan Complementario</span>
+                            @endif                              
                             @if ($item->hasRole('Jefe-Academico'))
                             <span class="badge badge-primary">Jefe Academico</span>
                             @endif                            
