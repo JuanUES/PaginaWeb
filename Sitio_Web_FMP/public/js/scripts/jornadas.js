@@ -130,7 +130,7 @@ function fnHoras() {
 
     $.each(dataColumn.getCells(), function (indexInArray, valueOfElement) {
         let cellVall = valueOfElement._cell.value;
-        let fieldCell = cellVall.split(':');
+        let fieldCell = isNaN(cellVall) ? "" : cellVall.split(':');
         let HourCell = isNaN(parseFloat(fieldCell[0])) ? 0 : parseFloat(fieldCell[0]); let MinuteCell = isNaN(parseFloat(fieldCell[1])) ? 0 : parseFloat(fieldCell[1]);
         var horas_Cell = HourCell * 3600; var minutos_Cell = MinuteCell * 60; var segundosC = minutos_Cell + horas_Cell;
         var hoursCe = Math.floor( segundosC / 3600 ); var minutesCe = Math.floor( (segundosC % 3600) / 60 );
