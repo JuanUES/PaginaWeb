@@ -27,7 +27,7 @@
 
 @section('container')
 @auth
-@if (@Auth::user()->hasRole('Pagina-Inicio-Imagenes'))
+@if (@Auth::user()->hasRole('Pagina-Inicio-Imagenes|Pagina-Admin|super-admin'))
 <div id="modalCR2" class="modal fade bs-example-modal-center" tabindex="-1" 
 role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
 <div class="modal-dialog modal-dialog-centered">
@@ -88,7 +88,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                 <div class="col order-first ">
                                     <h3>Facultad Multidisciplinaria Paracentral</h3></div>
                                 @auth
-                                @if (@Auth::user()->hasRole('Pagina-Inicio-Imagenes'))
+                                @if (@Auth::user()->hasRole('Pagina-Inicio-Imagenes|Pagina-Admin|super-admin'))
                                 <div class="col-lg-3 order-last ">
                                     <a href="" class="btn btn-block btn-info tex-left" 
                                     data-toggle="modal" data-target="#agregarImagenCarrusel">
@@ -140,7 +140,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                         
                                             <div class="carousel-item {{($i == 0 )?'active':''}}">
                                                 @auth
-                                                @if (@Auth::user()->hasRole('Pagina-Inicio-Imagenes'))                                                                                                    
+                                                @if (@Auth::user()->hasRole('Pagina-Inicio-Imagenes|Pagina-Admin|super-admin'))                                                                                                 
                                                     <button type="submit" class="btn text-white btn-danger btn-block" data-toggle="modal" data-target="#modalCR2" onclick="$('#imagenCR').val({!!$imgCarrusel[$i]->id!!})">
                                                         <div class=" mdi mdi-delete mdi-16px text-center" data-toggle="modal" data-target="#modalCR2" onclick="$('#imagenCR').val({!!$imgCarrusel[$i]->id!!})">Eliminar</div>
                                                     </button>
@@ -171,6 +171,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                 <h3>Noticias</h3>
                             </div>                     
                             @auth
+                            @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
                                 <div class="col-lg-3 order-last btn-block">
                                     <!-- Button trigger modal noticia-->
                                     <button type="button" class="btn btn-block btn-info waves-effect waves-light" 
@@ -339,7 +340,8 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                             </div>                                    
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->                          
+                                </div><!-- /.modal -->    
+                            @endif                      
                             @endauth     
                             </div>
                             @if (count($noticias))                                
@@ -352,10 +354,8 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                       </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($noticias as $n)
-                                        
+                                        @foreach ($noticias as $n)                                        
                                         <tr>
-
                                             <td>
                                                 <div class="border p-1 rounded media">
                                                     
@@ -403,18 +403,22 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                                             @endif
                                                         </a>
                                                         @auth
+                                                        @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
                                                         <span data-toggle="modal" data-target="#myModalNoticia">
                                                             <button type="button"  class="btn btn-light waves-effect width-md" onclick="modificarEX({!!$n->id!!})" >
                                                                 <i class="mdi mdi-file-document-edit mdi-16p"></i> Modificar</button>
                                                         </span>
+                                                        @endif
                                                         @endauth
                                                     @endif
                                                     
                                                     @auth 
+                                                    @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
                                                         <button type="button" onclick="$('#noticia').val('{!!base64_encode($n->id)!!}')"
                                                              class="btn btn-light waves-effect width-md btn-block" data-toggle="modal" 
                                                              data-target="#modalEliminarNoticia">
                                                             <i class="mdi mdi-delete"></i> Eliminar</button>
+                                                    @endif
                                                     @endauth      
                                                 </div>                          
                                                 </div>
@@ -423,7 +427,8 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                         @endforeach                
                                     </tbody>
                                 </table>   
-                                @auth                                   
+                                @auth        
+                                @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))                           
                                 <div id="modalEliminarNoticia" class="modal fade bs-example-modal-center" tabindex="-1" 
                                     role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                                     <div class="modal-dialog modal-dialog-centered">
@@ -461,7 +466,8 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                             </div>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->                     
+                                </div><!-- /.modal --> 
+                                @endif                    
                                 @endauth 
                                 @else
                                 <p class="p-2 border text-center">No hay noticias para mostrar.</p>
@@ -568,18 +574,21 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
 @auth  
 <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
 <script src="{{ asset('js/summernote.config.min.js') }}"></script>
-<script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>  
+<script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script> 
+ 
 <script src="{{ asset('js/scripts/http.min.js') }}"></script>
-<script src="{{ asset('js/scripts/index.js') }}"></script>
 
+@if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
+<script src="{{ asset('js/scripts/index.js') }}"></script>
+@endif
 
 <!-- Plugins js -->
 <script src=" {{ asset('js/dropzone.min.js') }} "></script>
 
 
 <script src="{{ asset('js/index/index.datatable.js') }}"></script>
-
-<script>
+@if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
+<script>   
     function reset(){$('.nav-tabs a[href="#noticiaL"]').tab('show')};
   
     /*Carga del model con los datos de la noticia actual */
@@ -596,6 +605,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
         editarEX($json);        
     };
 </script>
+@endif
 @endauth
 
 @endsection
