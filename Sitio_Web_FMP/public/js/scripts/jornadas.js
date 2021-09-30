@@ -249,7 +249,7 @@ function validateHoras(valor, total){
     let restante = valor-total;
     //console.log(restante);
 
-    if (total>valor) {
+    if (restante>valor) {
         validado = false;
         mensaje = 'Las horas registradas exceden el número de horas permitidas';
     }
@@ -336,7 +336,7 @@ function CalcularHoras(inicio, fin) {
     }
 
     // console.log('_horas CalcularHoras'+ diffHTotal + ':' + diffMTotal);
-    let total  = ((isNaN(hoursF) - isNaN(hoursI) < 0  ||  isNaN(hoursI)<=0 ) ) ? ( parseInt(hoursF) - parseInt(hoursI) ) : ( diffHTotal + ':' + diffMTotal);
+    let total  = ((isNaN(hoursF) - isNaN(hoursI) < 0  ||  isNaN(hoursI)<=0 ) || parseInt(hoursF) - parseInt(hoursI) < 0  ) ? ( parseInt(hoursF) - parseInt(hoursI) ) : ( diffHTotal + ':' + diffMTotal);
     // console.log('To CalcularHoras'+ total);
 
     return total;
