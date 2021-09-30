@@ -373,30 +373,34 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                                     @if ($n->tipo)
                                                         <a href="{{ asset('/noticias') }}/{!!base64_encode($n->id)!!}/{!!base64_encode($n->titulo)!!}"
                                                            
-                                                        class="btn btn-light waves-effect width-md  @if(is_null(@Auth::user()->hasRole('Pagina-Inicio-Noticias')))  mt-4 @endif" target="_blank">
+                                                        class="btn btn-light waves-effect width-md  @if(is_null(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin')))  mt-4 @endif" target="_blank">
                                                         @auth
                                                             <i class="mdi mdi-send"></i>
                                                         @endauth Leer más 
-                                                        @if(is_null(@Auth::user()->hasRole('Pagina-Inicio-Noticias')))
+                                                        @if(is_null(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin')))
                                                         <i class="mdi mdi-send"></i>
                                                         @endif
                                                         </a>
-                                                        @auth                                                        
+                                                        @auth  
+                                                        @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))                                                      
                                                         <button type="button"  class="btn btn-light waves-effect width-md"
                                                             onclick="modificarNL({!!$n->id!!})" data-toggle="modal" data-target="#myModalNoticia">
                                                          <i class="mdi mdi-file-document-edit mdi-16p"></i> Modificar
                                                         </button>
+                                                        @endif
                                                         @endauth
                                                     @else
                                                         <a href="{!!$n->urlfuente!!}"
-                                                            class="btn btn-light waves-effect width-md @guest mt-4 @endguest" target="_blank">
+                                                            class="btn btn-light waves-effect width-md @if(is_null(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))) mt-4 @endif" target="_blank">
                                                             @auth
+                                                            @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
                                                             <i class="mdi mdi-earth"></i>
+                                                            @endif
                                                             @endauth
                                                             Leer más 
-                                                            @guest
+                                                            @if(is_null(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin')))
                                                             <i class="mdi mdi-earth"></i>
-                                                            @endguest
+                                                            @endif
                                                         </a>
                                                         @auth
                                                         <span data-toggle="modal" data-target="#myModalNoticia">
