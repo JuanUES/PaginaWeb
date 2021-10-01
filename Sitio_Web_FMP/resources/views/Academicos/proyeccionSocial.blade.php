@@ -1,13 +1,13 @@
 @extends('Pagina/baseOnlyHtml')
 @section('header')
-@auth
+@if(@Auth::check()?@Auth::user()->hasRole('Pagina-ProyeccionSocial|Pagina-Admin|super-admin'):@Auth::check())
 <!-- Este css se carga nada mas cuando esta logeado un usuario-->
 <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
 <link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
-@endauth
+@endif
 @endsection
 @section('footer')
-@auth    
+@if(@Auth::check()?@Auth::user()->hasRole('Pagina-ProyeccionSocial|Pagina-Admin|super-admin'):@Auth::check())    
 <!-- Plugins js -->
 <script src=" {{ asset('js/dropzone.min.js') }} "></script>
 <script src="{{ asset('js/scripts/http.min.js') }}"></script><!--Este es el script que se utiliza para enviar post con un ajax generico-->
@@ -25,7 +25,7 @@
          }
      
  </script>
-@endauth
+@endif
 @endsection
 @section('container')
 <div class="wrapper">
@@ -50,18 +50,18 @@
                             </p>-->
                             <h4 class="mb-1 font-weight-bold">Jefe de la Unidad</h4>
                             @if (count($jefaturas)==0)
-                            @guest
+                            @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-ProyeccionSocial|Pagina-Admin|super-admin'))
                             <div class="row">
                                 <p class="border p-2 text-center btn-block">No hay datos registrados.</p>
                             </div>
-                            @endguest
                             @endif
-                            @guest
+                            @endif
+                            @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-ProyeccionSocial|Pagina-Admin|super-admin'))
                             <p class="text-muted font-15 text-justify">
                                 {!!count($jefaturas)?$jefaturas[0]->sector_dep_unid:null;!!}   
                             </p>
-                            @endguest
-                            @auth
+                            @endif
+                            @if(@Auth::check()?@Auth::user()->hasRole('Pagina-ProyeccionSocial|Pagina-Admin|super-admin'):@Auth::check())
                             <div class="row">
                                 <div class="col-xl-12">
                                     <form action="{{ route('JefeProyeccionSocial') }}" method="POST">
@@ -80,12 +80,12 @@
                                     </form>                                    
                                 </div>
                             </div>  
-                            @endauth
+                            @endif
                             <div class="row py-2">
                                 <div class="col order-first">
                                 <h4 class="mb-1 font-weight-bold">Coordinadores de Carreras</h4>
                                 </div>
-                                @auth         
+                                @if(@Auth::check()?@Auth::user()->hasRole('Pagina-ProyeccionSocial|Pagina-Admin|super-admin'):@Auth::check())         
                                 <div class="col-lg-4 order-last">              
                                     <a type="button" href="#" class="btn btn-info btn-block"
                                     data-toggle="modal" data-target="#myModalCoordinadores"><i class="dripicons-document"></i> Nuevo Coordinador</a>
@@ -150,7 +150,7 @@
                                         </div><!-- /.modal-dialog -->
                                     </div><!-- /.modal -->                                     
                                 </div>
-                                @endauth
+                                @endif
                             </div>
 
                             <div class="row">
@@ -167,11 +167,11 @@
                                                     <th class="text-lefth">
                                                         <p>Departamento</p>
                                                     </th>   
-                                                    @auth
+                                                    @if(@Auth::check()?@Auth::user()->hasRole('Pagina-ProyeccionSocial|Pagina-Admin|super-admin'):@Auth::check())
                                                     <th class="col-sm-1 text-left">
                                                         <p>Acciones</p>
                                                     </th> 
-                                                    @endauth                           
+                                                    @endif                           
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -179,7 +179,7 @@
                                                 <tr>
                                                     <th class="text-nowrap" scope="row">{!!$item->nombre!!}</th>
                                                     <td>{!!$item->sector_dep_unid!!}</td>
-                                                    @auth                                   
+                                                    @if(@Auth::check()?@Auth::user()->hasRole('Pagina-ProyeccionSocial|Pagina-Admin|super-admin'):@Auth::check())                                   
                                                     <td>
                                                         <div class="row">  
                                                             <div class="col text-center">                                               
@@ -196,7 +196,7 @@
                                                             </div>
                                                         </div>                         
                                                     </th>
-                                                    @endauth 
+                                                    @endif 
                                                 </tr>  
                                                 @endforeach                                                              
                                             </tbody>
@@ -269,7 +269,7 @@
                         $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
                         
                         ?>
-                        @auth
+                        @if(@Auth::check()?@Auth::user()->hasRole('Pagina-ProyeccionSocial|Pagina-Admin|super-admin'):@Auth::check())
                             
                         
                         
@@ -301,16 +301,16 @@
                             </form>
                         
                         
-                        @endauth 
+                        @endif 
                         
-                        @guest  
+                        @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-ProyeccionSocial|Pagina-Admin|super-admin'))  
                         
                         @if ($contenido!=null)
                         {!!$contenido->contenido!!}
                         @endif
                             
-                        @endguest
-                            @auth
+                        @endif
+                            @if(@Auth::check()?@Auth::user()->hasRole('Pagina-ProyeccionSocial|Pagina-Admin|super-admin'):@Auth::check())
                             <div id="modalEliminar2" class="modal fade bs-example-modal-center" tabindex="-1" 
                             role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                 <div class="modal-dialog modal-dialog-centered">
@@ -349,12 +349,12 @@
                                     </div><!-- /.modal-content -->
                                 </div><!-- /.modal-dialog -->
                             </div><!-- /.modal --> 
-                            @endauth
+                            @endif
                             <div class="row">                                
                                 <div class="col order-first">
                                     <h4></h4>
                                 </div>                               
-                                @auth
+                                @if(@Auth::check()?@Auth::user()->hasRole('Pagina-ProyeccionSocial|Pagina-Admin|super-admin'):@Auth::check())
                                 <div class="col-lg-3 order-last">
                                     <button class="btn btn-block btn-info tex-left" 
                                         data-toggle="modal" data-target="#subirpdf">
@@ -383,11 +383,11 @@
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal -->
-                                @endauth
+                                @endif
                             </div> 
                             @if (count($pdfs)>0)
                             <div class="table-responsive my-2" id="listaPDF">
-                                <table class="table mb-0 border @guest table-striped @endguest">
+                                <table class="table mb-0 border @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-ProyeccionSocial|Pagina-Admin|super-admin')) table-striped @endif">
                                     <thead>
                                         <tr>
                                             <th>
@@ -410,11 +410,11 @@
                                                     <a class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/'.$item->file !!}" target="_blank"> 
                                                         <i class="mdi mdi-file-pdf mdi-24px mr-1"></i>Descargar
                                                     </a>
-                                                    @auth
+                                                    @if(@Auth::check()?@Auth::user()->hasRole('Pagina-ProyeccionSocial|Pagina-Admin|super-admin'):@Auth::check())
                                                     <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminar"
                                                         onclick="$('#eliminar').val({{$item->id}})"><i class="mdi mdi-delete mdi-24px"></i>  Eliminar
                                                     </button>  
-                                                    @endauth 
+                                                    @endif 
                                                 </div>
                                                                                          
                                             </th>
@@ -428,7 +428,7 @@
                    
                     
 
-                            @auth
+                            @if(@Auth::check()?@Auth::user()->hasRole('Pagina-ProyeccionSocial|Pagina-Admin|super-admin'):@Auth::check())
                             <div id="modalEliminar" class="modal fade bs-example-modal-center" tabindex="-1" 
                                 role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                                 <div class="modal-dialog modal-dialog-centered">
@@ -467,7 +467,7 @@
                                     </div><!-- /.modal-content -->
                                 </div><!-- /.modal-dialog -->
                             </div><!-- /.modal --> 
-                            @endauth
+                            @endif
                             @endif
                             <!--
                             <h4>Contactanos</h4>

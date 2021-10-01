@@ -1,18 +1,18 @@
 @extends('Pagina/baseOnlyHtml')
 
 @section('header')
-@auth
+@if(@Auth::check()?@Auth::user()->hasRole('Pagina-UnidadInvestigacion|Pagina-Admin|super-admin'):@Auth::check())
     <!-- Summernote css -->
     <link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
     
     <!-- Este css se carga nada mas cuando esta logeado un usuario-->
     <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
     
-@endauth    
+@endif    
 @endsection
 
 @section('footer')
-    @auth 
+    @if(@Auth::check()?@Auth::user()->hasRole('Pagina-UnidadInvestigacion|Pagina-Admin|super-admin'):@Auth::check()) 
     <script src="{{ asset('js/scripts/http.min.js') }}"></script>   
         <!-- Plugins js -->
         <script src=" {{ asset('js/dropzone.min.js') }} "></script>   
@@ -26,7 +26,7 @@
             // para recargar pagina luego de subir o no imagenes
             $('.bs-example-modal-center').on('hidden.bs.modal', function() { location.reload(); });
         </script>
-    @endauth    
+    @endif    
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v11.0" nonce="FxW143mb"></script>
 @endsection
@@ -54,7 +54,7 @@
                                 <div class="col order-first">
                                     <h3 >Unidad de Investigación</h3>
                                 </div>
-                                @auth
+                                @if(@Auth::check()?@Auth::user()->hasRole('Pagina-UnidadInvestigacion|Pagina-Admin|super-admin'):@Auth::check())
                                 <div class="col-lg-3 order-last">
                                     <a href="" class="btn btn-block btn-info tex-left" 
                                     data-toggle="modal" data-target=".bs-example-modal-center">
@@ -84,7 +84,7 @@
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal -->
-                                @endauth  
+                                @endif  
                             </div>
                            
                             
@@ -106,11 +106,11 @@
                                         @for ($i = 0; $i < count($investigacionCarrusel); $i++)            
                                                                                 
                                             <div class="carousel-item {!!$i == 0 ? 'active': null!!}">
-                                                @auth                                                
+                                                @if(@Auth::check()?@Auth::user()->hasRole('Pagina-UnidadInvestigacion|Pagina-Admin|super-admin'):@Auth::check())                                                
                                                 <button type="submit" class="btn text-white btn-danger btn-block">
                                                     <div class=" mdi mdi-delete mdi-16px text-center" data-toggle="modal" data-target="#modalCR" onclick="$('#imagenCR').val({!!$investigacionCarrusel[$i]->id!!})">Eliminar</div>
                                                 </button>
-                                                @endauth  
+                                                @endif  
                                                 <img src="images/carrusel/{{$investigacionCarrusel[$i]->imagen}}" class="img-fluid" width="100%" height="60%" alt="{!!$investigacionCarrusel[$i]->imagen!!}">                                
                                             </div>  
                                         @endfor 
@@ -125,7 +125,7 @@
                                     </div>  
                                 </div>
                                 @endif  
-                                @auth
+                                @if(@Auth::check()?@Auth::user()->hasRole('Pagina-UnidadInvestigacion|Pagina-Admin|super-admin'):@Auth::check())
                                     <div class="row py-3">
                                         <div class="col-xl-12">
                                             <form action="{{ route('contenido', ['localizacion'=>'investigacionIndex']) }}" method="POST"  
@@ -156,7 +156,7 @@
                                             </form>
                                         </div>  
                                     </div>    
-                                @endauth 
+                                @endif 
                                       
 
                                       
@@ -164,7 +164,7 @@
 
                                     <div class="col order-first">
                                     </div>                               
-                                    @auth
+                                    @if(@Auth::check()?@Auth::user()->hasRole('Pagina-UnidadInvestigacion|Pagina-Admin|super-admin'):@Auth::check())
                                     <div class="col-lg-3 order-last">
                                         <button class="btn btn-block btn-info tex-left" 
                                             data-toggle="modal" data-target="#modalSubirInvestigacion">
@@ -195,15 +195,15 @@
                                             </div><!-- /.modal-content -->
                                         </div><!-- /.modal-dialog -->
                                     </div><!-- /.modal-->
-                                    @endauth
+                                    @endif
                                 </div> 
-                                @guest  
+                                @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-UnidadInvestigacion|Pagina-Admin|super-admin'))  
                                 <div class="col-xl-12 py-2">
                                     @if ($contenido!=null)
                                         {!!$contenido->contenido!!}
                                     @endif
                                 </div>      
-                                @endguest
+                                @endif
                                 <div class="col-xl-12 py-3">
                                     <?php
                                         $pdfs = \App\Models\Pagina\PDF::where('localizacion','investigacion')->get();
@@ -211,7 +211,7 @@
                                     
                                     @if (count($pdfs)>0)
                                     <div class="table-responsive my-1" id="listaPDFInvestigacion">
-                                        <table class="table mb-0 border @guest table-striped @endguest">
+                                        <table class="table mb-0 border @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-UnidadInvestigacion|Pagina-Admin|super-admin')) table-striped @endif">
                                             <thead>
                                                 <tr>
                                                     <th>
@@ -234,11 +234,11 @@
                                                             <a class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/investigacion/'.$item->file !!}" target="_blank"> 
                                                                 <i class="mdi mdi-file-pdf mdi-24px mr-1"></i>Descargar
                                                             </a>
-                                                            @auth
+                                                            @if(@Auth::check()?@Auth::user()->hasRole('Pagina-UnidadInvestigacion|Pagina-Admin|super-admin'):@Auth::check())
                                                             <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminarPDF"
                                                                 onclick="$('#eliminar').val({{$item->id}});$('#localizacion').val('investigacion');$('#vista').val('investigacion')"><i class="mdi mdi-delete mdi-24px"></i>  Eliminar
                                                             </button>  
-                                                            @endauth 
+                                                            @endif 
                                                         </div>
                                                                                                 
                                                     </th>
@@ -250,7 +250,7 @@
                                     </div> <!-- end table-responsive-->    
                                     @endif
                                 </div>                                
-                                @auth
+                                @if(@Auth::check()?@Auth::user()->hasRole('Pagina-UnidadInvestigacion|Pagina-Admin|super-admin'):@Auth::check())
                                     <div id="modalEliminarPDF" class="modal fade bs-example-modal-center" tabindex="-1" 
                                         role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                                         <div class="modal-dialog modal-dialog-centered">
@@ -291,7 +291,7 @@
                                             </div><!-- /.modal-content -->
                                         </div><!-- /.modal-dialog -->
                                     </div><!-- /.modal --> 
-                                @endauth                                
+                                @endif                                
                                                              
                                 <!-- end col -->
                             </div> <!-- end row-->
@@ -330,7 +330,7 @@
                                     </p>
                                 </li>
                             </ul>
-                            @auth
+                            @if(@Auth::check()?@Auth::user()->hasRole('Pagina-UnidadInvestigacion|Pagina-Admin|super-admin'):@Auth::check())
                                 
                             
                             <div class="row my-2">
@@ -342,7 +342,7 @@
                                     </button>
                                 </div> 
                             </div>
-                            @endauth
+                            @endif
                            
                             <table cellspacing="0" width="100%">
 <thead></thead>
@@ -435,7 +435,7 @@
                         </div>                        
                     </div>
                 </div> <!-- end col -->
-                @auth
+                @if(@Auth::check()?@Auth::user()->hasRole('Pagina-UnidadInvestigacion|Pagina-Admin|super-admin'):@Auth::check())
                 <div id ="modalCR" class="modal fade bs-example-modal-center" tabindex="-1" 
                 role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                     <div class="modal-dialog modal-dialog-centered">
@@ -474,9 +474,9 @@
                         </div><!-- /.modal-content -->
                     </div><!-- /.modal-dialog -->
                 </div><!-- /.modal --> 
-                @endauth
+                @endif
 
-@auth         
+@if(@Auth::check()?@Auth::user()->hasRole('Pagina-UnidadInvestigacion|Pagina-Admin|super-admin'):@Auth::check())         
 <!-- Coordinadores modal content -->
 <div class="modal fade" id="sondeo-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -552,7 +552,7 @@
 </div>
                                     
         
-@endauth
+@endif
                 <div class="col-xl-4">
                     <h4>Subunidades</h4>
                     <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">

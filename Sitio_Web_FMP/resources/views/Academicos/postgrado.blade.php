@@ -1,18 +1,18 @@
 @extends('Pagina/baseOnlyHtml')
 
 @section('header')
-@auth
+@if(@Auth::check()?@Auth::user()->hasRole('Pagina-Postgrado|Pagina-Admin|super-admin'):@Auth::check())
     <!-- Summernote css -->
     <link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
     
     <!-- Este css se carga nada mas cuando esta logeado un usuario-->
     <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
 
-@endauth    
+@endif    
 @endsection
 
 @section('footer')
-    @auth    
+    @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Postgrado|Pagina-Admin|super-admin'):@Auth::check())    
     
     <!-- Plugins js -->
     <script src=" {{ asset('js/dropzone.min.js') }} "></script>
@@ -27,7 +27,7 @@
     <script>
         function editarMaestria(id){$json = {!!json_encode($maestrias)!!}.find(x => x.id==id);editar($json);}
     </script>
-    @endauth    
+    @endif    
     <div id="fb-root"></div>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v11.0" nonce="FxW143mb"></script>
 @endsection
@@ -53,7 +53,7 @@
                                         <div class="col order-first">
                                             <h4>Aviso de Convocatoria de Ingresos</h4>
                                         </div>
-                                        @auth
+                                        @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Postgrado|Pagina-Admin|super-admin'):@Auth::check())
                                         <div class="col-lg-3 order-last">
                                             <a href="" class="btn btn-block btn-info tex-left" 
                                             data-toggle="modal" data-target=".bs-example-modal-center">
@@ -83,7 +83,7 @@
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
                                         </div><!-- /.modal -->
-                                        @endauth  
+                                        @endif  
                                     </div>
                                     
                                     <div class="row">                        
@@ -104,11 +104,11 @@
                                                 @for ($i = 0; $i < count($imagenConvocatoria); $i++)            
                                                                                         
                                                     <div class="carousel-item {!!$i == 0 ? 'active': null!!}">
-                                                        @auth
+                                                        @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Postgrado|Pagina-Admin|super-admin'):@Auth::check())
                                                         <button type="submit" class="btn text-white btn-danger btn-block" data-toggle="modal" data-target="#modalCR" onclick="$('#imagenCR').val({!!$imagenConvocatoria[$i]->id!!})">
                                                             <div class=" mdi mdi-delete mdi-16px text-center">Eliminar</div>
                                                         </button>
-                                                        @endauth  
+                                                        @endif  
                                                         <img src="images/carrusel/{{$imagenConvocatoria[$i]->imagen}}" class="img-fluid" width="100%" height="60%" alt="{!!$imagenConvocatoria[$i]->imagen!!}">                                
                                                     </div>  
                                             @endfor 
@@ -128,7 +128,7 @@
 
                                     <!--Aqui cargamos el contenido que sera visualizado para las personas que esten logeadas-->
                                     <!--Nota:Impotante cambiar la localizacion de la ruta y los id del form,notificacion y el boton guardar-->
-                                    @auth
+                                    @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Postgrado|Pagina-Admin|super-admin'):@Auth::check())
                                     <div class="row py-3">
                                         <div class="col-xl-12">
                                             <form action="{{ route('contenido', ['localizacion'=>'postgradoIndex']) }}" method="POST"  
@@ -159,19 +159,19 @@
                                             </form>
                                         </div>  
                                     </div>    
-                                    @endauth       
-                                    @guest  
+                                    @endif       
+                                    @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Postgrado|Pagina-Admin|super-admin'))  
                                     <div class="py-1">
                                         @if ($contenido!=null)
                                             {!!$contenido->contenido!!}
                                         @endif
                                     </div>
-                                    @endguest 
+                                    @endif 
 
                                 </div>
                             </div>         
                         </div>
-                        @auth
+                        @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Postgrado|Pagina-Admin|super-admin'):@Auth::check())
                         <div id ="modalCR" class="modal fade bs-example-modal-center" tabindex="-1" 
                         role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                             <div class="modal-dialog modal-dialog-centered">
@@ -210,7 +210,7 @@
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal --> 
-                        @endauth
+                        @endif
                         @foreach ($maestrias as $m)
                         <div class="tab-pane fade" id="{!!preg_replace('([^A-Za-z0-9])', 'l', $m->nombre)!!}" role="tabpanel">
                             <div class="btn-group" role="group">
@@ -219,7 +219,7 @@
                                     <i class="mdi mdi-arrow-left-thick"></i> 
                                     Volver a Postgrado
                                 </a>
-                                @auth                                 
+                                @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Postgrado|Pagina-Admin|super-admin'):@Auth::check())                                 
                                     <button class="btn btn-light waves-effect width-md" data-toggle="modal" data-target="#myModalMaestria"
                                         onclick="editarMaestria({!!$m->id!!})">
                                         <i class="mdi mdi-file-document-edit mdi-16p"></i>
@@ -236,7 +236,7 @@
                                     <button class="btn btn-light waves-effect width-md"  data-toggle="modal" data-target="#modalEliminar" onclick="eliminarMaestria('{!!base64_encode($m->id)!!}')">
                                         <i class="mdi mdi-delete mdi-16px"></i> Eliminar
                                     </button>
-                                @endauth
+                                @endif
                             </div>
                             <br>
                             <h3 class="py-3">{!!$m->nombre!!}</h3>     
@@ -261,7 +261,7 @@
                             <div class="row">                                
                                 <div class="col order-first">
                                 </div>                               
-                                @auth
+                                @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Postgrado|Pagina-Admin|super-admin'):@Auth::check())
                                 <div class="col-lg-3 order-last">
                                     <button class="btn btn-block btn-info tex-left" 
                                         data-toggle="modal" data-target="#modalSubir{!!$m->id!!}">
@@ -292,7 +292,7 @@
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal-->
-                                @endauth
+                                @endif
                             </div> 
                             <div class="row">
                                 <?php
@@ -301,7 +301,7 @@
                                 
                                 @if (count($pdfs)>0)
                                 <div class="table-responsive my-1" id="listaPDF">
-                                    <table class="table mb-0 border @guest table-striped @endguest">
+                                    <table class="table mb-0 border @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Postgrado|Pagina-Admin|super-admin')) table-striped @endif">
                                         <thead>
                                             <tr>
                                                 <th>
@@ -324,11 +324,11 @@
                                                         <a class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/'.$m->nombre.$m->id.'/'.$item->file !!}" target="_blank"> 
                                                             <i class="mdi mdi-file-pdf mdi-24px mr-1"></i>Descargar
                                                         </a>
-                                                        @auth
+                                                        @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Postgrado|Pagina-Admin|super-admin'):@Auth::check())
                                                         <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminarPDF"
                                                             onclick="$('#eliminar').val({{$item->id}});$('#localizacion').val({{$item->nombre.$item->id}});"><i class="mdi mdi-delete mdi-24px"></i>  Eliminar
                                                         </button>  
-                                                        @endauth 
+                                                        @endif 
                                                     </div>
                                                                                             
                                                 </th>
@@ -342,7 +342,7 @@
                             </div>
                         </div>
                         @endforeach
-                        @auth
+                        @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Postgrado|Pagina-Admin|super-admin'):@Auth::check())
                         <div id="modalEliminarPDF" class="modal fade bs-example-modal-center" tabindex="-1" 
                             role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                             <div class="modal-dialog modal-dialog-centered">
@@ -382,7 +382,7 @@
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal --> 
-                        @endauth
+                        @endif
                         <div id="modalEliminar" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
@@ -437,7 +437,7 @@
                         @if (count($maestrias)>0)
                         <h4>Carreras</h4>
                         @endif            
-                        @auth
+                        @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Postgrado|Pagina-Admin|super-admin'):@Auth::check())
                         <a class="btn btn-info btn-block text-white text-left  mb-2" data-toggle="modal" data-target="#myModalMaestria"><i class="dripicons-document"></i> Nuevo Registro</a>
                         <div id="myModalMaestria" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-lg">
@@ -579,7 +579,7 @@
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal --> 
-                    @endauth             
+                    @endif             
                         @foreach ($maestrias as $m)
                         <a class="nav-link mb-2 btn-outline-danger  border " data-toggle="pill" href="#{!! preg_replace('([^A-Za-z0-9])', 'l', $m->nombre)!!}" role="tab" 
                         aria-selected="false">
@@ -587,7 +587,7 @@
                         </a>
                         @endforeach                                                
                     </div>
-                    @auth
+                    @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Postgrado|Pagina-Admin|super-admin'):@Auth::check())
                     <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;" id="dropZonePdf">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
@@ -611,7 +611,7 @@
                             </div><!-- /.modal-content -->
                         </div><!-- /.modal-dialog -->
                     </div><!-- /.modal -->
-                    @endauth 
+                    @endif 
                 </div> <!-- end col -->
             </div> <!-- end row--> 
         </div> <!-- end card-box -->
