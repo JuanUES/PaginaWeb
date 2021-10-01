@@ -43,37 +43,34 @@
                         </div>
                         @if(@Auth::check()?@Auth::user()->hasRole('Pagina-EstructuraOrganizativa|Pagina-Admin|super-admin'):@Auth::check())                           
                         <div class="col-lg-2 order-last">
-                            @auth
-                                <button type="button" class="btn btn-info btn-block my-1 float-right"  
-                                    data-toggle="modal" data-target=".bs-example-modal-center"> 
-                                    <div class="dripicons-photo">&nbsp;Subir Imagen</div>
-                                </button>
-                                <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" 
-                                    aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h3 class="modal-title" id="myCenterModalLabel">Zona para subir</h3>
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form  method="post" action="{{ asset('/nosotros/organigrama/image') }}/{!! base64_encode('organigrama')!!}"
-                                                    class="dropzone" id="my-awesome-dropzone">
-                                                    @csrf                                 
-                                                    <div class="dz-message needsclick">
-                                                        <i class="h1 text-muted dripicons-cloud-upload"></i>
-                                                        <h3>Suelta el archivo aquí o haz clic para subir.</h3>
-                                                    </div>
-                                                    <div class="dropzone-previews"></div>
-                                                </form>
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal -->
-                            @endif
-                                                        
+                            <button type="button" class="btn btn-info btn-block my-1 float-right"  
+                                data-toggle="modal" data-target=".bs-example-modal-center"> 
+                                <div class="dripicons-photo">&nbsp;Subir Imagen</div>
+                            </button>
+                            <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" 
+                                aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title" id="myCenterModalLabel">Zona para subir</h3>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form  method="post" action="{{ asset('/nosotros/organigrama/image') }}/{!! base64_encode('organigrama')!!}"
+                                                class="dropzone" id="my-awesome-dropzone">
+                                                @csrf                                 
+                                                <div class="dz-message needsclick">
+                                                    <i class="h1 text-muted dripicons-cloud-upload"></i>
+                                                    <h3>Suelta el archivo aquí o haz clic para subir.</h3>
+                                                </div>
+                                                <div class="dropzone-previews"></div>
+                                            </form>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->                                                        
                         </div>
-                        @endauth
+                        @endif
                     </div>
                     @if (count($organigrama)>0)
                         <img  width="100%" height="550px" src="{{ asset('/files/image') }}/{!!$organigrama[0]->file!!}" alt="{!!$organigrama[0]->file!!}">
@@ -92,10 +89,11 @@
                             <h3 class="my-2">Miembros de la Junta Directiva de la Facultad Multidisciplinaria Paracentral</h3>
                         </div>                        
                     </div>
-                        @guest
+                        @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-EstructuraOrganizativa|Pagina-Admin|super-admin'))
                             <p>{!!count($periodoJunta)==1 ? $periodoJunta[0] -> sector_dep_unid :'Periodo:'!!}</p>
-                        @endguest
-                        @auth
+                        @endif
+                        
+                        @if(@Auth::check()?@Auth::user()->hasRole('Pagina-EstructuraOrganizativa|Pagina-Admin|super-admin'):@Auth::check())
                             <div class="row">
                                 <div class="col-xl-12">
                                         <form action="{{ route('Periodo.junta') }}" method="POST">
@@ -115,7 +113,7 @@
                                                 </div>
                                             </div>  
                                         </form>                            
-                                            @auth
+                                            @if(@Auth::check()?@Auth::user()->hasRole('Pagina-EstructuraOrganizativa|Pagina-Admin|super-admin'):@Auth::check())
                                             <div class="col-lg-3 order-last">
                                                 <a href="#" class="btn btn-block btn-info" data-toggle="modal" data-target="#myModalJunta"><i class="dripicons-document"></i> Nuevo Miembro de Junta</a>
                                                 <div id="myModalJunta" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -171,15 +169,15 @@
                                                     </div><!-- /.modal-dialog -->
                                                 </div><!-- /.modal --> 
                                             </div>
-                                            @endauth                                      
+                                            @endif                                     
                                         </div> 
                                                                        
                                 </div>
                             </div>   
-                        @endauth  
+                        @endif  
                         @if (count($junta)!=0)
                             <div class="table-responsive">
-                                <table class="table table-bordered @guest table-striped @endguest mb-0">
+                                <table class="table table-bordered @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-EstructuraOrganizativa|Pagina-Admin|super-admin')) table-striped @endif mb-0">
                                     <thead>
                                         <tr>
                                             <th class="tex-left">  
@@ -220,7 +218,7 @@
                                     </tbody>
                                 </table>
                             </div> <!-- end table-responsive-->
-                            @auth
+                            @if(@Auth::check()?@Auth::user()->hasRole('Pagina-EstructuraOrganizativa|Pagina-Admin|super-admin'):@Auth::check())
                             <div id="modalEliminar" class="modal fade bs-example-modal-center" tabindex="-1" 
                                 role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                                 <div class="modal-dialog modal-dialog-centered">
@@ -259,7 +257,7 @@
                                     </div><!-- /.modal-content -->
                                 </div><!-- /.modal-dialog -->
                             </div><!-- /.modal --> 
-                            @endauth
+                            @endif
                         @else
                             <p class="border p-2 text-center">No hay datos registrados.</p>
                         @endif             
@@ -277,9 +275,9 @@
                         </div>
                         
                     </div>                    
-                    @guest
+                    @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-EstructuraOrganizativa|Pagina-Admin|super-admin'))
                             <p>{!!count($periodoJefatura)==1 ? $periodoJefatura[0] -> sector_dep_unid :'Periodo:'!!}</p>
-                    @endguest
+                    @endif
                     @if(@Auth::check()?@Auth::user()->hasRole('Pagina-EstructuraOrganizativa|Pagina-Admin|super-admin'):@Auth::check())
                         <div class="row">
                             <div class="col order-first">
@@ -364,7 +362,7 @@
                     @endif
                     @if (count($jefaturas)!=0)
                     <div class="table-responsive">
-                        <table class="table table-bordered @guest table-striped @endguest mb-0">
+                        <table class="table table-bordered @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-EstructuraOrganizativa|Pagina-Admin|super-admin')) table-striped @endif mb-0">
                             <thead>
                                 <tr>
                                     <th class="tex-left">  

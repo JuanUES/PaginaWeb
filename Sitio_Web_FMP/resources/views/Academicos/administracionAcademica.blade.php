@@ -3,13 +3,13 @@
 @section('appcss')
 <!-- App favicon -->
 <link rel="shortcut icon" href="images/favicon.ico">
-@auth
+@if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin'):@Auth::check())
 <!-- Este css se carga nada mas cuando esta logeado un usuario-->
 <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
 
 <!-- Summernote css -->
 <link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
-@endauth
+@endif
 
 <!-- App css -->
 <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
@@ -46,9 +46,9 @@
                                 <div class="col order-first">
                                     <h3 class="my-2">Administración Académica</h3>
                                 </div>
-                                @auth                            
+                                @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin'):@Auth::check())                            
                                 <div class="col-lg-3 order-last">
-                                    @auth
+                                    @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin'):@Auth::check())
                                         <button type="button" class="btn btn-info btn-block my-1 float-right"  
                                             data-toggle="modal" data-target=".bs-example-modal-center"> 
                                             <div class="dripicons-photo">&nbsp;Subir Imagen</div>
@@ -75,14 +75,12 @@
                                                 </div><!-- /.modal-content -->
                                             </div><!-- /.modal-dialog -->
                                         </div><!-- /.modal -->
-                                    @endauth
+                                    @endif
                                                                 
                                 </div>
-                                @endauth
+                                @endif
                             </div>
-                            @php
-                                
-                            @endphp
+                            
                             @if (count($carrusel) == '0')
                                     <p class="p-2 mx-2 border text-center btn-block"> No hay imagenes para mostrar.</p>
                             @else
@@ -100,13 +98,13 @@
                                     @for ($i = 0; $i < count($carrusel); $i++)            
                                                                             
                                         <div class="carousel-item {!!$i == 0 ? 'active': null!!}">
-                                            @auth                                                
+                                            @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin'):@Auth::check())                                                
                                             <button type="submit" class="btn text-white btn-danger btn-block">
                                                 <div class=" mdi mdi-delete mdi-16px text-center" 
                                                 data-toggle="modal" data-target="#modalCR" 
                                                 onclick="$('#imagenCR').val({!!$carrusel[$i]->id!!})">Eliminar</div>
                                             </button>
-                                            @endauth  
+                                            @endif  
                                             <img src="images/carrusel/{{$carrusel[$i]->imagen}}" class="img-fluid" width="100%" height="60%" alt="{!!$carrusel[$i]->imagen!!}">                                
                                         </div>  
                                 @endfor 
@@ -119,7 +117,7 @@
                                     <span class="sr-only">Siguiente</span>
                                     </a>
                             </div>  
-                            @auth
+                            @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin'):@Auth::check())
                             <div id ="modalCR" class="modal fade bs-example-modal-center" tabindex="-1" 
                             role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                                 <div class="modal-dialog modal-dialog-centered">
@@ -158,7 +156,7 @@
                                     </div><!-- /.modal-content -->
                                 </div><!-- /.modal-dialog -->
                             </div><!-- /.modal --> 
-                            @endauth                             
+                            @endif                             
                             @endif
                         </div>
                     </div> <!-- end col -->
@@ -201,17 +199,17 @@
                                                                     href="{{ route('index') }}{!!'/files/pdfs/ProAcademica/'.$item->file !!}" style="margin-left: 0px; " target="_blank">
                                                                     <i class=" mdi mdi-arrow-down-bold font-18"></i>  {{$item->file}}
                                                                 </a> 
-                                                                @auth
+                                                                @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin'):@Auth::check())
                                                                 <a class="btn btn-light waves-effect width-md  text-center" onclick="$('#eliminar').val({{$item->id}});$('#localizacion').val('ProAcademica');"
                                                                     data-toggle="modal" data-target="#modalEliminarPDF"><i class="mdi mdi-delete font-18"></i> Eliminar</a>
-                                                                @endauth
+                                                                @endif
                                                             </div>
                                                             @endforeach 
                                                         </div>  
                                                     </div>
                                                     @endif
                                                 </div>
-                                                @auth
+                                                @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin'):@Auth::check())
                                                 <div class="row">   
                                                     <div class="col-xl-12">
                                                         <div class="card-box">
@@ -228,7 +226,7 @@
                                                         </div>
                                                     </div>
                                                 </div> 
-                                                @endauth
+                                                @endif
                                             </div>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
@@ -262,7 +260,7 @@
                                                     <div class="col-xl-12">
                                                         <div class="card-box">
                                                             <div class="table-responsive text-left" id="listaPDF">
-                                                                <table class="table  mb-0 @guest table-striped @endguest">
+                                                                <table class="table  mb-0 @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin')) table-striped @endif">
                                                                     <thead>
                                                                         <tr>
                                                                             <th>
@@ -284,12 +282,12 @@
                                                                                             <a class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/academicaMallas/'.$item->file !!}" target="_blank"> 
                                                                                                 <i class="  mdi mdi-arrow-down-bold font-18 mr-1"></i>Descargar
                                                                                             </a>
-                                                                                            @auth
+                                                                                            @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin'):@Auth::check())
                                                                                             <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminarPDF"
                                                                                                 onclick="$('#eliminar').val({{$item->id}});$('#localizacion').val('academicaMallas');"
                                                                                                 data-toggle="modal" data-target="#modalEliminarPDF"><i class="mdi mdi-delete font-18"></i>  Eliminar
                                                                                             </button>  
-                                                                                            @endauth 
+                                                                                            @endif 
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>                                                                                                                    
@@ -303,7 +301,7 @@
                                                     </div>
                                                     @endif
                                                 </div>
-                                                @auth
+                                                @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin'):@Auth::check())
                                                 <div class="row">   
                                                     <div class="col-xl-12">
                                                         <div class="card-box">
@@ -320,7 +318,7 @@
                                                         </div>
                                                     </div>
                                                 </div> 
-                                                @endauth
+                                                @endif
                                             </div>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
@@ -354,7 +352,7 @@
                                                     <div class="col-xl-12">
                                                         <div class="card-box">
                                                             <div class="table-responsive text-left" id="listaPDF">
-                                                                <table class="table  mb-0 @guest table-striped @endguest">
+                                                                <table class="table  mb-0 @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin')) table-striped @endif">
                                                                     <thead>
                                                                         <tr>
                                                                             <th>
@@ -376,12 +374,12 @@
                                                                                             <a class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/academicaGradua/'.$item->file !!}" target="_blank"> 
                                                                                                 <i class="  mdi mdi-arrow-down-bold font-18 mr-1"></i>Descargar
                                                                                             </a>
-                                                                                            @auth
+                                                                                            @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin'):@Auth::check())
                                                                                             <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminarPDF"
                                                                                                 onclick="$('#eliminar').val({{$item->id}});$('#localizacion').val('academicaGradua');"
                                                                                                 data-toggle="modal" data-target="#modalEliminarPDF"><i class="mdi mdi-delete font-18"></i>  Eliminar
                                                                                             </button>  
-                                                                                            @endauth 
+                                                                                            @endif 
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>                                                                                                                    
@@ -395,7 +393,7 @@
                                                     </div>
                                                     @endif
                                                 </div>
-                                                @auth
+                                                @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin'):@Auth::check())
                                                 <div class="row">   
                                                     <div class="col-xl-12">
                                                         <div class="card-box">
@@ -412,7 +410,7 @@
                                                         </div>
                                                     </div>
                                                 </div> 
-                                                @endauth
+                                                @endif
                                             </div>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
@@ -448,7 +446,7 @@
                                                         </div>
                                                     </div>
                                                 </div>     
-                                                @auth
+                                                @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin'):@Auth::check())
                                                 <div class="row">
                                                     <div class="col-xl-12">
                                                         <div class="card-box">
@@ -465,7 +463,7 @@
                                                         </div>
                                                     </div>  
                                                 </div>     
-                                                @endauth                              
+                                                @endif                              
                                             </div>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
@@ -499,7 +497,7 @@
                                                     <div class="col-xl-12">
                                                         <div class="card-box">
                                                             <div class="table-responsive text-left" >
-                                                                <table class="table  mb-0 @guest table-striped @endguest">
+                                                                <table class="table  mb-0 @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin')) table-striped @endif">
                                                                     <thead>
                                                                         <tr>
                                                                             <th>
@@ -521,12 +519,12 @@
                                                                                             <a class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/academicaFormula/'.$item->file !!}" target="_blank"> 
                                                                                                 <i class="  mdi mdi-arrow-down-bold font-18 mr-1"></i>Descargar
                                                                                             </a>
-                                                                                            @auth
+                                                                                            @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin'):@Auth::check())
                                                                                             <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminarPDF"
                                                                                                 onclick="$('#eliminar').val({{$item->id}});$('#localizacion').val('academicaFormula');"
                                                                                                 ><i class="mdi mdi-delete font-18"></i>  Eliminar
                                                                                             </button>  
-                                                                                            @endauth 
+                                                                                            @endif 
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>                                                                                                                    
@@ -540,7 +538,7 @@
                                                     </div>
                                                     @endif
                                                 </div>
-                                                @auth
+                                                @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin'):@Auth::check())
                                                 <div class="row">   
                                                     <div class="col-xl-12">
                                                         <div class="card-box">
@@ -557,7 +555,7 @@
                                                         </div>
                                                     </div>
                                                 </div> 
-                                                @endauth
+                                                @endif
                                             </div>
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
@@ -582,7 +580,7 @@
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                             </div>
                                             <div class="modal-body text-left"> 
-                                                @auth
+                                                @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin'):@Auth::check())
                                                 <div class="card-box">
                                                     <div class="alert alert-primary text-white " 
                                                         role="alert" style="display:none" id="notificacionAudioVisual">                                               
@@ -620,7 +618,7 @@
                                                         </div>
                                                     </form>
                                                 </div>
-                                                @endauth
+                                                @endif
                                                 <?php
                                                     $videos = \App\Models\Pagina\AudioVisual::all();
                                                 ?>
@@ -633,12 +631,12 @@
                                                             tyle="margin-left: 0px;">
                                                             <i class=" mdi mdi-video-vintage mdi-24px"></i>  {{$item->titulo}}
                                                         </button> 
-                                                        @auth
+                                                        @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin'):@Auth::check())
                                                         <button type="buttom"  class="btn btn-light waves-effect width-md" data-toggle="modal" data-target="#modalEliminarVideo" 
                                                             onclick="$('#eliminarV').val({{$item->id}})">
                                                             <i class="mdi mdi-delete font-18"></i>  Eliminar
                                                         </button>
-                                                        @endauth
+                                                        @endif
                                                     </div>
                                                     
                                                     <div class="collapse" id="collapseExample{{$item->id}}">
@@ -659,6 +657,7 @@
                     </div>
                 </div>
             </div>
+            
             <div class="col-xl-4">
                 <div class="row">
                     <div class="col-xl-12">
@@ -700,7 +699,7 @@
                 </div>
             </div>
         </div>
-        @auth
+        @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin'):@Auth::check())
         <div id="modalEliminarPDF" class="modal fade bs-example-modal-center" tabindex="-1" 
             role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-dialog-centered">
@@ -779,7 +778,7 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->
         </div><!-- /.modal --> 
-        @endauth
+        @endif
         <div class="row">
             <div class="col-xl-12">
                 <div class="card-box"> 
@@ -848,7 +847,7 @@
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
 
-@auth  
+@if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin'):@Auth::check())  
 <script src="{{ asset('js/scripts/http.min.js') }}"></script>
 <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
 <script src="{{ asset('js/summernote.config.min.js') }}"></script>
@@ -856,9 +855,9 @@
 <script src="{{ asset('js/scripts/http.min.js') }}"></script>
 
 <!-- Plugins js -->
-<script src=" {{ asset('js/dropzone.min.js') }} "></script>
+<script src="{{ asset('js/dropzone.min.js') }} "></script>
 <script src="{{ asset('js/scripts/dropzoneimagenpdf.js') }}"></script>
-@endauth
+@endif
 <script src="{{ asset('js/index/index.datatable.js') }}"></script>
 
 @endsection
