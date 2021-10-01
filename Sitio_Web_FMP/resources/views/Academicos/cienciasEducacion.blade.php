@@ -111,7 +111,7 @@
                             @endif
                         @endauth
                       
-                        @if(auth()->guest()|| !auth()->guest())
+                         @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Depto-CDE|Pagina-Admin|super-admin'))
                                 <div class="col-xl-12 py-2">
                                     @if ($contenido != null)
                                         {!! $contenido->contenido !!}
@@ -205,7 +205,7 @@
                             @endif
                             @endauth
 
-                            @if(auth()->guest()|| !auth()->guest())
+                             @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Depto-CDE|Pagina-Admin|super-admin'))
                                 <div class="col-xl-12 py-2">
                                     @if ($contenido != null)
                                         {!! $contenido->contenido !!}
@@ -331,7 +331,7 @@
                             @endif
                             @endauth
 
-                            @if(auth()->guest()|| !auth()->guest())
+                             @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Depto-CDE|Pagina-Admin|super-admin'))
                                 <div class="col-xl-12 py-2">
                                     @if ($contenido != null)
                                         {!! $contenido->contenido !!}
@@ -422,7 +422,7 @@
                             @endif
                             @endauth
 
-                            @if(auth()->guest()|| !auth()->guest())
+                             @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Depto-CDE|Pagina-Admin|super-admin'))
                                 <div class="col-xl-12 py-2">
                                     @if ($contenido != null)
                                         {!! $contenido->contenido !!}
@@ -557,7 +557,7 @@
                             @endif
                             @endauth
 
-                            @if(auth()->guest()|| !auth()->guest())
+                             @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Depto-CDE|Pagina-Admin|super-admin'))
                                 <div class="col-xl-12 py-2">
                                     @if ($contenido != null)
                                         {!! $contenido->contenido !!}
@@ -758,7 +758,7 @@
                             @endif
                             @endauth
 
-                            @if(auth()->guest()|| !auth()->guest())
+                             @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Depto-CDE|Pagina-Admin|super-admin'))
                                 <div class="col-xl-12 py-2">
                                     @if ($contenido != null)
                                         {!! $contenido->contenido !!}
@@ -842,7 +842,7 @@
                             @endif
                             @endauth
 
-                            @if(auth()->guest()|| !auth()->guest())
+                             @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Depto-CDE|Pagina-Admin|super-admin'))
                                 <div class="col-xl-12 py-2">
                                     @if ($contenido != null)
                                         {!! $contenido->contenido !!}
