@@ -168,7 +168,7 @@
                         @endif
                         @endauth 
                         
-                        @if(auth()->guest()|| !auth()->guest())  
+                        @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Depto-CI|Pagina-Admin|super-admin'))
                         <div class="col-xl-12 py-2">
                         @if ($contenido!=null)
                         {!!$contenido->contenido!!}
