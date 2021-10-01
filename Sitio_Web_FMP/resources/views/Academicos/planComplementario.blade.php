@@ -1,19 +1,19 @@
 @extends('Pagina/baseOnlyHtml')
 
 @section('header')
-@auth
+@if(@Auth::check()?@Auth::user()->hasRole('Pagina-Depto-PC|Pagina-Admin|super-admin'):@Auth::check())
     <!-- Summernote css -->
     <link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
     
     <!-- Este css se carga nada mas cuando esta logeado un usuario-->
     <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
 
-@endauth    
+@endif   
 @endsection
 
 @section('footer')
 
-@auth    
+@if(@Auth::check()?@Auth::user()->hasRole('Pagina-Depto-PC|Pagina-Admin|super-admin'):@Auth::check())  
 <script src="{{ asset('js/scripts/http.min.js') }}"></script>
 <!-- Plugins js -->
 <script src=" {{ asset('js/dropzone.min.js') }} "></script>
@@ -26,7 +26,7 @@
 <script>
     function editarComplementario(id){$json = {!!json_encode($complementario)!!}.find(x => x.id==id);editar($json);}
 </script>
-@endauth  
+@endif
 
 
 
@@ -50,7 +50,7 @@
                 <div class="col-xl-8 px-3">
                     <div class="tab-content pt-0" id="v-pills-tabContent">
                         <div class="tab-pane fade active show" id="index" role="tabpanel">
-                            @auth
+                            @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Depto-PC|Pagina-Admin|super-admin'):@Auth::check())
                             <form action="{{ route('contenido', ['localizacion'=>'complementarioIndex']) }}" method="POST"  
                                 class="parsley-examples"  id="indexContenido">
                                 @csrf
@@ -77,14 +77,14 @@
                                     </div>
                                 </div>
                             </form>      
-                            @endauth 
-                            @guest
+                            @endif
+                            @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Depto-PC|Pagina-Admin|super-admin'))
                             <div class="py-1">
                                 @if ($contenido!=null)
                                     {!!$contenido->contenido!!}
                                 @endif
                             </div>
-                            @endguest 
+                            @endif
                         </div>
 
                         <!--aqui va-->
@@ -96,7 +96,8 @@
                                     <i class="mdi mdi-arrow-left-thick"></i> 
                                     Volver a Plan
                                 </a>
-                                @auth                                 
+                                
+                                @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Depto-PC|Pagina-Admin|super-admin'):@Auth::check())                              
                                     <button class="btn btn-light waves-effect width-md" data-toggle="modal" data-target="#myModalPlan"
                                         onclick="editarComplementario({!!$m->id!!})">
                                         <i class="mdi mdi-file-document-edit mdi-16p"></i>
@@ -113,7 +114,7 @@
                                     <button class="btn btn-light waves-effect width-md"  data-toggle="modal" data-target="#modalEliminar" onclick="eliminarPlan('{!!base64_encode($m->id)!!}')">
                                         <i class="mdi mdi-delete mdi-16px"></i> Eliminar
                                     </button>
-                                @endauth
+                                @endif
                             </div>
                             <br>
                             <h3 class="py-3">{!!$m->nombre!!}</h3>     
@@ -139,7 +140,8 @@
                             <div class="row">                                
                                 <div class="col order-first">
                                 </div>                               
-                                @auth
+                                
+                            @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Depto-PC|Pagina-Admin|super-admin'):@Auth::check())
                                 <div class="col-lg-3 order-last">
                                     <button class="btn btn-block btn-info tex-left" 
                                         data-toggle="modal" data-target="#modalSubir{!!$m->id!!}">
@@ -170,7 +172,7 @@
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal-->
-                                @endauth
+                                @endif
                             </div> 
                             <div class="row">
                                 <?php
@@ -179,7 +181,8 @@
                                 
                                 @if (count($pdfs)>0)
                                 <div class="table-responsive my-1" id="listaPDF">
-                                    <table class="table mb-0 border @guest table-striped @endguest">
+                                    <table class="table mb-0 border @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Depto-PC|Pagina-Admin|super-admin'))
+                                        table-striped @endif">
                                         <thead>
                                             <tr>
                                                 <th>
@@ -202,11 +205,11 @@
                                                         <a class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/'.$m->nombre.$m->id.'/'.$item->file !!}" target="_blank"> 
                                                             <i class="mdi mdi-file-pdf mdi-24px mr-1"></i>Descargar
                                                         </a>
-                                                        @auth
+                                                        @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Depto-PC|Pagina-Admin|super-admin'):@Auth::check())
                                                         <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminarPDF"
                                                             onclick="$('#eliminar').val({{$item->id}});$('#localizacion').val({{$item->nombre.$item->id}});"><i class="mdi mdi-delete mdi-24px"></i>  Eliminar
                                                         </button>  
-                                                        @endauth 
+                                                        @endif
                                                     </div>
                                                                                             
                                                 </th>
@@ -220,7 +223,7 @@
                             </div>
                         </div>
                         @endforeach
-                        @auth
+                        @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Depto-PC|Pagina-Admin|super-admin'):@Auth::check())
                         <div id="modalEliminarPDF" class="modal fade bs-example-modal-center" tabindex="-1" 
                             role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                             <div class="modal-dialog modal-dialog-centered">
@@ -298,7 +301,7 @@
                                 </div><!-- /.modal-content -->
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal -->
-                        @endauth
+                        @endif
                     </div>     
                            
                         
@@ -311,7 +314,7 @@
                     @if (count($complementario)>0)
                     <h4>Licenciaturas</h4>
                     @endif
-                    @auth
+                    @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Depto-PC|Pagina-Admin|super-admin'):@Auth::check())
                     <a class="btn btn-info btn-block text-white text-left  my-2" data-toggle="modal" data-target="#myModalPlan"><i class="dripicons-document"></i> Nuevo Registro</a>
                     <div id="myModalPlan" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
@@ -444,7 +447,7 @@
                             </div><!-- /.modal-content -->
                         </div><!-- /.modal-dialog -->
                     </div><!-- /.modal --> 
-                @endauth       
+                @endif       
                     @foreach ($complementario as $comple)
                         <a class="nav-link  mb-2 btn-outline-danger  border"  data-toggle="pill" href="#{!! preg_replace('([^A-Za-z0-9])', 'l', $comple->nombre)!!}" role="tab" 
                             aria-selected="false">{!!$comple->nombre!!}</a>
