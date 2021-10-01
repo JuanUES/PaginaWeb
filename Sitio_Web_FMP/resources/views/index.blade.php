@@ -374,13 +374,13 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                                    
                                                         <a href="{{ asset('/noticias') }}/{!!base64_encode($n->id)!!}/{!!base64_encode($n->titulo)!!}"
                                                            
-                                                        class="btn btn-light waves-effect width-md  @if(@Auth::guest()?@Auth::guest():!is_null(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin')))  mt-4 @endif" target="_blank">
+                                                        class="btn btn-light waves-effect width-md  @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))  mt-4 @endif" target="_blank">
                                                         @auth
                                                         @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
                                                             <i class="mdi mdi-send"></i>
                                                         @endif
                                                         @endauth Leer más 
-                                                        @if(@Auth::guest()?@Auth::guest():!is_null(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin')))
+                                                        @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
                                                         <i class="mdi mdi-send"></i>
                                                         @endif
                                                         </a>
@@ -395,14 +395,14 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                                     @else
                                                         <a href="{!!$n->urlfuente!!}"
                                                            
-                                                            class="btn btn-light waves-effect width-md @if(@Auth::guest()?@Auth::guest():!is_null(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))) mt-4 @endif" target="_blank">
+                                                            class="btn btn-light waves-effect width-md @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin')) mt-4 @endif" target="_blank">
                                                             @auth
                                                             @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
                                                             <i class="mdi mdi-earth"></i>
                                                             @endif
                                                             @endauth
                                                             Leer más 
-                                                            @if(@Auth::guest()?@Auth::guest():!is_null(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin')))
+                                                            @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
                                                             <i class="mdi mdi-earth"></i>
                                                             @endif
                                                         </a>

@@ -19,7 +19,7 @@
 
     <!-- App js -->
     <script src="{{ asset('js/app.min.js') }}"></script>
-    @auth
+    @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Directorio|Pagina-Admin|super-admin'):@Auth::check())
 
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('js/summernote.config.min.js') }}"></script>
@@ -34,7 +34,7 @@
             modificar(json);
         }
     </script>
-    @endauth
+    @endif
 @endsection
 
 @section('container')
@@ -55,7 +55,8 @@
                         <div class="col order-first">
                             <h3>Directorio</h3>                   
                         </div>
-                        @auth                           
+                        
+                        @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Directorio|Pagina-Admin|super-admin'):@Auth::check())                         
                         <div class="col-lg-2 order-last container-fluid">
                             <a type="button" href="#" class="btn btn-block btn-info"
                             data-toggle="modal" data-target="#myModalDirectorio"><i class="dripicons-document"></i> Nuevo Contacto</a>
@@ -121,11 +122,13 @@
                             </div><!-- /.modal-dialog -->
                         </div><!-- /.modal --> 
                         </div>
-                        @endauth
+                        @endif
                     </div>
                     @if (count($directorio)!=0)
                     <div class="table-responsive">
-                        <table class="table mb-0 table-bordered @guest table-striped @endguest">
+                        <table class="table mb-0 table-bordered  
+                        @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Directorio|Pagina-Admin|super-admin'))
+                            table-striped @endif">
                             <thead>
                                 <tr>
                                     <th>
@@ -146,7 +149,7 @@
                                 <tr>
                                     <th class="text-nowrap" scope="row">{!!$item->nombre!!}</th>
                                     <td>{!!$item->contacto!!}</td>
-                                    @auth                                   
+                                    @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Directorio|Pagina-Admin|super-admin'):@Auth::check())                                  
                                     <th class="align-middle ">
                                         <div class="row">
                                             <div class="col text-center"> 
@@ -157,13 +160,13 @@
                                             </div>
                                         </div>                                         
                                     </th>
-                                    @endauth 
+                                    @endif
                                 </tr>  
                                 @endforeach                                                              
                             </tbody>
                         </table>
                     </div> <!-- end table-responsive-->
-                    @auth
+                    @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Directorio|Pagina-Admin|super-admin'):@Auth::check())
                     <div id="modalEliminar" class="modal fade bs-example-modal-center" tabindex="-1" 
                         role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                         <div class="modal-dialog modal-dialog-centered">
@@ -202,7 +205,7 @@
                             </div><!-- /.modal-content -->
                         </div><!-- /.modal-dialog -->
                     </div><!-- /.modal --> 
-                    @endauth
+                    @endif
                     @else
                     <p class="border p-2 text-center">No hay datos registrados.</p>
                     @endif         
