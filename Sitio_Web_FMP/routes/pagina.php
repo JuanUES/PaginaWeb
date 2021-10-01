@@ -30,7 +30,7 @@ Route::post('/subirCarrusel/{tipo}', [ImagenesCarruselController::class, 'store'
 /**ContenidoHTML */
 
 Route::post('contenidoHTML/{localizacion}',[ContenidoHtmlController::class,'store'])
-->middleware(['auth'])->name('contenido');
+->middleware(['auth','role:super-admin|Pagina-Admin|Pagina-Depto-CDE|Pagina-Depto-CA|Pagina-Depto-CE|Pagina-Depto-I|Pagina-Depto-PC'])->name('contenido');
 
 /**Index ----------------------------------------------------------------*/
 
@@ -111,14 +111,14 @@ Route::get('CienciasEducacion', [Academicos::class,'indexEdu'])->name('Departame
 Route::get('PlanComplementario', [PlaComplementarioController::class,'index'])->name('planComp');
 
 Route::post('PlanCOmplementario/Licenciaturas',[PlaComplementarioController::class,'store'])
-->middleware(['auth'])
+->middleware(['auth','role:super-admin|Pagina-Depto-PC|Pagina-Admin'])
 ->name('Plan.registro');//para actualizar e registrar
 
 Route::post('PlanComplementario/destroy', [PlaComplementarioController::class,'destroy'])
-->middleware(['auth'])->name('EliminarPlan');//para eliminar
+->middleware(['auth','role:super-admin|Pagina-Depto-PC|Pagina-Admin'])->name('EliminarPlan');//para eliminar
 
 Route::post('PlanComplementario/estado', [PlaComplementarioController::class,'estado'])
-->middleware(['auth'])->name('estadoPlan');
+->middleware(['auth','role:super-admin|Pagina-Depto-PC|Pagina-Admin'])->name('estadoPlan');
 
 /**---------------------------------------------------------------------------------------- */
 
