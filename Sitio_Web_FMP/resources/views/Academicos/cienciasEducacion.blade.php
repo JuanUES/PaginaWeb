@@ -1,126 +1,142 @@
 @extends('Pagina/baseOnlyHtml')
 @section('header')
-@auth    
-    <!-- Este css se carga nada mas cuando esta logeado un usuario-->
-    <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
-    <link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
-@endauth    
+    @auth
+    @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-CDE'))
+        <!-- Este css se carga nada mas cuando esta logeado un usuario-->
+        <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
+    @endif
+    @endauth
 @endsection
 
 @section('footer')
     @auth
+        @if (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Pagina-Admin') || @Auth::user()->hasRole('Pagina-Depto-CDE'))
+            <script src="{{ asset('js/scripts/http.min.js') }}"></script>
 
-    <script src="{{ asset('js/scripts/http.min.js') }}"></script>
+            <script src=" {{ asset('js/dropzone.min.js') }} "></script>
+            <script src=" {{ asset('js/scripts/dropzonePdf.js') }} "></script>
+            <script src=" {{ asset('js/scripts/pdf.js') }} "></script>
 
-    <script src=" {{ asset('js/dropzone.min.js') }} "></script>   
-    <script src=" {{ asset('js/scripts/dropzonePdf.js') }} "></script>
-    <script src=" {{ asset('js/scripts/pdf.js') }} "></script>
+            <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
+            <script src="{{ asset('js/summernote.config.min.js') }}"></script>
+            <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
 
-    <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
-    <script src="{{ asset('js/summernote.config.min.js') }}"></script>
-    <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
+        @endif
+
     @endauth
+
 @endsection
 @section('container')
-<div class="wrapper">
-    <div class="container-fluid">
-        <!-- start page title -->
-        <div class="page-title-box color-boton py-2 rounded">
-            <h2 class="page-title text-white">Facultad Multidisciplinaria Paracentral</h2>
-        </div>         
-        <div class="my-3"></div>
-        <!-- end page title -->
+    <div class="wrapper">
+        <div class="container-fluid">
+            <!-- start page title -->
+            <div class="page-title-box color-boton py-2 rounded">
+                <h2 class="page-title text-white">Facultad Multidisciplinaria Paracentral</h2>
+            </div>
+            <div class="my-3"></div>
+            <!-- end page title -->
+
+            <div class="card-box">
+                <div class="row">
+                    <div class="col-xl-8 px-3">
+                        <div class="tab-content pt-0" id="v-pills-tabContent">
+                            <div class="tab-pane fade active show" id="v-pills-social2" role="tabpanel"
+                                aria-labelledby="v-pills-social-tab2">
+                                <h2 class="header-title py-2">Licenciatura en Trabajo Social</h2>
+                                <!--                            
+                                <p class="mb-1 font-weight-bold ">Código:</p>
+                                <p class="text-muted font-15 text-justify">L10439</p>
+                                <p class="mb-1 font-weight-bold">Descripción:</p>
+                                <p class="text-muted font-15 text-justify">
+                                    La Licenciatura en Trabajo Social en la UES nace a iniciativa del personal docente de la Escuela de Trabajo Social y se concretiza por medio de un Convenio entre el Gobierno de la República de El Salvador a través del Ministerio de Educación y la Universidad de El Salvador, firmado el 20 de mayo de 1999.
+                                </p>  
+                                <p class="mb-1 font-weight-bold">Objetivo:</p>
+                                <p class="text-muted font-15 text-justify">
+                                    Formar profesionales en Trabajo Social, con fundamentación humanista, teórica-técnica-metodológica con un marco axiológico sólido que contribuya al desarrollo de las potencialidades e iniciativas de las personas, grupos y sectores poblacionales que posibiliten la construcción de opciones y alternativas tendientes a la promoción y transformación de la realidad.
+                                </p>                                             
         
-        <div class="card-box"> 
-            <div class="row">
-                <div class="col-xl-8 px-3">
-                    <div class="tab-content pt-0" id="v-pills-tabContent">
-                        <div class="tab-pane fade active show" id="v-pills-social2" role="tabpanel" aria-labelledby="v-pills-social-tab2">
-                            <h2 class="header-title py-2">Licenciatura en Trabajo Social</h2>
-                            <!--                            
-                            <p class="mb-1 font-weight-bold ">Código:</p>
-                            <p class="text-muted font-15 text-justify">L10439</p>
-                            <p class="mb-1 font-weight-bold">Descripción:</p>
-                            <p class="text-muted font-15 text-justify">
-                                La Licenciatura en Trabajo Social en la UES nace a iniciativa del personal docente de la Escuela de Trabajo Social y se concretiza por medio de un Convenio entre el Gobierno de la República de El Salvador a través del Ministerio de Educación y la Universidad de El Salvador, firmado el 20 de mayo de 1999.
-                            </p>  
-                            <p class="mb-1 font-weight-bold">Objetivo:</p>
-                            <p class="text-muted font-15 text-justify">
-                                Formar profesionales en Trabajo Social, con fundamentación humanista, teórica-técnica-metodológica con un marco axiológico sólido que contribuya al desarrollo de las potencialidades e iniciativas de las personas, grupos y sectores poblacionales que posibiliten la construcción de opciones y alternativas tendientes a la promoción y transformación de la realidad.
-                            </p>                                             
-    
-                            <p class="mb-1 font-weight-bold">Tiempo de duración de la carrera:</p>
-                            <p class="text-muted font-15">
-                                5 años (10 ciclos).
-                            </p>
-    
-                            <p class="mb-1 font-weight-bold">Grado y título que otorga:</p>
-                            <p class="text-muted font-15">
-                                Licenciado (a) en trabajo social.
-                            </p>
-                        -->
-                        <?php
-                        $variableNoTocar = 'localizacion';
-                        $localizacion ='licTrabajoSocial';
-                        $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
-                        
-                        ?>
-                        @auth
-                            
-                        
-                        <div class="col-xl-12">
-                            <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
-                                class="parsley-examples"  id="contenido{{$localizacion}}">
-                                @csrf
-                                <div class="alert alert-primary text-white py-1" 
-                                        role="alert" style="display:none" id="notificacion{{$localizacion}}">                                               
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-12">   
-                                        <div class="form-group">                       
-                                            <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
-                                                @if ($contenido!=null)
-                                                    {{$contenido->contenido}}
+                                <p class="mb-1 font-weight-bold">Tiempo de duración de la carrera:</p>
+                                <p class="text-muted font-15">
+                                    5 años (10 ciclos).
+                                </p>
+        
+                                <p class="mb-1 font-weight-bold">Grado y título que otorga:</p>
+                                <p class="text-muted font-15">
+                                    Licenciado (a) en trabajo social.
+                                </p>
+                            -->
+                                <?php
+                                $variableNoTocar = 'localizacion';
+                                $localizacion = 'licTrabajoSocial';
+                                $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar, $localizacion)->first();
+                                
+                                ?>
+
+                            @auth
+                            @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-CDE'))
+
+
+                                <div class="col-xl-12">
+                                    <form action="{{ route('contenido', ['localizacion' => $localizacion]) }}"
+                                        method="POST" class="parsley-examples" id="contenido{{ $localizacion }}">
+                                        @csrf
+                                        <div class="alert alert-primary text-white py-1" role="alert"
+                                            style="display:none" id="notificacion{{ $localizacion }}">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="form-group">
+                                                    <textarea value="" class="form-control summernote-config"
+                                                        name="contenido" rows="10">
+                                                @if ($contenido != null)
+                                                    {{ $contenido->contenido }}
                                                 @endif
                                             </textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12">
+                                                <div class="form-group">
+                                                    <button type="button"
+                                                        class="btn btn-primary waves-effect waves-light btn-block"
+                                                        onclick="submitForm('#contenido{{ $localizacion }}','#notificacion{{ $localizacion }}')">
+                                                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="col-xl-12">
-                                        <div class="form-group">
-                                            <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
-                                                onclick="submitForm('#contenido{{$localizacion}}','#notificacion{{$localizacion}}')">
-                                                <i class="fa fa-save fa-5 ml-3"></i> Guardar
-                                            </button>
-                                        </div>
-                                    </div>
+                                    </form>
                                 </div>
-                            </form>
-                        </div>  
+
+                            @endif
+                        @endauth
+                      
+                        @if(auth()->guest()|| !auth()->guest())
+                                <div class="col-xl-12 py-2">
+                                    @if ($contenido != null)
+                                        {!! $contenido->contenido !!}
+                                    @endif
+                                </div>
+                        @endif  
                         
-                        @endauth 
-                        
-                        @guest  
-                        <div class="col-xl-12 py-2">
-                        @if ($contenido!=null)
-                        {!!$contenido->contenido!!}
-                        @endif
-                        </div>      
-                        @endguest
                             <p class="mb-1 font-weight-bold">Pensum:</p>
-                            <a href="{{$pdfs->where('file','LicSocial.pdf')->first()==null 
-                                ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/LicSocial.pdf')}}" 
+                            <a href="{{ $pdfs->where('file', 'LicSocial.pdf')->first() == null ? '#' : asset('files/pdfs/' . $pdfs[0]->localizacion . '/LicSocial.pdf') }}"
                                 type="submit" class="btn btn-outline-danger" id="LicSocial" target="_blank">
-                                    <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
+                                <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
                             </a>
                             @auth
-                            <a href="#" class="btn  btn-outline-info my-2" 
-                            data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('LicSocial')">
-                                <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
-                            </a>
-                            @endauth 
+                            @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-CDE'))
+                                <a href="#" class="btn  btn-outline-info my-2" data-toggle="modal"
+                                    data-target=".bs-example-modal-center" onclick="pdf('LicSocial')">
+                                    <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
+                                </a>
+                            @endif
+                            @endauth
                         </div>
-                        <div class="tab-pane fade" id="v-pills-profile2" role="tabpanel" aria-labelledby="v-pills-profile-tab2">
-                            <h2 class="header-title py-2">Profesorado en Educación Básica para Primero y Segundo Ciclos</h2>                            
+                        <div class="tab-pane fade" id="v-pills-profile2" role="tabpanel"
+                            aria-labelledby="v-pills-profile-tab2">
+                            <h2 class="header-title py-2">Profesorado en Educación Básica para Primero y Segundo Ciclos
+                            </h2>
                             <!--
                             <p class="mb-1 font-weight-bold ">Código:</p>
                             <p class="text-muted font-15 text-justify">P70402</p>
@@ -148,74 +164,78 @@
                             </p>
                         -->
 
-                        <?php
-$variableNoTocar = 'localizacion';
-$localizacion ='profesoradoBasica';
-$contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
+                            <?php
+                            $variableNoTocar = 'localizacion';
+                            $localizacion = 'profesoradoBasica';
+                            $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar, $localizacion)->first();
+                            
+                            ?>
+                            @auth
+                            @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-CDE'))
+                                <div class="col-xl-12">
+                                    <form action="{{ route('contenido', ['localizacion' => $localizacion]) }}"
+                                        method="POST" class="parsley-examples" id="contenido{{ $localizacion }}">
+                                        @csrf
+                                        <div class="alert alert-primary text-white py-1" role="alert" style="display:none"
+                                            id="notificacion{{ $localizacion }}">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="form-group">
+                                                    <textarea value="" class="form-control summernote-config"
+                                                        name="contenido" rows="10">
+                            @if ($contenido != null)
+                                {{ $contenido->contenido }}
+                            @endif
+                        </textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12">
+                                                <div class="form-group">
+                                                    <button type="button"
+                                                        class="btn btn-primary waves-effect waves-light btn-block"
+                                                        onclick="submitForm('#contenido{{ $localizacion }}','#notificacion{{ $localizacion }}')">
+                                                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            @endif
+                            @endauth
 
-?>
-@auth
-    
+                            @if(auth()->guest()|| !auth()->guest())
+                                <div class="col-xl-12 py-2">
+                                    @if ($contenido != null)
+                                        {!! $contenido->contenido !!}
+                                    @endif
+                                </div>
+                            @endif
 
-<div class="col-xl-12">
-    <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
-        class="parsley-examples"  id="contenido{{$localizacion}}">
-        @csrf
-        <div class="alert alert-primary text-white py-1" 
-                role="alert" style="display:none" id="notificacion{{$localizacion}}">                                               
-        </div>
-        <div class="row">
-            <div class="col-xl-12">   
-                <div class="form-group">                       
-                    <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
-                        @if ($contenido!=null)
-                            {{$contenido->contenido}}
-                        @endif
-                    </textarea>
-                </div>
-            </div>
-            <div class="col-xl-12">
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
-                        onclick="submitForm('#contenido{{$localizacion}}','#notificacion{{$localizacion}}')">
-                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>  
-
-@endauth 
-
-@guest  
-<div class="col-xl-12 py-2">
-@if ($contenido!=null)
-{!!$contenido->contenido!!}
-@endif
-</div>      
-@endguest
-                        
 
 
 
 
                             <p class="mb-1 font-weight-bold">Pensum:</p>
-                            <a href="{{$pdfs->where('file','profeBasica.pdf')->first()==null 
-                                ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeBasica.pdf')}}" 
+                            <a href="{{ $pdfs->where('file', 'profeBasica.pdf')->first() == null ? '#' : asset('files/pdfs/' . $pdfs[0]->localizacion . '/profeBasica.pdf') }}"
                                 type="submit" class="btn btn-outline-danger" id="profeBasica" target="_blank">
                                 <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
                             </a>
                             @auth
-                            <a href="#" class="btn  btn-outline-info my-2" 
-                            data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('profeBasica')">
-                                <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
-                            </a>
-                            @endauth 
+                            @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-CDE'))
+                                <a href="#" class="btn  btn-outline-info my-2" data-toggle="modal"
+                                    data-target=".bs-example-modal-center" onclick="pdf('profeBasica')">
+                                    <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
+                                </a>
+                            @endif
+                            @endauth
                         </div>
-                        <div class="tab-pane fade" id="v-pills-messages2" role="tabpanel" aria-labelledby="v-pills-messages-tab2">
-                            <h2 class="header-title py-2">Profesorado en Matemática para Tercer Ciclo de Educación Básica y Educación Media</h2>                            
-                          <!--
+                        <div class="tab-pane fade" id="v-pills-messages2" role="tabpanel"
+                            aria-labelledby="v-pills-messages-tab2">
+                            <h2 class="header-title py-2">Profesorado en Matemática para Tercer Ciclo de Educación
+                                Básica y Educación Media</h2>
+                            <!--
                             <p class="mb-1 font-weight-bold ">Código:</p>
                             <p class="text-muted font-15 text-justify">
                                 P70923
@@ -270,72 +290,76 @@ $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizaci
                         -->
 
 
-                        <?php
-$variableNoTocar = 'localizacion';
-$localizacion ='profesoradoMatematica';
-$contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
+                            <?php
+                            $variableNoTocar = 'localizacion';
+                            $localizacion = 'profesoradoMatematica';
+                            $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar, $localizacion)->first();
+                            
+                            ?>
+                            @auth
+                            @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-CDE'))
+                                <div class="col-xl-12">
+                                    <form action="{{ route('contenido', ['localizacion' => $localizacion]) }}"
+                                        method="POST" class="parsley-examples" id="contenido{{ $localizacion }}">
+                                        @csrf
+                                        <div class="alert alert-primary text-white py-1" role="alert" style="display:none"
+                                            id="notificacion{{ $localizacion }}">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="form-group">
+                                                    <textarea value="" class="form-control summernote-config"
+                                                        name="contenido" rows="10">
+                            @if ($contenido != null)
+                                {{ $contenido->contenido }}
+                            @endif
+                        </textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12">
+                                                <div class="form-group">
+                                                    <button type="button"
+                                                        class="btn btn-primary waves-effect waves-light btn-block"
+                                                        onclick="submitForm('#contenido{{ $localizacion }}','#notificacion{{ $localizacion }}')">
+                                                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            @endif
+                            @endauth
 
-?>
-@auth
-    
+                            @if(auth()->guest()|| !auth()->guest())
+                                <div class="col-xl-12 py-2">
+                                    @if ($contenido != null)
+                                        {!! $contenido->contenido !!}
+                                    @endif
+                                </div>
+                            @endif
 
-<div class="col-xl-12">
-    <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
-        class="parsley-examples"  id="contenido{{$localizacion}}">
-        @csrf
-        <div class="alert alert-primary text-white py-1" 
-                role="alert" style="display:none" id="notificacion{{$localizacion}}">                                               
-        </div>
-        <div class="row">
-            <div class="col-xl-12">   
-                <div class="form-group">                       
-                    <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
-                        @if ($contenido!=null)
-                            {{$contenido->contenido}}
-                        @endif
-                    </textarea>
-                </div>
-            </div>
-            <div class="col-xl-12">
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
-                        onclick="submitForm('#contenido{{$localizacion}}','#notificacion{{$localizacion}}')">
-                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>  
-
-@endauth 
-
-@guest  
-<div class="col-xl-12 py-2">
-@if ($contenido!=null)
-{!!$contenido->contenido!!}
-@endif
-</div>      
-@endguest
-                     
 
 
 
                             <p class="mb-1 font-weight-bold">Pensum:</p>
-                            <a href="{{$pdfs->where('file','profeMate.pdf')->first()==null 
-                                ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeMate.pdf')}}" 
+                            <a href="{{ $pdfs->where('file', 'profeMate.pdf')->first() == null ? '#' : asset('files/pdfs/' . $pdfs[0]->localizacion . '/profeMate.pdf') }}"
                                 type="submit" class="btn btn-outline-danger" id="profeMate" target="_blank">
                                 <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
                             </a>
                             @auth
-                            <a href="#" class="btn  btn-outline-info my-2" 
-                            data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('profeMate')">
-                                <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
-                            </a>
-                            @endauth 
+                            @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-CDE'))
+                                <a href="#" class="btn  btn-outline-info my-2" data-toggle="modal"
+                                    data-target=".bs-example-modal-center" onclick="pdf('profeMate')">
+                                    <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
+                                </a>
+                            @endif
+                            @endauth
                         </div>
-                        <div class="tab-pane fade" id="v-pills-settings2" role="tabpanel" aria-labelledby="v-pills-settings-tab2">
-                            <h2 class="header-title py-2">Profesorado en Idioma Inglés Para Tercer Ciclo de Educación Básica y Educación Media</h2>                            
+                        <div class="tab-pane fade" id="v-pills-settings2" role="tabpanel"
+                            aria-labelledby="v-pills-settings-tab2">
+                            <h2 class="header-title py-2">Profesorado en Idioma Inglés Para Tercer Ciclo de Educación
+                                Básica y Educación Media</h2>
                             <!--
                             <p class="mb-1 font-weight-bold ">Código:</p>
                             <p class="text-muted font-15 text-justify">P70430</p>
@@ -357,74 +381,77 @@ $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizaci
                             </p>
                         -->
 
-                        <?php
-$variableNoTocar = 'localizacion';
-$localizacion ='profesoradoIngles';
-$contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
+                            <?php
+                            $variableNoTocar = 'localizacion';
+                            $localizacion = 'profesoradoIngles';
+                            $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar, $localizacion)->first();
+                            
+                            ?>
+                            @auth
+                            @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-CDE'))
+                                <div class="col-xl-12">
+                                    <form action="{{ route('contenido', ['localizacion' => $localizacion]) }}"
+                                        method="POST" class="parsley-examples" id="contenido{{ $localizacion }}">
+                                        @csrf
+                                        <div class="alert alert-primary text-white py-1" role="alert" style="display:none"
+                                            id="notificacion{{ $localizacion }}">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="form-group">
+                                                    <textarea value="" class="form-control summernote-config"
+                                                        name="contenido" rows="10">
+                            @if ($contenido != null)
+                                {{ $contenido->contenido }}
+                            @endif
+                        </textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12">
+                                                <div class="form-group">
+                                                    <button type="button"
+                                                        class="btn btn-primary waves-effect waves-light btn-block"
+                                                        onclick="submitForm('#contenido{{ $localizacion }}','#notificacion{{ $localizacion }}')">
+                                                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            @endif
+                            @endauth
 
-?>
-@auth
-    
+                            @if(auth()->guest()|| !auth()->guest())
+                                <div class="col-xl-12 py-2">
+                                    @if ($contenido != null)
+                                        {!! $contenido->contenido !!}
+                                    @endif
+                                </div>
+                            @endif
 
-<div class="col-xl-12">
-    <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
-        class="parsley-examples"  id="contenido{{$localizacion}}">
-        @csrf
-        <div class="alert alert-primary text-white py-1" 
-                role="alert" style="display:none" id="notificacion{{$localizacion}}">                                               
-        </div>
-        <div class="row">
-            <div class="col-xl-12">   
-                <div class="form-group">                       
-                    <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
-                        @if ($contenido!=null)
-                            {{$contenido->contenido}}
-                        @endif
-                    </textarea>
-                </div>
-            </div>
-            <div class="col-xl-12">
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
-                        onclick="submitForm('#contenido{{$localizacion}}','#notificacion{{$localizacion}}')">
-                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>  
-
-@endauth 
-
-@guest  
-<div class="col-xl-12 py-2">
-@if ($contenido!=null)
-{!!$contenido->contenido!!}
-@endif
-</div>      
-@endguest
-                      
 
 
 
                             <p class="mb-1 font-weight-bold">Pensum:</p>
-                            <a href="{{$pdfs->where('file','profeIngles.pdf')->first()==null 
-                                ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeIngles.pdf')}}"
-                                 type="submit" class="btn btn-outline-danger" id="profeIngles" target="_blank">
-                                    <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
+                            <a href="{{ $pdfs->where('file', 'profeIngles.pdf')->first() == null ? '#' : asset('files/pdfs/' . $pdfs[0]->localizacion . '/profeIngles.pdf') }}"
+                                type="submit" class="btn btn-outline-danger" id="profeIngles" target="_blank">
+                                <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
                             </a>
                             @auth
-                            <a href="#" class="btn  btn-outline-info my-2" 
-                            data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('profeIngles')">
-                                <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
-                            </a>
-                            @endauth 
+                            @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-CDE'))
+                                <a href="#" class="btn  btn-outline-info my-2" data-toggle="modal"
+                                    data-target=".bs-example-modal-center" onclick="pdf('profeIngles')">
+                                    <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
+                                </a>
+                            @endif
+                            @endauth
                         </div>
-                        <div class="tab-pane fade" id="v-pills-biologia2" role="tabpanel" aria-labelledby="v-pills-biologia-tab2">
+                        <div class="tab-pane fade" id="v-pills-biologia2" role="tabpanel"
+                            aria-labelledby="v-pills-biologia-tab2">
                             <h2 class="header-title py-2">
-                                Profesorado en Biología para Tercer Ciclo en Educación Básica y Educación Media  
-                            </h2>  
+                                Profesorado en Biología para Tercer Ciclo en Educación Básica y Educación Media
+                            </h2>
                             <!--     
                             <p class="mb-1 font-weight-bold">Objetivos:</p>
                             <ul>
@@ -489,70 +516,73 @@ $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizaci
                                 Profesor o profesora de Biología para Tercer Ciclo de Educación Básica y Educación Media. 
                             </p>
                         -->
-                        <?php
-                        $variableNoTocar = 'localizacion';
-                        $localizacion ='profesoradoBiologia';
-                        $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
-                        
-                        ?>
-                        @auth
+                            <?php
+                            $variableNoTocar = 'localizacion';
+                            $localizacion = 'profesoradoBiologia';
+                            $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar, $localizacion)->first();
                             
-                        
-                        <div class="col-xl-12">
-                            <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
-                                class="parsley-examples"  id="contenido{{$localizacion}}">
-                                @csrf
-                                <div class="alert alert-primary text-white py-1" 
-                                        role="alert" style="display:none" id="notificacion{{$localizacion}}">                                               
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-12">   
-                                        <div class="form-group">                       
-                                            <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
-                                                @if ($contenido!=null)
-                                                    {{$contenido->contenido}}
-                                                @endif
-                                            </textarea>
+                            ?>
+                            @auth
+                            @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-CDE'))
+                                <div class="col-xl-12">
+                                    <form action="{{ route('contenido', ['localizacion' => $localizacion]) }}"
+                                        method="POST" class="parsley-examples" id="contenido{{ $localizacion }}">
+                                        @csrf
+                                        <div class="alert alert-primary text-white py-1" role="alert" style="display:none"
+                                            id="notificacion{{ $localizacion }}">
                                         </div>
-                                    </div>
-                                    <div class="col-xl-12">
-                                        <div class="form-group">
-                                            <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
-                                                onclick="submitForm('#contenido{{$localizacion}}','#notificacion{{$localizacion}}')">
-                                                <i class="fa fa-save fa-5 ml-3"></i> Guardar
-                                            </button>
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="form-group">
+                                                    <textarea value="" class="form-control summernote-config"
+                                                        name="contenido" rows="10">
+                                                    @if ($contenido != null)
+                                                        {{ $contenido->contenido }}
+                                                    @endif
+                                                </textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12">
+                                                <div class="form-group">
+                                                    <button type="button"
+                                                        class="btn btn-primary waves-effect waves-light btn-block"
+                                                        onclick="submitForm('#contenido{{ $localizacion }}','#notificacion{{ $localizacion }}')">
+                                                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
-                            </form>
-                        </div>  
-                        
-                        @endauth 
-                        
-                        @guest  
-                        <div class="col-xl-12 py-2">
-                        @if ($contenido!=null)
-                        {!!$contenido->contenido!!}
-                        @endif
-                        </div>      
-                        @endguest
+                            @endif
+                            @endauth
+
+                            @if(auth()->guest()|| !auth()->guest())
+                                <div class="col-xl-12 py-2">
+                                    @if ($contenido != null)
+                                        {!! $contenido->contenido !!}
+                                    @endif
+                                </div>
+                            @endif
 
                             <p class="mb-1 font-weight-bold">Pensum:</p>
-                            <a href="{{$pdfs->where('file','profeBiolo.pdf')->first()==null 
-                                ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeBiolo.pdf')}}"
-                                 type="submit" class="btn btn-outline-danger" id="profeBiolo" target="_blank">
+                            <a href="{{ $pdfs->where('file', 'profeBiolo.pdf')->first() == null ? '#' : asset('files/pdfs/' . $pdfs[0]->localizacion . '/profeBiolo.pdf') }}"
+                                type="submit" class="btn btn-outline-danger" id="profeBiolo" target="_blank">
                                 <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
                             </a>
                             @auth
-                            <a href="#" class="btn  btn-outline-info my-2" 
-                            data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('profeBiolo')">
-                                <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
-                            </a>
-                            @endauth                        
-                        </div>                        
-                        <div class="tab-pane fade" id="v-pills-parvularia2" role="tabpanel" aria-labelledby="v-pills-parvularia-tab2">
-                            <h2 class="header-title py-2">Profesorado en Educación Inicial y Parvularia</h2>                            
-                          <!--
+                            @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-CDE'))
+                                <a href="#" class="btn  btn-outline-info my-2" data-toggle="modal"
+                                    data-target=".bs-example-modal-center" onclick="pdf('profeBiolo')">
+                                    <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
+                                </a>
+                            @endif
+                            @endauth
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-parvularia2" role="tabpanel"
+                            aria-labelledby="v-pills-parvularia-tab2">
+                            <h2 class="header-title py-2">Profesorado en Educación Inicial y Parvularia</h2>
+                            <!--
                             <p class="mb-1 font-weight-bold ">Código:</p>
                             <p class="text-muted font-15 text-justify">P70403</p>
                             <p class="mb-1 font-weight-bold">Descripción:</p>
@@ -687,70 +717,74 @@ $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizaci
                             </p>
                         -->
 
-                        <?php
-$variableNoTocar = 'localizacion';
-$localizacion ='parvularia';
-$contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
+                            <?php
+                            $variableNoTocar = 'localizacion';
+                            $localizacion = 'parvularia';
+                            $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar, $localizacion)->first();
+                            
+                            ?>
+                            @auth
+                            @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-CDE'))
+                                <div class="col-xl-12">
+                                    <form action="{{ route('contenido', ['localizacion' => $localizacion]) }}"
+                                        method="POST" class="parsley-examples" id="contenido{{ $localizacion }}">
+                                        @csrf
+                                        <div class="alert alert-primary text-white py-1" role="alert" style="display:none"
+                                            id="notificacion{{ $localizacion }}">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="form-group">
+                                                    <textarea value="" class="form-control summernote-config"
+                                                        name="contenido" rows="10">
+                            @if ($contenido != null)
+                                {{ $contenido->contenido }}
+                            @endif
+                        </textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12">
+                                                <div class="form-group">
+                                                    <button type="button"
+                                                        class="btn btn-primary waves-effect waves-light btn-block"
+                                                        onclick="submitForm('#contenido{{ $localizacion }}','#notificacion{{ $localizacion }}')">
+                                                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            @endif
+                            @endauth
 
-?>
-@auth
-    
+                            @if(auth()->guest()|| !auth()->guest())
+                                <div class="col-xl-12 py-2">
+                                    @if ($contenido != null)
+                                        {!! $contenido->contenido !!}
+                                    @endif
+                                </div>
+                            @endif
 
-<div class="col-xl-12">
-    <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
-        class="parsley-examples"  id="contenido{{$localizacion}}">
-        @csrf
-        <div class="alert alert-primary text-white py-1" 
-                role="alert" style="display:none" id="notificacion{{$localizacion}}">                                               
-        </div>
-        <div class="row">
-            <div class="col-xl-12">   
-                <div class="form-group">                       
-                    <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
-                        @if ($contenido!=null)
-                            {{$contenido->contenido}}
-                        @endif
-                    </textarea>
-                </div>
-            </div>
-            <div class="col-xl-12">
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
-                        onclick="submitForm('#contenido{{$localizacion}}','#notificacion{{$localizacion}}')">
-                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>  
-
-@endauth 
-
-@guest  
-<div class="col-xl-12 py-2">
-@if ($contenido!=null)
-{!!$contenido->contenido!!}
-@endif
-</div>      
-@endguest
-                     
                             <p class="mb-1 font-weight-bold">Pensum:</p>
-                            <a href="{{$pdfs->where('file','profeParvularia.pdf')->first()==null 
-                                ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/profeParvularia.pdf')}}"
-                                 type="submit" class="btn btn-outline-danger" id="profeParvularia" target="_blank">
-                                    <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
+                            <a href="{{ $pdfs->where('file', 'profeParvularia.pdf')->first() == null ? '#' : asset('files/pdfs/' . $pdfs[0]->localizacion . '/profeParvularia.pdf') }}"
+                                type="submit" class="btn btn-outline-danger" id="profeParvularia" target="_blank">
+                                <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
                             </a>
                             @auth
-                            <a href="#" class="btn  btn-outline-info my-2" 
-                            data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('profeParvularia')">
-                                <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
-                            </a>
-                            @endauth 
-                        
+                            @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-CDE'))
+                                <a href="#" class="btn  btn-outline-info my-2" data-toggle="modal"
+                                    data-target=".bs-example-modal-center" onclick="pdf('profeParvularia')">
+                                    <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
+                                </a>
+                            @endif
+                            @endauth
+
                         </div>
-                        <div class="tab-pane fade" id="v-pills-licenciatura2" role="tabpanel" aria-labelledby="v-pills-licenciatura-tab2">
-                            <h2 class="header-title py-2">Licenciatura en Enseñanza de Idiomas Extranjeros, Especialidad Inglés-Francés</h2>                            
+                        <div class="tab-pane fade" id="v-pills-licenciatura2" role="tabpanel"
+                            aria-labelledby="v-pills-licenciatura-tab2">
+                            <h2 class="header-title py-2">Licenciatura en Enseñanza de Idiomas Extranjeros,
+                                Especialidad Inglés-Francés</h2>
                             <!--
                             <p class="mb-1 font-weight-bold">Descripción:</p>
                             <p class="text-muted font-15 text-justify">
@@ -767,126 +801,134 @@ $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizaci
                                 Licenciado (a) en enseñanza de idiomas extranjeros, especialidad inglés-francés.
                             </p>
                         -->
-                        <?php
-                        $variableNoTocar = 'localizacion';
-                        $localizacion ='licenciaturaInglesFrances';
-                        $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
+                            <?php
+                            $variableNoTocar = 'localizacion';
+                            $localizacion = 'licenciaturaInglesFrances';
+                            $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar, $localizacion)->first();
+                            
+                            ?>
+                            @auth
+                            @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-CDE'))
+                                <div class="col-xl-12">
+                                    <form action="{{ route('contenido', ['localizacion' => $localizacion]) }}"
+                                        method="POST" class="parsley-examples" id="contenido{{ $localizacion }}">
+                                        @csrf
+                                        <div class="alert alert-primary text-white py-1" role="alert" style="display:none"
+                                            id="notificacion{{ $localizacion }}">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xl-12">
+                                                <div class="form-group">
+                                                    <textarea value="" class="form-control summernote-config"
+                                                        name="contenido" rows="10">
+                            @if ($contenido != null)
+                                {{ $contenido->contenido }}
+                            @endif
+                        </textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-12">
+                                                <div class="form-group">
+                                                    <button type="button"
+                                                        class="btn btn-primary waves-effect waves-light btn-block"
+                                                        onclick="submitForm('#contenido{{ $localizacion }}','#notificacion{{ $localizacion }}')">
+                                                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            @endif
+                            @endauth
 
-                        ?>
-                        @auth
-    
+                            @if(auth()->guest()|| !auth()->guest())
+                                <div class="col-xl-12 py-2">
+                                    @if ($contenido != null)
+                                        {!! $contenido->contenido !!}
+                                    @endif
+                                </div>
+                            @endif
 
-    <div class="col-xl-12">
-        <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
-            class="parsley-examples"  id="contenido{{$localizacion}}">
-            @csrf
-                <div class="alert alert-primary text-white py-1" 
-                role="alert" style="display:none" id="notificacion{{$localizacion}}">                                               
-        </div>
-        <div class="row">
-            <div class="col-xl-12">   
-                <div class="form-group">                       
-                    <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
-                        @if ($contenido!=null)
-                            {{$contenido->contenido}}
-                        @endif
-                    </textarea>
-                </div>
-            </div>
-            <div class="col-xl-12">
-                <div class="form-group">
-                    <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
-                        onclick="submitForm('#contenido{{$localizacion}}','#notificacion{{$localizacion}}')">
-                        <i class="fa fa-save fa-5 ml-3"></i> Guardar
-                    </button>
-                </div>
-            </div>
-        </div>
-    </form>
-</div>  
-
-@endauth 
-
-@guest  
-<div class="col-xl-12 py-2">
-@if ($contenido!=null)
-{!!$contenido->contenido!!}
-@endif
-</div>      
-@endguest
-
-
-
-
-
-              
                             <p class="mb-1 font-weight-bold">Pensum:</p>
-                            <a href="{{$pdfs->where('file','licEspInglesFrances.pdf')->first()==null 
-                                ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/licEspInglesFrances.pdf')}}"
+                            <a href="{{ $pdfs->where('file', 'licEspInglesFrances.pdf')->first() == null ? '#' : asset('files/pdfs/' . $pdfs[0]->localizacion . '/licEspInglesFrances.pdf') }}"
                                 type="submit" class="btn btn-outline-danger" id="licEspInglesFrances" target="_blank">
-                                    <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
+                                <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
                             </a>
                             @auth
-                            <a href="#" class="btn  btn-outline-info my-2" 
-                                data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('licEspInglesFrances')">
-                                <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
-                            </a>
-                            @endauth 
+                            @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-CDE'))
+                                <a href="#" class="btn  btn-outline-info my-2" data-toggle="modal"
+                                    data-target=".bs-example-modal-center" onclick="pdf('licEspInglesFrances')">
+                                    <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
+                                </a>
+                            @endif
+                            @endauth
                         </div>
                     </div>
                     @auth
-                    <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;" id="dropZonePdf">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title" id="myCenterModalLabel">Zona para subir imágenes</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                    <form action="{{ route('PDF', ['localizacion'=>'ccEdu']) }}" method="post"
-                                        class="dropzone" id="my-awesome-dropzone">
-                                        @csrf                                 
-                                        <input type="hidden" name='pdf' id="pdf">
-                                        <div class="dz-message needsclick">
-                                            <i class="h3 text-muted dripicons-cloud-upload"></i>
-                                            <h3>Suelta los archivos aquí o haz clic para subir.</h3>
-                                        </div>
-                                        <div class="dropzone-previews"></div>
-                                    </form>
-                                </div>
-                            </div><!-- /.modal-content -->
-                        </div><!-- /.modal-dialog -->
-                    </div><!-- /.modal -->
-                    @endauth   
+                    @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-CDE'))
+                        <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog"
+                            aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;" id="dropZonePdf">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title" id="myCenterModalLabel">Zona para subir imágenes</h4>
+                                        <button type="button" class="close" data-dismiss="modal"
+                                            aria-hidden="true">×</button>
+                                    </div>
+                                    <div class="modal-body">
+
+                                        <form action="{{ route('PDF', ['localizacion' => 'ccEdu']) }}" method="post"
+                                            class="dropzone" id="my-awesome-dropzone">
+                                            @csrf
+                                            <input type="hidden" name='pdf' id="pdf">
+                                            <div class="dz-message needsclick">
+                                                <i class="h3 text-muted dripicons-cloud-upload"></i>
+                                                <h3>Suelta los archivos aquí o haz clic para subir.</h3>
+                                            </div>
+                                            <div class="dropzone-previews"></div>
+                                        </form>
+                                    </div>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+                    @endif
+                    @endauth
                 </div> <!-- end col -->
                 <div class="col-xl-4">
                     <h4>Departamentos de Ciencias de la Educación</h4>
-                    <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
-                        <a class="nav-link active show mb-2 btn-outline-danger  border" id="v-pills-social-tab2" data-toggle="pill" href="#v-pills-social2" role="tab" aria-controls="v-pills-social2"
+                    <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist"
+                        aria-orientation="vertical">
+                        <a class="nav-link active show mb-2 btn-outline-danger  border" id="v-pills-social-tab2"
+                            data-toggle="pill" href="#v-pills-social2" role="tab" aria-controls="v-pills-social2"
                             aria-selected="true">
                             Licenciatura en Trabajo Social</a>
-                        <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-profile-tab2" data-toggle="pill" href="#v-pills-profile2" role="tab" aria-controls="v-pills-profile2"
-                            aria-selected="false">
+                        <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-profile-tab2" data-toggle="pill"
+                            href="#v-pills-profile2" role="tab" aria-controls="v-pills-profile2" aria-selected="false">
                             Profesorado en Educación Básica para Primero y Segundo Ciclos</a>
-                        <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-messages-tab2" data-toggle="pill" href="#v-pills-messages2" role="tab" aria-controls="v-pills-messages2"
+                        <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-messages-tab2"
+                            data-toggle="pill" href="#v-pills-messages2" role="tab" aria-controls="v-pills-messages2"
                             aria-selected="false">
                             Profesorado en Matemática para Tercer Ciclo de Educación Básica y Educación Media</a>
-                        <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-settings-tab2" data-toggle="pill" href="#v-pills-settings2" role="tab" aria-controls="v-pills-settings2"
+                        <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-settings-tab2"
+                            data-toggle="pill" href="#v-pills-settings2" role="tab" aria-controls="v-pills-settings2"
                             aria-selected="false">
                             Profesorado en Idioma Inglés Para Tercer Ciclo de Educación Básica y Educación Media</a>
-                        <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-biologia-tab2" data-toggle="pill" href="#v-pills-biologia2" role="tab" aria-controls="v-pills-biologia2"
-                            aria-selected="false">                                 
+                        <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-biologia-tab2"
+                            data-toggle="pill" href="#v-pills-biologia2" role="tab" aria-controls="v-pills-biologia2"
+                            aria-selected="false">
                             Profesorado en Biología para Tercer Ciclo en Educación Básica y Educación Media</a>
-                        <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-parvularia-tab2" data-toggle="pill" href="#v-pills-parvularia2" role="tab" aria-controls="v-pills-parvularia2"
-                            aria-selected="false">     
+                        <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-parvularia-tab2"
+                            data-toggle="pill" href="#v-pills-parvularia2" role="tab"
+                            aria-controls="v-pills-parvularia2" aria-selected="false">
                             Profesorado en Educación Inicial y Parvularia</a>
-                        <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-licenciatura-tab2" data-toggle="pill" href="#v-pills-licenciatura2" role="tab" aria-controls="v-pills-licenciatura2"
-                            aria-selected="false">     
+                        <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-licenciatura-tab2"
+                            data-toggle="pill" href="#v-pills-licenciatura2" role="tab"
+                            aria-controls="v-pills-licenciatura2" aria-selected="false">
                             Licenciatura en Enseñanza de Idiomas Extranjeros, Especialidad Inglés-Francés</a>
                     </div>
                 </div> <!-- end col -->
-            </div> <!-- end row--> 
+            </div> <!-- end row-->
         </div> <!-- end card-box -->
 
     </div> <!-- end container-->
