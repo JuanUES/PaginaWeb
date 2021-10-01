@@ -45,6 +45,9 @@
             <!-- Topbar Start -->
             <div class="navbar-custom">
                 <ul class="list-unstyled topnav-menu float-right mb-0">
+                    <li class="notification-list">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light" href="{{ route('index') }}" title="Pagina Web"><i class="mdi mdi-earth font-22"></i></a>
+                    </li>
                     <li class="dropdown notification-list">
                         <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             <i class="font-18 dripicons-bell noti-icon"></i>
@@ -67,7 +70,6 @@
                                     </a>
                                 @endforeach
                             </div>
-
                             <!-- All-->
                             <a href="{{ url('admin/notificaciones') }}" class="dropdown-item text-center text-primary notify-item notify-all">Ver todas<i class="fi-arrow-right"></i></a>
                         </div>

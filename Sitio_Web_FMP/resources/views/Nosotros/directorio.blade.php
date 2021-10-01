@@ -137,11 +137,11 @@
                                     <th class="text-lefth">
                                         Contacto
                                     </th>   
-                                    @auth
+                                    @if(@Auth::check()?@Auth::user()->hasRole('Pagina-Directorio|Pagina-Admin|super-admin'):@Auth::check())
                                     <th class="col-sm-1 text-left">
                                         Acciones
                                     </th> 
-                                    @endauth                           
+                                    @endif                          
                                 </tr>
                             </thead>
                             <tbody>

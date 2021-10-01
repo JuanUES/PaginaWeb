@@ -1,13 +1,13 @@
 @extends('Pagina/baseOnlyHtml')
 
 @section('header')
-@auth
+@if(@Auth::check()?@Auth::user()->hasRole('Pagina-EstructuraOrganizativa|Pagina-Admin|super-admin'):@Auth::check())
 <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
-@endauth
+@endif
 @endsection
 
 @section('footer')
-@auth
+@if(@Auth::check()?@Auth::user()->hasRole('Pagina-EstructuraOrganizativa|Pagina-Admin|super-admin'):@Auth::check())
 <!-- Plugins js -->
 <script src="{{ asset('js/dropzone.min.js') }}"></script>
 
@@ -20,7 +20,7 @@
     // para recargar pagina luego de subir imagen o cerrar el modal( recarga siempre que se cierra)
     $('.bs-example-modal-center').on('hidden.bs.modal', function() { location.reload(); });
 </script>
-@endauth
+@endif
 @endsection
 
 @section('container')
@@ -41,7 +41,7 @@
                         <div class="col order-first">
                             <h3 class="my-2">Organigrama</h3>
                         </div>
-                        @auth                            
+                        @if(@Auth::check()?@Auth::user()->hasRole('Pagina-EstructuraOrganizativa|Pagina-Admin|super-admin'):@Auth::check())                           
                         <div class="col-lg-2 order-last">
                             @auth
                                 <button type="button" class="btn btn-info btn-block my-1 float-right"  
@@ -70,7 +70,7 @@
                                         </div><!-- /.modal-content -->
                                     </div><!-- /.modal-dialog -->
                                 </div><!-- /.modal -->
-                            @endauth
+                            @endif
                                                         
                         </div>
                         @endauth
@@ -188,11 +188,11 @@
                                             <th class="text-left">
                                                 Sector que representa
                                             </th>    
-                                            @auth
+                                            @if(@Auth::check()?@Auth::user()->hasRole('Pagina-EstructuraOrganizativa|Pagina-Admin|super-admin'):@Auth::check())
                                                 <th class="col-sm-1 text-left">
                                                     Acciones
                                                 </th>  
-                                            @endauth            
+                                            @endif          
                                         </tr>
                                     </thead>
                                     <tbody> 
@@ -200,7 +200,7 @@
                                         <tr>
                                             <td class="align-middle">{!!$item->nombre;!!}</td>
                                             <th class="text-nowrap align-middle" scope="row">{!!$item->sector_dep_unid;!!}</th>
-                                            @auth                                   
+                                            @if(@Auth::check()?@Auth::user()->hasRole('Pagina-EstructuraOrganizativa|Pagina-Admin|super-admin'):@Auth::check())                            
                                             <th class="align-middle">
                                                 <div class="row text-center">
                                                     <div class="btn-group" role="group">                                
@@ -213,7 +213,7 @@
                                                     </div>
                                                 </div>                                         
                                             </th>
-                                            @endauth
+                                            @endif
                                         </tr>
                                         @endforeach
                                         
@@ -275,14 +275,12 @@
                         <div class="col order-first">
                             <h3 class="my-2" >Jefaturas Académicas y Administrativas de la Facultad Multidisciplinaria Paracentral</h3>
                         </div>
-                        @auth                            
                         
-                        @endauth
                     </div>                    
                     @guest
                             <p>{!!count($periodoJefatura)==1 ? $periodoJefatura[0] -> sector_dep_unid :'Periodo:'!!}</p>
                     @endguest
-                    @auth
+                    @if(@Auth::check()?@Auth::user()->hasRole('Pagina-EstructuraOrganizativa|Pagina-Admin|super-admin'):@Auth::check())
                         <div class="row">
                             <div class="col order-first">
                                 <div class="row">
@@ -363,7 +361,7 @@
                                 </div><!-- /.modal -->
                             </div>
                         </div>  
-                    @endauth 
+                    @endif
                     @if (count($jefaturas)!=0)
                     <div class="table-responsive">
                         <table class="table table-bordered @guest table-striped @endguest mb-0">
@@ -375,11 +373,11 @@
                                     <th class="text-left">
                                         Departamento / Unidad
                                     </th>   
-                                    @auth
+                                    @if(@Auth::check()?@Auth::user()->hasRole('Pagina-EstructuraOrganizativa|Pagina-Admin|super-admin'):@Auth::check())
                                     <th class="col-sm-1 text-left">
                                         Acciones
                                     </th> 
-                                    @endauth                                                                   
+                                    @endif                                                                  
                                 </tr>
                             </thead>
                             <tbody>
@@ -389,7 +387,7 @@
                                         {!!$item->nombre!!}
                                     </td>
                                     <th class="align-middle" scope="row">{!!$item->sector_dep_unid!!}</th> 
-                                    @auth                                   
+                                    @if(@Auth::check()?@Auth::user()->hasRole('Pagina-EstructuraOrganizativa|Pagina-Admin|super-admin'):@Auth::check())                                
                                     <th >                                        
                                         <div class="btn-group" role="group"> 
                                             <button href="#" class="btn btn-light waves-effect width-md m-1" data-toggle="modal" data-target="#myModalJefatura" onclick="modificarJefatura({!!$item->id!!})"><i class="mdi mdi-file-document-edit mdi-16p"></i>  Modificar</button>                                               
@@ -398,7 +396,7 @@
                                                                                       
                                         </div>                                         
                                     </th>
-                                    @endauth  
+                                    @endif
                                 </tr>
                                 @endforeach
                             </tbody>
