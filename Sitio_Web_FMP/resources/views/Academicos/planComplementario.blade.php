@@ -1,7 +1,7 @@
 @extends('Pagina/baseOnlyHtml')
 
 @section('header')
-@if(@Auth::check()?@Auth::user()->hasRole('Pagina-Depto-PC|Pagina-Admin|super-admin'):@Authcd::check())
+@if(@Auth::check()?@Auth::user()->hasRole('Pagina-Depto-PC|Pagina-Admin|super-admin'):@Auth::check())
     <!-- Summernote css -->
     <link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
     
