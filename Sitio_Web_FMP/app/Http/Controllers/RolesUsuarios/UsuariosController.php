@@ -72,7 +72,7 @@ class UsuariosController extends Controller
 
         $roles = $request -> roles;
 
-        if($b){
+        if($b&&!is_null($roles)){            
             for ($i=0; $i < count($roles); $i++){$user -> assignRole(base64_decode($roles[$i]));}
         }
 
