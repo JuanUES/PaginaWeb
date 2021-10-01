@@ -1,14 +1,17 @@
 @extends('Pagina/baseOnlyHtml')
 @section('header')
-@auth    
+@auth 
+@if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-I'))
     <!-- Este css se carga nada mas cuando esta logeado un usuario-->
     <link href="{{ asset('css/dropzone.min.css') }} " rel="stylesheet" type="text/css" />
     <link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
+@endif
 @endauth    
 @endsection
 
 @section('footer')
     @auth
+    @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-I'))
     <script src=" {{ asset('js/dropzone.min.js') }} "></script>   
     <script src=" {{ asset('js/scripts/dropzonePdf.js') }} "></script>
     <script src=" {{ asset('js/scripts/pdf.js') }} "></script>
@@ -16,6 +19,7 @@
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('js/summernote.config.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
+    @endif
     @endauth
 @endsection
 @section('container')
@@ -132,8 +136,7 @@
                         
                         ?>
                         @auth
-                            
-                        
+                        @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-I'))
                         <div class="col-xl-12">
                             <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
                                 class="parsley-examples"  id="contenido{{$localizacion}}">
@@ -162,16 +165,16 @@
                                 </div>
                             </form>
                         </div>  
-                        
+                        @endif
                         @endauth 
                         
-                        @guest  
+                        @if(auth()->guest()|| !auth()->guest())  
                         <div class="col-xl-12 py-2">
                         @if ($contenido!=null)
                         {!!$contenido->contenido!!}
                         @endif
                         </div>      
-                        @endguest
+                        @endif
                             <p class="mb-1 font-weight-bold">Pensum:</p>
                             <a href="{{$pdfs->where('file','ingSistemas.pdf')->first()==null 
                                 ? '#':asset('files/pdfs/'.$pdfs[0]->localizacion.'/ingSistemas.pdf')}}"
@@ -179,12 +182,15 @@
                                     <div class="mdi mdi-file-pdf mdi-24px align-top">Descargar</div>
                             </a>
                             @auth
+                            @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-I'))
                             <a href="#" class="btn  btn-outline-info my-2" 
                             data-toggle="modal" data-target=".bs-example-modal-center" onclick="pdf('ingSistemas')">
                                 <i class="mdi mdi-cloud-upload mdi-24px ml-2 align-center"></i> Subir Archivo
                             </a>
+                            @endif
                             @endauth 
                             @auth
+                            @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-I'))
                             <div class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;" id="dropZonePdf">
                                 <div class="modal-dialog modal-dialog-centered">
                                     <div class="modal-content">
@@ -208,6 +214,7 @@
                                     </div><!-- /.modal-content -->
                                 </div><!-- /.modal-dialog -->
                             </div><!-- /.modal -->
+                            @endif
                             @endauth
                     </div>
                 
