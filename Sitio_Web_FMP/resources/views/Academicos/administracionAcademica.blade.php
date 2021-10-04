@@ -82,7 +82,86 @@
                 </div>
             </div>
         </div>
-        
+        @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminAcademica|Pagina-Admin|super-admin'):@Auth::check())
+<div id="modalEliminarPDF" class="modal fade bs-example-modal-center" tabindex="-1" 
+    role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border rounded">
+                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body border rounded">
+                <form action="{{ route('eliminarpdfmaestri') }}" method="POST">
+                    @csrf
+                    <div class="row py-3">
+                        <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                        <div class="col-lg-10 text-black">
+                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se elimina este registro de manera permanente, ¿Desea continuar?</h4>
+                        </div>
+                        <input type="hidden" name="_id" id="eliminar">                                                        
+                        <input type="hidden" name="localizacion" id="localizacion">
+                        <input type="hidden" name="vista" value="admonAcademica">
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <button type="submit" 
+                                class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
+                                <i class="mdi mdi-check mdi-16px"></i>
+                                Si
+                            </button>
+                        </div>
+                        <div class="col-xl-6">
+                            <button type="reset" class="btn btn-light p-1 waves-light waves-effect btn-block font-24" data-dismiss="modal" >
+                                <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal --> 
+<div id="modalEliminarVideo" class="modal fade bs-example-modal-center" tabindex="-1" 
+    role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border rounded">
+                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body border rounded">
+                <form action="{{ route('admonEliminarV') }}" method="POST">
+                    @csrf
+                    <div class="row py-3">
+                        <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                        <div class="col-lg-10 text-black">
+                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se elimina este registro de manera permanente, ¿Desea continuar?</h4>
+                        </div>
+                        <input type="hidden" name="_id" id="eliminarV">             
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <button type="submit" 
+                                class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
+                                <i class="mdi mdi-check mdi-16px"></i>
+                                Si
+                            </button>
+                        </div>
+                        <div class="col-xl-6">
+                            <button type="reset" class="btn btn-light p-1 waves-light waves-effect btn-block font-24" data-dismiss="modal" >
+                                <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal --> 
+@endif
         <div class="row">
             <div class="col-xl-12">
                 <div class="card-box"> 
