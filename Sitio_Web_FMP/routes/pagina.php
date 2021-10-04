@@ -23,14 +23,18 @@ Route::post('PDFS/{localizacion}',[PDFImageController::class,'storeAll'])->middl
 
 Route::post('PDF/{localizacion}',[PDFImageController::class,'store'])->middleware(['auth'])->name('PDF');
 
-/**Carrusel */
+/**Carrusel 
 Route::post('/subirCarrusel/{tipo}', [ImagenesCarruselController::class, 'store'])
-->middleware(['auth','role:super-admin'])->name('ImagenCarrusel');
+->middleware(['auth','role:super-admin'])->name('ImagenCarrusel');*/
+Route::post('/subirCarrusel/{tipo}', [ImagenesCarruselController::class, 'store'])
+->middleware(['auth'])->name('ImagenCarrusel');
 
-/**ContenidoHTML */
-
+/**ContenidoHTML 
 Route::post('contenidoHTML/{localizacion}',[ContenidoHtmlController::class,'store'])
 ->middleware(['auth','role:super-admin|Pagina-Admin|Pagina-Depto-CDE|Pagina-Depto-CA|Pagina-Depto-CE|Pagina-Depto-I|Pagina-Depto-PC'])->name('contenido');
+*/
+Route::post('contenidoHTML/{localizacion}',[ContenidoHtmlController::class,'store'])
+->middleware(['auth'])->name('contenido');
 
 /**Index ----------------------------------------------------------------*/
 
