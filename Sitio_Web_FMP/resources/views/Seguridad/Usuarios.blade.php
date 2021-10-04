@@ -69,6 +69,12 @@
                                         <option value="{{base64_encode('Pagina-Depto-CE')}}">Departamento-Ciencias Ecónomicas</option>
                                         <option value="{{base64_encode('Pagina-Depto-I')}}">Departamento-Informática</option>
                                         <option value="{{base64_encode('Pagina-Depto-PC')}}">Departamento-Plan Complementario</option>
+                                        <option value="{{base64_encode('Pagina-Postgrado')}}">Postgrado</option>
+                                        <option value="{{base64_encode('Pagina-UnidadInvestigacion')}}">Unidad de Investigación</option>
+                                        <option value="{{base64_encode('Pagina-ProyeccionSocial')}}">Proyección Social</option>
+                                        <option value="{{base64_encode('Pagina-AdminFinanciera-Informacion')}}">Administración Financiera-Información</option>
+                                        <option value="{{base64_encode('Pagina-AdminFinanciera-Colecturia')}}">Administración Financiera-Colecturia</option>
+                                        <option value="{{base64_encode('Pagina-Uti')}}">Unidad de Tecnología de la Información</option>
                                     </optgroup>   
                                     <optgroup label="Transparencia">
                                         <option value="{{base64_encode('Transparencia-Repositorio')}}">Repositorio</option>
@@ -297,8 +303,26 @@
                             <span class="badge badge-primary">Pagina Departamento Informática</span>
                             @endif
                             @if ($item->hasRole('Pagina-Depto-PC'))
-                            <span class="badge badge-primary">Plan Complementario</span>
-                            @endif                              
+                            <span class="badge badge-primary">Pagina Plan Complementario</span>
+                            @endif      
+                            @if ($item->hasRole('Pagina-Postgrado'))
+                            <span class="badge badge-primary">Pagina Postgrado</span>
+                            @endif  
+                             @if ($item->hasRole('Pagina-UnidadInvestigacion'))
+                            <span class="badge badge-primary">Pagina Investigación</span>
+                            @endif  
+                             @if ($item->hasRole('Pagina-ProyeccionSocial'))
+                            <span class="badge badge-primary">Pagina Proyección Social</span>
+                            @endif  
+                            @if ($item->hasRole('Pagina-AdminFinanciera-Informacion'))
+                            <span class="badge badge-primary">Pagina Administración Financiera-Información</span>
+                            @endif  
+                             @if ($item->hasRole('Pagina-AdminFinanciera-Colecturia'))
+                            <span class="badge badge-primary">Pagina Administración Financiera-Colecturia</span>
+                            @endif  
+                             @if ($item->hasRole('Pagina-Uti'))
+                            <span class="badge badge-primary">Pagina Unidad de Tecnología de la Información</span>
+                            @endif  
                             @if ($item->hasRole('Jefe-Academico'))
                             <span class="badge badge-primary">Jefe Academico</span>
                             @endif                            
