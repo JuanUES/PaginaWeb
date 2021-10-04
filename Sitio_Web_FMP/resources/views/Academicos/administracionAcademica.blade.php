@@ -36,6 +36,52 @@
         </div>         
         <div class="my-4"></div>
         <!-- end page title --> 
+        <div class="row">
+            <div class="col-xl-8">
+                
+            </div>
+            
+            <div class="col-xl-4">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="card-box">
+                            <div class="row">
+                                <div class="col-xl-12"><h3>Siguenos en Facebook</h3></div>
+                                <div class="col-xl-12 text-center" style="overflow: auto;">
+                                    <div class="fb-page" data-href="https://www.facebook.com/academicaparacentralues/" data-tabs="" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/academicaparacentralues/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/academicaparacentralues/">Académica Paracentral - UES</a></blockquote></div> 
+                                </div>                                                                                                                
+                            </div>                                                         
+                        </div>
+                    </div><!-- end col-->      
+        
+                    <div class="col-xl-12" >                        
+                        <div class="card-box"> 
+                            <h3>Canales Digitales</h3>    
+                            <a href="https://www.facebook.com/celeues" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> CELEUES</a>
+                            <a href="https://campus.ues.edu.sv/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Campus Virtual Central</a>
+                            <a href="https://eel.ues.edu.sv/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Expediente en Linea</a>                      
+                            <a href="https://correo.ues.edu.sv/" target="_blank" class="btn btn-danger  btn-block mt-3 text-left"><i class=" mdi mdi-email font-18"></i> Correo Institucional</a>                           
+                            <a href="https://www.facebook.com/DistanciaFMP" target="_blank" class="btn btn-danger  btn-block mt-3 text-left"><i class="mdi mdi-facebook border rounded font-16"></i> Universidad en Linea / Sede Paracentral</a> 
+                            <a href="http://biblio.fmp.ues.edu.sv/biblioteca/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-book-open-variant font-18"></i> Biblioteca</a>
+                            <!-- <a href="#" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-book-open-variant font-18"></i> Recurso LMS-FMP</a>-->
+                            <!-- <a href="#" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-book-open-variant font-18"></i> Campus Virtual FMP</a>-->
+                        </div> <!-- end card-box-->                        
+                    </div> <!-- end col-->  
+        
+                    <div class="col-xl-12">
+                        <div class="card-box">
+                            <h3>Oferta Académica</h3>
+                            <a href="{{ route('Departamento.CienciasEdu') }}" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Ciencias de la Educación</a>                                        
+                            <a href="{{ route('Departamento.CienciasAgr') }}" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Ciencias Agronómicas</a>                        
+                            <a href="{{ route('Departamento.CienciasEcon') }}" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Ciencias Económicas</a>                        
+                            <a href="{{ route('Departamento.Inform') }}" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Informática</a>                        
+                            <a href="{{ route('planComp') }}" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Plan Complementario</a>
+                            <a href="{{ route('postgrado') }}" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-school font-18"></i> Postgrado</a>
+                        </div>
+                    </div>                                       
+                </div>
+            </div>
+        </div>
         
         <div class="row">
             <div class="col-xl-12">
