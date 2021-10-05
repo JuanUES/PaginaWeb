@@ -101,7 +101,7 @@
                     <div class="col-xl-12">
                         <div class="card-box text-center">
                             <div class="row button-list">
-                                <div class="col-xl-6 col-sm-5">
+                                <div class="col-xl-6 col-sm-6">
                                     <div type="button" class="card border border-danger" href="#" data-toggle="modal" data-target="#modalProAca">
                                         <div class="card-body">
                                             <blockquote class="card-bodyquote mb-0">
@@ -111,7 +111,7 @@
                                         </div>
                                     </div>
                                 </div>                       
-                                <div class="col-xl-6 col-sm-5" >
+                                <div class="col-xl-6 col-sm-6" >
                                     <div type="button" class="card border border-danger" data-toggle="modal" data-target="#modalMallas">
                                         <div class="card-body">
                                             <blockquote class="card-bodyquote mb-0 ">
@@ -121,7 +121,7 @@
                                         </div>
                                     </div>
                                 </div>                             
-                                <div class="col-xl-6 col-sm-5">
+                                <div class="col-xl-6 col-sm-6">
                                     <div type="button" class="card border border-danger" data-toggle="modal" data-target="#modalGradua">
                                         <div class="card-body">
                                             <blockquote class="card-bodyquote mb-0">
@@ -131,7 +131,7 @@
                                         </div>
                                     </div>
                                 </div>                       
-                                <div class="col-xl-6 col-sm-5" >
+                                <div class="col-xl-6 col-sm-6" >
                                     <div type="button" class="card border border-danger" data-toggle="modal" data-target="#modalCalendario">
                                         <div class="card-body">
                                             <blockquote class="card-bodyquote mb-0">
@@ -141,7 +141,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-6 col-sm-5" >
+                                <div class="col-xl-6 col-sm-6" >
                                     <div type="button" class="card border border-danger" data-toggle="modal" data-target="#modalFromula">
                                         <div class="card-body">
                                             <blockquote class="card-bodyquote mb-0">
@@ -151,7 +151,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-xl-6 col-sm-5">
+                                <div class="col-xl-6 col-sm-6">
                                     <div type="button" class="card border border-danger" data-toggle="modal" data-target="#modalAudioVisual">
                                         <div class="card-body">
                                             <blockquote class="card-bodyquote mb-0">
