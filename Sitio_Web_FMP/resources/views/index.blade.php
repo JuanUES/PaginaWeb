@@ -1,5 +1,4 @@
 @extends('Pagina/base')
-@extends('MensajesToast/notificacionesErrores')
 
 @section('appcss')
 <!-- App favicon -->
