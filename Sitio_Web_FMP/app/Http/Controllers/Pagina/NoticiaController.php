@@ -67,7 +67,7 @@ class NoticiaController extends Controller
             $noticia->save();
         }
 
-        return $request->_id !=null ?response()->json(['mensaje'=>'Modificación exitosa.']):response()->json(['mensaje'=>'Registro exitoso.']);
+        return $request->_id !=null ?response()->json(['mensaje'=>'Modificación exitosa']):response()->json(['mensaje'=>'Registro exitoso']);
     }
 
     public function storeurl(Request $request)
@@ -107,7 +107,7 @@ class NoticiaController extends Controller
             $noticia->save();
         }
 
-        return $request->_id !=null ?response()->json(['mensaje'=>'Modificación exitosa.']):response()->json(['mensaje'=>'Registro exitoso.']);
+        return $request->_id !=null ?response()->json(['mensaje'=>'Modificación exitosa']):response()->json(['mensaje'=>'Registro exitoso.']);
 
     }
     
