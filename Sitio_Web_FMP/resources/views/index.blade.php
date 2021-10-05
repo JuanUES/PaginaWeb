@@ -303,7 +303,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                                                 <div class="form-group">
                                                                     <label>Imagen <code>*</code></label>
                                                                     <div class="custom-file">
-                                                                        <input type="file" class="custom-file-input" name="imagen" id="customFileLang" lang="es">
+                                                                        <input type="file" class="custom-file-input" name="imagen" accept="image/*" id="customFileLang" lang="es">
                                                                         <label class="custom-file-label" for="customFile">Seleccionar imagen</label>
                                                                     </div>
                                                                 </div>

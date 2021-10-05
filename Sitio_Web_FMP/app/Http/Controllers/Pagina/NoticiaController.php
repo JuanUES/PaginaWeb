@@ -56,11 +56,12 @@ class NoticiaController extends Controller
         $noticia -> save();
         
         if($request->imagen=!null){
+            $file = $request->file('imagen');
             $nombreUnico = uniqid();
             File::delete(public_path().'/images/noticias/'.$noticia->imagen);
-            $request->file('imagen')->move(public_path().'\images\noticias',$nombreUnico);
             $noticia->imagen = $nombreUnico;
             $noticia->save();
+            $file->move(public_path().'\images\noticias',$nombreUnico);
         }else{
             $noticia->imagen = 'N/A';
             $noticia->save();
@@ -94,12 +95,13 @@ class NoticiaController extends Controller
         $noticia -> save();
 
         if($request->imagen=!null){
+            $file = $request->file('imagen');
             $ruta = public_path().'\images\noticias';
             File::delete(public_path().'/images/noticias/'.$noticia->imagen);
             $nombreUnico = uniqid();
-            $request->file('imagen')->move($ruta,$nombreUnico);
             $noticia->imagen = $nombreUnico;
             $noticia->save();
+            $file->move($ruta,$nombreUnico);
         }else{
             $noticia->imagen = 'N/A';
             $noticia->save();
