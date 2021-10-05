@@ -33,7 +33,6 @@ class NoticiaController extends Controller
      */
     public function store(Request $request)
     {
-
         $validator = Validator::make($request->all(),[
             'titulo' => 'required|max:255',
             'contenido' => 'required',
@@ -59,12 +58,12 @@ class NoticiaController extends Controller
         if($request->imagen=!null){
             $ruta = public_path().'\images\noticias';
             $nombreUnico = uniqid().$request->file('imagen')->getClientOriginalName();
-            File::delete($ruta.'/'.$noticia->imagen);
+            File::delete($ruta."/".$noticia->imagen);
             $request->file('imagen')->move($ruta,$nombreUnico);
             $noticia->imagen = $nombreUnico;
             $noticia->save();
         }else{
-            $noticia->imagen = 'sin_imagen';
+            $noticia->imagen = 'N/A';
             $noticia->save();
         }
 
@@ -98,9 +97,12 @@ class NoticiaController extends Controller
         if($request->imagen=!null){
             $ruta = public_path().'\images\noticias';
             $nombreUnico = uniqid().$request->file('imagen')->getClientOriginalName();
-            File::delete($ruta.'/'.$noticia->imagen);
+            File::delete($ruta."/".$noticia->imagen);
             $request->file('imagen')->move($ruta,$nombreUnico);
             $noticia->imagen = $nombreUnico;
+            $noticia->save();
+        }else{
+            $noticia->imagen = 'N/A';
             $noticia->save();
         }
 

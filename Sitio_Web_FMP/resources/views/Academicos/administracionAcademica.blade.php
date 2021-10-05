@@ -583,8 +583,8 @@
                 ?>
                 <div class="card-box">  
                 @foreach ($videos as $item)
-                    <div class="btn-group btn-block">
-                        <button class="btn btn-danger waves-effect waves-light btn-block text-left fond-19" type="button" 
+                    <div class="btn-group py-1 btn-block">
+                        <button class="btn btn-danger  waves-effect waves-light btn-block text-left fond-19" type="button" 
                             data-toggle="collapse" data-target="#collapseExample{{$item->id}}" 
                             aria-expanded="false" aria-controls="collapseExample{{$item->id}}" s
                             tyle="margin-left: 0px;">
