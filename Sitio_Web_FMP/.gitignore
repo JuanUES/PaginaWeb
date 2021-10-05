@@ -5,6 +5,7 @@
 /public/images/fotos
 /public/images/noticias
 /public/images/sondeos
+/public/files
 /vendor
 .env
 .env.backup

@@ -89,8 +89,7 @@ class NoticiaController extends Controller
         /**Guardo en base de datos */
         
         $noticia -> titulo    =  $request->titulo;        
-        $noticia -> subtitulo =  $request->subtitulo;        
-        $noticia -> imagen    =  $fileName;
+        $noticia -> subtitulo =  $request->subtitulo;    
         $noticia -> tipo      =  'false';  
         $noticia -> urlfuente =  $request->urlfuente;
         $noticia -> user      =  auth()->id();
