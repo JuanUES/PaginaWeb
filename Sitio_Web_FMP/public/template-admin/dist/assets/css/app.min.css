@@ -2740,7 +2740,7 @@ body.boxed-layout.enlarged .footer {
 }
 
 .bootstrap-select .inner {
-    overflow-y: inherit !important
+    overflow-y: auto !important
 }
 
 .bootstrap-timepicker-widget table td input {
