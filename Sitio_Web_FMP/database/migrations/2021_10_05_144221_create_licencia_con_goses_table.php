@@ -15,8 +15,8 @@ class CreateLicenciaConGosesTable extends Migration
     {
         Schema::create('licencia_con_goses', function (Blueprint $table) {
             $table->id();
-            $table->time('anuales');
-            $table->time('mensuales');
+            $table->bigInteger('anuales');
+            $table->bigInteger('mensuales');
             $table->bigInteger('id_tipo_jornada');
             $table->foreign('id_tipo_jornada')->references('id')->on('tipo_jornada');
             $table->timestamps();
