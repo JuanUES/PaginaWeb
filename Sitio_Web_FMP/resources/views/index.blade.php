@@ -1,5 +1,4 @@
 @extends('Pagina/base')
-@extends('MensajesToast/notificacionesErrores')
 
 @section('appcss')
 <!-- App favicon -->
@@ -304,7 +303,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                                                 <div class="form-group">
                                                                     <label>Imagen <code>*</code></label>
                                                                     <div class="custom-file">
-                                                                        <input type="file" class="custom-file-input" name="imagen" id="customFileLang" lang="es">
+                                                                        <input type="file" class="custom-file-input" name="imagen" accept="image/*" id="customFileLang" lang="es">
                                                                         <label class="custom-file-label" for="customFile">Seleccionar imagen</label>
                                                                     </div>
                                                                 </div>
@@ -358,8 +357,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                         <tr>
                                             <td>
                                                 <div class="border p-1 rounded media">
-                                                    
-                                                    <img class="mr-3 mt-1 rounded bx-shadow-lg" src="{{ asset('/') }}images/noticias/{{$n->imagen}}"
+                                                    <img class="mr-3 mt-1 rounded bx-shadow-lg" src="images/noticias/{{$n->imagen}}"
                                                     alt="Generic placeholder image" height="110" width="140" style="">
                                                     <div class="media-body" style="width: 20em">
                                                         <h6 class="text-left">Publicado {!!/*date('d M Y - h:i:s A', strtotime($n->created_at))*/$n->created_at->diffForHumans()!!}</h6>

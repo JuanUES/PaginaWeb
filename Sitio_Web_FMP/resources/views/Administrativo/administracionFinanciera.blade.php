@@ -2,28 +2,31 @@
 
 @section('header')
 <!-- Summernote css -->
-<link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
+    <link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
     <!-- Plugin css -->
     <link href="{{ asset('css/fullcalendar.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('footer')
-<script src="{{ asset('js/scripts/http.min.js') }}"></script><!--Este es el script que se utiliza para enviar post con un ajax generico-->
-<script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
+    @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminFinanciera-Informacion|Pagina-AdminFinanciera-Colecturia|Pagina-Admin|super-admin'):@Auth::check())
+    <script src="{{ asset('js/scripts/http.min.js') }}"></script><!--Este es el script que se utiliza para enviar post con un ajax generico-->
+    @endif
+    @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminFinanciera-Informacion|Pagina-Admin|super-admin'):@Auth::check())
+    <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('js/summernote.config.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
-
+    @endif
     <!-- Calendar init -->
     <script src="{{ asset('js/moment.min.js') }}"></script>
     <script src="{{ asset('js/fullcalendar.min.js') }}"></script>  
     <script src="{{ asset('js/locale/es.js') }}"></script>  
-    @auth 
+    @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminFinanciera-Colecturia|Pagina-Admin|super-admin'):@Auth::check())
     <script src="{{ asset('js/scripts/admonFinanciero.js') }}"></script>
     <script>calendarConfig('{{route('HorarioCole')}}');</script>
-    @endauth
-    @guest
+    @endif
+    @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-AdminFinanciera-Colecturia|Pagina-Admin|super-admin'))
     <script>$('#calendar').fullCalendar({events:'{{route('HorarioCole')}}',height: 600,timeFormat: 'hh:mm t',});</script>        
-    @endguest
+    @endif
 @endsection
 
 @section('container')
@@ -86,8 +89,7 @@
                         $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
                         
                         ?>
-                        @auth
-                            
+                        @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminFinanciera-Informacion|Pagina-Admin|super-admin'):@Auth::check())                          
                         
                         <div class="col-xl-12">
                             <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
@@ -118,15 +120,15 @@
                             </form>
                         </div>  
                         
-                        @endauth 
+                        @endif
                         
-                        @guest  
+                        @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-AdminFinanciera-Informacion|Pagina-Admin|super-admin'))
                         <div class="col-xl-12 py-2">
                         @if ($contenido!=null)
                         {!!$contenido->contenido!!}
                         @endif
                         </div>      
-                        @endguest
+                        @endif
                         
                     </div> 
                 </div> 
@@ -141,8 +143,8 @@
                     <h3>Horarios de Colecturia</h3>
                     <div id="calendar" ></div>
                 </div>
-            </div>'
-            @auth               
+            </div>
+            @if(@Auth::check()?@Auth::user()->hasRole('Pagina-AdminFinanciera-Colecturia|Pagina-Admin|super-admin'):@Auth::check())               
             <div id="myModalRegistro" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -296,7 +298,7 @@
                     </div><!-- /.modal-content -->
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal --> 
-            @endauth
+            @endif
         </div>
     </div> <!-- end container -->
 </div> 

@@ -182,7 +182,7 @@
                     
                     <div class="row">
                         <div class="col-xl-6 p-1">
-                            <button  type="button" onclick="submitForm('#altaBajaForm','#notificacion1')"
+                            <button  type="button" 
                                 class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
                                 <i class="mdi mdi-check mdi-16px"></i>
                                 Si
@@ -250,129 +250,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                @php
-                    $roles = Spatie\Permission\Models\Role::all();
-                    $i=0;
-                @endphp
-               
-                @foreach ($usuarios as $item)
-                <tr>
-                    @php
-                        $i++;
-                    @endphp
-                    <th class="align-middle ">{!!$i!!}</th>
-                    <td class="align-middle ">{!!$item->name!!}</td>
-                    <td class="align-middle ">{!!$item->email!!}</td>
-                    <td class="align-middle font-16">{!! !$item->estado?'<span class="badge badge-danger">Desactivado</span> ' :
-                     '<span class="badge badge-success">Activado</span> ' !!}</td>
-                    <td class="align-middle font-16">
-                        @if ($item->hasAllRoles($roles))
-                        <span class="badge badge-success">Todos los roles</span>
-                        @else
-                            @if ($item->hasRole('super-admin'))
-                            <span class="badge badge-primary">Super Administrador</span>
-                            @endif   
-                            @if ($item->hasRole('Pagina-Inicio-Imagenes'))
-                            <span class="badge badge-primary">Pagina Inicio-Imagenes</span>
-                            @endif
-                            @if ($item->hasRole('Pagina-Admin'))
-                            <span class="badge badge-primary">Pagina Administrador</span>
-                            @endif                        
-                            @if ($item->hasRole('Pagina-Inicio-Noticias'))
-                            <span class="badge badge-primary">Pagina Inicio-Noticias</span>
-                            @endif                            
-                            @if ($item->hasRole('Pagina-Directorio'))
-                            <span class="badge badge-primary">Pagina Directorio</span>
-                            @endif
-                            @if ($item->hasRole('Pagina-EstructuraOrganizativa'))
-                            <span class="badge badge-primary">Pagina Estructura Organizativa</span>
-                            @endif
-                            @if ($item->hasRole('Pagina-AdminAcademica'))
-                            <span class="badge badge-primary">Pagina Administración Académica</span>
-                            @endif 
-                            @if ($item->hasRole('Pagina-Depto-CDE'))
-                            <span class="badge badge-primary">Pagina Departamento Ciencias de la Educación</span>
-                            @endif
-                            @if ($item->hasRole('Pagina-Depto-CA'))
-                            <span class="badge badge-primary">Pagina Departamento Ciencias Agronómicas</span>
-                            @endif 
-                            @if ($item->hasRole('Pagina-Depto-CE'))
-                            <span class="badge badge-primary">Pagina Departamento Ciencias Ecónomicas</span>
-                            @endif
-                            @if ($item->hasRole('Pagina-Depto-I'))
-                            <span class="badge badge-primary">Pagina Departamento Informática</span>
-                            @endif
-                            @if ($item->hasRole('Pagina-Depto-PC'))
-                            <span class="badge badge-primary">Pagina Plan Complementario</span>
-                            @endif      
-                            @if ($item->hasRole('Pagina-Postgrado'))
-                            <span class="badge badge-primary">Pagina Postgrado</span>
-                            @endif  
-                             @if ($item->hasRole('Pagina-UnidadInvestigacion'))
-                            <span class="badge badge-primary">Pagina Investigación</span>
-                            @endif  
-                             @if ($item->hasRole('Pagina-ProyeccionSocial'))
-                            <span class="badge badge-primary">Pagina Proyección Social</span>
-                            @endif  
-                            @if ($item->hasRole('Pagina-AdminFinanciera-Informacion'))
-                            <span class="badge badge-primary">Pagina Administración Financiera-Información</span>
-                            @endif  
-                             @if ($item->hasRole('Pagina-AdminFinanciera-Colecturia'))
-                            <span class="badge badge-primary">Pagina Administración Financiera-Colecturia</span>
-                            @endif  
-                             @if ($item->hasRole('Pagina-Uti'))
-                            <span class="badge badge-primary">Pagina Unidad de Tecnología de la Información</span>
-                            @endif  
-                            @if ($item->hasRole('Jefe-Academico'))
-                            <span class="badge badge-primary">Jefe Academico</span>
-                            @endif                            
-                            @if ($item->hasRole('Transparencia-Decanato'))
-                            <span class="badge badge-primary"> Transparencia Decanato</span>
-                            @endif                            
-                            @if ($item->hasRole('Transparencia-Secretario'))
-                            <span class="badge badge-primary">Transparencia Secretario</span>
-                            @endif                           
-                            @if ($item->hasRole('Transparencia-Presupuestario'))
-                            <span class="badge badge-primary">Transparencia Presupuestario</span>
-                            @endif
-                            @if ($item->hasRole('Transparencia-Decano'))
-                            <span class="badge badge-primary">Transparencia Decano</span>
-                            @endif        
-                            @if ($item->hasRole('Transparencia-Repositorio'))
-                            <span class="badge badge-primary">Transparencia Repositorio</span>
-                            @endif 
-                            @if ($item->hasRole('Recurso-Humano'))
-                            <span class="badge badge-primary">Recurso Humano</span>
-                            @endif  
-                            @if ($item->hasRole('Docente'))
-                            <span class="badge badge-primary">Docente</span>
-                            @endif                                 
-                            @if ($item->hasRole('Jefe-Administrativo'))
-                            <span class="badge badge-primary">Jefe Administrativo</span>
-                            @endif                   
-                        @endif
-                    </td>
-                    <td class="align-middle ">
-                        <div class="row">
-                            <div class="col text-center">
-                                <div class="btn-group" role="group">
-                                    <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="editar('{{ route('usuarios') }}',{!!$item->id!!},this)">
-                                        <i class="fa fa-edit font-16" aria-hidden="true"></i>
-                                    </button>
-                                    <button title="{!! !$item->estado?'Activar' : 'Desactivar' !!}" 
-                                        class="btn btn-outline-primary btn-sm mx-1 rounded 
-                                            {!! $item->estado?'btn-outline-danger' : 'btn-outline-success' !!}" 
-                                        data-toggle="modal" data-target="#modalAlta" 
-                                        onclick="$('#activarId').val({!!$item->id!!});">
-                                        {!! !$item->estado?'<i class="mdi mdi-arrow-up-bold font-18"></i>':
-                                                           '<i class="mdi mdi-arrow-down-bold font-18"></i>'!!}
-                                    </button>                                   
-                                </div>
-                            </div>
-                        </div>
-                    </td>                    
-                </tr>
-                @endforeach
+                    <tr>
+                        <th class="align-middle "></th>
+                    </tr>
                 </tbody>
             </table>
 
@@ -395,6 +275,5 @@
     <script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
     <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
 
-    <script src="{{ asset('js/scripts/usuariosRoles.js') }}" ></script>
     <script src="{{ asset('js/scripts/data-table.js') }}" ></script>
 @endsection

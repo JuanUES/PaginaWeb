@@ -2,9 +2,8 @@
 
 //use App\Http\Controllers\EmpleadoController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Licencias\LicenciaController;
 
-/*Route::get('Empleado',[EmpleadoController::class, 'index'])->name('indexEmpleado');
-
-// ruta para guardar con ajax
-Route::post('Empleado/empleado', [EmpleadoController::class, 'store'])
-->name('Empleado.empleado');*/
+Route::group(['middleware' => ['role:super-admin','auth']], function () {
+    Route::get('Admin/LicenciaGS', [LicenciaController::class,'indexLicenciaGS'])->name('indexLicGS');
+});

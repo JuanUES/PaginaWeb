@@ -1,9 +1,8 @@
 @extends('layouts.admin')
 @section('content')
 <!-- inicio Modal de registro -->
-<div class="modal fade bs-example-modal-lg" tabindex="-1"
-    role="dialog" aria-labelledby="myLargeModalLabel"
-    id="modalRegistro" tabindex="-1" aria-hidden="true">
+<div class="modal fade bs-example-modal-lg" role="dialog" 
+    aria-labelledby="myLargeModalLabel"   id="modalRegistro" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -37,7 +36,7 @@
                         </div>
                         <div class="form-group text-center">
                             <label for="fileE" class="centrado text-black"><i class="mdi mdi-mouse font-20"></i> Click para subir foto</label>
-                            <input type="file" id="fileE" name="fotoE" accept="image/*">
+                            <input type="file" id="fileE" name="foto" accept="image/*">
                         </div>
                     </div>
                     <div class="col-xl-6">
@@ -56,7 +55,7 @@
                         </div>
                         <div class="form-group">
                             <label for="nitE">NIT <code>*</code></label>
-                            <input type="text" class="form-control" name="nit" id="nitE" data-mask="0000-000000-000-0"
+                            <input type="text" class="form-control" name="nit" id="nitE" data-mask="0000-000000-000-0" 
                             placeholder="0000-000000-000-0">
                         </div>
                     </div>
@@ -64,29 +63,23 @@
                 <div class="row">
                     <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="">Teléfono <code>*</code></label>
+                            <label for="">Teléfono </label>
                             <input type="tel" class="form-control" id="telE" name="telefono" data-mask="0000-0000"
                             placeholder="0000-0000">
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="">Categoria <code>*</code></label>
-                            <select class="select2 form-group" id="categoriaE"
-                                data-live-search="true" style="width: 100%;" name="categoria">
-                                <option value="" selected>Seleccione</option>
-                                @foreach ($categorias as $item)
-                                <option value="{!!$item->id!!}">{!!$item->categoria!!}</option>
-                                @endforeach
-                            </select>
+                            <label for="salarioE">Salario <code>*</code></label>
+                            <input type="text" name="salario" id="salarioE" class="form-control" placeholder="$00.00">
                         </div>
-                    </div>
+                    </div>                    
                 </div>
                 <div class="row">
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="Departamento">Tipo Contrato <code>*</code></label>
-                            <select  style="width: 100%;" class="form-group select2" data-live-search="true" data-style="btn-white"
+                            <select  style="width: 100%;" class="form-group select2" data-live-search="false" data-style="btn-white"
                                     id="tipo_contratoE" name="tipo_contrato">
                             <option value="" selected>Seleccione</option>
                             @foreach ($tcontrato as $contrato)
@@ -134,7 +127,19 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xl-12">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="categoriaE">Categoria <code>*</code></label>
+                            <select class="select2 form-group" id="categoriaE"
+                                data-live-search="true" style="width: 100%;" name="categoria">
+                                <option value="" selected>Seleccione</option>
+                                @foreach ($categorias as $item)
+                                <option value="{!!$item->id!!}">{!!$item->categoria!!}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
                         <div class="form-group">
                             <label for="Departamento">Jefes y Empleados </label>
                             <select class="select2 form-group " data-live-search="true"  data-style="btn-white"
@@ -444,7 +449,7 @@
     .contenedor{
         position: relative;
         display: inline-block;
-        text-align: auto;
+        text-align: center;
     }
     .centrado{
         position: absolute;

@@ -35,17 +35,19 @@ class EmpleadoController extends Controller
     }
 
     public function store (Request $request){
-        
 
+       
         $validator = Validator::make($request->all(),[
             'nombre' => 'required|max:25',
             'apellido' => 'required|max:20',
             'dui' => 'required|max:10',
             'nit' => 'required|max:40',
+            'foto' => 'image|mimes:jpeg,jpg,png|max:3000',
             'telefono' => 'required|max:9',
             'categoria' => 'required',
             'tipo_contrato' => 'required',
             'tipo_jornada' => 'required',
+            'salario' => 'required',
             'departamento' => 'required',
             'tipo_empleado'=>'required',
         ]);
@@ -56,14 +58,14 @@ class EmpleadoController extends Controller
             return response()->json(['error'=>$validator->errors()->all()]);
 
         }
-        $foto = $request->file('fotoE'); 
-        //Nuevo registro
+        $foto = $request->file('foto'); 
 
         $empleado = Empleado::updateOrCreate(
             ['id'=>$request->_id],
             ['nombre'=>$request->nombre,
             'apellido'=>$request->apellido,
             'dui'=>$request->dui,
+            'salario'=>str_replace('',',',$request->salario),
             'nit'=>$request->nit,
             'telefono'=>$request->telefono,
             'categoria'=>$request->categoria,
@@ -73,11 +75,11 @@ class EmpleadoController extends Controller
             'tipo_empleado'=>$request->tipo_empleado,]
         );
     
-        if($request->fotoE=!null){
+        if(!is_null($foto)){
             $ruta=public_path() . '/images/fotos';
-            $nombreUnico = uniqid().$request->file('fotoE')->getClientOriginalName();
+            $nombreUnico = uniqid().$request->file('foto')->getClientOriginalName();
             File::delete($ruta.'/'.$empleado->urlfoto);
-            $request->file('fotoE')->move($ruta,$nombreUnico);
+            $request->file('foto')->move($ruta,$nombreUnico);
             $empleado->urlfoto = $nombreUnico;
             $empleado->save();
         }
@@ -90,7 +92,7 @@ class EmpleadoController extends Controller
 
     public function empleado($id){
         $e = Empleado::select('nombre','apellido','dui','nit','telefono as tel',
-        'urlfoto','tipo_empleado as tipo','jefe',
+        'urlfoto','tipo_empleado as tipo','jefe','salario',
         'id_depto as depto','categoria','id_tipo_jornada as jornada','id_tipo_contrato as contrato')
         ->findOrFail($id);
         if($e->urlfoto!=null)

@@ -12,7 +12,7 @@ $fileE.addEventListener("change", () => {
     const archivos = $fileE.files;
     // Si no hay archivos salimos de la función y quitamos la imagen
     if (!archivos || !archivos.length) {
-        $fotoE.src = "";
+        $('#fotoE').attr('src', '/sin_imagen');
         return;
     }
     // Ahora tomamos el primer archivo, el cual vamos a previsualizar
@@ -27,7 +27,7 @@ $fileE.addEventListener("change", () => {
 
 $('#modalRegistro').on('hidden.bs.modal',function(){
     $(".alert").hide();
-    $fotoE.src = "";
+    $('#fotoE').attr('src', '/sin_imagen');
     $("form").trigger("reset");
     $(".selectpicker").val(null).trigger("change");
 });
@@ -181,6 +181,7 @@ function editar(id,boton){
                 $('#nombreE').val(json.nombre);
                 $('#apellidoE').val(json.apellido);
                 $('#duiE').val(json.dui);
+                $('#salarioE').val(json.salario);
                 $('#nitE').val(json.nit);
                 $('#telE').val(json.tel);
                 $('#categoriaE').val(json.categoria).trigger("change");
@@ -192,7 +193,7 @@ function editar(id,boton){
 
                 $('#fotoE').width(ancho); 
                 $('#fotoE').height(alto);
-                $fotoE.src = json.urlfoto===null?'':json.urlfoto;
+                $('#fotoE').attr('src',json.urlfoto===null?'/sin_imagen':json.urlfoto);;
 
                 $("#modalRegistro").modal();
         },
@@ -203,11 +204,16 @@ function editar(id,boton){
         }
     });
 }    
-
-
-
-$('.select2').select2({
-    width: "100%",
-    allowHtml: true,
-    dropdownParent: $('#modalRegistro')
-}).select2();
+$(document).ready(function() {
+    $('.select2').select2(
+        {   
+            tags: "true",
+            placeholder: "Seleccione una opción",
+            allowClear: true,
+            width: "100%",
+            allowHtml: true,
+            dropdownParent: $('#modalRegistro')
+        }
+    ).select2();
+    $('#salarioE').mask('##.00', {reverse: true});
+});

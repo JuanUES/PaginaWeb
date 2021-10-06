@@ -168,7 +168,7 @@
                             <li class="menu-title"> General</li>
                             <li>
                                 <a href="{{ url('admin/') }}">
-                                    <i class="font-18 mdi mdi-home-outline"></i>
+                                    <i class="font-20 mdi mdi-home-outline"></i>
                                     <span> Inicio </span>
                                 </a>
                             </li>
@@ -180,13 +180,30 @@
                             </li>
                             @endhasrole
                             @hasrole('super-admin')
-                            <li class="menu-title">Licencias</li>
-                            
-                            
+                            <li class="menu-title">Licencias</li>                       
                             <li>
-                                <a href="#"><i class="mdi  mdi-file-document-box-outline font-18"></i><span>Mis Licencias</span></a>
+                                <a href="#"><i class="icon-notebook font-18"></i><span>Mis Licencias</span></a>
                             </li>
-                            
+                            <li>
+                                <a href="javascript: void(0);"><i class="font-18  icon-layers"></i><span> Gestión de Licencias </span><span class="menu-arrow"></span></a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                        <li>
+                                            <a href="{{ route('indexLicGS') }}">Tipo de Licencia</a>
+                                        </li>
+                                        <li>
+                                            <a href="#"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#"></a>
+                                        </li>
+                                </ul>
+                            </li>                            
                             @endhasrole
                             @hasanyrole('super-admin|Transparencia-Decano|Transparencia-Secretario|Transparencia-Presupuestario')
                             <li class="menu-title">Transparencia</li>
