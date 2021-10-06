@@ -180,11 +180,29 @@
                             </li>
                             @endhasrole
                             @hasrole('super-admin')
-                            <li class="menu-title">Licencias</li>
-                            
-                            
+                            <li class="menu-title">Licencias</li>                       
                             <li>
                                 <a href="#"><i class="mdi  mdi-file-document-box-outline font-18"></i><span>Mis Licencias</span></a>
+                            </li>
+                            <li>
+                                <a href="javascript: void(0);"><i class="font-18 dripicons-view-list-large"></i><span> Gestión de Licencias </span><span class="menu-arrow"></span></a>
+                                <ul class="nav-second-level" aria-expanded="false">
+                                        <li>
+                                            <a href="#"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#"></a>
+                                        </li>
+                                        <li>
+                                            <a href="#"></a>
+                                        </li>
+                                </ul>
                             </li>
                             
                             @endhasrole

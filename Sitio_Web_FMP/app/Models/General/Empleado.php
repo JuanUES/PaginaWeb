@@ -24,6 +24,7 @@ class Empleado extends Model
         'estado',
         'categoria',
         'jefe',
+        'salario',
         'tipo_empleado',
         'id_tipo_jornada',
         'id_tipo_contrato',
