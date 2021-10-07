@@ -93,32 +93,7 @@
                                 <select class="form-control selectpicker"  data-live-search="true" 
                                     data-style="btn-white" data-width="100%"  name="empleado" id="empleado">
                                     <option value="">Seleccione</option>
-                                    @foreach ($empleados as $item)
-                                        @php
-                                            $b=false;
-                                        @endphp
-                                        @foreach ($usuarios as $u)
-                                            @if ($u->empleado==$item->id)
-                                                @php
-                                                    $b=$u->empleado==$item->id;
-                                                @endphp
-                                                @break
-                                            @endif
-                                        @endforeach
-                                        @if ($b)
-                                            <option data-icon="mdi mdi-account-remove-outline font-18" class="text-danger" value="{{$item->id}}">                                                
-                                                <span>
-                                                    {{$item->nombre.' '.$item->apellido}}
-                                                </span>
-                                            </option>
-                                        @else
-                                            <option data-icon="mdi mdi-account-plus-outline font-18" value="{{$item->id}}">
-                                                <span>
-                                                {{$item->nombre.' '.$item->apellido}}
-                                                </span>
-                                            </option>
-                                        @endif                                        
-                                    @endforeach
+                                    
                                 </select>
                             </div>
                         </div>
@@ -250,9 +225,9 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                   <!-- <tr>
                         <th class="align-middle "></th>
-                    </tr>
+                    </tr>-->
                 </tbody>
             </table>
 
