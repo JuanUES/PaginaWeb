@@ -31,10 +31,19 @@
                     <div class="col-xl-12">
                         <div class="form-group">
                             <label for="id_jornada">Tipo de Jornada<code>*</code></label>
+                            
+                            @if (count($tipo_jornada))
                             <select class="form-control select2" style="width: 100%" data-live-search="true" 
-                                data-style="btn-white" name="jornada" id="id_jornada">
-                                <option value="" selected>Seleccione</option>
-                            </select>
+                            data-style="btn-white" name="jornada" id="id_jornada">
+                                <option value="">Seleccione</option>
+                                @foreach ($tipo_jornada as $item)
+                                <option value="{!!$item->id!!}">{!!$item->horas_semanales!!}</option>
+                                @endforeach
+                            @else
+                            <select class="custom-select" name="id_depto" id="id_depto">
+                                <option>Sin datos</option>
+                            @endif  
+                        </select>
                         </div>
                     </div>
                 </div>
