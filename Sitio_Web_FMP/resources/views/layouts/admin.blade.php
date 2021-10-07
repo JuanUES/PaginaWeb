@@ -188,7 +188,7 @@
                                 <a href="javascript: void(0);"><i class="font-18  icon-layers"></i><span> Gestión de Licencias </span><span class="menu-arrow"></span></a>
                                 <ul class="nav-second-level" aria-expanded="false">
                                         <li>
-                                            <a href="{{ route('indexLicGS') }}">Tipo de Licencia</a>
+                                            <a href="{{ route('indexLicGS') }}">Horas GS</a>
                                         </li>
                                         <li>
                                             <a href="#"></a>
