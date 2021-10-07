@@ -77,7 +77,7 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Inicio</a></li>
-                    <li class="breadcrumb-item active">Usuarios</li>
+                    <li class="breadcrumb-item active">Horas de Licencias</li>
                 </ol>
             </div>
             <h4 class="page-title">&nbsp;</h4>
@@ -94,7 +94,7 @@
             <div class="row py-2">
                 <div class="col order-first">
                     <h3>
-                        Usuarios
+                        Horas de Licencias por Jornada
                     </h3>
                 </div>
                 <div class="col-lg-1 order-last">
@@ -139,6 +139,9 @@
     <!-- Bootstrap Select -->
     <script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
     <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
+
+    <script src="{{ asset('js/scripts/http.min.js') }}"></script>
+    
     <script src="{{ asset('js/scripts/data-table.js') }}" ></script>
     <script>
         $(document).ready(function() {
