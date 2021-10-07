@@ -11,9 +11,13 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 
-class LicenciaController extends Controller
+class LicenciasController extends Controller
 {
     public function indexLicenciaGS(){
         return view('Licencias.LicenciasGS');
+    }
+    
+    public function indexMisLicencias(){
+
     }
 }

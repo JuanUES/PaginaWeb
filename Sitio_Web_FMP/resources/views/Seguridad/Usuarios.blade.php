@@ -2,10 +2,8 @@
 
 @section('content')
 <!-- inicio Modal de registro -->
-<div class="modal fade bs-example-modal-lg" 
-    role="dialog" aria-labelledby="myLargeModalLabel" 
-    id="modalRegistro">
-    <div class="modal-dialog modal-lg" role="document">
+<div class="modal fade bs-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" id="modalRegistro">
+    <div class="modal-dialog modal-lg" role="document" aria-hidden="false">
       <div class="modal-content">
         <div class="modal-header">
             <h3 class="modal-title" id=" exampleModalLongTitle"><i class=" mdi mdi-account-badge-horizontal mdi-36px"></i> Usuario</h3>
@@ -90,9 +88,9 @@
                         <div class="col-xl-12">
                             <div class="form-group" id="form-id">
                                 <label for="exampleInputNombre">Empleado <code>*</code></label>
-                                <select class="form-control selectpicker"  data-live-search="true" 
-                                    data-style="btn-white" data-width="100%"  name="empleado" id="empleado">
-                                    <option value="">Seleccione</option>
+                                <select class="form-control selectpicker btn-light" data-live-search="true" data-style="btn-light"
+                                     data-width="100%"  name="empleado" id="empleado">
+                                    <option value="" selected>Seleccione</option>
                                     @foreach ($empleados as $item)
                                         @php
                                             $b=false;
@@ -128,7 +126,6 @@
                             <div class="form-group">
                                 <label for="exampleInputNombre">Contraseña <code>*</code></label>
                                 <input type="password" class="form-control" name="contraseña" id="contraseña"  autocomplete="off"  placeholder="Digite la contraseña">
-
                             </div>
                         </div>
                         <div class="col-xl-6">
@@ -384,17 +381,19 @@
 
 @section('plugins')
 <link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
-<link href="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>
-<style>
 
-</style>
 @endsection
 
 @section('plugins-js')
     <!-- Bootstrap Select -->
     <script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
+    <script src="{{ asset('/template-admin/dist/assets/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}" ></script>
+
     <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
 
     <script src="{{ asset('js/scripts/usuariosRoles.js') }}" ></script>
     <script src="{{ asset('js/scripts/data-table.js') }}" ></script>
+    <script>
+   
+    </script>
 @endsection

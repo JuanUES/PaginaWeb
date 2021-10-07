@@ -146,7 +146,7 @@
                                 id="jefe_empleadoE" name="jefe" style="width: 100%;">
                                 <option name="" value="">Seleccione</option>
                                 @foreach ($empleados as $item)
-                                    <option name="{!!$item->id!!}">{!!$item->nombre.' '.$item->apellido!!}</option>
+                                    <option name="{!!$item->id!!}" id="jefe_empleadoE_option{!!$item->id!!}">{!!$item->nombre.' '.$item->apellido!!}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -467,7 +467,7 @@
 <script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
 <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
 <!-- Bootstrap Select -->
+<script src="{{ asset('js/jquery.mask.js') }}" ></script>
 <script src="{{ asset('js/scripts/data-table.js') }}" ></script>
 <script src="{{ asset('js/scripts/empleados.js') }}" ></script>
-<script src="{{ asset('js/jquery.mask.js') }}" ></script>
 @endsection
