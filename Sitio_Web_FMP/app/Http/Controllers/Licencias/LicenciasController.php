@@ -16,8 +16,8 @@ class LicenciasController extends Controller
     public function indexLicenciaGS(){
         return view('Licencias.LicenciasGS');
     }
-    
-    public function indexMisLicencias(){
 
+    public function indexMisLicencias(){
+        return view('Licencias.LicenciaEmpleado');
     }
 }
