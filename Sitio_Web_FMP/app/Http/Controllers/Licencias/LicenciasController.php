@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\DB;
 
 class LicenciasController extends Controller
 {
-    public function indexLicenciaGS(){
-        return view('Licencias.LicenciasGS');
-    }
 
     public function indexMisLicencias(){
         return view('Licencias.LicenciaEmpleado');

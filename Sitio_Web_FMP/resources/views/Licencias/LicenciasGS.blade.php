@@ -30,7 +30,7 @@
                 <div class="row ">
                     <div class="col-xl-12">
                         <div class="form-group">
-                            <label for="id_jornada">Jornada<code>*</code></label>
+                            <label for="id_jornada">Tipo de Jornada<code>*</code></label>
                             <select class="form-control select2" style="width: 100%" data-live-search="true" 
                                 data-style="btn-white" name="jornada" id="id_jornada">
                                 <option value="" selected>Seleccione</option>
