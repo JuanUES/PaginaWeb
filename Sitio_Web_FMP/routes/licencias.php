@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Licencias\LicenciasController;
 use App\Http\Controllers\Licencias\LicenciasGosesController;
+use App\Models\Licencias\Licencia_con_gose;
 
 Route::group(['middleware' => ['auth']], function () {
 
@@ -11,7 +12,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('Admin/LicenciaGS', [LicenciasGosesController::class,'index'])->name('indexLicGS');
     Route::get('Admin/MisLicencias', [LicenciasController::class,'indexMisLicencias'])->name('indexLic');
     //get para cargar los datos en el modal GS
-    Route::get('Asigar/ver/{carga}',[AsignacionCargaController::class,'cargaCombobox']);
+    Route::get('GS/{id}',[LicenciasGosesController::class,'GsModal']);
     /*END GET**/
 
 
