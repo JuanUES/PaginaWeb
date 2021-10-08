@@ -293,29 +293,20 @@
                             <li>
                                 <a href="javascript: void(0);">
                                     <i class="font-18 dripicons-clipboard"></i>
-                                    <span> Gestión de Horarios </span>
+                                    <span> Gestión de Departamentos</span>
                                     <span class="menu-arrow"></span>
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                    <li>
-                                        <a href="{{route('horarios')}}">Crear horarios</a>
-                                    </li>
                                     @if(@Auth::user()->hasRole('super-admin'))
-                                    <li>
-                                        <a href="{{route('materias')}}">Materias</a>
-                                    </li>
+                                   
                                     <li>
                                         <a href="{{route('carreras')}}">Carreras</a>
                                     </li>
                                     <li>
                                         <a href="{{route('depto')}}">Departamentos</a>
                                     </li>
-                                    <li>
-                                        <a href="{{route('aulas')}}">Aulas</a>
-                                    </li>
-                                    <li>
-                                        <a href="{{route('horas')}}">Ingresar Horas</a>
-                                    </li>
+                                 
+                        
                                     @endif
                                 </ul>
                             </li>
