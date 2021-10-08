@@ -432,6 +432,56 @@
                                 <i class="mdi mdi-arrow-left-thick"></i> 
                                     Volver a Investigación
                             </a>
+                            <h2 class="header-title py-2">Centro de Investigación Ambiental</h2> 
+                            <?php
+                            $variableNoTocar = 'localizacion';
+                            $localizacion ='ingenieriaAgronomica';
+                            $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
+                        
+                        ?>
+                        @auth
+                        @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-CA'))
+                        <!-- Esto va en el content-->
+                        
+                            <div class="col-xl-12">
+                                <form action="{{ route('contenido', ['localizacion'=>$localizacion]) }}" method="POST"  
+                                    class="parsley-examples"  id="contenido{{$localizacion}}">
+                                    @csrf
+                                    <div class="alert alert-primary text-white py-1" 
+                                            role="alert" style="display:none" id="notificacion{{$localizacion}}">                                               
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl-12">   
+                                            <div class="form-group">                       
+                                                <textarea value="" class="form-control summernote-config" name="contenido"  rows="10">
+                                                    @if ($contenido!=null)
+                                                        {{$contenido->contenido}}
+                                                    @endif
+                                                </textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-12">
+                                            <div class="form-group">
+                                                <button type="button" class="btn btn-primary waves-effect waves-light btn-block" 
+                                                    onclick="submitForm('#contenido{{$localizacion}}','#notificacion{{$localizacion}}')">
+                                                    <i class="fa fa-save fa-5 ml-3"></i> Guardar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>  
+                        @endif   
+                        @endauth 
+                        
+                        @if(auth()->guest()|| !auth()->guest()) 
+                        <div class="col-xl-12 py-2">
+                        @if ($contenido!=null)
+                            {!!$contenido->contenido!!}
+                        @endif
+                        </div>      
+                        @endif
+                        
                         </div>                        
                     </div>
                 </div> <!-- end col -->
