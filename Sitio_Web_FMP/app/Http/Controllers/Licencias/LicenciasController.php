@@ -17,7 +17,7 @@ class LicenciasController extends Controller
     public function indexMisLicencias(){
         if(is_null(auth()->user()->empleado))
         {
-            return view('Licencias.LicenciaEmpleado',compact('empleado'));
+            return view('Licencias.LicenciaEmpleado');
         }
         else
         {

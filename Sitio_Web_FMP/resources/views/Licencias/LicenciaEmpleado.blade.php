@@ -119,7 +119,13 @@
             @else
             <div class="row m-3">
                 <div class="col-xl-12">
-                    <p class="border rounded py-3 px-1 text-center">No eres un usuario con un registro de empleado.</p>
+                    <div class="card-box p-2 border">
+                        <p> <i class="fa fa-info-circle"></i> No es posible cargar la información perteneciente a <strong> {{auth()->user()->name}} </strong>.</p>
+                        <label> A continuación se detallan las posibles causas: </label>
+                        <ul>
+                            <li>El Usuario no se encuentra vinculado con ningun <strong>Empleado</strong> registrado en el sistema.</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             @endif
