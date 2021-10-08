@@ -30,18 +30,18 @@
                 <div class="row ">
                     <div class="col-xl-12">
                         <div class="form-group">
-                            <label for="id_jornada">Tipo de Jornada<code>*</code></label>
+                            <label for="id_jornadas">Tipo de Jornada<code>*</code></label>
                             
                             @if (count($tipo_jornada))
                             <select class="form-control select2" style="width: 100%" data-live-search="true" 
                             data-style="btn-white" name="jornada" id="id_jornada">
                                 <option value="">Seleccione</option>
                                 @foreach ($tipo_jornada as $item)
-                                <option value="{!!$item->id!!}">{!!$item->horas_semanales!!}</option>
+                                <option value="{!!$item->id!!}">{!!$item->tipo!!}</option>
                                 @endforeach
                             @else
                             <select class="form-control select2" style="width: 100%" data-live-search="true" 
-                            data-style="btn-white" name="jornada" id="id_jornada">
+                            data-style="btn-white" name="jornada">
                                 <option>Sin datos</option>
                             @endif  
                         </select>
@@ -109,7 +109,7 @@
                 </div>
                 <div class="col-lg-1 order-last">
                     <!-- Button trigger modal -->
-                 <button type="button" title="Agregar Usuario"
+                 <button type="button" title="Agregar GS"
                     class="btn btn-primary dripicons-plus"
                     data-toggle="modal" data-target="#modalRegistro"></button>
                 </div>                
@@ -118,7 +118,7 @@
                 <thead>
                 <tr>
                     <th class="col-sm-1" style="width: 5%;">N°</th>
-                    <th>Jornada</th>
+                    <th>Tipo Jornada</th>
                     <th class="col-xs-1">Horas Anuales</th>
                     <th class="col-xs-1">Horas Mensuales</th>
                     <th class="col-sm-1 text-center">Acciones</th>
@@ -139,9 +139,8 @@
                         <td>{!!$item->mensuales!!}</td>
                         <td>
                             <div class="btn-group text-center" role="group">
-                                <button onclick="editarCat({!!$item->id!!});"
-                                 title="Editar" class="btn btn-outline-primary mr-1 btn-sm rounded" onclick="">
-                                    <i class="fa fa-edit font-15" aria-hidden="true"></i>
+                                <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="editar({{$item->id}},this)">
+                                    <i class="fa fa-edit font-16" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </td>
@@ -170,7 +169,7 @@
     <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
 
     <script src="{{ asset('js/scripts/http.min.js') }}"></script>
-    
+    <script src="{{ asset('js/scripts/GS.js') }}"></script>
     <script src="{{ asset('js/scripts/data-table.js') }}" ></script>
     <script>
         $(document).ready(function() {

@@ -1,8 +1,7 @@
-
     function editar(id,boton){
         $.ajax({
             type: "GET",
-            url: 'Empleado/'+id,
+            url: '/Admin/GS/'+id,
             beforeSend: function() {
                 $(boton).prop('disabled', true).html(''
                     +'<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
@@ -10,25 +9,11 @@
             },
             success: function(json) {
                 json=JSON.parse(json);
-                    $("#idE").val(id);
-                    $('#nombreE').val(json.nombre);
-                    $('#apellidoE').val(json.apellido);
-                    $('#duiE').val(json.dui);
-                    $('#salarioE').val(json.salario);
-                    $('#nitE').val(json.nit);
-                    $('#telE').val(json.tel);
-                    $('#categoriaE').val(json.categoria).trigger("change");
-                    $('#tipo_contratoE').val(json.contrato).trigger("change");
-                    $('#tipo_jornadaE').val(json.jornada).trigger("change");
-                    $('#deptoE').val(json.depto).trigger("change");
-                    $('#tipo_empleadoE').val(json.tipo).trigger("change");
-                    $('#jefe_empleadoE_option'+id).prop('disabled', !$('#jefe_empleadoE_option'+id).prop('disabled'));
-                    $('#jefe_empleadoE').val(json.jefe).trigger("change");
-
-                    $('#fotoE').width(ancho); 
-                    $('#fotoE').height(alto);
-                    $('#fotoE').attr('src',json.urlfoto===null?'/sin_imagen':json.urlfoto);;
-
+                //console.log(json);
+                    $("#idMR").val(json.id);
+                    $('#id_jornada').val(json.id_tipo_jornada).trigger("change");;
+                    $('#hrsA').val(json.anuales);
+                    $('#hrsM').val(json.mensuales);
                     $("#modalRegistro").modal();
             },
             complete: function() {
@@ -37,4 +22,5 @@
                 );
             }
         });
-    }    
+    } 
+

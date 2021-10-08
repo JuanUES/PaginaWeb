@@ -51,4 +51,12 @@ class LicenciasGosesController extends Controller
     }//fin create
 
     //FIN DEL CODIGO PARA INSERTAR, MODIFICAR
+
+    //servicio que me carga la GS depende del id
+    public function GsModal($id){         
+        $data = Licencia_con_gose::select('*')
+        ->findOrFail($id);
+        return $data->toJson();
+    }
+    //fin del servicio que me carga la Gs
 }
