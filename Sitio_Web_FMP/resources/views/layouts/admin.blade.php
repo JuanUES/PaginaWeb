@@ -178,12 +178,12 @@
                                     <i class="font-18 dripicons-user "></i> <span> Empleados </span>
                                 </a>
                             </li>
-                            @endhasrole
-                            @hasrole('super-admin')
+                            @endhasrole                            
                             <li class="menu-title">Licencias</li>                       
                             <li>
-                                <a href="#"><i class="icon-notebook font-18"></i><span>Mis Licencias</span></a>
+                                <a href="{{ route('indexLic') }}"><i class="icon-notebook font-18"></i><span>Mis Licencias</span></a>
                             </li>
+                            @hasrole('super-admin')
                             <li>
                                 <a href="javascript: void(0);"><i class="font-18  icon-layers"></i><span> Gestión de Licencias </span><span class="menu-arrow"></span></a>
                                 <ul class="nav-second-level" aria-expanded="false">

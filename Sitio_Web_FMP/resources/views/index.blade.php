@@ -247,7 +247,6 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                                             <div class="col-xl-12">
                                                                 <div class="form-group">                                               
                                                                     <label for="contenido">Contenido <code>*</code></label>
-                                                                    <textarea value=" " class="form-control summernote-config" name="contenido" id="contenido" rows="6"></textarea>
                                                                 </div>
                                                             </div>
                                                         </div>         

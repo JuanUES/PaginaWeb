@@ -8,111 +8,104 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-            <h3 class="modal-title" id=" exampleModalLongTitle"><i class=" mdi mdi-account-badge-horizontal mdi-36px"></i> Usuario</h3>
+            <h3 class="modal-title" id=" exampleModalLongTitle"><i class="icon-notebook mdi-36px"></i> Licencia</h3>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <form id="registroForm"  action="{{ route('guardarUser') }}" method="POST">
             @csrf
+            @if (!is_null(auth()->user()->empleado))
             <div class="modal-body">
-                    <input type="hidden" id="idUser" name="_id"/>
-                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
-                        role="alert" style="display:none" id="notificacion">
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group">
-                                <label>Nota: <code>* Campos Obligatorio</code></label>
-                            </div>
+                <input type="hidden" id="idUser" name="_id"/>
+                <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
+                    role="alert" style="display:none" id="notificacion">
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group">
+                            <label>Nota: <code>* Campos Obligatorio</code></label>
                         </div>
                     </div>
+                </div>
 
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="exampleInputCodigo">Usuario <code>*</code></label>
-                                <input type="text" class="form-control" id='usuario' name="usuario"  autocomplete="off" placeholder="Digite el nombre">
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="exampleInputUbicacion">Correo <code>*</code></label>
-                                <input type="email" class="form-control" id="correo" name="correo"  autocomplete="off" placeholder="Digite el correo">
-                            </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="exampleInputCodigo">Nombre <code>*</code></label>
+                            <input type="text" class="form-control"   autocomplete="off" placeholder="Digite el nombre" readonly>
                         </div>
                     </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="exampleInputUbicacion">Apellido <code>*</code></label>
+                            <input type="text" class="form-control"  autocomplete="off" placeholder="Digite el correo" readonly>
+                        </div>
+                    </div>
+                </div>
 
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group">
-                                <label for="">Roles <code>*</code></label>
-                                <select class="form-control select2-multiple" data-toggle="select2" id="roles" placeholder="sddf"
-                                     multiple="multiple" aria-placeholder="Seleccione" style="width: 100%;" name="roles[]" id="roles">
-                                    <optgroup  label="General">
-                                        <option value="{{base64_encode('super-admin')}}">Super Administrador</option>
-                                        <option value="{{base64_encode('Jefe-Academico')}}">Jefe Academico</option>
-                                        <option value="{{base64_encode('Jefe-Administrativo')}}">Jefe Administrativo</option>
-                                        <option value="{{base64_encode('Recurso-Humano')}}">Recurso Humano</option>
-                                        <option value="{{base64_encode('Docente')}}">Docente</option>
-                                        <option value="{{base64_encode('Jefe-Administrativo')}}">Jefe Administrativo</option>
-                                    </optgroup>
-                                    <optgroup label="Pagina">
-                                        <option value="{{base64_encode('Pagina-Admin')}}">Administrador</option>
-                                        <option value="{{base64_encode('Pagina-Inicio-Imagenes')}}">Inicio - Imagenes</option>
-                                        <option value="{{base64_encode('Pagina-Inicio-Noticias')}}">Inicio - Noticias</option>
-                                        <option value="{{base64_encode('Pagina-Directorio')}}">Directorio</option>
-                                        <option value="{{base64_encode('Pagina-EstructuraOrganizativa')}}">Estructura Organizativa</option>
-                                        <option value="{{base64_encode('Pagina-AdminAcademica')}}">Administración Académica</option>
-                                        <option value="{{base64_encode('Pagina-Depto-CDE')}}">Departamento-Ciencias de la Educación</option>
-                                        <option value="{{base64_encode('Pagina-Depto-CA')}}">Departamento-Ciencias Agronómicas</option>
-                                        <option value="{{base64_encode('Pagina-Depto-CE')}}">Departamento-Ciencias Ecónomicas</option>
-                                        <option value="{{base64_encode('Pagina-Depto-I')}}">Departamento-Informática</option>
-                                        <option value="{{base64_encode('Pagina-Depto-PC')}}">Departamento-Plan Complementario</option>
-                                        <option value="{{base64_encode('Pagina-Postgrado')}}">Postgrado</option>
-                                        <option value="{{base64_encode('Pagina-UnidadInvestigacion')}}">Unidad de Investigación</option>
-                                        <option value="{{base64_encode('Pagina-ProyeccionSocial')}}">Proyección Social</option>
-                                        <option value="{{base64_encode('Pagina-AdminFinanciera-Informacion')}}">Administración Financiera-Información</option>
-                                        <option value="{{base64_encode('Pagina-AdminFinanciera-Colecturia')}}">Administración Financiera-Colecturia</option>
-                                        <option value="{{base64_encode('Pagina-Uti')}}">Unidad de Tecnología de la Información</option>
-                                    </optgroup>   
-                                    <optgroup label="Transparencia">
-                                        <option value="{{base64_encode('Transparencia-Repositorio')}}">Repositorio</option>
-                                        <option value="{{base64_encode('Transparencia-Presupuestario')}}">Presupuestario</option>
-                                        <option value="{{base64_encode('Transparencia-Secretario')}}">Secretario</option>
-                                        <option value="{{base64_encode('Transparencia-Decano')}}">Decano</option>
-                                    </optgroup>                                    
-                                </select>
-                            </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="exampleInputNombre">Tipo de permiso <code>*</code></label>
+                            <select name="tipo_permiso" class="form-control" style="width: 100%"  id="tipo_permiso">
+                                <option value="">Seleccione</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="row ">
-                        <div class="col-xl-12">
-                            <div class="form-group" id="form-id">
-                                <label for="exampleInputNombre">Empleado <code>*</code></label>
-                                <select class="form-control selectpicker"  data-live-search="true" 
-                                    data-style="btn-white" data-width="100%"  name="empleado" id="empleado">
-                                    <option value="">Seleccione</option>
-                                    
-                                </select>
-                            </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="exampleInputNombre">Representantes <code>*</code></label>
+                            <select name="tipo_representante" class="form-control" style="width: 100%"  id="tipo_representante">
+                                <option value="">Seleccione</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="exampleInputNombre">Contraseña <code>*</code></label>
-                                <input type="password" class="form-control" name="contraseña" id="contraseña"  autocomplete="off"  placeholder="Digite la contraseña">
-
-                            </div>
-                        </div>
-                        <div class="col-xl-6">
-                            <div class="form-group">
-                                <label for="exampleInputNombre">Repetir Contraseña <code>*</code></label>
-                                <input type="password" class="form-control" name="repetir_contraseña" id="repetir_contraseña"  autocomplete="off"  placeholder="Digite la contraseña">
-                            </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="exampleInputNombre">Fecha de Uso <code>*</code></label>
+                            <input type="date" name="fecha_de_uso" class="form-control" style="width: 100%"  id="fecha_de_uso">
+                        </div>                            
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="exampleInputNombre">Fecha de Presentación <code>*</code></label>
+                            <input type="date" name="fecha_de_presentación" class="form-control" style="width: 100%"  id="fecha_de_presentacion">
                         </div>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="exampleInputNombre">Hora Inicio <code>*</code></label>
+                            <input type="time" name="fecha_de_uso" class="form-control" style="width: 100%"  id="fecha_de_uso">
+                        </div> 
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="exampleInputNombre">Hora Inicio <code>*</code></label>
+                            <input type="time" name="fecha_de_uso" class="form-control" style="width: 100%"  id="fecha_de_uso">
+                        </div> 
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="exampleInputNombre">Justificación <code>*</code></label>
+                            <textarea value=" " class="form-control summernote-config" 
+                                name="contenido" id="contenido" rows="6"></textarea>
+                        </div> 
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="exampleInputNombre">Observaciones <code>*</code></label>
+                            <textarea value=" " class="form-control summernote-config" 
+                                name="contenido" id="contenido" rows="6"></textarea>
+                        </div> 
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary"
@@ -122,6 +115,13 @@
                     onClick="submitForm('#registroForm','#notificacion')">
                     <li class="fa fa-save"></li> Guardar</button>
             </div>
+            @else
+            <div class="row m-3">
+                <div class="col-xl-12">
+                    <p class="border rounded py-3 px-1 text-center">No eres un usuario con un registro de empleado.</p>
+                </div>
+            </div>
+            @endif
         </form>
       </div>
     </div>
@@ -203,12 +203,12 @@
             <div class="row py-2">
                 <div class="col order-first">
                     <h3>
-                        Usuarios
+                        Mis Licencias
                     </h3>
                 </div>
                 <div class="col-lg-1 order-last">
                     <!-- Button trigger modal -->
-                 <button type="button" title="Agregar Usuario"
+                 <button type="button" title="Agregar Licencia"
                     class="btn btn-primary dripicons-plus"
                     data-toggle="modal" data-target="#modalRegistro"></button>
                 </div>                
@@ -249,6 +249,5 @@
     <!-- Bootstrap Select -->
     <script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
     <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
-
     <script src="{{ asset('js/scripts/data-table.js') }}" ></script>
 @endsection

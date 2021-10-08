@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Licencias;
-use App\Models\User;
+use App\Models\General\Empleado;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +15,7 @@ class LicenciasController extends Controller
 {
 
     public function indexMisLicencias(){
+       // $empleado = Empleado::findOrFail(auth()->empleado());       
         return view('Licencias.LicenciaEmpleado');
     }
 }

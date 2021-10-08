@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePermisosTable extends Migration
+class CreateAjustesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,6 +13,9 @@ class CreatePermisosTable extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('fecha_uso_licencias');
+        Schema::dropIfExists('permisos'); 
+       
         Schema::create('permisos', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('empleado');
@@ -32,6 +35,7 @@ class CreatePermisosTable extends Migration
             $table->foreign('empleado')->references('id')->on('empleado');                            
             $table->timestamps();
         });
+        
     }
 
     /**
@@ -41,6 +45,6 @@ class CreatePermisosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permisos');
+        //
     }
 }
