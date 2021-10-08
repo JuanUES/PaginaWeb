@@ -31,7 +31,7 @@
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="exampleInputCategoria">Categoria</label>
-                                <select class="custom-select" name="categoria" id="categoria">
+                                <select  class="form-control select2" style="width: 100%" name="categoria" id="categoria">
                                     <option value="">Seleccione</option>
                                     <option value="ad">Carga Administrativa</option>
                                     <option value="ps">Proyección Social</option>
@@ -45,11 +45,11 @@
                     <div class="col-xl-12">
                         <div class="form-group">
                         <label for="Departamento">Jefe </label>
-                        <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                            id="jefe" name="jefe">
+                        <select class="form-control selectpicker" style="width: 100%" data-live-search="true" 
+                        data-style="btn-white" name="jefe" id="jefe">
                             <option value="" selected>Seleccione</option>
                             @foreach ($empleadosC as $i)
-                                <option value="{!!$i->id!!}">{!!$i->nombre.' '.$i->apellido!!}</option>
+                                <option data-icon="mdi mdi-account-plus-outline font-18" value="{!!$i->id!!}">{!!$i->nombre.' '.$i->apellido!!}</option>
                             @endforeach
                         </select>
                         </div>
@@ -179,8 +179,8 @@
                             <div class="row">
                                 <div class="col text-center">
                                     <div class="btn-group" role="group">
-                                        <button title="Editar Carga {!!$item->id!!}" class="btn btn-outline-primary btn-sm rounded"  onclick="editarCarga({!!$item->id!!})"
-                                        data-toggle="modal" data-target="#carga"><i class="fa fa-edit font-16" aria-hidden="true"></i>
+                                        <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="editar({{$item->id}},this)">
+                                            <i class="fa fa-edit font-16" aria-hidden="true"></i>
                                         </button>
                                         <button title="{!! !$item->estado?'Activar' : 'Desactivar' !!}" 
                                             class="btn btn-outline-primary btn-sm mx-1 rounded 
@@ -212,8 +212,8 @@
                             <div class="row">
                                 <div class="col text-center">
                                     <div class="btn-group" role="group">
-                                        <button title="Editar Carga {!!$ix->id!!}" class="btn btn-outline-primary btn-sm rounded"  onclick="editarCargajefe({!!$ix->id!!})"
-                                        data-toggle="modal" data-target="#carga"><i class="fa fa-edit font-16" aria-hidden="true"></i>
+                                        <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="editar({{$ix->id}},this)">
+                                            <i class="fa fa-edit font-16" aria-hidden="true"></i>
                                         </button>
                                         <button title="{!! !$ix->estado?'Activar' : 'Desactivar' !!}" 
                                             class="btn btn-outline-primary btn-sm mx-1 rounded 
@@ -264,4 +264,5 @@
 </script>
 
 <script src="{{ asset('js/scripts/data-table.js') }}" defer></script>
+
 @endsection

@@ -1,15 +1,30 @@
-function editar(json){
+function editar(id,boton){
+    $.ajax({
+        type: "GET",
+        url: '/Administrativa/Carga/'+id,
+        beforeSend: function() {
+            $(boton).prop('disabled', true).html(''
+                +'<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
+            );
+        },
+        success: function(json) {
+            json=JSON.parse(json);
+            //console.log(json);
+            $("#_id").val(json.id);
+            $("#nombre_carga").val(json.nombre_carga); 
+            $("#categoria").val(json.categoria);
+            $('#jefe').val(json.id_jefe).trigger('change');
+            $("#carga").modal();
+        },
+        complete: function() {
+            $(boton).prop('disabled', false).html(''
+                +'<i class="fa fa-edit font-16" aria-hidden="true"></i>'
+            );
+        }
+    });
+} 
 
-    console.log(json);
-    $("#_id").val(json.id);
-    $("#nombre_carga").val(json.nombre_carga); 
-    $("#categoria").val(json.categoria);
-    $('select[name=jefe]').val(json.id_jefe);
-    $('.selectpicker').selectpicker('refresh');
-   // $("#jefe").val(json.id_jefe);
 
-   
-    };
 
 
 (function(window){

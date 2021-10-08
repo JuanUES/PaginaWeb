@@ -63,5 +63,12 @@ class CargaController extends Controller
             return response()->json(['error'=>'Error']);
         }
     }
+    //servicio que me carga la GS depende del id
+    public function cargaModal($id){         
+        $data = CargaAdmin::select('*')
+        ->findOrFail($id);
+        return $data->toJson();
+    }
+    //fin del servicio que me carga la Gs
 
 }

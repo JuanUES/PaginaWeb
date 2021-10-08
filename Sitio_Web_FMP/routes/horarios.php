@@ -44,6 +44,7 @@ Route::get('Administrativa/Empleado',[CargaController::class,'EmpleadoCombobox']
 Route::get('Asigar/Carga',[AsignacionCargaController::class,'index'])->name('asignar-carga');
 Route::get('Asigar/ver/{carga}',[AsignacionCargaController::class,'cargaCombobox']);
 Route::get('Asigar/Empleado',[AsignacionCargaController::class,'EmpleadoCombobox']);
+Route::get('/Administrativa/Carga/{id}',[CargaController::class,'cargaModal']);
 //para las horas
 Route::get('Horas',[HoraController::class,'index'])->name('horas');
 Route::post('Horas/create',[HoraController::class,'create'])->name('horas/create');
