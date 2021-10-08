@@ -9,10 +9,11 @@ use App\Models\Licencias\Licencia_con_gose;
 Route::group(['middleware' => ['auth']], function () {
 
     /*METODOS GET**/
-    Route::get('Admin/LicenciaGS', [LicenciasGosesController::class,'index'])->name('indexLicGS');
-    Route::get('Admin/MisLicencias', [LicenciasController::class,'indexMisLicencias'])->name('indexLic');
+    Route::get('admin/licenciaGS', [LicenciasGosesController::class,'index'])->name('indexLicGS');
+    Route::get('admin/mislicencias', [LicenciasController::class,'indexMisLicencias'])->name('indexLic');
+
     //get para cargar los datos en el modal GS
-    Route::get('/Admin/GS/{id}',[LicenciasGosesController::class,'GsModal']);
+    Route::get('/admin/GS/{id}',[LicenciasGosesController::class,'GsModal']);
     /*END GET**/
 
 

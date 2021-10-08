@@ -605,6 +605,5 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
     };
 </script>
 @endif
-@endauth
 
 @endsection
