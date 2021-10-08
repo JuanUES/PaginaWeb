@@ -14,6 +14,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     /*METODOS POST**/
+    Route::post('GS/create',[LicenciasGosesController::class,'create'])->name('gs/create');
     
     /*END POST**/
 

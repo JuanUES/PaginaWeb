@@ -13,7 +13,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form id="registroForm"  action="" method="POST">
+        <form id="registroForm"  action="{{route("gs/create")}}" method="POST">
             @csrf
             <div class="modal-body">
                 <input type="hidden" id="idMR" name="_id"/>
@@ -40,7 +40,8 @@
                                 <option value="{!!$item->id!!}">{!!$item->horas_semanales!!}</option>
                                 @endforeach
                             @else
-                            <select class="custom-select" name="id_depto" id="id_depto">
+                            <select class="form-control select2" style="width: 100%" data-live-search="true" 
+                            data-style="btn-white" name="jornada" id="id_jornada">
                                 <option>Sin datos</option>
                             @endif  
                         </select>
@@ -51,7 +52,7 @@
                     <div class="col-xl-12">
                         <div class="form-group">
                             <label for="exampleInputUbicacion">Horas Anuales <code>*</code></label>
-                            <input type="number" class="form-control" min="0" max="120"  id="hrsA" name="horas_anuales"  autocomplete="off" placeholder="Digite el correo">
+                            <input type="number" class="form-control" min="0" max="120"  id="hrsA" name="horas_anuales"  autocomplete="off" placeholder="Digite las horas anuales">
                         </div>
                     </div>
                 </div>
@@ -59,7 +60,7 @@
                     <div class="col-xl-12">
                         <div class="form-group">
                             <label for="exampleInputCodigo">Horas Mensuales <code>*</code></label>
-                            <input type="number" min="0" max="40" class="form-control" id='hrsM' name="horas_mensuales"  autocomplete="off" placeholder="Digite el nombre">
+                            <input type="number" min="0" max="40" class="form-control" id='hrsM' name="horas_mensuales"  autocomplete="off" placeholder="Digite las horas mensuales">
                         </div>
                     </div>
                 </div>
@@ -124,9 +125,28 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <!--<tr>
-                        <th class="align-middle "></th>
-                    </tr>-->
+                @php
+                    $i=0;
+                @endphp
+                @foreach ($ver as $item)
+                    @php
+                        $i++;
+                    @endphp
+                    <tr>
+                        <td>{{$i}}</td>
+                        <td>{!!$item->tipo!!}</td>
+                        <td>{!!$item->anuales!!}</td>
+                        <td>{!!$item->mensuales!!}</td>
+                        <td>
+                            <div class="btn-group text-center" role="group">
+                                <button onclick="editarCat({!!$item->id!!});"
+                                 title="Editar" class="btn btn-outline-primary mr-1 btn-sm rounded" onclick="">
+                                    <i class="fa fa-edit font-15" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
                 </tbody>
             </table>
 
