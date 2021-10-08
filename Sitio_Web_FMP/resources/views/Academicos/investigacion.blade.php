@@ -470,6 +470,7 @@
                                         </div>
                                     </div>
                                 </form>
+
                             </div>  
                         @endif   
                         @endauth 
@@ -482,8 +483,106 @@
                         </div>      
                         @endif
                         
-                        </div>                        
+                        <!--pegar aqui-->
+                        
+
+                        <div class="col-xl-12 row">
+
+                            <div class="col order-first">
+                            </div>                               
+                            @if(@Auth::check()?@Auth::user()->hasRole('Pagina-UnidadInvestigacion|Pagina-Admin|super-admin'):@Auth::check())
+                            <div class="col-lg-3 order-last">
+                                <button class="btn btn-block btn-info tex-left" 
+                                    data-toggle="modal" data-target="#modalSubirInvestigacion2">
+                                    <div class="mdi mdi-upload mdi-16px text-center" > Subir PDF</div>
+                                </button>
+                            </div>  
+                            <div id="modalSubirInvestigacion2" class="modal fade bs-example-modal-center" 
+                                tabindex="-1" role="dialog" aria-labelledby="myCenterModalLabel" 
+                                aria-hidden="true" style="display: none;" >
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="myCenterModalLabel">Zona para subir PDF</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            
+                                            <form action="{{ route('Mpdf', ['localizacion'=>'investigacion']) }}" method="post"
+                                                class="dropzone dropzonepdf" >
+                                                @csrf                                 
+                                                <div class="dz-message needsclick">
+                                                    <i class="h3 text-muted dripicons-cloud-upload"></i>
+                                                    <h3>Suelta los archivos aquí o haz clic para subir.</h3>
+                                                </div>
+                                                <div class="dropzone-previews"></div>
+                                            </form>
+                                        </div>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal-->
+                            @endif
+                        </div> 
+                           
+                        @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-UnidadInvestigacion|Pagina-Admin|super-admin'))  
+                                <div class="col-xl-12 py-2">
+                                    @if ($contenido!=null)
+                                        {!!$contenido->contenido!!}
+                                    @endif
+                                </div>      
+                                @endif
+                                <div class="col-xl-12 py-3">
+                                    <?php
+                                        $pdfs = \App\Models\Pagina\PDF::where('localizacion','investigacion')->get();
+                                    ?>
+                                    
+                                    @if (count($pdfs)>0)
+                                    <div class="table-responsive my-1" id="listaPDFInvestigacion">
+                                        <table class="table mb-0 border @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-UnidadInvestigacion|Pagina-Admin|super-admin')) table-striped @endif">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <h4>Formatos</h4>
+                                                    </th>
+                                                    <th class="col-sm-4">                                              
+                                                    </th>                             
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($pdfs as $item)
+                                                <tr>
+                                                    <th class="align-middle" scope="row">
+                                                        {!!$item->file!!}
+                                                    </th>                                             
+                                                                                    
+                                                    <th class="align-middle ">
+                                                        
+                                                        <div class="btn-group" role="group">
+                                                            <a class="btn btn-danger waves-effect width-lg mx-1"  href="{{ route('index') }}{!!'/files/pdfs/investigacion/'.$item->file !!}" target="_blank"> 
+                                                                <i class="mdi mdi-file-pdf mdi-24px mr-1"></i>Descargar
+                                                            </a>
+                                                            @if(@Auth::check()?@Auth::user()->hasRole('Pagina-UnidadInvestigacion|Pagina-Admin|super-admin'):@Auth::check())
+                                                            <button type="buttom"  class="btn btn-light waves-effect width-md mx-1" data-toggle="modal" data-target="#modalEliminarPDF"
+                                                                onclick="$('#eliminar').val({{$item->id}});$('#localizacion').val('investigacion');$('#vista').val('investigacion')"><i class="mdi mdi-delete mdi-24px"></i>  Eliminar
+                                                            </button>  
+                                                            @endif 
+                                                        </div>
+                                                                                                
+                                                    </th>
+                                                    
+                                                </tr>  
+                                                @endforeach                                                              
+                                            </tbody>
+                                        </table>
+                                    </div> <!-- end table-responsive-->    
+                                    @endif
+                                </div>
                     </div>
+                    
+                </div>
+
+                
+                    
                 </div> <!-- end col -->
                 @if(@Auth::check()?@Auth::user()->hasRole('Pagina-UnidadInvestigacion|Pagina-Admin|super-admin'):@Auth::check())
                 <div id ="modalCR" class="modal fade bs-example-modal-center" tabindex="-1" 
