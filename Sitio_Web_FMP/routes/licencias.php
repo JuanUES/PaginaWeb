@@ -12,7 +12,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('Admin/LicenciaGS', [LicenciasGosesController::class,'index'])->name('indexLicGS');
     Route::get('Admin/MisLicencias', [LicenciasController::class,'indexMisLicencias'])->name('indexLic');
     //get para cargar los datos en el modal GS
-    Route::get('GS/{id}',[LicenciasGosesController::class,'GsModal']);
+    Route::get('/Admin/GS/{id}',[LicenciasGosesController::class,'GsModal']);
     /*END GET**/
 
 
