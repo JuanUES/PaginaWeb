@@ -435,7 +435,7 @@
                             <h2 class="header-title py-2">Centro de Investigación Ambiental</h2> 
                             <?php
                             $variableNoTocar = 'localizacion';
-                            $localizacion ='ingenieriaAgronomica';
+                            $localizacion ='centroInvestigacionAmbiental';
                             $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
                         
                         ?>
