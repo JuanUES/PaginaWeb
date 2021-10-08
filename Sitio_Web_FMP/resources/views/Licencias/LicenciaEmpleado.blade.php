@@ -33,13 +33,13 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="exampleInputCodigo">Nombre <code>*</code></label>
-                            <input type="text" class="form-control"   autocomplete="off" placeholder="Digite el nombre" readonly>
+                            <input type="text" class="form-control" value="{{$empleado->nombre}}"  autocomplete="off" placeholder="Digite el nombre" readonly>
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="exampleInputUbicacion">Apellido <code>*</code></label>
-                            <input type="text" class="form-control"  autocomplete="off" placeholder="Digite el correo" readonly>
+                            <input type="text" class="form-control" value="{{$empleado->apellido}}" autocomplete="off" placeholder="Digite el correo" readonly>
                         </div>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="exampleInputNombre">Representantes <code>*</code></label>
+                            <label for="exampleInputNombre">Representantes </label>
                             <select name="tipo_representante" class="form-control" style="width: 100%"  id="tipo_representante">
                                 <option value="">Seleccione</option>
                             </select>
@@ -72,7 +72,8 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="exampleInputNombre">Fecha de Presentación <code>*</code></label>
-                            <input type="date" name="fecha_de_presentación" class="form-control" style="width: 100%"  id="fecha_de_presentacion">
+                            <input type="text" name="fecha_de_presentación" class="form-control"  value="{{Carbon\Carbon::now('UTC')->format('d-M-Y')}}"
+                             style="width: 100%"  id="fecha_de_presentacion" readonly>
                         </div>
                     </div>
                 </div>
@@ -100,7 +101,7 @@
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="exampleInputNombre">Observaciones <code>*</code></label>
+                            <label for="exampleInputNombre">Observaciones </label>
                             <textarea value=" " class="form-control summernote-config" 
                                 name="contenido" id="contenido" rows="6"></textarea>
                         </div> 
@@ -250,4 +251,7 @@
     <script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
     <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
     <script src="{{ asset('js/scripts/data-table.js') }}" ></script>
+    <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
+    <script src="{{ asset('js/summernote.config.min.js') }}"></script>
+    <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
 @endsection

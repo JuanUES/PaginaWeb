@@ -15,7 +15,7 @@ class LicenciasController extends Controller
 {
 
     public function indexMisLicencias(){
-       // $empleado = Empleado::findOrFail(auth()->empleado());       
-        return view('Licencias.LicenciaEmpleado');
+        $empleado = Empleado::findOrFail(auth()->user()->empleado);       
+        return view('Licencias.LicenciaEmpleado',compact('empleado'));
     }
 }
