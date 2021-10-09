@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+@if (!is_null(auth()->user()->empleado))
 <!-- inicio Modal de registro -->
 <div class="modal fade bs-example-modal-lg" 
     role="dialog" aria-labelledby="myLargeModalLabel" 
@@ -13,9 +14,9 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form id="registroForm"  action="{{ route('guardarUser') }}" method="POST">
+        <form id="registroForm"  action="{{ route('lic/create') }}" method="POST">
             @csrf
-            @if (!is_null(auth()->user()->empleado))
+            
             <div class="modal-body">
                 <input type="hidden" id="idUser" name="_id"/>
                 <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
@@ -50,6 +51,8 @@
                             <label for="exampleInputNombre">Tipo de permiso <code>*</code></label>
                             <select name="tipo_permiso" class="form-control" style="width: 100%"  id="tipo_permiso">
                                 <option value="">Seleccione</option>
+                                <option value="">L.C/G.S</option>
+                                <option value="">L.C/G.S</option>
                             </select>
                         </div>
                     </div>
@@ -81,13 +84,13 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="exampleInputNombre">Hora Inicio <code>*</code></label>
-                            <input type="time" name="fecha_de_uso" class="form-control" style="width: 100%"  id="fecha_de_uso">
+                            <input type="time" name="hora_inicio" class="form-control" style="width: 100%"  id="fecha_de_uso">
                         </div> 
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="exampleInputNombre">Hora Inicio <code>*</code></label>
-                            <input type="time" name="fecha_de_uso" class="form-control" style="width: 100%"  id="fecha_de_uso">
+                            <input type="time" name="hora_final" class="form-control" style="width: 100%"  id="fecha_de_uso">
                         </div> 
                     </div>
                 </div>
@@ -96,14 +99,14 @@
                         <div class="form-group">
                             <label for="exampleInputNombre">Justificación <code>*</code></label>
                             <textarea value=" " class="form-control summernote-config" 
-                                name="contenido" id="contenido" rows="6"></textarea>
+                                name="justificación" id="justificación" rows="6"></textarea>
                         </div> 
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="exampleInputNombre">Observaciones </label>
                             <textarea value=" " class="form-control summernote-config" 
-                                name="contenido" id="contenido" rows="6"></textarea>
+                                name="observaciones" id="observaciones" rows="6"></textarea>
                         </div> 
                     </div>
                 </div>
@@ -116,19 +119,7 @@
                     onClick="submitForm('#registroForm','#notificacion')">
                     <li class="fa fa-save"></li> Guardar</button>
             </div>
-            @else
-            <div class="row m-3">
-                <div class="col-xl-12">
-                    <div class="card-box p-2 border">
-                        <p> <i class="fa fa-info-circle"></i> No es posible cargar la información perteneciente a <strong> {{auth()->user()->name}} </strong>.</p>
-                        <label> A continuación se detallan las posibles causas: </label>
-                        <ul>
-                            <li>El Usuario no se encuentra vinculado con ningun <strong>Empleado</strong> registrado en el sistema.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            @endif
+            
         </form>
       </div>
     </div>
@@ -242,6 +233,19 @@
     </div> <!-- end col -->
 </div>
 <!-- end row -->
+@else
+    <div class="row m-3">
+        <div class="col-xl-12">
+            <div class="card-box p-2 border">
+                <p> <i class="fa fa-info-circle"></i> No es posible cargar la información perteneciente a <strong> {{auth()->user()->name}} </strong>.</p>
+                <label> A continuación se detallan las posibles causas: </label>
+                <ul>
+                    <li>El Usuario no se encuentra vinculado con ningun <strong>Empleado</strong> registrado en el sistema.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+@endif
 @endsection
 
 @section('plugins')

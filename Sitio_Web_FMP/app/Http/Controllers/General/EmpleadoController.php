@@ -43,7 +43,7 @@ class EmpleadoController extends Controller
             'dui' => 'required|max:10',
             'nit' => 'required|max:40',
             'foto' => 'image|mimes:jpeg,jpg,png|max:3000',
-            'telefono' => 'required|max:9',
+            'telefono' => 'max:9',
             'categoria' => 'required',
             'tipo_contrato' => 'required',
             'tipo_jornada' => 'required',
