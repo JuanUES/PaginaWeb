@@ -31,7 +31,11 @@
     </head>
 
     <body class="unsticky-header">
-
+        <div class="loading show" id="loading">
+            <div class="spinner-border text-danger m-2 font-50" role="status">
+                <span class="sr-only">Cargando...</span>
+            </div>
+        </div>
         <!-- Navigation Bar-->
         <header id="topnav">
             <div class="navb  color-top">
@@ -198,6 +202,6 @@
         <script src="{{ asset('template-admin/dist/assets/libs/datatables/responsive.bootstrap4.min.js') }}"></script>
 
         @yield('footerjs')
-
+        <script src="{{ asset('js/base.js') }}"></script>
     </body>
 </html>

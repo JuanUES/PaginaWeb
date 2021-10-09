@@ -471,9 +471,9 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                 </div><!-- /.modal --> 
                                 @endif                    
                                 @endauth 
-                                @else
+                            @else
                                 <p class="p-2 border text-center">No hay noticias para mostrar.</p>
-                                 @endif   
+                            @endif   
                         </div> <!-- end card-box -->
                     </div><!-- end col -->
                 </div>
@@ -564,17 +564,22 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
 @section('footerjs')
 
 <!--Librerias js para datatable-->
+@if (count($noticias)) 
+<script src="{{ asset('js/index/index.datatable.js') }}"></script>
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
-
+@endif
+@auth
 @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
+@if (count($noticias)) 
 <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
 <script src="{{ asset('js/summernote.config.min.js') }}"></script>
 <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script> 
- 
 <script src="{{ asset('js/scripts/http.min.js') }}"></script>
 <script src="{{ asset('js/scripts/index.js') }}"></script>
 @endif
+@endif
+@endauth
 
 <!-- Plugins js -->
 <script src=" {{ asset('js/dropzone.min.js') }} "></script>
@@ -584,8 +589,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
 
 <!-- App js -->
 <script src="{{ asset('js/app.min.js') }}"></script>
-
-<script src="{{ asset('js/index/index.datatable.js') }}"></script>
+@auth
 @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
 <script>   
     function reset(){$('.nav-tabs a[href="#noticiaL"]').tab('show')};
@@ -605,5 +609,6 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
     };
 </script>
 @endif
+@endauth
 
 @endsection

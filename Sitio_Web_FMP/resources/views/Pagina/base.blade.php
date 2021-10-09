@@ -10,13 +10,15 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
         @yield('appcss')
-        @yield('csstoast')
-
         <link rel="stylesheet" href="{{ asset('css/base.css') }}" />
     </head>
 
     <body class="unsticky-header">
-
+        <div class="loading show" id="loading">
+            <div class="spinner-border text-danger m-2 font-50" role="status">
+                <span class="sr-only">Cargando...</span>
+            </div>
+        </div>
         <!-- Navigation Bar-->
         <header id="topnav">
             <div class="navb  color-top">
@@ -190,7 +192,6 @@
 
         </header>
         <!-- End Navigation Bar-->
-
         <!-- ============================================================== -->
         <!-- Start Page Content here -->
         <!-- ============================================================== -->
@@ -198,7 +199,6 @@
         <!-- ============================================================== -->
         <!-- End Page content -->
         <!-- ============================================================== -->
-
         <!-- Footer Start -->
         <footer class="footer py-1 text-white" id="footerbase">
             <div class="container-fluid">
@@ -210,8 +210,7 @@
             </div>
         </footer>
         <!-- end Footer -->
-
         @yield('footerjs')
-        @yield('jstoast')
+        <script src="{{ asset('js/base.js') }}"></script>
     </body>
 </html>
