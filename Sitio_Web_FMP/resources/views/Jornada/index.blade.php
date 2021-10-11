@@ -100,19 +100,35 @@
                         </td>
                         <td class="text-center">
                             <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-outline-success btn-sm" onclick="fnDetalleJornada(this);" title="Detalle"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i></button>
-                            @if(!($item->procedimiento=='aceptado'))
+                           
+                            {{-- @if(!($item->procedimiento=='aceptado'))
                                 <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)" title="Seguimiento"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
+                            @endif --}}
+
+                            @if (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano'))
+                                @if($item->procedimiento=='enviado a recursos humanos')
+                                    <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)" title="Seguimiento"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
+                                @endif
+                            @elseif(@Auth::user()->hasRole('Jefe-Academico') || @Auth::user()->hasRole('Jefe-Administrativo'))
+                                @if($item->procedimiento=='enviado a jefatura' || $item->procedimiento=='recursos humanos lo ha regresado a jefatura')
+                                    <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)" title="Seguimiento"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
+                                @endif
+                            @elseif(@Auth::user()->hasRole('Docente'))
+                                @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
+                                    <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)" title="Seguimiento"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
+                                @endif
                             @endif
 
-                            @if (($item->empleado_rf->id == Auth::user()->empleado_rf->id))
+
+                            {{-- @if (($item->empleado_rf->id == Auth::user()->empleado_rf->id))
                                 @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
                                     <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}" title="Editar"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
                                 @endif
-                            @else
-                                @if(@Auth::user()->hasRole('Jefe-Academico') || @Auth::user()->hasRole('Jefe-Administrativo'))
+                            @else --}}
+                                {{-- @if(@Auth::user()->hasRole('Jefe-Academico') || @Auth::user()->hasRole('Jefe-Administrativo'))
                                     @if($item->procedimiento=='enviado a recursos humanos' || $item->procedimiento=='aceptado')
-                                    @endif
-                                @elseif (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano'))
+                                    @endif --}}
+                                @if (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano'))
                                     @if($item->procedimiento=='enviado a recursos humanos' || $item->procedimiento=='aceptado')
                                         <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}" title="Editar"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
                                     @endif
@@ -125,7 +141,7 @@
                                         <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}" title="Editar"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
                                     @endif
                                 @endif
-                            @endif
+                            {{-- @endif --}}
                         </td>
                     </tr>
                 @endforeach
