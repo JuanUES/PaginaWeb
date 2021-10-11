@@ -117,7 +117,14 @@
                     <div class="col-xl-12 py-2">
                     @if ($contenido!=null)
                     {!!$contenido->contenido!!}
+                    @else 
+                    <center>
+                        <p class="p-2 border text-center" >No hay información para mostrar</p>
+                    </center>
+                    
                     @endif
+                    
+                    
                     </div>      
                     @endguest      
                     </div> 
