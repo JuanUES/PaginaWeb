@@ -41,7 +41,7 @@ function updateHour(cell) {
 
     let total = CalcularHoras(hoursTotal,valor);
     validateHoras(valor, total);
-    console.log('T ' + total);
+    // console.log('T ' + total);
     $("#_horas").val('' + total);
 
     //Valores de Carga Academica
@@ -141,11 +141,11 @@ function fnHoras() {
 
         hourRow += parseInt(hoursCe);
         minuteRow += parseInt(minutesCe);
-        console.log('Hora row' + hoursCe + ":" + minutesCe);
+        // console.log('Hora row' + hoursCe + ":" + minutesCe);
     });
     hourRow =  isNaN(hourRow) ? 0 : parseInt(hourRow);
     minuteRow =  isNaN(minuteRow) ? 0 : parseInt(minuteRow);
-    console.log('Hora AA ' + hourRow + ':' + minuteRow);
+    // console.log('Hora AA ' + hourRow + ':' + minuteRow);
 
     let timeT = hourRow + ':' + minuteRow;
 
@@ -235,7 +235,7 @@ function updateJornada() {
     let valor = $("#auxJornada").val();
     let hoursTotal = fnHoras();
     let total = CalcularHoras(hoursTotal,valor);
-    console.log('anted de validar '+ total);
+    // console.log('anted de validar '+ total);
     validateHoras(valor, total);
     return total;
 }
@@ -269,7 +269,7 @@ function validateHoras(valor, total){
 function updateChangeTable(){
     let total = $(".total-horas").val();
     let updatehours = updateJornada();
-    console.log('anted de updateChangeTable '+updatehours);
+    // console.log('anted de updateChangeTable '+updatehours);
 
     $("#_horas").val(updatehours);
     validateHoras(total, updatehours);
@@ -286,7 +286,7 @@ function CalcularHoras(inicio, fin) {
     //Anteponiendo un 0 a los minutos y horas si son menos de 10
     hoursFi = hoursFi < 10 ? '0' + hoursFi : hoursFi;
     minutesFi = minutesFi < 10 ? '0' + minutesFi : minutesFi;
-    console.log('valor (FIN) ' + hoursFi + ":" + minutesFi);
+    // console.log('valor (FIN) ' + hoursFi + ":" + minutesFi);
 
     //inicio
     let hoursI = inicio;
@@ -306,7 +306,7 @@ function CalcularHoras(inicio, fin) {
     var diffHTotal = 0;
 
     if(minutesIn > minutesFi ){
-        console.log(minutesIn + ' '+ minutesFi);
+        // console.log(minutesIn + ' '+ minutesFi);
         diffMTotal = 60 - parseInt(minutesIn);
         diffHTotal = -1;
         if(parseInt(diffMTotal) < 10){
