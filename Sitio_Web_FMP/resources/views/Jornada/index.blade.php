@@ -15,7 +15,7 @@
         </div>
         @if($cargar)
             <div class="col-12 col-sm-7" style="text-align:right">
-                @hasanyrole('super-admin|Jefe-Academico|Jefe-Administrativo|Recurso-Humano')
+                @hasanyrole('super-admin|Jefe-Academico|Recurso-Humano')
                     <button class="btn btn btn-success" title="Generar Reporte" data-toggle="modal" data-target="#modalExport"> <i class="fa fa-file-excel" aria-hidden="true"></i> </button>
                 @endhasanyrole
                 @if(is_null($emp) || $emp->tipo_empleado=='Académico')
