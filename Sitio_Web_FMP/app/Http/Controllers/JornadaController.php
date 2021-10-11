@@ -181,20 +181,24 @@ class JornadaController extends Controller{
                 return response()->json(['error' => $validator->errors()->all()]);
             }
 
-            //para determinar el estado del proceso dependiendo del usuario que hace el registro o la modificacion
-            $procedimiento = 'guardado';
-            if ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano')) {
-                $procedimiento = 'enviado a recursos humanos';
-            }else if($user->hasRole('Jefe-Administrativo') || $user->hasRole('Jefe-Academico')){
-                $procedimiento = 'enviado a jefatura';
-            }
+           
 
             $items = json_decode($request->items);
             $requestData = $request->except(['_id', 'items']);
-            $requestData['procedimiento'] = $procedimiento;
 
             if (strcmp(trim($request->_id), '') == 0 ) {
                 $msg = 'Registro exitoso.';
+
+                //para determinar el estado del proceso dependiendo del usuario que hace el registro
+                $procedimiento = 'guardado';
+                if ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano')) {
+                    $procedimiento = 'enviado a recursos humanos';
+                } else if ($user->hasRole('Jefe-Administrativo') || $user->hasRole('Jefe-Academico')) {
+                    $procedimiento = 'enviado a jefatura';
+                }
+                $requestData['procedimiento'] = $procedimiento;
+
+
                 $jornada = Jornada::create($requestData);
                 if (is_array($items) || is_object($items)) {
                     foreach ($items as $key => $value) { //para guardar los items del jornada
