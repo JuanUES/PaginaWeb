@@ -19,12 +19,16 @@ $('#A_carga').on('change', function() {
 
             let $select = $('#carga');
             $('#carga').empty();
+            $select.append('<option value="">' + "Seleccione "+'</option>');
             for (let index = 0; index < data.length; index++) {
-                //console.log( data[index]);
-                $select.append('<option value=' + data[index].id + '>' + data[index].nombre_carga+
-                '</option>');
+                console.log('cuantos'+ data[index].nombre_carga);
+               /* $select.append('<option value=' + data[index].id + '>' + data[index].nombre_carga+
+                '</option>');*/
+
+                document.getElementById("carga").innerHTML += "<option value='"+data[index].id+"'>"+data[index].nombre_carga+"</option>";
                 
             }
+            $("#carga").selectpicker('refresh')
            
 
         }, 
