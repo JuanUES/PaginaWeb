@@ -33,6 +33,7 @@ class NoticiaController extends Controller
      */
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(),[
             'titulo' => 'required|max:255',
             'contenido' => 'required',
@@ -56,18 +57,18 @@ class NoticiaController extends Controller
         $noticia -> save();
         
         if($request->imagen=!null){
-            $file = $request->file('imagen');
-            $nombreUnico = uniqid();
-            File::delete(public_path().'/images/noticias/'.$noticia->imagen);
+            $ruta = public_path().'\images\noticias';
+            $nombreUnico = uniqid().$request->file('imagen')->getClientOriginalName();
+            File::delete($ruta.'/'.$noticia->imagen);
+            $request->file('imagen')->move($ruta,$nombreUnico);
             $noticia->imagen = $nombreUnico;
             $noticia->save();
-            $file->move(public_path().'\images\noticias',$nombreUnico);
         }else{
-            $noticia->imagen = 'N/A';
+            $noticia->imagen = 'sin_imagen';
             $noticia->save();
         }
 
-        return $request->_id !=null ?response()->json(['mensaje'=>'Modificación exitosa']):response()->json(['mensaje'=>'Registro exitoso']);
+        return $request->_id !=null ?response()->json(['mensaje'=>'Modificación exitosa.']):response()->json(['mensaje'=>'Registro exitoso.']);
     }
 
     public function storeurl(Request $request)
@@ -88,26 +89,23 @@ class NoticiaController extends Controller
         /**Guardo en base de datos */
         
         $noticia -> titulo    =  $request->titulo;        
-        $noticia -> subtitulo =  $request->subtitulo;    
+        $noticia -> subtitulo =  $request->subtitulo;        
+        $noticia -> imagen    =  $fileName;
         $noticia -> tipo      =  'false';  
         $noticia -> urlfuente =  $request->urlfuente;
         $noticia -> user      =  auth()->id();
         $noticia -> save();
 
         if($request->imagen=!null){
-            $file = $request->file('imagen');
             $ruta = public_path().'\images\noticias';
-            File::delete(public_path().'/images/noticias/'.$noticia->imagen);
-            $nombreUnico = uniqid();
+            $nombreUnico = uniqid().$request->file('imagen')->getClientOriginalName();
+            File::delete($ruta.'/'.$noticia->imagen);
+            $request->file('imagen')->move($ruta,$nombreUnico);
             $noticia->imagen = $nombreUnico;
-            $noticia->save();
-            $file->move($ruta,$nombreUnico);
-        }else{
-            $noticia->imagen = 'N/A';
             $noticia->save();
         }
 
-        return $request->_id !=null ?response()->json(['mensaje'=>'Modificación exitosa']):response()->json(['mensaje'=>'Registro exitoso.']);
+        return $request->_id !=null ?response()->json(['mensaje'=>'Modificación exitosa.']):response()->json(['mensaje'=>'Registro exitoso.']);
 
     }
     

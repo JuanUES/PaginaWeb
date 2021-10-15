@@ -12,4 +12,4 @@ function editarEX(json) {
     $('#_id_externa').val(json.id);
 }
 
-$('.bs-example-modal-center').on('hidden.bs.modal', function() { location.reload(); });
+$('#myModalNoticia').on('hidden.bs.modal', function() { location.reload(); });

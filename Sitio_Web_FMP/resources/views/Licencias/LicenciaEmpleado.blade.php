@@ -49,18 +49,27 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="exampleInputNombre">Tipo de permiso <code>*</code></label>
-                            <select name="tipo_permiso" class="form-control" style="width: 100%"  id="tipo_permiso">
+                            <select name="tipo_de_permiso" class="form-control select2" style="width: 100%" data-live-search="true" 
+                                data-style="btn-white"   id="tipo_permiso">
                                 <option value="">Seleccione</option>
-                                <option value="">L.C/G.S</option>
-                                <option value="">L.C/G.S</option>
+                                <option value="L.C/G.S">L.C/G.S</option>
+                                <option value="L.C/G.S">L.C/G.S</option>
+                                <option value="INCAP">INCAP</option>
+                                <option value="L.OFICIAL">L.OFICIAL</option>
+                                <option value="T.COMP.">T.COMP.</option>
+                                <option value="CITA MEDICA">CITA MEDICA</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="exampleInputNombre">Representantes </label>
-                            <select name="tipo_representante" class="form-control" style="width: 100%"  id="tipo_representante">
+                            <select name="representante" class="form-control select2" style="width: 100%"
+                                data-style="btn-white"  id="tipo_representante">
                                 <option value="">Seleccione</option>
+                                <option value="C.S.U">C.S.U</option>
+                                <option value="AGU">AGU</option>
+                                <option value="J.D">J.D</option>
                             </select>
                         </div>
                     </div>
@@ -68,29 +77,31 @@
                 <div class="row">
                     <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="exampleInputNombre">Fecha de Uso <code>*</code></label>
-                            <input type="date" name="fecha_de_uso" class="form-control" style="width: 100%"  id="fecha_de_uso">
+                            <label for="fecha_de_uso">Fecha de Uso <code>*</code></label>
+                            <input type="date" name="fecha_de_uso" class="form-control"
+                                tyle="width: 100%"  id="fecha_de_uso">
                         </div>                            
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="exampleInputNombre">Fecha de Presentación <code>*</code></label>
-                            <input type="text" name="fecha_de_presentación" class="form-control"  value="{{Carbon\Carbon::now('UTC')->format('d-M-Y')}}"
-                             style="width: 100%"  id="fecha_de_presentacion" readonly>
+                            <label for="fecha_de_presentacion">Fecha de Presentación <code>*</code></label>
+                            <input type="text" name="fecha_de_presentación" id="fecha_de_presentacion" class="form-control"  
+                                value="{{Carbon\Carbon::now('UTC')->format('d-M-Y')}}" 
+                                style="width: 100%"  id="fecha_de_presentacion" readonly>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="exampleInputNombre">Hora Inicio <code>*</code></label>
-                            <input type="time" name="hora_inicio" class="form-control" style="width: 100%"  id="fecha_de_uso">
+                            <label for="hora_inicio">Hora Inicio <code>*</code></label>
+                            <input type="time" name="hora_inicio" class="form-control timepicker" style="width: 100%"  id="hora_inicio">
                         </div> 
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="exampleInputNombre">Hora Inicio <code>*</code></label>
-                            <input type="time" name="hora_final" class="form-control" style="width: 100%"  id="fecha_de_uso">
+                            <label for="hora_final">Hora Final <code>*</code></label>
+                            <input type="time" name="hora_final" class="form-control" style="width: 100%"  id="hora_final">
                         </div> 
                     </div>
                 </div>
@@ -134,7 +145,7 @@
             <div class="modal-header">
                 <h3 class="modal-title" id="myCenterModalLabel">
                     <i class="mdi mdi-arrow-up-bold  mdi-24px" style="margin: none; padding: none;"></i>
-                    <i class="mdi-arrow-down-bold mdi mdi-24px" style="margin: 0px;"></i> Dar Baja/Alta</h3>
+                    <i class="mdi-arrow-down-bold mdi mdi-24px" style="margin: 0px;"></i> Cancelar</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <form action="{{ route('usuarioEstado') }}" method="POST" id="altaBajaForm">
@@ -148,7 +159,7 @@
                         <div class="col-xl-2 fa fa-exclamation-triangle text-warning fa-4x mr-1"></div>
                         <div class="col-xl-9 text-black"> 
                             <h4 class="font-17 text-justify font-weight-bold">
-                                Advertencia: Se dara de alta/baja este usuario, ¿Desea continuar?
+                                Advertencia: Se cancelara esta licencia, ¿Desea continuar?
                             </h4>
                         </div>
                     </div>
@@ -176,8 +187,8 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <!--Modal para dar alta fin-->
-<!-- start page title -->
 
+<!-- start page title -->
 <div class="row">
     <div class="col-xl-12">
         <div class="page-title-box">
@@ -191,8 +202,6 @@
         </div>
     </div>
 </div>
-
-
 <!-- end page title -->
 
 <div class="row">
@@ -211,21 +220,55 @@
                     data-toggle="modal" data-target="#modalRegistro"></button>
                 </div>                
             </div>
-            <table  class="table table-bordered " style="width: 100%">
+            <table  class="table table-responsive " style="width: 100%">
                 <thead>
                 <tr>
-                    <th class="col-sm-1" style="width: 5%;">N°</th>
-                    <th>Usuario</th>
-                    <th class="col-xs-1">Correo</th>
-                    <th class="col-xs-1" style="width: 10%;">Estado</th>
-                    <th>Roles</th>
+                    <th class="col-sm-2">Presentación</th>
+                    <th class="col-sm-2">Uso</th>
+                    <th class="col-sm-1">Tipo</th>
+                    <th class="col-xs-1">Hora Inicio</th>
+                    <th class="col-xs-1">Hora Final</th>
+                    <th class="col-sm-1 text-center" >Horas</th>
+                    <th class="col-sm-2">Estado</th>
                     <th class="col-sm-1 text-center">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
-                   <!-- <tr>
-                        <th class="align-middle "></th>
-                    </tr>-->
+                    @foreach ($permisos as $item)
+                        <tr>
+                            <th class="align-middle ">{{Carbon\Carbon::parse($item->fecha_presentacion)->format('d/M/Y')}}</th>
+                            <td class="align-middle ">{{Carbon\Carbon::parse($item->fecha_uso)->format('d/M/Y')}}</td>
+                            <td class="align-middle ">{{$item->tipo_permiso}}</td>
+                            <td class="align-middle ">{{date('H:i', strtotime($item->hora_inicio))}}</td>
+                            <td class="align-middle " >{{date('H:i', strtotime($item->hora_final))}}</td>
+                            <td class="align-middle text-center">
+                                {{
+                                    Carbon\Carbon::parse($item->fecha_uso.'T'.$item->hora_inicio)
+                                        ->diffInHours(Carbon\Carbon::parse($item->fecha_uso.'T'.$item->hora_final))
+                                }}
+                            </td>
+                            <td class="align-middle ">
+                                <span class="badge badge-primary font-14">{{$item->estado}}</span>
+                            </td>
+                            <td class="align-middle ">
+                                <div class="row">
+                                    <div class="col text-center">
+                                        <div class="btn-group" role="group">
+                                            <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="editar('{{ route('usuarios') }}',{!!$item->id!!},this)">
+                                                <i class="fa fa-edit font-16 my-1" aria-hidden="true"></i>
+                                            </button>
+                                            <button title="Cancelar" 
+                                                class="btn btn-outline-primary btn-sm mx-1 rounded btn-outline-danger" 
+                                                data-toggle="modal" data-target="#modalAlta" 
+                                                onclick="$('#activarId').val({!!$item->id!!});">
+                                                <i class="fa fa-ban font-16 my-1"></i>
+                                            </button>                                   
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>  
+                        </tr>
+                    @endforeach                   
                 </tbody>
             </table>
 
@@ -233,6 +276,7 @@
     </div> <!-- end col -->
 </div>
 <!-- end row -->
+
 @else
     <div class="row m-3">
         <div class="col-xl-12">
@@ -251,6 +295,7 @@
 @section('plugins')
 <link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
 <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>
+<link href="{{ asset('template-admin/dist/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet"/>
 <style>
 
 </style>
@@ -258,10 +303,28 @@
 
 @section('plugins-js')
     <!-- Bootstrap Select -->
-    <script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
+    <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
     <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
+    <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.js') }}" ></script>
     <script src="{{ asset('js/scripts/data-table.js') }}" ></script>
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
-    <script src="{{ asset('js/summernote.config.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
+    <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+    <script>
+        $(
+            function () {
+                $('.select2').select2();            
+
+                $(".summernote-config").summernote({
+                    lang: 'es-ES',
+                    height: 100,
+                    toolbar: [
+                        // [groupName, [list of button]]
+                        ['view', ['fullscreen']],           
+                    ]
+                });
+            }
+        
+        );
+    </script>
 @endsection

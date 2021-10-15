@@ -187,7 +187,7 @@
                             <a href="https://campus.ues.edu.sv/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Campus Virtual Central</a>
                             <a href="https://eel.ues.edu.sv/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Expediente en Linea</a>                      
                             <a href="https://correo.ues.edu.sv/" target="_blank" class="btn btn-danger  btn-block mt-3 text-left"><i class=" mdi mdi-email font-18"></i> Correo Institucional</a>                           
-                            <a href="https://www.facebook.com/DistanciaFMP" target="_blank" class="btn btn-danger  btn-block mt-3 text-left"><i class="mdi mdi-facebook border rounded font-16"></i> Universidad en Linea / Sede Paracentral</a> 
+                            <a href="https://www.facebook.com/EnLineaFMP" target="_blank" class="btn btn-danger  btn-block mt-3 text-left"><i class="mdi mdi-facebook border rounded font-16"></i> Educación en Línea Sede San Vicente</a> 
                             <a href="http://biblio.fmp.ues.edu.sv/biblioteca/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-book-open-variant font-18"></i> Biblioteca</a>
                             <!-- <a href="#" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-book-open-variant font-18"></i> Recurso LMS-FMP</a>-->
                             <!-- <a href="#" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-book-open-variant font-18"></i> Campus Virtual FMP</a>-->

@@ -71,7 +71,12 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="salarioE">Salario <code>*</code></label>
-                            <input type="text" name="salario" id="salarioE" class="form-control" placeholder="$00.00">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="basic-addon1">$</span>
+                                </div>
+                                <input type="text" name="salario" id="salarioE" class="form-control" placeholder="00.00">
+                            </div>
                         </div>
                     </div>                    
                 </div>
@@ -247,7 +252,7 @@
                 <div class="row p-3">
                     <div class="col-xl-12">
                         <div class="table-responsive">
-                            <table class="table table-bordered" style="width: 100%" id="categoriaTb">
+                            <table class="table table-responsive" style="width: 100%" id="categoriaTb">
                                 <thead>
                                     <tr>
                                         <th class="col-sm-1" style="width: 5%;">#</th>
@@ -384,7 +389,7 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-bordered" style="width: 100%;">
+            <table class="table table-responsive" style="width: 100%;">
                 <thead>
                 <tr>
                     <th data-priority="1" class="col-sm-1">#</th>

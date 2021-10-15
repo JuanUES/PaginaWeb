@@ -19,20 +19,24 @@ class CreateAjustesTable extends Migration
         Schema::create('permisos', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('empleado');
-            $table->integer('tipo_permiso');
-            $table->longText('justificacion');
-            $table->integer('horas_utilizar');
+
+            $table->string('tipo_representante') -> nullable();
+            $table->string('tipo_permiso');
             $table->date('fecha_uso');
-            $table->date('fecha_presentacio');
+            $table->date('fecha_presentacion');
             $table->time('hora_inicio');
-            $table->time('hora_finalizado');
+            $table->time('hora_final');
+            $table->longText('justificacion');
             $table->longText('observaciones') -> nullable();
-            $table->integer('representantes') -> nullable();
+            $table->string('estado') -> nullable();
+
             $table->bigInteger('jefatura') -> nullable();
-            $table->bigInteger('gestor_rrhh') ->nullable();
+            $table->bigInteger('gestor_rrhh') -> nullable();
+            
             $table->foreign('jefatura')->references('id')->on('empleado');
             $table->foreign('gestor_rrhh')->references('id')->on('empleado');
-            $table->foreign('empleado')->references('id')->on('empleado');                            
+            $table->foreign('empleado')->references('id')->on('empleado');    
+
             $table->timestamps();
         });
         

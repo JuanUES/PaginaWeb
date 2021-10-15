@@ -53,6 +53,12 @@ class RolesSeeder extends Seeder
         $role = Role::create(['name' => 'Pagina-Depto-PC']);//Plan Complementario
         /**------------------------------------------------------------------------------*/
 
+        /**Licencias --------------------------*/
+        $role = Role::create(['name' => 'decano-a']);
+        $role = Role::create(['name' => 'vice-decano-a']);
+        $role = Role::create(['name' => 'secretario']);        
+        /** ------------------------------------------------------------------------------*/
+
         $role = Role::create(['name' => 'super-admin']);
         $role = Role::create(['name' => 'Jefe-Academico']);
         $role = Role::create(['name' => 'Recurso-Humano']);

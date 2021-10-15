@@ -35,9 +35,7 @@ class UsuariosController extends Controller
             ->join('roles','roles.id','=','model_has_roles.role_id')
             ->where('model_has_roles.model_id','=',$usuario)
             ->get();
-
             for ($i=0; $i < count($roles); $i++) {$roles[$i]->name = base64_encode($roles[$i]->name);}
-
             return $roles->toJson();
         }else{
             return response()->json(['error'=>['ACCESO DENEGADO']]);
@@ -57,6 +55,7 @@ class UsuariosController extends Controller
 
     public function store(Request $request){
         if(Auth::user()->hasRole('super-admin')){
+            $roles = $request -> roles;      
             $id = $request->_id;
             $validator = Validator::make($request->all(),[
                 'usuario' => 'required|string|max:255',
@@ -82,8 +81,6 @@ class UsuariosController extends Controller
             $user -> empleado = $request -> empleado;
             $user -> password = Hash::make($request->contraseña);
             $b = $user -> save(); 
-
-            $roles = $request -> roles;
 
             if($b&&!is_null($roles)){            
                 for ($i=0; $i < count($roles); $i++){$user -> assignRole(base64_decode($roles[$i]));}

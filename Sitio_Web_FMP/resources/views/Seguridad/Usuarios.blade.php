@@ -235,7 +235,7 @@
                     data-toggle="modal" data-target="#modalRegistro"></button>
                 </div>                
             </div>
-            <table  class="table table-bordered " style="width: 100%">
+            <table  class="table table-responsive" style="width: 100%">
                 <thead>
                 <tr>
                     <th class="col-sm-1" style="width: 5%;">N°</th>
@@ -265,9 +265,9 @@
                     <td class="align-middle font-16">
                         @if ($item->hasAllRoles($roles))
                         <span class="badge badge-success">Todos los roles</span>
-                        @else
+                        @else                             
                             @if ($item->hasRole('super-admin'))
-                            <span class="badge badge-primary">Super Administrador</span>
+                            <span class="badge badge-danger">Super Administrador</span>
                             @endif   
                             @if ($item->hasRole('Pagina-Inicio-Imagenes'))
                             <span class="badge badge-primary">Pagina Inicio-Imagenes</span>

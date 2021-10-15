@@ -1,4 +1,3 @@
 $( window ).on( "load", function() {
-    $('#loading').hide();
-    setTimeout(function(){$('#loading').remove()},1000);
+    $('#loading').hide().remove();
 });  
