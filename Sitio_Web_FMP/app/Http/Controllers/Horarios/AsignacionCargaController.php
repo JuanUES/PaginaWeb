@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Horarios\Asig_admin;
 use App\Models\Horarios\CargaAdmin;
 use App\Models\Horarios\Ciclo;
+use App\Models\Horarios\Trabajogrado;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -92,14 +93,14 @@ class AsignacionCargaController extends Controller
         try{
 
             $error = null;
-            $validar = DB::table('asig_admins')
+            $validar = DB::table('trabajogrados')
             ->select('*')
             ->where([['id_carga','=',$request->carga],
             ['id_ciclo','=',$request->id_ciclo]]);
-
+            //echo dd($validar);
             if($validar->exists())
             {
-                $error = 'Carga Administrativa ya Asignada';
+                $error = 'Trabajos de grados Asignados';
                 return response()->json(['error'=>[$error]]);
             }
 
@@ -108,7 +109,7 @@ class AsignacionCargaController extends Controller
                 'id_empleado'   =>'required',
                 'carga'         =>'required',
                 'id_ciclo'      =>'required',
-                'dias'          =>'required'
+                'cantidad'          =>'required|numeric'
             ]);         
 
             if($validator->fails())
@@ -116,12 +117,12 @@ class AsignacionCargaController extends Controller
                 return response()->json(['error'=>$validator->errors()->all()]);                
             }
           //echo dd($request);
-            $asig = $request->_id ==null ? new Asig_admin():Asig_admin::findOrFail($request->_id);
-            $asig -> id_empleado   = $request->id_empleado;
-            $asig -> id_carga      = $request->carga;
-            $asig -> id_ciclo      = $request->id_ciclo;
-            $asig -> dias      = $request->dias;
-            $asig -> save();         
+            $trabajos = $request->_id ==null ? new Trabajogrado():Trabajogrado::findOrFail($request->_id);
+            $trabajos -> id_empleado   = $request->id_empleado;
+            $trabajos -> id_carga      = $request->carga;
+            $trabajos -> id_ciclo      = $request->id_ciclo;
+            $trabajos -> cantidad      = $request->cantidad;
+            $trabajos -> save();         
         
             return $request->_id != null?response()->json(['mensaje'=>'Modificación exitosa.']):response()->json(['mensaje'=>'Registro exitoso.']);
         
