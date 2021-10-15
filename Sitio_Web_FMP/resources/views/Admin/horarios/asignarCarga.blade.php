@@ -11,7 +11,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form id="empleadoForm" action="" method="POST">
+        <form id="empleadoForm" action="{{route('create/asignacion')}}" method="POST">
             <div class="modal-body">
                     @csrf
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" 
@@ -33,12 +33,26 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group">
+                                <label for="exampleInputCarga">Ciclo Activo</label>
+                                <select class="form-control selectpicker" style="width: 100%" data-live-search="true" 
+                                data-style="btn-white" name="id_ciclo" id="id_ciclo">
+                                    <option value="" selected>Seleccione</option>
+                                    @foreach ($ciclos as $i)
+                                        <option data-icon="mdi mdi mdi-school font-18" value="{!!$i->id!!}">{!!$i->nombre.'-'.$i->año!!}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
                                 <label for="Departamento">Empleado</label>
-                                <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"
-                                    id="id_empleado" name="id_empleado">
+                                <select class="form-control selectpicker" style="width: 100%" data-live-search="true" 
+                                data-style="btn-white" name="id_empleado" id="id_empleado">
                                     <option value="" selected>Seleccione</option>
                                     @foreach ($empleados as $index)
-                                        <option value="{!!$index->id!!}">{!!$index->nombre.' '.$index->apellido!!}</option>
+                                        <option data-icon="mdi mdi-account-plus-outline font-18" value="{!!$index->id!!}">{!!$index->nombre.' '.$index->apellido!!}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -49,9 +63,10 @@
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="exampleInputDocente">Carga Administrativa</label>
-                                <select class="form-control select2-multiple" data-toggle="select2" id="carga"
-                                multiple="multiple" aria-placeholder="Seleccione" style="width: 100%;" name="carga[]">
-                                                               
+                           <select class="form-control selectpicker" style="width: 100%" data-live-search="true" 
+                                data-style="btn-white" name="carga" id="carga" aria-placeholder="Seleccione">
+                                    <option value="" selected >Seleccione</option>
+                                         
                            </select>
                             </div>
                         </div>
@@ -69,6 +84,7 @@
                                     <option value="Miércoles">Miércoles</option>
                                     <option value="Jueves">Jueves</option>
                                     <option value="Viernes">Viernes</option>
+                                    <option value="Todos">Todos los días</option>
                                 </select>
                             </div>
                         </div>
@@ -236,7 +252,7 @@
 <script>
     $('#roles').select2();
 </script>
-
+<script src="{{ asset('js/scripts/http.min.js') }}"></script>
 <script src="{{ asset('js/horariosJs/asignacionCarga.js') }}"></script>
 <script src="{{ asset('js/scripts/data-table.js') }}" defer></script>
 @endsection
