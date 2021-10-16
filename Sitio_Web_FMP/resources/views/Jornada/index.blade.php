@@ -104,8 +104,12 @@
                             {{-- @if(!($item->procedimiento=='aceptado'))
                                 <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)" title="Seguimiento"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
                             @endif --}}
-
-                            @if (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano'))
+{{-- 
+                            @if (($item->empleado_rf->id == Auth::user()->empleado_rf->id))
+                                @if($item->procedimiento=='guardado' || $item->procedimiento=='recursos humanos lo ha regresado a jefatura')
+                                    <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)" title="Seguimiento"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
+                                @endif
+                            @elseif (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano'))
                                 @if($item->procedimiento=='enviado a recursos humanos')
                                     <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)" title="Seguimiento"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
                                 @endif
@@ -117,31 +121,45 @@
                                 @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
                                     <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)" title="Seguimiento"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
                                 @endif
-                            @endif
+                            @endif --}}
 
+                            @php
+                                $buttons = '<button data-key="'.($item->id).'" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)" title="Seguimiento"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
+                                            <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="'.$item->id.'" title="Editar"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
+                                       ';
+                            @endphp
 
-                            {{-- @if (($item->empleado_rf->id == Auth::user()->empleado_rf->id))
-                                @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
-                                    <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}" title="Editar"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
-                                @endif
-                            @else --}}
-                                {{-- @if(@Auth::user()->hasRole('Jefe-Academico') || @Auth::user()->hasRole('Jefe-Administrativo'))
+                            @if( (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano')) || ( (@Auth::user()->hasRole('Jefe-Academico') || @Auth::user()->hasRole('Jefe-Administrativo') || @Auth::user()->hasRole('Docente')) && strcmp($item->periodo_rf->estado, 'activo')==0) )
+
+                                @if (($item->empleado_rf->id == Auth::user()->empleado_rf->id))
+                                    @if (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano'))
+                                        @if($item->procedimiento=='guardado' || $item->procedimiento=='enviado a recursos humanos')
+                                            {!! $buttons !!}
+                                        @endif
+                                    @elseif(@Auth::user()->hasRole('Jefe-Academico') || @Auth::user()->hasRole('Jefe-Administrativo'))
+                                        @if($item->procedimiento=='guardado' || $item->procedimiento=='recursos humanos lo ha regresado a jefatura')
+                                            {!! $buttons !!}
+                                        @endif
+                                    @elseif(@Auth::user()->hasRole('Docente'))
+                                        @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
+                                            {!! $buttons !!}
+                                        @endif
+                                    @endif
+                                @elseif (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano'))
                                     @if($item->procedimiento=='enviado a recursos humanos' || $item->procedimiento=='aceptado')
-                                    @endif --}}
-                                @if (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano'))
-                                    @if($item->procedimiento=='enviado a recursos humanos' || $item->procedimiento=='aceptado')
-                                        <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}" title="Editar"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
+                                        {!! $buttons !!}
                                     @endif
                                 @elseif(@Auth::user()->hasRole('Jefe-Academico') || @Auth::user()->hasRole('Jefe-Administrativo'))
                                     @if($item->procedimiento=='enviado a jefatura' || $item->procedimiento=='recursos humanos lo ha regresado a jefatura')
-                                        <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}" title="Editar"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
+                                        {!! $buttons !!}
                                     @endif
                                 @elseif(@Auth::user()->hasRole('Docente'))
                                     @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
-                                        <button class="btn btn-outline-primary btn-sm" onclick="fnEditJornada(this);" data-id="{{ $item->id }}" title="Editar"><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
+                                        {!! $buttons !!}
                                     @endif
                                 @endif
-                            {{-- @endif --}}
+
+                            @endif
                         </td>
                     </tr>
                 @endforeach
@@ -304,7 +322,7 @@
     function fnProcedimiento(componet){
         let jornada = $(componet).data('key');
         $("#formSeguimiento #jornada_id").val(jornada);
-        let data = getData('GET', `{{ url('admin/jornada-seguimiento-opciones') }}`, '#notificacion_seguimiento');
+        let data = getData('GET', `{{ url('admin/jornada-seguimiento-opciones') }}/${jornada}`, '#notificacion_seguimiento');
         data.then(function (response) {
             $("#formSeguimiento #procesoSeguimiento").val(null).trigger('change');
             $('#formSeguimiento #procesoSeguimiento').empty();

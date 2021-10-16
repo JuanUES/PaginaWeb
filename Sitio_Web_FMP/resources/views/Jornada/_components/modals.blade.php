@@ -115,7 +115,7 @@
 </div>
 
 {{--  Modal para exportar a Excel las Jornadas  --}}
-@hasanyrole('super-admin|Jefe-Academico|Jefe-Administrativo|Recurso-Humano')
+@hasanyrole('super-admin|Jefe-Academico|Recurso-Humano')
     <div id="modalExport" class="modal fade bs-example-modal-center" tabindex="-1"  role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -201,7 +201,13 @@
                                     <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" name="id_periodo" id="id_periodo">
                                         <option value="">Seleccione un Periodo</option>
                                         @foreach ($periodos as $item)
-                                            <option value="{{ $item->id }}">{{ $item->tipo }} -> {{ $item->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
+                                            @if (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano'))
+                                                <option value="{{ $item->id }}"> ({{ ucfirst($item->estado) }}) {{ $item->tipo }} -> {{ $item->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
+                                            @elseif (@Auth::user()->hasRole('Jefe-Academico') || @Auth::user()->hasRole('Jefe-Administrativo') || @Auth::user()->hasRole('Docente'))
+                                                @if (strcmp($item->estado, 'activo')==0)
+                                                    <option value="{{ $item->id }}"> ({{ ucfirst($item->estado) }}) {{ $item->tipo }} -> {{ $item->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
+                                                @endif
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
@@ -210,9 +216,9 @@
                                 <input type="hidden" name="id_emp" id="id_emp_text" disabled>
                                 <div class="form-group">
                                     <label for="empleado" class="control-label">{{ 'Empleado' }} <span class="text-danger">*</span> </label>
-                                        <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" name="id_emp" id="id_emp">
-                                            <option value="">Seleccione un Empleado</option>
-                                        </select>
+                                    <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" name="id_emp" id="id_emp">
+                                        <option value="">Seleccione un Empleado</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-12 col-sm-2">
@@ -228,22 +234,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!--<div class="row" id="horario-div">
-                            <div class="col-12">
-                                <h5 class="mb-3">Carga Academica</h5>
-                                <table class="table table-hover table-sm" id="tableViewH">
-                                    <thead>
-                                        <th>Dia</th>
-                                        <th>Materia</th>
-                                        <th>Inicio</th>
-                                        <th>Fin</th>
-                                    </thead>
-                                    <tbody id="bodyViewH">
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>-->
-
                         <div class="row" id="jornada-div">
                             <div class="col-12">
                                 <h5 class="mb-3">Detalle de la Jornada

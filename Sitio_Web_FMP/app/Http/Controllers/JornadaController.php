@@ -96,7 +96,7 @@ class JornadaController extends Controller{
                 $query = null;
             }else {
 
-                if(!$user->hasRole('super-admin') && !$user->hasRole('Recurso-Humano')){ // si no es jefe filtramos la informacion dependiendo de si es jefe o empleado normal
+                if(!$user->hasRole('super-admin') && !$user->hasRole('Recurso-Humano')){ // si no es RRHH filtramos la informacion dependiendo de si es jefe o empleado normal
                     if($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo')){//para filtrar por tipo de departamento
                         $depto = $empleado->id_depto;// id que servira para filtrar los empleados por departemento
                         $query->whereIn('jornada.procedimiento', [$estados[1]['value'], $estados[2]['value'], $estados[3]['value'], $estados[4]['value'], $estados[5]['value']]);
@@ -143,6 +143,7 @@ class JornadaController extends Controller{
 
 
             $jornadas = $query->get();
+
             $deptos = Departamento::where('estado', true)->latest()->get();
 
             //filtrar periodos por tipo de usuarios
@@ -443,8 +444,9 @@ class JornadaController extends Controller{
         // dd($horarios);
     }
 
-    public function getOpcionesSeguimiento(){
+    public function getOpcionesSeguimiento($id){
         $user = Auth::user();
+        $jornada = Jornada::findOrFail($id);
         $estados = $this->estado_procedimiento;
         unset($estados[0]);
 
@@ -457,14 +459,28 @@ class JornadaController extends Controller{
         //     5 => ['value' => 'aceptado', 'text' => 'Aceptado'],
         // ];
 
+        // los procedimientos para el usuario en session serian diferentes dependiendo del rol que tenga
 
-        if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo')  ){
-            unset($estados[5], $estados[4], $estados[1]);
-        } else  if ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano')){
-            unset($estados[1], $estados[2], $estados[3]);
-        } else if($user->hasRole('Docente')){
-            unset($estados[2], $estados[3], $estados[4], $estados[5]);
+        // dd($user->empleado_rf->id == $jornada->empleado_rf->id);
+
+        if($user->empleado_rf->id == $jornada->empleado_rf->id){
+            if ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano')) {
+                unset($estados[1], $estados[2], $estados[3], $estados[4]);
+            } else if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo')) {
+                unset($estados[5], $estados[4], $estados[1], $estados[2]);
+            } else if ($user->hasRole('Docente')) {
+                unset($estados[2], $estados[3], $estados[4], $estados[5]);
+            }
+        }else{
+            if ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano')){
+                unset($estados[1], $estados[2], $estados[3]);
+            }else if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo')  ){
+                unset($estados[5], $estados[4], $estados[1]);
+            }  else if($user->hasRole('Docente')){
+                unset($estados[2], $estados[3], $estados[4], $estados[5]);
+            }
         }
+
         return $estados;
     }
 

@@ -15,7 +15,7 @@ Route::group(['middleware' => ['auth','role:super-admin|Docente|Jefe-Administrat
     Route::get('admin/jornada/jornadaEmpleado/{id}', 'App\Http\Controllers\JornadaController@getEmpleadoJornada')->name('admin.jornada.empleado');
     Route::get('admin/jornada/periodoEmpleados/{id}', 'App\Http\Controllers\JornadaController@getEmpleadoPeriodo')->name('admin.jornada.periodo.empleados');
     Route::post("admin/jornada-procedimiento", "App\Http\Controllers\JornadaController@procedimiento")->name('admin.jornada.procedimiento');
-    Route::get("admin/jornada-seguimiento-opciones", "App\Http\Controllers\JornadaController@getOpcionesSeguimiento")->name('admin.jornada.seguimiento.opciones');
+    Route::get("admin/jornada-seguimiento-opciones/{id}", "App\Http\Controllers\JornadaController@getOpcionesSeguimiento")->name('admin.jornada.seguimiento.opciones');
     Route::post("admin/jornada-check-dia", "App\Http\Controllers\JornadaController@checkDia")->name('admin.jornada.check-dia');
 
     //obtener departamentos
