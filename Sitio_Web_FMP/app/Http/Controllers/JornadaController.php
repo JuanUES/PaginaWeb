@@ -74,7 +74,7 @@ class JornadaController extends Controller{
                         $periodo = Periodo::select('id')->where('tipo', $empleado->tipo_empleado)->OrderBy('id', 'DESC')->first();
                     }
                 }else{
-                    $periodo = Periodo::select('id')->where('tipo', $empleado->tipo_empleado)->OrderBy('id', 'DESC')->first();
+                    $periodo = Periodo::select('id')->OrderBy('id', 'DESC')->first();
                 }
             }
 
@@ -146,9 +146,9 @@ class JornadaController extends Controller{
             $deptos = Departamento::where('estado', true)->latest()->get();
 
             //filtrar periodos por tipo de usuarios
-            $periodos_query = Periodo::select('periodos.id', 'ciclos.nombre', 'periodos.tipo', 'periodos.fecha_inicio', 'periodos.fecha_fin')
-                                ->join('ciclos', 'ciclos.id', 'periodos.ciclo_id')
-                                ->where('periodos.estado', 'activo');
+            $periodos_query = Periodo::select('periodos.*', 'ciclos.nombre')
+                                ->join('ciclos', 'ciclos.id', 'periodos.ciclo_id');
+                                // ->where('periodos.estado', 'activo');
 
 
             if (!$user->hasRole('super-admin') && !$user->hasRole('Recurso-Humano')) {

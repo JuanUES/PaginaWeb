@@ -49,7 +49,7 @@
                                 <thead>
                                     <th>Registro</th>
                                     <th>Proceso</th>
-                                    <th>observaciones</th>
+                                    <th>Observaciones</th>
                                     {{--  <th>Total</th>  --}}
                                 </thead>
                                 <tbody id="bodySeguimiento">

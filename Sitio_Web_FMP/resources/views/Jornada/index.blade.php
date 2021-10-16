@@ -36,7 +36,7 @@
                         <select class="form-group selectpicker select-filter" data-live-search="true" data-style="btn-white"  name="periodo">
                             @if(isset($periodos))
                                 @foreach ($periodos as $item)
-                                    <option value="{{ $item->id }}" {{ strcmp($item->id, $periodo->id)==0 ? 'selected' : '' }}> {{ $item->tipo }} -> {{ $item->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
+                                    <option value="{{ $item->id }}" {{ strcmp($item->id, $periodo->id)==0 ? 'selected' : '' }}>({{ ucfirst($item->estado) }}) {{ $item->tipo }} -> {{ $item->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
                                 @endforeach
                             @else
                                 <script>window.location = "/admin/periodo";</script>
@@ -339,10 +339,11 @@
             contenido = '';
             $.each(data.seguimiento, function (indexInArray, valueOfElement) {
                 let options = { year: 'numeric', month: 'long', day: 'numeric' };
+                let observaciones = valueOfElement.observaciones === null ? '' : valueOfElement.observaciones;
                 contenido +=`<tr>
                                 <td>${ new Date(valueOfElement.created_at).toLocaleDateString("es-ES", options) }</td>
                                 <td class="text-dark">${valueOfElement.proceso}</td>
-                                <td>${valueOfElement.observaciones}</td>
+                                <td>${observaciones}</td>
                             </tr>`;
             });
             $("#bodySeguimiento").html(contenido);
