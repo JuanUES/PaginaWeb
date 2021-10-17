@@ -137,7 +137,7 @@
                                             {!! $buttons !!}
                                         @endif
                                     @elseif(@Auth::user()->hasRole('Jefe-Academico') || @Auth::user()->hasRole('Jefe-Administrativo'))
-                                        @if($item->procedimiento=='guardado' || $item->procedimiento=='recursos humanos lo ha regresado a jefatura')
+                                        @if($item->procedimiento=='guardado' || $item->procedimiento=='recursos humanos lo ha regresado a jefatura' || $item->procedimiento == 'enviado a jefatura')
                                             {!! $buttons !!}
                                         @endif
                                     @elseif(@Auth::user()->hasRole('Docente'))
@@ -360,7 +360,7 @@
                 let observaciones = valueOfElement.observaciones === null ? '' : valueOfElement.observaciones;
                 contenido +=`<tr>
                                 <td>${ new Date(valueOfElement.created_at).toLocaleDateString("es-ES", options) }</td>
-                                <td class="text-dark">${valueOfElement.proceso}</td>
+                                <td class="text-dark">${ valueOfElement.proceso[0].toUpperCase() + valueOfElement.proceso.slice(1) }</td>
                                 <td>${observaciones}</td>
                             </tr>`;
             });

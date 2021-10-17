@@ -66,6 +66,11 @@ class JornadaController extends Controller{
         }else{
             $periodo = null;
             $empleado = $user->empleado_rf;//determinamos si tiene un empleado relacionado
+
+
+            // dd($empleado);
+
+
             if (!is_null($empleado)) { //para que muestre una alerta de que no existe un empleado relacionado con el usuario
                 if (!$user->hasRole('super-admin') && !$user->hasRole('Recurso-Humano')) { // si no es jefe filtramos la informacion dependiendo de si es jefe o empleado normal
                     if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo')) { //para filtrar por tipo de departamento
@@ -369,7 +374,7 @@ class JornadaController extends Controller{
                 if(!is_null($usuario_jefe)){
                     Notificaciones::create([
                         'usuario_id' => $usuario_jefe->id,
-                        'mensaje' => $request->proceso . ' ' . $empleado->nombre . ' ' . $empleado->apellido . ' ha enviado la jornada para el período ' . $periodo->titulo,
+                        'mensaje' => $request->proceso . ' ' . $empleado->nombre . ' ' . $empleado->apellido . ' ha enviado la jornada para el período ' . $periodo->ciclo_rf->nombre,
                         'tipo' => 'Jornada',
                         'observaciones' => $request->observaciones
                     ]);
@@ -381,7 +386,7 @@ class JornadaController extends Controller{
             //Notificacion de que ha sido enviado a jefatura la
             Notificaciones::create([
                 'usuario_id' => Auth::user()->id,
-                'mensaje' => $request->proceso . ' ' . $empleado->nombre . ' ' . $empleado->apellido . ' ha enviado la jornada para el período ' . $periodo->titulo,
+                'mensaje' => $request->proceso . ' ' . $empleado->nombre . ' ' . $empleado->apellido . ' ha enviado la jornada para el período ' . $periodo->ciclo_rf->nombre,
                 'tipo' => 'Jornada',
                 'observaciones' => $request->observaciones
             ]);
