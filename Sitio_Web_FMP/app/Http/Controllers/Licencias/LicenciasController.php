@@ -42,7 +42,6 @@ class LicenciasController extends Controller
                 'hora_inicio'  => 'required|date_format:H:i',
                 'hora_final' => 'required|date_format:H:i|after:hora_inicio',
                 'justificación' => 'required|min:5|string',
-                'observaciones' => 'min:5|string',
             ],['hora_final.after'=>'Hora final debe ser una hora posterior a hora inicio.',]);         
 
             if($validator->fails())
@@ -85,9 +84,9 @@ class LicenciasController extends Controller
                 }                
             }
 
-            $query = DB::table('empleado')->join('tipo_jornada','tipo_jornada.id','=','empleado.id_tipo_jornada')
+            /*$query = DB::table('empleado')->join('tipo_jornada','tipo_jornada.id','=','empleado.id_tipo_jornada')
                         ->join('licencia_con_gose','licencia_con_gose.id_tipo_jornada','=','tipo_jornada.id')
-                        ->where('empleado.id',auth()->user()->empleado)->select('mensuales')->first();
+                        ->where('empleado.id',auth()->user()->empleado)->select('mensuales')->first();*/
             
            // $query->
             $p = $request->_id == null ? new Permiso():Permiso::findOrFail($request->_id);
@@ -113,9 +112,11 @@ class LicenciasController extends Controller
     }//fin create
 
     public function horas_disponibles(){
-        if(is_null(auth()->user()->empleado))
-        {return DB::table('tipo_jornada')
-            ->join;}
+        
+        return $query = DB::table('empleado')
+        ->join('tipo_jornada','tipo_jornada.id','=','empleado.id_tipo_jornada')
+        ->join('licencia_con_gose','licencia_con_gose.id_tipo_jornada','=','tipo_jornada.id')
+        ->where('empleado.id',auth()->user()->empleado)->select('mensuales')->first();
     }
 
     //FIN DEL CODIGO PARA INSERTAR, MODIFICAR

@@ -51,12 +51,12 @@
                             <label for="exampleInputNombre">Tipo de permiso <code>*</code></label>
                             <select name="tipo_de_permiso" class="form-control select2" style="width: 100%" data-live-search="true" 
                                 data-style="btn-white"   id="tipo_permiso">
-                                <option value="">Seleccione</option>
-                                <option value="L.C/G.S">L.C/G.S</option>
-                                <option value="L.C/G.S">L.C/G.S</option>
+                                <option value="tipo[]">Seleccione</option>
+                                <option id='LC_GS' name='LC_GS' value="LC_GS">L.C./G.S.</option>
+                                <option value="LS_GS">L.S./G.S.</option>
                                 <option value="INCAP">INCAP</option>
-                                <option value="L.OFICIAL">L.OFICIAL</option>
-                                <option value="T.COMP.">T.COMP.</option>
+                                <option value="L_OFICIAL">L.OFICIAL</option>
+                                <option value="T_COMP">T.COMP.</option>
                                 <option value="CITA MEDICA">CITA MEDICA</option>
                             </select>
                         </div>
@@ -92,16 +92,23 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xl-6">
+                    <div class="col-xl-4">
                         <div class="form-group">
                             <label for="hora_inicio">Hora Inicio <code>*</code></label>
                             <input type="time" name="hora_inicio" class="form-control timepicker" style="width: 100%"  id="hora_inicio">
                         </div> 
                     </div>
-                    <div class="col-xl-6">
+                    <div class="col-xl-4">
                         <div class="form-group">
                             <label for="hora_final">Hora Final <code>*</code></label>
                             <input type="time" name="hora_final" class="form-control" style="width: 100%"  id="hora_final">
+                        </div> 
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group">
+                            <label for="hora_final">Horas Disponible <code>*</code></label>
+                            <input type="text" value="Ilimitado" name="hora_disponible" 
+                            class="form-control" style="width: 100%"  id="hora_disponible" readonly>
                         </div> 
                     </div>
                 </div>
@@ -126,7 +133,7 @@
                 <button type="button" class="btn btn-secondary"
                     data-dismiss="modal"><i class="fa fa-ban"
                     aria-hidden="true"></i> Cerrar</button>
-                <button type="button" class="btn btn-primary"
+                <button type="button" class="btn btn-primary" id='guardar_registro'
                     onClick="submitForm('#registroForm','#notificacion')">
                     <li class="fa fa-save"></li> Guardar</button>
             </div>
@@ -326,5 +333,22 @@
             }
         
         );
+        $('#tipo_permiso').on('select2:select',function() {
+            console.log($('#tipo_permiso').val());            
+        });
+        $('#hora_inicio').change(function() {
+            
+        });
+        $('#hora_final').change(function() {
+            
+        });
+
+        //$('#guardar_registro')
+
+        function calculoHora() {
+            $.get('/',function () {
+                
+            });
+        }
     </script>
 @endsection
