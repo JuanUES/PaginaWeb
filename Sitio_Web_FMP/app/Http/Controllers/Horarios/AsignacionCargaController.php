@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Horarios\Asig_admin;
 use App\Models\Horarios\CargaAdmin;
 use App\Models\Horarios\Ciclo;
+use App\Models\Horarios\Proyectosociale;
 use App\Models\Horarios\Trabajogrado;
 use Exception;
 use Illuminate\Http\Request;
@@ -89,6 +90,52 @@ class AsignacionCargaController extends Controller
     /***FIN PARA INGRESAR CARGA ADMIN */
 
     ///************PARA TRABAJO DE GRADO********* */
+    if($request->A_carga=='ps'){
+        try{
+
+            $error = null;
+            $validar = DB::table('proyectosociales')
+            ->select('*')
+            ->where([['id_carga','=',$request->carga],
+            ['id_ciclo','=',$request->id_ciclo],
+            ['id_empleado','=',$request->id_empleado],
+            ['id_empleado','=',$request->id_empleado]]);
+            //echo dd($validar);
+            if($validar->exists())
+            {
+                $error = 'Proyectos sociales Asignados';
+                return response()->json(['error'=>[$error]]);
+            }
+
+
+            $validator = Validator::make($request->all(),[
+                'id_empleado'   =>'required',
+                'carga'         =>'required',
+                'id_ciclo'      =>'required',
+                'cantidad'          =>'required|numeric'
+            ]);         
+
+            if($validator->fails())
+            {            
+                return response()->json(['error'=>$validator->errors()->all()]);                
+            }
+          //echo dd($request);
+            $trabajos = $request->_id ==null ? new Proyectosociale():Proyectosociale::findOrFail($request->_id);
+            $trabajos -> id_empleado   = $request->id_empleado;
+            $trabajos -> id_carga      = $request->carga;
+            $trabajos -> id_ciclo      = $request->id_ciclo;
+            $trabajos -> cantidad      = $request->cantidad;
+            $trabajos -> save();         
+        
+            return $request->_id != null?response()->json(['mensaje'=>'Modificación exitosa.']):response()->json(['mensaje'=>'Registro exitoso.']);
+        
+        }catch(Exception $e){
+            return response()->json(['error'=>$e->getMessage()]);
+        }
+    }
+    /***FIN PARA TRABAJO DE GRADO*******/
+
+    /****PARA PROYECTO SOCIALES* */
     if($request->A_carga=='tg'){
         try{
 
@@ -130,7 +177,7 @@ class AsignacionCargaController extends Controller
             return response()->json(['error'=>$e->getMessage()]);
         }
     }
-    /***FIN PARA TRABAJO DE GRADO*******/
+    //******FIN DE PARA PROYECTO SOCIALES */
 
    }catch(Exception $e){
     return response()->json(['error'=>$e->getMessage()]);
