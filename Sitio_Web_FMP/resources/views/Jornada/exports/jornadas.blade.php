@@ -39,7 +39,7 @@
             <td style="text-align: center; vertical-align: middle;" rowspan="2">{{ $item->empleado_rf->tipo_jornada_rf->tipo }}</td>
 
             @php
-                $dias = ['Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'];
+                $dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
                 $horas_diarias = [];
                 $total = 0;
             @endphp
