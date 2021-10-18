@@ -65,21 +65,18 @@ class JornadaController extends Controller{
             $periodo = Periodo::findOrFail($request->periodo);
         }else{
             $periodo = null;
-            $empleado = $user->empleado_rf;//determinamos si tiene un empleado relacionado
-
-
-            // dd($empleado);
+            $empleado = $user->empleado_rf;//determinamos si tiene un empleado relacionado;
 
 
             if (!is_null($empleado)) { //para que muestre una alerta de que no existe un empleado relacionado con el usuario
                 if (!$user->hasRole('super-admin') && !$user->hasRole('Recurso-Humano')) { // si no es jefe filtramos la informacion dependiendo de si es jefe o empleado normal
                     if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo')) { //para filtrar por tipo de departamento
-                        $periodo = Periodo::select('id')->where('tipo', $empleado->tipo_empleado)->OrderBy('id', 'DESC')->first();
+                        $periodo = Periodo::select('id')->where('estado', '!=', 'inactivo')->where('tipo', $empleado->tipo_empleado)->OrderBy('id', 'DESC')->first();
                     } else if ($user->hasRole('Docente') && strcmp($empleado->tipo_empleado, 'Académico') == 0) { // con esto determinamos que es un empleado sin cargos de jefatura por lo cual solo se mostrara ese empleado
-                        $periodo = Periodo::select('id')->where('tipo', $empleado->tipo_empleado)->OrderBy('id', 'DESC')->first();
+                        $periodo = Periodo::select('id')->where('estado', '!=', 'inactivo')->where('tipo', 'Académico')->OrderBy('id', 'DESC')->first();
                     }
                 }else{
-                    $periodo = Periodo::select('id')->OrderBy('id', 'DESC')->first();
+                    $periodo = Periodo::select('id')->where('estado', '!=', 'inactivo')->OrderBy('id', 'DESC')->first();
                 }
             }
 
@@ -118,7 +115,7 @@ class JornadaController extends Controller{
 
 
                 //PARA AGREGAR LA FILA DE LA JORNADA DEL JEFES Y DE RECURSO HUMANO
-                if($user->hasRole('Recurso-Humano') || $user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo')){
+                if($user->hasRole('Recurso-Humano') || $user->hasRole('Jefe-Academico')|| $user->hasRole('Jefe-Administrativo') || $user->hasRole('super-admin')){
                     $add_jornada = true;
                     $jornada_query = Jornada::join('periodos', 'jornada.id_periodo', 'periodos.id')
                         ->join('empleado', 'jornada.id_emp', 'empleado.id')
@@ -164,11 +161,11 @@ class JornadaController extends Controller{
                     $periodos_query->where('periodos.tipo', 'Administrativo');
                 }else if ($user->hasRole('Docente') && strcmp($empleado->tipo_empleado, 'Académico') == 0) { // con esto determinamos que es un empleado sin cargos de jefatura por lo cual solo se mostrara ese empleado
                     $query->where('empleado.id', $empleado->id);
-                    $periodos_query->where('periodos.tipo', $empleado->tipo_empleado);
+                    $periodos_query->where('periodos.tipo', 'Académico');
                     $emp = $empleado;
                 }
             }
-            $periodos = $periodos_query->orderBy('periodos.id', 'DESC')->get();
+            $periodos = $periodos_query->where('periodos.estado', '!=', 'inactivo')->orderBy('periodos.id', 'DESC')->get();
 
 
             //agregar la jornada del usuario activo
@@ -466,7 +463,7 @@ class JornadaController extends Controller{
 
         // los procedimientos para el usuario en session serian diferentes dependiendo del rol que tenga
 
-        // dd($user->empleado_rf->id == $jornada->empleado_rf->id);
+        // dd($jornada->periodo_rf);
 
         if($user->empleado_rf->id == $jornada->empleado_rf->id){
             if ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano')) {
@@ -477,11 +474,18 @@ class JornadaController extends Controller{
                 unset($estados[2], $estados[3], $estados[4], $estados[5]);
             }
         }else{
+
             if ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano')){
                 unset($estados[1], $estados[2], $estados[3]);
-            }else if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo')  ){
+                //si el periodo se encuentra finalizado no podra retornarlo a jefatura solamente podra aceptarlo
+                if(strcmp($jornada->periodo_rf->estado, 'finalizado')==0){
+                    unset($estados[4]);
+                }
+            }else if ($user->hasRole('Jefe-Academico')){
                 unset($estados[5], $estados[4], $estados[1]);
-            }  else if($user->hasRole('Docente')){
+            }else if($user->hasRole('Jefe-Administrativo')){
+                unset($estados[5], $estados[4], $estados[1], $estados[2]);
+            }else if($user->hasRole('Docente')){
                 unset($estados[2], $estados[3], $estados[4], $estados[5]);
             }
         }
