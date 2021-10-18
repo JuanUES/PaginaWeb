@@ -363,7 +363,11 @@ class JornadaController extends Controller{
 
 
 
+
+
+
             $periodo = $jornada->periodo_rf;
+            $ciclo = $periodo->ciclo_rf;
             $empleado = $jornada->empleado_rf;
             $jefe = $empleado->jefe_rf;
             if (!is_null($jefe)) {
@@ -371,7 +375,7 @@ class JornadaController extends Controller{
                 if(!is_null($usuario_jefe)){
                     Notificaciones::create([
                         'usuario_id' => $usuario_jefe->id,
-                        'mensaje' => $request->proceso . ' ' . $empleado->nombre . ' ' . $empleado->apellido . ' ha enviado la jornada para el período ' . $periodo->ciclo_rf->nombre,
+                        'mensaje' => 'NUEVO => Procedimiento: '. ucwords($request->proceso) . ', Empleado: ' . $empleado->nombre . ' ' . $empleado->apellido . ', Periodo: ' . $ciclo->nombre,
                         'tipo' => 'Jornada',
                         'observaciones' => $request->observaciones
                     ]);
@@ -383,7 +387,7 @@ class JornadaController extends Controller{
             //Notificacion de que ha sido enviado a jefatura la
             Notificaciones::create([
                 'usuario_id' => Auth::user()->id,
-                'mensaje' => $request->proceso . ' ' . $empleado->nombre . ' ' . $empleado->apellido . ' ha enviado la jornada para el período ' . $periodo->ciclo_rf->nombre,
+                'mensaje' => 'NUEVO => Procedimiento: ' . ucwords($request->proceso) . ', Empleado: ' . $empleado->nombre . ' ' . $empleado->apellido . ', Periodo: ' . $ciclo->nombre,
                 'tipo' => 'Jornada',
                 'observaciones' => $request->observaciones
             ]);

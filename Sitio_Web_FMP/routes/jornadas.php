@@ -29,6 +29,8 @@ Route::group(['middleware' => ['auth','role:super-admin|Recurso-Humano']], funct
     //RUTAS PERIODO
     Route::resource('admin/periodo', 'App\Http\Controllers\PeriodoController')->only(['index', 'store', 'show', 'destroy'])->names('admin.periodo');
     Route::get('admin/periodo/finalizar/{id}', 'App\Http\Controllers\PeriodoController@finalizar')->name('admin.periodo.finalizar');
+    Route::get('admin/periodo/jornadasFinalizar/{id}', 'App\Http\Controllers\PeriodoController@jornadasFinalizar');
+    Route::get('admin/periodo/jornadasEliminar/{id}', 'App\Http\Controllers\PeriodoController@jornadasEliminar');
     //RUTAS TIPO CONTRATO
     Route::resource('admin/tcontrato', 'App\Http\Controllers\Tipo_ContratoController')->only(['index', 'store', 'show', 'destroy'])->names('admin.tcontrato');
     //RUTAS TIPO JORNADA

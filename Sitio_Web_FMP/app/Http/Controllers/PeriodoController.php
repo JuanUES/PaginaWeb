@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\_UTILS\Utilidades;
+use App\Models\General\Empleado;
 use App\Models\Horarios\Ciclo;
+use App\Models\Jornada\Jornada;
 use App\Models\Jornada\Periodo;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class PeriodoController extends Controller{
@@ -71,6 +74,45 @@ class PeriodoController extends Controller{
      */
     public function show($id){
         return Periodo::findOrFail($id);
+    }
+
+
+    public function jornadasFinalizar($id){
+        $jornadas = Jornada::select('jornada.procedimiento', 'empleado.nombre', 'empleado.apellido', 'departamentos.nombre_departamento')
+                ->join('empleado', 'empleado.id', 'jornada.id_emp')
+                ->join('departamentos', 'departamentos.id', 'empleado.id_depto')
+                ->where('jornada.estado', 'activo')
+                ->where('jornada.id', $id)
+                ->where('jornada.procedimiento', '!=', 'aceptado')->orderBy('jornada.id', 'DESC')->get();
+
+        $restantes = Empleado::where('estado', true)
+            ->whereNotExists(function ($query) use ($id) {
+                $query->select(DB::raw(1))
+                    ->from('jornada')
+                    ->where('jornada.id', $id)
+                    ->whereRaw('jornada.id_emp = empleado.id');
+            })->count();
+
+        return json_encode(['jornadas'=>$jornadas, 'pendientes'=>$restantes]);
+    }
+
+    public function jornadasEliminar($id){
+        $jornadas = Jornada::select('jornada.procedimiento', 'empleado.nombre', 'empleado.apellido', 'departamentos.nombre_departamento')
+            ->join('empleado', 'empleado.id', 'jornada.id_emp')
+            ->join('departamentos', 'departamentos.id', 'empleado.id_depto')
+            ->where('jornada.estado', 'activo')
+            ->where('jornada.id', $id)
+            ->orderBy('jornada.id', 'DESC')->get();
+
+        $restantes = Empleado::where('estado', true)
+            ->whereNotExists(function ($query) use ($id) {
+                $query->select(DB::raw(1))
+                    ->from('jornada')
+                    ->where('jornada.id', $id)
+                    ->whereRaw('jornada.id_emp = empleado.id');
+            })->count();
+
+        return json_encode(['jornadas' => $jornadas, 'pendientes' => $restantes]);;
     }
 
     public function destroy($id){
