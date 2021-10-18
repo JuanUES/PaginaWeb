@@ -62,7 +62,7 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group">
-                                <label for="exampleInputDocente">Carga Administrativa</label>
+                                <label for="exampleInputDocente">Cargas</label>
                            <select class="form-control selectpicker" style="width: 100%" data-live-search="true" 
                                 data-style="btn-white" name="carga" id="carga" aria-placeholder="Seleccione">
                                     <option value="" selected >Seleccione</option>
