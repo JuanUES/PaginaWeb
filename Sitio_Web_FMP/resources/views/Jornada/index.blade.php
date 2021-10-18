@@ -90,7 +90,7 @@
                                 else if($item->procedimiento=='enviado a recursos humanos')
                                     $color = 'primary';
                                 else if($item->procedimiento=='la jefatura lo ha regresado por problemas')
-                                    $color = 'warnign';
+                                    $color = 'warning';
                                 else if($item->procedimiento=='aceptado')
                                     $color = 'success';
                                 else if($item->procedimiento=='invalidado')

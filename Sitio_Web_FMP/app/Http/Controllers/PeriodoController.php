@@ -89,7 +89,8 @@ class PeriodoController extends Controller{
             ->whereNotExists(function ($query) use ($id) {
                 $query->select(DB::raw(1))
                     ->from('jornada')
-                    ->where('jornada.id', $id)
+                    ->join('periodos', 'periodos.id', 'jornada.id_periodo')
+                    ->where('periodos.id', $id)
                     ->whereRaw('jornada.id_emp = empleado.id');
             })->count();
 
@@ -108,7 +109,8 @@ class PeriodoController extends Controller{
             ->whereNotExists(function ($query) use ($id) {
                 $query->select(DB::raw(1))
                     ->from('jornada')
-                    ->where('jornada.id', $id)
+                    ->join('periodos', 'periodos.id', 'jornada.id_periodo')
+                    ->where('periodos.id', $id)
                     ->whereRaw('jornada.id_emp = empleado.id');
             })->count();
 

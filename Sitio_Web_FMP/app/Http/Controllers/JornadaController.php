@@ -102,7 +102,6 @@ class JornadaController extends Controller{
                     if($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo')){//para filtrar por tipo de departamento
                         $depto = $empleado->id_depto;// id que servira para filtrar los empleados por departemento
                         $query->whereIn('jornada.procedimiento', [$estados[1]['value'], $estados[2]['value'], $estados[3]['value'], $estados[4]['value'], $estados[5]['value']]);
-
                     }else if($user->hasRole('Docente') && strcmp($empleado->tipo_empleado,'Académico')==0){ // con esto determinamos que es un empleado sin cargos de jefatura por lo cual solo se mostrara ese empleado
                         $query->where('empleado.id', $empleado->id);
                         $emp = $empleado;
