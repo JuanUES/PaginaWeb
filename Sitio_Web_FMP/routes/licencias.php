@@ -15,12 +15,11 @@ Route::group(['middleware' => ['auth']], function () {
     //get para cargar los datos en el modal GS
     Route::get('/admin/GS/{id}',[LicenciasGosesController::class,'GsModal']);
     /*END GET**/
-
     
     /*METODOS POST**/
     //para registrar las horas GS depende de las jornadas
     Route::post('GS/create',[LicenciasGosesController::class,'create'])->name('gs/create');
-    Route::post('admin/Lic/create', [LicenciasController::class,'create'])->name('lic/create');
+    Route::post('admin/Lic/create', [LicenciasController::class,'store'])->name('lic/create');
     /*END POST**/
 
 });
