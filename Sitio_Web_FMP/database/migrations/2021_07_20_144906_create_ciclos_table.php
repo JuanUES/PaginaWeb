@@ -17,7 +17,7 @@ class CreateCiclosTable extends Migration
             $table->increments('id');
             $table->string('nombre');
             $table->string('año');
-            $table->boolean('estado')->default(true);
+            $table->enum('estado',['activo','inactivo','finalizado'])->default('activo');
             $table->timestamps();
         });
     }

@@ -34,7 +34,10 @@ function updateHour(cell) {
     let fin = data.hora_fin;
     let resul = CalcularHoras(inicio,fin);
 
-    row.update({ 'jornada': resul });
+    if(isNaN(inicio) && isNaN(fin) ){
+        row.update({ 'jornada': resul });
+    }
+
 
     let valor = $("#auxJornada").val();
     let hoursTotal = fnHoras();
@@ -149,7 +152,7 @@ function fnHoras() {
 
     let timeT = hourRow + ':' + minuteRow;
 
-    return timeT;
+    return isNaN(timeT) ? timeT : '' ;
 }
 
 //funcion para gregar una nueva fila

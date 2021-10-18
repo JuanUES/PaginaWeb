@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class PeriodoController extends Controller{
-    public $modulo = 'Transparencia Directorios';
+    public $modulo = 'Periodos';
 
     public $rules = [
         'ciclo_id' => 'required|integer',
@@ -33,7 +33,7 @@ class PeriodoController extends Controller{
      */
     public function index(Request $request){
         $periodo = Periodo::where('estado', '!=' ,'inactivo')->get();
-        $ciclos = Ciclo::where('estado', true)->orderBy('id', 'DESC')->get();
+        $ciclos = Ciclo::where('estado', 'activo')->orderBy('id', 'DESC')->get();
         return view('Periodo.index', compact(['periodo','ciclos']));
     }
     /**

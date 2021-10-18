@@ -260,6 +260,9 @@
                                                 <a href="{{ url('admin/periodo') }}">Periodo</a>
                                             </li>
                                             <li>
+                                                <a href="{{ url('admin/ciclo') }}">Ciclo</a>
+                                            </li>
+                                            <li>
                                                 <a href="{{ url('admin/tcontrato') }}">Tipo Contrato</a>
                                             </li>
                                             <li>
