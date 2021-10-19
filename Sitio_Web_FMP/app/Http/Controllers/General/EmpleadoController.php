@@ -48,6 +48,7 @@ class EmpleadoController extends Controller
             'tipo_contrato' => 'required',
             'tipo_jornada' => 'required',
             'salario' => 'required',
+            'jefe' => 'required',
             'departamento' => 'required',
             'tipo_empleado'=>'required',
         ]);
@@ -71,6 +72,7 @@ class EmpleadoController extends Controller
             'categoria'=>$request->categoria,
             'id_tipo_contrato'=>$request->tipo_contrato,
             'id_tipo_jornada'=>$request->tipo_jornada,
+            'jefe'=>$request->jefe,
             'id_depto'=>$request->departamento,
             'tipo_empleado'=>$request->tipo_empleado,]
         );
