@@ -235,8 +235,8 @@
                     <th class="col-sm-1">Tipo</th>
                     <th class="col-xs-1">Hora Inicio</th>
                     <th class="col-xs-1">Hora Final</th>
-                    <th class="col-sm-1 text-center" >Horas</th>
-                    <th class="col-sm-2">Estado</th>
+                    <th class="col-sm-2">Horas</th>
+                    <th class="col-sm-1">Estado</th>
                     <th class="col-sm-1 text-center">Acciones</th>
                 </tr>
                 </thead>
@@ -248,11 +248,11 @@
                             <td class="align-middle ">{{Carbon\Carbon::parse($item->fecha_uso)->format('d/M/Y')}}</td>
                             <td class="align-middle "><span class="badge badge-primary">{{$item->tipo_permiso}}</span></td>
                             <td class="align-middle ">{{date('H:i', strtotime($item->hora_inicio))}}</td>
-                            <td class="align-middle " >{{date('H:i', strtotime($item->hora_final))}}</td>
-                            <td class="align-middle text-center">
+                            <td class="align-middle ">{{date('H:i', strtotime($item->hora_final))}}</td>
+                            <td class="align-middle ">
                                 {{
                                     Carbon\Carbon::parse($item->fecha_uso.'T'.$item->hora_inicio)
-                                        ->diffInHours(Carbon\Carbon::parse($item->fecha_uso.'T'.$item->hora_final))
+                                        ->diffAsCarbonInterval(Carbon\Carbon::parse($item->fecha_uso.'T'.$item->hora_final))
                                 }}
                             </td>
                             <td class="align-middle ">
@@ -267,12 +267,12 @@
                                                 <i class="fa fa-eye font-16 my-1" aria-hidden="true"></i>
                                             </button>
                                             <button title="Editar" class="btn btn-outline-primary btn-sm" value="{{$item->permiso}}"
-                                                 onclick="editar(this)">
-                                                <i class="fa fa-edit font-16 my-1" aria-hidden="true"></i>
+                                                 onclick="enviar(this)">                                                
+                                                <i class="fa fa-arrow-circle-up font-16 my-1" aria-hidden="true"></i>
                                             </button>
                                             <button title="Enviar" class="btn btn-outline-primary btn-sm border-letf-0" value="{{$item->permiso}}"
-                                                onclick="enviar(this)">
-                                                <i class="fa fa-arrow-circle-up font-16 my-1" aria-hidden="true"></i>
+                                                onclick="editar(this)">
+                                                <i class="fa fa-edit font-16 my-1" aria-hidden="true"></i>
                                             </button>
                                             <button title="Cancelar" 
                                                 class="btn btn-outline-primary btn-sm border-left-0 btn-outline-danger rounded-right" 
@@ -343,9 +343,11 @@
             }
         
         );
+
         var hrs_usados=0;
         var min_usados=0;
         var hrs_disponible=0;
+
         function obtenerHora() {
             if($('#tipo_permiso').val()==='LC_GS'){             
                 
@@ -373,6 +375,7 @@
         $('#tipo_permiso').on('select2:select',obtenerHora);
 
         $('#fecha_de_uso').change(obtenerHora);
+        $('#fecha_de_uso').click(obtenerHora);
 
         function calcularHora() {
             var hora_inicio = $('#hora_inicio').val();
@@ -398,19 +401,22 @@
             
             // Diferencia de minutos
             var diferencia = minutos_final - minutos_inicio;
+            diferencia = parseInt(diferencia)+parseInt(min_usados);
             
             // Cálculo de horas y minutos de la diferencia
             var horas = parseInt(Math.floor(diferencia / 60))+parseInt(hrs_usados);
-            var minutos = parseInt((diferencia % 60))+parseInt(min_usados);
+            var minutos = parseInt((diferencia % 60));
 
             $('#hora_disponible').val('Usado: '+horas+' horas, '+(minutos < 10 ? '0' : '') + minutos+' minutos'+'    Disponibles: '+hrs_disponible+' horas');          
         }
 
         $('#hora_inicio').change(calcularHora);
+        $('#hora_inicio').click(calcularHora);
 
         $('#hora_final').change(calcularHora);
+        $('#hora_final').click(calcularHora);
 
-        //$('#guardar_registro')
+        //
        // observaciones,editar,enviar,cancelar
        function observaciones(boton){
             $.ajax({

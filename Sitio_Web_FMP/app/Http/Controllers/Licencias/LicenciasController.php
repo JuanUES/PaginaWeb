@@ -30,8 +30,7 @@ class LicenciasController extends Controller
             $empleado = Empleado::findOrFail(auth()->user()->empleado);  
             $permisos = Permiso::selectRaw('md5(id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
                 fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,estado')
-            ->where('empleado',auth()->user()->empleado)->get();     
-//            echo dd($permisos);
+            ->where('empleado',auth()->user()->empleado)->orderBy('fecha_presentacion')->get();     
             return view('Licencias.LicenciaEmpleado',compact('empleado','permisos'));
         }
     }
@@ -58,7 +57,7 @@ class LicenciasController extends Controller
                 ->where('empleado.id',auth()->user()->empleado);
 
             if(!$query->exists()){
-                return response()->json(['error'=>['Error: No existe jornada asignada para este empleado']]);
+                return response()->json(['error'=>['Error: No existe jornada asignada para este empleado.']]);
             }
 
             $query->join('periodos','periodos.id','=','jornada.id_periodo')
@@ -70,7 +69,7 @@ class LicenciasController extends Controller
             
             if(!$query->exists())
             {
-                return response()->json(['error'=>['El campo fecha de uso: No valida fuera del rango registrado en su jornada']]);
+                return response()->json(['error'=>['El campo fecha de uso: No valida fuera del rango registrado en su jornada.']]);
 
             }else {
                 $query = $query->join('jornada_items', 'jornada_items.id_jornada', '=','jornada.id' );
@@ -79,30 +78,39 @@ class LicenciasController extends Controller
                     return response()->json(['error'=>['El campo fecha de uso: No puede registrar una licencia Domingo']]);
                 }else*/if(!$query->where('jornada_items.dia',$this->obtenerDia($request->fecha_de_uso))
                         ->exists()){               
-                    return response()->json(['error'=>['El campo fecha de uso: No tiene horarios para el dia '.$this->obtenerDia($request->fecha_de_uso)]]);
+                    return response()->json(['error'=>['El campo fecha de uso: No tiene horarios para el dia.'.$this->obtenerDia($request->fecha_de_uso)]]);
                 }else if(!$query->where([['hora_inicio','<=',$request->hora_inicio],['hora_fin','>=',$request->hora_inicio]])->exists()){
-                    return response()->json(['error'=>['Campo hora inicio esta fuera del rango registrado en su horario']]); 
+                    return response()->json(['error'=>['Campo hora inicio esta fuera del rango registrado en su horario.']]); 
                 }else if(!$query->where([['hora_inicio','<=',$request->hora_final],['hora_fin','>=',$request->hora_final]])->exists()){
-                    return response()->json(['error'=>['Campo hora final esta fuera del rango registrado en su horario']]); 
+                    return response()->json(['error'=>['Campo hora final esta fuera del rango registrado en su horario.']]); 
                 }                
             }
-
-            /*$query = DB::table('empleado')->join('tipo_jornada','tipo_jornada.id','=','empleado.id_tipo_jornada')
-                        ->join('licencia_con_gose','licencia_con_gose.id_tipo_jornada','=','tipo_jornada.id')
-                        ->where('empleado.id',auth()->user()->empleado)->select('mensuales')->first();*/
             
-           // $query->
+            if($request->tipo_de_permiso = 'LC-GS')
+            {
+                $horas = json_decode($this->horas_disponibles($request->fecha_de_uso));
+                $hora_inicio = new \DateTime($request->hora_inicio);
+                $hora_final = new \DateTime($request->hora_final);
+                $diferencia = $hora_inicio -> diff($hora_final);
+                $total_minutos = (\intval($diferencia->format("%H"))*60)+\intval($diferencia->format("%i"))+
+                                 (\intval($horas->horas_acumuladas)*60)+\intval($horas->minutos_acumulados);
+
+                if(\intval($total_minutos/60)>\intval($horas->mensuales)){
+                    return response()->json(['error'=>['Las horas exceden el límite establecido mensual.']]); 
+                }
+            }
+            
             $p = $request->_id == null ? new Permiso():Permiso::findOrFail($request->_id);
             $p -> tipo_representante = $request-> representante;
             $p -> tipo_permiso = $request-> tipo_de_permiso;
             $p -> fecha_uso = $request-> fecha_de_uso;
-            $p -> fecha_presentacion = $request-> fecha_de_presentación;
+            if($request->_id == null) $p -> fecha_presentacion = $request-> fecha_de_presentación;
             $p -> hora_inicio = $request-> hora_inicio;
             $p -> hora_final = $request-> hora_final;
             $p -> justificacion = $request-> justificación;
             $p -> observaciones = $request-> observaciones;
             $p -> empleado = auth()->user()->empleado;
-            $p -> estado = 'Guardado';
+            $p -> estado = 'GUARDADO';
             $p ->save();      
 
             return $request->_id != null?
