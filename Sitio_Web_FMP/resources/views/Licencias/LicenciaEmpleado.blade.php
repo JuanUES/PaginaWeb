@@ -50,13 +50,13 @@
                         <div class="form-group">
                             <label for="exampleInputNombre">Tipo de permiso <code>*</code></label>
                             <select name="tipo_de_permiso" class="form-control select2" style="width: 100%" data-live-search="true" 
-                                data-style="btn-white"   id="tipo_permiso">
-                                <option value="tipo[]">Seleccione</option>
-                                <option id='LC_GS' name='LC_GS' value="LC_GS">L.C./G.S.</option>
-                                <option value="LS_GS">L.S./G.S.</option>
+                                data-style="btn-white"   id="tipo_permiso" name="tipo_permiso">
+                                <option value="">Seleccione</option>
+                                <option value="LC_GS">L.C./G.S.</option>
+                                <option value="LS/GS">L.S./G.S.</option>
                                 <option value="INCAP">INCAP</option>
-                                <option value="L_OFICIAL">L.OFICIAL</option>
-                                <option value="T_COMP">T.COMP.</option>
+                                <option value="L OFICIAL">L.OFICIAL</option>
+                                <option value="T COMP">T.COMP.</option>
                                 <option value="CITA MEDICA">CITA MEDICA</option>
                             </select>
                         </div>
@@ -92,21 +92,21 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <div class="form-group">
                             <label for="hora_inicio">Hora Inicio <code>*</code></label>
                             <input type="time" name="hora_inicio" class="form-control timepicker" style="width: 100%"  id="hora_inicio">
                         </div> 
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-3">
                         <div class="form-group">
                             <label for="hora_final">Hora Final <code>*</code></label>
                             <input type="time" name="hora_final" class="form-control" style="width: 100%"  id="hora_final">
                         </div> 
                     </div>
-                    <div class="col-xl-4">
+                    <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="hora_final">Horas Disponible <code>*</code></label>
+                            <label for="hora_final">Horas Total<code>*</code></label>
                             <input type="text" value="Ilimitado" name="hora_disponible" 
                             class="form-control" style="width: 100%"  id="hora_disponible" readonly>
                         </div> 
@@ -227,7 +227,7 @@
                     data-toggle="modal" data-target="#modalRegistro"></button>
                 </div>                
             </div>
-            <table  class="table table-responsive " style="width: 100%">
+            <table  class="table" style="width: 100%">
                 <thead>
                 <tr>
                     <th class="col-sm-2">Presentación</th>
@@ -241,11 +241,12 @@
                 </tr>
                 </thead>
                 <tbody>
+                    
                     @foreach ($permisos as $item)
                         <tr>
                             <th class="align-middle ">{{Carbon\Carbon::parse($item->fecha_presentacion)->format('d/M/Y')}}</th>
                             <td class="align-middle ">{{Carbon\Carbon::parse($item->fecha_uso)->format('d/M/Y')}}</td>
-                            <td class="align-middle ">{{$item->tipo_permiso}}</td>
+                            <td class="align-middle "><span class="badge badge-primary">{{$item->tipo_permiso}}</span></td>
                             <td class="align-middle ">{{date('H:i', strtotime($item->hora_inicio))}}</td>
                             <td class="align-middle " >{{date('H:i', strtotime($item->hora_final))}}</td>
                             <td class="align-middle text-center">
@@ -255,19 +256,28 @@
                                 }}
                             </td>
                             <td class="align-middle ">
-                                <span class="badge badge-primary font-14">{{$item->estado}}</span>
+                                <span class="badge badge-primary"><strong>{{$item->estado}}</strong></span>
                             </td>
                             <td class="align-middle ">
                                 <div class="row">
                                     <div class="col text-center">
-                                        <div class="btn-group" role="group">
-                                            <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="editar('{{ route('usuarios') }}',{!!$item->id!!},this)">
+                                        <div class="btn-group" role="group" id="group_{{$item->permiso}}">
+                                            <button title="Observaciones" class="btn btn-outline-primary btn-sm rounded-left" value="{{$item->permiso}}"
+                                                onclick="observaciones(this)">
+                                                <i class="fa fa-eye font-16 my-1" aria-hidden="true"></i>
+                                            </button>
+                                            <button title="Editar" class="btn btn-outline-primary btn-sm" value="{{$item->permiso}}"
+                                                 onclick="editar(this)">
                                                 <i class="fa fa-edit font-16 my-1" aria-hidden="true"></i>
                                             </button>
+                                            <button title="Enviar" class="btn btn-outline-primary btn-sm border-letf-0" value="{{$item->permiso}}"
+                                                onclick="enviar(this)">
+                                                <i class="fa fa-arrow-circle-up font-16 my-1" aria-hidden="true"></i>
+                                            </button>
                                             <button title="Cancelar" 
-                                                class="btn btn-outline-primary btn-sm mx-1 rounded btn-outline-danger" 
+                                                class="btn btn-outline-primary btn-sm border-left-0 btn-outline-danger rounded-right" 
                                                 data-toggle="modal" data-target="#modalAlta" 
-                                                onclick="$('#activarId').val({!!$item->id!!});">
+                                                onclick="cancelar(this)" value="{{$item->permiso}}">
                                                 <i class="fa fa-ban font-16 my-1"></i>
                                             </button>                                   
                                         </div>
@@ -333,22 +343,95 @@
             }
         
         );
-        $('#tipo_permiso').on('select2:select',function() {
-            console.log($('#tipo_permiso').val());            
-        });
-        $('#hora_inicio').change(function() {
+        var hrs_usados=0;
+        var min_usados=0;
+        var hrs_disponible=0;
+        function obtenerHora() {
+            if($('#tipo_permiso').val()==='LC_GS'){             
+                
+                $.ajax({
+                    type: "GET",
+                    url: 'mislicencias/horas/'+$('#fecha_de_uso').val(),
+                    beforeSend: function() {
+                        $('#hora_disponible').val('Cargando...');
+                    },
+                    success: function(json) {
+                        json = JSON.parse(json);
+                        hrs_usados = json.horas_acumuladas;
+                        min_usados = (json.minutos_acumulados < 10 ? '0' : '')+json.minutos_acumulados;
+                        hrs_disponible = json.mensuales;
+                    },
+                    complete: function() {
+                        $('#hora_disponible').val('Usado: '+hrs_usados+' horas, '+min_usados+' minutos'+'    Disponibles: '+hrs_disponible+' horas');
+                    }
+                });
+            }else{
+                $('#hora_disponible').val('Ilimitado');
+            }
+        }
+
+        $('#tipo_permiso').on('select2:select',obtenerHora);
+
+        $('#fecha_de_uso').change(obtenerHora);
+
+        function calcularHora() {
+            var hora_inicio = $('#hora_inicio').val();
+            var hora_final = $('#hora_final').val();
             
-        });
-        $('#hora_final').change(function() {
+            // Expresión regular para comprobar formato
+            var formatohora = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
             
-        });
+            // Si algún valor no tiene formato correcto sale
+            if (!(hora_inicio.match(formatohora)
+                    && hora_final.match(formatohora))){
+                return;
+            }
+            
+            // Calcula los minutos de cada hora
+            var minutos_inicio = hora_inicio.split(':')
+                .reduce((p, c) => parseInt(p) * 60 + parseInt(c));
+            var minutos_final = hora_final.split(':')
+                .reduce((p, c) => parseInt(p) * 60 + parseInt(c));
+            
+            // Si la hora final es anterior a la hora inicial sale
+            if (minutos_final < minutos_inicio) return;
+            
+            // Diferencia de minutos
+            var diferencia = minutos_final - minutos_inicio;
+            
+            // Cálculo de horas y minutos de la diferencia
+            var horas = parseInt(Math.floor(diferencia / 60))+parseInt(hrs_usados);
+            var minutos = parseInt((diferencia % 60))+parseInt(min_usados);
+
+            $('#hora_disponible').val('Usado: '+horas+' horas, '+(minutos < 10 ? '0' : '') + minutos+' minutos'+'    Disponibles: '+hrs_disponible+' horas');          
+        }
+
+        $('#hora_inicio').change(calcularHora);
+
+        $('#hora_final').change(calcularHora);
 
         //$('#guardar_registro')
-
-        function calculoHora() {
-            $.get('/',function () {
-                
+       // observaciones,editar,enviar,cancelar
+       function observaciones(boton){
+            $.ajax({
+                type: "GET",
+                url: 'Empleado/'+id,
+                beforeSend: function() {
+                    $(boton).prop('disabled', true).html(''
+                        +'<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
+                    );
+                },
+                success: function(json) {
+                    json=JSON.parse(json);
+                    
+                    $("#modalRegistro").modal();
+                },
+                complete: function() {
+                    $(boton).prop('disabled', false).html(''
+                        +'<i class="fa fa-edit font-16" aria-hidden="true"></i>'
+                    );
+                }
             });
-        }
+       };
     </script>
 @endsection

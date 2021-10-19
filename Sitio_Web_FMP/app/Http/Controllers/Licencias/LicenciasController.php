@@ -28,7 +28,10 @@ class LicenciasController extends Controller
         else
         {
             $empleado = Empleado::findOrFail(auth()->user()->empleado);  
-            $permisos = Permiso::where('empleado',auth()->user()->empleado)->get();     
+            $permisos = Permiso::selectRaw('md5(id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
+                fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,estado')
+            ->where('empleado',auth()->user()->empleado)->get();     
+//            echo dd($permisos);
             return view('Licencias.LicenciaEmpleado',compact('empleado','permisos'));
         }
     }
@@ -71,10 +74,10 @@ class LicenciasController extends Controller
 
             }else {
                 $query = $query->join('jornada_items', 'jornada_items.id_jornada', '=','jornada.id' );
-                if ($this->obtenerDia($request->fecha_de_uso)=='Domingo') 
+                /*if ($this->obtenerDia($request->fecha_de_uso)=='Domingo') //Validacion por dia
                 {
                     return response()->json(['error'=>['El campo fecha de uso: No puede registrar una licencia Domingo']]);
-                }else if(!$query->where('jornada_items.dia',$this->obtenerDia($request->fecha_de_uso))
+                }else*/if(!$query->where('jornada_items.dia',$this->obtenerDia($request->fecha_de_uso))
                         ->exists()){               
                     return response()->json(['error'=>['El campo fecha de uso: No tiene horarios para el dia '.$this->obtenerDia($request->fecha_de_uso)]]);
                 }else if(!$query->where([['hora_inicio','<=',$request->hora_inicio],['hora_fin','>=',$request->hora_inicio]])->exists()){
@@ -111,12 +114,26 @@ class LicenciasController extends Controller
         }
     }//fin create
 
-    public function horas_disponibles(){
+    public function horas_disponibles($fecha){
         
-        return $query = DB::table('empleado')
-        ->join('tipo_jornada','tipo_jornada.id','=','empleado.id_tipo_jornada')
-        ->join('licencia_con_gose','licencia_con_gose.id_tipo_jornada','=','tipo_jornada.id')
-        ->where('empleado.id',auth()->user()->empleado)->select('mensuales')->first();
+        $horas = Permiso::selectRaw('sum(date_part(\'hour\', permisos.hora_final-permisos.hora_inicio)) as horas_acumuladas,
+            sum(date_part(\'minute\', permisos.hora_final-permisos.hora_inicio)) as minutos_acumulados,mensuales')
+            ->join('empleado', 'empleado.id','=','permisos.empleado')
+            ->join('tipo_jornada', 'tipo_jornada.id','=','empleado.id_tipo_jornada')
+            ->join('licencia_con_goses','licencia_con_goses.id_tipo_jornada','=','tipo_jornada.id')
+            ->whereRaw('empleado.id=? and permisos.tipo_permiso=\'LC-GS\' and to_char(permisos.fecha_uso, \'MM\')=to_char(\''.$fecha.'\'::date, \'MM\')',
+                [auth()->user()->empleado])
+            ->groupBy('mensuales')->first();
+
+        if(is_null($horas)){
+            return Empleado::selectRaw('0 as horas_acumuladas,0 as  minutos_acumulados,mensuales')
+                ->join('tipo_jornada', 'tipo_jornada.id','=','empleado.id_tipo_jornada')
+                ->join('licencia_con_goses','licencia_con_goses.id_tipo_jornada','=','tipo_jornada.id')
+                ->whereRaw('empleado.id=?',[auth()->user()->empleado])->first()->toJSON();
+        }else{
+            return $horas->toJSON();
+        }
+        
     }
 
     //FIN DEL CODIGO PARA INSERTAR, MODIFICAR

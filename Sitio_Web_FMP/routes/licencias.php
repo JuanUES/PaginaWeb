@@ -9,8 +9,10 @@ use App\Models\Licencias\Licencia_con_gose;
 Route::group(['middleware' => ['auth']], function () {
 
     /*METODOS GET**/
+    Route::get('admin/mislicencias', [LicenciasController::class,'indexMisLicencias'])->name('indexLic');
+    Route::get('admin/mislicencias/horas/{fecha}', [LicenciasController::class,'horas_disponibles']);
+
     Route::get('admin/licenciaGS', [LicenciasGosesController::class,'index'])->name('indexLicGS');
-    Route::get('admin/misLicencias', [LicenciasController::class,'indexMisLicencias'])->name('indexLic');
 
     //get para cargar los datos en el modal GS
     Route::get('/admin/GS/{id}',[LicenciasGosesController::class,'GsModal']);
@@ -19,7 +21,7 @@ Route::group(['middleware' => ['auth']], function () {
     /*METODOS POST**/
     //para registrar las horas GS depende de las jornadas
     Route::post('GS/create',[LicenciasGosesController::class,'create'])->name('gs/create');
-    Route::post('admin/Lic/create', [LicenciasController::class,'store'])->name('lic/create');
+    Route::post('admin/licencia/create', [LicenciasController::class,'store'])->name('lic/create');
     /*END POST**/
 
 });
