@@ -151,7 +151,7 @@
                                 id="jefe_empleadoE" name="jefe" style="width: 100%;">
                                 <option name="" value="">Seleccione</option>
                                 @foreach ($empleados as $item)
-                                    <option name="{!!$item->id!!}" id="jefe_empleadoE_option{!!$item->id!!}">{!!$item->nombre.' '.$item->apellido!!}</option>
+                                    <option name="{!!$item->id!!}" value="{!!$item->id!!}" id="jefe_empleadoE_option{!!$item->id!!}">{!!$item->nombre.' '.$item->apellido!!}</option>
                                 @endforeach
                             </select>
                         </div>
