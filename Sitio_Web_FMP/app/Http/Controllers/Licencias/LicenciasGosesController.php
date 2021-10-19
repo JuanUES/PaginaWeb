@@ -27,7 +27,7 @@ class LicenciasGosesController extends Controller
         try{
            
             $validator = Validator::make($request->all(),[
-                'jornada'          => 'required',
+                'jornada'          => 'required|unique:licencia_con_goses,id_tipo_jornada',
                 'horas_anuales'    => 'required|numeric',
                 'horas_mensuales'  => 'required|numeric',
             ]);         
