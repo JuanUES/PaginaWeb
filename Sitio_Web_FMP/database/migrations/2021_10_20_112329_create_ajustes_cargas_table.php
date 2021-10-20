@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAjustesCargaTable extends Migration
+class CreateAjustesCargasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,8 @@ class CreateAjustesCargaTable extends Migration
      */
     public function up()
     {
-        
+        Schema::dropIfExists('proyectosociales');
+        Schema::dropIfExists('trabajogrados');
         Schema::dropIfExists('asig_admins');
         Schema::create('asig_admins', function (Blueprint $table) {
             $table->id();
@@ -48,6 +49,5 @@ class CreateAjustesCargaTable extends Migration
      */
     public function down()
     {
-      
     }
 }
