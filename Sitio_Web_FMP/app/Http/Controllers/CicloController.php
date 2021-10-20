@@ -20,7 +20,7 @@ class CicloController extends Controller
 
     public function index(Request $request)
     {
-        $ciclo = Ciclo::where('estado', 'activo')->orderBy('id', 'DESC')->get();
+        $ciclo = Ciclo::orderBy('id', 'DESC')->get();
         return view('Ciclo.index', compact(['ciclo']));
 
     }
@@ -70,9 +70,18 @@ class CicloController extends Controller
     public function finalizar($id){
         $tipo = Ciclo::findOrFail($id);
         $tipo->update([
-            'estado' => 'inactivo'
+            'estado' => 'finalizado'
         ]);
         Utilidades::fnSaveBitacora('Ciclo #: ' . $tipo->id, 'Finalización', $this->modulo);
         return redirect('admin/ciclo')->with('bandera', 'Ciclo Finalizado con éxito');
+    }
+
+    public function reactivar($id){
+        $tipo = Ciclo::findOrFail($id);
+        $tipo->update([
+            'estado' => 'activo'
+        ]);
+        Utilidades::fnSaveBitacora('Ciclo #: ' . $tipo->id, 'Reactivado', $this->modulo);
+        return redirect('admin/ciclo')->with('bandera', 'Ciclo Reactivado con éxito');
     }
 }

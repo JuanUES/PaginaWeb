@@ -37,7 +37,7 @@ Route::group(['middleware' => ['auth','role:super-admin|Recurso-Humano']], funct
     //RUTAS CICLO
     Route::resource('admin/ciclo', 'App\Http\Controllers\CicloController')->only(['index', 'store', 'show', 'destroy'])->names('admin.ciclo');
     Route::get('admin/ciclo/finalizar/{id}', 'App\Http\Controllers\CicloController@finalizar')->name('admin.ciclo.finalizar');
-
+    Route::get('admin/ciclo/reactivar/{id}', 'App\Http\Controllers\CicloController@reactivar')->name('admin.ciclo.reactivar');
     //RUTAS TIPO CONTRATO
     Route::resource('admin/tcontrato', 'App\Http\Controllers\Tipo_ContratoController')->only(['index', 'store', 'show', 'destroy'])->names('admin.tcontrato');
     //RUTAS TIPO JORNADA
