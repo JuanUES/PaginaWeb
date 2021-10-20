@@ -47,8 +47,8 @@ class CreateAjustesTable extends Migration
             $table->bigInteger('id_empleado');
             $table->bigInteger('id_carga');
             $table->bigInteger('id_ciclo');
-            $table->integer('sociales');
-            $table->integer('tg');
+            $table->integer('sociales')->nullable();
+            $table->integer('tg')->nullable();
             $table->foreign('id_empleado')
             ->references('id')
             ->on('empleado')

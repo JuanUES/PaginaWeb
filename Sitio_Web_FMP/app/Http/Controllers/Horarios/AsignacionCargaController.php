@@ -40,28 +40,16 @@ class AsignacionCargaController extends Controller
     
     //vamos a insertar los datos a la base de datos
     public function create(Request $request){
-       // echo dd($request);
-       try{//para verficar que mande algo del combo carga
-       
-
-        $validator = Validator::make($request->all(),[
-            'A_carga'   =>'required'
-        ]);         
-
-        if($validator->fails())
-        {            
-            return response()->json(['error'=>$validator->errors()->all()]);                
-        }
-
+      
     ///************PARA INGRESAR CARGA ADMIN********* */
-    if($request->A_carga=='ad'){
         try{
 
             $error = null;
             $validar = DB::table('asig_admins')
             ->select('*')
             ->where([['id_carga','=',$request->carga],
-            ['id_ciclo','=',$request->id_ciclo]]);
+            ['id_ciclo','=',$request->id_ciclo],
+            ['id_empleado','=',$request->id_empleado]]);
 
             if($validar->exists())
             {
@@ -69,7 +57,7 @@ class AsignacionCargaController extends Controller
                 return response()->json(['error'=>[$error]]);
             }
 
-
+           // echo dd($request);
             $validator = Validator::make($request->all(),[
                 'id_empleado'   =>'required',
                 'carga'         =>'required',
@@ -86,7 +74,9 @@ class AsignacionCargaController extends Controller
             $asig -> id_empleado   = $request->id_empleado;
             $asig -> id_carga      = $request->carga;
             $asig -> id_ciclo      = $request->id_ciclo;
-            $asig -> dias      = $request->dias;
+            $asig -> dias          = $request->dias;
+            $asig -> sociales      = $request->sociales;
+            $asig -> tg            = $request->tg;
             $asig -> save();         
         
             return $request->_id != null?response()->json(['mensaje'=>'Modificación exitosa.']):response()->json(['mensaje'=>'Registro exitoso.']);
@@ -94,13 +84,8 @@ class AsignacionCargaController extends Controller
         }catch(Exception $e){
             return response()->json(['error'=>$e->getMessage()]);
         }
-    }
+    
     /***FIN PARA INGRESAR CARGA ADMIN */
-
-   }catch(Exception $e){
-    return response()->json(['error'=>$e->getMessage()]);
-    }
-
 
     }//fin create
 

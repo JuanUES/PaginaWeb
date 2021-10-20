@@ -87,6 +87,16 @@
                         </div>
 
                     </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                              <label for="exampleInputCantidad">Trabajo de Grado Asesorando</label>
+                              <input type="number" min="1" name="tg" id="tg" class="form-control" placeholder="Ingrese la cantidad">
+                              </div>
+                        </div>
+
+                    </div>
+
 
                     
             </div>
@@ -150,6 +160,8 @@
                
                 <tr>
                    
+                    <td></td>
+                    <td></td>
                     <td></td>
 
                     <th><span class="co-name"></span></th>
