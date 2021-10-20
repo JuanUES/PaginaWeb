@@ -24,13 +24,13 @@ class AsignacionCargaController extends Controller
         ->join('asig_admins', 'asig_admins.id_empleado', '=', 'empleado.id')
         ->join('ciclos', 'ciclos.id', '=', 'asig_admins.id_ciclo')
         ->join('carga_admins', 'carga_admins.id', '=', 'asig_admins.id_carga')
-        ->select('empleado.id','empleado.nombre as E_nombre','empleado.apellido','asig_admins.dias',
-        'carga_admins.nombre_carga','ciclos.nombre','ciclos.año',)
+        ->select('empleado.id','empleado.nombre as E_nombre','empleado.apellido',
+        'asig_admins.dias','asig_admins.sociales','asig_admins.tg','carga_admins.nombre_carga','ciclos.nombre','ciclos.año')
         ->where('ciclos.estado','activo')
         ->get();
 
-       echo dd($tablaA);
-        return view('Admin.horarios.asignarCarga',compact('empleados','ciclos'));
+     //  echo dd($tablaA);
+        return view('Admin.horarios.asignarCarga',compact('empleados','ciclos','tablaA'));
     }
 
     public function cargaCombobox(){         

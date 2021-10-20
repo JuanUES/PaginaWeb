@@ -138,7 +138,7 @@
                  <button type="button" title="Agregar Carga Asignar Administrativa" style="margin-left: 450px;" class="btn btn-primary dripicons-plus" data-toggle="modal" data-target="#exampleModalCenter"></button>
                 </div>
             </div>
-            <table  class="table table-bordered" style="width:100%;" id="tabla-car">
+            <table  class="table table-bordered" style="width: 100%">
                 <thead>
                 <tr>
                     <th data-priority="1">#</th>
@@ -157,21 +157,30 @@
                     $i=0;
                 @endphp
            
-               
+               @foreach ($tablaA as $item)
+               @php
+                   $i++;
+               @endphp
                 <tr>
                    
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{!!$i!!}</td>
+                    <td>{!!$item->E_nombre!!}{!!' '!!}{!!$item->apellido!!}</td>
+                    <td>{!!$item->nombre!!}{!!'-'!!}{!!$item->año!!}</td>
+                    <td>{!!$item->nombre_carga!!}</td>
+                    <td>{!!$item->dias!!}</td>
+                    @if (!is_null($item->sociales))
+                    <td>{!!'Proyectos Sociales Asignados: '!!}{!!$item->sociales!!}</td>    
+                    @else
+                    <td>{!!'Proyectos Sociales Asignados: 0'!!}</td>   
+                    @endif
 
-                    <th><span class="co-name"></span></th>
-               
-                    <td></td>
-                    <td></td> 
-                  
-                   
-                  
-                    <td>No Asignados</td>
+                    @if (!is_null($item->tg))
+                    <td>{!!'Trabajo de Grado Asignados: '!!}{!!$item->tg!!}</td>    
+                    @else
+                    <td>{!!'Trabajo de Grado Asignados: 0'!!}</td>   
+                    @endif
+                    
+                
                    
                     <td><a href="" title="Editar Asignación">
                         <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
@@ -180,9 +189,8 @@
                             <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
                             </button></a>
                     </td>
-                    
-                    
                 </tr>
+                @endforeach
                
                 </tbody>
             </table>
