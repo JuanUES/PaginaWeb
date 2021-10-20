@@ -47,8 +47,10 @@
                     <span class="badge badge-{{ strcmp($item->estado, 'activo')==0 ? 'success' : 'secondary' }}">{{ Str::ucfirst($item->estado) }}</span>
                 </td>
                 <td class="text-center">
-                    @if(strcmp($item->estado, false)==0)
+                    @if(strcmp($item->estado, 'finalizado')==0)
                         <span class="small"> <i>Sin Acciones</i> </span>
+                    @elseif(strcmp($item->estado, 'inactivo')==0)
+                        <button type="buttom"  class="btn btn-outline-dark btn-sm" {!! strcmp($item->estado, 'finalizado')==0 ? 'disabled' : 'onclick="fnReactivar('. $item->id .')" data-toggle="modal" data-target="#modalReactivar"' !!}  title="Reactivar Ciclo"><i class="mdi mdi-restore"></i></button>
                     @else
                         <button type="buttom"  class="btn btn-outline-dark btn-sm" {!! strcmp($item->estado, 'finalizado')==0 ? 'disabled' : 'onclick="fnFinalizar('. $item->id .')" data-toggle="modal" data-target="#modalFinalizar"' !!}  title="Finalizar Ciclo"><i class="mdi mdi-close-octagon"></i></button>
                         <button class="btn btn-outline-primary btn-sm" title="Modificar Ciclo" {!! strcmp($item->estado, 'finalizado')==0 ? 'disabled' : 'data-id="'. $item->id .'" data-toggle="modal" data-target="#modalRegistro" onclick="btnEdit(this);"' !!}><i class="fa fa-edit fa-fw" aria-hidden="true"></i></button>
@@ -171,6 +173,36 @@
         </div>
     </div>
 </div>
+
+<div id="modalReactivar" class="modal fade bs-example-modal-center" tabindex="-1"  role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-close-octagon mdi-24px"></i> Reactivar</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="frmReactivar" action="" method="GET">
+                    @csrf
+                    <div class="row py-3">
+                        <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                        <div class="col-lg-10 text-black">
+                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se Reactivara el Ciclo seleccionado, ¿Desea continuar?</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6">
+                            <button type="submit" class="btn p-1 btn-light waves-effect waves-light btn-block font-24"> <i class="mdi mdi-check mdi-16px"></i>Si</button>
+                        </div>
+                        <div class="col-xl-6">
+                            <button type="reset" class="btn btn-light p-1 waves-light waves-effect btn-block font-24" data-dismiss="modal" ><i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>No</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 
 @section('plugins-js')
@@ -260,6 +292,10 @@
 
     function fnFinalizar(id){
         $("#frmFinalizar").attr('action', `{{ url("admin/ciclo/finalizar/") }}/`+id);
+    }
+
+    function fnReactivar(id){
+        $("#frmReactivar").attr('action', `{{ url("admin/ciclo/reactivar/") }}/`+id);
     }
 
     </script>
