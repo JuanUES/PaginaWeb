@@ -15,6 +15,9 @@
         </div>
         @if($cargar)
             <div class="col-12 col-sm-7" style="text-align:right">
+                @hasanyrole('super-admin|Jefe-Academico|Jefe-Administrativo')
+                    <button class="btn btn btn-info" title="Enviar notificación a Recursos Humanos de la finalización del registro de las jornadas" data-toggle="modal" data-target="#modalEmail"> <i class="fa fa-check-circle" aria-hidden="true"></i> </button>
+                @endhasanyrole
                 @hasanyrole('super-admin|Jefe-Academico|Recurso-Humano')
                     <button class="btn btn btn-success" title="Generar Reporte" data-toggle="modal" data-target="#modalExport"> <i class="fa fa-file-excel" aria-hidden="true"></i> </button>
                 @endhasanyrole
@@ -44,7 +47,7 @@
                         </select>
                     </div>
                 </div>
-                @hasanyrole('super-admin|Recurso-Humano')
+                {{-- @hasanyrole('super-admin|Recurso-Humano') --}}
                     <div class="col-12 col-sm-6 col-md-6">
                         <div class="form-group">
                             <select class="form-group selectpicker select-filter" data-live-search="true" data-style="btn-white"  name="depto">
@@ -55,7 +58,7 @@
                             </select>
                         </div>
                     </div>
-                @endhasanyrole
+                {{-- @endhasanyrole --}}
             </div>
         </form>
         <br/>
@@ -73,7 +76,7 @@
                     <th class="text-center">Acciones</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody> 
                 @foreach($jornadas as $item)
                     <tr {!! ($item->empleado_rf->id == Auth::user()->empleado_rf->id) ? 'style="background-color: rgba(21, 174, 234, 0.1);"' : '' !!} >
                         <th  data-sort="{{ strtotime($item->created_at) }}">{{ date('d/m/Y H:m', strtotime($item -> created_at)) }}</th>

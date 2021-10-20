@@ -36,6 +36,7 @@
                 <th data-priority="4">Inicio</th>
                 <th data-priority="5">Fin</th>
                 <th data-priority="6">Estado</th>
+                <th data-priority="6">Observaciones</th>
                 <th data-priority="0" class="text-center">Acciones</th>
             </tr>
         </thead>
@@ -51,6 +52,7 @@
                 <td>
                     <span class="badge badge-{{ strcmp($item->estado, 'activo')==0 ? 'success' : 'secondary' }}">{{ Str::ucfirst($item->estado) }}</span>
                 </td>
+                <td>{{  $item->observaciones }}</td>
                 <td class="text-center">
                     @if(strcmp($item->estado, 'finalizado')==0)
                         <span class="small"> <i>Sin Acciones</i> </span>

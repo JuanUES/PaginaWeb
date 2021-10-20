@@ -51,7 +51,7 @@
                     <li class="dropdown notification-list">
                         <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             <i class="font-18 dripicons-bell noti-icon"></i>
-                            <span class="badge badge-info noti-icon-badge">{{ count(notificaciones()) }}</span>
+                            {{-- <span class="badge badge-info noti-icon-badge">{{ count(notificaciones()) }}</span> --}}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-lg">
                             <div class="dropdown-item noti-title">
@@ -63,12 +63,12 @@
                             </div>
 
                             <div class="slimscroll noti-scroll">
-                                @foreach (notificaciones() as $key => $value)
+                                {{-- @foreach (notificaciones() as $key => $value)
                                     <a href="javascript:void(0);" class="dropdown-item notify-item {{ $loop->index==0 ? 'active' : '' }} ">
                                         <div class="notify-icon bg-success"><i class="mdi mdi-account-clock-outline"></i> </div>
                                         <p class="notify-details"> {{ $value->mensaje }}<small class="text-muted"> {{ $value->created_at->diffForHumans() }}</small></p>
                                     </a>
-                                @endforeach
+                                @endforeach --}}
                             </div>
                             <!-- All-->
                             <a href="{{ url('admin/notificaciones') }}" class="dropdown-item text-center text-primary notify-item notify-all">Ver todas<i class="fi-arrow-right"></i></a>
