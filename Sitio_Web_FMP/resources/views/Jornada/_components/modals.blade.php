@@ -254,3 +254,44 @@
         </div>
     </div>
 @endif
+
+
+{{--  Modal para notificar al recurso humano --}}
+@hasanyrole('super-admin|Jefe-Academico|Jefe-Administrativo')
+    <div id="modalEmail" class="modal fade bs-example-modal-center" tabindex="-1"  role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="myCenterModalLabel"><i class="fa fa-envelope-square mdi-24px"></i> Correo Electrónico</h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <form id="frmExport" action="{{ route('admin.jornada.notificacion') }}" method="POST">
+                        @csrf
+                        <div class="row py-3 text-center">
+                            <div class="col-lg-2 fa fa-envelope-square text-primary fa-4x"></div>
+                            <div class="col-lg-10 text-black">
+                                <h4 class="font-17 text-justify font-weight-bold">Información: Se notificara de Jornadas completadas a Recursos Humanos</h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 mt-2">
+                                <div class="form-group">
+                                    <label for="periodo">Seleccione un Periodo <span class="text-danger">*</span> </label>
+                                    <select class="custom-select" name="periodo">
+                                        @foreach ($periodos as $item)
+                                            <option value="{{ $item->id }}">{{ $item->tipo }} -> {{ $item->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <button type="submit" class="btn p-1 btn-light waves-effect waves-light btn-block font-24 btn-block"> <i class="fa fa-paper-plane"></i>  Notificar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+@endhasanyrole

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use App\Exports\JornadaExport;
+use App\Mail\JornadaEmail;
 use App\Models\_UTILS\Utilidades;
 use App\Models\Jornada\Jornada;
 use App\Models\Jornada\JornadaItem;
@@ -19,6 +20,7 @@ use DateTime;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -511,5 +513,15 @@ class JornadaController extends Controller{
         $horarios = $query->get();
         return $horarios;
     }*/
+
+
+    public function email(Request $request){
+        $periodo = Periodo::findOrFail($request->periodo);
+
+
+        Mail::to('email')->send(new JornadaEmail());
+
+        return view('Mails.jornada');
+    }
 
 }
