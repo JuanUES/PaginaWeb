@@ -562,33 +562,34 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
 @endsection
 
 @section('footerjs')
+<!-- Vendor js -->
+<script src="{{ asset('js/vendor.min.js') }}"></script>
+
+<!-- App js -->
+<script src="{{ asset('js/app.min.js') }}"></script>
 
 <!--Librerias js para datatable-->
-@if (count($noticias)) 
+
 <script src="{{ asset('js/index/index.datatable.js') }}"></script>
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
-@endif
+
 @auth
 @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
-@if (count($noticias)) 
+
 <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
 <script src="{{ asset('js/summernote.config.min.js') }}"></script>
 <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script> 
 <script src="{{ asset('js/scripts/http.min.js') }}"></script>
 <script src="{{ asset('js/scripts/index.js') }}"></script>
-@endif
+
 @endif
 @endauth
 
 <!-- Plugins js -->
 <script src=" {{ asset('js/dropzone.min.js') }} "></script>
 
-<!-- Vendor js -->
-<script src="{{ asset('js/vendor.min.js') }}"></script>
 
-<!-- App js -->
-<script src="{{ asset('js/app.min.js') }}"></script>
 @auth
 @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
 <script>   
