@@ -132,13 +132,17 @@ class JornadaController extends Controller{
             if($depto != false){
                 $query->where('empleado.id_depto', $depto);
             }else{
-                $filter_departamentos = [];
-                foreach ($deptos as $key => $value) {
-                    array_push($filter_departamentos, $value->id);
-                }
-                if(count($filter_departamentos)>0){
-                    $query->whereIn('empleado.id_depto', $filter_departamentos);
-                }
+
+                $q = $this->filterDeptosEmpleado($deptos, $query);
+                $query = !is_null($q) ? $q : $query;
+
+                // $filter_departamentos = [];
+                // foreach ($deptos as $key => $value) {
+                //     array_push($filter_departamentos, $value->id);
+                // }
+                // if(count($filter_departamentos)>0){
+                //     $query->whereIn('empleado.id_depto', $filter_departamentos);
+                // }
             }
               
             $jornadas = $query->get();
@@ -383,13 +387,15 @@ class JornadaController extends Controller{
 
                 //para filtrar por los empleados dependiendo del departamento al que pertenezcan
                 if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo')) {
-                    $filter_departamentos = [];
-                    foreach ($deptos as $key => $value) {
-                        array_push($filter_departamentos, $value->id);
-                    }
-                    if (count($filter_departamentos) > 0) {
-                        $query->whereIn('empleado.id_depto', $filter_departamentos);
-                    }
+                    // $filter_departamentos = [];
+                    // foreach ($deptos as $key => $value) {
+                    //     array_push($filter_departamentos, $value->id);
+                    // }
+                    // if (count($filter_departamentos) > 0) {
+                    //     $query->whereIn('empleado.id_depto', $filter_departamentos);
+                    // }
+                    $q = $this->filterDeptosEmpleado($deptos, $query);
+                    $query = !is_null($q) ? $q : $query;
                 }
 
                 if ($user->hasRole('Jefe-Academico')) {
@@ -445,6 +451,18 @@ class JornadaController extends Controller{
             }
         }
         return $deptos;
+    }
+
+    public function filterDeptosEmpleado($deptos, $query){
+        $filter_departamentos = [];
+        $q = null;
+        foreach ($deptos as $key => $value) {
+            array_push($filter_departamentos, $value->id);
+        }
+        if (count($filter_departamentos) > 0) {
+            $q = $query->whereIn('empleado.id_depto', $filter_departamentos);
+        }
+        return $q;
     }
 
     public function checkDia(Request $request){
@@ -516,12 +534,52 @@ class JornadaController extends Controller{
 
 
     public function email(Request $request){
+        $user = Auth::user();
+
+        //Empleado jefe
+        $empleado = $user->empleado_rf;
+
+        //Periodo
         $periodo = Periodo::findOrFail($request->periodo);
 
+        //Departamentos
+        $deptos = $this->fnDeptosSegunRol();
 
-        Mail::to('email')->send(new JornadaEmail());
+        //Empleados
+        $query = Empleado::select('empleado.*', 'departamentos.nombre_departamento')
+                            ->where('empleado.estado', true)
+                            ->where('departamentos.estado', true)
+                            ->join('departamentos', 'departamentos.id', 'empleado.id_depto');
 
-        return view('Mails.jornada');
+        $q = $this->filterDeptosEmpleado($deptos, $query);
+        $query = !is_null($q) ? $q : $query;
+
+        if ($user->hasRole('Jefe-Academico')) { //para filtrar por tipo de empleado en los periodos
+            $query->where('empleado.tipo_empleado', 'Académico');
+        } else if ($user->hasRole('Jefe-Administrativo')) {
+            $query->where('empleado.tipo_empleado', 'Administrativo');
+        } 
+
+        $empleados = $query->get();
+
+        //jefes de recurso humanos
+
+        $jefes = User::whereHas("roles", function ($q) {
+            $q->where("name", "Recurso-Humano");
+        })->get();
+
+        
+        //enviado los correos
+        // foreach ($jefes as $key => $item) {
+        //     if(!is_null($item->email) && !empty($item->email))
+        //         Mail::to('mr15058@ues.edu.sv')->send(new JornadaEmail($empleado, $periodo, $deptos, $empleados));
+        // }
+
+        Mail::to('mr15058@ues.edu.sv')->send(new JornadaEmail($empleado, $periodo, $deptos, $empleados));
+        
+        // return view('Mails.jornada', compact(['empleado', 'periodo', 'deptos', 'empleados']));
+
+        return redirect()->back();
     }
 
 }

@@ -140,17 +140,25 @@
                             <tbody>
                               <tr>
                                 <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                  <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#637381;">Hola [Empleado],</div>
+                                  <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#637381;">Recursos Humanos,</div>
                                 </td>
                               </tr>
                               <tr>
                                 <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                                   <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:16px;font-weight:400;line-height:24px;text-align:left;color:#637381;">
-                                    [Jefe], jefe del departamento [Departamento], notifica que las <strong>Jornadas</strong> para el periodo [Periodo] han sido completas, por lo cual se queda a la espera del seguimiento para la aprobación de las mismas.
+                                    <strong>{{ $jefe->nombre }} {{ $jefe->apellido }}</strong>, jefe {{ count($deptos)>1 ? 'de los departamentos' : 'del departamento'; }}:
+                                    <ul>
+                                      @foreach ($deptos as $index => $depto)
+                                          <li>{{ $depto->nombre_departamento }} </li>
+                                      @endforeach
+                                    </ul>
+                                    Notifica que las <strong>Jornadas</strong> para el periodo <strong><i>{{ $periodo->ciclo_rf->nombre }}</i></strong> han sido completas, por lo cual se queda a la espera del seguimiento para la aprobación de las mismas.
                                     <hr>
                                     <strong>Empleados con Jornadas registradas</strong>
                                     <ul>
-                                        <li>1</li>
+                                      @foreach ($empleados as $index => $empleado)
+                                          <li>{{ $empleado->nombre_departamento }}: {{ $empleado->nombre }} {{ $empleado->apellido }} </li>
+                                      @endforeach
                                     </ul>
                                 </div>
                                 </td>
@@ -201,7 +209,7 @@
                   <tbody>
                     <tr>
                       <td style="direction:ltr;font-size:0px;padding:20px 0;padding-left:15px;padding-right:15px;text-align:center;">
-                        <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
+                        <div class="mj-column-per-100 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
                           <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="vertical-align:top;" width="100%">
                             <tbody>
                               <tr>
@@ -216,8 +224,6 @@
                               </tr>
                             </tbody>
                           </table>
-                        </div>
-                        <div class="mj-column-per-50 mj-outlook-group-fix" style="font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;">
                         </div>
                       </td>
                     </tr>
@@ -252,7 +258,7 @@
                                             <tbody>
                                               <tr>
                                                 <td align="center" style="font-size:0px;padding:10px 25px;word-break:break-word;">
-                                                  <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:11px;font-weight:400;line-height:16px;text-align:center;color:#445566;">You are receiving this email advertisement because you registered with Croft's Accountants. (123 Main Street, Austin, TX 78701) and agreed to receive emails from us regarding new features, events and special offers.</div>
+                                                  <div style="font-family:'Helvetica Neue', Helvetica, Arial, sans-serif;font-size:11px;font-weight:400;line-height:16px;text-align:center;color:#445566;">NOTA:   Favor no responder este mensaje que ha sido emitido automáticamente por el sistema.</div>
                                                 </td>
                                               </tr>
                                               <tr>

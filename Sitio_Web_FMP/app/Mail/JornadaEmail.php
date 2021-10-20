@@ -12,20 +12,20 @@ use Illuminate\Queue\SerializesModels;
 
 class JornadaEmail extends Mailable{
     use Queueable, SerializesModels;
-    public $recursos_humanos;
+    public $jefe;
     public $empleados;
     public $periodo;
-    public $depto;
+    public $deptos;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Empleado $recursos_humanos, Periodo $periodo, Departamento $depto, Empleado $empleados){
-        $this->recursos_humanos = $recursos_humanos;
+    public function __construct(Empleado $jefe, Periodo $periodo, $deptos, $empleados){
+        $this->jefe = $jefe;
         $this->periodo = $periodo;
-        $this->depto = $depto;
+        $this->deptos = $deptos;
         $this->empleados = $empleados;
     }
 
@@ -35,6 +35,6 @@ class JornadaEmail extends Mailable{
      * @return $this
      */
     public function build(){
-        return $this->view('Mails.jornada');
+        return $this->subject('Jornadas')->view('Mails.jornada');
     }
 }

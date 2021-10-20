@@ -15,7 +15,7 @@
         </div>
         @if($cargar)
             <div class="col-12 col-sm-7" style="text-align:right">
-                @hasanyrole('super-admin|Jefe-Academico|Jefe-Administrativo')
+                @hasanyrole('Jefe-Academico|Jefe-Administrativo')
                     <button class="btn btn btn-info" title="Enviar notificación a Recursos Humanos de la finalización del registro de las jornadas" data-toggle="modal" data-target="#modalEmail"> <i class="fa fa-check-circle" aria-hidden="true"></i> </button>
                 @endhasanyrole
                 @hasanyrole('super-admin|Jefe-Academico|Recurso-Humano')
