@@ -10,6 +10,8 @@
 <!-- Summernote css -->
 <link href="{{ asset('css/summernote-bs4.css') }}" rel="stylesheet" />
 @endauth
+<!--Libreria data table para paginacion de noticias-->
+<link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 
 <!-- App css -->
 <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
@@ -18,9 +20,6 @@
 
 <div id="fb-root"></div>
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v11.0" nonce="qj9mH20N"></script>
-
-<!--Libreria data table para paginacion de noticias-->
-<link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
 
 @endsection
 
@@ -82,7 +81,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
             <div class="col-xl-8">
                 <div class="row">                    
                     <div class="col-xl-12">
-                        <div class="card-box">
+                        <div class="card-box" >
                             <div class="row py-1">
                                 <div class="col order-first ">
                                     <h3>Facultad Multidisciplinaria Paracentral</h3></div>
@@ -163,7 +162,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                             </div> <!-- end row-->
                         </div>  <!-- end card-box-->
                     </div> <!-- end col -->
-                    <div class="col-xl-12" id="noticias">
+                    <div class="col-xl-12" id="noticias" style=" overflow: auto;">
                         <div class="card-box"> 
                             <div class="row my-2">
                             <div class="col-xl order-first">
@@ -344,34 +343,36 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                             @endauth     
                             </div>
                             @if (count($noticias))                                
-                                <table id="dtNoticias" class="table table-borderless  btn-table"  
-                                    cellspacing="0" width="100%">
+                                <table id="dtNoticias" class="table"  
+                                    cellspacing="0" style="width: 100%;">
                                     <thead id="dtNoticiasthead">
-                                      <tr>
-                                        <th>             
-                                        </th>                   
+                                      <tr>                                            
+                                        <th class="col-sm-1">&nbsp;</th>     
+                                        <th class="col-sm-3">&nbsp;</th>     
+                                        <th class="col-sm-1">&nbsp;</th> 
                                       </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($noticias as $n)                                        
-                                        <tr>
+                                        <tr class="border rounded" style="border-bottom: 1pt solid black;">
+                                            <td>                                                       
+                                                <img class=" mt-1 rounded img-responsive bx-shadow-lg" src="images/noticias/{{$n->imagen}}"
+                                                    alt="Generic placeholder image" height="115" width="145" style="">
+                                            </td>
+                                            <td>                                                        
+                                                <h6 class="text-left">Publicado {!!/*date('d M Y - h:i:s A', strtotime($n->created_at))*/$n->created_at->diffForHumans()!!}</h6>
+                                                <h4 class="mt-0">{{$n->titulo}}</h4>
+                                                @if (!$n->tipo)
+                                                    {!!$n->subtitulo !!}
+                                                @endif
+                                                {{mb_strwidth(strip_tags($n->contenido), 'UTF-8') <= 125?strip_tags($n->contenido):rtrim(mb_strimwidth(strip_tags($n->contenido), 0, 125, '', 'UTF-8')).'...'}}
+                                            </td>
                                             <td>
-                                                <div class="border p-1 rounded media">
-                                                    <img class="mr-3 mt-1 rounded bx-shadow-lg" src="images/noticias/{{$n->imagen}}"
-                                                    alt="Generic placeholder image" height="110" width="140" style="">
-                                                    <div class="media-body" style="width: 20em">
-                                                        <h6 class="text-left">Publicado {!!/*date('d M Y - h:i:s A', strtotime($n->created_at))*/$n->created_at->diffForHumans()!!}</h6>
-                                                        <h4 class="mt-0">{{$n->titulo}}</h4>
-                                                        @if (!$n->tipo)
-                                                            <p>{!!$n->subtitulo !!}</p>
-                                                        @endif
-                                                        <p>{!!mb_strwidth(strip_tags($n->contenido), 'UTF-8') <= 125?strip_tags($n->contenido):rtrim(mb_strimwidth(strip_tags($n->contenido), 0, 125, '', 'UTF-8')).'...'!!}</p>
-                                                    </div>
-                                                    <div class="btn-group-vertical" role="group">
-                                                    @if ($n->tipo)
-                                                   
+                                                <div class="btn-group-vertical" role="group">
+                                                        @if ($n->tipo)
+                                                
                                                         <a href="{{ asset('/noticias') }}/{!!base64_encode($n->id)!!}/{!!base64_encode($n->titulo)!!}"
-                                                           
+                                                        
                                                         class="btn btn-light waves-effect width-md  @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))  mt-4 @endif" target="_blank">
                                                         @auth
                                                         @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
@@ -386,13 +387,13 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                                         @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))                                                      
                                                         <button type="button"  class="btn btn-light waves-effect width-md"
                                                             onclick="modificarNL({!!$n->id!!})" data-toggle="modal" data-target="#myModalNoticia">
-                                                         <i class="mdi mdi-file-document-edit mdi-16p"></i> Modificar
+                                                        <i class="mdi mdi-file-document-edit mdi-16p"></i> Modificar
                                                         </button>
                                                         @endif
                                                         @endauth
                                                     @else
                                                         <a href="{!!$n->urlfuente!!}"
-                                                           
+                                                        
                                                             class="btn btn-light waves-effect width-md @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin')) mt-4 @endif" target="_blank">
                                                             @auth
                                                             @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
@@ -417,14 +418,13 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                                     @auth 
                                                     @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
                                                         <button type="button" onclick="$('#noticia').val('{!!base64_encode($n->id)!!}')"
-                                                             class="btn btn-light waves-effect width-md btn-block" data-toggle="modal" 
-                                                             data-target="#modalEliminarNoticia">
+                                                            class="btn btn-light waves-effect width-md btn-block" data-toggle="modal" 
+                                                            data-target="#modalEliminarNoticia">
                                                             <i class="mdi mdi-delete"></i> Eliminar</button>
                                                     @endif
                                                     @endauth      
-                                                </div>                          
-                                                </div>
-                                            </td>                      
+                                                </div>       
+                                            </td>
                                         </tr>   
                                         @endforeach                
                                     </tbody>
@@ -562,6 +562,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
 @endsection
 
 @section('footerjs')
+
 <!-- Vendor js -->
 <script src="{{ asset('js/vendor.min.js') }}"></script>
 
@@ -569,8 +570,6 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
 <script src="{{ asset('js/app.min.js') }}"></script>
 
 <!--Librerias js para datatable-->
-
-<script src="{{ asset('js/index/index.datatable.js') }}"></script>
 <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
 
@@ -582,7 +581,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
 <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script> 
 <script src="{{ asset('js/scripts/http.min.js') }}"></script>
 <script src="{{ asset('js/scripts/index.js') }}"></script>
-
+<script src="{{ asset('js/index/index.datatable.js') }}"></script>
 @endif
 @endauth
 

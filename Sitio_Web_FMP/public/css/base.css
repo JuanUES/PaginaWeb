@@ -16,6 +16,10 @@
     opacity: 1;
 }   
 
+td{
+    Word-break: break-all;
+}
+
 #footerbase{
     background: #AA0000;
 }
