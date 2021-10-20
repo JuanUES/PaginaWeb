@@ -77,34 +77,32 @@
             <form id="registroForm"  action="{{ route('admin.ciclo.store') }}" method="POST">
                 <input type="hidden" name="_id" id="_id">
                 <div class="modal-body">
-                        <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
-                            role="alert" style="display:none" id="notificacion">
-                        </div>
-                        <div class="row">
-                            <div class="col-xl-12">
-                                <div class="form-group">
-                                    <label>Nota: <code>* Campos Obligatorio</code></label>
-                                </div>
+                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
+                        role="alert" style="display:none" id="notificacion">
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label>Nota: <code>* Campos Obligatorio</code></label>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="row">
-                                <div class="col-12 col-sm-12 mb-3">
-                                    <div class="form-group">
-                                        <label for="ciclo">Ciclo <span class="text-danger">*</span> </label>
-                                        <input type="text" class="form-control" name="nombre" id="nombre" aria-describedby="tipo" placeholder="Ingrese Ciclo" >
-                                    </div>
-                                </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-12">
+                            <div class="form-group">
+                                <label for="ciclo">Ciclo <span class="text-danger">*</span> </label>
+                                <input type="text" class="form-control" name="nombre" id="nombre" aria-describedby="tipo" placeholder="Ingrese Ciclo" >
+                            </div>
                         </div>
-
-                        <div class="row">
-                                <div class="col-12 col-sm-12 mb-3">
-                                    <div class="form-group">
-                                        <label for="año">Año <span class="text-danger">*</span> </label>
-                                        <input type="text" class="form-control" name="año" id="año" aria-describedby="tipo" placeholder="Ingrese Año" >
-                                    </div>
-                                </div>
+                    
+                        <div class="col-12 col-sm-12">
+                            <div class="form-group">
+                                <label for="año">Año <span class="text-danger">*</span> </label>
+                                <input type="text" class="form-control" name="año" id="año" aria-describedby="tipo" placeholder="Ingrese Año" >
+                            </div>
                         </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban"  aria-hidden="true"></i> Cerrar</button>
@@ -118,7 +116,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar Ciclo</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
@@ -128,7 +126,7 @@
                     <div class="row py-3">
                         <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
                         <div class="col-lg-10 text-black">
-                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se elimina este registro de manera permanente, ¿Desea continuar?</h4>
+                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se eliminará este registro de manera permanente, ¿Desea continuar?</h4>
                         </div>
                     </div>
                     <div class="row">
@@ -148,7 +146,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-close-octagon mdi-24px"></i> Finalizar</h3>
+                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-close-octagon mdi-24px"></i> Finalizar Ciclo</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
@@ -157,7 +155,7 @@
                     <div class="row py-3">
                         <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
                         <div class="col-lg-10 text-black">
-                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se finalizara el Ciclo seleccionado, ¿Desea continuar?</h4>
+                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se finalizará el Ciclo seleccionado, ¿Desea continuar?</h4>
                         </div>
                     </div>
                     <div class="row">
@@ -178,7 +176,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-close-octagon mdi-24px"></i> Reactivar</h3>
+                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-close-octagon mdi-24px"></i> Reactivar Ciclo</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
@@ -187,7 +185,7 @@
                     <div class="row py-3">
                         <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
                         <div class="col-lg-10 text-black">
-                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se Reactivara el Ciclo seleccionado, ¿Desea continuar?</h4>
+                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se Reactivará el Ciclo seleccionado, ¿Desea continuar?</h4>
                         </div>
                     </div>
                     <div class="row">

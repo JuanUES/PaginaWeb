@@ -34,6 +34,7 @@ Route::group(['middleware' => ['auth','role:super-admin|Recurso-Humano']], funct
     Route::get('admin/periodo/finalizar/{id}', 'App\Http\Controllers\PeriodoController@finalizar')->name('admin.periodo.finalizar');
     Route::get('admin/periodo/jornadasFinalizar/{id}', 'App\Http\Controllers\PeriodoController@jornadasFinalizar');
     Route::get('admin/periodo/jornadasEliminar/{id}', 'App\Http\Controllers\PeriodoController@jornadasEliminar');
+    Route::get('admin/periodo/reactivar/{id}', 'App\Http\Controllers\PeriodoController@reactivar')->name('admin.periodo.reactivar');
     //RUTAS CICLO
     Route::resource('admin/ciclo', 'App\Http\Controllers\CicloController')->only(['index', 'store', 'show', 'destroy'])->names('admin.ciclo');
     Route::get('admin/ciclo/finalizar/{id}', 'App\Http\Controllers\CicloController@finalizar')->name('admin.ciclo.finalizar');

@@ -32,7 +32,7 @@ class PeriodoController extends Controller{
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request){
-        $periodo = Periodo::where('estado', '!=' ,'inactivo')->get();
+        $periodo = Periodo::orderBy('id', 'DESC')->get();
         $ciclos = Ciclo::where('estado', 'activo')->orderBy('id', 'DESC')->get();
         return view('Periodo.index', compact(['periodo','ciclos']));
     }
@@ -133,5 +133,14 @@ class PeriodoController extends Controller{
         ]);
         Utilidades::fnSaveBitacora('Periodo #: ' . $tipo->id, 'Finalización', $this->modulo);
         return redirect('admin/periodo')->with('bandera', 'Periodo Finalizado con éxito');
+    }
+
+    public function reactivar($id){
+        $tipo = Periodo::findOrFail($id);
+        $tipo->update([
+            'estado' => 'activo'
+        ]);
+        Utilidades::fnSaveBitacora('Periodo #: ' . $tipo->id, 'Reactivado', $this->modulo);
+        return redirect('admin/periodo')->with('bandera', 'Periodo Reactivado con éxito');
     }
 }
