@@ -20,15 +20,16 @@ class AsignacionCargaController extends Controller
         $empleados = DB::table('empleado')->where('tipo_empleado','Académico')->get();
         $ciclos    = DB::table('ciclos')->where('estado','activo')->get();
         //solo para mostrar la carga admin
-       /* $tablaA = DB::table('empleado')
+        $tablaA = DB::table('empleado')
         ->join('asig_admins', 'asig_admins.id_empleado', '=', 'empleado.id')
         ->join('ciclos', 'ciclos.id', '=', 'asig_admins.id_ciclo')
         ->join('carga_admins', 'carga_admins.id', '=', 'asig_admins.id_carga')
-        ->select('empleado.id','empleado.nombre as E_nombre','empleado.apellido','asig_admins.dias','carga_admins.nombre_carga','ciclos.nombre','ciclos.año')
-        ->where('ciclos.estado',true)
-        ->get();*/
+        ->select('empleado.id','empleado.nombre as E_nombre','empleado.apellido','asig_admins.dias',
+        'carga_admins.nombre_carga','ciclos.nombre','ciclos.año',)
+        ->where('ciclos.estado','activo')
+        ->get();
 
-       //echo dd($empleados);
+       echo dd($tablaA);
         return view('Admin.horarios.asignarCarga',compact('empleados','ciclos'));
     }
 
