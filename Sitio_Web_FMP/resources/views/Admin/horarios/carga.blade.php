@@ -46,7 +46,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban" aria-hidden="true"></i>Cerrar</button>
-                <button type="button" class="btn btn-primary" onClick="submitForm('#cargaForm','#notificacionCarga')"><li class="fa fa-save"></li>Guardar</button>
+                <button type="button" class="btn btn-primary" onClick="submitForm('#cargaForm','#notificacionCarga')"><li class="fa fa-save"></li> Guardar</button>
             </div>
         </form>
       </div>
