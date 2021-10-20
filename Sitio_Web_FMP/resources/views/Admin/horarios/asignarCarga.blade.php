@@ -13,6 +13,7 @@
         </div>
         <form id="empleadoForm" action="{{route('create/asignacion')}}" method="POST">
             <div class="modal-body">
+                <input type="hidden" name="_id" id="_id">
                     @csrf
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" 
                         role="alert" style="display:none" id="notificacion">                                               
@@ -179,15 +180,16 @@
                     @else
                     <td>{!!'Trabajo de Grado Asignados: 0'!!}</td>   
                     @endif
-                    
-                
-                   
-                    <td><a href="" title="Editar Asignación">
-                        <button class="btn btn-outline-primary btn-sm"><i class="fa fa-edit fa-fw" aria-hidden="true"></i>
-                        </button></a>
-                        <a href="" title="Eliminar Asignación">
-                            <button class="btn btn-outline-primary btn-sm"><i class="fas fa-trash-alt" aria-hidden="true"></i>
-                            </button></a>
+                    <td class="align-middle ">
+                        <div class="row">
+                            <div class="col text-center">
+                                <div class="btn-group" role="group">
+                                    <button title="Editar Asignación" class="btn btn-outline-primary btn-sm rounded" onclick="editar({{$item->id}},this)">
+                                        <i class="fa fa-edit py-1 font-16" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 @endforeach
@@ -217,5 +219,6 @@
 </script>
 <script src="{{ asset('js/scripts/http.min.js') }}"></script>
 <script src="{{ asset('js/horariosJs/asignacionCarga.js') }}"></script>
+<script src="{{ asset('js/horariosJs/asignacion.js') }}"></script>
 
 @endsection

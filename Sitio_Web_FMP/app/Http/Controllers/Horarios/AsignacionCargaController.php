@@ -25,7 +25,7 @@ class AsignacionCargaController extends Controller
         ->join('ciclos', 'ciclos.id', '=', 'asig_admins.id_ciclo')
         ->join('carga_admins', 'carga_admins.id', '=', 'asig_admins.id_carga')
         ->select('empleado.id','empleado.nombre as E_nombre','empleado.apellido',
-        'asig_admins.dias','asig_admins.sociales','asig_admins.tg','carga_admins.nombre_carga','ciclos.nombre','ciclos.año')
+        'asig_admins.dias','asig_admins.id','asig_admins.sociales','asig_admins.tg','carga_admins.nombre_carga','ciclos.nombre','ciclos.año')
         ->where('ciclos.estado','activo')
         ->get();
 
@@ -41,27 +41,12 @@ class AsignacionCargaController extends Controller
     
     //vamos a insertar los datos a la base de datos
     public function create(Request $request){
-      
     ///************PARA INGRESAR CARGA ADMIN********* */
         try{
-
-            $error = null;
-            $validar = DB::table('asig_admins')
-            ->select('*')
-            ->where([['id_carga','=',$request->carga],
-            ['id_ciclo','=',$request->id_ciclo],
-            ['id_empleado','=',$request->id_empleado]]);
-
-            if($validar->exists())
-            {
-                $error = 'Carga Administrativa ya Asignada';
-                return response()->json(['error'=>[$error]]);
-            }
-
            // echo dd($request);
             $validator = Validator::make($request->all(),[
-                'id_empleado'   =>'required',
-                'carga'         =>'required',
+                'id_empleado'   =>'required|integer|unique:asig_admins,id_empleado'.(!is_null($request->_id) ? ','.$request->_id : null),
+                'carga'         =>'required|unique:asig_admins,id_carga'.(!is_null($request->_id) ? ','.$request->_id : null),
                 'id_ciclo'      =>'required',
                 'dias'          =>'required'
             ]);         
@@ -89,7 +74,10 @@ class AsignacionCargaController extends Controller
     /***FIN PARA INGRESAR CARGA ADMIN */
 
     }//fin create
-
-
     //fin de insertar los datos
+    public function cargaModal($id){         
+        $data = Asig_admin::select('*')
+        ->findOrFail($id);
+        return $data->toJson();
+    }
 }
