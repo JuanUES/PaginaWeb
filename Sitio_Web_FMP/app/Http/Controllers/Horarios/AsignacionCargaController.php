@@ -17,15 +17,23 @@ class AsignacionCargaController extends Controller
 {
     //
     public function index(){
-        $empleados = DB::table('empleado')->get();
-        $ciclos    = DB::table('ciclos')->where('estado',true)->get();
-       // echo dd($ciclos);
+        $empleados = DB::table('empleado')->where('tipo_empleado','Académico')->get();
+        $ciclos    = DB::table('ciclos')->where('estado','activo')->get();
+        //solo para mostrar la carga admin
+       /* $tablaA = DB::table('empleado')
+        ->join('asig_admins', 'asig_admins.id_empleado', '=', 'empleado.id')
+        ->join('ciclos', 'ciclos.id', '=', 'asig_admins.id_ciclo')
+        ->join('carga_admins', 'carga_admins.id', '=', 'asig_admins.id_carga')
+        ->select('empleado.id','empleado.nombre as E_nombre','empleado.apellido','asig_admins.dias','carga_admins.nombre_carga','ciclos.nombre','ciclos.año')
+        ->where('ciclos.estado',true)
+        ->get();*/
+
+       //echo dd($empleados);
         return view('Admin.horarios.asignarCarga',compact('empleados','ciclos'));
     }
 
-    public function cargaCombobox($c){         
-        return CargaAdmin::where('categoria',$c)
-        ->select('*')->get()
+    public function cargaCombobox(){         
+        return CargaAdmin::select('*')->get()
         ->toJson();
     }
 
@@ -88,96 +96,6 @@ class AsignacionCargaController extends Controller
         }
     }
     /***FIN PARA INGRESAR CARGA ADMIN */
-
-    ///************PARA TRABAJO DE GRADO********* */
-    if($request->A_carga=='ps'){
-        try{
-
-            $error = null;
-            $validar = DB::table('proyectosociales')
-            ->select('*')
-            ->where([['id_carga','=',$request->carga],
-            ['id_ciclo','=',$request->id_ciclo],
-            ['id_empleado','=',$request->id_empleado],
-            ['id_empleado','=',$request->id_empleado]]);
-            //echo dd($validar);
-            if($validar->exists())
-            {
-                $error = 'Proyectos sociales Asignados';
-                return response()->json(['error'=>[$error]]);
-            }
-
-
-            $validator = Validator::make($request->all(),[
-                'id_empleado'   =>'required',
-                'carga'         =>'required',
-                'id_ciclo'      =>'required',
-                'cantidad'          =>'required|numeric'
-            ]);         
-
-            if($validator->fails())
-            {            
-                return response()->json(['error'=>$validator->errors()->all()]);                
-            }
-          //echo dd($request);
-            $trabajos = $request->_id ==null ? new Proyectosociale():Proyectosociale::findOrFail($request->_id);
-            $trabajos -> id_empleado   = $request->id_empleado;
-            $trabajos -> id_carga      = $request->carga;
-            $trabajos -> id_ciclo      = $request->id_ciclo;
-            $trabajos -> cantidad      = $request->cantidad;
-            $trabajos -> save();         
-        
-            return $request->_id != null?response()->json(['mensaje'=>'Modificación exitosa.']):response()->json(['mensaje'=>'Registro exitoso.']);
-        
-        }catch(Exception $e){
-            return response()->json(['error'=>$e->getMessage()]);
-        }
-    }
-    /***FIN PARA TRABAJO DE GRADO*******/
-
-    /****PARA PROYECTO SOCIALES* */
-    if($request->A_carga=='tg'){
-        try{
-
-            $error = null;
-            $validar = DB::table('trabajogrados')
-            ->select('*')
-            ->where([['id_carga','=',$request->carga],
-            ['id_ciclo','=',$request->id_ciclo]]);
-            //echo dd($validar);
-            if($validar->exists())
-            {
-                $error = 'Trabajos de grados Asignados';
-                return response()->json(['error'=>[$error]]);
-            }
-
-
-            $validator = Validator::make($request->all(),[
-                'id_empleado'   =>'required',
-                'carga'         =>'required',
-                'id_ciclo'      =>'required',
-                'cantidad'          =>'required|numeric'
-            ]);         
-
-            if($validator->fails())
-            {            
-                return response()->json(['error'=>$validator->errors()->all()]);                
-            }
-          //echo dd($request);
-            $trabajos = $request->_id ==null ? new Trabajogrado():Trabajogrado::findOrFail($request->_id);
-            $trabajos -> id_empleado   = $request->id_empleado;
-            $trabajos -> id_carga      = $request->carga;
-            $trabajos -> id_ciclo      = $request->id_ciclo;
-            $trabajos -> cantidad      = $request->cantidad;
-            $trabajos -> save();         
-        
-            return $request->_id != null?response()->json(['mensaje'=>'Modificación exitosa.']):response()->json(['mensaje'=>'Registro exitoso.']);
-        
-        }catch(Exception $e){
-            return response()->json(['error'=>$e->getMessage()]);
-        }
-    }
-    //******FIN DE PARA PROYECTO SOCIALES */
 
    }catch(Exception $e){
     return response()->json(['error'=>$e->getMessage()]);

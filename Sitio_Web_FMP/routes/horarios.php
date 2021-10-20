@@ -42,7 +42,7 @@ Route::post('Administrativa/estado', [CargaController::class,'estado'])->name('e
 Route::get('Administrativa/Empleado',[CargaController::class,'EmpleadoCombobox']);
 //fin de ingresar la carga administrativa
 Route::get('Asigar/Carga',[AsignacionCargaController::class,'index'])->name('asignar-carga');
-Route::get('Asigar/ver/{carga}',[AsignacionCargaController::class,'cargaCombobox']);
+Route::get('Asigar/ver',[AsignacionCargaController::class,'cargaCombobox']);
 Route::get('Asigar/Empleado',[AsignacionCargaController::class,'EmpleadoCombobox']);
 Route::get('/Administrativa/Carga/{id}',[CargaController::class,'cargaModal']);
 Route::post('Asignar/create', [AsignacionCargaController::class,'create'])->name('create/asignacion');

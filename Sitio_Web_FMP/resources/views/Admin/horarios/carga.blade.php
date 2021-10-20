@@ -27,20 +27,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="form-group">
-                                <label for="exampleInputCategoria">Categoria</label>
-                                <select  class="form-control select2" style="width: 100%" name="categoria" id="categoria">
-                                    <option value="">Seleccione</option>
-                                    <option value="ad">Carga Administrativa</option>
-                                    <option value="ps">Proyección Social</option>
-                                    <option value="tg">Trabajo de Grado</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
             <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group">

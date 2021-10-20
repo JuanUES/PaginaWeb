@@ -12,7 +12,6 @@ function editar(id,boton){
             //console.log(json);
             $("#_id").val(json.id);
             $("#nombre_carga").val(json.nombre_carga); 
-            $("#categoria").val(json.categoria);
             $('#jefe').val(json.id_jefe).trigger('change');
             $("#carga").modal();
         },

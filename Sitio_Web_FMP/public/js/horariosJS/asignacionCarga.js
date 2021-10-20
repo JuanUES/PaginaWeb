@@ -1,17 +1,7 @@
-$('#A_carga').on('change', function() {
-    let option = document.getElementById("A_carga").value;
-    if(option=='ad'){
-        document.getElementById("cantidad").disabled=true;
-        document.getElementById("dias").disabled=false;
-    }else if(option=='ps' || option=='tg'){
-        document.getElementById("dias").disabled=true;
-        document.getElementById("cantidad").disabled=false;
-    }else{
-        document.getElementById("cantidad").disabled=false;
-        document.getElementById("dias").disabled=false;
-    }
+$(document).ready(function() {
+    
     $.ajax({
-        url: 'ver/'+option,
+        url: 'ver',
         type: "GET",
         success: function(data){
             document.getElementById("carga").disabled=false;
@@ -42,8 +32,4 @@ $('#A_carga').on('change', function() {
 
         }); 
   });
-
-
-
-
 $('.select2-multiple').select2();

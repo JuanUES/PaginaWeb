@@ -31,8 +31,7 @@ class CargaController extends Controller
         try{
 
             $validator = Validator::make($request->all(),[
-                'nombre_carga'      => 'required|max:255',
-                'categoria'         =>'required'
+                'nombre_carga'      => 'required|max:255'
             ]);         
 
             if($validator->fails())
@@ -42,7 +41,7 @@ class CargaController extends Controller
         //echo dd($request);
             $carga = $request->_id ==null ? new CargaAdmin():CargaAdmin::findOrFail($request->_id);
             $carga -> nombre_carga   = $request->nombre_carga;
-            $carga -> categoria        = $request->categoria;
+            $carga -> categoria        = 'ad';
             $carga -> id_jefe        = $request->jefe;
             $carga -> save();         
         
