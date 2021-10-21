@@ -71,6 +71,7 @@
                     <th>Tipo</th>
                     <th>Departamento</th>
                     <th>Tipo</th>
+                    <th>Periodo Tipo</th>
                     <th>Periodo</th>
                     <th>Proceso</th>
                     <th class="text-center">Acciones</th>
@@ -84,6 +85,7 @@
                         <td>{{ $item->empleado_rf->tipo_empleado }}</td>
                         <td>{{ $item->empleado_rf->departamento_rf->nombre_departamento }}</td>
                         <td>{{ $item->empleado_rf->tipo_jornada_rf->tipo }}</td>
+                        <td>{{ $item->tipo_periodo }}</td>
                         <td>{{ $item -> periodo }}</td>
                         <td>
                             @php
