@@ -16,7 +16,11 @@ class CargaAdminSeeder extends Seeder
     {
         //
         CargaAdmin::create([
-            'nombre_carga'=>'Decano',
+            'nombre_carga'=>'Decanato',
+            'categoria'=>'ad'
+        ]);
+        CargaAdmin::create([
+            'nombre_carga'=>'Vicedecanato',
             'categoria'=>'ad'
         ]);
     }

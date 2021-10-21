@@ -1,6 +1,9 @@
 @extends('layouts.admin')
 
 @section('content')
+<!--para garantizar que esten asignada la carga administrativa decanato y vicedecanato-->
+@if (!is_null($decanato) and !is_null($vicedecanato))
+
 <!-- Modal -->
 <div class="modal fade" id="carga" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -21,8 +24,8 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group">
-                                <label for="exampleInputNombre">Nombre</label>
-                                <input type="text" class="form-control" name="nombre_carga" id="nombre_carga"  placeholder="Digite el nombre de la carga">
+                                <label for="exampleInputNombre">Titulo carga</label>
+                                <input type="text" class="form-control" name="nombre_carga" id="nombre_carga"  placeholder="Digite el titulo de la carga">
                             
                             </div>
                         </div>
@@ -35,7 +38,7 @@
                         data-style="btn-white" name="jefe" id="jefe">
                             <option value="" selected>Seleccione</option>
                             @foreach ($empleadosC as $i)
-                                <option data-icon="mdi mdi-account-plus-outline font-18" value="{!!$i->id!!}">{!!$i->nombre.' '.$i->apellido!!}</option>
+                                <option data-icon="mdi mdi-account-plus-outline font-18" value="{!!$i->id!!}">{!!$i->nombre.' '.$i->apellido!!}{!!'  -  '!!}{!!$i->nombre_carga!!}</option>
                             @endforeach
                         </select>
                         </div>
@@ -139,11 +142,11 @@
             <table  class="table table-bordered" style="width: 100%">
                 <thead>
                 <tr>
-                    <th data-priority="1">N°</th>
-                    <th data-priority="1">Carga Administrativa</th>
-                    <th data-priority="1">Jefe</th>
-                    <th data-priority="1">Estado</th>
-                    <th data-priority="1">Acciones</th>
+                    <th class="col-sm-1">N°</th>
+                    <th class="col-xs-1">Carga Administrativa</th>
+                    <th class="col-xs-1">Jefe</th>
+                    <th class="col-sm-2">Estado</th>
+                    <th class="col-sm-1 text-center">Acciones</th>
                   
                 </tr>
                 </thead>
@@ -155,10 +158,21 @@
                     @php
                         $i++;
                     @endphp
+                    @if ($item->nombre_carga=='Decanato' || $item->nombre_carga=='Vicedecanato')
                     <tr>
                         <td>{!!$i!!}</td>
-                        <th><span class="co-name">{!!$item->nombre_carga!!}</span></th>
-                        <th>Sin Jefe</th>
+                        <th class="align-middle font-16 text-center"><span class="co-name">{!!$item->nombre_carga!!}</span></th>
+                        <th class="align-middle font-16 text-center"><span class="badge badge-success">Sin Jefe</span></th>
+                        <td class="align-middle font-16 col-sm-1 text-center"><span class="badge badge-danger">Sin Acciones</span></td>
+                        <td class="align-middle font-16 col-sm-1 text-center"><span class="badge badge-danger">Sin Acciones</span></td>
+                   
+                    </tr>
+                        
+                    @else
+                    <tr>
+                        <td>{!!$i!!}</td>
+                        <th class="align-middle font-16 col-sm-1 text-center"><span class="co-name">{!!$item->nombre_carga!!}</span></th>
+                        <th class="align-middle font-16 col-sm-1 text-center">Sin Jefe</th>
                         <td class="align-middle font-16">{!! !$item->estado?'<span class="badge badge-danger">Desactivado</span> ' :
                             '<span class="badge badge-success">Activado</span> ' !!}</td>
                         <td class="align-middle ">
@@ -181,8 +195,9 @@
                             </div>
                         </td>
                    
-                    </tr>
-                        
+                    </tr>   
+                    @endif
+
                     @endforeach
                     @foreach ($empleados as $ix)
                     @php
@@ -190,9 +205,9 @@
                     @endphp
                     <tr>
                         <td>{!!$i!!}</td>
-                        <th><span class="co-name">{!!$ix->nombre_carga!!}</span></th>
-                        <th>{!!$ix->nombre.' '.$ix->apellido!!}</th>
-                        <td class="align-middle font-16">{!! !$ix->estado?'<span class="badge badge-danger">Desactivado</span> ' :
+                        <th class="align-middle font-16 text-center"><span class="co-name">{!!$ix->nombre_carga!!}</span></th>
+                        <th class="align-middle font-16 text-center">{!!$ix->nombre.' '.$ix->apellido!!}</th>
+                        <td class="align-middle font-16 text-center">{!! !$ix->estado?'<span class="badge badge-danger">Desactivado</span> ' :
                             '<span class="badge badge-success">Activado</span> ' !!}</td>
                         <td class="align-middle ">
                             <div class="row">
@@ -224,7 +239,24 @@
         </div> <!-- end card-box -->
     </div> <!-- end col -->
 </div>
-<!-- end row -->   
+<!-- end row --> 
+@else
+
+<div class="row m-3">
+    <div class="col-xl-12">
+        <div class="card-box p-2 border">
+            <p> <i class="fa fa-info-circle"></i> No es posible cargar la información perteneciente.</p>
+            <label> A continuación se detallan las posibles causas: </label>
+            <ul>
+                <li>Es probable que no se encuentre registro de asignación de carga administrativa para Decanato</li>
+                <li>Es probable que no se encuentre registro de asignación de carga administrativa para Vicedecanato</li>
+                <li>Debes a ver asignado ambas cargas para poder continuar</li>
+            </ul>
+        </div>
+    </div>
+</div>
+    
+@endif
 @endsection
 @section('plugins')
 <link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
