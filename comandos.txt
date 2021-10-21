@@ -91,3 +91,16 @@ Illuminate\Support\Facades\Schema::create('permisos', function (Illuminate\Datab
         $table->timestamps();
     });
 quit
+
+
+
+
+CORREO ELECTRONICO
+MAIL_DRIVER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=email@gmail.com
+MAIL_PASSWORD=******
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=email@gmail.com
+MAIL_FROM_NAME=[Nombre del remitente]
