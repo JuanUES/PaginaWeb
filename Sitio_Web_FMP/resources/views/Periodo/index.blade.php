@@ -317,8 +317,10 @@
     $('#rangos').daterangepicker({
         locale: localCustom
     },function(start, end, label) {
-        $('#fecha_inicio').val(new Date(start).toLocaleString("es-ES",{timeZone:'America/El_Salvador'}));
-        $('#fecha_fin').val(new Date(end).toLocaleString("es-ES",{timeZone:'America/El_Salvador'}));
+        var utc= (new Date(start).toUTCString());
+        var utcEnd= (new Date(end).toUTCString());
+        $('#fecha_inicio').val(new Date(utc).getFullYear() + "-" + (new Date(utc).getMonth() + 1) + "-" + (new Date(utc).getDate()));
+        $('#fecha_fin').val(new Date(utcEnd).getFullYear() + "-" + (new Date(utcEnd).getMonth() + 1) + "-" + (new Date(utcEnd).getDate())); 
     });
 
     function btnEdit(element){
@@ -332,8 +334,10 @@
                 endDate: moment(response.fecha_fin).format('DD/MM/YYYY'),
                 locale: localCustom
             },function(start, end, label) {
-                $('#fecha_inicio').val(new Date(start).toLocaleString("es-ES",{timeZone:'America/El_Salvador'}));
-                $('#fecha_fin').val(new Date(end).toLocaleString("es-ES",{timeZone:'America/El_Salvador'}));
+                var utc= (new Date(start).toUTCString());
+                var utcEnd= (new Date(end).toUTCString());
+                $('#fecha_inicio').val(new Date(utc).getFullYear() + "-" + (new Date(utc).getMonth() + 1) + "-" + (new Date(utc).getDate()));
+                $('#fecha_fin').val(new Date(utcEnd).getFullYear() + "-" + (new Date(utcEnd).getMonth() + 1) + "-" + (new Date(utcEnd).getDate())); 
             });
             $("#registroForm #observaciones").val(response.observaciones);
             $("#registroForm #ciclo_id").val(response.ciclo_id).change();
