@@ -301,7 +301,6 @@
             data.then(function(response){
                 $(".total-horas").val(response.empleado.horas_semanales + ':00');
                 updateChangeTable();
-
                 if(!response.permiso){
                     $("#jornada-div").hide('slow');
                     $("#btnSaveJornada").hide('slow');
@@ -313,13 +312,8 @@
                     $("#jornada-div").before(alert);
                 }
             });
-            //$("#horario-div").prop("hidden", false);
-
-            //fnCargaAcademica(id);
-
         }else{
             $("#jornada-div :input").prop("disabled", true);
-            //$("#horario-div").prop("hidden", true);
         }
     });
 

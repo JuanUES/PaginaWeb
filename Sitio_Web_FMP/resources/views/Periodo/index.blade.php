@@ -382,7 +382,7 @@
                 <table class="table table-sm table-hover tblJornadas mt-3" style="width: 100%;">
                     <thead>
                         <tr>
-                            <th colspan='3' class="text-center">Jornadas Pendientes</th>
+                            <th colspan='3' class="text-center">Jornadas en espera de Aprobación</th>
                         </tr>
                         <tr>
                             <th>Empleado</th>
