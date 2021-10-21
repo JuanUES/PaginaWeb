@@ -119,8 +119,8 @@
                 <tr>
                     <th class="col-sm-1" style="width: 5%;">N°</th>
                     <th>Tipo Jornada</th>
-                    <th class="col-xs-1">Horas Anuales</th>
-                    <th class="col-xs-1">Horas Mensuales</th>
+                    <th class="col-sm-2">Horas Anuales</th>
+                    <th class="col-sm-2">Horas Mensuales</th>
                     <th class="col-sm-1 text-center">Acciones</th>
                 </tr>
                 </thead>
@@ -135,12 +135,12 @@
                     <tr>
                         <td>{{$i}}</td>
                         <td>{!!$item->tipo!!}</td>
-                        <td>{!!$item->anuales!!}</td>
-                        <td>{!!$item->mensuales!!}</td>
+                        <td class="text-center">{!!$item->anuales!!}</td>
+                        <td class="text-center">{!!$item->mensuales!!}</td>
                         <td>
                             <div class="btn-group text-center" role="group">
                                 <button title="Editar" class="btn btn-outline-primary btn-sm rounded" onclick="editar({{$item->id}},this)">
-                                    <i class="fa fa-edit font-16" aria-hidden="true"></i>
+                                    <i class="fa fa-edit py-1 font-16" aria-hidden="true"></i>
                                 </button>
                             </div>
                         </td>
