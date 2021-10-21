@@ -15,7 +15,7 @@
         </div>
         @if($cargar)
             <div class="col-12 col-sm-7" style="text-align:right">
-                @hasanyrole('super-admin|Jefe-Academico|Jefe-Administrativo')
+                @hasanyrole('Jefe-Academico|Jefe-Administrativo')
                     <button class="btn btn btn-info" title="Enviar notificación a Recursos Humanos de la finalización del registro de las jornadas" data-toggle="modal" data-target="#modalEmail"> <i class="fa fa-check-circle" aria-hidden="true"></i> </button>
                 @endhasanyrole
                 @hasanyrole('super-admin|Jefe-Academico|Recurso-Humano')
@@ -47,7 +47,7 @@
                         </select>
                     </div>
                 </div>
-                {{-- @hasanyrole('super-admin|Recurso-Humano') --}}
+                @hasanyrole('super-admin|Recurso-Humano|Jefe-Administrativo|Jefe-Academico')
                     <div class="col-12 col-sm-6 col-md-6">
                         <div class="form-group">
                             <select class="form-group selectpicker select-filter" data-live-search="true" data-style="btn-white"  name="depto">
@@ -58,7 +58,7 @@
                             </select>
                         </div>
                     </div>
-                {{-- @endhasanyrole --}}
+                @endhasanyrole
             </div>
         </form>
         <br/>
@@ -71,6 +71,7 @@
                     <th>Tipo</th>
                     <th>Departamento</th>
                     <th>Tipo</th>
+                    <th>Periodo Tipo</th>
                     <th>Periodo</th>
                     <th>Proceso</th>
                     <th class="text-center">Acciones</th>
@@ -84,6 +85,7 @@
                         <td>{{ $item->empleado_rf->tipo_empleado }}</td>
                         <td>{{ $item->empleado_rf->departamento_rf->nombre_departamento }}</td>
                         <td>{{ $item->empleado_rf->tipo_jornada_rf->tipo }}</td>
+                        <td>{{ $item->tipo_periodo }}</td>
                         <td>{{ $item -> periodo }}</td>
                         <td>
                             @php
@@ -301,7 +303,6 @@
             data.then(function(response){
                 $(".total-horas").val(response.empleado.horas_semanales + ':00');
                 updateChangeTable();
-
                 if(!response.permiso){
                     $("#jornada-div").hide('slow');
                     $("#btnSaveJornada").hide('slow');
@@ -313,13 +314,8 @@
                     $("#jornada-div").before(alert);
                 }
             });
-            //$("#horario-div").prop("hidden", false);
-
-            //fnCargaAcademica(id);
-
         }else{
             $("#jornada-div :input").prop("disabled", true);
-            //$("#horario-div").prop("hidden", true);
         }
     });
 

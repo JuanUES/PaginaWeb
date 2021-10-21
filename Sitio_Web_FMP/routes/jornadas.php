@@ -22,7 +22,7 @@ Route::group(['middleware' => ['auth','role:super-admin|Docente|Jefe-Administrat
     Route::post('admin/jornada/select{id}', 'App\Http\Controllers\JornadaController@getDepto')->name('admin.jornada.select');
 });
 
-Route::group(['middleware' => ['auth', 'role:super-admin|Jefe-Administrativo|Jefe-Academico']], function () {
+Route::group(['middleware' => ['auth', 'role:Jefe-Administrativo|Jefe-Academico']], function () {
     Route::post('admin/jornada/notificacion/mail', 'App\Http\Controllers\JornadaController@email')->name('admin.jornada.notificacion');
 });
 

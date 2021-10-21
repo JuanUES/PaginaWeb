@@ -257,7 +257,7 @@
 
 
 {{--  Modal para notificar al recurso humano --}}
-@hasanyrole('super-admin|Jefe-Academico|Jefe-Administrativo')
+@hasanyrole('Jefe-Academico|Jefe-Administrativo')
     <div id="modalEmail" class="modal fade bs-example-modal-center" tabindex="-1"  role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -278,9 +278,11 @@
                             <div class="col-12 mt-2">
                                 <div class="form-group">
                                     <label for="periodo">Seleccione un Periodo <span class="text-danger">*</span> </label>
-                                    <select class="custom-select" name="periodo">
+                                    <select class="custom-select" name="periodo" required>
                                         @foreach ($periodos as $item)
-                                            <option value="{{ $item->id }}">{{ $item->tipo }} -> {{ $item->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
+                                            @if (strcmp('activo', $item->estado)==0)
+                                                <option value="{{ $item->id }}">{{ $item->tipo }} -> {{ $item->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
