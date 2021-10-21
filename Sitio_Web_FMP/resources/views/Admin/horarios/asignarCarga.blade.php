@@ -18,11 +18,18 @@
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show" 
                         role="alert" style="display:none" id="notificacion">                                               
                     </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label>Nota: <code>* Campos Obligatorio</code></label>
+                            </div>
+                        </div>
+                    </div>
                     
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group">
-                                <label for="exampleInputCarga">Ciclo Activo</label>
+                                <label for="exampleInputCarga">Ciclo Activo <code>*</code></label>
                                 <select class="form-control selectpicker" style="width: 100%" data-live-search="true" 
                                 data-style="btn-white" name="id_ciclo" id="id_ciclo">
                                     <option value="" selected>Seleccione</option>
@@ -36,7 +43,7 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group">
-                                <label for="Departamento">Empleado</label>
+                                <label for="Departamento">Empleado <code>*</code></label>
                                 <select class="form-control selectpicker" style="width: 100%" data-live-search="true" 
                                 data-style="btn-white" name="id_empleado" id="id_empleado">
                                     <option value="" selected>Seleccione</option>
@@ -51,7 +58,7 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group">
-                                <label for="exampleInputDocente">Carga Administrativa</label>
+                                <label for="exampleInputDocente">Carga Administrativa <code>*</code></label>
                            <select class="form-control selectpicker" style="width: 100%" data-live-search="true" 
                                 data-style="btn-white" name="carga" id="carga" aria-placeholder="Seleccione">
                                     <option value="" selected >Seleccione</option>
@@ -65,8 +72,10 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group">
-                                <label for="exampleInputDias">Día</label>
-                                <select class="custom-select" name="dias" id="dias">
+                                <label for="exampleInputDias">Día <code>*</code></label>
+                                <select class="form-control selectpicker" style="width: 100%" data-live-search="true" 
+                                data-style="btn-white" name="dias" id="dias" aria-placeholder="Seleccione">
+                               
                                     <option value="">Seleccione</option>
                                     <option value="Lunes">Lunes</option>
                                     <option value="Martes">Martes</option>
