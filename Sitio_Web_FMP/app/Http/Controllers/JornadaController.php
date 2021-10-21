@@ -373,29 +373,28 @@ class JornadaController extends Controller{
         if (!$user->hasRole('super-admin') && !$user->hasRole('Recurso-Humano')) { // si no es jefe filtramos la informacion dependiendo de si es jefe o empleado normal
             //determinamos si tiene un empleado relacionado
             $deptos = $this->fnDeptosSegunRol();
-            if (is_null($empleado)) { //para que muestre una alerta de que no existe un empleado relacionado con el usuario
-                $query = null;
-            } else {
                 //para filtrar por los empleados dependiendo del departamento al que pertenezcan
-                if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo')) {
-                    $q = $this->filterDeptosEmpleado($deptos, $query);
-                    $query = !is_null($q) ? $q : $query;
-                    $tipo = 'Administrativo';
-                    if (
-                        ($user->hasRole('Jefe-Academico') && $user->hasRole('Jefe-Administrativo')) 
-                        || ($user->hasRole('Docente') && $user->hasRole('Jefe-Administrativo')&& $periodo->tipo == $empleado->tipo_empleado)
-                        ) {
-                        $tipo = $periodo->tipo;
-                    }else if ($user->hasRole('Jefe-Academico')) {
-                        $tipo = 'Académico';
-                    } else if ($user->hasRole('Jefe-Administrativo')) {
-                        $tipo = 'Administrativo';
-                    }
-                    $query->where('empleado.jefe', $empleado->id)->where('empleado.tipo_empleado', $tipo);
-                }else {//cuando es docente
-                    $query->where('empleado.id', $empleado->id);
-                }
+            if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo')) {
+                $q = $this->filterDeptosEmpleado($deptos, $query);
+                $query = !is_null($q) ? $q : $query;
+
+                // $tipo = 'Administrativo';
+                // if (
+                //     ($user->hasRole('Jefe-Academico') && $user->hasRole('Jefe-Administrativo')) 
+                //     || ($user->hasRole('Docente') && $user->hasRole('Jefe-Administrativo') && $periodo->tipo == $empleado->tipo_empleado)
+                //     ) {
+                //     $tipo = $periodo->tipo;
+                // }else if ($user->hasRole('Jefe-Academico')) {
+                //     $tipo = 'Académico';
+                // } else if ($user->hasRole('Jefe-Administrativo')) {
+                //     $tipo = 'Administrativo';
+                // }
+                $query->where('empleado.jefe', $empleado->id)->where('empleado.tipo_empleado', $periodo->tipo);
+
+            }else {//cuando es docente
+                $query->where('empleado.id', $empleado->id);
             }
+            
         }else{
             $query->where('empleado.tipo_empleado', $periodo->tipo);
         }
