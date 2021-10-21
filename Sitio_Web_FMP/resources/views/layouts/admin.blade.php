@@ -190,18 +190,6 @@
                                         <li>
                                             <a href="{{ route('indexLicGS') }}">Horas GS</a>
                                         </li>
-                                        <li>
-                                            <a href="#"></a>
-                                        </li>
-                                        <li>
-                                            <a href="#"></a>
-                                        </li>
-                                        <li>
-                                            <a href="#"></a>
-                                        </li>
-                                        <li>
-                                            <a href="#"></a>
-                                        </li>
                                 </ul>
                             </li>                            
                             @endhasrole

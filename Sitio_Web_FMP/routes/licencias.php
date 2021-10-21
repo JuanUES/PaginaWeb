@@ -11,6 +11,7 @@ Route::group(['middleware' => ['auth']], function () {
     /*METODOS GET**/
     Route::get('admin/mislicencias', [LicenciasController::class,'indexMisLicencias'])->name('indexLic');
     Route::get('admin/mislicencias/horas/{fecha}', [LicenciasController::class,'horas_disponibles']);
+    Route::get('admin/mislicencias/permiso/{permiso}',[LicenciasController::class,'permiso']);
 
     Route::get('admin/licenciaGS', [LicenciasGosesController::class,'index'])->name('indexLicGS');
 
@@ -21,7 +22,10 @@ Route::group(['middleware' => ['auth']], function () {
     /*METODOS POST**/
     //para registrar las horas GS depende de las jornadas
     Route::post('GS/create',[LicenciasGosesController::class,'create'])->name('gs/create');
+
     Route::post('admin/licencia/create', [LicenciasController::class,'store'])->name('lic/create');
+    Route::post('admin/licencia/cancel', [LicenciasController::class,'cancelar'])->name('lic/cancelar');
+    Route::post('admin/licencia/enviar', [LicenciasController::class,'enviar'])->name('lic/enviar');
     /*END POST**/
 
 });

@@ -52,7 +52,7 @@
                             <select name="tipo_de_permiso" class="form-control select2" style="width: 100%" data-live-search="true" 
                                 data-style="btn-white"   id="tipo_permiso" name="tipo_permiso">
                                 <option value="">Seleccione</option>
-                                <option value="LC_GS">L.C./G.S.</option>
+                                <option value="LC/GS">L.C./G.S.</option>
                                 <option value="LS/GS">L.S./G.S.</option>
                                 <option value="INCAP">INCAP</option>
                                 <option value="L OFICIAL">L.OFICIAL</option>
@@ -117,7 +117,7 @@
                         <div class="form-group">
                             <label for="exampleInputNombre">Justificación <code>*</code></label>
                             <textarea value=" " class="form-control summernote-config" 
-                                name="justificación" id="justificación" rows="6"></textarea>
+                                name="justificación" id="justificacion" rows="6"></textarea>
                         </div> 
                     </div>
                     <div class="col-xl-6">
@@ -145,23 +145,22 @@
 <!--fin modal de registro-->
 
 <!--modal para dar alta-->
-<div id="modalAlta" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" 
+<div id="modalCancelar" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" 
     aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="myCenterModalLabel">
-                    <i class="mdi mdi-arrow-up-bold  mdi-24px" style="margin: none; padding: none;"></i>
-                    <i class="mdi-arrow-down-bold mdi mdi-24px" style="margin: 0px;"></i> Cancelar</h3>
+                    <i class="fa fa-ban mdi-24px" style="margin: 0px;"></i> Cancelar</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            <form action="{{ route('usuarioEstado') }}" method="POST" id="altaBajaForm">
+            <form action="{{ route('lic/cancelar') }}" method="POST" id="cancelarModal">
                 @csrf
                 <div class="modal-body">
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
                         role="alert" style="display:none" id="notificacion1">
                     </div>
-                    <input type="hidden" name="_id" id="activarId">
+                    <input type="hidden" name="_id" id="cancelar_id">
                     <div class="row py-3">
                         <div class="col-xl-2 fa fa-exclamation-triangle text-warning fa-4x mr-1"></div>
                         <div class="col-xl-9 text-black"> 
@@ -173,7 +172,7 @@
                     
                     <div class="row">
                         <div class="col-xl-6 p-1">
-                            <button  type="button" 
+                            <button  type="submit" 
                                 class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
                                 <i class="mdi mdi-check mdi-16px"></i>
                                 Si
@@ -192,8 +191,60 @@
             </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+</div><!-- /.modal-->
 <!--Modal para dar alta fin-->
+
+<div id="modalEnviar" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" 
+    aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myCenterModalLabel">
+                    <i class="dripicons-information  mdi-24px" style="margin: 0px;"></i> Cancelar</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <form action="{{ route('lic/enviar') }}" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
+                        role="alert" style="display:none" id="notificacion1">
+                    </div>
+                    <input type="hidden" name="_id" id="enviar_id">
+                    <input type="hidden" name="permiso" id="enviar_permiso">
+                    <div class="row py-3 align-center">
+                        <div class="col-xl-2 dripicons-information text-info fa-4x mr-1"></div>
+                        <div class="col-xl-9 text-black"> 
+                            <h4 class="font-17 text-justify font-weight-bold">
+                                Advertencia: Se enviara esta licencia,
+                            </h4>
+                            <h4 class="font-17 text-justify font-weight-bold">
+                                ¿Desea continuar?
+                            </h4>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-xl-6 p-1">
+                            <button  type="submit" 
+                                class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
+                                <i class="mdi mdi-check mdi-16px"></i>
+                                Si
+                            </button>
+                        </div>
+                        <div class="col-xl-6 p-1">
+                            <button type="reset" 
+                                class="btn btn-light p-1 waves-light waves-effect btn-block font-24" 
+                                data-dismiss="modal" >
+                                <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
 
 <!-- start page title -->
 <div class="row">
@@ -256,28 +307,49 @@
                                 }}
                             </td>
                             <td class="align-middle ">
-                                <span class="badge badge-primary"><strong>{{$item->estado}}</strong></span>
+                                @if($item->estado =='GUARDADO') 
+                                    <span class="badge badge-primary"><strong>{{$item->estado}}</strong></span>
+                                @endif
+                                @if($item->estado =='CANCELADO') 
+                                    <span class="badge badge-danger"><strong>{{$item->estado}}</strong></span>
+                                @endif
                             </td>
                             <td class="align-middle ">
                                 <div class="row">
                                     <div class="col text-center">
-                                        <div class="btn-group" role="group" id="group_{{$item->permiso}}">
-                                            <button title="Observaciones" class="btn btn-outline-primary btn-sm rounded-left" value="{{$item->permiso}}"
-                                                onclick="observaciones(this)">
+                                        <div class="btn-group" role="group" 
+                                        @if($item->estado =='GUARDADO') 
+                                        id="group_{{$item->permiso}}"
+                                        @else disabled @endif>
+                                            <button title="Observaciones" class="btn btn-outline-primary btn-sm rounded-left" 
+                                              @if($item->estado =='GUARDADO') value="{{$item->permiso}}" onclick="observaciones(this)"@else disabled @endif>
                                                 <i class="fa fa-eye font-16 my-1" aria-hidden="true"></i>
                                             </button>
-                                            <button title="Editar" class="btn btn-outline-primary btn-sm" value="{{$item->permiso}}"
-                                                 onclick="enviar(this)">                                                
+                                            <button title="Enviar" class="btn btn-outline-primary btn-sm" 
+                                            @if($item->estado =='GUARDADO')
+                                                value="{{$item->permiso}}"
+                                                 onclick="enviar(this)"
+                                                 @else disabled
+                                                 @endif>                                                
                                                 <i class="fa fa-arrow-circle-up font-16 my-1" aria-hidden="true"></i>
                                             </button>
-                                            <button title="Enviar" class="btn btn-outline-primary btn-sm border-letf-0" value="{{$item->permiso}}"
-                                                onclick="editar(this)">
+                                            <button title="Editar" class="btn btn-outline-primary btn-sm border-letf-0"  
+                                            @if($item->estado =='GUARDADO')
+                                                 value="{{$item->permiso}}"
+                                                onclick="editar(this)"
+                                                @else
+                                                disabled
+                                                @endif>
                                                 <i class="fa fa-edit font-16 my-1" aria-hidden="true"></i>
                                             </button>
                                             <button title="Cancelar" 
-                                                class="btn btn-outline-primary btn-sm border-left-0 btn-outline-danger rounded-right" 
-                                                data-toggle="modal" data-target="#modalAlta" 
-                                                onclick="cancelar(this)" value="{{$item->permiso}}">
+                                                class="btn btn-outline-primary btn-sm border-left-0 btn-outline-danger rounded-right"
+                                                @if($item->estado =='GUARDADO')
+                                                 onclick="cancelar(this)"
+                                                 value="{{$item->permiso}}"
+                                                @else
+                                                disabled
+                                                @endif>
                                                 <i class="fa fa-ban font-16 my-1"></i>
                                             </button>                                   
                                         </div>
@@ -349,24 +421,25 @@
         var hrs_disponible=0;
 
         function obtenerHora() {
-            if($('#tipo_permiso').val()==='LC_GS'){             
-                
-                $.ajax({
-                    type: "GET",
-                    url: 'mislicencias/horas/'+$('#fecha_de_uso').val(),
-                    beforeSend: function() {
-                        $('#hora_disponible').val('Cargando...');
-                    },
-                    success: function(json) {
-                        json = JSON.parse(json);
-                        hrs_usados = json.horas_acumuladas;
-                        min_usados = (json.minutos_acumulados < 10 ? '0' : '')+json.minutos_acumulados;
-                        hrs_disponible = json.mensuales;
-                    },
-                    complete: function() {
-                        $('#hora_disponible').val('Usado: '+hrs_usados+' horas, '+min_usados+' minutos'+'    Disponibles: '+hrs_disponible+' horas');
-                    }
-                });
+            if($('#tipo_permiso').val()==='LC/GS'){             
+                if($('#fecha_de_uso').val()!=null){
+                    $.ajax({
+                        type: "GET",
+                        url: 'mislicencias/horas/'+$('#fecha_de_uso').val(),
+                        beforeSend: function() {
+                            $('#hora_disponible').val('Cargando...');
+                        },
+                        success: function(json) {
+                            json = JSON.parse(json);
+                            hrs_usados = json.horas_acumuladas;
+                            min_usados = (json.minutos_acumulados < 10 ? '0' : '')+json.minutos_acumulados;
+                            hrs_disponible = json.mensuales;
+                        },
+                        complete: function() {
+                            $('#hora_disponible').val('Usado: '+hrs_usados+' horas, '+min_usados+' minutos'+'    Disponibles: '+hrs_disponible+' horas');
+                        }
+                    });
+                }
             }else{
                 $('#hora_disponible').val('Ilimitado');
             }
@@ -378,6 +451,7 @@
         $('#fecha_de_uso').click(obtenerHora);
 
         function calcularHora() {
+            if($('#tipo_permiso').val()==='LC/GS'){ 
             var hora_inicio = $('#hora_inicio').val();
             var hora_final = $('#hora_final').val();
             
@@ -407,7 +481,8 @@
             var horas = parseInt(Math.floor(diferencia / 60))+parseInt(hrs_usados);
             var minutos = parseInt((diferencia % 60));
 
-            $('#hora_disponible').val('Usado: '+horas+' horas, '+(minutos < 10 ? '0' : '') + minutos+' minutos'+'    Disponibles: '+hrs_disponible+' horas');          
+            $('#hora_disponible').val('Usado: '+horas+' horas, '+(minutos < 10 ? '0' : '') + minutos+' minutos'+'    Disponibles: '+hrs_disponible+' horas');      
+            }    
         }
 
         $('#hora_inicio').change(calcularHora);
@@ -417,7 +492,48 @@
         $('#hora_final').click(calcularHora);
 
         //
-       // observaciones,editar,enviar,cancelar
+       // observaciones,editar,enviar,cancelar enviar_id enviar_permiso
+       function cancelar(btn) {
+            $('#cancelar_id').val($(btn).val());
+            $('#modalCancelar').modal();
+       }
+       function enviar(boton){
+            $('#id_permiso').val($(boton).val());
+            $('#modalEnviar').modal();
+       }
+       function editar(boton) {
+           if($(boton).val()!=null){
+                $.ajax({
+                    type: "GET",
+                    url: 'mislicencias/permiso/'+$(boton).val(),
+                    beforeSend: function() {
+                        $(boton).prop('disabled', true).html(''
+                            +'<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
+                        );
+                    },
+                    success: function(json) {   
+                        json = JSON.parse(json);                     
+                        $('#fecha_de_uso').val(json.fecha_uso);                        
+                        $('#hora_final').val(json.hora_final);
+                        $('#hora_inicio').val(json.hora_inicio);
+                        $('#justificacion').summernote("code",json.justificacion);
+                        $('#observaciones').summernote("code",json.observaciones);
+                        $('#tipo_representante').val(json.tipo_representante).trigger("change");
+                        $('#tipo_permiso').val(json.tipo_permiso).trigger("change");
+                        $('#fecha_de_presentacion').val(json.fecha_presentacion);
+                        $('#fecha_de_uso').change();
+                        $("#modalRegistro").modal();
+                    },
+                    complete: function() {
+                        $(boton).prop('disabled', false).html(''
+                            +'<i class="fa fa-edit font-16 py-1" aria-hidden="true"></i>'
+                        );
+                    }
+                });
+                
+           }
+       }
+
        function observaciones(boton){
             $.ajax({
                 type: "GET",
@@ -440,4 +556,5 @@
             });
        };
     </script>
+
 @endsection
