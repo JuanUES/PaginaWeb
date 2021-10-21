@@ -47,7 +47,7 @@
                         </select>
                     </div>
                 </div>
-                {{-- @hasanyrole('super-admin|Recurso-Humano') --}}
+                @hasanyrole('super-admin|Recurso-Humano|Jefe-Administrativo|Jefe-Academico')
                     <div class="col-12 col-sm-6 col-md-6">
                         <div class="form-group">
                             <select class="form-group selectpicker select-filter" data-live-search="true" data-style="btn-white"  name="depto">
@@ -58,7 +58,7 @@
                             </select>
                         </div>
                     </div>
-                {{-- @endhasanyrole --}}
+                @endhasanyrole
             </div>
         </form>
         <br/>
