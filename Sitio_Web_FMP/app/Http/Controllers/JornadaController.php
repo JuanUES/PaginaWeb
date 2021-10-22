@@ -557,12 +557,12 @@ class JornadaController extends Controller{
 
         
         //enviado los correos
-        // foreach ($jefes as $key => $item) {
-        //     if(!is_null($item->email) && !empty($item->email))
-        //         Mail::to('mr15058@ues.edu.sv')->send(new JornadaEmail($empleado, $periodo, $deptos, $empleados));
-        // }
+        foreach ($jefes as $key => $item) {
+            if(!is_null($item->email) && !empty($item->email))
+                Mail::to($item->email)->send(new JornadaEmail($empleado, $periodo, $deptos, $empleados));
+        }
 
-        Mail::to('mr15058@ues.edu.sv')->send(new JornadaEmail($empleado, $periodo, $deptos, $empleados));
+        //Mail::to('mr15058@ues.edu.sv')->send(new JornadaEmail($empleado, $periodo, $deptos, $empleados));
         
         // return view('Mails.jornada', compact(['empleado', 'periodo', 'deptos', 'empleados']));
 
