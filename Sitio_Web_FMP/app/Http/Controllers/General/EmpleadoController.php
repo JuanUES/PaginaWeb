@@ -48,7 +48,6 @@ class EmpleadoController extends Controller
             'tipo_contrato' => 'required',
             'tipo_jornada' => 'required',
             'salario' => 'required',
-            'jefe' => 'required',
             'departamento' => 'required',
             'tipo_empleado'=>'required',
         ]);
