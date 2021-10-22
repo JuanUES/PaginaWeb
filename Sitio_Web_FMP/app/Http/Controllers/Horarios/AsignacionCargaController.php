@@ -10,6 +10,7 @@ use App\Models\Horarios\Proyectosociale;
 use App\Models\Horarios\Trabajogrado;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,6 +18,7 @@ class AsignacionCargaController extends Controller
 {
     //
     public function index(){
+        if(Auth::user()->hasRole('super-admin')){
         $empleados = DB::table('empleado')->where('tipo_empleado','Académico')->get();
         $ciclos    = DB::table('ciclos')->where('estado','activo')->get();
         //solo para mostrar la carga admin
@@ -29,8 +31,18 @@ class AsignacionCargaController extends Controller
         ->where('ciclos.estado','activo')
         ->get();
 
-     //  echo dd($tablaA);
-        return view('Admin.horarios.asignarCarga',compact('empleados','ciclos','tablaA'));
+        //para marcar el usuario ya asignado
+        $asig = DB::table('empleado')
+        ->join('asig_admins', 'asig_admins.id_empleado', '=', 'empleado.id')
+        ->select('empleado.id')
+        ->get();
+        //fin de marcar los usuarios ya registrados
+
+      //echo dd($asig);
+        return view('Admin.horarios.asignarCarga',compact('empleados','ciclos','tablaA','asig'));
+      }else{
+        return response()->json(['error'=>['ACCESO DENEGADO']]);
+      }
     }
 
     public function cargaCombobox(){         

@@ -48,7 +48,30 @@
                                 data-style="btn-white" name="id_empleado" id="id_empleado">
                                     <option value="" selected>Seleccione</option>
                                     @foreach ($empleados as $index)
-                                        <option data-icon="mdi mdi-account-plus-outline font-18" value="{!!$index->id!!}">{!!$index->nombre.' '.$index->apellido!!}</option>
+                                    @php
+                                    $b=false;
+                                     @endphp
+                                        @foreach ($asig as $item)
+                                        @if ($item->id==$index->id)
+                                            @php
+                                            $b=$item->id==$index->id;
+                                            @endphp
+                                            @break;
+                                        @endif
+                                        @endforeach
+                                        @if($b)
+                                        <option data-icon="mdi mdi-account-plus-outline font-18" class="text-danger"  value="{!!$index->id!!}">
+                                            <span>
+                                            {!!$index->nombre.' '.$index->apellido!!}
+                                            </span>
+                                        </option>
+                                        @else
+                                        <option data-icon="mdi mdi-account-plus-outline font-18" value="{!!$index->id!!}">
+                                            <span>
+                                            {!!$index->nombre.' '.$index->apellido!!}
+                                            </span>
+                                        </option>
+                                        @endif
                                     @endforeach
                                 </select>
                             </div>
