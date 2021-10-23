@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\DB;
 
 class LicenciasController extends Controller
 {
+    /**ESTADOS: 'ENVIADO A JEFATURA' , 'GUARDADO' */
+
     protected function obtenerDia($fecha){
         $dias = array('Lunes','Martes','Miércoles','Jueves','Viernes','Sabado','Domingo');
         $dia = $dias[(date('N', strtotime($fecha))) - 1];
@@ -126,16 +128,18 @@ class LicenciasController extends Controller
     public function horas_disponibles($fecha){
         if(Auth::check() and !empty($fecha)){
             $horas = Permiso::selectRaw('sum(date_part(\'hour\', permisos.hora_final-permisos.hora_inicio)) as horas_acumuladas,
-                sum(date_part(\'minute\', permisos.hora_final-permisos.hora_inicio)) as minutos_acumulados,mensuales')
+                sum(date_part(\'minute\', permisos.hora_final-permisos.hora_inicio)) as minutos_acumulados,
+                mensuales - sum(date_part(\'hour\', hora_final-hora_inicio))  mensuales')
                 ->join('empleado', 'empleado.id','=','permisos.empleado')
                 ->join('tipo_jornada', 'tipo_jornada.id','=','empleado.id_tipo_jornada')
                 ->join('licencia_con_goses','licencia_con_goses.id_tipo_jornada','=','tipo_jornada.id')
-                ->whereRaw('empleado.id=? and permisos.tipo_permiso=\'LC/GS\' and to_char(permisos.fecha_uso, \'MM\')=to_char(\''.$fecha.'\'::date, \'MM\')',
+                ->whereRaw('empleado.id=? and permisos.tipo_permiso=\'LC/GS\' and to_char(permisos.fecha_uso, \'MM-YY\')=to_char(\''.$fecha.'\'::date, \'MM-YY\')',
                     [auth()->user()->empleado])
                 ->groupBy('mensuales')->first();
 
             if(is_null($horas)){
-                return Empleado::selectRaw('0 as horas_acumuladas,0 as  minutos_acumulados,mensuales')
+                return Empleado::selectRaw('0 as horas_acumuladas,0 as  minutos_acumulados,
+                    mensuales - sum(date_part(\'hour\', hora_final-hora_inicio))  as mensuales')
                     ->join('tipo_jornada', 'tipo_jornada.id','=','empleado.id_tipo_jornada')
                     ->join('licencia_con_goses','licencia_con_goses.id_tipo_jornada','=','tipo_jornada.id')
                     ->whereRaw('empleado.id=?',[auth()->user()->empleado])->first()->toJSON();
@@ -165,20 +169,24 @@ class LicenciasController extends Controller
     }
 
     public function enviar(Request $request){
-        if(isset($request) and Auth::check()){
-            $seguimiento = new Permiso_seguimiento;
-            $seguimiento -> permiso_id = $request->permiso;
-            $seguimiento -> observaciones = 'Enviado a revisión Jefatura';
-            $seguimiento -> estado = true;
-            $exito = $seguimiento -> save();
+        if(isset($request->_id) and Auth::check()){
 
-            if($exito){
-                $permiso = Permiso::findOrFail($request->permiso);
-                $permiso -> estado = 'ENVIADO A JEFATURA';
-                $permiso -> save();                
-            }
-            
+            $permiso = Permiso::select('estado','id')
+                ->whereRaw('md5(id::text) = \''.$request->_id.'\'')->first();
+            $permiso -> estado = 'ENVIADO A JEFATURA';
+            $permiso -> save(); 
+
+            $seguimiento = new Permiso_seguimiento;
+            $seguimiento -> permiso_id = $permiso->id;
+            $seguimiento -> estado = true;
+            $seguimiento -> proceso = 'ENVIADO A JEFATURA';
+            $seguimiento -> save();
+
             return redirect()->route('indexLic');
         }
+    }
+
+    public function procesos($permiso){
+        
     }
 }

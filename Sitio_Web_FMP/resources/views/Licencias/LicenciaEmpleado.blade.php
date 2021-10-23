@@ -210,7 +210,6 @@
                         role="alert" style="display:none" id="notificacion1">
                     </div>
                     <input type="hidden" name="_id" id="enviar_id">
-                    <input type="hidden" name="permiso" id="enviar_permiso">
                     <div class="row py-3 align-center">
                         <div class="col-xl-2 dripicons-information text-info fa-4x mr-1"></div>
                         <div class="col-xl-9 text-black"> 
@@ -242,6 +241,29 @@
                     </div>
                 </div>
             </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+<div id="modalObservaciones" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" 
+    aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myCenterModalLabel">
+                    <i class="fa fa-eye font-16 my-1" style="margin: 0px;"></i> Observaciones</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>           
+            <div class="modal-body">
+                <table style="width: 100%" id="obs-table"> 
+                    <thead>
+                        <tr>
+                            <th class="col-sm-1">Procedimiento</th>
+                            <th class="col-xs-2">Observaciones</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
@@ -287,7 +309,7 @@
                     <th class="col-xs-1">Hora Inicio</th>
                     <th class="col-xs-1">Hora Final</th>
                     <th class="col-sm-2">Horas</th>
-                    <th class="col-sm-1">Estado</th>
+                    <th class="col-sm-1 text-center">Estado</th>
                     <th class="col-sm-1 text-center">Acciones</th>
                 </tr>
                 </thead>
@@ -306,35 +328,41 @@
                                         ->diffAsCarbonInterval(Carbon\Carbon::parse($item->fecha_uso.'T'.$item->hora_final))
                                 }}
                             </td>
-                            <td class="align-middle ">
+                            <td class="align-middle text-center">
                                 @if($item->estado =='GUARDADO') 
-                                    <span class="badge badge-primary"><strong>{{$item->estado}}</strong></span>
+                                    <span class="badge badge-primary">{{$item->estado}}</span>
                                 @endif
                                 @if($item->estado =='CANCELADO') 
-                                    <span class="badge badge-danger"><strong>{{$item->estado}}</strong></span>
+                                    <span class="badge badge-danger">{{$item->estado}}</span>
+                                @endif
+                                @if ($item->estado =='ENVIADO A JEFATURA')
+                                    <span class="badge badge-warning">{{$item->estado}}</span>
                                 @endif
                             </td>
                             <td class="align-middle ">
                                 <div class="row">
                                     <div class="col text-center">
-                                        <div class="btn-group" role="group" 
-                                        @if($item->estado =='GUARDADO') 
-                                        id="group_{{$item->permiso}}"
-                                        @else disabled @endif>
+                                        @php
+                                            $todos_btn = $item->estado =='GUARDADO' or 
+                                                        !$item->estado=='ENVIADO A JEFATURA';
+                                        @endphp
+                                        <div class="btn-group" role="group">
                                             <button title="Observaciones" class="btn btn-outline-primary btn-sm rounded-left" 
-                                              @if($item->estado =='GUARDADO') value="{{$item->permiso}}" onclick="observaciones(this)"@else disabled @endif>
+                                              value="{{$item->permiso}}" 
+                                              onclick="observaciones(this)">
                                                 <i class="fa fa-eye font-16 my-1" aria-hidden="true"></i>
                                             </button>
                                             <button title="Enviar" class="btn btn-outline-primary btn-sm" 
-                                            @if($item->estado =='GUARDADO')
+                                            @if($todos_btn)
                                                 value="{{$item->permiso}}"
                                                  onclick="enviar(this)"
                                                  @else disabled
                                                  @endif>                                                
                                                 <i class="fa fa-arrow-circle-up font-16 my-1" aria-hidden="true"></i>
                                             </button>
-                                            <button title="Editar" class="btn btn-outline-primary btn-sm border-letf-0"  
-                                            @if($item->estado =='GUARDADO')
+                                            <button title="Editar" 
+                                            class="btn btn-outline-primary btn-sm border-letf-0"  
+                                            @if($todos_btn)
                                                  value="{{$item->permiso}}"
                                                 onclick="editar(this)"
                                                 @else
@@ -344,7 +372,7 @@
                                             </button>
                                             <button title="Cancelar" 
                                                 class="btn btn-outline-primary btn-sm border-left-0 btn-outline-danger rounded-right"
-                                                @if($item->estado =='GUARDADO')
+                                                @if($todos_btn)
                                                  onclick="cancelar(this)"
                                                  value="{{$item->permiso}}"
                                                 @else
@@ -421,8 +449,7 @@
         var hrs_disponible=0;
 
         function obtenerHora() {
-            if($('#tipo_permiso').val()==='LC/GS'){             
-                if($('#fecha_de_uso').val()!=null){
+            if($('#tipo_permiso').val()==='LC/GS' && $('#fecha_de_uso').val().trim() != ""){
                     $.ajax({
                         type: "GET",
                         url: 'mislicencias/horas/'+$('#fecha_de_uso').val(),
@@ -430,28 +457,24 @@
                             $('#hora_disponible').val('Cargando...');
                         },
                         success: function(json) {
-                            json = JSON.parse(json);
+                            var json = JSON.parse(json);
                             hrs_usados = json.horas_acumuladas;
                             min_usados = (json.minutos_acumulados < 10 ? '0' : '')+json.minutos_acumulados;
-                            hrs_disponible = json.mensuales;
+                            hrs_disponible = (json.minutos_acumulados > 0 ? parseInt(json.mensuales)-1:json.mensuales);
                         },
                         complete: function() {
-                            $('#hora_disponible').val('Usado: '+hrs_usados+' horas, '+min_usados+' minutos'+'    Disponibles: '+hrs_disponible+' horas');
+                            $('#hora_disponible').val('Usado: '+hrs_usados+' hrs, '+min_usados+' min'
+                            +'   Disponibles: '+hrs_disponible+' hrs,'+(json.minutos_acumulados > 0 ? 60 - parseInt(json.minutos_acumulados):0));
                         }
                     });
-                }
+                
             }else{
                 $('#hora_disponible').val('Ilimitado');
             }
         }
 
-        $('#tipo_permiso').on('select2:select',obtenerHora);
-
-        $('#fecha_de_uso').change(obtenerHora);
-        $('#fecha_de_uso').click(obtenerHora);
-
         function calcularHora() {
-            if($('#tipo_permiso').val()==='LC/GS'){ 
+            
             var hora_inicio = $('#hora_inicio').val();
             var hora_final = $('#hora_final').val();
             
@@ -463,33 +486,32 @@
                     && hora_final.match(formatohora))){
                 return;
             }
-            
             // Calcula los minutos de cada hora
             var minutos_inicio = hora_inicio.split(':')
                 .reduce((p, c) => parseInt(p) * 60 + parseInt(c));
             var minutos_final = hora_final.split(':')
                 .reduce((p, c) => parseInt(p) * 60 + parseInt(c));
-            
+            var hrs_disp = parseInt(parseInt(hrs_disponible)+parseInt(hrs_usados)) * 60;
             // Si la hora final es anterior a la hora inicial sale
             if (minutos_final < minutos_inicio) return;
             
             // Diferencia de minutos
             var diferencia = minutos_final - minutos_inicio;
             diferencia = parseInt(diferencia)+parseInt(min_usados);
-            
+
             // Cálculo de horas y minutos de la diferencia
             var horas = parseInt(Math.floor(diferencia / 60))+parseInt(hrs_usados);
             var minutos = parseInt((diferencia % 60));
+            var hora_disponible = parseInt(parseInt(hrs_disponible)-parseInt(Math.floor(diferencia / 60)));
 
-            $('#hora_disponible').val('Usado: '+horas+' horas, '+(minutos < 10 ? '0' : '') + minutos+' minutos'+'    Disponibles: '+hrs_disponible+' horas');      
-            }    
+            $('#hora_disponible').val('Usado: '+horas+' hrs, '+(minutos < 10 ? '0' : '') 
+            + minutos+' min'+'  Disponibles: '+(minutos>0 ? parseInt(horas_disponibles):hora_disponible)+' hrs');      
         }
 
-        $('#hora_inicio').change(calcularHora);
-        $('#hora_inicio').click(calcularHora);
-
-        $('#hora_final').change(calcularHora);
-        $('#hora_final').click(calcularHora);
+        $('#tipo_permiso').on('select2:select',obtenerHora);
+        $('#fecha_de_uso').change(obtenerHora).click(obtenerHora);
+        $('#hora_inicio').change(calcularHora).click(calcularHora);
+        $('#hora_final').change(calcularHora).click(calcularHora);
 
         //
        // observaciones,editar,enviar,cancelar enviar_id enviar_permiso
@@ -498,7 +520,7 @@
             $('#modalCancelar').modal();
        }
        function enviar(boton){
-            $('#id_permiso').val($(boton).val());
+            $('#enviar_id').val($(boton).val());
             $('#modalEnviar').modal();
        }
        function editar(boton) {
@@ -513,15 +535,14 @@
                     },
                     success: function(json) {   
                         json = JSON.parse(json);                     
-                        $('#fecha_de_uso').val(json.fecha_uso);                        
-                        $('#hora_final').val(json.hora_final);
-                        $('#hora_inicio').val(json.hora_inicio);
                         $('#justificacion').summernote("code",json.justificacion);
                         $('#observaciones').summernote("code",json.observaciones);
                         $('#tipo_representante').val(json.tipo_representante).trigger("change");
                         $('#tipo_permiso').val(json.tipo_permiso).trigger("change");
                         $('#fecha_de_presentacion').val(json.fecha_presentacion);
-                        $('#fecha_de_uso').change();
+                        $('#fecha_de_uso').val(json.fecha_uso).change();                                   
+                        $('#hora_inicio').val(json.hora_inicio).change();
+                        $('#hora_final').val(json.hora_final).change();
                         $("#modalRegistro").modal();
                     },
                     complete: function() {
@@ -529,31 +550,32 @@
                             +'<i class="fa fa-edit font-16 py-1" aria-hidden="true"></i>'
                         );
                     }
-                });
-                
+                });                
            }
        }
 
        function observaciones(boton){
-            $.ajax({
-                type: "GET",
-                url: 'Empleado/'+id,
-                beforeSend: function() {
-                    $(boton).prop('disabled', true).html(''
-                        +'<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
-                    );
-                },
-                success: function(json) {
-                    json=JSON.parse(json);
-                    
-                    $("#modalRegistro").modal();
-                },
-                complete: function() {
-                    $(boton).prop('disabled', false).html(''
-                        +'<i class="fa fa-edit font-16" aria-hidden="true"></i>'
-                    );
-                }
-            });
+        if($(boton).val()!=null){
+                $.ajax({
+                    type: "GET",
+                    url: 'mislicencias/permiso/'+$(boton).val(),
+                    beforeSend: function() {
+                        $(boton).prop('disabled', true).html(''
+                            +'<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
+                        );
+                    },
+                    success: function(json) {   
+                        json = JSON.parse(json);                     
+                        
+                        $("#modalEnviar").modal();
+                    },
+                    complete: function() {
+                        $(boton).prop('disabled', false).html(''
+                            +'<i class="fa fa-edit font-16 py-1" aria-hidden="true"></i>'
+                        );
+                    }
+                });                
+           }
        };
     </script>
 

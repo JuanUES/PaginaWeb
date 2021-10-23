@@ -12,6 +12,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('admin/mislicencias', [LicenciasController::class,'indexMisLicencias'])->name('indexLic');
     Route::get('admin/mislicencias/horas/{fecha}', [LicenciasController::class,'horas_disponibles']);
     Route::get('admin/mislicencias/permiso/{permiso}',[LicenciasController::class,'permiso']);
+    Route::get('admin/mislicencias/observaciones/{permiso]}',[LicenciasController::class,'permiso']);
 
     Route::get('admin/licenciaGS', [LicenciasGosesController::class,'index'])->name('indexLicGS');
 
