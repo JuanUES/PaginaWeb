@@ -9,7 +9,7 @@ Route::group(['middleware' => ['role:super-admin','auth']], function () {
     Route::get('admin/Empleado',[EmpleadoController::class, 'index'])->name('empleado');
     Route::get('admin/Empleado/{id}', [EmpleadoController::class, 'empleado']);
 
-    Route::get('admin/Empleado/Categoria',[EmpleadoController::class, 'categoriaGet'])->name('empleadoCat');
+    Route::get('admin/Empleado/Categoria/Get',[EmpleadoController::class, 'categoriaGet'])->name('empleadoCat');
     Route::get('admin/Empleado/categoriaGetObjeto/{id}',[EmpleadoController::class, 'categoriaGetObjeto']);
 
     /**Metodos Post */

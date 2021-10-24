@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function() {
     $('.select2').select2();
     $('#salarioE').mask('##.00', {reverse: true});
 });
@@ -38,11 +38,30 @@ $(document).ready(function() {
         $(".select2").select2();
     });
 
-    function editarCat(id){
-        $.get('Empleado/categoriaGetObjeto/'+id,function(json){
-            json=JSON.parse(json);
-            $('#_idCat').val(json.id);
-            $('#categoria').val(json.categoria);
+    function editarCat(id,boton){
+        $.ajax({
+            type: "GET",
+            url: 'Empleado/categoriaGetObjeto/'+id,
+            beforeSend: function() {
+                $(boton).prop('disabled', true).html(''
+                    +'<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
+                );
+                $('#categoria').prop('disabled', true);
+                $('#guardadCat').prop('disabled', true);
+            },
+            success: function(json) {
+                json=JSON.parse(json);
+                $('#_idCat').val(json.id);
+                $('#categoria').val(json.categoria);
+            },
+            complete: function() {
+                $(boton).prop('disabled', false).html(''
+                    +'<i class="fa fa-edit font-16" aria-hidden="true"></i>'
+                );
+                $('#categoria').prop('disabled', false);
+                $('#guardadCat').prop('disabled', false);
+                $('.modal').scrollTop(0);
+            }
         });
     }
     function eliminarCat(id){
@@ -54,7 +73,7 @@ $(document).ready(function() {
         $("#modalAlta").modal();
     }
     function cargarCategoria(){
-        $.get('Empleado/Categoria',function(json){
+        $.get('Empleado/Categoria/Get',function(json){
             json=JSON.parse(json);
             var categoria = $('#categoriaTb').DataTable();
             categoria.clear();
@@ -62,7 +81,7 @@ $(document).ready(function() {
             for (var i in json) {
                 var html = '';
                 html += '<div class="btn-group text-center" role="group">';
-                html += '<button onclick="editarCat('+json[i].id+');"';
+                html += '<button onclick="editarCat('+json[i].id+',this);"';
                 html += '    title="Editar" class="btn btn-outline-primary mr-1 btn-sm rounded">';
                 html += '   <i class="fa fa-edit font-15" aria-hidden="true"></i>';
                 html += '</button>';
@@ -74,9 +93,9 @@ $(document).ready(function() {
                 categoria.row.add([id,json[i].categoria,html]).draw(false);
                 id++;
             }
+            categoria.trigger('processing.dt');
         });
     }
-    
     function httpCategoria(formulario,notificacion){
         $.ajax({
             type: $(formulario).attr('method'),

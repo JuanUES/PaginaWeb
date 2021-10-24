@@ -14,10 +14,10 @@ class EmpleadoController extends Controller
 {
     function index(){
 
-        $categorias=CategoriaEmpleado::all();
-        $departamentos=Departamento::get();
-        $tcontrato=Tipo_Contrato::get();
-        $tjornada=Tipo_Jornada::get();
+        $categorias=CategoriaEmpleado::orderBy('id')->get();
+        $departamentos=Departamento::orderBy('id')->get();
+        $tcontrato=Tipo_Contrato::orderBy('id')->get();
+        $tjornada=Tipo_Jornada::orderBy('id')->get();
 
         $empleados = Empleado::orderBy('id')
         ->join('categoria_empleados','categoria_empleados.id','=','empleado.categoria')
@@ -126,7 +126,9 @@ class EmpleadoController extends Controller
         $cat = $request->_id != null ? CategoriaEmpleado::findOrFail($request->_id):new CategoriaEmpleado;
         $cat -> categoria = $request->categoria;
         $cat -> save();
-        return response()->json(['code'=>200, 'mensaje'=>'Categoria registrada','data' => $cat], 200);
+        return $request->_id != null ?
+        response()->json(['code'=>200, 'mensaje'=>'Categoria Modificada','data' => $cat], 200):
+        response()->json(['code'=>200, 'mensaje'=>'Categoria registrada','data' => $cat], 200);
     }
 
     public function categoriaDestroy(Request $request){

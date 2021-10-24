@@ -172,9 +172,9 @@
     </div>
 </div>
 
-<div class="modal fade bs-example-modal-lg" tabindex="-1"
+<div class="modal fade bs-example-modal-lg"
     role="dialog" aria-labelledby="myLargeModalLabel"
-    id="modalCategoria" tabindex="-1" aria-hidden="true">
+    id="modalCategoria"  aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -241,7 +241,7 @@
                         <div class="col-xl-2">
                             <div class="form-group">
                                 <label for="">&nbsp;</label>
-                                <button type="button" class="btn btn-primary form-control"
+                                <button type="button" class="btn btn-primary form-control" id="guardadCat"
                                     onClick="httpCategoria('#empleadoCatReg','#notificacionCat')">
                                     <li class="fa fa-save"></li> Guardar
                                 </button>
@@ -249,47 +249,44 @@
                         </div>
                     </div>
                 </form>
-                <div class="row p-3">
-                    <div class="col-xl-12">
-                        <div class="table-responsive">
-                            <table class="table table-responsive" style="width: 100%" id="categoriaTb">
-                                <thead>
-                                    <tr>
-                                        <th class="col-sm-1" style="width: 5%;">#</th>
-                                        <th class="col-xs-1" style="width: 90%;">Categoria</th>
-                                        <th class="col-sm-1" style="width: 5%;">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="catbody">
-                                    @php
-                                        $i=0;
-                                    @endphp
-                                    @foreach ($categorias as $item)
-                                        @php
-                                            $i++;
-                                        @endphp
-                                        <tr>
-                                            <td>{{$i}}</td>
-                                            <td>{!!$item->categoria!!}</td>
-                                            <td>
-                                                <div class="btn-group text-center" role="group">
-                                                    <button onclick="editarCat({!!$item->id!!});"
-                                                     title="Editar" class="btn btn-outline-primary mr-1 btn-sm rounded" onclick="">
-                                                        <i class="fa fa-edit font-15" aria-hidden="true"></i>
-                                                    </button>
-                                                    <button title="Eliminar" class="btn btn-outline-danger btn-sm rounded"
-                                                        onclick="eliminarCat({!!$item->id!!});">
-                                                        <i class=" mdi mdi-trash-can-outline font-18" aria-hidden="true"></i>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                <div class="p-3 container-fluid">
+                    <table class="table " style="width: 100%" id="categoriaTb">
+                        <thead>
+                            <tr>
+                                <th class="col-sm-1">#</th>
+                                <th>Categoria</th>
+                                <th class="col-xl-2">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="catbody">
+                            @php
+                                $i=0;
+                            @endphp
+                            @foreach ($categorias as $item)
+                                @php
+                                    $i++;
+                                @endphp
+                                <tr>
+                                    <td class="col-sm-1">{{$i}}</td>
+                                    <td>{!!$item->categoria!!}</td>
+                                    <td class="col-xl-2">
+                                        <div class="btn-group text-center" role="group">
+                                            <button onclick="editarCat({!!$item->id!!},this);"
+                                                title="Editar" class="btn btn-outline-primary mr-1 btn-sm rounded">
+                                                <i class="fa fa-edit font-15" aria-hidden="true"></i>
+                                            </button>
+                                            <button title="Eliminar" class="btn btn-outline-danger btn-sm rounded"
+                                                onclick="eliminarCat({!!$item->id!!});">
+                                                <i class=" mdi mdi-trash-can-outline font-18" aria-hidden="true"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 </div>
+                
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary"
@@ -379,8 +376,7 @@
                     <!-- Button trigger modal -->
                     <div class="btn-group" role="group">
                         <button type="button" title="Agregar Categoria"
-                            class="btn dripicons-briefcase btn-success mr-1 rounded font-18"
-                            data-toggle="modal" data-target="#modalCategoria">
+                            class="btn dripicons-briefcase btn-success mr-1 rounded font-18" onclick="$('#categoriaTb').trigger('processing.dt');$('#modalCategoria').modal();">
                         </button>
                         <button type="button" title="Agregar Empleado"
                             class="btn btn-primary dripicons-plus rounded"
@@ -396,8 +392,8 @@
                     <th data-priority="3">Nombre</th>
                     <th data-priority="3" class="col-sm-1 text-center">Categoria</th>
                     <th data-priority="3" class="col-sm-1 text-center">Contrato</th>
-                    <th data-priority="3" class="col-sm-1 text-center">Jornada</th>
-                    <th data-priority="3" class="col-sm-1 text-center">Departamento</th>
+                    <th data-priority="3" class="col-sm-2 text-center">Jornada</th>
+                    <th data-priority="3" class="col-sm-2 text-center">Departamento</th>
                     <th data-priority="3" class="col-sm-1 text-center">Estado</th>
                     <th data-priority="1" class="col-sm-1 text-center">Acciones</th>
                 </tr>
@@ -462,6 +458,16 @@
         left: 50%;
         transform: translate(-50%, -50%);
     }    
+
+    #categoriaTb>tbody>tr>:nth-child(1){
+        width: 10%;
+    }
+    #categoriaTb>tbody>tr>:nth-child(2){
+        width: 90%;
+    }
+    #categoriaTb>tbody>tr>:nth-child(3){
+        width: 10%;
+    }
 </style>
 <link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
 <link href="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>

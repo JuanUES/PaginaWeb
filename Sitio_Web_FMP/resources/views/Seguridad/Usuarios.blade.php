@@ -387,7 +387,6 @@
 @section('plugins-js')
     <!-- Bootstrap Select -->
     <script src="{{ asset('/template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
-    <script src="{{ asset('/template-admin/dist/assets/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}" ></script>
 
     <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
 

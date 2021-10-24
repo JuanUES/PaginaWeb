@@ -308,7 +308,7 @@
                     <th class="col-sm-1">Tipo</th>
                     <th class="col-xs-1">Hora Inicio</th>
                     <th class="col-xs-1">Hora Final</th>
-                    <th class="col-sm-2">Horas</th>
+                    <th class="col-xs-2">Horas</th>
                     <th class="col-sm-1 text-center">Estado</th>
                     <th class="col-sm-1 text-center">Acciones</th>
                 </tr>
@@ -462,7 +462,7 @@
                             min_usados = (json.minutos_acumulados < 10 ? '0' : '')+json.minutos_acumulados;
                             hrs_disponible = (json.minutos_acumulados > 0 ? parseInt(json.mensuales)-1:json.mensuales);
                         },
-                        complete: function() {
+                        complete: function(json) {
                             $('#hora_disponible').val('Usado: '+hrs_usados+' hrs, '+min_usados+' min'
                             +'   Disponibles: '+hrs_disponible+' hrs,'+(json.minutos_acumulados > 0 ? 60 - parseInt(json.minutos_acumulados):0));
                         }
@@ -545,7 +545,7 @@
                         $('#hora_final').val(json.hora_final).change();
                         $("#modalRegistro").modal();
                     },
-                    complete: function() {
+                    complete: function(json) {
                         $(boton).prop('disabled', false).html(''
                             +'<i class="fa fa-edit font-16 py-1" aria-hidden="true"></i>'
                         );
@@ -569,7 +569,7 @@
                         
                         $("#modalEnviar").modal();
                     },
-                    complete: function() {
+                    complete: function(json) {
                         $(boton).prop('disabled', false).html(''
                             +'<i class="fa fa-edit font-16 py-1" aria-hidden="true"></i>'
                         );
