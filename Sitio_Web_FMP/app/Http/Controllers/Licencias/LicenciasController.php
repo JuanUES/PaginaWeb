@@ -133,12 +133,12 @@ class LicenciasController extends Controller
                 ->join('empleado', 'empleado.id','=','permisos.empleado')
                 ->join('tipo_jornada', 'tipo_jornada.id','=','empleado.id_tipo_jornada')
                 ->join('licencia_con_goses','licencia_con_goses.id_tipo_jornada','=','tipo_jornada.id')
-                ->whereRaw('empleado.id=? and permisos.tipo_permiso=\'LC/GS\' and to_char(permisos.fecha_uso, \'MM-YY\')=to_char(\''.$fecha.'\'::date, \'MM-YY\')',
+                ->whereRaw('empleado.id=? and permisos.tipo_permiso=\'LC/GS\' and to_char(permisos.fecha_uso, \'MM-YY\') = to_char(\''.$fecha.'\'::date, \'MM-YY\')',
                     [auth()->user()->empleado])
                 ->groupBy('mensuales')->first();
 
             if(is_null($horas)){
-                return Empleado::selectRaw('0 as horas_acumuladas,0 as  minutos_acumulados,
+                return Permiso::selectRaw('0 as horas_acumuladas,0 as  minutos_acumulados,
                         mensuales - sum(date_part(\'hour\', permisos.hora_final-permisos.hora_inicio))  as mensuales')
                     ->join('tipo_jornada', 'tipo_jornada.id','=','empleado.id_tipo_jornada')
                     ->join('licencia_con_goses','licencia_con_goses.id_tipo_jornada','=','tipo_jornada.id')
