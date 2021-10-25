@@ -139,7 +139,7 @@ class LicenciasController extends Controller
 
             if(is_null($horas)){
                 return Empleado::selectRaw('0 as horas_acumuladas,0 as  minutos_acumulados,
-                    mensuales - sum(date_part(\'hour\', hora_final-hora_inicio))  as mensuales')
+                    mensuales - sum(date_part(\'hour\', permisos.hora_final-permisos.hora_inicio))  as mensuales')
                     ->join('tipo_jornada', 'tipo_jornada.id','=','empleado.id_tipo_jornada')
                     ->join('licencia_con_goses','licencia_con_goses.id_tipo_jornada','=','tipo_jornada.id')
                     ->whereRaw('empleado.id=?',[auth()->user()->empleado])->first()->toJSON();

@@ -343,7 +343,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                             @endauth     
                             </div>
                             @if (count($noticias)) 
-                                <table id="dtNoticias" class="table table-borderless" style="width: 100%;">
+                                <table id="dtNoticias" class="table table-border" style="width: 100%;">
                                     <thead style="display: none;">
                                       <tr>                                            
                                         <th>&nbsp;</th>    
