@@ -129,7 +129,7 @@ class LicenciasController extends Controller
         if(Auth::check() and !empty($fecha)){
             $horas = Permiso::selectRaw('sum(date_part(\'hour\', permisos.hora_final-permisos.hora_inicio)) as horas_acumuladas,
                 sum(date_part(\'minute\', permisos.hora_final-permisos.hora_inicio)) as minutos_acumulados,
-                mensuales - sum(date_part(\'hour\', hora_final-hora_inicio))  mensuales')
+                mensuales - sum(date_part(\'hour\', permisos.hora_final-permisos.hora_inicio))  mensuales')
                 ->join('empleado', 'empleado.id','=','permisos.empleado')
                 ->join('tipo_jornada', 'tipo_jornada.id','=','empleado.id_tipo_jornada')
                 ->join('licencia_con_goses','licencia_con_goses.id_tipo_jornada','=','tipo_jornada.id')
@@ -139,7 +139,7 @@ class LicenciasController extends Controller
 
             if(is_null($horas)){
                 return Empleado::selectRaw('0 as horas_acumuladas,0 as  minutos_acumulados,
-                    mensuales - sum(date_part(\'hour\', permisos.hora_final-permisos.hora_inicio))  as mensuales')
+                        mensuales - sum(date_part(\'hour\', permisos.hora_final-permisos.hora_inicio))  as mensuales')
                     ->join('tipo_jornada', 'tipo_jornada.id','=','empleado.id_tipo_jornada')
                     ->join('licencia_con_goses','licencia_con_goses.id_tipo_jornada','=','tipo_jornada.id')
                     ->whereRaw('empleado.id=?',[auth()->user()->empleado])->first()->toJSON();
