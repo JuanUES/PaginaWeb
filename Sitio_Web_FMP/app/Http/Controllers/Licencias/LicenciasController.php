@@ -33,10 +33,12 @@ class LicenciasController extends Controller
             $empleado = Empleado::findOrFail(auth()->user()->empleado);  
             $permisos = Permiso::selectRaw('md5(id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
                 fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,estado')
-                ->where([
-                    ['tipo_permiso','LC/GS'],['tipo_permiso','LS/GS'],['tipo_permiso','T COMP'],
-                    ['tipo_permiso','INCAP'],['tipo_permiso','L OFICIAL'],['tipo_permiso','CITA MEDICA']]
-                )->where('empleado',auth()->user()->empleado)->orderBy('fecha_presentacion')->get();     
+                ->where('empleado',auth()->user()->empleado)
+                ->orWhere([
+                    ['tipo_permiso','=','LC/GS'],['tipo_permiso','=','LS/GS'],['tipo_permiso','=','T COMP'],
+                    ['tipo_permiso','=','INCAP'],['tipo_permiso','=','L OFICIAL'],['tipo_permiso','=','CITA MEDICA']]
+                )
+                ->orderBy('fecha_presentacion')->get();     
             return view('Licencias.LicenciaEmpleado',compact('empleado','permisos'));
         }
     }
