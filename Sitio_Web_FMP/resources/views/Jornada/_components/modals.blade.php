@@ -43,6 +43,9 @@
 
                                 </tbody>
                             </table>
+                            <span class="float-center">
+                                <p class="lead" style="font-size: 13px;">Nota: <span class="badge badge-info" id="notaDetalle"></span></p>
+                            </span>
                         </div>
                         <div class="tab-pane show" id="seguimiento">
                             <table class="table table-hover table-sm">
@@ -244,6 +247,17 @@
                                 <div id="days-table"></div>
                             </div>
                         </div>
+
+                        @if (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano'))
+                            <div class="row" style="padding-top: 15px;" >
+                                <div class="col-12 col-sm-12" id="nota_div" style="display:none">
+                                    <div class="form-group">
+                                        <label for="tnota" class="control-label">{{ 'Nota' }} <span class="text-danger">*</span> </label>
+                                        <input type="text" class="form-control" name="observaciones" id="observaciones" placeholder="Ingrese una Nota de Modificación a esté registro" ></input>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fa fa-ban"  aria-hidden="true"></i> Cerrar</button>

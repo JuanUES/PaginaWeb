@@ -259,11 +259,10 @@
                 $("#id_periodo").val(periodo);
                 $('#id_periodo').selectpicker('refresh');
 
+
                 $("#id_periodo_text").prop('disabled', false);
                 $("#id_periodo_text").val($("#id_periodo").val());
                 $("#id_periodo").prop('disabled', 'disabled');
-
-
             }
             if(updateEmpleado && empleado!==null){//para uctualizar el dato del empleado
                 $("#id_emp").val(empleado).trigger('change');
@@ -281,12 +280,14 @@
     //Para editar la jornada
     function fnEditJornada(element) {
         $("#modalNewJonarda").modal('show');
+        $("#nota_div").show();
         let id = $(element).data('id');
         let data = getData('GET', `{{ url('admin/jornada') }}/`+id,'#notificacion_jornada');
         data.then(function(response){
             $("#_id").val(id);
             fnUpdatePeriodoSelect(response.jornada.id_periodo, true, response.jornada.id_emp, true, response.jornada.id_periodo);
             table.replaceData(response.items);
+            $("#frmJornada #nota").val(response.jornada.observaciones);
         });
     }
 
@@ -344,6 +345,7 @@
             var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
             $('#fechaRegistroDetalle').html(fecha.toLocaleDateString("es-ES", options));
+            $('#notaDetalle').html(data.jornada.observaciones);
 
             let contenido = '';
             $.each(data.items, function (indexInArray, valueOfElement) {
