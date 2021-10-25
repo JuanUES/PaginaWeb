@@ -114,7 +114,7 @@
                     data-toggle="modal" data-target="#modalRegistro"></button>
                 </div>                
             </div>
-            <table  class="table  table-responsive" style="width: 100%">
+            <table  class="table " style="width: 100%">
                 <thead>
                 <tr>
                     <th class="col-sm-1" style="width: 5%;">N°</th>
