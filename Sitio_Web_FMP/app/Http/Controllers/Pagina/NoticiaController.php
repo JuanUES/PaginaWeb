@@ -18,7 +18,7 @@ class NoticiaController extends Controller
     public function index($id, $titulo)
     { 
         $idNoticia = base64_decode($id);
-        $noticias  = Noticia::all();
+        $noticias  = Noticia::all()->orderBy('id', 'desc');
         $noticia   = $noticias -> find($idNoticia);
         if($noticia != null and $noticia -> tipo){   
             return view('Inicio.Noticia', compact('noticia'));
