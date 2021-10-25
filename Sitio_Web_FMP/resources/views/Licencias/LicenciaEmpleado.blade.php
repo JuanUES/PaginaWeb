@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xl-6">
+                    <div class="col-xl-3">
                         <div class="form-group">
                             <label for="exampleInputNombre">Tipo de permiso <code>*</code></label>
                             <select name="tipo_de_permiso" class="form-control select2" style="width: 100%" data-live-search="true" 
@@ -61,7 +61,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-xl-6">
+                    <div class="col-xl-3">
                         <div class="form-group">
                             <label for="exampleInputNombre">Representantes </label>
                             <select name="representante" class="form-control select2" style="width: 100%"
@@ -72,6 +72,32 @@
                                 <option value="J.D">J.D</option>
                             </select>
                         </div>
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group">
+                            <label for="hora_anual">Horas Disponible Año</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend" style="width: 100%;">
+                                    <span class="input-group-text" id="basic-addon1">
+                                        <i class="mdi mdi-clock-outline"></i>
+                                    </span>
+                                    <input type="text" name="" class="form-control" style="width: 100%"  id="hora_anual" readonly>
+
+                                </div>                                
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group">
+                            <label for="hora_disponible">Horas Disponible Mes</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend" style="width: 100%;">
+                                    <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
+                                    <input type="text" value="Ilimitado" name="hora_disponible" 
+                                         class="form-control " style="width: 100%"  id="hora_disponible" readonly>
+                                </div>
+                            </div>
+                        </div> 
                     </div>
                 </div>
                 <div class="row">
@@ -124,28 +150,16 @@
                             </div>
                         </div> 
                     </div>
-                    <div class="col-xl-3">
+                    <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="hora_actuales">Horas Actuales</label>
+                            <label for="hora_actuales">Horas Utilizar</label>
                             <div class="input-group">
                                 <div class="input-group-prepend" style="width: 100%;">
                                     <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
                                     <input type="text" value="Ilimitado" name="hora_actuales" 
                                         class="form-control" style="width: 100%"  id="hora_actuales" readonly>
                                 </div>
-                            </div>
-                        </div> 
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group">
-                            <label for="hora_disponible">Horas Disponibles</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend" style="width: 100%;">
-                                    <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
-                                    <input type="text" value="Ilimitado" name="hora_disponible" 
-                                         class="form-control " style="width: 100%"  id="hora_disponible" readonly>
-                                </div>
-                            </div>
+                            </div>                            
                         </div> 
                     </div>
                 </div>
