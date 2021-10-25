@@ -5,7 +5,7 @@
 <!-- inicio Modal de registro -->
 <div class="modal fade bs-example-modal-lg" 
     role="dialog" aria-labelledby="myLargeModalLabel" 
-    id="modalRegistro">
+    id="modalRegistro" tabindex="-1">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -18,7 +18,7 @@
             @csrf
             
             <div class="modal-body">
-                <input type="hidden" id="idUser" name="_id"/>
+                <input type="hidden" id="idPermiso" name="_id"/>
                 <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
                     role="alert" style="display:none" id="notificacion">
                 </div>
@@ -78,16 +78,26 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="fecha_de_uso">Fecha de Uso <code>*</code></label>
-                            <input type="date" name="fecha_de_uso" class="form-control"
-                                tyle="width: 100%"  id="fecha_de_uso">
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                <input type="date" name="fecha_de_uso" class="form-control"
+                                    tyle="width: 100%;"  id="fecha_de_uso" >
+                            </div>
                         </div>                            
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="fecha_de_presentacion">Fecha de Presentación <code>*</code></label>
-                            <input type="text" name="fecha_de_presentación" id="fecha_de_presentacion" class="form-control"  
-                                value="{{Carbon\Carbon::now('UTC')->format('d-M-Y')}}" 
-                                style="width: 100%"  id="fecha_de_presentacion" readonly>
+                            <label for="fecha_de_presentacion">Fecha de Presentación <code>*</code></label> 
+                            <div class="input-group">
+                                <div class="input-group-append" style="width: 100%;">
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                    <input type="text" name="fecha_de_presentación" class="form-control"  readonly
+                                        value="{{Carbon\Carbon::now('UTC')->format('d/M/Y')}}" 
+                                        style="width: 100%;"  id="fecha_de_presentacion" >
+                                </div>
+                            </div>                           
                         </div>
                     </div>
                 </div>
@@ -95,20 +105,47 @@
                     <div class="col-xl-3">
                         <div class="form-group">
                             <label for="hora_inicio">Hora Inicio <code>*</code></label>
-                            <input type="time" name="hora_inicio" class="form-control timepicker" style="width: 100%"  id="hora_inicio">
+                            <div class="input-group">                             
+                                <div class="input-group-append" style="width: 100%;">
+                                    <span class="input-group-text" id="basic-addon1"><i class="mdi mdi-clock-outline"></i></span>
+                                    <input type="time" name="hora_inicio" class="form-control" style="width: 100%"  id="hora_inicio">
+                                </div>
+                            </div>
                         </div> 
                     </div>
                     <div class="col-xl-3">
                         <div class="form-group">
                             <label for="hora_final">Hora Final <code>*</code></label>
-                            <input type="time" name="hora_final" class="form-control" style="width: 100%"  id="hora_final">
+                            <div class="input-group">
+                                <div class="input-group-prepend" style="width: 100%;">
+                                    <span class="input-group-text" id="basic-addon1"><i class="mdi mdi-clock-outline"></i></span>
+                                    <input type="time" name="hora_final" class="form-control" style="width: 100%"  id="hora_final">
+                                </div>                                
+                            </div>
                         </div> 
                     </div>
-                    <div class="col-xl-6">
+                    <div class="col-xl-3">
                         <div class="form-group">
-                            <label for="hora_final">Horas Total<code>*</code></label>
-                            <input type="text" value="Ilimitado" name="hora_disponible" 
-                            class="form-control" style="width: 100%"  id="hora_disponible" readonly>
+                            <label for="hora_actuales">Horas Actuales</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend" style="width: 100%;">
+                                    <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
+                                    <input type="text" value="Ilimitado" name="hora_actuales" 
+                                        class="form-control" style="width: 100%"  id="hora_actuales" readonly>
+                                </div>
+                            </div>
+                        </div> 
+                    </div>
+                    <div class="col-xl-3">
+                        <div class="form-group">
+                            <label for="hora_disponible">Horas Disponibles</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend" style="width: 100%;">
+                                    <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
+                                    <input type="text" value="Ilimitado" name="hora_disponible" 
+                                         class="form-control " style="width: 100%"  id="hora_disponible" readonly>
+                                </div>
+                            </div>
                         </div> 
                     </div>
                 </div>
@@ -203,7 +240,7 @@
                     <i class="dripicons-information  mdi-24px" style="margin: 0px;"></i> Cancelar</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            <form action="{{ route('lic/enviar') }}" method="POST">
+            <form action="{{ route('lic/enviar') }}" method="POST" id="enviarForm">
                 @csrf
                 <div class="modal-body">
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
@@ -224,7 +261,7 @@
                     
                     <div class="row">
                         <div class="col-xl-6 p-1">
-                            <button  type="submit" 
+                            <button  type="button"  onClick="submitForm('#enviarForm','#notificacion1')"
                                 class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
                                 <i class="mdi mdi-check mdi-16px"></i>
                                 Si
@@ -245,24 +282,27 @@
     </div><!-- /.modal-dialog -->
 </div>
 
-<div id="modalObservaciones" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" 
+<div id="modalObservaciones" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" 
     aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="myCenterModalLabel">
-                    <i class="fa fa-eye font-16 my-1" style="margin: 0px;"></i> Observaciones</h3>
+                    <i class="fa fa-eye mdi-36px" style="margin: 0px;"></i> Observaciones</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>           
             <div class="modal-body">
-                <table style="width: 100%" id="obs-table"> 
-                    <thead>
-                        <tr>
-                            <th class="col-sm-1">Procedimiento</th>
-                            <th class="col-xs-2">Observaciones</th>
-                        </tr>
-                    </thead>
-                </table>
+                <div class="container-fluid">
+                    <table style="width: 100%" class="table" id="obs-table"> 
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Procedimiento</th>
+                                <th>Observaciones</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
@@ -348,8 +388,12 @@
                                         @endphp
                                         <div class="btn-group" role="group">
                                             <button title="Observaciones" class="btn btn-outline-primary btn-sm rounded-left" 
+                                            @if ($item->estado =='CANCELADO')
+                                                disabled
+                                            @else
                                               value="{{$item->permiso}}" 
-                                              onclick="observaciones(this)">
+                                              onclick="observaciones(this)"
+                                            @endif>
                                                 <i class="fa fa-eye font-16 my-1" aria-hidden="true"></i>
                                             </button>
                                             <button title="Enviar" class="btn btn-outline-primary btn-sm" 
@@ -427,156 +471,5 @@
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-    <script>
-        $(
-            function () {
-                $('.select2').select2();            
-
-                $(".summernote-config").summernote({
-                    lang: 'es-ES',
-                    height: 100,
-                    toolbar: [
-                        // [groupName, [list of button]]
-                        ['view', ['fullscreen']],           
-                    ]
-                });
-            }
-        
-        );
-
-        var hrs_usados=0;
-        var min_usados=0;
-        var hrs_disponible=0;
-
-        function obtenerHora() {
-            if($('#tipo_permiso').val()==='LC/GS' && $('#fecha_de_uso').val().trim() != ""){
-                    $.ajax({
-                        type: "GET",
-                        url: 'mislicencias/horas/'+$('#fecha_de_uso').val(),
-                        beforeSend: function() {
-                            $('#hora_disponible').val('Cargando...');
-                        },
-                        success: function(json) {
-                            var json = JSON.parse(json);
-                            hrs_usados = json.horas_acumuladas;
-                            min_usados = (json.minutos_acumulados < 10 ? '0' : '')+json.minutos_acumulados;
-                            hrs_disponible = (json.minutos_acumulados > 0 ? parseInt(json.mensuales)-1:json.mensuales);
-                        },
-                        complete: function(json) {
-                            $('#hora_disponible').val('Usado: '+hrs_usados+' hrs, '+min_usados+' min'
-                            +'   Disponibles: '+hrs_disponible+' hrs,'+(json.minutos_acumulados > 0 ? 60 - parseInt(json.minutos_acumulados):0));
-                        }
-                    });
-                
-            }else{
-                $('#hora_disponible').val('Ilimitado');
-            }
-        }
-
-        function calcularHora() {
-            
-            var hora_inicio = $('#hora_inicio').val();
-            var hora_final = $('#hora_final').val();
-            
-            // Expresión regular para comprobar formato
-            var formatohora = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
-            
-            // Si algún valor no tiene formato correcto sale
-            if (!(hora_inicio.match(formatohora)
-                    && hora_final.match(formatohora))){
-                return;
-            }
-            // Calcula los minutos de cada hora
-            var minutos_inicio = hora_inicio.split(':')
-                .reduce((p, c) => parseInt(p) * 60 + parseInt(c));
-            var minutos_final = hora_final.split(':')
-                .reduce((p, c) => parseInt(p) * 60 + parseInt(c));
-            var hrs_disp = parseInt(parseInt(hrs_disponible)+parseInt(hrs_usados)) * 60;
-            // Si la hora final es anterior a la hora inicial sale
-            if (minutos_final < minutos_inicio) return;
-            
-            // Diferencia de minutos
-            var diferencia = minutos_final - minutos_inicio;
-            diferencia = parseInt(diferencia)+parseInt(min_usados);
-
-            // Cálculo de horas y minutos de la diferencia
-            var horas = parseInt(Math.floor(diferencia / 60))+parseInt(hrs_usados);
-            var minutos = parseInt((diferencia % 60));
-            var hora_disponible = parseInt(parseInt(hrs_disponible)-parseInt(Math.floor(diferencia / 60)));
-
-            $('#hora_disponible').val('Usado: '+horas+' hrs, '+(minutos < 10 ? '0' : '') 
-            + minutos+' min'+'  Disponibles: '+(minutos>0 ? parseInt(horas_disponibles):hora_disponible)+' hrs');      
-        }
-
-        $('#tipo_permiso').on('select2:select',obtenerHora);
-        $('#fecha_de_uso').change(obtenerHora).click(obtenerHora);
-        $('#hora_inicio').change(calcularHora).click(calcularHora);
-        $('#hora_final').change(calcularHora).click(calcularHora);
-
-        //
-       // observaciones,editar,enviar,cancelar enviar_id enviar_permiso
-       function cancelar(btn) {
-            $('#cancelar_id').val($(btn).val());
-            $('#modalCancelar').modal();
-       }
-       function enviar(boton){
-            $('#enviar_id').val($(boton).val());
-            $('#modalEnviar').modal();
-       }
-       function editar(boton) {
-           if($(boton).val()!=null){
-                $.ajax({
-                    type: "GET",
-                    url: 'mislicencias/permiso/'+$(boton).val(),
-                    beforeSend: function() {
-                        $(boton).prop('disabled', true).html(''
-                            +'<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
-                        );
-                    },
-                    success: function(json) {   
-                        json = JSON.parse(json);                     
-                        $('#justificacion').summernote("code",json.justificacion);
-                        $('#observaciones').summernote("code",json.observaciones);
-                        $('#tipo_representante').val(json.tipo_representante).trigger("change");
-                        $('#tipo_permiso').val(json.tipo_permiso).trigger("change");
-                        $('#fecha_de_presentacion').val(json.fecha_presentacion);
-                        $('#fecha_de_uso').val(json.fecha_uso).change();                                   
-                        $('#hora_inicio').val(json.hora_inicio).change();
-                        $('#hora_final').val(json.hora_final).change();
-                        $("#modalRegistro").modal();
-                    },
-                    complete: function(json) {
-                        $(boton).prop('disabled', false).html(''
-                            +'<i class="fa fa-edit font-16 py-1" aria-hidden="true"></i>'
-                        );
-                    }
-                });                
-           }
-       }
-
-       function observaciones(boton){
-        if($(boton).val()!=null){
-                $.ajax({
-                    type: "GET",
-                    url: 'mislicencias/permiso/'+$(boton).val(),
-                    beforeSend: function() {
-                        $(boton).prop('disabled', true).html(''
-                            +'<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
-                        );
-                    },
-                    success: function(json) {   
-                        json = JSON.parse(json);                     
-                        
-                        $("#modalEnviar").modal();
-                    },
-                    complete: function(json) {
-                        $(boton).prop('disabled', false).html(''
-                            +'<i class="fa fa-edit font-16 py-1" aria-hidden="true"></i>'
-                        );
-                    }
-                });                
-           }
-       };
-    </script>
-
+    <script src="{{ asset('js/scripts/lic-emp.js') }}" ></script>
 @endsection

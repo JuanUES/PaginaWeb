@@ -44,8 +44,8 @@ class LicenciasController extends Controller
             $validator = Validator::make($request->all(),[
                 'tipo_de_permiso' => 'required|string',
                 'fecha_de_uso' => 'required|date|date_format:Y-m-d',
-                'hora_inicio'  => 'required|date_format:H:i', 
-                'hora_final' => 'required|date_format:H:i|after:hora_inicio',
+                'hora_inicio'  => 'required', 
+                'hora_final' => 'required|after:hora_inicio',
                 'justificación' => 'required|min:5|string',
             ],['hora_final.after'=>'Hora final debe ser una hora posterior a hora inicio.',]);         
 
@@ -103,7 +103,7 @@ class LicenciasController extends Controller
                 }
             }
             
-            $p = $request->_id == null ? new Permiso():Permiso::whereRaw('md5(id::text) = ?'[$request->_id])->first();
+            $p = $request->_id == null ? new Permiso():Permiso::whereRaw('md5(id::text) = ?',[$request->_id])->first();
             $p -> tipo_representante = $request-> representante;
             $p -> tipo_permiso = $request-> tipo_de_permiso;
             $p -> fecha_uso = $request-> fecha_de_uso;
@@ -161,7 +161,9 @@ class LicenciasController extends Controller
 
     public function cancelar(Request $request){
         if(Auth::check() and isset($request)){
-            $p = Permiso::select('estado','id')->whereRaw('md5(id::text) = \''.$request->_id.'\'')->first();
+           // echo dd($request);
+            $p = Permiso::select('estado','id')
+                ->whereRaw('md5(id::text) = ?',[$request->_id])->first();
             $p -> estado = 'CANCELADO';
             $p -> save();
             return redirect()->route('indexLic');
@@ -170,23 +172,47 @@ class LicenciasController extends Controller
 
     public function enviar(Request $request){
         if(isset($request->_id) and Auth::check()){
+            //Jefe carga administrativa del empleado logueado
+            $queryJC = Empleado::join('asig_admins','asig_admins.id_empleado','=','empleado.id')
+                ->join('carga_admins','carga_admins.id','=','asig_admins.id_carga')
+                ->where('empleado.id',auth()->user()->empleado);
 
+            //Jefe inmediato del empleado logueado
+            $queryJ = Empleado::where('id',auth()->user()->empleado)
+                ->where('jefe','!=',null);
+
+            //Obtengo el permiso de la base de datos
             $permiso = Permiso::select('estado','id')
-                ->whereRaw('md5(id::text) = \''.$request->_id.'\'')->first();
-            $permiso -> estado = 'ENVIADO A JEFATURA';
-            $permiso -> save(); 
+                ->whereRaw('md5(id::text) = ?',[$request->_id])->first();
 
-            $seguimiento = new Permiso_seguimiento;
-            $seguimiento -> permiso_id = $permiso->id;
-            $seguimiento -> estado = true;
-            $seguimiento -> proceso = 'ENVIADO A JEFATURA';
-            $seguimiento -> save();
+            //Si encuenta uno de los dos jefes seguir con el proceso            
+            $jc = $queryJC -> select('id_jefe') -> first();
+            $j = $queryJ -> select('jefe') -> first();
 
-            return redirect()->route('indexLic');
+            $permiso -> jefatura = is_null($jc) ? (is_null($j) ? null: $j->jefe) : $jc->id_jefe;
+            
+            if($queryJC->exists() || $queryJ->exists()){
+                $permiso -> estado = 'ENVIADO A JEFATURA';
+                $permiso -> save(); 
+
+                $seguimiento = new Permiso_seguimiento;
+                $seguimiento -> permiso_id = $permiso->id;
+                $seguimiento -> estado = false;
+                $seguimiento -> proceso = 'ENVIADO A JEFATURA';
+                $seguimiento -> save();
+            }else{
+                return response()->json(['error'=>'No tiene asignado un jefe']);
+            }
+            return response()->json(['mensaje'=>'Envio exitoso']);                       
         }
     }
 
     public function procesos($permiso){
-        
+        if(isset($permiso) and Auth::check()){
+            return Permiso_seguimiento::whereRaw('md5(permiso_id::text) = ?',[$permiso])
+            ->select('estado','proceso','observaciones')
+            ->selectRaw('to_char(created_at, \'DD/MM/YY - HH24:MI\') as fecha')
+            ->get()->toJSON();
+        }
     }
 }

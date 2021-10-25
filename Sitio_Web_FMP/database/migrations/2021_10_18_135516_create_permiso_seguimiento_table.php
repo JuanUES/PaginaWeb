@@ -13,7 +13,7 @@ class CreatePermisoSeguimientoTable extends Migration
      */
     public function up()
     {
-        Schema::create('permiso_seguimiento', function (Blueprint $table) {
+        Illuminate\Support\Facades\Schema::create('permiso_seguimiento', function (Illuminate\Database\Schema\Blueprint $table) {
             $table->id();
             $table->bigInteger('permiso_id');
             $table->string('proceso');

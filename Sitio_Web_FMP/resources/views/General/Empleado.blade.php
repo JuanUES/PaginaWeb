@@ -64,8 +64,13 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="">Teléfono </label>
-                            <input type="tel" class="form-control" id="telE" name="telefono" data-mask="0000-0000"
-                            placeholder="0000-0000">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="mdi mdi-phone-classic"></i></span>
+                                </div>
+                                <input type="tel" class="form-control" id="telE" name="telefono" data-mask="0000-0000"
+                                placeholder="0000-0000">
+                            </div>
                         </div>
                     </div>
                     <div class="col-xl-6">
@@ -73,7 +78,7 @@
                             <label for="salarioE">Salario <code>*</code></label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="basic-addon1">$</span>
+                                    <span class="input-group-text" id="basic-addon1"><strong>$</strong></span>
                                 </div>
                                 <input type="text" name="salario" id="salarioE" class="form-control" placeholder="00.00">
                             </div>
@@ -385,7 +390,7 @@
                     </div>
                 </div>
             </div>
-            <table class="table table-responsive" style="width: 100%;">
+            <table class="table" style="width: 100%;">
                 <thead>
                 <tr>
                     <th data-priority="1" class="col-sm-1">#</th>

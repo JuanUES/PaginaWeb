@@ -185,11 +185,29 @@
                             </li>
                             @hasrole('super-admin')
                             <li>
-                                <a href="javascript: void(0);"><i class="font-18  icon-layers"></i><span> Gestión de Licencias </span><span class="menu-arrow"></span></a>
+                                <a href="javascript: void(0);"><i class="font-18  icon-layers"></i>
+                                    <span> Gestión de Licencias </span>
+                                    <span class="menu-arrow"></span>
+                                </a>
                                 <ul class="nav-second-level" aria-expanded="false">
-                                        <li>
-                                            <a href="{{ route('indexLicGS') }}">Horas GS</a>
-                                        </li>
+                                    @hasanyrole('super-admin')
+                                    <li>
+                                        <a href="{{ route('indexLicGS') }}">Horas de Licencias</a>
+                                    </li>
+                                    @endhasrole
+                                    @php
+                                        //jefe = App\Models\General\Empleado
+                                    @endphp
+                                    @if (true)
+                                    <li>
+                                        <a href="{{ route('indexJefatura') }}">Jefatura</a>
+                                    </li>
+                                    @endif
+                                    @hasanyrole('super-admin')
+                                    <li>
+                                        <a href="{{ route('indexRRHH') }}">Recurso Humano</a>
+                                    </li>
+                                    @endhasrole                                   
                                 </ul>
                             </li>                            
                             @endhasrole

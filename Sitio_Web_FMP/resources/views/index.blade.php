@@ -342,135 +342,95 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                             @endif                      
                             @endauth     
                             </div>
-                            @if (count($noticias))                                
-                                <table id="dtNoticias" class="table"  
-                                    cellspacing="0" style="width: 100%;">
-                                    <thead id="dtNoticiasthead">
+                            @if (count($noticias)) 
+                                <table id="dtNoticias" class="table table-borderless" style="width: 100%;">
+                                    <thead style="display: none;">
                                       <tr>                                            
-                                        <th class="col-sm-1">&nbsp;</th>     
-                                        <th class="col-sm-3">&nbsp;</th>     
-                                        <th class="col-sm-1">&nbsp;</th> 
+                                        <th>&nbsp;</th>    
                                       </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($noticias as $n)                                        
-                                        <tr class="border rounded" style="border-bottom: 1pt solid black;">
-                                            <td>                                                       
-                                                <img class=" mt-1 rounded img-responsive bx-shadow-lg" src="images/noticias/{{$n->imagen}}"
-                                                    alt="Generic placeholder image" height="115" width="145" style="">
-                                            </td>
-                                            <td>                                                        
-                                                <h6 class="text-left">Publicado {!!/*date('d M Y - h:i:s A', strtotime($n->created_at))*/$n->created_at->diffForHumans()!!}</h6>
-                                                <h4 class="mt-0">{{$n->titulo}}</h4>
-                                                @if (!$n->tipo)
-                                                    {!!$n->subtitulo !!}
-                                                @endif
-                                                {{mb_strwidth(strip_tags($n->contenido), 'UTF-8') <= 125?strip_tags($n->contenido):rtrim(mb_strimwidth(strip_tags($n->contenido), 0, 125, '', 'UTF-8')).'...'}}
-                                            </td>
+                                        @foreach ($noticias as $n)  
+                                        <tr>
                                             <td>
-                                                <div class="btn-group-vertical" role="group">
-                                                        @if ($n->tipo)
-                                                
-                                                        <a href="{{ asset('/noticias') }}/{!!base64_encode($n->id)!!}/{!!base64_encode($n->titulo)!!}"
+                                                <div class="row">
+                                                    <div class="col-md-3 col-sm-12  m-1 order-md-first d-none d-md-lg d-md-block d-md-block">                                                     
+                                                        <img class=" mt-1 rounded img-responsive bx-shadow-lg " src="images/noticias/{{$n->imagen}}"
+                                                            alt="Generic placeholder image" height="115" width="145">
+                                                    </div>  
+                                                    <div class="col-md-6 col-sm-12 m-1 order-sm-first">                                                                                                           
+                                                        <h6 class="text-left">Publicado {!!/*date('d M Y - h:i:s A', strtotime($n->created_at))*/$n->created_at->diffForHumans()!!}</h6>
+                                                        <h4 class="mt-0">{{$n->titulo}}</h4>
+                                                        @if (!$n->tipo)
+                                                            {!!$n->subtitulo !!}
+                                                        @endif
+                                                        {{mb_strwidth(strip_tags($n->contenido), 'UTF-8') <= 125?strip_tags($n->contenido):rtrim(mb_strimwidth(strip_tags($n->contenido), 0, 125, '', 'UTF-8')).'...'}}                                       
+                                                    </div>  
+                                                    <div class="col-md-2  col-sm-12 text-right">
+                                                        <div class="btn-group-vertical" role="group">
+                                                                @if ($n->tipo)
                                                         
-                                                        class="btn btn-light waves-effect width-md  @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))  mt-4 @endif" target="_blank">
-                                                        @auth
-                                                        @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
-                                                            <i class="mdi mdi-send"></i>
-                                                        @endif
-                                                        @endauth Leer más 
-                                                        @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
-                                                        <i class="mdi mdi-send"></i>
-                                                        @endif
-                                                        </a>
-                                                        @auth  
-                                                        @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))                                                      
-                                                        <button type="button"  class="btn btn-light waves-effect width-md"
-                                                            onclick="modificarNL({!!$n->id!!})" data-toggle="modal" data-target="#myModalNoticia">
-                                                        <i class="mdi mdi-file-document-edit mdi-16p"></i> Modificar
-                                                        </button>
-                                                        @endif
-                                                        @endauth
-                                                    @else
-                                                        <a href="{!!$n->urlfuente!!}"
-                                                        
-                                                            class="btn btn-light waves-effect width-md @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin')) mt-4 @endif" target="_blank">
-                                                            @auth
+                                                                <a href="{{ asset('/noticias') }}/{!!base64_encode($n->id)!!}/{!!base64_encode($n->titulo)!!}"
+                                                                
+                                                                class="btn btn-light waves-effect width-md  @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))  mt-4 @endif" target="_blank">
+                                                                @auth
+                                                                @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
+                                                                    <i class="mdi mdi-send"></i>
+                                                                @endif
+                                                                @endauth Leer más 
+                                                                @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
+                                                                <i class="mdi mdi-send"></i>
+                                                                @endif
+                                                                </a>
+                                                                @auth  
+                                                                @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))                                                      
+                                                                <button type="button"  class="btn btn-light waves-effect width-md"
+                                                                    onclick="modificarNL({!!$n->id!!})" data-toggle="modal" data-target="#myModalNoticia">
+                                                                <i class="mdi mdi-file-document-edit mdi-16p"></i> Modificar
+                                                                </button>
+                                                                @endif
+                                                                @endauth
+                                                            @else
+                                                                <a href="{!!$n->urlfuente!!}"
+                                                                
+                                                                    class="btn btn-light waves-effect width-md @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin')) mt-4 @endif" target="_blank">
+                                                                    @auth
+                                                                    @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
+                                                                    <i class="mdi mdi-earth"></i>
+                                                                    @endif
+                                                                    @endauth
+                                                                    Leer más 
+                                                                    @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
+                                                                    <i class="mdi mdi-earth"></i>
+                                                                    @endif
+                                                                </a>
+                                                                @auth
+                                                                @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
+                                                                <span data-toggle="modal" data-target="#myModalNoticia">
+                                                                    <button type="button"  class="btn btn-light waves-effect width-md" onclick="modificarEX({!!$n->id!!})" >
+                                                                        <i class="mdi mdi-file-document-edit mdi-16p"></i> Modificar</button>
+                                                                </span>
+                                                                @endif
+                                                                @endauth
+                                                            @endif
+                                                            
+                                                            @auth 
                                                             @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
-                                                            <i class="mdi mdi-earth"></i>
+                                                                <button type="button" onclick="$('#noticia').val('{!!base64_encode($n->id)!!}')"
+                                                                    class="btn btn-light waves-effect width-md btn-block" data-toggle="modal" 
+                                                                    data-target="#modalEliminarNoticia">
+                                                                    <i class="mdi mdi-delete"></i> Eliminar</button>
                                                             @endif
-                                                            @endauth
-                                                            Leer más 
-                                                            @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
-                                                            <i class="mdi mdi-earth"></i>
-                                                            @endif
-                                                        </a>
-                                                        @auth
-                                                        @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
-                                                        <span data-toggle="modal" data-target="#myModalNoticia">
-                                                            <button type="button"  class="btn btn-light waves-effect width-md" onclick="modificarEX({!!$n->id!!})" >
-                                                                <i class="mdi mdi-file-document-edit mdi-16p"></i> Modificar</button>
-                                                        </span>
-                                                        @endif
-                                                        @endauth
-                                                    @endif
-                                                    
-                                                    @auth 
-                                                    @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
-                                                        <button type="button" onclick="$('#noticia').val('{!!base64_encode($n->id)!!}')"
-                                                            class="btn btn-light waves-effect width-md btn-block" data-toggle="modal" 
-                                                            data-target="#modalEliminarNoticia">
-                                                            <i class="mdi mdi-delete"></i> Eliminar</button>
-                                                    @endif
-                                                    @endauth      
-                                                </div>       
+                                                            @endauth      
+                                                        </div>       
+                                                    </div>
+                                                </div> 
                                             </td>
-                                        </tr>   
+                                        </tr>                                      
+                                          
                                         @endforeach                
                                     </tbody>
-                                </table>   
-                                @auth        
-                                @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))                           
-                                <div id="modalEliminarNoticia" class="modal fade bs-example-modal-center" tabindex="-1" 
-                                    role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="{{ route('NoticiaBorrar') }}" method="POST">
-                                                    @csrf
-                                                    <div class="row py-3">
-                                                        <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
-                                                        <div class="col-lg-10 text-black">
-                                                            <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se elimina este registro de manera permanente, ¿Desea continuar?</h4>
-                                                        </div>
-                                                        <input type="hidden" name="_id" id="noticia">
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-xl-6">
-                                                            <button type="submit" 
-                                                                class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
-                                                                <i class="mdi mdi-check mdi-16px"></i>
-                                                                Si
-                                                            </button>
-                                                        </div>
-                                                        <div class="col-xl-6">
-                                                            <button type="reset" class="btn btn-light p-1 waves-light waves-effect btn-block font-24" data-dismiss="modal" >
-                                                                <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
-                                                                No
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div><!-- /.modal-content -->
-                                    </div><!-- /.modal-dialog -->
-                                </div><!-- /.modal --> 
-                                @endif                    
-                                @endauth 
+                                </table>  
                             @else
                                 <p class="p-2 border text-center">No hay noticias para mostrar.</p>
                             @endif   
@@ -497,11 +457,11 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                             <a href="https://campus.ues.edu.sv/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Campus Virtual Central</a>
                             <a href="https://eel.ues.edu.sv/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i> Expediente en Linea</a>                      
                             <a href="https://correo.ues.edu.sv/" target="_blank" class="btn btn-danger  btn-block mt-3 text-left"><i class=" mdi mdi-email font-18"></i> Correo Institucional</a>                           
-                            <a href="https://www.facebook.com/DistanciaFMP" target="_blank" class="btn btn-danger  btn-block mt-3 text-left"><i class="mdi mdi-facebook border rounded font-16"></i> Universidad en Linea / Sede Paracentral</a> 
+                            <a href="https://www.facebook.com/EnLineaFMP" target="_blank" class="btn btn-danger  btn-block mt-3 text-left"><i class="mdi mdi-facebook border rounded font-16"></i> Educación en Línea Sede San Vicente</a> 
                             <a href="http://biblio.fmp.ues.edu.sv/biblioteca/" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-book-open-variant font-18"></i> Biblioteca</a>
                             <!-- <a href="#" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-book-open-variant font-18"></i> Recurso LMS-FMP</a>-->
                             <!-- <a href="#" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-book-open-variant font-18"></i> Campus Virtual FMP</a>-->
-                        </div> <!-- end card-box-->                        
+                        </div> <!-- end card-box-->                         
                     </div> <!-- end col-->    
                 </div>
             </div>
@@ -557,7 +517,48 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
     </div> <!-- end container -->
 </div>   
 
-
+@auth        
+@if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))                           
+<div id="modalEliminarNoticia" class="modal fade bs-example-modal-center" tabindex="-1" 
+role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="myCenterModalLabel"><i class="mdi mdi-delete mdi-24px"></i> Eliminar</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        </div>
+        <div class="modal-body">
+            <form action="{{ route('NoticiaBorrar') }}" method="POST">
+                @csrf
+                <div class="row py-3">
+                    <div class="col-lg-2 fa fa-exclamation-triangle text-warning fa-4x"></div>
+                    <div class="col-lg-10 text-black">
+                        <h4 class="font-17 text-justify font-weight-bold">Advertencia: Se elimina este registro de manera permanente, ¿Desea continuar?</h4>
+                    </div>
+                    <input type="hidden" name="_id" id="noticia">
+                </div>
+                <div class="row">
+                    <div class="col-xl-6">
+                        <button type="submit" 
+                            class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
+                            <i class="mdi mdi-check mdi-16px"></i>
+                            Si
+                        </button>
+                    </div>
+                    <div class="col-xl-6">
+                        <button type="reset" class="btn btn-light p-1 waves-light waves-effect btn-block font-24" data-dismiss="modal" >
+                            <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
+                            No
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal --> 
+@endif                    
+@endauth 
 <!-- end wrapper -->
 @endsection
 
@@ -569,10 +570,14 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
 <!-- App js -->
 <script src="{{ asset('js/app.min.js') }}"></script>
 
-<!--Librerias js para datatable-->
-<script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
+<!-- Datatable js -->
+<script src="{{ asset('template-admin/dist/assets/libs/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('template-admin/dist/assets/libs/datatables/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('template-admin/dist/assets/libs/datatables/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('template-admin/dist/assets/libs/datatables/responsive.bootstrap4.min.js') }}"></script>
 
+
+<script src="{{ asset('js/scripts/data-table.js') }}"></script>
 @auth
 @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
 
@@ -581,7 +586,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
 <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script> 
 <script src="{{ asset('js/scripts/http.min.js') }}"></script>
 <script src="{{ asset('js/scripts/index.js') }}"></script>
-<script src="{{ asset('js/index/index.datatable.js') }}"></script>
+
 @endif
 @endauth
 
