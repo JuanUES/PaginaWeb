@@ -329,7 +329,7 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Inicio</a></li>
-                    <li class="breadcrumb-item active">Usuarios</li>
+                    <li class="breadcrumb-item active">Licencias por Acuerdo</li>
                 </ol>
             </div>
             <h4 class="page-title">&nbsp;</h4>
@@ -344,7 +344,7 @@
             <div class="row py-2">
                 <div class="col order-first">
                     <h3>
-                        Mis Licencias
+                        Licencias por Acuerdo
                     </h3>
                 </div>
                 <div class="col-lg-1 order-last">
@@ -357,17 +357,16 @@
             <table  class="table" style="width: 100%">
                 <thead>
                 <tr>
-                    <th class="col-sm-2">Presentación</th>
-                    <th class="col-sm-2">Uso</th>
+                    <th class="col-xs-2">Empleado</th>
                     <th class="col-sm-1">Tipo</th>
-                    <th class="col-xs-1">Hora Inicio</th>
-                    <th class="col-xs-1">Hora Final</th>
-                    <th class="col-xs-2">Horas</th>
-                    <th class="col-sm-1 text-center">Estado</th>
+                    <th class="col-xs-1">Fecha Inicio</th>
+                    <th class="col-xs-1">Fecha Final</th>
+                    <th class="col-sm-2">Horas</th>
                     <th class="col-sm-1 text-center">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
+                    <th class="col-xs-3">Liseth Guadalupe Merino de Córdova</th>
                     
                                
                 </tbody>
