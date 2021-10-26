@@ -183,7 +183,7 @@
                             <li>
                                 <a href="{{ route('indexLic') }}"><i class="icon-notebook font-18"></i><span>Mis Licencias</span></a>
                             </li>
-                            @hasrole('super-admin')
+                            @hasrole('super-admin|Recurso-Humano')
                             <li>
                                 <a href="javascript: void(0);"><i class="font-18  icon-layers"></i>
                                     <span> Gestión de Licencias </span>
@@ -207,7 +207,13 @@
                                     <li>
                                         <a href="{{ route('indexRRHH') }}">Recurso Humano</a>
                                     </li>
-                                    @endhasrole                                   
+                                    @endhasrole
+                                    @hasanyrole('super-admin|')
+                                    <li>
+                                        <a href="">Recurso Humano</a>
+                                    </li>
+                                    @endhasrole
+                                                                      
                                 </ul>
                             </li>                            
                             @endhasrole
