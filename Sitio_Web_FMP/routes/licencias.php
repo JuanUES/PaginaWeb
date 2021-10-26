@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth']], function () {
     /*METODOS POST**/
     //para registrar las horas GS depende de las jornadas
     Route::post('GS/create',[LicenciasGosesController::class,'create'])->name('gs/create');
+    Route::post('admin/licencia/create', [LicenciasAcuerdoController::class,'store'])->name('licAcuerdo/create');
 
     Route::post('admin/licencia/create', [LicenciasController::class,'store'])->name('lic/create');
     Route::post('admin/licencia/cancel', [LicenciasController::class,'cancelar'])->name('lic/cancelar');
