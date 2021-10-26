@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 class LicenciasAcuerdoController extends Controller
 {
     public function index(){
+        $empleados=Empleado::all();
         $empleado = Empleado::findOrFail(auth()->user()->empleado);  
-        return view('Licencias.LicenciaAcuerdo',compact('empleado'));
+        return view('Licencias.LicenciaAcuerdo',compact('empleados'));
     }
 }

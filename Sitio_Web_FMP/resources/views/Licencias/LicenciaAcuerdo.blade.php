@@ -6,10 +6,10 @@
 <div class="modal fade bs-example-modal-lg" 
     role="dialog" aria-labelledby="myLargeModalLabel" 
     id="modalRegistro" tabindex="-1">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg-8" role="document">
       <div class="modal-content">
         <div class="modal-header">
-            <h3 class="modal-title" id=" exampleModalLongTitle"><i class="icon-notebook mdi-36px"></i> Licencia</h3>
+            <h3 class="modal-title" id=" exampleModalLongTitle"><i class="icon-notebook mdi-36px"></i> Licencia por Acuerdo</h3>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -31,79 +31,54 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xl-6">
+                    <div class="col-xl-12">
                         <div class="form-group">
-                            <label for="exampleInputCodigo">Nombre <code>*</code></label>
-                            <input type="text" class="form-control" value="{{$empleado->nombre}}"  autocomplete="off" placeholder="Digite el nombre" readonly>
+                            <label for="exampleInputCodigo">Empleado<code>*</code></label>
+                            <select class="form-control selectpicker" style="width: 100%" data-live-search="true" 
+                            data-style="btn-white" name="id_empleado" id="id_empleado">
+                                <option value="" selected>Seleccione</option>
+                                @if (count($empleados))
+                                @foreach ($empleados as $index)
+                                <option data-icon="mdi mdi-account-plus-outline font-18" value="{!!$index->id!!}">
+                                    <span>
+                                    {!!$index->nombre.' '.$index->apellido!!}
+                                    </span>
+                               </option>
+                                  @endforeach
+                                @else
+                                <option data-icon="mdi mdi-account-plus-outline font-18" value="">
+                                    <span>
+                                    {!!'No hay datos'!!}
+                                    </span>
+                               </option>
+                                @endif
+                               
+                            </select>
                         </div>
                     </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label for="exampleInputUbicacion">Apellido <code>*</code></label>
-                            <input type="text" class="form-control" value="{{$empleado->apellido}}" autocomplete="off" placeholder="Digite el correo" readonly>
-                        </div>
-                    </div>
+                    
                 </div>
 
                 <div class="row">
-                    <div class="col-xl-3">
+                    <div class="col-xl-12">
                         <div class="form-group">
                             <label for="exampleInputNombre">Tipo de permiso <code>*</code></label>
                             <select name="tipo_de_permiso" class="form-control select2" style="width: 100%" data-live-search="true" 
                                 data-style="btn-white"   id="tipo_permiso" name="tipo_permiso">
                                 <option value="">Seleccione</option>
-                                <option value="LC/GS">L.C./G.S.</option>
-                                <option value="LS/GS">L.S./G.S.</option>
-                                <option value="INCAP">INCAP</option>
-                                <option value="L OFICIAL">L.OFICIAL</option>
-                                <option value="T COMP">T.COMP.</option>
-                                <option value="CITA MEDICA">CITA MEDICA</option>
+                                <option value="Incapacidad">Incapacidad</option>
+                                <option value="Estudio">Estudio</option>
+                                <option value="Fumigación">Fumigación</option>
+                                <option value="Misión Oficial ">Misión Oficial</option>
+                                <option value="Otros">Otros</option>
                             </select>
                         </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group">
-                            <label for="exampleInputNombre">Representantes </label>
-                            <select name="representante" class="form-control select2" style="width: 100%"
-                                data-style="btn-white"  id="tipo_representante">
-                                <option value="">Seleccione</option>
-                                <option value="C.S.U">C.S.U</option>
-                                <option value="AGU">AGU</option>
-                                <option value="J.D">J.D</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group">
-                            <label for="hora_anual">Horas Disponible Año</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend" style="width: 100%;">
-                                    <span class="input-group-text" id="basic-addon1">
-                                        <i class="mdi mdi-clock-outline"></i>
-                                    </span>
-                                    <input type="text" name="" class="form-control" style="width: 100%"  id="hora_anual" readonly>
-
-                                </div>                                
-                            </div>
-                        </div> 
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group">
-                            <label for="hora_disponible">Horas Disponible Mes</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend" style="width: 100%;">
-                                    <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
-                                    <input type="text" value="Ilimitado" name="hora_disponible" 
-                                         class="form-control " style="width: 100%"  id="hora_disponible" readonly>
-                                </div>
-                            </div>
-                        </div> 
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="fecha_de_uso">Fecha de Uso <code>*</code></label>
+                            <label for="fecha_de_uso">Fecha de inicio <code>*</code></label>
                             <div class="input-group">
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
@@ -115,12 +90,11 @@
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="fecha_de_presentacion">Fecha de Presentación <code>*</code></label> 
+                            <label for="fecha_de_presentacion">Fecha final <code>*</code></label> 
                             <div class="input-group">
                                 <div class="input-group-append" style="width: 100%;">
                                     <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                    <input type="text" name="fecha_de_presentación" class="form-control"  readonly
-                                        value="{{Carbon\Carbon::now('UTC')->format('d/M/Y')}}" 
+                                    <input type="date" name="fecha_de_presentación" class="form-control"
                                         style="width: 100%;"  id="fecha_de_presentacion" >
                                 </div>
                             </div>                           
@@ -128,54 +102,25 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xl-3">
-                        <div class="form-group">
-                            <label for="hora_inicio">Hora Inicio <code>*</code></label>
-                            <div class="input-group">                             
-                                <div class="input-group-append" style="width: 100%;">
-                                    <span class="input-group-text" id="basic-addon1"><i class="mdi mdi-clock-outline"></i></span>
-                                    <input type="time" name="hora_inicio" class="form-control" style="width: 100%"  id="hora_inicio">
-                                </div>
-                            </div>
-                        </div> 
-                    </div>
-                    <div class="col-xl-3">
-                        <div class="form-group">
-                            <label for="hora_final">Hora Final <code>*</code></label>
-                            <div class="input-group">
-                                <div class="input-group-prepend" style="width: 100%;">
-                                    <span class="input-group-text" id="basic-addon1"><i class="mdi mdi-clock-outline"></i></span>
-                                    <input type="time" name="hora_final" class="form-control" style="width: 100%"  id="hora_final">
-                                </div>                                
-                            </div>
-                        </div> 
-                    </div>
-                    <div class="col-xl-6">
+                    <div class="col-xl-12">
                         <div class="form-group">
                             <label for="hora_actuales">Horas Utilizar</label>
                             <div class="input-group">
                                 <div class="input-group-prepend" style="width: 100%;">
                                     <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
                                     <input type="text" value="Ilimitado" name="hora_actuales" 
-                                        class="form-control" style="width: 100%"  id="hora_actuales" readonly>
+                                        class="form-control" style="width: 100%"  id="hora_actuales">
                                 </div>
                             </div>                            
                         </div> 
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xl-6">
+                    <div class="col-xl-12">
                         <div class="form-group">
-                            <label for="exampleInputNombre">Justificación <code>*</code></label>
+                            <label for="exampleInputNombre">Descripción<code>*</code></label>
                             <textarea value=" " class="form-control summernote-config" 
                                 name="justificación" id="justificacion" rows="6"></textarea>
-                        </div> 
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label for="exampleInputNombre">Observaciones </label>
-                            <textarea value=" " class="form-control summernote-config" 
-                                name="observaciones" id="observaciones" rows="6"></textarea>
                         </div> 
                     </div>
                 </div>
@@ -362,6 +307,7 @@
                     <th class="col-xs-1">Fecha Inicio</th>
                     <th class="col-xs-1">Fecha Final</th>
                     <th class="col-sm-2">Horas</th>
+                    <th class="col-sm-2">Descripción</th>
                     <th class="col-sm-1 text-center">Acciones</th>
                 </tr>
                 </thead>
@@ -410,5 +356,6 @@
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('js/scripts/lic-emp.js') }}" ></script>
+   
+    <!--<script src="{{ asset('js/scripts/lic-emp.js') }}" ></script>-->
 @endsection
