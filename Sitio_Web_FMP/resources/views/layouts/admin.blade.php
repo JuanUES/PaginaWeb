@@ -210,7 +210,7 @@
                                     @endhasrole
                                     @hasanyrole('super-admin|Recurso-Humano')
                                     <li>
-                                        <a href="">Licencia por acuerdo</a>
+                                        <a href="{{route('AcuerdoLic')}}">Licencia por acuerdo</a>
                                     </li>
                                     @endhasrole
                                                                       
