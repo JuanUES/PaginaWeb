@@ -1,6 +1,8 @@
 <?php
 
 //use App\Http\Controllers\EmpleadoController;
+
+use App\Http\Controllers\Licencias\LicenciasAcuerdoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Licencias\LicenciasController;
 use App\Http\Controllers\Licencias\LicenciasGosesController;
@@ -11,6 +13,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     /*METODOS GET**/
     Route::get('admin/mislicencias', [LicenciasController::class,'indexMisLicencias'])->name('indexLic');
+    Route::get('admin/LicenciasAcuerdo', [LicenciasAcuerdoController::class,'index'])->name('AcuerdoLic');
     Route::get('admin/mislicencias/horas/{fecha}', [LicenciasController::class,'horas_disponibles']);
     Route::get('admin/mislicencias/horas-anuales/{fecha}', [LicenciasController::class,'horas_anuales']);
     Route::get('admin/mislicencias/permiso/{permiso}',[LicenciasController::class,'permiso']);

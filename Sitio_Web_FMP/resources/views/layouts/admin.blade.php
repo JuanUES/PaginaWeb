@@ -208,9 +208,9 @@
                                         <a href="{{ route('indexRRHH') }}">Recurso Humano</a>
                                     </li>
                                     @endhasrole
-                                    @hasanyrole('super-admin|')
+                                    @hasanyrole('super-admin|Recurso-Humano')
                                     <li>
-                                        <a href="">Recurso Humano</a>
+                                        <a href="">Licencia por acuerdo</a>
                                     </li>
                                     @endhasrole
                                                                       
