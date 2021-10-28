@@ -360,12 +360,13 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                                     </div>  
                                                     <div class="col-md-6 col-sm-12 m-1 order-sm-first">                                                                                                           
                                                         <h6 class="text-left">Publicado {!!/*date('d M Y - h:i:s A', strtotime($n->created_at))*/$n->created_at->diffForHumans()!!}</h6>
-                                                        <h4 class="mt-0">{{$n->titulo}}</h4>
+                                                        <h4 class="mt-0"><p class="text-break">{{$n->titulo}}</p></h4>
                                                         @if (!$n->tipo)
                                                             {!!$n->subtitulo !!}
                                                         @endif
-                                                        {{mb_strwidth(strip_tags($n->contenido), 'UTF-8') <= 125?strip_tags($n->contenido):rtrim(mb_strimwidth(strip_tags($n->contenido), 0, 125, '', 'UTF-8')).'...'}}                                       
-                                                    </div>  
+                                                        <p class="text-truncate"> {{mb_strwidth(strip_tags($n->contenido), 'UTF-8') <= 125?strip_tags($n->contenido):rtrim(mb_strimwidth(strip_tags($n->contenido), 0, 125, '', 'UTF-8')).'...'}}                                       
+                                                        </p>
+                                                        </div>  
                                                     <div class="col-md-2  col-sm-12 text-right">
                                                         <div class="btn-group-vertical" role="group">
                                                                 @if ($n->tipo)
@@ -577,7 +578,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" style="dis
 <script src="{{ asset('template-admin/dist/assets/libs/datatables/responsive.bootstrap4.min.js') }}"></script>
 
 
-<script src="{{ asset('js/scripts/data-table.js') }}"></script>
+<script src="{{ asset('js/index/index.datatable.js') }}"></script>
 @auth
 @if(@Auth::user()->hasRole('Pagina-Inicio-Noticias|Pagina-Admin|super-admin'))
 
