@@ -389,8 +389,8 @@
                                 @if($item->estado =='CANCELADO') 
                                     <span class="badge badge-danger">{{$item->estado}}</span>
                                 @endif
-                                @if ($item->estado =='ENVIADO A JEFATURA')
-                                    <span class="badge badge-warning">{{$item->estado}}</span>
+                                @if ($item->estado =='ENVIADO A JEFATURA' or $item->estado =='ENVIADO A RRHH')
+                                    <span class="badge badge-primary">{{$item->estado}}</span>
                                 @endif
                             </td>
                             <td class="align-middle ">

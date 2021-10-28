@@ -19,29 +19,46 @@ class LicenciasJefeRRHHController extends Controller
     public function indexJefe(){
         if(Auth::check()){
 
-            $permisos1 = DB::table('permisos')->selectRaw('md5(id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
-                fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,estado')
-                ->where('jefe',auth()->user()->empleado)
+            $permisos = Permiso::selectRaw('md5(permisos.id::text) as permiso, tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,nombre,apellido')
+                ->join('empleado','empleado.id','=','permisos.empleado')
+                ->where([['jefatura',auth()->user()->empleado],['permisos.estado','=','ENVIADO A JEFATURA']])
                 ->orWhere([
                     ['tipo_permiso','=','LC/GS'],['tipo_permiso','=','LS/GS'],['tipo_permiso','=','T COMP'],
                     ['tipo_permiso','=','INCAP'],['tipo_permiso','=','L OFICIAL'],['tipo_permiso','=','CITA MEDICA']]
-                )->orderBy('fecha_presentacion')->get();
-
-            $permisos = DB::union($permisos1)
-                ->selectRaw('md5(id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
-                fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,estado')
-                ->orWhere(
-                    [['tipo_permiso','=','LC/GS'],['tipo_permiso','=','LS/GS'],['tipo_permiso','=','T COMP'],
-                    ['tipo_permiso','=','INCAP'],['tipo_permiso','=','L OFICIAL'],['tipo_permiso','=','CITA MEDICA']]
-                );
-
-            return view('Licencias.LicenciaJefe',compat($permisos));
+                )->get();
+            return view('Licencias.LicenciaJefe',compact('permisos'));
+        }else {
+            return redirect()->route('index');
         }
     }
+
     public function indexRRHH(){
         if(Auth::check()){
             return view('Licencias.LicenciaRRHH');
+        }else {
+            return redirect()->route('index');
         }
+    }
+
+    public function aceptarJefatura(Request $request){
+        $permiso = Permiso::select('estado','id')->whereRaw('md5(id::text) = ?',[$request->_id])->first();
+        $permiso -> estado = 'ENVIADO A RRHH';
+        DB::update('update permiso_seguimiento set estado = false where estado = ? and permiso_id=?', [true,$permiso->id]);
+
+        $seguimiento = new Permiso_seguimiento;
+        $seguimiento -> permiso_id = $permiso->id;
+        $seguimiento -> estado = false;
+        $seguimiento -> proceso = 'ACEPTADO POR JEFATURA';
+        $seguimiento -> save();
+        
+        $seguimiento = new Permiso_seguimiento;
+        $seguimiento -> permiso_id = $permiso->id;
+        $seguimiento -> estado = true;
+        $seguimiento -> proceso = 'ENVIADO A RRHH';
+        $seguimiento -> save();
+
+        $permiso->save();
+        return redirect()->route('indexJefatura');
     }
 
 }

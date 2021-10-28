@@ -53,7 +53,6 @@
                                         <option value="{{base64_encode('Jefe-Administrativo')}}">Jefe Administrativo</option>
                                         <option value="{{base64_encode('Recurso-Humano')}}">Recurso Humano</option>
                                         <option value="{{base64_encode('Docente')}}">Docente</option>
-                                        <option value="{{base64_encode('Jefe-Administrativo')}}">Jefe Administrativo</option>
                                     </optgroup>
                                     <optgroup label="Pagina">
                                         <option value="{{base64_encode('Pagina-Admin')}}">Administrador</option>

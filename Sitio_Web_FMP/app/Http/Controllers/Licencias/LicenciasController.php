@@ -27,18 +27,16 @@ class LicenciasController extends Controller
         if(is_null(auth()->user()->empleado))
         {
             return view('Licencias.LicenciaEmpleado');
-        }
-        else
-        {
+        }else{
+
             $empleado = Empleado::findOrFail(auth()->user()->empleado);  
             $permisos = Permiso::selectRaw('md5(id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
                 fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,estado')
-                ->where('empleado',auth()->user()->empleado)
+                ->where([['empleado','=',auth()->user()->empleado],['estado','!=','CANCELADO']])
                 ->orWhere([
                     ['tipo_permiso','=','LC/GS'],['tipo_permiso','=','LS/GS'],['tipo_permiso','=','T COMP'],
                     ['tipo_permiso','=','INCAP'],['tipo_permiso','=','L OFICIAL'],['tipo_permiso','=','CITA MEDICA']]
-                )
-                ->orderBy('fecha_presentacion')->get();     
+                )->orderBy('fecha_presentacion')->get();     
             return view('Licencias.LicenciaEmpleado',compact('empleado','permisos'));
         }
     }
@@ -189,6 +187,8 @@ class LicenciasController extends Controller
                     fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,estado')
             ->whereRaw('empleado = ? and md5(permisos.id::text) = ?',[auth()->user()->empleado, $permiso])
             ->first()->toJSON();  
+        }else {
+            return redirect()->route('index');
         }
     }
 
@@ -199,6 +199,8 @@ class LicenciasController extends Controller
             $p -> estado = 'CANCELADO';
             $p -> save();
             return redirect()->route('indexLic');
+        }else {
+            return redirect()->route('index');
         }
     }
 
@@ -224,18 +226,39 @@ class LicenciasController extends Controller
             $permiso -> jefatura = is_null($jc) ? (is_null($j) ? null: $j->jefe) : $jc->id_jefe;
             
             if($queryJC->exists() || $queryJ->exists()){
-                $permiso -> estado = 'ENVIADO A JEFATURA';
-                $permiso -> save(); 
+                 
+                /*if ($permiso -> estado != 'APROVADO') {
+                    # code...
+                }*/
 
                 $seguimiento = new Permiso_seguimiento;
                 $seguimiento -> permiso_id = $permiso->id;
                 $seguimiento -> estado = false;
-                $seguimiento -> proceso = 'ENVIADO A JEFATURA';
+
+                if($permiso -> estado === 'GUARDADO'){
+                    $permiso -> estado = 'ENVIADO A JEFATURA';
+                    $seguimiento -> proceso = 'ENVIADO A JEFATURA';
+                }else {
+
+                    if($permiso -> estado === 'OBSERVACION JEFATURA'){
+                        $permiso -> estado = 'ENVIADO A JEFATURA';
+                        $seguimiento -> proceso = 'ENVIADO A JEFATURA';
+                    }
+                    if($permiso -> estado === 'OBSERVACION RRHH'){
+                        $permiso -> estado = 'ENVIADO A RRHH';
+                        $seguimiento -> proceso = 'ENVIADO A RRHH';
+                    }           
+                             
+                }
+                $permiso -> save();                
                 $seguimiento -> save();
+                
             }else{
                 return response()->json(['error'=>'No tiene asignado un jefe']);
             }
             return response()->json(['mensaje'=>'Envio exitoso']);                       
+        }else {
+            return response()->json([500,'ERROR'=>['IDENTIFICADOR DESCONOCIDO','SESSION INVALIDA']]);
         }
     }
 
@@ -243,8 +266,10 @@ class LicenciasController extends Controller
         if(isset($permiso) and Auth::check()){
             return Permiso_seguimiento::whereRaw('md5(permiso_id::text) = ?',[$permiso])
             ->select('estado','proceso','observaciones')
-            ->selectRaw('to_char(created_at, \'DD/MM/YY - HH24:MI\') as fecha')
+            ->selectRaw('to_char(created_at, \'DD/MM/YY - HH24:MI \') as fecha')
             ->get()->toJSON();
+        }else {
+            return redirect()->route('index');
         }
     }
 }

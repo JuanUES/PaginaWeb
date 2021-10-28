@@ -2,30 +2,31 @@
 
 @section('content')
 @if (!is_null(auth()->user()->empleado))
-<
+
 <!--modal para dar alta-->
-<div id="modalCancelar" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" 
+<div id="modalAceptar" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" 
     aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="myCenterModalLabel">
-                    <i class="fa fa-ban mdi-24px" style="margin: 0px;"></i> Cancelar</h3>
+                    <i class="fa fa-check mdi-24px" style="margin: 0px;"></i> Aceptar</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            <form action="{{ route('lic/cancelar') }}" method="POST" id="cancelarModal">
+            <form action="{{ route('jf/aceptar') }}" method="POST" id="cancelarModal">
                 @csrf
                 <div class="modal-body">
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
                         role="alert" style="display:none" id="notificacion1">
                     </div>
-                    <input type="hidden" name="_id" id="cancelar_id">
+                    <input type="hidden" name="_id" id="aceptar_id">
                     <div class="row py-3">
-                        <div class="col-xl-2 fa fa-exclamation-triangle text-warning fa-4x mr-1"></div>
+                        <div class="col-xl-2 fa fa-check text-success fa-4x mr-1"></div>
                         <div class="col-xl-9 text-black"> 
-                            <h4 class="font-17 text-justify font-weight-bold">
-                                Advertencia: Se cancelara esta licencia, ¿Desea continuar?
-                            </h4>
+                            <h3 class="font-17 text-justify font-weight-bold">
+                                Nota: Se aceptara esta licencia, 
+                                ¿Desea continuar?
+                            </h3>
                         </div>
                     </div>
                     
@@ -110,13 +111,12 @@
             <table  class="table" style="width: 100%">
                 <thead>
                 <tr>
-                    <th class="col-sm-2">Presentación</th>
-                    <th class="col-sm-2">Uso</th>
+                    <th class="col-sm-2">Fecha de Uso</th>
+                    <th class="col-xs-2">Empleado</th>
                     <th class="col-sm-1">Tipo</th>
-                    <th class="col-xs-1">Hora Inicio</th>
-                    <th class="col-xs-1">Hora Final</th>
-                    <th class="col-xs-2">Horas</th>
-                    <th class="col-sm-1 text-center">Estado</th>
+                    <th class="col-sm-1">Hora Inicio</th>
+                    <th class="col-sm-1">Hora final</th>
+                    <th class="col-sm-2">Horas</th>
                     <th class="col-sm-1 text-center">Acciones</th>
                 </tr>
                 </thead>
@@ -124,8 +124,8 @@
                     
                     @foreach ($permisos as $item)
                         <tr>
-                            <th class="align-middle ">{{Carbon\Carbon::parse($item->fecha_presentacion)->format('d/M/Y')}}</th>
-                            <td class="align-middle ">{{Carbon\Carbon::parse($item->fecha_uso)->format('d/M/Y')}}</td>
+                            <th class="align-middle ">{{Carbon\Carbon::parse($item->fecha_uso)->format('d/M/Y')}}</th>
+                            <td class="align-middle ">{{$item->nommbre.' '.$item->apellido}}</td>
                             <td class="align-middle "><span class="badge badge-primary">{{$item->tipo_permiso}}</span></td>
                             <td class="align-middle ">{{date('H:i', strtotime($item->hora_inicio))}}</td>
                             <td class="align-middle ">{{date('H:i', strtotime($item->hora_final))}}</td>
@@ -134,63 +134,23 @@
                                     Carbon\Carbon::parse($item->fecha_uso.'T'.$item->hora_inicio)
                                         ->diffAsCarbonInterval(Carbon\Carbon::parse($item->fecha_uso.'T'.$item->hora_final))
                                 }}
-                            </td>
-                            <td class="align-middle text-center">
-                                @if($item->estado =='GUARDADO') 
-                                    <span class="badge badge-primary">{{$item->estado}}</span>
-                                @endif
-                                @if($item->estado =='CANCELADO') 
-                                    <span class="badge badge-danger">{{$item->estado}}</span>
-                                @endif
-                                @if ($item->estado =='ENVIADO A JEFATURA')
-                                    <span class="badge badge-warning">{{$item->estado}}</span>
-                                @endif
-                            </td>
+                            </td>                           
                             <td class="align-middle ">
                                 <div class="row">
                                     <div class="col text-center">
-                                        @php
-                                            $todos_btn = $item->estado =='GUARDADO' or 
-                                                        !$item->estado=='ENVIADO A JEFATURA';
-                                        @endphp
+                                        
                                         <div class="btn-group" role="group">
-                                            <button title="Observaciones" class="btn btn-outline-primary btn-sm rounded-left" 
-                                            @if ($item->estado =='CANCELADO')
-                                                disabled
-                                            @else
+                                            <button title="Aceptar Licencia" class="btn btn-outline-success btn-sm rounded-left" 
                                               value="{{$item->permiso}}" 
-                                              onclick="observaciones(this)"
-                                            @endif>
-                                                <i class="fa fa-eye font-16 my-1" aria-hidden="true"></i>
+                                              onclick="aceptar(this)">
+                                                <i class="fa fa-check font-16 my-1" aria-hidden="true"></i>
                                             </button>
-                                            <button title="Enviar" class="btn btn-outline-primary btn-sm" 
-                                            @if($todos_btn)
+                                            <button title="Agregar Observacion" class="btn btn-outline-primary btn-sm" 
                                                 value="{{$item->permiso}}"
-                                                 onclick="enviar(this)"
-                                                 @else disabled
-                                                 @endif>                                                
-                                                <i class="fa fa-arrow-circle-up font-16 my-1" aria-hidden="true"></i>
-                                            </button>
-                                            <button title="Editar" 
-                                            class="btn btn-outline-primary btn-sm border-letf-0"  
-                                            @if($todos_btn)
-                                                 value="{{$item->permiso}}"
-                                                onclick="editar(this)"
-                                                @else
-                                                disabled
-                                                @endif>
+                                                 onclick="agregar(this)">                                                
                                                 <i class="fa fa-edit font-16 my-1" aria-hidden="true"></i>
                                             </button>
-                                            <button title="Cancelar" 
-                                                class="btn btn-outline-primary btn-sm border-left-0 btn-outline-danger rounded-right"
-                                                @if($todos_btn)
-                                                 onclick="cancelar(this)"
-                                                 value="{{$item->permiso}}"
-                                                @else
-                                                disabled
-                                                @endif>
-                                                <i class="fa fa-ban font-16 my-1"></i>
-                                            </button>                                   
+                                                                           
                                         </div>
                                     </div>
                                 </div>
@@ -238,5 +198,12 @@
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('js/scripts/lic-emp.js') }}" ></script>
+    <script>       
+        
+        function aceptar(boton){
+            $('#aceptar_id').val($(boton).val());
+            $('#modalAceptar').modal();
+        }
+        
+    </script>
 @endsection

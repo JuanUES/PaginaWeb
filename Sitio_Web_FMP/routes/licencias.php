@@ -36,6 +36,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('admin/licencia/create', [LicenciasController::class,'store'])->name('lic/create');
     Route::post('admin/licencia/cancel', [LicenciasController::class,'cancelar'])->name('lic/cancelar');
     Route::post('admin/licencia/enviar', [LicenciasController::class,'enviar'])->name('lic/enviar');
+
+    Route::post('admin/licencias/jefatura/aceptar',[LicenciasJefeRRHHController::class,'aceptarJefatura'])->name('jf/aceptar');
     /*END POST**/
 
 });
