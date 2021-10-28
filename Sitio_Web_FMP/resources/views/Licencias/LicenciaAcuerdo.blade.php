@@ -14,7 +14,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form id="registroForm"  action="{{ route('lic/create') }}" method="POST">
+        <form id="registroForm"  action="{{ route('licAcuerdo/create') }}" method="POST">
             @csrf
             
             <div class="modal-body">
@@ -35,7 +35,7 @@
                         <div class="form-group">
                             <label for="exampleInputCodigo">Empleado<code>*</code></label>
                             <select class="form-control selectpicker" style="width: 100%" data-live-search="true" 
-                            data-style="btn-white" name="id_empleado" id="id_empleado">
+                            data-style="btn-white" name="empleado" id="empleado">
                                 <option value="" selected>Seleccione</option>
                                 @if (count($empleados))
                                 @foreach ($empleados as $index)
@@ -83,8 +83,8 @@
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                 </div>
-                                <input type="date" name="fecha_de_uso" class="form-control"
-                                    tyle="width: 100%;"  id="fecha_de_uso" >
+                                <input type="date" name="fecha_de_inicio" class="form-control"
+                                    tyle="width: 100%;"  id="fecha_de_inicio" >
                             </div>
                         </div>                            
                     </div>
@@ -94,8 +94,8 @@
                             <div class="input-group">
                                 <div class="input-group-append" style="width: 100%;">
                                     <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                    <input type="date" name="fecha_de_presentación" class="form-control"
-                                        style="width: 100%;"  id="fecha_de_presentacion" >
+                                    <input type="date" name="fecha_final" class="form-control"
+                                        style="width: 100%;"  id="fecha_final" >
                                 </div>
                             </div>                           
                         </div>
@@ -108,8 +108,8 @@
                             <div class="input-group">
                                 <div class="input-group-prepend" style="width: 100%;">
                                     <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
-                                    <input type="text" value="Ilimitado" name="hora_actuales" 
-                                        class="form-control" style="width: 100%"  id="hora_actuales">
+                                    <input type="text" value="Ilimitado" name="hora_utilizar" 
+                                        class="form-control" style="width: 100%"  id="hora_utilizar">
                                 </div>
                             </div>                            
                         </div> 
@@ -118,7 +118,7 @@
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group">
-                            <label for="exampleInputNombre">Descripción<code>*</code></label>
+                            <label for="exampleInputNombre">Justificación<code>*</code></label>
                             <textarea value=" " class="form-control summernote-config" 
                                 name="justificación" id="justificacion" rows="6"></textarea>
                         </div> 
@@ -357,5 +357,28 @@
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
    
-    <!--<script src="{{ asset('js/scripts/lic-emp.js') }}" ></script>-->
+    <script src="{{ asset('js/scripts/lic_acuerdo.js') }}" ></script>
+    <script>
+        const nombreDelDiaSegunFecha = fecha => [
+    'domingo',
+    'lunes',
+    'martes',
+    'miércoles',
+    'jueves',
+    'viernes',
+    'sábado',
+  ][new Date(fecha).getDay()];
+
+
+const fechasParaProbar = [
+  "2013-01-18 17:00:00",
+  "2013-08-03 10:00:00",
+  "1997-06-21 22:00:00",
+];
+
+fechasParaProbar.forEach(fecha => {
+  console.log(`En ${fecha} fue ${nombreDelDiaSegunFecha(fecha)}`);
+});
+
+    </script>
 @endsection
