@@ -18,7 +18,24 @@ class LicenciasJefeRRHHController extends Controller
 {
     public function indexJefe(){
         if(Auth::check()){
-            return view('Licencias.LicenciaJefe');
+
+            $permisos1 = DB::table('permisos')->selectRaw('md5(id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
+                fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,estado')
+                ->where('jefe',auth()->user()->empleado)
+                ->orWhere([
+                    ['tipo_permiso','=','LC/GS'],['tipo_permiso','=','LS/GS'],['tipo_permiso','=','T COMP'],
+                    ['tipo_permiso','=','INCAP'],['tipo_permiso','=','L OFICIAL'],['tipo_permiso','=','CITA MEDICA']]
+                )->orderBy('fecha_presentacion')->get();
+
+            $permisos = DB::union($permisos1)
+                ->selectRaw('md5(id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
+                fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,estado')
+                ->orWhere(
+                    [['tipo_permiso','=','LC/GS'],['tipo_permiso','=','LS/GS'],['tipo_permiso','=','T COMP'],
+                    ['tipo_permiso','=','INCAP'],['tipo_permiso','=','L OFICIAL'],['tipo_permiso','=','CITA MEDICA']]
+                );
+
+            return view('Licencias.LicenciaJefe',compat($permisos));
         }
     }
     public function indexRRHH(){

@@ -24,7 +24,7 @@ var hrs_disponible_a = 0;
 
 
 function obtenerHora() {
-    if($('#tipo_permiso').val()==='LC/GS' && $('#fecha_de_uso').val().trim() != ""){
+    if($('#tipo_permiso').val() ==='LC/GS' && $('#fecha_de_uso').val().trim() != ""){
             $.ajax({
                 type: "GET",
                 url: 'mislicencias/horas/'+$('#fecha_de_uso').val(),

@@ -175,7 +175,7 @@ class LicenciasController extends Controller
                     ->join('licencia_con_goses','licencia_con_goses.id_tipo_jornada','=','tipo_jornada.id')
                     ->whereRaw('empleado.id=? and permisos.tipo_permiso=\'LC/GS\' and to_char(permisos.fecha_uso, \'MM-YY\') = to_char(\''.$fecha.'\'::date, \'MM-YY\')',
                     [auth()->user()->empleado])
-                ->groupBy('mensuales')->first();
+                ->groupBy('mensuales')->first()->toJSON();
             }else{
                 return $horas->toJSON();
             }
@@ -194,7 +194,6 @@ class LicenciasController extends Controller
 
     public function cancelar(Request $request){
         if(Auth::check() and isset($request)){
-           // echo dd($request);
             $p = Permiso::select('estado','id')
                 ->whereRaw('md5(id::text) = ?',[$request->_id])->first();
             $p -> estado = 'CANCELADO';

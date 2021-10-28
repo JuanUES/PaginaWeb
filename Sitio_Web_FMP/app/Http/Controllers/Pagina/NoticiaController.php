@@ -38,7 +38,7 @@ class NoticiaController extends Controller
         $validator = Validator::make($request->all(),[
             'titulo' => 'required|max:255',
             'contenido' => 'required',
-            'imagen' => 'required',
+            'imagen' => 'required|image|mimes:jpeg,png|max:2500',
         ]);         
 
         if($validator->fails())
@@ -89,8 +89,8 @@ class NoticiaController extends Controller
     public function storeurl(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'titulo' => 'required|max:255',
-            'imagen' => 'required',
+            'titulo' => 'required|max:200',
+            'imagen' => 'required|image|mimes:jpeg,png|max:2500',
             'urlfuente' => 'required',
         ]);         
 
