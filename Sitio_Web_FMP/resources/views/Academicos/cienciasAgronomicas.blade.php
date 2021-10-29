@@ -139,7 +139,7 @@
     
                         </div>
                         <div class="tab-pane fade" id="v-pills-profile2" role="tabpanel" aria-labelledby="v-pills-profile-tab2">
-                            <h2 class="header-title py-2">Ingeniería AgroIndustrial</h2>   
+                            <h2 class="header-title py-2">Ingeniería Agroindustrial</h2>   
                             <!--
                             <p class="mb-0 font-weight-bold ">Código</p> 
                                     <p class="text-muted font-15 text-justify">
@@ -272,7 +272,7 @@ $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizaci
                             Ingeniería Agronómica</a>
                         <a class="nav-link mb-2 btn-outline-danger border" id="v-pills-profile-tab2" data-toggle="pill" href="#v-pills-profile2" role="tab" aria-controls="v-pills-profile2"
                             aria-selected="false">
-                            Ingeniería AgroIndustrial</a>
+                            Ingeniería Agroindustrial</a>
                         
                     </div>
                 </div> <!-- end col -->

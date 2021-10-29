@@ -114,7 +114,7 @@
                                     <a href="{{ route('postgrado') }}">Unidad de Postgrado</a>
                                 </li>
                                 <li>
-                                    <a href="https://distancia.ues.edu.sv/" target="_blank">Universidad en Linea</a>
+                                    <a href="https://distancia.ues.edu.sv/" target="_blank">Universidad en Línea</a>
                                 </li>
                                 <li class="has-submenu">
                                     <a href="{{ route('investigacion')}}">Unidad de Investigación</a>
