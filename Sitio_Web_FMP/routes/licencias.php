@@ -14,7 +14,9 @@ Route::group(['middleware' => ['auth']], function () {
     /*METODOS GET**/
     Route::get('admin/mislicencias', [LicenciasController::class,'indexMisLicencias'])->name('indexLic');
     Route::get('admin/LicenciasAcuerdo', [LicenciasAcuerdoController::class,'index'])->name('AcuerdoLic');
-    Route::get('admin/LicenciasAcuerdo/horas/{f1}/{f2}/{id}', [LicenciasAcuerdoController::class,'horas']);
+    Route::get('admin/LicenciasAcuerdo/tabla', [LicenciasAcuerdoController::class,'Data']);
+    Route::get('admin/LicenciasAcuerdo/edit{id}', [LicenciasAcuerdoController::class,'cargarModal']);
+    
     Route::get('admin/mislicencias/horas/{fecha}', [LicenciasController::class,'horas_disponibles']);
     Route::get('admin/mislicencias/horas-anuales/{fecha}', [LicenciasController::class,'horas_anuales']);
     Route::get('admin/mislicencias/permiso/{permiso}',[LicenciasController::class,'permiso']);
