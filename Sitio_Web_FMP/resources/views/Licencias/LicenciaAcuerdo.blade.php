@@ -101,20 +101,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-xl-12">
-                        <div class="form-group">
-                            <label for="hora_actuales">Horas Utilizar</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend" style="width: 100%;">
-                                    <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
-                                    <input type="text" value="Ilimitado" name="hora_utilizar" 
-                                        class="form-control" style="width: 100%"  id="hora_utilizar">
-                                </div>
-                            </div>                            
-                        </div> 
-                    </div>
-                </div>
+              
                 <div class="row">
                     <div class="col-xl-12">
                         <div class="form-group">
@@ -252,7 +239,7 @@
             </div>           
             <div class="modal-body">
                 <div class="container-fluid">
-                    <table style="width: 100%" class="table" id="obs-table"> 
+                    <table style="width: 100%" class="table" id="acuerdo-table"> 
                         <thead>
                             <tr>
                                 <th>Fecha</th>
@@ -299,20 +286,19 @@
                     data-toggle="modal" data-target="#modalRegistro"></button>
                 </div>                
             </div>
-            <table  class="table" style="width: 100%">
+            <table  class="table" style="width: 100%" id="Lic-table">
                 <thead>
                 <tr>
-                    <th class="col-xs-2">Empleado</th>
-                    <th class="col-sm-1">Tipo</th>
-                    <th class="col-xs-1">Fecha Inicio</th>
-                    <th class="col-xs-1">Fecha Final</th>
-                    <th class="col-sm-2">Horas</th>
-                    <th class="col-sm-2">Descripción</th>
-                    <th class="col-sm-1 text-center">Acciones</th>
+                    <th class="col-xs-1">Empleado</th>
+                    <th class="col-sm-2">Tipo</th>
+                    <th class="col-sm-2">Fecha inicio</th>
+                    <th class="col-sm-2">Fecha Final</th>
+                    <th class="col-xs-1">Justificación</th>
+                    <th class="col-sm-1">Acciones</th>
                 </tr>
                 </thead>
                 <tbody>
-                    <th class="col-xs-3">Liseth Guadalupe Merino de Córdova</th>
+             
                     
                                
                 </tbody>
@@ -352,33 +338,12 @@
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
     <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.js') }}" ></script>
-    <script src="{{ asset('js/scripts/data-table.js') }}" ></script>
+    <!--<script src="{{ asset('js/scripts/data-table.js') }}" ></script>-->
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
    
-    <script src="{{ asset('js/scripts/lic_acuerdo.js') }}" ></script>
-    <script>
-        const nombreDelDiaSegunFecha = fecha => [
-    'domingo',
-    'lunes',
-    'martes',
-    'miércoles',
-    'jueves',
-    'viernes',
-    'sábado',
-  ][new Date(fecha).getDay()];
-
-
-const fechasParaProbar = [
-  "2013-01-18 17:00:00",
-  "2013-08-03 10:00:00",
-  "1997-06-21 22:00:00",
-];
-
-fechasParaProbar.forEach(fecha => {
-  console.log(`En ${fecha} fue ${nombreDelDiaSegunFecha(fecha)}`);
-});
-
-    </script>
+    <script src="{{ asset('js/Lic_Acuerdo/lic_acuerdo.js') }}" ></script>
+    <script src="{{ asset('js/Lic_Acuerdo/lic_acuerdo_table.js')}}"></script>
+ 
 @endsection
