@@ -162,7 +162,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                             </div> <!-- end row-->
                         </div>  <!-- end card-box-->
                     </div> <!-- end col -->
-                    <div class="col-xl-12" id="noticias" style=" overflow: auto;">
+                    <div class="col-xl-12" id="noticias">
                         <div class="card-box"> 
                             <div class="row my-2">
                             <div class="col-xl order-first">
@@ -343,7 +343,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                             @endauth     
                             </div>
                             @if (count($noticias)) 
-                                <table id="dtNoticias" class="table table-border" style="width: 100%;">
+                                <table id="dtNoticias" class="table table-bordered" style="width: 100%;">
                                     <thead style="display: none;">
                                       <tr>                                            
                                         <th>&nbsp;</th>    
@@ -366,7 +366,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                                         @endif
                                                         <p class="text-truncate"> {{mb_strwidth(strip_tags($n->contenido), 'UTF-8') <= 125?strip_tags($n->contenido):rtrim(mb_strimwidth(strip_tags($n->contenido), 0, 125, '', 'UTF-8')).'...'}}                                       
                                                         </p>
-                                                        </div>  
+                                                    </div>  
                                                     <div class="col-md-2  col-sm-12 text-right">
                                                         <div class="btn-group-vertical" role="group">
                                                                 @if ($n->tipo)
@@ -427,8 +427,7 @@ role="dialog" aria-labelledby="myCenterModalLabel" aria-hidden="true" >
                                                     </div>
                                                 </div> 
                                             </td>
-                                        </tr>                                      
-                                          
+                                        </tr>                                     
                                         @endforeach                
                                     </tbody>
                                 </table>  

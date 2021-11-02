@@ -44,7 +44,7 @@
                     <div class="row">
                         <div class="col-xl-12">
                             <div class="form-group">
-                                <label for="">Roles <code>*</code></label>
+                                <label for="">Roles </label>
                                 <select class="form-control select2-multiple" data-toggle="select2" id="roles" placeholder="sddf"
                                      multiple="multiple" aria-placeholder="Seleccione" style="width: 100%;" name="roles[]" id="roles">
                                     <optgroup  label="General">

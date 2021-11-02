@@ -41,6 +41,16 @@ class LicenciasController extends Controller
         }
     }
 
+    public function getPermisos(){
+        return $permisos = Permiso::selectRaw('md5(id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
+        fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,estado')
+        ->where([['empleado','=',auth()->user()->empleado],['estado','!=','CANCELADO']])
+        ->orWhere([
+            ['tipo_permiso','=','LC/GS'],['tipo_permiso','=','LS/GS'],['tipo_permiso','=','T COMP'],
+            ['tipo_permiso','=','INCAP'],['tipo_permiso','=','L OFICIAL'],['tipo_permiso','=','CITA MEDICA']])
+        ->orderBy('fecha_presentacion')->get()->toJson();
+    }
+
     //CODIGO PARA INSERTAR, MODIFICAR
     public function store(Request $request){
         try{
@@ -92,16 +102,25 @@ class LicenciasController extends Controller
                 }                
             }
             
-            if($request->tipo_de_permiso == 'LC-GS')
+            if($request->tipo_de_permiso === 'LC/GS')
             {
-                $horas = json_decode($this->horas_disponibles($request->fecha_de_uso));
+                $horas_m = json_decode($this->horas_disponibles($request->fecha_de_uso,'mensual',null));
+                $horas_a = json_decode($this->horas_disponibles($request->fecha_de_uso,'anual',null));
+
                 $hora_inicio = new \DateTime($request->hora_inicio);
                 $hora_final = new \DateTime($request->hora_final);
                 $diferencia = $hora_inicio -> diff($hora_final);
-                $total_minutos = (\intval($diferencia->format("%H"))*60)+\intval($diferencia->format("%i"))+
-                                 (\intval($horas->horas_acumuladas)*60)+\intval($horas->minutos_acumulados);
+                $total_minutos_m = (\intval($diferencia->format("%H"))*60)+\intval($diferencia->format("%i"))+
+                                 (\intval($horas_m->horas_acumuladas)*60)+\intval($horas_m->minutos_acumulados);
 
-                if(\intval($total_minutos/60)>\intval($horas->mensuales)){
+                $total_minutos_a = (\intval($diferencia->format("%H"))*60)+\intval($diferencia->format("%i"))+
+                                (\intval($horas_a->horas_acumuladas)*60)+\intval($horas_a->minutos_acumulados);
+                
+                if(\intval($total_minutos_m/60)>\intval($horas_m->mensuales)){
+                    return response()->json(['error'=>['Las horas exceden el límite establecido Anual.']]); 
+                }
+
+                if(\intval($total_minutos_a/60)>\intval($horas_a->anuales)){
                     return response()->json(['error'=>['Las horas exceden el límite establecido mensual.']]); 
                 }
             }
@@ -116,7 +135,7 @@ class LicenciasController extends Controller
             $p -> justificacion = $request-> justificación;
             $p -> observaciones = $request-> observaciones;
             $p -> empleado = auth()->user()->empleado;
-            $p -> estado = 'GUARDADO';
+            $p -> estado = 'Guardado';
             $p ->save();      
 
             return $request->_id != null?
@@ -128,65 +147,81 @@ class LicenciasController extends Controller
         }
     }//fin create
 
-    public function horas_anuales($fecha){
+    protected function horas_disponibles($fecha,$tipo,$permiso){
         if(Auth::check() and !empty($fecha)){
-            $horas = Permiso::selectRaw('sum(date_part(\'hour\', permisos.hora_final-permisos.hora_inicio)) as horas_acumuladas_a,
-                sum(date_part(\'minute\', permisos.hora_final-permisos.hora_inicio)) as minutos_acumulados_a, anuales as anual')
-                ->join('empleado', 'empleado.id','=','permisos.empleado')
-                ->join('tipo_jornada', 'tipo_jornada.id','=','empleado.id_tipo_jornada')
-                ->join('licencia_con_goses','licencia_con_goses.id_tipo_jornada','=','tipo_jornada.id')
-                ->whereRaw('empleado.id=? and permisos.tipo_permiso=\'LC/GS\' and to_char(permisos.fecha_uso, \'YY\') = to_char(\''.$fecha.'\'::date, \'YY\')',
-                    [auth()->user()->empleado])
-                ->groupBy('anual')->first();
-
-            if(is_null($horas)){
-               return Permiso::selectRaw('DISTINCT 0 as horas_acumuladas_a,0 as minutos_acumulados_a, anuales as anual')
-                    ->join('empleado', 'empleado.id','=','permisos.empleado')
-                    ->join('tipo_jornada', 'tipo_jornada.id','=','empleado.id_tipo_jornada')
-                    ->join('licencia_con_goses','licencia_con_goses.id_tipo_jornada','=','tipo_jornada.id')
-                    ->whereRaw('empleado.id=? and permisos.tipo_permiso=\'LC/GS\' and to_char(permisos.fecha_uso, \'YY\') = 
-                        to_char(\''.$fecha.'\'::date, \'YY\')',
-                        [auth()->user()->empleado])
-                    ->first()->toJSON();
-            }else{
-                return $horas->toJSON();
+            $query = Permiso::join ('empleado','empleado.id','=','permisos.empleado')
+            ->join ('tipo_jornada','tipo_jornada.id','=','empleado.id_tipo_jornada')
+            ->join ('licencia_con_goses','licencia_con_goses.id_tipo_jornada','=','tipo_jornada.id')
+            ->where ([
+                ['empleado.id','=',auth()->user()->empleado],
+                ['permisos.tipo_permiso','=','LC/GS']]);
+            
+            if ($permiso != 'nuevo') {
+                # code...
+                $query = $query -> whereRaw('md5(permisos.id::text) != ?',[$permiso]);
             }
+            
+            $queryEmp = Empleado::
+               join ('tipo_jornada', 'tipo_jornada.id', '=', 'empleado.id_tipo_jornada')
+            -> join ('licencia_con_goses', 'licencia_con_goses.id_tipo_jornada', '=' ,'tipo_jornada.id')
+            -> where ('empleado.id',auth()->user()->empleado);
+
+            if ($tipo==='anual') {
+                # code...            
+                $queryM = $query->whereRaw('to_char(permisos.fecha_uso, \'YY\') = to_char(\''.$fecha.'\'::date,\'YY\')')            
+                ->groupBy('licencia_con_goses.anuales')
+                ->selectRaw('sum(date_part(\'hour\', permisos.hora_final-permisos.hora_inicio)) as horas_acumuladas,
+                    sum(date_part(\'minute\', permisos.hora_final-permisos.hora_inicio)) as minutos_acumulados, licencia_con_goses.anuales');
+
+                if($queryM->exists()){
+                    return $queryM->first()->toJson();
+                }else {
+                    # code...
+                    return $queryEmp
+                        ->selectRaw ('\'0\' as horas_acumuladas,\'0\' as minutos_acumulados, licencia_con_goses.anuales')
+                        ->first()->toJson();
+                }
+            }else {
+                # code...
+                if ($tipo==='mensual') {
+                    # code...
+                    $queryM = $query->whereRaw('to_char(permisos.fecha_uso, \'MM\') = to_char(\''.$fecha.'\'::date,\'MM\')')            
+                    ->groupBy('licencia_con_goses.mensuales')->selectRaw('sum(date_part(\'hour\', permisos.hora_final-permisos.hora_inicio)) as horas_acumuladas,
+                    sum(date_part(\'minute\', permisos.hora_final-permisos.hora_inicio)) as minutos_acumulados, licencia_con_goses.mensuales::text');
+                    
+                    if($queryM->exists()){
+                        return $queryM->first()->toJson();
+                    }else{
+                        return $queryEmp
+                        ->selectRaw ('\'0\' as horas_acumuladas,\'0\' as minutos_acumulados, licencia_con_goses.mensuales::text')
+                        ->first()->toJson();
+                    }
+
+                }else {                
+                    return null;
+                }
+            }
+        }else {
+            return redirect()->route('index');
         }
     }
 
-    public function horas_disponibles($fecha){
-        if(Auth::check() and !empty($fecha)){
-            $horas = Permiso::selectRaw('sum(date_part(\'hour\', permisos.hora_final-permisos.hora_inicio)) as horas_acumuladas,
-                sum(date_part(\'minute\', permisos.hora_final-permisos.hora_inicio)) as minutos_acumulados,
-                mensuales - sum(date_part(\'hour\', permisos.hora_final-permisos.hora_inicio))  mensuales')
-                ->join('empleado', 'empleado.id','=','permisos.empleado')
-                ->join('tipo_jornada', 'tipo_jornada.id','=','empleado.id_tipo_jornada')
-                ->join('licencia_con_goses','licencia_con_goses.id_tipo_jornada','=','tipo_jornada.id')
-                ->whereRaw('empleado.id=? and permisos.tipo_permiso=\'LC/GS\' and to_char(permisos.fecha_uso, \'MM-YY\') = to_char(\''.$fecha.'\'::date, \'MM-YY\')',
-                    [auth()->user()->empleado])
-                ->groupBy('mensuales')->first();
-
-            if(is_null($horas)){
-                return Permiso::selectRaw('0 as horas_acumuladas,0 as minutos_acumulados,0  mensuales')
-                    ->join('empleado', 'empleado.id','=','permisos.empleado')
-                    ->join('tipo_jornada', 'tipo_jornada.id','=','empleado.id_tipo_jornada')
-                    ->join('licencia_con_goses','licencia_con_goses.id_tipo_jornada','=','tipo_jornada.id')
-                    ->whereRaw('empleado.id=? and permisos.tipo_permiso=\'LC/GS\' and to_char(permisos.fecha_uso, \'MM-YY\') = to_char(\''.$fecha.'\'::date, \'MM-YY\')',
-                    [auth()->user()->empleado])
-                ->groupBy('mensuales')->first()->toJSON();
-            }else{
-                return $horas->toJSON();
-            }
-        }
-        
+    public function horas_anual($fecha,$permiso){
+        return $this -> horas_disponibles($fecha,'anual',$permiso);
+    }
+    
+    public function horas_mensual($fecha,$permiso){
+        return $this -> horas_disponibles($fecha,'mensual',$permiso);
     }
 
     public function permiso($permiso){
         if(Auth::check() and !is_null($permiso)){
             return Permiso::selectRaw('md5(id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
-                    fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,estado')
+                    fecha_presentacion,to_char(hora_inicio,\'HH24:MI\') as hora_inicio
+                    ,to_char(hora_final,\'HH24:MI\') as hora_final,justificacion,observaciones,estado')
             ->whereRaw('empleado = ? and md5(permisos.id::text) = ?',[auth()->user()->empleado, $permiso])
             ->first()->toJSON();  
+
         }else {
             return redirect()->route('index');
         }
@@ -194,10 +229,10 @@ class LicenciasController extends Controller
 
     public function cancelar(Request $request){
         if(Auth::check() and isset($request)){
-            $p = Permiso::select('estado','id')
-                ->whereRaw('md5(id::text) = ?',[$request->_id])->first();
-            $p -> estado = 'Cancelado';
-            $p -> save();
+            Permiso::select('estado','id')
+                ->whereRaw('md5(id::text) = ?',[$request->_id])
+                ->first()
+                ->delete();
             return redirect()->route('indexLic');
         }else {
             return redirect()->route('index');
@@ -230,7 +265,6 @@ class LicenciasController extends Controller
                 if ($permiso -> estado != 'Aceptado') {
                                                         
                     $enviado_jf = 'Enviado a Jefatura';
-                    $enviado_rrhh = 'Enviado a Jefatura';
                     $observacion_jf = 'Observacion Jefatura';
                     $observacion_rrhh = 'Observacion RRHH';
 

@@ -83,7 +83,7 @@
                                     <span class="input-group-text" id="basic-addon1">
                                         <i class="mdi mdi-clock-outline"></i>
                                     </span>
-                                    <input type="text" name="" class="form-control" style="width: 100%"  id="hora_anual" readonly>
+                                    <input type="text" name="" value="Ilimitado" class="form-control" style="width: 100%"  id="hora_anual" readonly>
 
                                 </div>                                
                             </div>
@@ -96,7 +96,7 @@
                                 <div class="input-group-prepend" style="width: 100%;">
                                     <span class="input-group-text"><i class="mdi mdi-clock-outline"></i></span>
                                     <input type="text" value="Ilimitado" name="hora_disponible" 
-                                         class="form-control " style="width: 100%"  id="hora_disponible" readonly>
+                                         class="form-control " style="width: 100%"  id="hora_mensual" readonly>
                                 </div>
                             </div>
                         </div> 
@@ -331,7 +331,7 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Inicio</a></li>
-                    <li class="breadcrumb-item active">Usuarios</li>
+                    <li class="breadcrumb-item active">Mis Licencia</li>
                 </ol>
             </div>
             <h4 class="page-title">&nbsp;</h4>
@@ -356,7 +356,7 @@
                     data-toggle="modal" data-target="#modalRegistro"></button>
                 </div>                
             </div>
-            <table  class="table" style="width: 100%">
+            <table  class="table" style="width: 100%" id='permisos-table'>
                 <thead>
                 <tr>
                     <th class="col-sm-2">Presentación</th>
@@ -385,13 +385,13 @@
                                 }}
                             </td>
                             <td class="align-middle text-center">
-                                @if($item->estado =='GUARDADO') 
+                                @if($item->estado =='Guardado') 
                                     <span class="badge badge-primary">{{$item->estado}}</span>
                                 @endif
-                                @if($item->estado =='CANCELADO') 
+                                @if($item->estado =='Cancelado') 
                                     <span class="badge badge-danger">{{$item->estado}}</span>
                                 @endif
-                                @if ($item->estado =='ENVIADO A JEFATURA' or $item->estado =='ENVIADO A RRHH')
+                                @if ($item->estado =='Enviado a Jefatura' or $item->estado =='Enviado a RRHH')
                                     <span class="badge badge-primary">{{$item->estado}}</span>
                                 @endif
                             </td>
@@ -399,8 +399,8 @@
                                 <div class="row">
                                     <div class="col text-center">
                                         @php
-                                            $todos_btn = $item->estado =='GUARDADO' or 
-                                                        !$item->estado=='ENVIADO A JEFATURA';
+                                            $todos_btn = $item->estado =='Guardado' or 
+                                                        !$item->estado=='Enviado a Jefatura';
                                         @endphp
                                         <div class="btn-group" role="group">
                                             <button title="Observaciones" class="btn btn-outline-primary btn-sm rounded-left" 
@@ -483,9 +483,9 @@
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
     <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.js') }}" ></script>
-    <script src="{{ asset('js/scripts/data-table.js') }}" ></script>
-    <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
-    <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
+    <script src="{{ asset('js/scripts/data-table.js')}}"></script>
+    <script src="{{ asset('js/summernote-bs4.min.js')}}"></script>
+    <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js')}}"></script>
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('js/scripts/lic-emp.js') }}" ></script>
+    <script src="{{ asset('js/scripts/lic-emp.js')}}"></script>
 @endsection
