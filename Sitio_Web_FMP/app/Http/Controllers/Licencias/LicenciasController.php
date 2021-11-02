@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 
 class LicenciasController extends Controller
 {
-    /**ESTADOS: 'ENVIADO A JEFATURA' , 'GUARDADO' */
+    /**ESTADOS: 'Enviado a Jefatura' , 'GUARDADO' */
 
     protected function obtenerDia($fecha){
         $dias = array('Lunes','Martes','Miércoles','Jueves','Viernes','Sabado','Domingo');
@@ -196,7 +196,7 @@ class LicenciasController extends Controller
         if(Auth::check() and isset($request)){
             $p = Permiso::select('estado','id')
                 ->whereRaw('md5(id::text) = ?',[$request->_id])->first();
-            $p -> estado = 'CANCELADO';
+            $p -> estado = 'Cancelado';
             $p -> save();
             return redirect()->route('indexLic');
         }else {
@@ -227,31 +227,30 @@ class LicenciasController extends Controller
             
             if($queryJC->exists() || $queryJ->exists()){
                  
-                /*if ($permiso -> estado != 'APROVADO') {
-                    # code...
-                }*/
+                if ($permiso -> estado != 'Aceptado') {
+                                                        
+                    $enviado_jf = 'Enviado a Jefatura';
+                    $enviado_rrhh = 'Enviado a Jefatura';
+                    $observacion_jf = 'Observacion Jefatura';
+                    $observacion_rrhh = 'Observacion RRHH';
 
-                $seguimiento = new Permiso_seguimiento;
-                $seguimiento -> permiso_id = $permiso->id;
-                $seguimiento -> estado = false;
+                    $seguimiento = new Permiso_seguimiento;
+                    $seguimiento -> permiso_id = $permiso->id;
+                    $seguimiento -> estado = false;
 
-                if($permiso -> estado === 'GUARDADO'){
-                    $permiso -> estado = 'ENVIADO A JEFATURA';
-                    $seguimiento -> proceso = 'ENVIADO A JEFATURA';
-                }else {
+                    if($permiso -> estado === 'Guardado'){
+                        $permiso -> estado =  $enviado_jf;
+                        $seguimiento -> proceso =  $enviado_jf;
+                    }else {
 
-                    if($permiso -> estado === 'OBSERVACION JEFATURA'){
-                        $permiso -> estado = 'ENVIADO A JEFATURA';
-                        $seguimiento -> proceso = 'ENVIADO A JEFATURA';
+                        if($permiso -> estado === $observacion_rrhh || $permiso -> estado === $observacion_jf){
+                            $permiso -> estado =  $enviado_jf;
+                            $seguimiento -> proceso = $enviado_jf;
+                        }                             
                     }
-                    if($permiso -> estado === 'OBSERVACION RRHH'){
-                        $permiso -> estado = 'ENVIADO A RRHH';
-                        $seguimiento -> proceso = 'ENVIADO A RRHH';
-                    }           
-                             
+                    $permiso -> save();                
+                    $seguimiento -> save();
                 }
-                $permiso -> save();                
-                $seguimiento -> save();
                 
             }else{
                 return response()->json(['error'=>'No tiene asignado un jefe']);
