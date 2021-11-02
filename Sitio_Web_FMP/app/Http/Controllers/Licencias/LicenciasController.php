@@ -35,8 +35,8 @@ class LicenciasController extends Controller
                 ->where([['empleado','=',auth()->user()->empleado],['estado','!=','CANCELADO']])
                 ->orWhere([
                     ['tipo_permiso','=','LC/GS'],['tipo_permiso','=','LS/GS'],['tipo_permiso','=','T COMP'],
-                    ['tipo_permiso','=','INCAP'],['tipo_permiso','=','L OFICIAL'],['tipo_permiso','=','CITA MEDICA']]
-                )->orderBy('fecha_presentacion')->get();     
+                    ['tipo_permiso','=','INCAP'],['tipo_permiso','=','L OFICIAL'],['tipo_permiso','=','CITA MEDICA']])
+                ->orderBy('fecha_presentacion')->get();     
             return view('Licencias.LicenciaEmpleado',compact('empleado','permisos'));
         }
     }
@@ -267,7 +267,7 @@ class LicenciasController extends Controller
             ->select('estado','proceso','observaciones')
             ->selectRaw('to_char(created_at, \'DD/MM/YY - HH24:MI \') as fecha')
             ->get()->toJSON();
-        }else {
+        }else{
             return redirect()->route('index');
         }
     }

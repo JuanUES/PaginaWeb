@@ -77,7 +77,7 @@ function obtenerHora() {
             });
     }else{
         $('#hora_anual').val('Ilimitado');
-        $('#hora_actuales').val('Anual');
+        $('#hora_actuales').val('Ilimitado');
         $('#hora_disponible').val('Ilimitado');
     }
 }
@@ -109,16 +109,16 @@ function calcularHora() {
     // Cálculo de horas y minutos de la diferencia
     var horas = parseInt(Math.trunc(diferencia / 60));
     var minutos = parseInt((diferencia % 60));
-
+    console.log( horas+' '+minutos);
     //Horas disponibles en minutos
-    var minutos_disp = (parseInt(hrs_disponible) * 60) + (min_usados > 0 ? (60 - parseInt(min_usados)):0);
-    var minutos_disp_anual = (parseInt(hrs_anual) * 60) + (min_usados > 0 ? (60 - parseInt(min_usados)):0);
-    var minutos_disp_dife = minutos_disp - (minutos_final - minutos_inicio);
-    var minutos_disp_dife_anual = minutos_disp_anual - (minutos_final - minutos_inicio);
+    //var minutos_disp = (parseInt(hrs_disponible) * 60) + (min_usados > 0 ? (60 - parseInt(min_usados)):0);
+    //var minutos_disp_anual = (parseInt(hrs_anual) * 60) + (min_usados > 0 ? (60 - parseInt(min_usados)):0);
+    //var minutos_disp_dife = minutos_disp - (minutos_final - minutos_inicio);
+    //var minutos_disp_dife_anual = minutos_disp_anual - (minutos_final - minutos_inicio);
 
     $('#hora_actuales').val(horas+' hrs, '+minutos+' min');
-    $('#hora_disponible').val((Math.trunc(parseInt(minutos_disp_dife)/ 60))+' hrs, '+parseInt((minutos_disp_dife % 60)) +' min'); 
-    $('#hora_anual').val((Math.trunc(parseInt(minutos_disp_dife_anual)/ 60))+' hrs, '+parseInt((minutos_disp_dife_anual % 60)) +' min');     
+    //$('#hora_disponible').val((Math.trunc(parseInt(minutos_disp_dife)/ 60))+' hrs, '+parseInt((minutos_disp_dife % 60)) +' min'); 
+   // $('#hora_anual').val((Math.trunc(parseInt(minutos_disp_dife_anual)/ 60))+' hrs, '+parseInt((minutos_disp_dife_anual % 60)) +' min');     
 }
 
     $('#tipo_permiso').on('select2:select',obtenerHora);
