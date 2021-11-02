@@ -33,14 +33,16 @@
                 <div class="row">
                     <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="exampleInputCodigo">Nombre <code>*</code></label>
-                            <input type="text" class="form-control" value="{{$empleado->nombre}}"  autocomplete="off" placeholder="Digite el nombre" readonly>
+                            <label for="">Nombre <code>*</code></label>
+                            <input type="text" class="form-control" value="{{$empleado->nombre}}"  
+                            autocomplete="off" placeholder="Digite el nombre" readonly>
                         </div>
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="exampleInputUbicacion">Apellido <code>*</code></label>
-                            <input type="text" class="form-control" value="{{$empleado->apellido}}" autocomplete="off" placeholder="Digite el correo" readonly>
+                            <label for="">Apellido <code>*</code></label>
+                            <input type="text" class="form-control" value="{{$empleado->apellido}}"
+                             autocomplete="off" placeholder="Digite el correo" readonly>
                         </div>
                     </div>
                 </div>
@@ -48,7 +50,7 @@
                 <div class="row">
                     <div class="col-xl-3">
                         <div class="form-group">
-                            <label for="exampleInputNombre">Tipo de permiso <code>*</code></label>
+                            <label for="tipo_permiso">Tipo de permiso <code>*</code></label>
                             <select name="tipo_de_permiso" class="form-control select2" style="width: 100%" data-live-search="true" 
                                 data-style="btn-white"   id="tipo_permiso" name="tipo_permiso">
                                 <option value="">Seleccione</option>
@@ -63,7 +65,7 @@
                     </div>
                     <div class="col-xl-3">
                         <div class="form-group">
-                            <label for="exampleInputNombre">Representantes </label>
+                            <label for="tipo_representante">Representantes </label>
                             <select name="representante" class="form-control select2" style="width: 100%"
                                 data-style="btn-white"  id="tipo_representante">
                                 <option value="">Seleccione</option>
@@ -166,14 +168,14 @@
                 <div class="row">
                     <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="exampleInputNombre">Justificación <code>*</code></label>
+                            <label for="justificacion">Justificación <code>*</code></label>
                             <textarea value=" " class="form-control summernote-config" 
                                 name="justificación" id="justificacion" rows="6"></textarea>
                         </div> 
                     </div>
                     <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="exampleInputNombre">Observaciones </label>
+                            <label for="observaciones">Observaciones </label>
                             <textarea value=" " class="form-control summernote-config" 
                                 name="observaciones" id="observaciones" rows="6"></textarea>
                         </div> 

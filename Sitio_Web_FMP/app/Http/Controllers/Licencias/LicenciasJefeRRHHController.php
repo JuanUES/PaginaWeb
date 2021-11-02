@@ -19,7 +19,8 @@ class LicenciasJefeRRHHController extends Controller
     public function indexJefe(){
         if(Auth::check()){
 
-            $permisos = Permiso::selectRaw('md5(permisos.id::text) as permiso, tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,nombre,apellido')
+            $permisos = Permiso::selectRaw('md5(permisos.id::text) as permiso, tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,
+                observaciones,empleado.nombre,empleado.apellido')
                 ->join('empleado','empleado.id','=','permisos.empleado')
                 ->where([['jefatura',auth()->user()->empleado],['permisos.estado','=','ENVIADO A JEFATURA']])
                 ->orWhere([
