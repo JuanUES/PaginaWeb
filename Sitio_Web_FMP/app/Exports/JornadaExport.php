@@ -32,7 +32,7 @@ class JornadaExport implements FromView{
                         ->join('empleado', 'empleado.id', 'jornada.id_emp')
                         // ->join('periodos as p', 'p.id', 'jornada.id_periodo')
                         ->where('jornada.procedimiento','aceptado')
-                        ->where('tipo_empleado', 'Académico');
+                        ->whereIn('tipo_empleado', ['Académico','Administrativo'] );
 
         if(!is_null($this->depto)){
             $query->where('empleado.id_depto', $this->depto);
