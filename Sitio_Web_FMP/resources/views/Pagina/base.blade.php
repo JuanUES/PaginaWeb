@@ -60,12 +60,14 @@
 
                         <li class="has-submenu p-1 center-text">
                             <a href="{{ asset('/') }}" class=" rounded text-left" >
-                                <i class=" mdi mdi-home mdi-24px"></i>Inicio </a>
+                                <i class=" mdi mdi-home mdi-24px"></i>
+                                <font size="4">Inicio</font></a>
                         </li>
 
                         <li class="has-submenu p-1">
                             <a href="#" class="rounded btn text-left">
-                                 <i class="mdi mdi-account-multiple mdi-24px"></i>Nosotros <div class="arrow-down"></div></a>
+                                 <i class="mdi mdi-account-multiple mdi-24px"></i>
+                                 <font size="4">Nosotros</font> <div class="arrow-down"></div></a>
                             <ul class="submenu">
                                 <li>
                                     <a href="{{ asset('MisionVision') }}">Misión y Visión</a>
@@ -82,7 +84,8 @@
 
                         <li class="has-submenu p-1">
                             <a href="#">
-                            <i class="mdi mdi-book-open-page-variant mdi-24px"></i>Académico<div class="arrow-down"></div></a>
+                            <i class="mdi mdi-book-open-page-variant mdi-24px"></i>
+                            <font size="4">Académico</font><div class="arrow-down"></div></a>
                             <ul class="submenu">
                                 <li class="has-submenu">
                                     <a  href="{{ route('admonAcademica') }}">Administración Académica</a>
@@ -133,7 +136,8 @@
 
                         <li class="has-submenu p-1">
                             <a href="#" class="rounded btn text-left">
-                                 <i class="mdi mdi-clipboard-text mdi-24px"></i>Administrativo<div class="arrow-down"></div></a>
+                                 <i class="mdi mdi-clipboard-text mdi-24px"></i>
+                                 <font size="4">Administrativo</font><div class="arrow-down"></div></a>
                             <ul class="submenu">
                                 <li>
                                     <a href="{{ route('administracionFinanciera') }}">Administración Financiera</a>
@@ -149,7 +153,7 @@
                         <li class="has-submenu p-1">
                             <a href="{{ url('transparencia') }}"  class="rounded btn text-left">
                                 <i class="mdi mdi-file-account mdi-24px"></i>
-                                Transparencia
+                                <font size="4">Transparencia</font>
                             </a>
                         </li>
 
@@ -174,7 +178,7 @@
                             @else
                                 <a href="{{ route('login') }}"  class="rounded btn text-left">
                                     <i class="mdi mdi-account mdi-24px"></i>
-                                    Iniciar Sesión
+                                    <font size="4">Iniciar Sesión</font>
                                 </a>
                             @endauth
 
