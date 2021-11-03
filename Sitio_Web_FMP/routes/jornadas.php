@@ -4,7 +4,7 @@ use App\Models\Jornada\Jornada;
 use Illuminate\Support\Facades\Route;
 
 
-Route::group(['middleware' => ['auth','role:super-admin|Docente|Jefe-Administrativo|Jefe-Academico|Recurso-Humano']], function () {
+Route::group(['middleware' => ['auth','role:super-admin|Docente|Jefe-Administrativo|Jefe-Academico|Recurso-Humano|Administrativo']], function () {
     //RUTAS JORNADA
     Route::resource('admin/jornada', 'App\Http\Controllers\JornadaController')->only(['index','show','store','destroy'])->names('admin.jornada');
     Route::post('admin/jornada-export', 'App\Http\Controllers\JornadaController@export')->name('admin.jornada.export');

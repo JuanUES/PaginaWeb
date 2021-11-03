@@ -35,7 +35,18 @@ function updateHour(cell) {
     let resul = CalcularHoras(inicio,fin);
 
     if(isNaN(inicio) && isNaN(fin) ){
-        row.update({ 'jornada': resul });
+        if (parseInt(resul) >= 10 ) {
+            alert += `<div class="alert alert-danger mt-3" role="alert">
+                            <div class="alert-message">
+                                <strong> <i class="fa fa-info-circle"></i> Información!</strong> Las horas registradas exceden el número de horas permitidas
+                            </div>
+                        </div>`;
+            row.update({ 'hora_inicio': null });
+            row.update({ 'hora_fin': null });
+            row.update({ 'jornada': null });
+        }else{
+            row.update({ 'jornada': resul });
+        }
     }
 
 

@@ -89,7 +89,7 @@ class JornadaController extends Controller{
             if(!$user->hasRole('super-admin') && !$user->hasRole('Recurso-Humano')){ // si no es RRHH filtramos la informacion dependiendo de si es jefe o empleado normal
                 if($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo')){ //para filtrar por tipo de departamento
                     $query->where('empleado.jefe', $empleado->id)->whereIn('jornada.procedimiento', [$estados[1]['value'], $estados[2]['value'], $estados[3]['value'], $estados[4]['value'], $estados[5]['value']]);
-                }else if($user->hasRole('Docente')){ // con esto determinamos que es un empleado sin cargos de jefatura por lo cual solo se mostrara ese empleado
+                }else if($user->hasRole('Docente') || $user->hasrole('Administrativo')){ // con esto determinamos que es un empleado sin cargos de jefatura por lo cual solo se mostrara ese empleado
                     $query->where('empleado.id', $empleado->id);
                     $emp = $empleado;
                 }
@@ -149,7 +149,10 @@ class JornadaController extends Controller{
                     || ($user->hasRole('Jefe-Academico') && strcmp($empleado->tipo_empleado, 'Administrativo')==0)
                     ) {
                     $periodos_query->whereIn('periodos.tipo', ['Administrativo','Académico']);
-                }else{
+                }else if( ($user->hasRole('Administrativo')) ){
+                    $periodos_query->where('periodos.tipo', 'Administrativo');
+                }
+                else{
                     $tipo = ($user->hasRole('Jefe-Administrativo')) ? 'Administrativo' : 'Académico';
                     $periodos_query->where('periodos.tipo', $tipo);
                 }
@@ -426,7 +429,7 @@ class JornadaController extends Controller{
                         $deptos = $query->where('empleado.tipo_empleado', 'Administrativo')
                             ->groupBy('departamentos.id', 'departamentos.nombre_departamento')
                             ->get();
-                    } else if ($user->hasRole('Docente')) { // con esto determinamos que es un empleado sin cargos de jefatura por lo cual solo se mostrara ese empleado
+                    } else if ($user->hasRole('Docente') || $user->hasrole('Administrativo')) { // con esto determinamos que es un empleado sin cargos de jefatura por lo cual solo se mostrara ese empleado
                         $deptos = Departamento::where('estado', true)->where('id', $empleado->id_depto)->get();
                     }
             }

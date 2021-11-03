@@ -256,7 +256,7 @@
                                     </a>
                                 </li>
                             @endhasanyrole
-                            @hasrole('super-admin|Recurso-Humano|Jefe-Administrativo|Jefe-Academico|Docente')
+                            @hasrole('super-admin|Recurso-Humano|Jefe-Administrativo|Jefe-Academico|Docente|Administrativo')
                             <li class="menu-title">Jornada</li>
                                 <li>
                                     <a href="javascript: void(0);"><i class="font-18 dripicons-view-list-large"></i><span> Gestión de Jornada </span><span class="menu-arrow"></span></a>
