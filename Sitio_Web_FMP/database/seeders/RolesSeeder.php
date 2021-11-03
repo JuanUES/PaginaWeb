@@ -64,6 +64,7 @@ class RolesSeeder extends Seeder
         $role = Role::create(['name' => 'Recurso-Humano']);
         $role = Role::create(['name' => 'Docente']);
         $role = Role::create(['name' => 'Jefe-Administrativo']);
+        $role = Role::create(['name' => 'Administrativo']);
         // $role = Role::create(['name' => 'Empleado']);// Rol por default para todos los usuarios
 
         // $role->givePermissionTo('edit articles');

@@ -26,6 +26,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('admin/licencias/jefatura',[LicenciasJefeRRHHController::class,'indexJefe'])->name('indexJefatura');
     Route::get('admin/licencias/RRHH',[LicenciasJefeRRHHController::class,'indexRRHH'])->name('indexRRHH');
+
+    Route::get('admin/licencias/jefaturaRRHH/{permiso}',[LicenciasJefeRRHHController::class,'permiso']);
     
     Route::get('admin/licenciaGS', [LicenciasGosesController::class,'index'])->name('indexLicGS');
 
@@ -43,6 +45,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('admin/licencia/enviar', [LicenciasController::class,'enviar'])->name('lic/enviar');
 
     Route::post('admin/licencias/jefatura/aceptar',[LicenciasJefeRRHHController::class,'aceptarJefatura'])->name('jf/aceptar');
+    Route::post('admin/licencias/jefatura/observacion',[LicenciasJefeRRHHController::class,'observacionJefatura'])->name('jf/observacion');
     /*END POST**/
 
 });

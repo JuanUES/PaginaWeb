@@ -194,11 +194,8 @@
                                     <li>
                                         <a href="{{ route('indexLicGS') }}">Horas de Licencias</a>
                                     </li>
-                                    @endhasrole
-                                    @php
-                                        //jefe = App\Models\General\Empleado
-                                    @endphp
-                                    @if (true)
+                                    @endhasrole                                   
+                                    @if (\Illuminate\Support\Facades\DB::table('permisos')->where('jefatura',auth()->user()->empleado)->exists())
                                     <li>
                                         <a href="{{ route('indexJefatura') }}">Jefatura</a>
                                     </li>

@@ -51,6 +51,7 @@
                                         <option value="{{base64_encode('super-admin')}}">Super Administrador</option>
                                         <option value="{{base64_encode('Jefe-Academico')}}">Jefe Academico</option>
                                         <option value="{{base64_encode('Jefe-Administrativo')}}">Jefe Administrativo</option>
+                                        <option value="{{base64_encode('Administrativo')}}">Administrativo</option>
                                         <option value="{{base64_encode('Recurso-Humano')}}">Recurso Humano</option>
                                         <option value="{{base64_encode('Docente')}}">Docente</option>
                                     </optgroup>

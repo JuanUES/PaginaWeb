@@ -102,7 +102,7 @@ class LicenciasController extends Controller
                 }                
             }
             
-            if($request->tipo_de_permiso === 'LC/GS')
+            if($request->tipo_de_permiso === 'LC/G0S')
             {
                 $horas_m = json_decode($this->horas_disponibles($request->fecha_de_uso,'mensual',null));
                 $horas_a = json_decode($this->horas_disponibles($request->fecha_de_uso,'anual',null));
@@ -274,11 +274,12 @@ class LicenciasController extends Controller
 
                     if($permiso -> estado === 'Guardado'){
                         $permiso -> estado =  $enviado_jf;
+                        $permiso -> fecha_presentacion = date('Y-m-d');
                         $seguimiento -> proceso =  $enviado_jf;
                     }else {
 
                         if($permiso -> estado === $observacion_rrhh || $permiso -> estado === $observacion_jf){
-                            $permiso -> estado =  $enviado_jf;
+                            $permiso -> estado =  $enviado_jf;                            
                             $seguimiento -> proceso = $enviado_jf;
                         }                             
                     }
