@@ -239,7 +239,7 @@
             </div>           
             <div class="modal-body">
                 <div class="container-fluid">
-                    <table style="width: 100%" class="table" id="acuerdo-table"> 
+                    <table class="table" id="acuerdo-table"> 
                         <thead>
                             <tr>
                                 <th>Fecha</th>
@@ -272,7 +272,9 @@
 
 <div class="row">
     <div class="col-12">
+        
         <div class="card-box">
+           
             <div class="row py-2">
                 <div class="col order-first">
                     <h3>
@@ -286,6 +288,7 @@
                     data-toggle="modal" data-target="#modalRegistro"></button>
                 </div>                
             </div>
+            
             <table  class="table" style="width: 100%" id="Lic-table">
                 <thead>
                 <tr>
@@ -297,12 +300,14 @@
                     <th class="col-sm-1">Acciones</th>
                 </tr>
                 </thead>
+              
                 <tbody>
-             
+                    
                     
                                
                 </tbody>
             </table>
+            
 
         </div> <!-- end card-box -->
     </div> <!-- end col -->

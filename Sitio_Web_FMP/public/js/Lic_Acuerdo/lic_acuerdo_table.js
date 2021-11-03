@@ -1,4 +1,11 @@
 
+
+$(
+    function() {
+   // $('#Lic-table').hide();
+    
+}
+);
     let table;
     //BOTON DE EDITAR
     function editar(boton) {
@@ -62,8 +69,7 @@
                     "sortDescending": ": Ordenar de manera Descendente ",
                 }
             },
-            "responsive": true,
-            "autoWidth": false,
+            "autoWidth": true,
             "deferRender": true,
             "ajax": {
                 "url": "/admin/LicenciasAcuerdo/tabla",
@@ -75,6 +81,7 @@
                         for (let i = 0, ien = json.length; i < ien; i++) {
                             //CREAMOS UNA NUEVA PROPIEDAD LLAMADA BOTONES
                             html = "";
+                            html2 = "";
                             html += '<td>';
                             html += '    <div class="btn-group">';
                             html += '        <button title="Editar" type="button" name="' + json[i].id + '"  value="' + json[i].id + '"   onclick="editar(this)" class="btn btn-outline-primary btn-sm rounded" data-toggle="modal"';
@@ -88,6 +95,9 @@
                             html += '    </div>';
                             html += '</td>';
                             json[i]["botones"] = html;
+                            
+                            html2 += '<span class="badge badge-secondary">' + json[i].tipo_permiso+'</span>';
+                            json[i]["tipo"]=html2;
 
                         }
 
@@ -100,7 +110,7 @@
             },
             columns: [
                 { data: "e_nombre" },
-                { data: "tipo_permiso" },
+                { data: "tipo" },
                 { data: "inicio" },
                 { data: "fin" },
                 { data: "justificacion" },
