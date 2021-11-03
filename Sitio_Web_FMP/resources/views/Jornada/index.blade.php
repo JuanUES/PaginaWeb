@@ -36,7 +36,7 @@
                 </div>  --}}
                 <div class="col-12 col-sm-6 col-md-6">
                     <div class="form-group">
-                        <select class="form-group select2" data-live-search="true" style="width: 100%"  data-style="btn-white"  name="periodo">
+                        <select class="form-group select2 select-filter" data-live-search="true" style="width: 100%"  data-style="btn-white"  name="periodo">
                             @if(isset($periodos))
                                 @foreach ($periodos as $item)
                                     <option value="{{ $item->id }}" {{ strcmp($item->id, $periodo->id)==0 ? 'selected' : '' }}>({{ ucfirst($item->estado) }}) {{ $item->tipo }} -> {{ $item->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
@@ -50,7 +50,7 @@
                 @hasanyrole('super-admin|Recurso-Humano|Jefe-Administrativo|Jefe-Academico')
                     <div class="col-12 col-sm-6 col-md-6">
                         <div class="form-group">
-                            <select class="form-group select2" style="width: 100%" data-live-search="true" data-style="btn-white"  name="depto">
+                            <select class="form-group select2 select-filter" style="width: 100%" data-live-search="true" data-style="btn-white"  name="depto">
                                 <option value="all" selected> Todos los Departamentos </option>
                                 @foreach ($deptos as $item)
                                     <option value="{{ $item->id }}" {{ strcmp($item->id, $depto)==0 ? 'selected' : '' }}>{!!$item->nombre_departamento!!}</option>
