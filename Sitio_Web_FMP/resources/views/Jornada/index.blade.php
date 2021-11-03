@@ -36,7 +36,7 @@
                 </div>  --}}
                 <div class="col-12 col-sm-6 col-md-6">
                     <div class="form-group">
-                        <select class="form-group selectpicker select-filter" data-live-search="true" data-style="btn-white"  name="periodo">
+                        <select class="form-group select2" data-live-search="true" style="width: 100%"  data-style="btn-white"  name="periodo">
                             @if(isset($periodos))
                                 @foreach ($periodos as $item)
                                     <option value="{{ $item->id }}" {{ strcmp($item->id, $periodo->id)==0 ? 'selected' : '' }}>({{ ucfirst($item->estado) }}) {{ $item->tipo }} -> {{ $item->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
@@ -50,7 +50,7 @@
                 @hasanyrole('super-admin|Recurso-Humano|Jefe-Administrativo|Jefe-Academico')
                     <div class="col-12 col-sm-6 col-md-6">
                         <div class="form-group">
-                            <select class="form-group selectpicker select-filter" data-live-search="true" data-style="btn-white"  name="depto">
+                            <select class="form-group select2" style="width: 100%" data-live-search="true" data-style="btn-white"  name="depto">
                                 <option value="all" selected> Todos los Departamentos </option>
                                 @foreach ($deptos as $item)
                                     <option value="{{ $item->id }}" {{ strcmp($item->id, $depto)==0 ? 'selected' : '' }}>{!!$item->nombre_departamento!!}</option>
@@ -192,13 +192,21 @@
 </div>
 @include('Jornada._components.modals')
 @endsection
+@section('plugins')
+<link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
+<link href="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>
+@endsection
 @section('plugins-js')
+<!-- Bootstrap Select -->
+<script src="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
+<script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
 <link rel="stylesheet" href="{{ asset('vendor/tabulator/dist/css/tabulator_simple.css') }}">
 <script src="{{ asset('vendor/tabulator/dist/js/tabulator.js') }}"></script>
 <script src="{{ asset('js/moment.min.js') }}"></script>
 <script src="{{ asset('js/scripts/jornadas.js') }}"></script>
 <script>
     $(document).ready(function () {
+        $('.select2').select2();
         $("#jornada-div :input").prop("disabled", true);//para deshabilitar los botones cuando no este seleccionado ningun empleado
 
 

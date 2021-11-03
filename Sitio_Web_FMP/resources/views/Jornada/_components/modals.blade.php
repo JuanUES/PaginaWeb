@@ -96,7 +96,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="tip">Proceso <span class="text-danger">*</span> </label>
-                                <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" name="proceso" id="procesoSeguimiento">
+                                <select class="form-group select2" data-live-search="true" data-style="btn-white" name="proceso" id="procesoSeguimiento">
                                 </select>
                             </div>
                         </div>
@@ -139,9 +139,9 @@
                             <div class="col-12 mt-2">
                                 <div class="form-group">
                                     <label for="periodo">Seleccione un Periodo <span class="text-danger">*</span> </label>
-                                    <select class="custom-select" name="periodo">
+                                    <select class="form-control select2" style="width: 100%" data-live-search="true" data-style="btn-white" name="periodo">
                                         @foreach ($periodos as $item)
-                                            @if(strcmp('Académico', $item->tipo)==0)
+                                            @if(strcmp('Académico', $item->tipo)==0 || strcmp('Administrativo', $item->tipo)==0)
                                                 <option value="{{ $item->id }}">{{ $item->tipo }} -> {{ $item->nombre }} / {{ date('d-m-Y', strtotime($item->fecha_inicio)) }} - {{ date('d-m-Y', strtotime($item->fecha_fin)) }}</option>
                                             @endif
                                         @endforeach
@@ -152,7 +152,7 @@
                                 <div class="col-12">
                                     <div class="form-group">
                                     <label for="depto">Seleccione un Departamento <span class="text-danger">*</span> </label>
-                                        <select class="form-group selectpicker" data-live-search="true" data-style="btn-white"  name="depto">
+                                        <select class="form-control select2" style="width: 100%" data-live-search="true" data-style="btn-white" name="depto">
                                             @foreach ($deptos as $item)
                                                 <option value="{{ $item->id }}">{!!$item->nombre_departamento!!}</option>
                                             @endforeach
@@ -201,7 +201,7 @@
                                 <div class="form-group">
                                     <input type="hidden" name="id_periodo" id="id_periodo_text" disabled>
                                     <label for="periodo" class="control-label">{{ 'Periodo' }} <span class="text-danger">*</span> </label>
-                                    <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" name="id_periodo" id="id_periodo">
+                                    <select class="form-group select2" data-live-search="true" style="width: 100%" data-style="btn-white" name="id_periodo" id="id_periodo">
                                         <option value="">Seleccione un Periodo</option>
                                         @foreach ($periodos as $item)
                                             @if (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano'))
@@ -219,7 +219,7 @@
                                 <input type="hidden" name="id_emp" id="id_emp_text" disabled>
                                 <div class="form-group">
                                     <label for="empleado" class="control-label">{{ 'Empleado' }} <span class="text-danger">*</span> </label>
-                                    <select class="form-group selectpicker" data-live-search="true" data-style="btn-white" name="id_emp" id="id_emp">
+                                    <select class="form-control select2" style="width: 100%" data-live-search="true" data-style="btn-white" name="id_emp" id="id_emp">
                                         <option value="">Seleccione un Empleado</option>
                                     </select>
                                 </div>
