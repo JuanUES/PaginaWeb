@@ -48,7 +48,15 @@
                 </td>
                 <td class="text-center">
                     @if(strcmp($item->estado, 'finalizado')==0)
-                        <span class="small"> <i>Sin Acciones</i> </span>
+                        @hasanyrole('super-admin')
+                            @if(strcmp($item->estado, 'finalizado')==0)
+                                <button type="buttom"  class="btn btn-outline-dark btn-sm" {!! 'onclick="fnReactivar('. $item->id .')" data-toggle="modal" data-target="#modalReactivar"' !!}  title="Reactivar Ciclo"><i class="mdi mdi-restore"></i></button>
+                            @endif                        
+                        @endhasanyrole
+                        @hasanyrole('Recurso-Humano')
+                            <span class="small"> <i>Sin Acciones</i> </span>
+                        @endhasanyrole
+
                     @elseif(strcmp($item->estado, 'inactivo')==0)
                         <button type="buttom"  class="btn btn-outline-dark btn-sm" {!! strcmp($item->estado, 'finalizado')==0 ? 'disabled' : 'onclick="fnReactivar('. $item->id .')" data-toggle="modal" data-target="#modalReactivar"' !!}  title="Reactivar Ciclo"><i class="mdi mdi-restore"></i></button>
                     @else
