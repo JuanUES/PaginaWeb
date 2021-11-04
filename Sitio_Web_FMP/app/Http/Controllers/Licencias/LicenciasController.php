@@ -265,8 +265,8 @@ class LicenciasController extends Controller
                 if ($permiso -> estado != 'Aceptado') {
                                                         
                     $enviado_jf = 'Enviado a Jefatura';
-                    $observacion_jf = 'Observacion Jefatura';
-                    $observacion_rrhh = 'Observacion RRHH';
+                    $observacion_jf = 'Observaciones de Jefatura';
+                    $observacion_rrhh = 'Observaciones de RRHH';
 
                     $seguimiento = new Permiso_seguimiento;
                     $seguimiento -> permiso_id = $permiso->id;
@@ -278,7 +278,8 @@ class LicenciasController extends Controller
                         $seguimiento -> proceso =  $enviado_jf;
                     }else {
 
-                        if($permiso -> estado === $observacion_rrhh || $permiso -> estado === $observacion_jf){
+                        if($permiso -> estado == $observacion_rrhh ||
+                         $permiso -> estado == $observacion_jf){
                             $permiso -> estado =  $enviado_jf;                            
                             $seguimiento -> proceso = $enviado_jf;
                         }                             

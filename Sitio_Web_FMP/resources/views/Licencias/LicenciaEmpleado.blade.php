@@ -405,8 +405,9 @@
                                 <div class="row">
                                     <div class="col text-center">
                                         @php
-                                            $todos_btn = $item->estado =='Guardado' or 
-                                                        !$item->estado=='Enviado a Jefatura';
+                                            $todos_btn = $item->estado =='Guardado' || 
+                                            $item->estado == 'Observaciones de RRHH' || 
+                                            $item->estado == 'Observaciones de Jefatura';
                                         @endphp
                                         <div class="btn-group" role="group">
                                             <button title="Observaciones" class="btn btn-outline-primary btn-sm rounded-left" 
