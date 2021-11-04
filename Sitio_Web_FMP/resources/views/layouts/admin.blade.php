@@ -200,7 +200,7 @@
                                         <a href="{{ route('indexJefatura') }}">Jefatura</a>
                                     </li>
                                     @endif
-                                    @hasanyrole('super-admin')
+                                    @hasanyrole('super-admin|Recurso-Humano')
                                     <li>
                                         <a href="{{ route('indexRRHH') }}">Recurso Humano</a>
                                     </li>
