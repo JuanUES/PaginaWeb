@@ -553,8 +553,8 @@ mensuales = anuales = hrs_m = hrs_a = min_m = min_a = min_t_a = min_t_m = 0;
                             tabla.clear().draw(false);
                             for (var i in json) {     
                                 var html= '<tr>'
-                                +'<td class="col-xs-2">'+json[i].fecha+'</td>'
-                                +'<td class="col-xs-6"><span class="badge badge-primary">'+json[i].proceso+'</span></td>'
+                                +'<td class="col-sm-3">'+json[i].fecha+'</td>'
+                                +'<td class="col-sm-3"><span class="badge badge-primary font-13">'+json[i].proceso+'</span></td>'
                                 +'<td class="col-xs-6">'+(json[i].observaciones==null?'Ninguna':json[i].observaciones)+'</td>'
                                 +'</tr>';    
                                 tabla.row.add($.parseHTML(html)[0]).draw(false);

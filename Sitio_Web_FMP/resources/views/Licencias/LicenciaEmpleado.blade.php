@@ -375,7 +375,7 @@
                         <tr>
                             <th class="align-middle ">{{Carbon\Carbon::parse($item->fecha_presentacion)->format('d/M/Y')}}</th>
                             <td class="align-middle ">{{Carbon\Carbon::parse($item->fecha_uso)->format('d/M/Y')}}</td>
-                            <td class="align-middle "><span class="badge badge-primary">{{$item->tipo_permiso}}</span></td>
+                            <td class="align-middle "><span class="badge badge-primary font-13">{{$item->tipo_permiso}}</span></td>
                             <td class="align-middle ">{{date('H:i', strtotime($item->hora_inicio))}}</td>
                             <td class="align-middle ">{{date('H:i', strtotime($item->hora_final))}}</td>
                             <td class="align-middle ">
@@ -386,14 +386,20 @@
                             </td>
                             <td class="align-middle text-center">
                                 @if($item->estado =='Guardado') 
-                                    <span class="badge badge-primary">{{$item->estado}}</span>
+                                    <span class="badge badge-primary font-13">{{$item->estado}}</span>
                                 @endif
                                 @if($item->estado =='Cancelado') 
-                                    <span class="badge badge-danger">{{$item->estado}}</span>
+                                    <span class="badge badge-danger font-13">{{$item->estado}}</span>
                                 @endif
                                 @if ($item->estado =='Enviado a Jefatura' or $item->estado =='Enviado a RRHH')
-                                    <span class="badge badge-primary">{{$item->estado}}</span>
+                                    <span class="badge badge-primary font-13">{{$item->estado}}</span>
                                 @endif
+                                @if ($item->estado =='Observaciones de RRHH' or $item->estado =='Observaciones de Jefatura')
+                                    <span class="badge badge-danger font-13">{{$item->estado}}</span>
+                                @endif
+                                @if ($item->estado =='Aceptado por Jefatura' or $item->estado =='Aceptado')
+                                    <span class="badge badge-success font-13">{{$item->estado}}</span>
+                                @endif                        
                             </td>
                             <td class="align-middle ">
                                 <div class="row">

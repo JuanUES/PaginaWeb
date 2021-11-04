@@ -21,7 +21,7 @@ class LicenciasJefeRRHHController extends Controller
     }
 
     public function indexJefe(){
-        if(Auth::check() and $this->isJefe()){
+        if(Auth::check() and ($this->isJefe() or @Auth::user()->hasRole('super-admin'))){
 
             $permisos = Permiso::selectRaw('md5(permisos.id::text) as permiso, tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,
                 observaciones,empleado.nombre,empleado.apellido')
@@ -44,15 +44,50 @@ class LicenciasJefeRRHHController extends Controller
     }
 
     public function indexRRHH(){
-        if(Auth::check() and $this->isJefe()){
-            return view('Licencias.LicenciaRRHH');
+        if(Auth::check() and (@Auth::user()->hasRole('Recurso-Humano') or @Auth::user()->hasRole('super-admin'))){
+            $permisos = Permiso::selectRaw('md5(permisos.id::text) as permiso, tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,
+                observaciones,empleado.nombre,empleado.apellido')
+                ->join('empleado','empleado.id','=','permisos.empleado')
+                ->where([
+                    ['permisos.estado','=','Enviado a RRHH']]
+                )->orWhere([
+                    ['tipo_permiso','=','LC/GS'],
+                    ['tipo_permiso','=','LS/GS'],
+                    ['tipo_permiso','=','T COMP'],
+                    ['tipo_permiso','=','INCAP'],
+                    ['tipo_permiso','=','L OFICIAL'],
+                    ['tipo_permiso','=','CITA MEDICA']]
+                )->get();
+            return view('Licencias.LicenciaRRHH',compact('permisos'));
+        }else {
+            return redirect()->route('index');
+        }
+    }
+
+    public function aceptarRRHH(Request $request){
+        echo dd($request);
+        if (Auth::check() and (@Auth::user()->hasRole('Recurso-Humano') or @Auth::user()->hasRole('super-admin'))) {
+            # code...        
+            $permiso = Permiso::select('estado','id')->whereRaw('md5(id::text) = ?',[$request->_id])->first();
+            $permiso -> estado = 'Aceptado';
+            $permiso -> gestor_rrhh = auth()->user()->empleado;
+            DB::update('update permiso_seguimiento set estado = false where estado = ? and permiso_id=?', [true,$permiso->id]);
+
+            $seguimiento = new Permiso_seguimiento;
+            $seguimiento -> permiso_id = $permiso->id;
+            $seguimiento -> estado = true;
+            $seguimiento -> proceso = 'Aceptado';
+            $seguimiento -> save();
+
+            $permiso->save();
+            return redirect()->route('indexRRHH');
         }else {
             return redirect()->route('index');
         }
     }
 
     public function aceptarJefatura(Request $request){
-        if (Auth::check() and $this->isJefe()) {
+        if (Auth::check() and ($this->isJefe() or @Auth::user()->hasRole('super-admin'))) {
             # code...        
             $permiso = Permiso::select('estado','id')->whereRaw('md5(id::text) = ?',[$request->_id])->first();
             $permiso -> estado = 'Enviado a RRHH';
@@ -78,7 +113,7 @@ class LicenciasJefeRRHHController extends Controller
     }
 
     public function observacionJefatura(Request $request){
-        if(Auth::check() and $this->isJefe()){
+        if(Auth::check() and ($this->isJefe() or @Auth::user()->hasRole('super-admin'))){
             $validator = Validator::make($request->all(),[
                 'observaciones_jefatura' => 'required|string|min:3',
             ]);         
@@ -89,14 +124,46 @@ class LicenciasJefeRRHHController extends Controller
             }
 
             $permiso = Permiso::select('estado','id')->whereRaw('md5(id::text) = ?',[$request->_id])->first();
-            $permiso -> estado = 'Observación de Jefatura';
+            $permiso -> estado = 'Observaciones de Jefatura';
             DB::update('update permiso_seguimiento set estado = false where estado = ? and permiso_id=?', [true,$permiso->id]);
             
             $seguimiento = new Permiso_seguimiento;
             $seguimiento -> permiso_id = $permiso->id;
             $seguimiento -> estado = true;
             $seguimiento -> observaciones = $request->observaciones_jefatura;
-            $seguimiento -> proceso = 'Observación de Jefatura';
+            $seguimiento -> proceso = 'Observaciones de Jefatura';
+            $seguimiento -> save();
+
+            $permiso->save();
+            return $request->_id != null?
+            response()->json(['mensaje'=>'Observacion Registrada']):
+            response()->json(['error'=>'Error no se capturo id de permiso']);
+        }else {
+            return redirect()->route('index');
+        }
+
+    }
+
+    public function observacionRRHH(Request $request){
+        if(Auth::check() and ($this->isJefe() or @Auth::user()->hasRole('super-admin'))){
+            $validator = Validator::make($request->all(),[
+                'observaciones_recursos_humanos' => 'required|string|min:3',
+            ]);         
+
+            if($validator->fails())
+            {            
+                return response()->json(['error'=>$validator->errors()->all()]);                
+            }
+
+            $permiso = Permiso::select('estado','id')->whereRaw('md5(id::text) = ?',[$request->_id])->first();
+            $permiso -> estado = 'Observaciones de RRHH';
+            DB::update('update permiso_seguimiento set estado = false where estado = ? and permiso_id=?', [true,$permiso->id]);
+            
+            $seguimiento = new Permiso_seguimiento;
+            $seguimiento -> permiso_id = $permiso->id;
+            $seguimiento -> estado = true;
+            $seguimiento -> observaciones = $request->observaciones_jefatura;
+            $seguimiento -> proceso = 'Observaciones de RRHH';
             $seguimiento -> save();
 
             $permiso->save();
@@ -110,7 +177,7 @@ class LicenciasJefeRRHHController extends Controller
     }
 
     public function permiso($permiso){
-        if(Auth::check() and !is_null($permiso) and $this->isJefe()){
+        if(Auth::check() and !is_null($permiso) and ($this->isJefe() or @Auth::user()->hasRole('super-admin'))){
             return Permiso::selectRaw('md5(permisos.id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
                     fecha_presentacion,to_char(hora_inicio,\'HH24:MI\') as hora_inicio
                     ,to_char(hora_final,\'HH24:MI\') as hora_final,justificacion,observaciones,permisos.estado,nombre,apellido')

@@ -46,6 +46,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('admin/licencias/jefatura/aceptar',[LicenciasJefeRRHHController::class,'aceptarJefatura'])->name('jf/aceptar');
     Route::post('admin/licencias/jefatura/observacion',[LicenciasJefeRRHHController::class,'observacionJefatura'])->name('jf/observacion');
+
+    Route::post('admin/licencias/rrhh/aceptar',[LicenciasJefeRRHHController::class,'aceptarRRHH'])->name('rrhh/aceptar');
+    Route::post('admin/licencias/rrhh/observacion',[LicenciasJefeRRHHController::class,'observacionRRHH'])->name('rrhh/observacion');
     /*END POST**/
 
 });
