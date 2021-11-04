@@ -2,6 +2,7 @@
 
 //use App\Http\Controllers\EmpleadoController;
 
+use App\Http\Controllers\Licencias\ConstanciaOlvidoController;
 use App\Http\Controllers\Licencias\LicenciasAcuerdoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Licencias\LicenciasController;
@@ -16,7 +17,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('admin/LicenciasAcuerdo', [LicenciasAcuerdoController::class,'index'])->name('AcuerdoLic');
     Route::get('admin/LicenciasAcuerdo/tabla', [LicenciasAcuerdoController::class,'Data']);
     Route::get('admin/LicenciasAcuerdo/edit/{id}', [LicenciasAcuerdoController::class,'cargaModal']);
-
+    Route::get('admin/ConstanciaOlvido',[ConstanciaOlvidoController::class,'index'])->name('olvido');
     Route::get('admin/mislicencias/horas-anual/{fecha}/{permiso}', [LicenciasController::class,'horas_anual']);
     Route::get('admin/mislicencias/horas-mensual/{fecha}/{permiso}', [LicenciasController::class,'horas_mensual']);
     Route::get('admin/mislicencias/permisos', [LicenciasController::class,'getPermisos']);

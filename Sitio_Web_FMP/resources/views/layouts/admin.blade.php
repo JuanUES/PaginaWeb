@@ -183,6 +183,9 @@
                             <li>
                                 <a href="{{ route('indexLic') }}"><i class="icon-notebook font-18"></i><span>Mis Licencias</span></a>
                             </li>
+                            <li>
+                                <a href="{{ route('olvido') }}"><i class="dripicons-clock  font-18"></i><span>Constancia de Olvido</span></a>
+                            </li>
                             @hasrole('super-admin|Recurso-Humano')
                             <li>
                                 <a href="javascript: void(0);"><i class="font-18  icon-layers"></i>
