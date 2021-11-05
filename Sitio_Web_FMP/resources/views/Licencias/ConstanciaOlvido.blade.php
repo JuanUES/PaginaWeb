@@ -292,7 +292,7 @@
                     
                     @foreach ($data as $item)
                         <tr>
-                            <th class="align-middle ">{{Carbon\Carbon::parse($item->inicio)->format('d/M/Y')}}</th>
+                            <th class="align-middle ">{{Carbon\Carbon::parse($item->fecha_uso)->format('d/M/Y')}}</th>
                             <td class="align-middle "> <span class="badge badge-success font-13">{{$item->olvido}}</span></td>
                             <td class="align-middle ">{{date('H:i', strtotime($item->hora_inicio))}}</td>
                             <td class="align-middle">

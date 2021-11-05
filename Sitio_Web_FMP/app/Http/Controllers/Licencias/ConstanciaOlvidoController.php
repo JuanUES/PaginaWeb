@@ -16,7 +16,7 @@ class ConstanciaOlvidoController extends Controller
 {
     public function index(){
         $data =  Permiso::selectRaw('md5(permisos.id::text) as identificador,permisos.empleado, CONCAT(empleado.nombre,\' \',empleado.apellido) e_nombre, to_char(permisos.fecha_uso, \'DD/MM/YYYY\') inicio,
-        to_char(permisos.fecha_presentacion,\'DD/MM/YYYY\') fin, permisos.justificacion, permisos.tipo_permiso, permisos.hora_inicio,permisos.estado, permisos.fecha_presentacion, permisos.olvido')
+        to_char(permisos.fecha_presentacion,\'DD/MM/YYYY\') fin, permisos.justificacion, permisos.tipo_permiso, permisos.hora_inicio,permisos.estado, permisos.fecha_presentacion, permisos.olvido,permisos.fecha_uso')
         ->join('empleado','empleado.id','=','permisos.empleado')
         ->where('empleado.id',auth()->user()->empleado)
         ->whereRaw('tipo_permiso=\'Const. olvido\'')
@@ -61,7 +61,7 @@ class ConstanciaOlvidoController extends Controller
             $p = $request->_id == null ? new Permiso():Permiso::whereRaw('md5(id::text) = ?',[$request->_id])->first();
             $p -> tipo_permiso = 'Const. olvido';
             $p -> fecha_uso = $request-> fecha;//fecha_uso ocupo para la fecha que se le olvido marcar
-            $p -> fecha_presentacion = $request->fecha;//esta fecha va en ese formato porq para esta constancia solo se ocupa una fecha
+            $p -> fecha_presentacion = $request->fecha;//ocupo fecha de uso
             $p -> hora_inicio = $request->hora;//la hora que se olvido marcar ya se de entrada o salida
             $p -> hora_final = '00:00:00';//va en este formato por que para estas constancia solo se ocupa una fecha
             $p -> justificacion = $request-> justificación;
