@@ -52,6 +52,12 @@ Illuminate\Support\Facades\Schema::table('maestrias',function (Illuminate\Databa
 
 });
 
+//campo para olvido de marcaje
+Illuminate\Support\Facades\Schema::table('permisos',function (Illuminate\Database\Schema\Blueprint $table) {
+    $table->string('olvido')->nullable();
+
+});
+
 Illuminate\Support\Facades\Schema::dropIfExists('permiso_seguimiento');
 quit
 

@@ -31,6 +31,7 @@ class CreateAjustesTable extends Migration
             $table->integer('representantes') -> nullable();
             $table->bigInteger('jefatura') -> nullable();
             $table->bigInteger('gestor_rrhh') ->nullable();
+            $table->string('olvido') ->nullable();
             $table->foreign('jefatura')->references('id')->on('empleado');
             $table->foreign('gestor_rrhh')->references('id')->on('empleado');
             $table->foreign('empleado')->references('id')->on('empleado');

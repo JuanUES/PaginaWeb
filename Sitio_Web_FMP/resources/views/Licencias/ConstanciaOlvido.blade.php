@@ -281,8 +281,8 @@
                 <thead>
                 <tr>
                     <th class="col-sm-2">Fecha</th>
-                    <th class="col-sm-2">Hora</th>
-                    <th class="col-xs-1">Justificación</th>
+                    <th class="col-sm-2">Marcaje</th>
+                    <th class="col-sm-2">Hora de olvido</th>
                     <th class="col-sm-2">Estado</th>
                     <th class="col-sm-1">Acciones</th>
                 </tr>
@@ -290,6 +290,80 @@
               
                 <tbody>
                     
+                    @foreach ($data as $item)
+                        <tr>
+                            <th class="align-middle ">{{Carbon\Carbon::parse($item->inicio)->format('d/M/Y')}}</th>
+                            <td class="align-middle "> <span class="badge badge-success font-13">{{$item->olvido}}</span></td>
+                            <td class="align-middle ">{{date('H:i', strtotime($item->hora_inicio))}}</td>
+                            <td class="align-middle">
+                                @if($item->estado =='Guardado') 
+                                    <span class="badge badge-primary font-13">{{$item->estado}}</span>
+                                @endif
+                                @if($item->estado =='Cancelado') 
+                                    <span class="badge badge-danger font-13">{{$item->estado}}</span>
+                                @endif
+                                @if ($item->estado =='Enviado a Jefatura' or $item->estado =='Enviado a RRHH')
+                                    <span class="badge badge-primary font-13">{{$item->estado}}</span>
+                                @endif
+                                @if ($item->estado =='Observaciones de RRHH' or $item->estado =='Observaciones de Jefatura')
+                                    <span class="badge badge-danger font-13">{{$item->estado}}</span>
+                                @endif
+                                @if ($item->estado =='Aceptado por Jefatura' or $item->estado =='Aceptado')
+                                    <span class="badge badge-success font-13">{{$item->estado}}</span>
+                                @endif                        
+                            </td>
+                            <td class="align-middle ">
+                                <div class="row">
+                                    <div class="col text-center">
+                                        @php
+                                            $todos_btn = $item->estado =='Guardado' || 
+                                            $item->estado == 'Observaciones de RRHH' || 
+                                            $item->estado == 'Observaciones de Jefatura';
+                                        @endphp
+                                        <div class="btn-group" role="group">
+                                            <button title="Observaciones" class="btn btn-outline-primary btn-sm rounded-left" 
+                                            @if ($item->estado =='CANCELADO')
+                                                disabled
+                                            @else
+                                              value="{{$item->identificador}}" 
+                                              onclick="observaciones(this)"
+                                            @endif>
+                                                <i class="fa fa-eye font-16 my-1" aria-hidden="true"></i>
+                                            </button>
+                                            <button title="Enviar" class="btn btn-outline-primary btn-sm" 
+                                            @if($todos_btn)
+                                                value="{{$item->identificador}}"
+                                                 onclick="enviar(this)"
+                                                 @else disabled
+                                                 @endif>                                                
+                                                <i class="fa fa-arrow-circle-up font-16 my-1" aria-hidden="true"></i>
+                                            </button>
+                                            <button title="Editar" 
+                                            class="btn btn-outline-primary btn-sm border-letf-0"  
+                                            @if($todos_btn)
+                                                 value="{{$item->identificador}}"
+                                                onclick="editar(this)"
+                                                @else
+                                                disabled
+                                                @endif>
+                                                <i class="fa fa-edit font-16 my-1" aria-hidden="true"></i>
+                                            </button>
+                                            <button title="Cancelar" 
+                                                class="btn btn-outline-primary btn-sm border-left-0 btn-outline-danger rounded-right"
+                                                @if($todos_btn)
+                                                 onclick="cancelar(this)"
+                                                 value="{{$item->identificador}}"
+                                                @else
+                                                disabled
+                                                @endif>
+                                                <i class="fa fa-ban font-16 my-1"></i>
+                                            </button>                                   
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>  
+                        </tr>
+                    @endforeach 
                     
                                
                 </tbody>
@@ -330,7 +404,7 @@
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
     <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.js') }}" ></script>
-    <!--<script src="{{ asset('js/scripts/data-table.js') }}" ></script>-->
+    <script src="{{ asset('js/scripts/data-table.js') }}" ></script>
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>

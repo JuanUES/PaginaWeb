@@ -9,13 +9,21 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ConstanciaOlvidoController extends Controller
 {
     public function index(){
-        
+        $data =  Permiso::selectRaw('md5(permisos.id::text) as identificador,permisos.empleado, CONCAT(empleado.nombre,\' \',empleado.apellido) e_nombre, to_char(permisos.fecha_uso, \'DD/MM/YYYY\') inicio,
+        to_char(permisos.fecha_presentacion,\'DD/MM/YYYY\') fin, permisos.justificacion, permisos.tipo_permiso, permisos.hora_inicio,permisos.estado, permisos.fecha_presentacion, permisos.olvido')
+        ->join('empleado','empleado.id','=','permisos.empleado')
+        ->where('empleado.id',auth()->user()->empleado)
+        ->whereRaw('tipo_permiso=\'Const. olvido\'')
+        ->get();
+      //  echo dd($data);
         $logueado= Empleado::findOrFail(auth()->user()->empleado);
-        return view('Licencias.ConstanciaOlvido', compact('logueado'));
+        return view('Licencias.ConstanciaOlvido', compact('logueado','data'));
     }
 
     protected function obtenerDia($fecha){
@@ -41,6 +49,7 @@ class ConstanciaOlvidoController extends Controller
             $validator = Validator::make($request->all(),[
                 'fecha' => 'required|date|date_format:Y-m-d',
                 'hora' => 'required',
+                'marcaje' => 'required',
                 'justificación' => 'required|min:5|string',
             ]);         
 
@@ -49,7 +58,7 @@ class ConstanciaOlvidoController extends Controller
                 return response()->json(['error'=>$validator->errors()->all()]);                
             }
 
-            $p = $request->_id == null ? new Permiso():Permiso::findOrFail($request->_id);
+            $p = $request->_id == null ? new Permiso():Permiso::whereRaw('md5(id::text) = ?',[$request->_id])->first();
             $p -> tipo_permiso = 'Const. olvido';
             $p -> fecha_uso = $request-> fecha;//fecha_uso ocupo para la fecha que se le olvido marcar
             $p -> fecha_presentacion = $request->fecha;//esta fecha va en ese formato porq para esta constancia solo se ocupa una fecha
@@ -58,6 +67,8 @@ class ConstanciaOlvidoController extends Controller
             $p -> justificacion = $request-> justificación;
             $p -> empleado = $p -> empleado = auth()->user()->empleado;
             $p -> estado = 'Guardado';
+            $p -> olvido = $request->marcaje;
+
             $p ->save();      
 
             return $request->_id != null?
@@ -71,7 +82,7 @@ class ConstanciaOlvidoController extends Controller
 
     public function Table(){
         $data =  Permiso::selectRaw('permisos.id,permisos.empleado, CONCAT(empleado.nombre,\' \',empleado.apellido) e_nombre, to_char(permisos.fecha_uso, \'DD/MM/YYYY\') inicio,
-        to_char(permisos.fecha_presentacion,\'DD/MM/YYYY\') fin, permisos.justificacion, permisos.tipo_permiso, permisos.hora_inicio,permisos.estado')
+        to_char(permisos.fecha_presentacion,\'DD/MM/YYYY\') fin, permisos.justificacion, permisos.tipo_permiso, permisos.hora_inicio,permisos.estado, permisos.fecha_presentacion')
         ->join('empleado','empleado.id','=','permisos.empleado')
         ->where('empleado.id',auth()->user()->empleado)
         ->whereRaw('tipo_permiso=\'Const. olvido\'')
@@ -79,5 +90,20 @@ class ConstanciaOlvidoController extends Controller
         return $data;
         //echo dd($data);
     }//para mostrar en la tabla
+
+    public function modal($id){
+
+            
+        if(Auth::check() and !is_null($id)){
+            return Permiso::selectRaw('md5(id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
+                    fecha_presentacion,to_char(hora_inicio,\'HH24:MI\') as hora_inicio
+                    ,to_char(hora_final,\'HH24:MI\') as hora_final,justificacion,observaciones,estado,olvido')
+            ->whereRaw('empleado = ? and md5(permisos.id::text) = ? and tipo_permiso = ?',[auth()->user()->empleado, $id,'Const. olvido'])
+            ->first()->toJSON();
+        }else {
+            return redirect()->route('index');
+        }
+        
+    }
 
 }

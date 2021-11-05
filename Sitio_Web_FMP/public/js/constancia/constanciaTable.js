@@ -31,15 +31,6 @@ $( "#marcaje" ).change(function() {
                });
               
            }
-            /*$('#idPermiso').val(json.id);                   
-            $('#justificacion').summernote("code",json.justificacion);
-         
-            $('#empleado').val(json.empleado).trigger("change");
-            $('#tipo_permiso').val(json.tipo_permiso).trigger("change");
-            $('#fecha_de_inicio').val(json.fecha_uso);
-            $('#fecha_final').val(json.fecha_presentacion);                                   
-          
-            $("#modalRegistro").modal();*/
         },
     });  
 
@@ -58,7 +49,7 @@ $( "#marcaje" ).change(function() {
             
              $.ajax({
                  type: "GET",
-                 url: 'LicenciasAcuerdo/edit/'+$(boton).val(),
+                 url: '/admin/ConstanciaOlvido/Modal/'+$(boton).val(),
                  beforeSend: function() {
                      $(boton).prop('disabled', true).html(''
                          +'<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
@@ -66,14 +57,13 @@ $( "#marcaje" ).change(function() {
                  },
                  success: function(json) {   
                      var json = JSON.parse(json);  
-                    // console.log(json);
-                     $('#idPermiso').val(json.id);                   
-                     $('#justificacion').summernote("code",json.justificacion);
-                  
-                     $('#empleado').val(json.empleado).trigger("change");
-                     $('#tipo_permiso').val(json.tipo_permiso).trigger("change");
-                     $('#fecha_de_inicio').val(json.fecha_uso);
-                     $('#fecha_final').val(json.fecha_presentacion);                                   
+                    console.log(json);
+                    $('#idPermiso').val(json.permiso);
+                    $('#fecha').val(json.fecha_presentacion);
+                    $('#marcaje').val(json.olvido).trigger("change");
+                    $('#hora').val(json.hora_incio);          
+                    $('#justificacion').summernote("code",json.justificacion);
+                                              
                    
                      $("#modalRegistro").modal();
                  },
@@ -87,7 +77,7 @@ $( "#marcaje" ).change(function() {
      }
     //para la tabla
 
-        table = $("#Lic-table").DataTable({
+        /*table = $("#Lic-table").DataTable({
             "language": {
                 "decimal": ".",
                 "emptyTable": "No hay datos para mostrar",
@@ -125,15 +115,14 @@ $( "#marcaje" ).change(function() {
                             //CREAMOS UNA NUEVA PROPIEDAD LLAMADA BOTONES
                             html = "";
                             html2 = "";
+                            inyeccionFecha="";
                             html += '<td>';
                             html += '    <div class="btn-group">';
                             html += '        <button title="Editar" type="button" name="' + json[i].id + '"  value="' + json[i].id + '"   onclick="editar(this)" class="btn btn-outline-primary btn-sm rounded" data-toggle="modal"';
                             html += '            data-target="#modal-editar">';
                             html += '            <i class="fas fa-edit py-1 font-16"></i>';
                             html += '        </button>';
-                            /* <button title="Editar"  onclick="editar({{$item->id}},this)">
-                                         <i class="fa fa-edit py-1 font-16" aria-hidden="true"></i>
-                                     </button>*/
+                          
 
                             html += '    </div>';
                             html += '</td>';
@@ -152,12 +141,12 @@ $( "#marcaje" ).change(function() {
                 }
             },
             columns: [
-                { data: "inicio" },
+                { data: "fecha" },
                 { data: "hora_inicio" },
                 { data: "justificacion" },
                 { data: "estado" },
                 { data: "botones" },
             ]
-        });
+        });*/
 
 

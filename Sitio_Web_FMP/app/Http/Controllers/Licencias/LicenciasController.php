@@ -220,8 +220,7 @@ class LicenciasController extends Controller
                     fecha_presentacion,to_char(hora_inicio,\'HH24:MI\') as hora_inicio
                     ,to_char(hora_final,\'HH24:MI\') as hora_final,justificacion,observaciones,estado')
             ->whereRaw('empleado = ? and md5(permisos.id::text) = ?',[auth()->user()->empleado, $permiso])
-            ->first()->toJSON();  
-
+            ->first()->toJSON();
         }else {
             return redirect()->route('index');
         }
