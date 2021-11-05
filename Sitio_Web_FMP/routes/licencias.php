@@ -18,7 +18,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('admin/LicenciasAcuerdo/tabla', [LicenciasAcuerdoController::class,'Data']);
     Route::get('admin/LicenciasAcuerdo/edit/{id}', [LicenciasAcuerdoController::class,'cargaModal']);
     Route::get('admin/ConstanciaOlvido',[ConstanciaOlvidoController::class,'index'])->name('olvido');
-    Route::get('admin/ConstanciaOlvido/{fecha}',[ConstanciaOlvidoController::class,'SalidaEntrada']);
+    Route::get('admin/ConstanciaOlvido/EntradaSalida/{fecha}',[ConstanciaOlvidoController::class,'SalidaEntrada']);
     Route::get('admin/mislicencias/horas-anual/{fecha}/{permiso}', [LicenciasController::class,'horas_anual']);
     Route::get('admin/mislicencias/horas-mensual/{fecha}/{permiso}', [LicenciasController::class,'horas_mensual']);
     Route::get('admin/mislicencias/permisos', [LicenciasController::class,'getPermisos']);
@@ -41,6 +41,8 @@ Route::group(['middleware' => ['auth']], function () {
     //para registrar las horas GS depende de las jornadas
     Route::post('GS/create',[LicenciasGosesController::class,'create'])->name('gs/create');
     Route::post('admin/licenciasAcuerdos/create', [LicenciasAcuerdoController::class,'store'])->name('licAcuerdo/create');
+
+    Route::post('admin/ConstanciaOlvido/create', [ConstanciaOlvidoController::class,'store'])->name('olvido/create');
 
     Route::post('admin/licencia/create', [LicenciasController::class,'store'])->name('lic/create');
     Route::post('admin/licencia/cancel', [LicenciasController::class,'cancelar'])->name('lic/cancelar');
