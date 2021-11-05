@@ -1,11 +1,54 @@
-
-
 $(
     function() {
    // $('#Lic-table').hide();
     
 }
 );
+
+//PARA HORA DE SALIDA Y ENTRADA AUTOMATICO
+$( "#marcaje" ).change(function() {
+    //id de comb
+    $mar=document.getElementById('marcaje').value;
+   
+
+    // realizar la peticion 
+    $.ajax({
+        type: "GET",
+        url: 'ConstanciaOlvido/EntradaSalida/'+$('#fecha').val(),
+        success: function(json) {  
+
+           var json = JSON.parse(json);  
+          // console.log(json);
+           //alert($mar);
+           if($mar=='Entrada'){
+               $.each(json,function (i,index) {
+                $('#hora').val(index.hora_inicio);
+               });
+              
+           }else if($mar=='Salida'){
+            $.each(json,function (i,index) {
+                $('#hora').val(index.hora_fin);
+               });
+              
+           }
+            /*$('#idPermiso').val(json.id);                   
+            $('#justificacion').summernote("code",json.justificacion);
+         
+            $('#empleado').val(json.empleado).trigger("change");
+            $('#tipo_permiso').val(json.tipo_permiso).trigger("change");
+            $('#fecha_de_inicio').val(json.fecha_uso);
+            $('#fecha_final').val(json.fecha_presentacion);                                   
+          
+            $("#modalRegistro").modal();*/
+        },
+    });  
+
+  });
+
+//FIN DE HORA DE SALIDA Y ENTRADA AUTOMATICO
+
+
+
     let table;
     //BOTON DE EDITAR
     function editar(boton) {
@@ -23,7 +66,7 @@ $(
                  },
                  success: function(json) {   
                      var json = JSON.parse(json);  
-                    console.log(json);
+                    // console.log(json);
                      $('#idPermiso').val(json.id);                   
                      $('#justificacion').summernote("code",json.justificacion);
                   
@@ -72,7 +115,7 @@ $(
             "autoWidth": true,
             "deferRender": true,
             "ajax": {
-                "url": "/admin/LicenciasAcuerdo/tabla",
+                "url": "/admin/ConstanciaOlvido/table",
                 "method": "GET",
                 "dataSrc": function (json) {
                   //  console.log(json);
@@ -96,8 +139,8 @@ $(
                             html += '</td>';
                             json[i]["botones"] = html;
                             
-                            html2 += '<span class="badge badge-secondary">' + json[i].tipo_permiso+'</span>';
-                            json[i]["tipo"]=html2;
+                            html2 += '<span class="badge badge-success">' + json[i].estado+'</span>';
+                            json[i]["estado"]=html2;
 
                         }
 
@@ -109,11 +152,10 @@ $(
                 }
             },
             columns: [
-                { data: "e_nombre" },
-                { data: "tipo" },
                 { data: "inicio" },
-                { data: "fin" },
+                { data: "hora_inicio" },
                 { data: "justificacion" },
+                { data: "estado" },
                 { data: "botones" },
             ]
         });
