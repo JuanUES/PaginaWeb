@@ -43,9 +43,8 @@
 
                                 </tbody>
                             </table>
-                            <span class="float-center">
-                                <p class="lead" style="font-size: 13px;">Nota: <span class="badge badge-info" id="notaDetalle"></span></p>
-                            </span>
+                            <div id="rrNota">
+                            </div>
                         </div>
                         <div class="tab-pane show" id="seguimiento">
                             <table class="table table-hover table-sm">

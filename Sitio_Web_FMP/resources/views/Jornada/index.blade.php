@@ -351,9 +351,18 @@
         $.get( `{{ url('admin/jornada') }}/`+key, function(data) {
             var fecha = new Date(data.jornada.created_at);
             var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            let nota = (data.jornada.observaciones === null || data.jornada.observaciones === '') ? null : data.jornada.observaciones;
+            let contNota= `<span class="float-center" >
+                                <p class="lead" style="font-size: 13px;">Nota: <span class="badge badge-info" id="notaDetalle">${nota}</span></p>
+                            </span>`;
 
             $('#fechaRegistroDetalle').html(fecha.toLocaleDateString("es-ES", options));
-            $('#notaDetalle').html(data.jornada.observaciones);
+            console.log(nota);
+            if(nota != null){
+                $('#rrNota').html(contNota);
+            }else{
+                $('#rrNota').hide();
+            }
 
             let contenido = '';
             $.each(data.items, function (indexInArray, valueOfElement) {

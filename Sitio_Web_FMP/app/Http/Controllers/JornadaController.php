@@ -251,7 +251,7 @@ class JornadaController extends Controller{
     public function show($id){
         $user = Auth::user();
 
-        $jornada = Jornada::select('jornada.id', 'jornada.id_emp', 'jornada.id_periodo', 'jornada.created_at')
+        $jornada = Jornada::select('jornada.id', 'jornada.id_emp', 'jornada.id_periodo', 'jornada.created_at', 'jornada.observaciones')
                         ->where('jornada.id', $id)
                         ->first();
         $items = $jornada->items;
