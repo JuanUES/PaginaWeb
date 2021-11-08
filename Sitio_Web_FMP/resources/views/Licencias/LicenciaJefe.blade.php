@@ -80,6 +80,121 @@
     </div><!-- /.modal-dialog -->
 </div>
 
+<!--MODAL CONSTANCIA DE OLVIDO DE MARCAJE-->
+<!-- inicio Modal de registro -->
+<div class="modal fade bs-example-modal-lg" 
+    role="dialog" aria-labelledby="myLargeModalLabel" 
+    id="modalConstancia" tabindex="-1">
+    <div class="modal-dialog modal-lg-8" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id=" exampleModalLongTitle"><i class="icon-notebook mdi-36px"></i> Const. Olvido de Marcaje</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form id="registroForm"  action="{{ route('olvido/create') }}" method="POST">
+            @csrf
+            
+            <div class="modal-body">
+                <input type="hidden" id="idPermiso" name="_id"/>
+                <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
+                    role="alert" style="display:none" id="notificacion">
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group">
+                            <label>Nota: <code>* Campos Obligatorio</code></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="">Nombre <code>*</code></label>
+                            <input type="text" class="form-control" value="{{$logueado->nombre}}"  
+                            autocomplete="off" placeholder="Digite el nombre" readonly>
+                        </div>
+                    </div>
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="">Apellido <code>*</code></label>
+                            <input type="text" class="form-control" value="{{$logueado->apellido}}"
+                             autocomplete="off" placeholder="Digite el correo" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!--para el campo fecha-->
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="fecha_de_uso">Fecha<code>*</code></label>
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                <input type="date" name="fecha" class="form-control"
+                                    tyle="width: 100%;"  id="fecha" >
+                            </div>
+                        </div>                            
+                    </div>
+                    <!--fin del campo fecha-->
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="exampleInputNombre">Marcaje de:<code>*</code></label>
+                            <select class="form-control select2" style="width: 100%" data-live-search="true" 
+                                data-style="btn-white"   id="marcaje" name="marcaje">
+                                <option value="">Seleccione</option>
+                                <option value="Entrada">Entrada</option>
+                                <option value="Salida">Salida</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    
+                    <div class="col-xl-12">
+                        <div class="form-group">
+                            <label for="fecha_de_presentacion">Hora <code>*</code></label> 
+                            <div class="input-group">
+                                <div class="input-group-append" style="width: 100%;">
+                                    <span class="input-group-text"><i class=" mdi mdi-account-clock "></i></span>
+                                    <input type="time" name="hora" class="form-control"
+                                        style="width: 100%;"  id="hora" >
+                                </div>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+              
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group">
+                            <label for="exampleInputNombre">Justificación<code>*</code></label>
+                            <textarea value=" " class="form-control summernote-config" 
+                                name="justificación" id="justificacion" rows="6"></textarea>
+                        </div> 
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary"
+                    data-dismiss="modal"><i class="fa fa-ban"
+                    aria-hidden="true"></i> Cerrar</button>
+                <button type="button" class="btn btn-primary" id='guardar_registro'
+                    onClick="submitForm('#registroForm','#notificacion')">
+                    <li class="fa fa-save"></li> Guardar</button>
+            </div>
+            
+        </form>
+      </div>
+    </div>
+</div>
+<!--fin modal de registro-->
+<!--FIN DE MODAL CONSTANCIA DE OLVIDO DE MARCAJE-->
+
 <!-- inicio Modal de registro -->
 <div class="modal fade bs-example-modal-lg" 
     role="dialog" aria-labelledby="myLargeModalLabel" 

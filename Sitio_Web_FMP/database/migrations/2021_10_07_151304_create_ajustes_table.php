@@ -19,6 +19,7 @@ class CreateAjustesTable extends Migration
        
        
         Illuminate\Support\Facades\Schema::create('permisos', function (Illuminate\Database\Schema\Blueprint $table) {
+            $table->id();
             $table->bigInteger('empleado');
             $table->integer('tipo_permiso');
             $table->longText('justificacion');
