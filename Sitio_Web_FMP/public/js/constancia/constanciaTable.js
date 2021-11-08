@@ -41,6 +41,52 @@ $( "#marcaje" ).change(function() {
 
 
     let table;
+    //BOTON CANCELAR
+    function cancelar(btn) {
+        $('#cancelar_id').val($(btn).val());
+        $('#modalCancelar').modal();
+    }
+    //FIN DE CANCELAR
+    //BOTON ENVIAR
+    function enviar(boton){
+        $('#enviar_id').val($(boton).val());
+        $('#modalEnviar').modal();
+    }
+    //FIN ENVIAR
+    //PARA MOSTRAR LAS OBSERVACIONES+
+    function observaciones(boton){
+        if($(boton).val()!=null){
+                $.ajax({
+                    type: "GET",
+                    url: 'mislicencias/procesos/'+$(boton).val(),
+                    beforeSend: function() {
+                        $(boton).prop('disabled', true).html(''
+                            +'<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
+                        );
+                    },
+                    success: function(json) {   
+                        var json = JSON.parse(json);   
+                        var tabla = $('#obs-table').DataTable();
+                        tabla.clear().draw(false);
+                        for (var i in json) {     
+                            var html= '<tr>'
+                            +'<td class="col-sm-3">'+json[i].fecha+'</td>'
+                            +'<td class="col-sm-3"><span class="badge badge-primary font-13">'+json[i].proceso+'</span></td>'
+                            +'<td class="col-xs-6">'+(json[i].observaciones==null?'Ninguna':json[i].observaciones)+'</td>'
+                            +'</tr>';    
+                            tabla.row.add($.parseHTML(html)[0]).draw(false);
+                        }   
+                        $("#modalObservaciones").modal();
+                    },
+                    complete: function(json) {
+                        $(boton).prop('disabled', false).html(''
+                            +'<i class="fa fa-eye font-16 py-1" aria-hidden="true"></i>'
+                        );
+                    }
+                });                
+           }
+        };
+    //FIN DE CARGAR LAS OBSERVACIONES
     //BOTON DE EDITAR
     function editar(boton) {
         

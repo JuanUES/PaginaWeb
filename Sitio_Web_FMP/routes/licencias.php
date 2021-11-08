@@ -17,6 +17,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('admin/LicenciasAcuerdo', [LicenciasAcuerdoController::class,'index'])->name('AcuerdoLic');
     Route::get('admin/LicenciasAcuerdo/tabla', [LicenciasAcuerdoController::class,'Data']);
     Route::get('admin/LicenciasAcuerdo/edit/{id}', [LicenciasAcuerdoController::class,'cargaModal']);
+
     Route::get('admin/ConstanciaOlvido',[ConstanciaOlvidoController::class,'index'])->name('olvido');
     Route::get('admin/ConstanciaOlvido/table',[ConstanciaOlvidoController::class,'Table']);
     Route::get('admin/ConstanciaOlvido/Modal/{id}',[ConstanciaOlvidoController::class,'Modal']);
@@ -45,6 +46,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('admin/licenciasAcuerdos/create', [LicenciasAcuerdoController::class,'store'])->name('licAcuerdo/create');
 
     Route::post('admin/ConstanciaOlvido/create', [ConstanciaOlvidoController::class,'store'])->name('olvido/create');
+    Route::post('admin/ConstanciaOlvido/cancel', [ConstanciaOlvidoController::class,'cancelar'])->name('olvido/cancel');
 
     Route::post('admin/licencia/create', [LicenciasController::class,'store'])->name('lic/create');
     Route::post('admin/licencia/cancel', [LicenciasController::class,'cancelar'])->name('lic/cancelar');

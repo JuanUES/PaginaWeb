@@ -91,9 +91,7 @@ class ConstanciaOlvidoController extends Controller
         //echo dd($data);
     }//para mostrar en la tabla
 
-    public function modal($id){
-
-            
+    public function modal($id){     
         if(Auth::check() and !is_null($id)){
             return Permiso::selectRaw('md5(id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
                     fecha_presentacion,to_char(hora_inicio,\'HH24:MI\') as hora_inicio
@@ -104,6 +102,18 @@ class ConstanciaOlvidoController extends Controller
             return redirect()->route('index');
         }
         
+    }
+
+    public function cancelar(Request $request){
+        if(Auth::check() and isset($request)){
+            Permiso::select('estado','id')
+                ->whereRaw('md5(id::text) = ?',[$request->_id])
+                ->first()
+                ->delete();
+            return redirect()->route('olvido');
+        }else {
+            return redirect()->route('index');
+        }
     }
 
 }
