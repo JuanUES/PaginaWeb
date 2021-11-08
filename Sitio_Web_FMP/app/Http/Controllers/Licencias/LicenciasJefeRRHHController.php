@@ -65,7 +65,6 @@ class LicenciasJefeRRHHController extends Controller
     }
 
     public function aceptarRRHH(Request $request){
-        echo dd($request);
         if (Auth::check() and (@Auth::user()->hasRole('Recurso-Humano') or @Auth::user()->hasRole('super-admin'))) {
             # code...        
             $permiso = Permiso::select('estado','id')->whereRaw('md5(id::text) = ?',[$request->_id])->first();
