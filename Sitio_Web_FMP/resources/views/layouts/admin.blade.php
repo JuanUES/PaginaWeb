@@ -186,7 +186,7 @@
                             <li>
                                 <a href="{{ route('olvido') }}"><i class="dripicons-clock  font-18"></i><span>Constancia de Olvido</span></a>
                             </li>
-                            @hasrole('super-admin|Recurso-Humano')
+                            @if (@Auth::user()->hasRole('super-admin')||@Auth::user()->hasRole('Recurso-Humano')||\Illuminate\Support\Facades\DB::table('permisos')->where('jefatura',auth()->user()->empleado)->exists())
                             <li>
                                 <a href="javascript: void(0);"><i class="font-18  icon-layers"></i>
                                     <span> Gestión de Licencias </span>
@@ -216,7 +216,7 @@
                                                                       
                                 </ul>
                             </li>                            
-                            @endhasrole
+                            @endif
                             @hasanyrole('super-admin|Transparencia-Decano|Transparencia-Secretario|Transparencia-Presupuestario')
                             <li class="menu-title">Transparencia</li>
                                 <li>
