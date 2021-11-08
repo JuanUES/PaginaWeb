@@ -144,6 +144,14 @@
                                         @if($item->procedimiento=='guardado' || $item->procedimiento=='enviado a recursos humanos' || $item->procedimiento=='aceptado')
                                             {!! $buttons !!}
                                         @endif
+                                    @elseif((@Auth::user()->hasRole('Docente') && @Auth::user()->hasRole('Jefe-Academico')))
+                                        @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
+                                            {!! $buttons !!}
+                                        @endif
+                                    @elseif((@Auth::user()->hasRole('Docente') && @Auth::user()->hasRole('Jefe-Administrativo')))
+                                        @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
+                                            {!! $buttons !!}
+                                        @endif
                                     @elseif(@Auth::user()->hasRole('Jefe-Academico') || @Auth::user()->hasRole('Jefe-Administrativo'))
                                         @if($item->procedimiento=='guardado' || $item->procedimiento=='recursos humanos lo ha regresado a jefatura' || $item->procedimiento == 'enviado a jefatura')
                                             {!! $buttons !!}
@@ -155,6 +163,14 @@
                                     @endif
                                 @elseif (@Auth::user()->hasRole('super-admin') || @Auth::user()->hasRole('Recurso-Humano'))
                                     @if($item->procedimiento=='enviado a recursos humanos' || $item->procedimiento=='aceptado')
+                                        {!! $buttons !!}
+                                    @endif
+                                @elseif((@Auth::user()->hasRole('Docente') && @Auth::user()->hasRole('Jefe-Academico')))
+                                    @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
+                                        {!! $buttons !!}
+                                    @endif
+                                @elseif((@Auth::user()->hasRole('Docente') && @Auth::user()->hasRole('Jefe-Administrativo')))
+                                    @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
                                         {!! $buttons !!}
                                     @endif
                                 @elseif(@Auth::user()->hasRole('Jefe-Academico') || @Auth::user()->hasRole('Jefe-Administrativo'))
