@@ -41,6 +41,12 @@ $( "#marcaje" ).change(function() {
 
 
     let table;
+    //BOTON CANCELAR
+    function cancelar(btn) {
+        $('#cancelar_id').val($(btn).val());
+        $('#modalCancelar').modal();
+    }
+    //FIN DE CANCELAR
     //BOTON DE EDITAR
     function editar(boton) {
         

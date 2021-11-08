@@ -125,7 +125,7 @@
                     <i class="fa fa-ban mdi-24px" style="margin: 0px;"></i> Cancelar</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            <form action="{{ route('lic/cancelar') }}" method="POST" id="cancelarModal">
+            <form action="{{ route('olvido/cancel') }}" method="POST" id="cancelarModal">
                 @csrf
                 <div class="modal-body">
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
@@ -136,7 +136,7 @@
                         <div class="col-xl-2 fa fa-exclamation-triangle text-warning fa-4x mr-1"></div>
                         <div class="col-xl-9 text-black"> 
                             <h4 class="font-17 text-justify font-weight-bold">
-                                Advertencia: Se cancelara esta licencia, ¿Desea continuar?
+                                Advertencia: Se cancelara esta Const. olvido de marcaje, ¿Desea continuar?
                             </h4>
                         </div>
                     </div>
