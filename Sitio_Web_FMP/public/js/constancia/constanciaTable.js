@@ -1,11 +1,45 @@
-
-
 $(
     function() {
    // $('#Lic-table').hide();
     
 }
 );
+
+//PARA HORA DE SALIDA Y ENTRADA AUTOMATICO
+$( "#marcaje" ).change(function() {
+    //id de comb
+    $mar=document.getElementById('marcaje').value;
+   
+
+    // realizar la peticion 
+    $.ajax({
+        type: "GET",
+        url: 'ConstanciaOlvido/EntradaSalida/'+$('#fecha').val(),
+        success: function(json) {  
+
+           var json = JSON.parse(json);  
+          // console.log(json);
+           //alert($mar);
+           if($mar=='Entrada'){
+               $.each(json,function (i,index) {
+                $('#hora').val(index.hora_inicio);
+               });
+              
+           }else if($mar=='Salida'){
+            $.each(json,function (i,index) {
+                $('#hora').val(index.hora_fin);
+               });
+              
+           }
+        },
+    });  
+
+  });
+
+//FIN DE HORA DE SALIDA Y ENTRADA AUTOMATICO
+
+
+
     let table;
     //BOTON DE EDITAR
     function editar(boton) {
@@ -15,7 +49,7 @@ $(
             
              $.ajax({
                  type: "GET",
-                 url: 'LicenciasAcuerdo/edit/'+$(boton).val(),
+                 url: '/admin/ConstanciaOlvido/Modal/'+$(boton).val(),
                  beforeSend: function() {
                      $(boton).prop('disabled', true).html(''
                          +'<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
@@ -24,13 +58,12 @@ $(
                  success: function(json) {   
                      var json = JSON.parse(json);  
                     console.log(json);
-                     $('#idPermiso').val(json.id);                   
-                     $('#justificacion').summernote("code",json.justificacion);
-                  
-                     $('#empleado').val(json.empleado).trigger("change");
-                     $('#tipo_permiso').val(json.tipo_permiso).trigger("change");
-                     $('#fecha_de_inicio').val(json.fecha_uso);
-                     $('#fecha_final').val(json.fecha_presentacion);                                   
+                    $('#idPermiso').val(json.permiso);
+                    $('#fecha').val(json.fecha_presentacion);
+                    $('#marcaje').val(json.olvido).trigger("change");
+                    $('#hora').val(json.hora_incio);          
+                    $('#justificacion').summernote("code",json.justificacion);
+                                              
                    
                      $("#modalRegistro").modal();
                  },
@@ -44,7 +77,7 @@ $(
      }
     //para la tabla
 
-        table = $("#Lic-table").DataTable({
+        /*table = $("#Lic-table").DataTable({
             "language": {
                 "decimal": ".",
                 "emptyTable": "No hay datos para mostrar",
@@ -72,7 +105,7 @@ $(
             "autoWidth": true,
             "deferRender": true,
             "ajax": {
-                "url": "/admin/LicenciasAcuerdo/tabla",
+                "url": "/admin/ConstanciaOlvido/table",
                 "method": "GET",
                 "dataSrc": function (json) {
                   //  console.log(json);
@@ -82,22 +115,21 @@ $(
                             //CREAMOS UNA NUEVA PROPIEDAD LLAMADA BOTONES
                             html = "";
                             html2 = "";
+                            inyeccionFecha="";
                             html += '<td>';
                             html += '    <div class="btn-group">';
                             html += '        <button title="Editar" type="button" name="' + json[i].id + '"  value="' + json[i].id + '"   onclick="editar(this)" class="btn btn-outline-primary btn-sm rounded" data-toggle="modal"';
                             html += '            data-target="#modal-editar">';
                             html += '            <i class="fas fa-edit py-1 font-16"></i>';
                             html += '        </button>';
-                            /* <button title="Editar"  onclick="editar({{$item->id}},this)">
-                                         <i class="fa fa-edit py-1 font-16" aria-hidden="true"></i>
-                                     </button>*/
+                          
 
                             html += '    </div>';
                             html += '</td>';
                             json[i]["botones"] = html;
                             
-                            html2 += '<span class="badge badge-secondary">' + json[i].tipo_permiso+'</span>';
-                            json[i]["tipo"]=html2;
+                            html2 += '<span class="badge badge-success">' + json[i].estado+'</span>';
+                            json[i]["estado"]=html2;
 
                         }
 
@@ -109,13 +141,12 @@ $(
                 }
             },
             columns: [
-                { data: "e_nombre" },
-                { data: "tipo" },
-                { data: "inicio" },
-                { data: "fin" },
+                { data: "fecha" },
+                { data: "hora_inicio" },
                 { data: "justificacion" },
+                { data: "estado" },
                 { data: "botones" },
             ]
-        });
+        });*/
 
 

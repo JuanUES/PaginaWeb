@@ -184,7 +184,7 @@
                                 <a href="{{ route('indexLic') }}"><i class="icon-notebook font-18"></i><span>Mis Licencias</span></a>
                             </li>
                             <li>
-                                <a href="{{ route('olvido') }}"><i class="dripicons-clock  font-18"></i><span>Constancia de Olvido</span></a>
+                                <a href="{{ route('olvido') }}"><i class="dripicons-clock  font-18"></i><span>Const. Olvido de Marcaje</span></a>
                             </li>
                             @if (@Auth::user()->hasRole('super-admin')||@Auth::user()->hasRole('Recurso-Humano')||\Illuminate\Support\Facades\DB::table('permisos')->where('jefatura',auth()->user()->empleado)->exists())
                             <li>

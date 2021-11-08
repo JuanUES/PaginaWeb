@@ -9,12 +9,12 @@
     <div class="modal-dialog modal-lg-8" role="document">
       <div class="modal-content">
         <div class="modal-header">
-            <h3 class="modal-title" id=" exampleModalLongTitle"><i class="icon-notebook mdi-36px"></i> Licencia por Acuerdo</h3>
+            <h3 class="modal-title" id=" exampleModalLongTitle"><i class="icon-notebook mdi-36px"></i> Const. Olvido de Marcaje</h3>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <form id="registroForm"  action="{{ route('licAcuerdo/create') }}" method="POST">
+        <form id="registroForm"  action="{{ route('olvido/create') }}" method="POST">
             @csrf
             
             <div class="modal-body">
@@ -31,52 +31,59 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-xl-12">
+                    <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="exampleInputCodigo">Empleado<code>*</code></label>
-                           
+                            <label for="">Nombre <code>*</code></label>
+                            <input type="text" class="form-control" value="{{$logueado->nombre}}"  
+                            autocomplete="off" placeholder="Digite el nombre" readonly>
                         </div>
                     </div>
-                    
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="">Apellido <code>*</code></label>
+                            <input type="text" class="form-control" value="{{$logueado->apellido}}"
+                             autocomplete="off" placeholder="Digite el correo" readonly>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-xl-12">
+                    <!--para el campo fecha-->
+                    <div class="col-xl-6">
                         <div class="form-group">
-                            <label for="exampleInputNombre">Tipo de permiso <code>*</code></label>
-                            <select name="tipo_de_permiso" class="form-control select2" style="width: 100%" data-live-search="true" 
-                                data-style="btn-white"   id="tipo_permiso" name="tipo_permiso">
+                            <label for="fecha_de_uso">Fecha<code>*</code></label>
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                </div>
+                                <input type="date" name="fecha" class="form-control"
+                                    tyle="width: 100%;"  id="fecha" >
+                            </div>
+                        </div>                            
+                    </div>
+                    <!--fin del campo fecha-->
+                    <div class="col-xl-6">
+                        <div class="form-group">
+                            <label for="exampleInputNombre">Marcaje de:<code>*</code></label>
+                            <select class="form-control select2" style="width: 100%" data-live-search="true" 
+                                data-style="btn-white"   id="marcaje" name="marcaje">
                                 <option value="">Seleccione</option>
-                                <option value="Incapacidad">Incapacidad</option>
-                                <option value="Estudio">Estudio</option>
-                                <option value="Fumigación">Fumigación</option>
-                                <option value="Misión Oficial ">Misión Oficial</option>
-                                <option value="Otros">Otros</option>
+                                <option value="Entrada">Entrada</option>
+                                <option value="Salida">Salida</option>
                             </select>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xl-6">
+                    
+                    <div class="col-xl-12">
                         <div class="form-group">
-                            <label for="fecha_de_uso">Fecha de inicio <code>*</code></label>
-                            <div class="input-group">
-                                <div class="input-group-append">
-                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                </div>
-                                <input type="date" name="fecha_de_inicio" class="form-control"
-                                    tyle="width: 100%;"  id="fecha_de_inicio" >
-                            </div>
-                        </div>                            
-                    </div>
-                    <div class="col-xl-6">
-                        <div class="form-group">
-                            <label for="fecha_de_presentacion">Fecha final <code>*</code></label> 
+                            <label for="fecha_de_presentacion">Hora <code>*</code></label> 
                             <div class="input-group">
                                 <div class="input-group-append" style="width: 100%;">
-                                    <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                                    <input type="date" name="fecha_final" class="form-control"
-                                        style="width: 100%;"  id="fecha_final" >
+                                    <span class="input-group-text"><i class=" mdi mdi-account-clock "></i></span>
+                                    <input type="time" name="hora" class="form-control"
+                                        style="width: 100%;"  id="hora" >
                                 </div>
                             </div>                           
                         </div>
@@ -242,7 +249,7 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Inicio</a></li>
-                    <li class="breadcrumb-item active">Licencias por Acuerdo</li>
+                    <li class="breadcrumb-item active">Const. Olvido de Marcaje</li>
                 </ol>
             </div>
             <h4 class="page-title">&nbsp;</h4>
@@ -259,7 +266,7 @@
             <div class="row py-2">
                 <div class="col order-first">
                     <h3>
-                        Licencias por Acuerdo
+                        Const. Olvido de Marcaje
                     </h3>
                 </div>
                 <div class="col-lg-1 order-last">
@@ -273,17 +280,90 @@
             <table  class="table" style="width: 100%" id="Lic-table">
                 <thead>
                 <tr>
-                    <th class="col-xs-1">Empleado</th>
-                    <th class="col-sm-2">Tipo</th>
-                    <th class="col-sm-2">Fecha inicio</th>
-                    <th class="col-sm-2">Fecha Final</th>
-                    <th class="col-xs-1">Justificación</th>
+                    <th class="col-sm-2">Fecha</th>
+                    <th class="col-sm-2">Marcaje</th>
+                    <th class="col-sm-2">Hora de olvido</th>
+                    <th class="col-sm-2">Estado</th>
                     <th class="col-sm-1">Acciones</th>
                 </tr>
                 </thead>
               
                 <tbody>
                     
+                    @foreach ($data as $item)
+                        <tr>
+                            <th class="align-middle ">{{Carbon\Carbon::parse($item->fecha_uso)->format('d/M/Y')}}</th>
+                            <td class="align-middle "> <span class="badge badge-success font-13">{{$item->olvido}}</span></td>
+                            <td class="align-middle ">{{date('H:i', strtotime($item->hora_inicio))}}</td>
+                            <td class="align-middle">
+                                @if($item->estado =='Guardado') 
+                                    <span class="badge badge-primary font-13">{{$item->estado}}</span>
+                                @endif
+                                @if($item->estado =='Cancelado') 
+                                    <span class="badge badge-danger font-13">{{$item->estado}}</span>
+                                @endif
+                                @if ($item->estado =='Enviado a Jefatura' or $item->estado =='Enviado a RRHH')
+                                    <span class="badge badge-primary font-13">{{$item->estado}}</span>
+                                @endif
+                                @if ($item->estado =='Observaciones de RRHH' or $item->estado =='Observaciones de Jefatura')
+                                    <span class="badge badge-danger font-13">{{$item->estado}}</span>
+                                @endif
+                                @if ($item->estado =='Aceptado por Jefatura' or $item->estado =='Aceptado')
+                                    <span class="badge badge-success font-13">{{$item->estado}}</span>
+                                @endif                        
+                            </td>
+                            <td class="align-middle ">
+                                <div class="row">
+                                    <div class="col text-center">
+                                        @php
+                                            $todos_btn = $item->estado =='Guardado' || 
+                                            $item->estado == 'Observaciones de RRHH' || 
+                                            $item->estado == 'Observaciones de Jefatura';
+                                        @endphp
+                                        <div class="btn-group" role="group">
+                                            <button title="Observaciones" class="btn btn-outline-primary btn-sm rounded-left" 
+                                            @if ($item->estado =='CANCELADO')
+                                                disabled
+                                            @else
+                                              value="{{$item->identificador}}" 
+                                              onclick="observaciones(this)"
+                                            @endif>
+                                                <i class="fa fa-eye font-16 my-1" aria-hidden="true"></i>
+                                            </button>
+                                            <button title="Enviar" class="btn btn-outline-primary btn-sm" 
+                                            @if($todos_btn)
+                                                value="{{$item->identificador}}"
+                                                 onclick="enviar(this)"
+                                                 @else disabled
+                                                 @endif>                                                
+                                                <i class="fa fa-arrow-circle-up font-16 my-1" aria-hidden="true"></i>
+                                            </button>
+                                            <button title="Editar" 
+                                            class="btn btn-outline-primary btn-sm border-letf-0"  
+                                            @if($todos_btn)
+                                                 value="{{$item->identificador}}"
+                                                onclick="editar(this)"
+                                                @else
+                                                disabled
+                                                @endif>
+                                                <i class="fa fa-edit font-16 my-1" aria-hidden="true"></i>
+                                            </button>
+                                            <button title="Cancelar" 
+                                                class="btn btn-outline-primary btn-sm border-left-0 btn-outline-danger rounded-right"
+                                                @if($todos_btn)
+                                                 onclick="cancelar(this)"
+                                                 value="{{$item->identificador}}"
+                                                @else
+                                                disabled
+                                                @endif>
+                                                <i class="fa fa-ban font-16 my-1"></i>
+                                            </button>                                   
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>  
+                        </tr>
+                    @endforeach 
                     
                                
                 </tbody>
@@ -324,12 +404,12 @@
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
     <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.js') }}" ></script>
-    <!--<script src="{{ asset('js/scripts/data-table.js') }}" ></script>-->
+    <script src="{{ asset('js/scripts/data-table.js') }}" ></script>
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
    
-    <script src="{{ asset('js/Lic_Acuerdo/lic_acuerdo.js') }}" ></script>
-    <script src="{{ asset('js/Lic_Acuerdo/lic_acuerdo_table.js')}}"></script>
+    <script src="{{ asset('js/constancia/constaciaOlvido.js') }}" ></script>
+    <script src="{{ asset('js/constancia/constanciaTable.js')}}"></script>
  
 @endsection
