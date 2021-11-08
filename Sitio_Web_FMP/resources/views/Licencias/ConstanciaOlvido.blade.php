@@ -165,6 +165,7 @@
 </div><!-- /.modal-->
 <!--Modal para dar alta fin-->
 
+<!--MODAL ENVIAR-->
 <div id="modalEnviar" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" 
     aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-dialog-centered">
@@ -185,7 +186,7 @@
                         <div class="col-xl-2 dripicons-information text-info fa-4x mr-1"></div>
                         <div class="col-xl-9 text-black"> 
                             <h4 class="font-17 text-justify font-weight-bold">
-                                Advertencia: Se enviara esta licencia,
+                                Advertencia: Se enviara la Const. olvido de Marcaje,
                             </h4>
                             <h4 class="font-17 text-justify font-weight-bold">
                                 ¿Desea continuar?
@@ -215,7 +216,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>
-
+<!--MODAL ENVIAR FIN-->
 <div id="modalObservaciones" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" 
     aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-lg">
@@ -226,8 +227,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>           
             <div class="modal-body">
-                <div class="container-fluid">
-                    <table class="table" id="acuerdo-table"> 
+               
+                    <table class="table" style="width: 100%" id="obs-table"> 
                         <thead>
                             <tr>
                                 <th>Fecha</th>
@@ -236,7 +237,7 @@
                             </tr>
                         </thead>
                     </table>
-                </div>
+                
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
