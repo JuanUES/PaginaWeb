@@ -347,11 +347,11 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="registroForm" action="{{ route('jf/observacion') }}" method="POST">
+                    <form id="registroForm" action="{{ route('rrhh/observacion') }}" method="POST">
                         @csrf
 
                         <div class="modal-body">
-                            <input type="hidden" id="idPermiso" name="_id" />
+                            <input type="hidden" id="idPermisoC" name="_id" />
                             <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
                                 role="alert" style="display:none" id="notificacion">
                             </div>
@@ -437,7 +437,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                                <div class="col-xl-12">
                                 <div class="form-group">
                                     <label for="observacionesConst">Observaciones </label>
-                                    <textarea value=" " class="form-control summernote-config"  name="observaciones_jefatura"
+                                    <textarea value=" " class="form-control summernote-config"  name="observaciones_recursos_humanos"
                                      rows="4"></textarea>
                                 </div>
 
@@ -845,7 +845,7 @@ mensuales = anuales = hrs_m = hrs_a = min_m = min_a = min_t_a = min_t_m = 0;
 
                         var json = JSON.parse(json);
                         console.log(json);
-                        $('#idPermiso').val(json.permiso);
+                        $('#idPermisoC').val(json.permiso);
                         $('#nombreC').val(json.nombre);
                         $('#apellidoC').val(json.apellido);
                         $('#justificacionConst').summernote("code", json.justificacion);
