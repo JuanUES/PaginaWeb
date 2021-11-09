@@ -267,7 +267,7 @@
             <div class="row py-2">
                 <div class="col order-first">
                     <h3>
-                        Const. Olvido de Marcaje
+                        Constancia Olvido de Marcaje
                     </h3>
                 </div>
                 <div class="col-lg-1 order-last">

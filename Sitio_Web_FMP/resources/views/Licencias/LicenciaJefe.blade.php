@@ -56,6 +56,58 @@
         </div><!-- /.modal-->
         <!--Modal para dar alta fin-->
 
+        <!--MODAL ACEPTAR CONSTANCIA-->
+        <div id="modalAceptarConst" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog"
+            aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id="myCenterModalLabel">
+                            <i class="fa fa-check mdi-24px" style="margin: 0px;"></i> Aceptar
+                        </h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <form action="{{ route('jf/aceptar') }}" method="POST" id="cancelarModal">
+                        @csrf
+                        <div class="modal-body">
+                            <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
+                                role="alert" style="display:none" id="notificacion1">
+                            </div>
+                            <input type="hidden" name="_id" id="aceptarr_id">
+                            <div class="row py-3">
+                                <div class="col-xl-2 fa fa-check text-success fa-4x mr-1"></div>
+                                <div class="col-xl-9 text-black">
+                                    <h3 class="font-17 text-justify font-weight-bold">
+                                        Nota: Se aceptara esta Constancia olvido de Marcaje,
+                                        ¿Desea continuar?
+                                    </h3>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xl-6 p-1">
+                                    <button type="submit"
+                                        class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
+                                        <i class="mdi mdi-check mdi-16px"></i>
+                                        Si
+                                    </button>
+                                </div>
+                                <div class="col-xl-6 p-1">
+                                    <button type="reset"
+                                        class="btn btn-light p-1 waves-light waves-effect btn-block font-24"
+                                        data-dismiss="modal">
+                                        <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
+                                        No
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+        </div><!-- /.modal-->
+        <!--FIN DE MODAL ACEPTAR CONSTANCIA-->
+
         <div id="modalObservaciones" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
             aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-lg">
@@ -96,7 +148,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="registroForm" action="{{ route('olvido/create') }}" method="POST">
+                    <form id="registroForm" action="{{ route('jf/observacion') }}" method="POST">
                         @csrf
 
                         <div class="modal-body">
@@ -139,7 +191,7 @@
                                                 <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
                                             </div>
                                             <input type="date" class="form-control" tyle="width: 100%;"
-                                                id="fecha">
+                                                id="fecha" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -166,7 +218,7 @@
                                                 <span class="input-group-text"><i
                                                         class=" mdi mdi-account-clock "></i></span>
                                                 <input type="time" class="form-control" style="width: 100%;"
-                                                    id="hora">
+                                                    id="hora" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -178,10 +230,20 @@
                                     <div class="form-group">
                                         <label for="exampleInputNombre">Justificación<code>*</code></label>
                                         <textarea value=" " class="form-control summernote-config"
-                                            id="justificacion" rows="6"></textarea>
+                                            id="justificacionConst" rows="6" readonly></textarea>
                                     </div>
                                 </div>
                             </div>
+                           <div class="row">
+                               <div class="col-xl-12">
+                                <div class="form-group">
+                                    <label for="observacionesConst">Observaciones </label>
+                                    <textarea value=" " class="form-control summernote-config"  name="observaciones_jefatura"
+                                     rows="4"></textarea>
+                                </div>
+
+                               </div>
+                           </div> 
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban"
@@ -480,9 +542,9 @@
                                                                 aria-hidden="true"></i>
                                                         </button>
 
-                                                        <button title="Aceptar Licencia"
+                                                        <button title="Aceptar Const. olvido"
                                                             class="btn btn-outline-success btn-sm"
-                                                            value="{{ $item->permiso }}" onclick="aceptar(this)">
+                                                            value="{{ $item->permiso }}" onclick="aceptarConst(this)">
                                                             <i class="fa fa-check font-16 my-1" aria-hidden="true"></i>
                                                         </button>
 
@@ -513,9 +575,9 @@
                                                                 aria-hidden="true"></i>
                                                         </button>
 
-                                                        <button title="Aceptar Licencia"
+                                                        <button title="Aceptar Const. olvido"
                                                             class="btn btn-outline-success btn-sm"
-                                                            value="{{ $item->permiso }}" onclick="aceptar(this)">
+                                                            value="{{ $item->permiso }}" onclick="aceptarConst(this)">
                                                             <i class="fa fa-check font-16 my-1" aria-hidden="true"></i>
                                                         </button>
 
@@ -625,6 +687,10 @@
                 $('#observaciones').summernote('disable');
                 $("#tipo_representante").prop("disabled", true);
                 $("#tipo_permiso").prop("disabled", true);
+
+                //para la constancia de olvido de marcaje
+                $('#justificacionConst').summernote('disable');
+                $("#marcaje").prop("disabled", true);
             }
 
         );
@@ -736,6 +802,13 @@
             $('#modalAceptar').modal();
         }
 
+        //FUNCION PARA ACEPTAR CONSTANCIA
+        function aceptarConst(boton){
+            $('#aceptarr_id').val($(boton).val());
+            $('#modalAceptarConst').modal();
+        }
+        //FIN DE FUNCION PARA ACEPTAR CONSTANCIA
+
         function observaciones(boton) {
             if ($(boton).val() != null) {
                 $.ajax({
@@ -795,12 +868,12 @@
                         $('#idPermiso').val(json.permiso);
                         $('#nombre').val(json.nombre);
                         $('#apellido').val(json.apellido);
-                        $('#justificacion').summernote("code", json.justificacion);
+                        $('#justificacionConst').summernote("code", json.justificacion);
                      
                         $('#marcaje').val(json.olvido).trigger("change");
                         $('#fecha').val(json.fecha_uso).change();
                         $('#hora').val(json.hora_inicio);
-                        $('#observaciones').summernote("code", json.observaciones);
+                        $('#observacionesConst').summernote("code", json.observaciones);
                         
                         $('#modalConstancia').modal();
                     },
