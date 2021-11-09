@@ -584,7 +584,8 @@ mensuales = anuales = hrs_m = hrs_a = min_m = min_a = min_t_a = min_t_m = 0;
                             +'<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
                         );
                     },
-                    success: function(json) {   
+                    success: function(json) {  
+                      //  alert($(boton).val());
 
                         var json = JSON.parse(json);  
 

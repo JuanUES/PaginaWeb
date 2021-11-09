@@ -177,7 +177,7 @@ class LicenciasJefeRRHHController extends Controller
     }
 
     public function permiso($permiso){
-        if(Auth::check() and !is_null($permiso) and ($this->isJefe() or @Auth::user()->hasRole('super-admin'))){
+        if(Auth::check() and !is_null($permiso) and ($this->isJefe() or @Auth::user()->hasRole('super-admin') or @Auth::user()->hasRole('Recurso-Humano') )){
             return Permiso::selectRaw('md5(permisos.id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
                     fecha_presentacion,olvido,to_char(hora_inicio,\'HH24:MI\') as hora_inicio
                     ,to_char(hora_final,\'HH24:MI\') as hora_final,justificacion,observaciones,permisos.estado,nombre,apellido')
