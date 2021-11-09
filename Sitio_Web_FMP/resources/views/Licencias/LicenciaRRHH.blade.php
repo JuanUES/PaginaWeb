@@ -54,6 +54,58 @@
 </div><!-- /.modal-->
 <!--Modal para dar alta fin-->
 
+<!--MODAL ACEPTAR CONSTANCIA-->
+<div id="modalAceptarConst" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog"
+aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="myCenterModalLabel">
+                <i class="fa fa-check mdi-24px" style="margin: 0px;"></i> Aceptar
+            </h3>
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        </div>
+        <form action="{{ route('rrhh/aceptar') }}" method="POST" id="cancelarModal">
+            @csrf
+            <div class="modal-body">
+                <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
+                    role="alert" style="display:none" id="notificacion1">
+                </div>
+                <input type="hidden" name="_id" id="aceptarr_id">
+                <div class="row py-3">
+                    <div class="col-xl-2 fa fa-check text-success fa-4x mr-1"></div>
+                    <div class="col-xl-9 text-black">
+                        <h3 class="font-17 text-justify font-weight-bold">
+                            Nota: Se aceptara esta Constancia olvido de Marcaje,
+                            ¿Desea continuar?
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xl-6 p-1">
+                        <button type="submit"
+                            class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
+                            <i class="mdi mdi-check mdi-16px"></i>
+                            Si
+                        </button>
+                    </div>
+                    <div class="col-xl-6 p-1">
+                        <button type="reset"
+                            class="btn btn-light p-1 waves-light waves-effect btn-block font-24"
+                            data-dismiss="modal">
+                            <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
+                            No
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div><!-- /.modal-content -->
+</div><!-- /.modal-dialog -->
+</div><!-- /.modal-->
+<!--FIN DE MODAL ACEPTAR CONSTANCIA-->
+
 <div id="modalObservaciones" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" 
     aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-lg">
@@ -112,7 +164,7 @@
                     <div class="col-xl-6">
                         <div class="form-group">
                             <label for="">Nombre </label>
-                            <input type="text" class="form-control" value=""  
+                            <input type="text" class="form-control"  
                             autocomplete="off" placeholder="Digite el nombre" id="nombre" readonly>
                         </div>
                     </div>
@@ -282,6 +334,132 @@
 </div>
 <!--fin modal de registro-->
 
+<!--MODAL CONSTANCIA DE OLVIDO DE MARCAJE-->
+        <!-- inicio Modal de registro -->
+        <div class="modal fade bs-example-modal-lg" role="dialog" aria-labelledby="myLargeModalLabel" id="modalConstancia"
+            tabindex="-1">
+            <div class="modal-dialog modal-lg-8" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title" id=" exampleModalLongTitle"><i class="icon-notebook mdi-36px"></i> Const.
+                            Olvido de Marcaje</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form id="registroForm" action="{{ route('jf/observacion') }}" method="POST">
+                        @csrf
+
+                        <div class="modal-body">
+                            <input type="hidden" id="idPermiso" name="_id" />
+                            <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
+                                role="alert" style="display:none" id="notificacion">
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="form-group">
+                                        <label>Nota: <code>* Campos Obligatorio</code></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label for="">Nombre <code>*</code></label>
+                                        <input type="text" class="form-control" value="" autocomplete="off"
+                                            placeholder="Digite el nombre" id="nombreC" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label for="">Apellido <code>*</code></label>
+                                        <input type="text" class="form-control" value="" autocomplete="off"
+                                            placeholder="Digite el apellido" id="apellidoC"  readonly>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <!--para el campo fecha-->
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label for="fecha_de_uso">Fecha<code>*</code></label>
+                                        <div class="input-group">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                                            </div>
+                                            <input type="date" class="form-control" tyle="width: 100%;"
+                                                id="fecha" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--fin del campo fecha-->
+                                <div class="col-xl-6">
+                                    <div class="form-group">
+                                        <label for="exampleInputNombre">Marcaje de:<code>*</code></label>
+                                        <select class="form-control select2" style="width: 100%" data-live-search="true"
+                                            data-style="btn-white" id="marcaje">
+                                            <option value="">Seleccione</option>
+                                            <option value="Entrada">Entrada</option>
+                                            <option value="Salida">Salida</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-xl-12">
+                                    <div class="form-group">
+                                        <label for="fecha_de_presentacion">Hora <code>*</code></label>
+                                        <div class="input-group">
+                                            <div class="input-group-append" style="width: 100%;">
+                                                <span class="input-group-text"><i
+                                                        class=" mdi mdi-account-clock "></i></span>
+                                                <input type="time" class="form-control" style="width: 100%;"
+                                                    id="hora" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <div class="form-group">
+                                        <label for="exampleInputNombre">Justificación<code>*</code></label>
+                                        <textarea value=" " class="form-control summernote-config"
+                                            id="justificacionConst" rows="6" readonly></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                           <div class="row">
+                               <div class="col-xl-12">
+                                <div class="form-group">
+                                    <label for="observacionesConst">Observaciones </label>
+                                    <textarea value=" " class="form-control summernote-config"  name="observaciones_jefatura"
+                                     rows="4"></textarea>
+                                </div>
+
+                               </div>
+                           </div> 
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban"
+                                    aria-hidden="true"></i> Cerrar</button>
+                            <button type="button" class="btn btn-primary" id='guardar_registro'
+                                onClick="submitForm('#registroForm','#notificacion')">
+                                <li class="fa fa-save"></li> Guardar
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--fin modal de registro-->
+        <!--FIN DE MODAL CONSTANCIA DE OLVIDO DE MARCAJE-->
+
 <!-- start page title -->
 <div class="row">
     <div class="col-xl-12">
@@ -329,41 +507,109 @@
                             <th class="align-middle ">{{Carbon\Carbon::parse($item->fecha_uso)->format('d/M/Y')}}</th>
                             <td class="align-middle ">{{$item->nombre.' '.$item->apellido}}</td>
                             <td class="align-middle "><span class="badge badge-primary">{{$item->tipo_permiso}}</span></td>
-                            <td class="align-middle ">{{date('H:i', strtotime($item->hora_inicio))}}</td>
-                            <td class="align-middle ">{{date('H:i', strtotime($item->hora_final))}}</td>
-                            <td class="align-middle ">
-                                {{
-                                    Carbon\Carbon::parse($item->fecha_uso.'T'.$item->hora_inicio)
-                                        ->diffAsCarbonInterval(Carbon\Carbon::parse($item->fecha_uso.'T'.$item->hora_final))
-                                }}
-                            </td>                           
-                            <td class="align-middle ">
-                                <div class="row">
-                                    <div class="col text-center">
-                                        
-                                        <div class="btn-group" role="group">
-                                            <button title="Ver Datos" class="btn btn-outline-primary btn-sm" 
-                                                value="{{$item->permiso}}"
-                                                 onclick="observaciones(this)">                                                
-                                                <i class="fa fa-eye font-16 my-1" aria-hidden="true"></i>
-                                            </button>
-                                            
-                                            <button title="Agregar Observacion" class="btn btn-outline-primary btn-sm" 
-                                                value="{{$item->permiso}}"
-                                                onclick="verDatos(this)">                                                
-                                                <i class="fa fa-file-alt font-16 my-1 mx-0" aria-hidden="true"></i>
-                                            </button>
+                            @if ($item->olvido == 'Entrada')
+                                        <td class="align-middle ">{{ date('H:i', strtotime($item->hora_inicio)) }}</td>
+                                        <td class="align-middle ">{{ date('H:i', strtotime($item->hora_final)) }}</td>
+                                        <td class="align-middle ">{{ date('H:i', strtotime($item->hora_final)) }}</td>
+                                         <!--PARA LOS BOTONES-->
+                                         <td class="align-middle ">
+                                            <div class="row">
+                                                <div class="col text-center">
 
-                                            <button title="Aceptar Licencia" class="btn btn-outline-success btn-sm" 
-                                              value="{{$item->permiso}}" 
-                                              onclick="aceptar(this)">
-                                                <i class="fa fa-check font-16 my-1" aria-hidden="true"></i>
-                                            </button>
-                                                                           
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>  
+                                                    <div class="btn-group" role="group">
+                                                        <button title="Ver Datos" class="btn btn-outline-primary btn-sm"
+                                                            value="{{ $item->permiso }}" onclick="observaciones(this)">
+                                                            <i class="fa fa-eye font-16 my-1" aria-hidden="true"></i>
+                                                        </button>
+
+                                                        <button title="Agregar Observacion"
+                                                            class="btn btn-outline-primary btn-sm"
+                                                            value="{{ $item->permiso }}" onclick="verDatosConst(this)">
+                                                            <i class="fa fa-file-alt font-16 my-1 mx-0"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+
+                                                        <button title="Aceptar Const. olvido"
+                                                            class="btn btn-outline-success btn-sm"
+                                                            value="{{ $item->permiso }}" onclick="aceptarConst(this)">
+                                                            <i class="fa fa-check font-16 my-1" aria-hidden="true"></i>
+                                                        </button>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <!--FIN DE PARA LOS BOTONES-->
+                                    @elseif ($item->olvido =='Salida')
+                                        <td class="align-middle ">{{ date('H:i', strtotime($item->hora_final)) }}</td>
+                                        <td class="align-middle ">{{ date('H:i', strtotime($item->hora_inicio)) }}</td>
+                                        <td class="align-middle ">{{ date('H:i', strtotime($item->hora_final)) }}</td>
+                                        <!--PARA LOS BOTONES-->
+                                        <td class="align-middle ">
+                                            <div class="row">
+                                                <div class="col text-center">
+
+                                                    <div class="btn-group" role="group">
+                                                        <button title="Ver Datos" class="btn btn-outline-primary btn-sm"
+                                                            value="{{ $item->permiso }}" onclick="observaciones(this)">
+                                                            <i class="fa fa-eye font-16 my-1" aria-hidden="true"></i>
+                                                        </button>
+
+                                                        <button title="Agregar Observacion"
+                                                            class="btn btn-outline-primary btn-sm"
+                                                            value="{{ $item->permiso }}" onclick="verDatosConst(this)">
+                                                            <i class="fa fa-file-alt font-16 my-1 mx-0"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+
+                                                        <button title="Aceptar Const. olvido"
+                                                            class="btn btn-outline-success btn-sm"
+                                                            value="{{ $item->permiso }}" onclick="aceptarConst(this)">
+                                                            <i class="fa fa-check font-16 my-1" aria-hidden="true"></i>
+                                                        </button>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <!--FIN DE PARA LOS BOTONES-->
+
+                                    @else
+                                        <td class="align-middle ">{{ date('H:i', strtotime($item->hora_inicio)) }}</td>
+                                        <td class="align-middle ">{{ date('H:i', strtotime($item->hora_final)) }}</td>
+                                        <td class="align-middle ">
+                                            {{                                             Carbon\Carbon::parse($item->fecha_uso . 'T' . $item->hora_inicio)->diffAsCarbonInterval(Carbon\Carbon::parse($item->fecha_uso . 'T' . $item->hora_final)) }}
+                                        </td>
+                                        <td class="align-middle ">
+                                            <div class="row">
+                                                <div class="col text-center">
+
+                                                    <div class="btn-group" role="group">
+                                                        <button title="Ver Datos" class="btn btn-outline-primary btn-sm"
+                                                            value="{{ $item->permiso }}" onclick="observaciones(this)">
+                                                            <i class="fa fa-eye font-16 my-1" aria-hidden="true"></i>
+                                                        </button>
+
+                                                        <button title="Agregar Observacion"
+                                                            class="btn btn-outline-primary btn-sm"
+                                                            value="{{ $item->permiso }}" onclick="verDatos(this)">
+                                                            <i class="fa fa-file-alt font-16 my-1 mx-0"
+                                                                aria-hidden="true"></i>
+                                                        </button>
+
+                                                        <button title="Aceptar Licencia"
+                                                            class="btn btn-outline-success btn-sm"
+                                                            value="{{ $item->permiso }}" onclick="aceptar(this)">
+                                                            <i class="fa fa-check font-16 my-1" aria-hidden="true"></i>
+                                                        </button>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    @endif
+                                                      
+                        
                         </tr>
                     @endforeach                   
                 </tbody>
@@ -424,6 +670,9 @@
                 $('#observaciones').summernote('disable');
                 $("#tipo_representante").prop("disabled", true);
                 $("#tipo_permiso").prop("disabled", true);
+                 //para la constancia de olvido de marcaje
+                 $('#justificacionConst').summernote('disable');
+                $("#marcaje").prop("disabled", true);
             }
 
         );
@@ -529,6 +778,13 @@ mensuales = anuales = hrs_m = hrs_a = min_m = min_a = min_t_a = min_t_m = 0;
     $('#fecha_de_uso').change(obtenerHora).click(obtenerHora);
     $('#hora_inicio').change(calcularHora).click(calcularHora);
     $('#hora_final').change(calcularHora).click(calcularHora);
+
+         //FUNCION PARA ACEPTAR CONSTANCIA
+         function aceptarConst(boton){
+            $('#aceptarr_id').val($(boton).val());
+            $('#modalAceptarConst').modal();
+        }
+        //FIN DE FUNCION PARA ACEPTAR CONSTANCIA
             
         function aceptar(boton){
             $('#aceptar_id').val($(boton).val());
@@ -573,6 +829,43 @@ mensuales = anuales = hrs_m = hrs_a = min_m = min_a = min_t_a = min_t_m = 0;
         $('.modal').on('hidden.bs.modal',function(){
             $("form").trigger("reset");
         });
+
+        //FUNCION PARA VER LOS DATOS DE CONSTANCIA DE OLVIDO
+        function verDatosConst(boton) {
+            if ($(boton).val() != null) {
+                $.ajax({
+                    type: "GET",
+                    url: '/admin/licencias/jefaturaRRHH/' + $(boton).val(),
+                    beforeSend: function() {
+                        $(boton).prop('disabled', true).html('' +
+                            '<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
+                        );
+                    },
+                    success: function(json) {
+
+                        var json = JSON.parse(json);
+                        console.log(json);
+                        $('#idPermiso').val(json.permiso);
+                        $('#nombreC').val(json.nombre);
+                        $('#apellidoC').val(json.apellido);
+                        $('#justificacionConst').summernote("code", json.justificacion);
+                     
+                        $('#marcaje').val(json.olvido).trigger("change");
+                        $('#fecha').val(json.fecha_uso).change();
+                        $('#hora').val(json.hora_inicio);
+                        $('#observacionesConst').summernote("code", json.observaciones);
+                        
+                        $('#modalConstancia').modal();
+                    },
+                    complete: function(json) {
+                        $(boton).prop('disabled', false).html('' +
+                            '<i class="fa fa-file-alt font-16 py-1" aria-hidden="true"></i>'
+                        );
+                    }
+                });
+            }
+        }
+        //FIN DE VER DATOS DE CONSTANCIA DE OLVIDO
 
         function verDatos(boton) {
             if($(boton).val()!=null){

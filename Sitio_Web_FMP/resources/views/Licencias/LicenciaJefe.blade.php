@@ -169,14 +169,14 @@
                                     <div class="form-group">
                                         <label for="">Nombre <code>*</code></label>
                                         <input type="text" class="form-control" value="" autocomplete="off"
-                                            placeholder="Digite el nombre" id="nombre" readonly>
+                                            placeholder="Digite el nombre" id="nombreC" readonly>
                                     </div>
                                 </div>
                                 <div class="col-xl-6">
                                     <div class="form-group">
                                         <label for="">Apellido <code>*</code></label>
                                         <input type="text" class="form-control" value="" autocomplete="off"
-                                            placeholder="Digite el apellido" id="apellido"  readonly>
+                                            placeholder="Digite el apellido" id="apellidoC"  readonly>
                                     </div>
                                 </div>
                             </div>
@@ -866,8 +866,8 @@
                         var json = JSON.parse(json);
                         console.log(json);
                         $('#idPermiso').val(json.permiso);
-                        $('#nombre').val(json.nombre);
-                        $('#apellido').val(json.apellido);
+                        $('#nombreC').val(json.nombre);
+                        $('#apellidoC').val(json.apellido);
                         $('#justificacionConst').summernote("code", json.justificacion);
                      
                         $('#marcaje').val(json.olvido).trigger("change");

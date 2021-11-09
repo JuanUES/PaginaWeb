@@ -47,7 +47,7 @@ class LicenciasJefeRRHHController extends Controller
     public function indexRRHH(){
         if(Auth::check() and (@Auth::user()->hasRole('Recurso-Humano') or @Auth::user()->hasRole('super-admin'))){
             $permisos = Permiso::selectRaw('md5(permisos.id::text) as permiso, tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,
-                observaciones,empleado.nombre,empleado.apellido')
+                observaciones,olvido,empleado.nombre,empleado.apellido')
                 ->join('empleado','empleado.id','=','permisos.empleado')
                 ->where([
                     ['permisos.estado','=','Enviado a RRHH']]
