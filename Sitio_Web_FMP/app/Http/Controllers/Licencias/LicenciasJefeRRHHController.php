@@ -145,7 +145,7 @@ class LicenciasJefeRRHHController extends Controller
     }
 
     public function observacionRRHH(Request $request){
-        if(Auth::check() and ($this->isJefe() or @Auth::user()->hasRole('super-admin'))){
+        if(Auth::check() and ($this->isJefe() or @Auth::user()->hasRole('super-admin') or @Auth::user()->hasRole('Recurso-Humano'))){
             $validator = Validator::make($request->all(),[
                 'observaciones_recursos_humanos' => 'required|string|min:3',
             ]);         
