@@ -59,4 +59,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('admin/licencias/rrhh/observacion',[LicenciasJefeRRHHController::class,'observacionRRHH'])->name('rrhh/observacion');
     /*END POST**/
 
+// Resportes
+    Route::get('Reportes/Revision', [ReporteRevisionPermisosMensuales::class,'PDF'])->name('descargarPDF');
 });
