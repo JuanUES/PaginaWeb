@@ -24,7 +24,7 @@ class LicenciasJefeRRHHController extends Controller
         if(Auth::check() and ($this->isJefe() or @Auth::user()->hasRole('super-admin'))){
 
             $permisos = Permiso::selectRaw('md5(permisos.id::text) as permiso, tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,
-                observaciones,empleado.nombre,empleado.apellido')
+                observaciones,olvido,empleado.nombre,empleado.apellido')
                 ->join('empleado','empleado.id','=','permisos.empleado')
                 ->where([
                     ['jefatura',auth()->user()->empleado],
@@ -37,6 +37,7 @@ class LicenciasJefeRRHHController extends Controller
                     ['tipo_permiso','=','L OFICIAL'],
                     ['tipo_permiso','=','CITA MEDICA']]
                 )->get();
+                //echo dd($permisos);
             return view('Licencias.LicenciaJefe',compact('permisos'));
         }else {
             return redirect()->route('index');
@@ -178,7 +179,7 @@ class LicenciasJefeRRHHController extends Controller
     public function permiso($permiso){
         if(Auth::check() and !is_null($permiso) and ($this->isJefe() or @Auth::user()->hasRole('super-admin'))){
             return Permiso::selectRaw('md5(permisos.id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
-                    fecha_presentacion,to_char(hora_inicio,\'HH24:MI\') as hora_inicio
+                    fecha_presentacion,olvido,to_char(hora_inicio,\'HH24:MI\') as hora_inicio
                     ,to_char(hora_final,\'HH24:MI\') as hora_final,justificacion,observaciones,permisos.estado,nombre,apellido')
             ->join('empleado','empleado.id','=','permisos.empleado')
             ->whereRaw('md5(permisos.id::text) = ?',[$permiso])
