@@ -112,7 +112,42 @@ class LicenciasJefeRRHHController extends Controller
         }
     }
 
+    //PARA LAS OBSERVACIONES DE CONSTANCIA
+    public function observacionJefaturaConst(Request $request){
+        if(Auth::check() and ($this->isJefe() or @Auth::user()->hasRole('super-admin'))){
+            $validator = Validator::make($request->all(),[
+                'observaciones_jefatura_constancia' => 'required|string|min:3',
+            ]);         
+
+            if($validator->fails())
+            {            
+                return response()->json(['error'=>$validator->errors()->all()]);                
+            }
+
+            $permiso = Permiso::select('estado','id')->whereRaw('md5(id::text) = ?',[$request->_id])->first();
+            $permiso -> estado = 'Observaciones de Jefatura';
+            DB::update('update permiso_seguimiento set estado = false where estado = ? and permiso_id=?', [true,$permiso->id]);
+            
+            $seguimiento = new Permiso_seguimiento;
+            $seguimiento -> permiso_id = $permiso->id;
+            $seguimiento -> estado = true;
+            $seguimiento -> observaciones = $request->observaciones_jefatura_constancia;
+            $seguimiento -> proceso = 'Observaciones de Jefatura';
+            $seguimiento -> save();
+
+            $permiso->save();
+            return $request->_id != null?
+            response()->json(['mensaje'=>'Observacion Registrada']):
+            response()->json(['error'=>'Error no se capturo id de permiso']);
+        }else {
+            return redirect()->route('index');
+        }
+
+    }
+    //FIN DE LAS OBSERVACIONES DE CONSTANCIA
+
     public function observacionJefatura(Request $request){
+        //echo dd($request);
         if(Auth::check() and ($this->isJefe() or @Auth::user()->hasRole('super-admin'))){
             $validator = Validator::make($request->all(),[
                 'observaciones_jefatura' => 'required|string|min:3',
