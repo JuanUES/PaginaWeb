@@ -57,6 +57,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('admin/licencias/rrhh/aceptar',[LicenciasJefeRRHHController::class,'aceptarRRHH'])->name('rrhh/aceptar');
     Route::post('admin/licencias/rrhh/observacion',[LicenciasJefeRRHHController::class,'observacionRRHH'])->name('rrhh/observacion');
+    Route::post('admin/licencias/rrhh/observacionConst',[LicenciasJefeRRHHController::class,'observacionRRHHconst'])->name('rrhh/observacionConst');
+
     /*END POST**/
 
 // Resportes

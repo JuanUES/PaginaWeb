@@ -317,7 +317,7 @@
                                 <div class="row">
                                     <div class="col text-center">
                                         @php
-                                            $todos_btn = $item->estado =='Guardado' || 
+                                            $todos_btn = $item->estado == 'Guardado' ||
                                             $item->estado == 'Observaciones de RRHH' || 
                                             $item->estado == 'Observaciones de Jefatura';
                                         @endphp
@@ -351,12 +351,13 @@
                                             </button>
                                             <button title="Cancelar" 
                                                 class="btn btn-outline-primary btn-sm border-left-0 btn-outline-danger rounded-right"
-                                                @if($todos_btn)
-                                                 onclick="cancelar(this)"
-                                                 value="{{$item->identificador}}"
-                                                @else
-                                                disabled
-                                                @endif>
+                                                @if($item->estado == 'Observaciones de RRHH' || 
+                                               $item->estado == 'Observaciones de Jefatura' || $item->estado =='Aceptado')
+                                               disabled
+                                               @else
+                                               onclick="cancelar(this)"
+                                                value="{{$item->permiso}}"
+                                               @endif>
                                                 <i class="fa fa-ban font-16 my-1"></i>
                                             </button>                                   
                                         </div>

@@ -162,7 +162,7 @@ class LicenciasJefeRRHHController extends Controller
             $seguimiento = new Permiso_seguimiento;
             $seguimiento -> permiso_id = $permiso->id;
             $seguimiento -> estado = true;
-            $seguimiento -> observaciones = $request->observaciones_jefatura;
+            $seguimiento -> observaciones = $request->observaciones_recursos_humanos;
             $seguimiento -> proceso = 'Observaciones de RRHH';
             $seguimiento -> save();
 
@@ -176,6 +176,39 @@ class LicenciasJefeRRHHController extends Controller
 
     }
 
+    //PARA LAS OBSERVACIONES DE RRHH
+    public function observacionRRHHconst(Request $request){
+        if(Auth::check() and ($this->isJefe() or @Auth::user()->hasRole('super-admin') or @Auth::user()->hasRole('Recurso-Humano'))){
+            $validator = Validator::make($request->all(),[
+                'observaciones_recursos_humanos_constancia' => 'required|string|min:3',
+            ]);         
+
+            if($validator->fails())
+            {            
+                return response()->json(['error'=>$validator->errors()->all()]);                
+            }
+
+            $permiso = Permiso::select('estado','id')->whereRaw('md5(id::text) = ?',[$request->_id])->first();
+            $permiso -> estado = 'Observaciones de RRHH';
+            DB::update('update permiso_seguimiento set estado = false where estado = ? and permiso_id=?', [true,$permiso->id]);
+            
+            $seguimiento = new Permiso_seguimiento;
+            $seguimiento -> permiso_id = $permiso->id;
+            $seguimiento -> estado = true;
+            $seguimiento -> observaciones = $request->observaciones_recursos_humanos_constancia;
+            $seguimiento -> proceso = 'Observaciones de RRHH';
+            $seguimiento -> save();
+
+            $permiso->save();
+            return $request->_id != null?
+            response()->json(['mensaje'=>'Observacion Registrada']):
+            response()->json(['error'=>'Error no se capturo id de permiso']);
+        }else {
+            return redirect()->route('index');
+        }
+
+    }
+    //FIN DE LAS OBSERVACIONES DE RRHH
     public function permiso($permiso){
         if(Auth::check() and !is_null($permiso) and ($this->isJefe() or @Auth::user()->hasRole('super-admin') or @Auth::user()->hasRole('Recurso-Humano') )){
             return Permiso::selectRaw('md5(permisos.id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,

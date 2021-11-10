@@ -347,13 +347,13 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="registroForm" action="{{ route('rrhh/observacion') }}" method="POST">
+                    <form id="registroFormC" action="{{ route('rrhh/observacionConst') }}" method="POST">
                         @csrf
 
                         <div class="modal-body">
-                            <input type="hidden" id="idPermisoC" name="_id" />
+                            <input type="text" id="idPermisoC" name="_id" />
                             <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
-                                role="alert" style="display:none" id="notificacion">
+                                role="alert" style="display:none" id="notificacionC">
                             </div>
                             <div class="row">
                                 <div class="col-xl-12">
@@ -437,7 +437,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                                <div class="col-xl-12">
                                 <div class="form-group">
                                     <label for="observacionesConst">Observaciones </label>
-                                    <textarea value=" " class="form-control summernote-config"  name="observaciones_recursos_humanos"
+                                    <textarea value=" " class="form-control summernote-config"  name="observaciones_recursos_humanos_constancia"
                                      rows="4"></textarea>
                                 </div>
 
@@ -448,7 +448,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban"
                                     aria-hidden="true"></i> Cerrar</button>
                             <button type="button" class="btn btn-primary" id='guardar_registro'
-                                onClick="submitForm('#registroForm','#notificacion')">
+                                onClick="submitForm('#registroFormC','#notificacionC')">
                                 <li class="fa fa-save"></li> Guardar
                             </button>
                         </div>
