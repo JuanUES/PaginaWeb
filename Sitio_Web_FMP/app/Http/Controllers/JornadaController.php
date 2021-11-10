@@ -67,12 +67,14 @@ class JornadaController extends Controller{
         }else{
             $periodo = null;
             if (!$user->hasRole('super-admin') && !$user->hasRole('Recurso-Humano')) { // si no es jefe filtramos la informacion dependiendo de si es jefe o empleado normal
-                $tipo = ($user->hasRole('Jefe-Administrativo')) ? 'Administrativo' : 'Académico';
+                $tipo = ($user->hasRole('Jefe-Administrativo') || $user->hasRole('Administrativo')) ? 'Administrativo' : 'Académico';
                 $periodo = Periodo::select('id')->where('estado', '!=', 'inactivo')->where('tipo', $tipo)->OrderBy('id', 'DESC')->first();
             }else{
                 $periodo = Periodo::select('id')->where('estado', '!=', 'inactivo')->OrderBy('id', 'DESC')->first();
             }
         }
+
+        //dd($periodo);
 
         $depto = (isset($request->depto) && strcmp($request->depto, 'all')!=0) ? $request->depto : false;
 
