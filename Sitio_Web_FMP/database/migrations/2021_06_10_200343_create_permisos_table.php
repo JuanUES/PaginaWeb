@@ -13,7 +13,7 @@ class CreatePermisosTable extends Migration
      */
     public function up()
     {
-        Schema::create('permisos', function (Blueprint $table) {
+        Illuminate\Support\Facades\Schema::create('permisos', function (Illuminate\Database\Schema\Blueprint $table) {
             $table->id();
             $table->bigInteger('empleado');
             $table->integer('tipo_permiso');
@@ -24,6 +24,7 @@ class CreatePermisosTable extends Migration
             $table->time('hora_inicio');
             $table->time('hora_finalizado');
             $table->longText('observaciones') -> nullable();
+            $table->string('estado') -> nullable();
             $table->integer('representantes') -> nullable();
             $table->bigInteger('jefatura') -> nullable();
             $table->bigInteger('gestor_rrhh') ->nullable();

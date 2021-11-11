@@ -19,7 +19,7 @@ mensuales = anuales = hrs_m = hrs_a = min_m = min_a = min_t_a = min_t_m = 0;
 
 
     function obtenerHora() {
-        if($('#tipo_permiso').val() ==='LC/GS' && $('#fecha_de_uso').val().trim() != ""){
+        if(($('#tipo_permiso').val() ==='LC/GS' || $('#tipo_permiso').val() ==='CITA MEDICA') && $('#fecha_de_uso').val().trim() != ""){
                 var permiso = $('#idPermiso').val().trim()==''?'nuevo':$('#idPermiso').val();
                 $.ajax({
                     type: "GET",
@@ -126,6 +126,7 @@ function enviar(boton){
 }
 function editar(boton) {
    if($(boton).val()!=null){
+       var estado = true;
         $.ajax({
             type: "GET",
             url: 'mislicencias/permiso/'+$(boton).val(),
@@ -137,23 +138,25 @@ function editar(boton) {
             success: function(json) {   
 
                 var json = JSON.parse(json);  
-
-                $('#idPermiso').val(json.permiso);                   
+                estado = json.estado;
+                $('#idPermiso').val(json.permiso);      
                 $('#justificacion').summernote("code",json.justificacion);
+                $('#justificacion').summernote(json.estado?'enable':'disable');
                 $('#observaciones').summernote("code",json.observaciones);
-                $('#tipo_representante').val(json.tipo_representante).trigger("change");
-                $('#tipo_permiso').val(json.tipo_permiso).trigger("change");
+                $('#observaciones').summernote(json.estado?'enable':'disable');
+                $('#tipo_representante').val(json.tipo_representante).prop("disabled", !json.estado).trigger("change");
+                $('#tipo_permiso').val(json.tipo_permiso).prop("disabled", !json.estado).trigger("change");
                 $('#fecha_de_presentacion').val(json.fecha_presentacion);
                 $('#fecha_de_uso').val(json.fecha_uso).change();                                   
                 $('#hora_inicio').val(json.hora_inicio);
                 $('#hora_final').val(json.hora_final);
-                console.log($('#fecha_de_uso').val());
+                json.estado ? enableform('registroForm'):disableform('registroForm');
+                json.estado ? $('#guardar_registro').prop('disabled', !json.estado).show():$('#guardar_registro').prop('disabled', !json.estado).hide();
                 $("#modalRegistro").modal();
             },
             complete: function(json) {
-                $(boton).prop('disabled', false).html(''
-                    +'<i class="fa fa-edit font-16 py-1" aria-hidden="true"></i>'
-                );
+                
+                $(boton).prop('disabled', false).html('<i class="fa '+(estado?'fa-edit':'fa-file-alt')+' font-16 py-1" aria-hidden="true"></i>');
             }
         });                
    }
@@ -193,9 +196,12 @@ if($(boton).val()!=null){
 };
 
 $('.modal').on('hidden.bs.modal',function(){
-    $(".alert").hide();
-    $("form").trigger("reset");
+    $(".alert").hide();$("form").trigger("reset");
     $(".select2").val(null).trigger("change");
     $(".select2").select2();
-    console.log($('#idPermiso').val(null));
+    $('#idPermiso').val(null);
+    enableform('registroForm');
+    $('#observaciones').summernote('enable');
+    $('#justificacion').summernote('enable');
+    $('.btn').prop('disabled', false).show();
 });

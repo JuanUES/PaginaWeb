@@ -23,13 +23,23 @@ class LicenciasJefeRRHHController extends Controller
     public function indexJefe(){
         if(Auth::check() and ($this->isJefe() or @Auth::user()->hasRole('super-admin'))){
 
-            $permisos = Permiso::selectRaw('md5(permisos.id::text) as permiso, tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,
-                observaciones,olvido,empleado.nombre,empleado.apellido')
+            $permisos = Permiso::selectRaw('
+                md5(permisos.id::text) as permiso, 
+                permiso.tipo_permiso, 
+                permiso.fecha_uso,
+                permiso.fecha_presentacion,
+                permiso.hora_inicio,
+                permiso.hora_final,
+                permiso.justificacion,
+                permiso.observaciones,
+                permiso.olvido,
+                empleado.nombre,
+                empleado.apellido')
                 ->join('empleado','empleado.id','=','permisos.empleado')
-                ->where([
-                    ['jefatura',auth()->user()->empleado],
-                    ['permisos.estado','=','Enviado a Jefatura']]
-                )->orWhere([
+                ->where('jefatura',auth()->user()->empleado)
+                ->orWhere([
+                    ['permisos.estado','=','Aceptado'],['permisos.estado','=','Enviado a Jefatura']])
+                ->orWhere([
                     ['tipo_permiso','=','LC/GS'],
                     ['tipo_permiso','=','LS/GS'],
                     ['tipo_permiso','=','T COMP'],
@@ -37,7 +47,7 @@ class LicenciasJefeRRHHController extends Controller
                     ['tipo_permiso','=','L OFICIAL'],
                     ['tipo_permiso','=','CITA MEDICA']]
                 )->get();
-                //echo dd($permisos);
+                
             return view('Licencias.LicenciaJefe',compact('permisos'));
         }else {
             return redirect()->route('index');
@@ -147,7 +157,6 @@ class LicenciasJefeRRHHController extends Controller
     //FIN DE LAS OBSERVACIONES DE CONSTANCIA
 
     public function observacionJefatura(Request $request){
-        //echo dd($request);
         if(Auth::check() and ($this->isJefe() or @Auth::user()->hasRole('super-admin'))){
             $validator = Validator::make($request->all(),[
                 'observaciones_jefatura' => 'required|string|min:3',

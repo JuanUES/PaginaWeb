@@ -34,8 +34,12 @@ class LicenciasController extends Controller
                 fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,estado')
                 ->where([['empleado','=',auth()->user()->empleado],['estado','!=','CANCELADO']])
                 ->orWhere([
-                    ['tipo_permiso','=','LC/GS'],['tipo_permiso','=','LS/GS'],['tipo_permiso','=','T COMP'],
-                    ['tipo_permiso','=','INCAP'],['tipo_permiso','=','L OFICIAL'],['tipo_permiso','=','CITA MEDICA']])
+                    ['tipo_permiso','=','LC/GS'],
+                    ['tipo_permiso','=','LS/GS'],
+                    ['tipo_permiso','=','T COMP'],
+                    ['tipo_permiso','=','INCAP'],
+                    ['tipo_permiso','=','L OFICIAL'],
+                    ['tipo_permiso','=','CITA MEDICA']])
                 ->orderBy('fecha_presentacion')->get();     
             return view('Licencias.LicenciaEmpleado',compact('empleado','permisos'));
         }
@@ -102,7 +106,7 @@ class LicenciasController extends Controller
                 }                
             }
             
-            if($request->tipo_de_permiso === 'LC/G0S')
+            if($request->tipo_de_permiso === 'LC/GS'|| $request->tipo_de_permiso === 'CITA MEDICA')
             {
                 $horas_m = json_decode($this->horas_disponibles($request->fecha_de_uso,'mensual',null));
                 $horas_a = json_decode($this->horas_disponibles($request->fecha_de_uso,'anual',null));
@@ -152,9 +156,8 @@ class LicenciasController extends Controller
             $query = Permiso::join ('empleado','empleado.id','=','permisos.empleado')
             ->join ('tipo_jornada','tipo_jornada.id','=','empleado.id_tipo_jornada')
             ->join ('licencia_con_goses','licencia_con_goses.id_tipo_jornada','=','tipo_jornada.id')
-            ->where ([
-                ['empleado.id','=',auth()->user()->empleado],
-                ['permisos.tipo_permiso','=','LC/GS']]);
+            ->where ('empleado.id','=',auth()->user()->empleado)
+            ->orWhere([['permisos.tipo_permiso','=','CITA MEDICA'],['permisos.tipo_permiso','=','LC/GS']]);
             
             if ($permiso != 'nuevo') {
                 # code...
@@ -218,7 +221,8 @@ class LicenciasController extends Controller
         if(Auth::check() and !is_null($permiso)){
             return Permiso::selectRaw('md5(id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
                     fecha_presentacion,to_char(hora_inicio,\'HH24:MI\') as hora_inicio
-                    ,to_char(hora_final,\'HH24:MI\') as hora_final,justificacion,observaciones,estado')
+                    ,to_char(hora_final,\'HH24:MI\') as hora_final,justificacion,observaciones,
+                    estado = \'Observaciones de Jefatura\' or estado = \'Observaciones de RRHH\' or estado = \'Guardado\'  as estado')
             ->whereRaw('empleado = ? and md5(permisos.id::text) = ?',[auth()->user()->empleado, $permiso])
             ->first()->toJSON();
         }else {

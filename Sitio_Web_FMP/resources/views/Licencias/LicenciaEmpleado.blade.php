@@ -404,10 +404,8 @@
                             <td class="align-middle ">
                                 <div class="row">
                                     <div class="col text-center">
-                                        @php
-                                            $todos_btn = $item->estado =='Guardado' || 
-                                            $item->estado == 'Observaciones de RRHH' || 
-                                            $item->estado == 'Observaciones de Jefatura';
+                                        @php 
+                                        $todos_btn = $item->estado =='Guardado' || $item->estado == 'Observaciones de RRHH' || $item->estado == 'Observaciones de Jefatura';
                                         @endphp
                                         <div class="btn-group" role="group">
                                             <button title="Observaciones" class="btn btn-outline-primary btn-sm rounded-left" 
@@ -429,17 +427,17 @@
                                             </button>
                                             <button title="Editar" 
                                             class="btn btn-outline-primary btn-sm border-letf-0"  
-                                            @if($todos_btn)
+                                            @if($todos_btn || $item->estado == 'Enviado a RRHH' || $item->estado == 'Enviado a Jefatura')
                                                  value="{{$item->permiso}}"
                                                 onclick="editar(this)"
                                                 @else
                                                 disabled
                                                 @endif>
-                                                <i class="fa fa-edit font-16 my-1" aria-hidden="true"></i>
+                                                <i class="fa @if($item->estado == 'Observaciones de Jefatura' || $item->estado == 'Observaciones de RRHH' || $item->estado == 'Guardado') fa-edit @else fa-file-alt @endif font-16 my-1" aria-hidden="true"></i>
                                             </button>
                                             <button title="Cancelar" 
                                                 class="btn btn-outline-primary btn-sm border-left-0 btn-outline-danger rounded-right"
-                                                @if($todos_btn)
+                                                @if($todos_btn && $item->estado != 'Observaciones de RRHH' && $item->estado != 'Observaciones de Jefatura')
                                                  onclick="cancelar(this)"
                                                  value="{{$item->permiso}}"
                                                 @else

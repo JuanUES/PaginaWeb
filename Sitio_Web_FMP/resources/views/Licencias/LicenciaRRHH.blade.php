@@ -628,7 +628,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                 <label> A continuación se detallan las posibles causas: </label>
                 <ul>
                     <li>El Usuario no se encuentra vinculado con ningun <strong>Empleado</strong> registrado en el sistema.</li>
-                    <li>El Usuario no es <strong>Jefe</strong>.</li>
+                    <li>El Usuario no es <strong>Gestor de recursos humanos</strong>.</li>
                 </ul>
             </div>
         </div>

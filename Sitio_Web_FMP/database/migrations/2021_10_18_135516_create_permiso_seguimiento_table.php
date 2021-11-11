@@ -31,6 +31,6 @@ class CreatePermisoSeguimientoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permiso_seguimiento');
+        Illuminate\Support\Facades\Schema::dropIfExists('permiso_seguimiento');
     }
 }

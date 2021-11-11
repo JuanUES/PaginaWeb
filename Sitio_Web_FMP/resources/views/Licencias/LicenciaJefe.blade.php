@@ -700,7 +700,7 @@
 
 
         function obtenerHora() {
-            if ($('#tipo_permiso').val() === 'LC/GS' && $('#fecha_de_uso').val().trim() != "") {
+            if (($('#tipo_permiso').val() ==='LC/GS' || $('#tipo_permiso').val() ==='CITA MEDICA') && $('#fecha_de_uso').val().trim() != "") {
                 var permiso = $('#idPermiso').val().trim() == '' ? 'nuevo' : $('#idPermiso').val();
                 $.ajax({
                     type: "GET",
@@ -911,6 +911,8 @@
                         $('#fecha_de_uso').val(json.fecha_uso).change();
                         $('#hora_inicio').val(json.hora_inicio);
                         $('#hora_final').val(json.hora_final);
+                        json.estado ? enableform('registroForm'):disableform('registroForm');
+                        json.estado ? $('#guardar_registro').prop('disabled', !json.estado).show():$('#guardar_registro').prop('disabled', !json.estado).hide();
                         $('#modalRegistro').modal();
                     },
                     complete: function(json) {
