@@ -54,7 +54,7 @@
                                 data-mask="00000000-0">
                         </div>
                         <div class="form-group">
-                            <label for="nitE">NIT <code>*</code></label>
+                            <label for="nitE">NIT</label>
                             <input type="text" class="form-control" name="nit" id="nitE" data-mask="0000-000000-000-0" 
                             placeholder="0000-000000-000-0">
                         </div>
