@@ -32,15 +32,16 @@ class LicenciasController extends Controller
             $empleado = Empleado::findOrFail(auth()->user()->empleado);  
             $permisos = Permiso::selectRaw('md5(id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
                 fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,estado')
-                ->where([['empleado','=',auth()->user()->empleado],['estado','!=','CANCELADO']])
+                ->where([
+                    ['empleado','=',auth()->user()->empleado],
+                    ['estado','not like','CANCELADO']])
                 ->orWhere([
-                    ['tipo_permiso','=','LC/GS'],
-                    ['tipo_permiso','=','LS/GS'],
-                    ['tipo_permiso','=','T COMP'],
-                    ['tipo_permiso','=','INCAP'],
-                    ['tipo_permiso','=','L OFICIAL'],
-                    ['tipo_permiso','=','CITA MEDICA']])
-                ->where('olvido',null)
+                    ['tipo_permiso','like','LC/GS'],
+                    ['tipo_permiso','like','LS/GS'],
+                    ['tipo_permiso','like','T COMP'],
+                    ['tipo_permiso','like','INCAP'],
+                    ['tipo_permiso','like','L OFICIAL'],
+                    ['tipo_permiso','like','CITA MEDICA']])
                 ->orderBy('fecha_presentacion')->get();     
             return view('Licencias.LicenciaEmpleado',compact('empleado','permisos'));
         }
@@ -49,11 +50,17 @@ class LicenciasController extends Controller
     public function getPermisos(){
         return $permisos = Permiso::selectRaw('md5(id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
         fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,estado')
-        ->where([['empleado','=',auth()->user()->empleado],['estado','!=','CANCELADO']])
+        ->where([
+            ['empleado','=',auth()->user()->empleado],
+            ['estado','not like','CANCELADO']])
         ->orWhere([
-            ['tipo_permiso','=','LC/GS'],['tipo_permiso','=','LS/GS'],['tipo_permiso','=','T COMP'],
-            ['tipo_permiso','=','INCAP'],['tipo_permiso','=','L OFICIAL'],['tipo_permiso','=','CITA MEDICA']])
-        ->where('olvido',null)->orderBy('fecha_presentacion')->get()->toJson();
+            ['tipo_permiso','like','LC/GS'],
+            ['tipo_permiso','like','LS/GS'],
+            ['tipo_permiso','like','T COMP'],
+            ['tipo_permiso','like','INCAP'],
+            ['tipo_permiso','like','L OFICIAL'],
+            ['tipo_permiso','like','CITA MEDICA']])
+        ->orderBy('fecha_presentacion')->get()->toJson();
     }
 
     //CODIGO PARA INSERTAR, MODIFICAR
@@ -158,8 +165,9 @@ class LicenciasController extends Controller
             ->join ('tipo_jornada','tipo_jornada.id','=','empleado.id_tipo_jornada')
             ->join ('licencia_con_goses','licencia_con_goses.id_tipo_jornada','=','tipo_jornada.id')
             ->where ('empleado.id','=',auth()->user()->empleado)
-            ->orWhere([['permisos.tipo_permiso','=','CITA MEDICA'],['permisos.tipo_permiso','=','LC/GS']])
-            ->where('olvido',null);
+            ->orWhere([
+                ['permisos.tipo_permiso','like','CITA MEDICA'],
+                ['permisos.tipo_permiso','like','LC/GS']]);
             
             if ($permiso != 'nuevo') {
                 # code...
