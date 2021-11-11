@@ -32,17 +32,18 @@ class LicenciasController extends Controller
             $empleado = Empleado::findOrFail(auth()->user()->empleado);  
             $permisos = Permiso::selectRaw('md5(id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
                 fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,estado')
-                ->where([
-                    ['empleado','=',auth()->user()->empleado],
-                    ['estado','not like','CANCELADO']])
-                ->orWhere([
-                    ['tipo_permiso','like','LC/GS'],
-                    ['tipo_permiso','like','LS/GS'],
-                    ['tipo_permiso','like','T COMP'],
-                    ['tipo_permiso','like','INCAP'],
-                    ['tipo_permiso','like','L OFICIAL'],
-                    ['tipo_permiso','like','CITA MEDICA']])
-                ->orderBy('fecha_presentacion')->get();     
+                ->Where( function($query){
+                        $query->Where('tipo_permiso','like','LC/GS')
+                            ->orWhere('tipo_permiso','like','LS/GS')
+                            ->orWhere('tipo_permiso','like','T COMP')
+                            ->orWhere('tipo_permiso','like','INCAP')
+                            ->orWhere('tipo_permiso','like','L OFICIAL')
+                            ->orWhere('tipo_permiso','like','CITA MEDICA');
+                        }
+                )->where( function($query){
+                    $query->Where('empleado','=',auth()->user()->empleado)
+                          ->Where('estado','not like','CANCELADO');
+                })->orderBy('fecha_presentacion')->get();  
             return view('Licencias.LicenciaEmpleado',compact('empleado','permisos'));
         }
     }
