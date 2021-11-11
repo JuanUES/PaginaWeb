@@ -41,7 +41,6 @@ class EmpleadoController extends Controller
             'nombre' => 'required|max:25',
             'apellido' => 'required|max:20',
             'dui' => 'required|max:10',
-            'nit' => 'required|max:40',
             'foto' => 'image|mimes:jpeg,jpg,png|max:3000',
             'telefono' => 'max:9',
             'categoria' => 'required',
