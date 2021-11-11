@@ -40,6 +40,7 @@ class LicenciasController extends Controller
                     ['tipo_permiso','=','INCAP'],
                     ['tipo_permiso','=','L OFICIAL'],
                     ['tipo_permiso','=','CITA MEDICA']])
+                ->where('olvido',null)
                 ->orderBy('fecha_presentacion')->get();     
             return view('Licencias.LicenciaEmpleado',compact('empleado','permisos'));
         }
@@ -52,7 +53,7 @@ class LicenciasController extends Controller
         ->orWhere([
             ['tipo_permiso','=','LC/GS'],['tipo_permiso','=','LS/GS'],['tipo_permiso','=','T COMP'],
             ['tipo_permiso','=','INCAP'],['tipo_permiso','=','L OFICIAL'],['tipo_permiso','=','CITA MEDICA']])
-        ->orderBy('fecha_presentacion')->get()->toJson();
+        ->where('olvido',null)->orderBy('fecha_presentacion')->get()->toJson();
     }
 
     //CODIGO PARA INSERTAR, MODIFICAR
@@ -157,7 +158,8 @@ class LicenciasController extends Controller
             ->join ('tipo_jornada','tipo_jornada.id','=','empleado.id_tipo_jornada')
             ->join ('licencia_con_goses','licencia_con_goses.id_tipo_jornada','=','tipo_jornada.id')
             ->where ('empleado.id','=',auth()->user()->empleado)
-            ->orWhere([['permisos.tipo_permiso','=','CITA MEDICA'],['permisos.tipo_permiso','=','LC/GS']]);
+            ->orWhere([['permisos.tipo_permiso','=','CITA MEDICA'],['permisos.tipo_permiso','=','LC/GS']])
+            ->where('olvido',null);
             
             if ($permiso != 'nuevo') {
                 # code...
