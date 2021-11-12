@@ -3,6 +3,7 @@
 //use App\Http\Controllers\EmpleadoController;
 
 use App\Http\Controllers\Licencias\ConstanciaOlvidoController;
+use App\Http\Controllers\Licencias\ConstReporteController;
 use App\Http\Controllers\Licencias\LicenciasAcuerdoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Licencias\LicenciasController;
@@ -22,6 +23,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('admin/ConstanciaOlvido/table',[ConstanciaOlvidoController::class,'Table']);
     Route::get('admin/ConstanciaOlvido/Modal/{id}',[ConstanciaOlvidoController::class,'Modal']);
     Route::get('admin/ConstanciaOlvido/EntradaSalida/{fecha}',[ConstanciaOlvidoController::class,'SalidaEntrada']);
+
+    Route::get('admin/ConstanciaOlvido/Reporte',[ConstReporteController::class,'index'])->name('index/reporteConst');
+    Route::get('admin/ConstanciaOlvido/Report',[ConstReporteController::class,'downloadPDF'])->name('constR');
+
     Route::get('admin/mislicencias/horas-anual/{fecha}/{permiso}', [LicenciasController::class,'horas_anual']);
     Route::get('admin/mislicencias/horas-mensual/{fecha}/{permiso}', [LicenciasController::class,'horas_mensual']);
     Route::get('admin/mislicencias/permisos', [LicenciasController::class,'getPermisos']);
