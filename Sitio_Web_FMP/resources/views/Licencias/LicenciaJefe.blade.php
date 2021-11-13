@@ -4,7 +4,7 @@
     @if (!is_null(auth()->user()->empleado) and
         \Illuminate\Support\Facades\DB::table('permisos')->where('jefatura', auth()->user()->empleado)->exists())
 
-        <!--modal para dar alta-->
+        <!--modal paraaceptar -->
         <div id="modalAceptar" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog"
             aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
             <div class="modal-dialog modal-dialog-centered">
@@ -446,7 +446,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row" id='observacionJF'>
                                 <div class="col-xl-12">
                                     <div class="form-group">
                                         <label for="observaciones">Observaciones Jefatura <code>*</code></label>
@@ -459,7 +459,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban"
                                     aria-hidden="true"></i> Cerrar</button>
-                            <button type="button" class="btn btn-primary" id='guardar_registro'
+                            <button type="button" class="btn btn-primary" id='guardar_registro_lic'
                                 onClick="submitForm('#registroForm','#notificacion')">
                                 <li class="fa fa-save"></li> Guardar
                             </button>
@@ -591,7 +591,7 @@
                                         <td class="align-middle ">{{ date('H:i', strtotime($item->hora_inicio)) }}</td>
                                         <td class="align-middle ">{{ date('H:i', strtotime($item->hora_final)) }}</td>
                                         <td class="align-middle ">
-                                            {{                                             Carbon\Carbon::parse($item->fecha_uso . 'T' . $item->hora_inicio)->diffAsCarbonInterval(Carbon\Carbon::parse($item->fecha_uso . 'T' . $item->hora_final)) }}
+                                            {{Carbon\Carbon::parse($item->fecha_uso . 'T' . $item->hora_inicio)->diffAsCarbonInterval(Carbon\Carbon::parse($item->fecha_uso . 'T' . $item->hora_final)) }}
                                         </td>
                                         <td class="align-middle ">
                                             <div class="row">
@@ -864,12 +864,13 @@
                     success: function(json) {
 
                         var json = JSON.parse(json);
-                        console.log(json);
                         $('#idPermisoC').val(json.permiso);
                         $('#nombreC').val(json.nombre);
                         $('#apellidoC').val(json.apellido);
                         $('#justificacionConst').summernote("code", json.justificacion);
-                     
+                        $('#observacionJF').prop('disabled', !json.jf);
+                        $('#guardar_registrar').prop('disabled', !json.jf);
+                        json.jf?$('#guardar_registrar').show():$('#guardar_registrar').hide();
                         $('#marcaje').val(json.olvido).trigger("change");
                         $('#fecha').val(json.fecha_uso).change();
                         $('#hora').val(json.hora_inicio);
@@ -911,8 +912,9 @@
                         $('#fecha_de_uso').val(json.fecha_uso).change();
                         $('#hora_inicio').val(json.hora_inicio);
                         $('#hora_final').val(json.hora_final);
-                        json.estado ? enableform('registroForm'):disableform('registroForm');
-                        json.estado ? $('#guardar_registro').prop('disabled', !json.estado).show():$('#guardar_registro').prop('disabled', !json.estado).hide();
+                        json.jf ? $('#guardar_registro_lic').show():$('#guardar_registro_lic').hide();
+                        json.jf ? $('#guardar_registro_lic').prop('disabled', !json.jf).show()
+                        :$('guardar_registro_lic').prop('disabled', !json.jf).hide();
                         $('#modalRegistro').modal();
                     },
                     complete: function(json) {

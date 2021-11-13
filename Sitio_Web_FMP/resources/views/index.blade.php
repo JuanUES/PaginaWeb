@@ -414,8 +414,7 @@
                                                     <td>
                                                         <div class="row">
                                                             <!--IMAGEN-->
-                                                            <div
-                                                                class="col-md-3 col-sm-12 order-md-first d-none d-md-lg d-md-block d-md-block">
+                                                            <div class="col-md-3 col-sm-12 order-md-first d-none d-md-lg d-md-block d-md-block">
                                                                 <img class=" mt-1 rounded img-responsive bx-shadow-lg "
                                                                     src="images/noticias/{{ $n->imagen }}"
                                                                     alt="Generic placeholder image" height="115"

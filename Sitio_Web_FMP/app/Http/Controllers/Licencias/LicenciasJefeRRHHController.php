@@ -21,32 +21,27 @@ class LicenciasJefeRRHHController extends Controller
     }
 
     public function indexJefe(){
-        if(Auth::check() and ($this->isJefe() or @Auth::user()->hasRole('super-admin'))){
+        if(Auth::check() && ($this->isJefe() || @Auth::user()->hasRole('super-admin'))){
 
             $permisos = Permiso::selectRaw('
-                md5(permisos.id::text) as permiso, 
-                permiso.tipo_permiso, 
-                permiso.fecha_uso,
-                permiso.fecha_presentacion,
-                permiso.hora_inicio,
-                permiso.hora_final,
-                permiso.justificacion,
-                permiso.observaciones,
-                permiso.olvido,
-                empleado.nombre,
-                empleado.apellido')
+                    md5(permisos.id::text) as permiso, 
+                    permisos.tipo_permiso, 
+                    permisos.fecha_uso,
+                    permisos.fecha_presentacion,
+                    permisos.hora_inicio,
+                    permisos.hora_final,
+                    permisos.justificacion,
+                    permisos.observaciones,
+                    empleado.nombre,
+                    empleado.apellido')
                 ->join('empleado','empleado.id','=','permisos.empleado')
                 ->where('jefatura',auth()->user()->empleado)
-                ->orWhere([
-                    ['permisos.estado','=','Aceptado'],['permisos.estado','=','Enviado a Jefatura']])
-                ->orWhere([
-                    ['tipo_permiso','=','LC/GS'],
-                    ['tipo_permiso','=','LS/GS'],
-                    ['tipo_permiso','=','T COMP'],
-                    ['tipo_permiso','=','INCAP'],
-                    ['tipo_permiso','=','L OFICIAL'],
-                    ['tipo_permiso','=','CITA MEDICA']]
-                )->get();
+                ->where(
+                    function($query){
+                        $query->where('permisos.estado','like','Aceptado')
+                        ->orWhere('permisos.estado','like','Enviado a Jefatura')
+                        ->orWhere('permisos.estado','like','Enviado a RRHH');
+                })->where('olvido',null)->get();
                 
             return view('Licencias.LicenciaJefe',compact('permisos'));
         }else {
@@ -56,18 +51,12 @@ class LicenciasJefeRRHHController extends Controller
 
     public function indexRRHH(){
         if(Auth::check() and (@Auth::user()->hasRole('Recurso-Humano') or @Auth::user()->hasRole('super-admin'))){
-            $permisos = Permiso::selectRaw('md5(permisos.id::text) as permiso, tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,
+            $permisos = Permiso::selectRaw('md5(permisos.id::text) as permiso, 
+                tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,
                 observaciones,olvido,empleado.nombre,empleado.apellido')
                 ->join('empleado','empleado.id','=','permisos.empleado')
-                ->where([
-                    ['permisos.estado','=','Enviado a RRHH']]
-                )->orWhere([
-                    ['tipo_permiso','=','LC/GS'],
-                    ['tipo_permiso','=','LS/GS'],
-                    ['tipo_permiso','=','T COMP'],
-                    ['tipo_permiso','=','INCAP'],
-                    ['tipo_permiso','=','L OFICIAL'],
-                    ['tipo_permiso','=','CITA MEDICA']]
+                ->where(function($query)
+                    {$query->where('permisos.estado','like','Enviado a RRHH')->orWhere('permisos.estado','like','Aceptado');}
                 )->get();
             return view('Licencias.LicenciaRRHH',compact('permisos'));
         }else {
@@ -256,9 +245,17 @@ class LicenciasJefeRRHHController extends Controller
     public function permiso($permiso){
         if(Auth::check() and !is_null($permiso) and ($this->isJefe() or @Auth::user()->hasRole('super-admin') or @Auth::user()->hasRole('Recurso-Humano') )){
             return Permiso::selectRaw('md5(permisos.id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
-                    fecha_presentacion,olvido,to_char(hora_inicio,\'HH24:MI\') as hora_inicio
-                    ,to_char(hora_final,\'HH24:MI\') as hora_final,justificacion,observaciones,permisos.estado,nombre,apellido')
-            ->join('empleado','empleado.id','=','permisos.empleado')
+                    fecha_presentacion,
+                    olvido,
+                    to_char(hora_inicio,\'HH24:MI\') as hora_inicio,
+                    to_char(hora_final,\'HH24:MI\') as hora_final,
+                    justificacion,
+                    observaciones,
+                    permisos.estado like \'Enviado a Jefatura\' as jf,
+                    permisos.estado like \'Enviado a RRHH\' as rrhh,
+                    nombre,
+                    apellido'
+            )->join('empleado','empleado.id','=','permisos.empleado')
             ->whereRaw('md5(permisos.id::text) = ?',[$permiso])
             ->first()->toJSON();  
         }else {

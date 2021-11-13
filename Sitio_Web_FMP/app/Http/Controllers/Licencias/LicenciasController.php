@@ -12,6 +12,8 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Arr;
+use Carbon\Carbon;
 
 class LicenciasController extends Controller
 {
@@ -34,34 +36,86 @@ class LicenciasController extends Controller
                 fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,estado')
                 ->Where( function($query){
                         $query->Where('tipo_permiso','like','LC/GS')
-                            ->orWhere('tipo_permiso','like','LS/GS')
-                            ->orWhere('tipo_permiso','like','T COMP')
-                            ->orWhere('tipo_permiso','like','INCAP')
-                            ->orWhere('tipo_permiso','like','L OFICIAL')
-                            ->orWhere('tipo_permiso','like','CITA MEDICA');
-                        }
+                        ->orWhere('tipo_permiso','like','LS/GS')
+                        ->orWhere('tipo_permiso','like','T COMP')
+                        ->orWhere('tipo_permiso','like','INCAP')
+                        ->orWhere('tipo_permiso','like','L OFICIAL')
+                        ->orWhere('tipo_permiso','like','CITA MEDICA');
+                    }
                 )->where( function($query){
                     $query->Where('empleado','=',auth()->user()->empleado)
-                          ->Where('estado','not like','CANCELADO');
+                        ->Where('estado','not like','CANCELADO');
                 })->orderBy('fecha_presentacion')->get();  
             return view('Licencias.LicenciaEmpleado',compact('empleado','permisos'));
         }
     }
 
     public function getPermisos(){
-        return $permisos = Permiso::selectRaw('md5(id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
-        fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,estado')
-        ->where([
-            ['empleado','=',auth()->user()->empleado],
-            ['estado','not like','CANCELADO']])
-        ->orWhere([
-            ['tipo_permiso','like','LC/GS'],
-            ['tipo_permiso','like','LS/GS'],
-            ['tipo_permiso','like','T COMP'],
-            ['tipo_permiso','like','INCAP'],
-            ['tipo_permiso','like','L OFICIAL'],
-            ['tipo_permiso','like','CITA MEDICA']])
-        ->orderBy('fecha_presentacion')->get()->toJson();
+        $permisos = Permiso::selectRaw('md5(id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
+                fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,estado')
+        ->Where( function($query){
+                $query->Where('tipo_permiso','like','LC/GS')
+                ->orWhere('tipo_permiso','like','LS/GS')
+                ->orWhere('tipo_permiso','like','T COMP')
+                ->orWhere('tipo_permiso','like','INCAP')
+                ->orWhere('tipo_permiso','like','L OFICIAL')
+                ->orWhere('tipo_permiso','like','CITA MEDICA');
+            }
+        )->where('empleado','=',auth()->user()->empleado)->orderBy('fecha_presentacion')->get();
+        
+        foreach ($permisos as $item) {
+            # code...
+            $estado = null;
+            if($item->estado =='Guardado' ) 
+                $estado = '<span class="badge badge-primary font-13">'.$item->estado.'</span>';
+            
+            if($item->estado =='Cancelado' or $item->estado =='Observaciones de RRHH' or $item->estado =='Observaciones de Jefatura') 
+                $estado = '<span class="badge badge-danger font-13">'.$item->estado.'</span>';
+            
+            if ($item->estado =='Enviado a Jefatura' or $item->estado =='Enviado a RRHH' or $item->estado =='Aceptado')
+                $estado = ' <span class="badge badge-success font-13">'.$item->estado.'</span>';
+            
+            $todos_btn = $item->estado =='Guardado' || $item->estado == 'Observaciones de RRHH' || $item->estado == 'Observaciones de Jefatura';
+            
+            $acciones = '<div class="row">
+                <div class="col text-center">
+                    <div class="btn-group" role="group">
+                        <button title="Observaciones" class="btn btn-outline-primary btn-sm rounded-left" 
+                        '.(($item->estado =='CANCELADO')?' disabled':' value="'.$item->permiso.'" onclick="observaciones(this)"')
+                        .'><i class="fa fa-eye font-16 my-1" aria-hidden="true"></i>
+                        </button>
+                        <button title="Enviar" class="btn btn-outline-primary btn-sm"'.
+                        (($todos_btn)?' value="'.$item->permiso.'"
+                            onclick="enviar(this)"': 'disabled').'>                                                
+                            <i class="fa fa-arrow-circle-up font-16 my-1" aria-hidden="true"></i>
+                        </button>
+                        <button title="Editar" class="btn btn-outline-primary btn-sm border-letf-0"'.
+                        (($todos_btn || $item->estado == 'Enviado a RRHH' || $item->estado == 'Enviado a Jefatura')?'
+                            value="'.$item->permiso.'" onclick="editar(this)"':'disabled').'>
+                    
+                            <i class="fa '.(($item->estado == 'Observaciones de Jefatura' || $item->estado == 'Observaciones de RRHH' || $item->estado == 'Guardado')?' fa-edit ':' fa-file-alt ').' font-16 my-1" aria-hidden="true"></i>
+                        </button>
+                        <button title="Cancelar" class="btn btn-outline-primary btn-sm border-left-0 btn-outline-danger rounded-right"
+                            '.(($todos_btn && $item->estado != 'Observaciones de RRHH' && $item->estado != 'Observaciones de Jefatura')?
+                            ' onclick="cancelar(this)" value="'.$item->permiso.'"':' disabled').'>
+                            <i class="fa fa-ban font-16 my-1"></i>
+                        </button>                                   
+                    </div>
+                </div>
+            </div>';
+            $data[] = array(
+                "row0" => Carbon::parse($item->fecha_presentacion)->format('d/m/Y'),
+                "row1" => Carbon::parse($item->fecha_uso)->format('d/m/Y'),
+                "row2" => '<span class="badge badge-primary font-13">'.$item->tipo_permiso.'</span>',
+                "row3" => date('H:i', strtotime($item->hora_inicio)),
+                "row4" => date('H:i', strtotime($item->hora_final)),
+                "row5" => '<p class="text-break"> '.Carbon::parse($item->fecha_uso.'T'.$item->hora_inicio)->diffAsCarbonInterval(Carbon::parse($item->fecha_uso.'T'.$item->hora_final)).'</p>',
+                "row6" => $estado,
+                "row7" => $acciones
+            );
+        }
+
+        return isset($data)?response()->json($data,200,[]):response()->json([],200,[]);
     }
 
     //CODIGO PARA INSERTAR, MODIFICAR
@@ -107,7 +161,7 @@ class LicenciasController extends Controller
                     return response()->json(['error'=>['El campo fecha de uso: No puede registrar una licencia Domingo']]);
                 }else*/if(!$query->where('jornada_items.dia',$this->obtenerDia($request->fecha_de_uso))
                         ->exists()){               
-                    return response()->json(['error'=>['El campo fecha de uso: No tiene horarios para el dia.'.$this->obtenerDia($request->fecha_de_uso)]]);
+                    return response()->json(['error'=>['El campo fecha de uso: No tiene horarios para el dia '.$this->obtenerDia($request->fecha_de_uso)]]);
                 }else if(!$query->where([['hora_inicio','<=',$request->hora_inicio],['hora_fin','>=',$request->hora_inicio]])->exists()){
                     return response()->json(['error'=>['Campo hora inicio esta fuera del rango registrado en su horario.']]); 
                 }else if(!$query->where([['hora_inicio','<=',$request->hora_final],['hora_fin','>=',$request->hora_final]])->exists()){
@@ -247,9 +301,9 @@ class LicenciasController extends Controller
                 ->whereRaw('md5(id::text) = ?',[$request->_id])
                 ->first()
                 ->delete();
-            return redirect()->route('indexLic');
+            return response()->json(['mensaje'=>'Exito']);  
         }else {
-            return redirect()->route('index');
+            return response()->json(['error'=>'Error Session Invalida']);  ;
         }
     }
 
@@ -307,7 +361,7 @@ class LicenciasController extends Controller
             }
             return response()->json(['mensaje'=>'Envio exitoso']);                       
         }else {
-            return response()->json([500,'ERROR'=>['IDENTIFICADOR DESCONOCIDO','SESSION INVALIDA']]);
+            return response()->json([500,'error'=>['IDENTIFICADOR DESCONOCIDO -> '.$request->_id,'SESSION INVALIDA']]);
         }
     }
 

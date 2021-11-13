@@ -207,11 +207,11 @@
                     <i class="fa fa-ban mdi-24px" style="margin: 0px;"></i> Cancelar</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            <form action="{{ route('lic/cancelar') }}" method="POST" id="cancelarModal">
+            <form action="{{ route('lic/cancelar') }}" method="POST" id="cancelarForm">
                 @csrf
                 <div class="modal-body">
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
-                        role="alert" style="display:none" id="notificacion1">
+                        role="alert" style="display:none" id="notificacionCancelar">
                     </div>
                     <input type="hidden" name="_id" id="cancelar_id">
                     <div class="row py-3">
@@ -225,7 +225,7 @@
                     
                     <div class="row">
                         <div class="col-xl-6 p-1">
-                            <button  type="submit" 
+                            <button  type="submit" onClick="submitForm('#cancelarForm','#notificacionCancelar')"
                                 class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
                                 <i class="mdi mdi-check mdi-16px"></i>
                                 Si
@@ -253,21 +253,21 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="myCenterModalLabel">
-                    <i class="dripicons-information  mdi-24px" style="margin: 0px;"></i> Cancelar</h3>
+                    <i class="mdi dripicons-information  mdi-24px" style="margin: 0px;"></i> Aviso</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <form action="{{ route('lic/enviar') }}" method="POST" id="enviarForm">
                 @csrf
                 <div class="modal-body">
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
-                        role="alert" style="display:none" id="notificacion1">
+                        role="alert" style="display:none" id="notificacionEnviar">
                     </div>
                     <input type="hidden" name="_id" id="enviar_id">
                     <div class="row py-3 align-center">
                         <div class="col-xl-2 dripicons-information text-info fa-4x mr-1"></div>
                         <div class="col-xl-9 text-black"> 
                             <h4 class="font-17 text-justify font-weight-bold">
-                                Advertencia: Se enviara esta licencia,
+                                Aviso: Se enviara esta licencia,
                             </h4>
                             <h4 class="font-17 text-justify font-weight-bold">
                                 ¿Desea continuar?
@@ -277,7 +277,7 @@
                     
                     <div class="row">
                         <div class="col-xl-6 p-1">
-                            <button  type="button"  onClick="submitForm('#enviarForm','#notificacion1')"
+                            <button  type="button"  onClick="submitForm('#enviarForm','#notificacionEnviar')"
                                 class="btn p-1 btn-light waves-effect waves-light btn-block font-24">
                                 <i class="mdi mdi-check mdi-16px"></i>
                                 Si
@@ -341,7 +341,7 @@
 <!-- end page title -->
 
 <div class="row">
-    <div class="col-12">
+    <div class="col-xl-12">
         <div class="card-box">
             <div class="row py-2">
                 <div class="col order-first">
@@ -349,111 +349,31 @@
                         Mis Licencias
                     </h3>
                 </div>
-                <div class="col-lg-1 order-last">
-                    <!-- Button trigger modal -->
-                 <button type="button" title="Agregar Licencia"
-                    class="btn btn-primary dripicons-plus"
-                    data-toggle="modal" data-target="#modalRegistro"></button>
+                <div class="col-xl-2 text-right order-last">
+                    <div class="btn-group" role="group">
+                        <button type="button" title="Actualizar Tabla" class="btn btn-success mx-1 fa fa-sync-alt"
+                            id="ActualizarTabla"></button>
+                        <button type="button" title="Agregar Licencia" class="btn btn-primary dripicons-plus"
+                            data-toggle="modal" data-target="#modalRegistro"></button>
+                    </div>                   
                 </div>                
             </div>
-            <table  class="table" style="width: 100%" id='permisos-table'>
+            <table  id="misLicenciasTable" class="table" style="width: 100%">
                 <thead>
                 <tr>
                     <th class="col-sm-2">Presentación</th>
                     <th class="col-sm-2">Uso</th>
-                    <th class="col-sm-1">Tipo</th>
-                    <th class="col-xs-1">Hora Inicio</th>
-                    <th class="col-xs-1">Hora Final</th>
-                    <th class="col-xs-2">Horas</th>
-                    <th class="col-sm-1 text-center">Estado</th>
-                    <th class="col-sm-1 text-center">Acciones</th>
+                    <th class="col-xs-1">Tipo</th>
+                    <th>Hora Inicio</th>
+                    <th>Hora Final</th>
+                    <th class="col-sm-2">Horas</th>
+                    <th class="col-xs-1">Estado</th>
+                    <th class="col-xs-1 text-center">Acciones</th>
                 </tr>
-                </thead>
+                </thead>           
                 <tbody>
-                    
-                    @foreach ($permisos as $item)
-                        <tr>
-                            <th class="align-middle ">{{Carbon\Carbon::parse($item->fecha_presentacion)->format('d/M/Y')}}</th>
-                            <td class="align-middle ">{{Carbon\Carbon::parse($item->fecha_uso)->format('d/M/Y')}}</td>
-                            <td class="align-middle "><span class="badge badge-primary font-13">{{$item->tipo_permiso}}</span></td>
-                            <td class="align-middle ">{{date('H:i', strtotime($item->hora_inicio))}}</td>
-                            <td class="align-middle ">{{date('H:i', strtotime($item->hora_final))}}</td>
-                            <td class="align-middle ">
-                                {{
-                                    Carbon\Carbon::parse($item->fecha_uso.'T'.$item->hora_inicio)
-                                        ->diffAsCarbonInterval(Carbon\Carbon::parse($item->fecha_uso.'T'.$item->hora_final))
-                                }}
-                            </td>
-                            <td class="align-middle text-center">
-                                @if($item->estado =='Guardado') 
-                                    <span class="badge badge-primary font-13">{{$item->estado}}</span>
-                                @endif
-                                @if($item->estado =='Cancelado') 
-                                    <span class="badge badge-danger font-13">{{$item->estado}}</span>
-                                @endif
-                                @if ($item->estado =='Enviado a Jefatura' or $item->estado =='Enviado a RRHH')
-                                    <span class="badge badge-primary font-13">{{$item->estado}}</span>
-                                @endif
-                                @if ($item->estado =='Observaciones de RRHH' or $item->estado =='Observaciones de Jefatura')
-                                    <span class="badge badge-danger font-13">{{$item->estado}}</span>
-                                @endif
-                                @if ($item->estado =='Aceptado por Jefatura' or $item->estado =='Aceptado')
-                                    <span class="badge badge-success font-13">{{$item->estado}}</span>
-                                @endif                        
-                            </td>
-                            <td class="align-middle ">
-                                <div class="row">
-                                    <div class="col text-center">
-                                        @php 
-                                        $todos_btn = $item->estado =='Guardado' || $item->estado == 'Observaciones de RRHH' || $item->estado == 'Observaciones de Jefatura';
-                                        @endphp
-                                        <div class="btn-group" role="group">
-                                            <button title="Observaciones" class="btn btn-outline-primary btn-sm rounded-left" 
-                                            @if ($item->estado =='CANCELADO')
-                                                disabled
-                                            @else
-                                              value="{{$item->permiso}}" 
-                                              onclick="observaciones(this)"
-                                            @endif>
-                                                <i class="fa fa-eye font-16 my-1" aria-hidden="true"></i>
-                                            </button>
-                                            <button title="Enviar" class="btn btn-outline-primary btn-sm" 
-                                            @if($todos_btn)
-                                                value="{{$item->permiso}}"
-                                                 onclick="enviar(this)"
-                                                 @else disabled
-                                                 @endif>                                                
-                                                <i class="fa fa-arrow-circle-up font-16 my-1" aria-hidden="true"></i>
-                                            </button>
-                                            <button title="Editar" 
-                                            class="btn btn-outline-primary btn-sm border-letf-0"  
-                                            @if($todos_btn || $item->estado == 'Enviado a RRHH' || $item->estado == 'Enviado a Jefatura')
-                                                 value="{{$item->permiso}}"
-                                                onclick="editar(this)"
-                                                @else
-                                                disabled
-                                                @endif>
-                                                <i class="fa @if($item->estado == 'Observaciones de Jefatura' || $item->estado == 'Observaciones de RRHH' || $item->estado == 'Guardado') fa-edit @else fa-file-alt @endif font-16 my-1" aria-hidden="true"></i>
-                                            </button>
-                                            <button title="Cancelar" 
-                                                class="btn btn-outline-primary btn-sm border-left-0 btn-outline-danger rounded-right"
-                                                @if($todos_btn && $item->estado != 'Observaciones de RRHH' && $item->estado != 'Observaciones de Jefatura')
-                                                 onclick="cancelar(this)"
-                                                 value="{{$item->permiso}}"
-                                                @else
-                                                disabled
-                                                @endif>
-                                                <i class="fa fa-ban font-16 my-1"></i>
-                                            </button>                                   
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>  
-                        </tr>
-                    @endforeach                   
-                </tbody>
+                </tbody>     
             </table>
-
         </div> <!-- end card-box -->
     </div> <!-- end col -->
 </div>
@@ -476,21 +396,16 @@
 
 @section('plugins')
 <link href="{{ asset('template-admin/dist/assets/libs/select2/select2.min.css') }}" rel="stylesheet"/>
-<link href="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.css') }}" rel="stylesheet"/>
-<link href="{{ asset('template-admin/dist/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.css') }}" rel="stylesheet"/>
 <style>
 
 </style>
 @endsection
 
 @section('plugins-js')
-    <!-- Bootstrap Select -->
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
     <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
-    <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.js') }}" ></script>
-    <script src="{{ asset('js/scripts/data-table.js')}}"></script>
     <script src="{{ asset('js/summernote-bs4.min.js')}}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js')}}"></script>
-    <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-    <script src="{{ asset('js/scripts/lic-emp.js')}}"></script>
+    <script src="{{ asset('js/licencias/empleado.js')}}"></script>
+    <script src="{{ asset('js/licencias/http.js')}}"></script>
 @endsection
