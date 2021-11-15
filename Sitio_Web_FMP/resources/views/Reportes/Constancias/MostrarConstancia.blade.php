@@ -17,6 +17,52 @@
     </div>
 </div>
 <!-- end page title -->
+{{--PARA MOSTRAR LA ALERTA DE LAS FECHAS VACIAS --}}
+<div id="modalEnviar" class="modal fade bs-example-modal-center" tabindex="-1" role="dialog" 
+    aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myCenterModalLabel">
+                    <i class="mdi dripicons-information  mdi-24px" style="margin: 0px;"></i> Aviso</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <form action="" method="POST" id="enviarForm">
+                @csrf
+                <div class="modal-body">
+                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
+                        role="alert" style="display:none" id="notificacionEnviar">
+                    </div>
+                    <input type="hidden" name="_id" id="enviar_id">
+                    <div class="row py-3 align-center">
+                        <div class="col-xl-2 dripicons-information text-info fa-4x mr-1"></div>
+                        <div class="col-xl-9 text-black"> 
+                            <h4 class="font-17 text-justify font-weight-bold">
+                                Aviso: Fecha de inicio y fin son obligatorias,
+                            </h4>
+                            <h4 class="font-17 text-justify font-weight-bold">
+                                !Verificar información!
+                            </h4>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-xl-3 p-1"></div>
+                        <div class="col-xl-6 p-1">
+                            <button type="reset" 
+                                class="btn btn-light p-1 waves-light waves-effect btn-block font-24" 
+                                data-dismiss="modal" >
+                                <i class="mdi mdi-block-helper mdi-16px" aria-hidden="true"></i>
+                                Ok
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+{{--FIN DE MOSTRAR LA ALERTAS DE LAS FECHAS VACIAS--}}
 
 <div class="row">
     <div class="col-12">

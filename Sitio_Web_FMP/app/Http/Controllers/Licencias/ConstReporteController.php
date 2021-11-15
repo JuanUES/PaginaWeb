@@ -57,18 +57,30 @@ class ConstReporteController extends Controller
 
     }
     //PARA DIBUJAR LAS LA TABLA
-    public function mostrarTabla($fecha1,$fecha2){
+    public function mostrarTabla($fecha1,$fecha2,$dep){
+
+
         
-        $permisos = Empleado::selectRaw(' permisos.id, nombre, apellido, permisos.tipo_permiso,permisos.fecha_presentacion,
+        $permisoss = Empleado::selectRaw(' permisos.id, nombre, apellido, permisos.tipo_permiso,permisos.fecha_presentacion,
         permisos.hora_inicio,permisos.hora_final, permisos.justificacion, permisos.updated_at, departamentos.nombre_departamento')
         ->join('departamentos','departamentos.id','=','empleado.id_depto')
-        ->join('permisos','permisos.empleado','=','empleado.id')
-        ->where([
-            ['permisos.estado','=','Aceptado'],
-            ['permisos.fecha_presentacion','>=',$fecha1],
-            ['permisos.fecha_presentacion','<=',$fecha2]]
-        )->get();
+        ->join('permisos','permisos.empleado','=','empleado.id');
 
+        if($dep=='all'){
+            $permisos=$permisoss->where([
+                ['permisos.estado','=','Aceptado'],
+                ['permisos.fecha_presentacion','>=',$fecha1],
+                ['permisos.fecha_presentacion','<=',$fecha2]]
+            )->get();
+            
+        }else{
+           $permisos= $permisoss->where([
+                ['permisos.estado','=','Aceptado'],
+                ['permisos.fecha_presentacion','>=',$fecha1],
+                ['permisos.fecha_presentacion','<=',$fecha2],
+                ['departamentos.id','=',$dep]]
+            )->get();
+        }
        // echo dd($permisos);
         
         foreach ($permisos as $item) {

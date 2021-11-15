@@ -28,7 +28,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('admin/ConstanciaOlvido/Report',[ConstReporteController::class,'downloadPDF'])->name('constR');
     Route::get('admin/Constancia/Reporte',[ConstReporteController::class,'indexConsResporte'])->name('reporteConst/vista');//para visualizar los datos en el blade
-    Route::get('admin/Licencias/Reporte/{f1}/{f2}',[ConstReporteController::class,'mostrarTabla']);
+    Route::get('admin/Licencias/Reporte/{f1}/{f2}/{d}',[ConstReporteController::class,'mostrarTabla']);
 
     Route::get('admin/mislicencias', [LicenciasController::class,'indexMisLicencias'])->name('indexLic');
 
