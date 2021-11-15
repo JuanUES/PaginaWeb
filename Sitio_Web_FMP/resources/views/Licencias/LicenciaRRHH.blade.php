@@ -310,7 +310,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                         </div> 
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" id="observaciones_recursos_humanos_constancia">
                     <div class="col-xl-12">
                         <div class="form-group">
                             <label for="observaciones">Observaciones Recursos Humanos <code>*</code></label>
@@ -324,7 +324,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                 <button type="button" class="btn btn-secondary"
                     data-dismiss="modal"><i class="fa fa-ban"
                     aria-hidden="true"></i> Cerrar</button>
-                <button type="button" class="btn btn-primary" id='guardar_registro'
+                <button type="button" class="btn btn-primary" id="guardar_rrhh"
                     onClick="submitForm('#registroForm','#notificacion')">
                     <li class="fa fa-save"></li> Guardar</button>
             </div>            
@@ -437,8 +437,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                                <div class="col-xl-12">
                                 <div class="form-group">
                                     <label for="observacionesConst">Observaciones </label>
-                                    <textarea value=" " class="form-control summernote-config"  name="observaciones_recursos_humanos_constancia"
-                                     rows="4"></textarea>
+                                    <textarea value=" " class="form-control summernote-config"  name="observaciones_recursos_humanos_constancia" rows="4"></textarea>
                                 </div>
 
                                </div>
@@ -447,7 +446,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban"
                                     aria-hidden="true"></i> Cerrar</button>
-                            <button type="button" class="btn btn-primary" id='guardar_registro'
+                            <button type="button" class="btn btn-primary" id="guardar_registro"
                                 onClick="submitForm('#registroFormC','#notificacionC')">
                                 <li class="fa fa-save"></li> Guardar
                             </button>
@@ -551,5 +550,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('js/licencias/calcularHoras.js') }}"></script>
     <script src="{{ asset('js/licencias/rrhh.js') }}"></script>
+
 @endsection

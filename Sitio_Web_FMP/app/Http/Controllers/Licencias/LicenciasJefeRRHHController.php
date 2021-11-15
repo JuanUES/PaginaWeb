@@ -33,6 +33,7 @@ class LicenciasJefeRRHHController extends Controller
                     permisos.justificacion,
                     permisos.observaciones,
                     empleado.nombre,
+                    permisos.estado,
                     empleado.apellido')
                 ->join('empleado','empleado.id','=','permisos.empleado')
                 ->where('jefatura',auth()->user()->empleado)
@@ -50,13 +51,14 @@ class LicenciasJefeRRHHController extends Controller
     }
 
     public function indexRRHH(){
-        if(Auth::check() and (@Auth::user()->hasRole('Recurso-Humano') or @Auth::user()->hasRole('super-admin'))){
+        if(Auth::check() && (@Auth::user()->hasRole('Recurso-Humano')|| @Auth::user()->hasRole('super-admin'))){
             $permisos = Permiso::selectRaw('md5(permisos.id::text) as permiso, 
                 tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,
                 observaciones,olvido,empleado.nombre,empleado.apellido')
                 ->join('empleado','empleado.id','=','permisos.empleado')
                 ->where(function($query)
-                    {$query->where('permisos.estado','like','Enviado a RRHH')->orWhere('permisos.estado','like','Aceptado');}
+                    {$query->where('permisos.estado','like','Enviado a RRHH')
+                        ->orWhere('permisos.estado','like','Aceptado');}
                 )->get();
             return view('Licencias.LicenciaRRHH',compact('permisos'));
         }else {
@@ -67,7 +69,7 @@ class LicenciasJefeRRHHController extends Controller
     public function datableRRHHJson(){
 
         $permisos = Permiso::selectRaw('md5(permisos.id::text) as permiso, 
-                tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,
+                tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,permisos.estado,
                 observaciones,olvido,empleado.nombre,empleado.apellido')
         ->join('empleado','empleado.id','=','permisos.empleado')
         ->where(function($query)
@@ -104,7 +106,8 @@ class LicenciasJefeRRHHController extends Controller
                         </button>
                         <button title="Aceptar"
                             class="btn btn-outline-success btn-sm"
-                            value="'.$item->permiso.'" onclick="'.($item->olvido == 'Entrada' || $item->olvido =='Salida' ?'aceptarConst(this)':'aceptar(this)').'">
+                            '.($item->estado==='Enviado a RRHH' ? 'value="'. $item->permiso.'"
+                                 onclick="'.($item->olvido == 'Entrada' || $item->olvido =='Salida' ?'aceptarConst(this)':'aceptar(this)'): 'disabled').' ">
                             <i class="fa fa-check font-16 my-1" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -303,7 +306,11 @@ class LicenciasJefeRRHHController extends Controller
     }
     //FIN DE LAS OBSERVACIONES DE RRHH
     public function permiso($permiso){
-        if(Auth::check() and !is_null($permiso) and ($this->isJefe() or @Auth::user()->hasRole('super-admin') or @Auth::user()->hasRole('Recurso-Humano') )){
+        if(Auth::check() &&
+        !is_null($permiso) &&
+        ($this->isJefe() ||
+        @Auth::user()->hasRole('super-admin') || 
+        @Auth::user()->hasRole('Recurso-Humano') )){
             return Permiso::selectRaw('md5(permisos.id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
                     fecha_presentacion,
                     olvido,

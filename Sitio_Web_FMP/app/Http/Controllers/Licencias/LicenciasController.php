@@ -90,7 +90,7 @@ class LicenciasController extends Controller
                             <i class="fa fa-arrow-circle-up font-16 my-1" aria-hidden="true"></i>
                         </button>
                         <button title="Editar" class="btn btn-outline-primary btn-sm border-letf-0"'.
-                        (($todos_btn || $item->estado == 'Enviado a RRHH' || $item->estado == 'Enviado a Jefatura')?'
+                        (($todos_btn || $item->estado == 'Enviado a RRHH' || $item->estado == 'Enviado a Jefatura' ||$item->estado == 'Aceptado')?'
                             value="'.$item->permiso.'" onclick="editar(this)"':'disabled').'>
                     
                             <i class="fa '.(($item->estado == 'Observaciones de Jefatura' || $item->estado == 'Observaciones de RRHH' || $item->estado == 'Guardado')?' fa-edit ':' fa-file-alt ').' font-16 my-1" aria-hidden="true"></i>
