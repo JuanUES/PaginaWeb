@@ -34,7 +34,7 @@
                     data-toggle="modal" data-target="#modalRegistro"></button>
                 </div>      
             </div>
-            <form action="{{ route('admin.jornada.index') }}" method="get" id="frmFiltrar">
+            <form action="" method="get" id="frmFiltrar">
                 <div class="row">
                     {{--  <div class="col-12 col-sm-2 col-md-2">
                         <button class="btn btn btn-outline-info btn-block" title="Filtrar Contenido" type="submit"> <i class="fa fa-filter" aria-hidden="true"></i> </button>
@@ -64,8 +64,9 @@
                             <div class="form-group">
                                 <label for="justificacion">Seleccione el Departamento</label>
                                 <select class="form-control select2" style="width: 100%" data-live-search="true" 
-                                data-style="btn-white"   id="marcaje" name="marcaje">
-                                 <option value="all" selected> Todos los Departamentos </option>
+                                data-style="btn-white"   id="deptoR" name="deptoR">
+                                <option selected>Seleccione</option>
+                                 <option value="all"> Todos los Departamentos </option>
                                    @foreach ($deptos as $item)
                                         <option value="{{ $item->id }}">{!!$item->nombre_departamento!!}</option>
                                     @endforeach-->
@@ -76,17 +77,17 @@
                 </div>
             </form>
             <br/>
-            <table  class="table" style="width: 100%" id='permisos-table'>
+            <table  class="table" style="width: 100%" id='permisosReporte'>
                 <thead>
                 <tr>
                     <th class="col-sm-2">Nombre</th>
-                    <th class="col-sm-2">Tipo</th>
+                    <th class="col-xs-1">Tipo</th>
                     <th class="col-xs-1">Fecha Presentación</th>
                     <th class="col-xs-1">Fecha Aceptación</th>
                     <th class="col-xs-1">Hora Incio</th>
                     <th class="col-xs-1">Hora Final</th>
                     <th class="col-xs-2">Tiempo Utilizar</th>
-                    <th class="col-xs-2">Justificación</th>
+                    <th class="col-sm-2">Justificación</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -110,12 +111,11 @@
 <!-- Bootstrap Select -->
 <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
 <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
+<script src="{{ asset('js/ReportesJs/tablaLicencias.js')}}"></script>
 <script>
     $(
     function () {
         $('.select2').select2();            
-
-      
     });
 
 </script>
