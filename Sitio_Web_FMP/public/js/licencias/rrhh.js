@@ -16,6 +16,57 @@ $( function () {
          //para la constancia de olvido de marcaje
          $('#justificacionConst').summernote('disable');
         $("#marcaje").prop("disabled", true);
+
+        table = $('#misLicenciasRRHHTable').DataTable({
+            "order": [[ 1, 'desc' ], [ 0, 'asc' ]],
+            "language": {
+                "decimal":        ".",
+                "emptyTable":     "No hay datos para mostrar",
+                "info":           "Del _START_ al _END_ (_TOTAL_ total)",
+                "infoEmpty":      "Del 0 al 0 (0 total)",
+                "infoFiltered":   "(Filtrado de todas las _MAX_ entradas)",
+                "infoPostFix":    "",
+                "thousands":      "'",
+                "lengthMenu":     "Mostrar _MENU_ entradas",
+                "loadingRecords": "Cargando...",
+                "processing":     "Procesando...",
+                "search":         "Buscar:",
+                "zeroRecords":    "No hay resultados",
+                "paginate": {
+                        "first":      "Primero",
+                        "last":       "Ultimo",
+                        "next":       "Siguiente",
+                        "previous":   "Anterior"
+                    },
+                "aria": {
+                        "sortAscending":  ": Ordenar de manera Ascendente",
+                        "sortDescending": ": Ordenar de manera Descendente ",
+                    }
+                },
+                "pagingType": "full_numbers",
+                "lengthMenu": [[5, 10, 20, 25, 50, -1], [5, 10, 20, 25, 50, "Todos"]],
+                "iDisplayLength": 5,
+                "responsive": true,                
+                "autoWidth": true,                
+                "deferRender": true,
+                "ajax":{
+                    "url": "/admin/licencias/RRHH/datableJson",
+                    "method": "GET",
+                    "dataSrc": function (json) {
+                        console.log(json);
+                        return json;
+                    }
+                },
+                "columns": [
+                    { className: "align-middle", data: "col0" },
+                    { className: "align-middle", data: "col1" },
+                    { className: "align-middle", data: "col2" },
+                    { className: "align-middle", data: "col3" },
+                    { className: "align-middle", data: "col4" },
+                    { className: "align-middle", data: "col5" },
+                    { className: "align-middle text-center", data: "col6" }
+                ]               
+            });  
     }
 
 );
@@ -25,11 +76,11 @@ mensuales = anuales = hrs_m = hrs_a = min_m = min_a = min_t_a = min_t_m = 0;
 
 
 function obtenerHora() {
-    if($('#tipo_permiso').val() ==='LC/GS' && $('#fecha_de_uso').val().trim() != ""){
+    if(($('#tipo_permiso').val() =='LC/GS' || $('#tipo_permiso').val() =='CITA MEDICA') && $('#fecha_de_uso').val().trim() != ""){
             var permiso = $('#idPermiso').val().trim()==''?'nuevo':$('#idPermiso').val();
             $.ajax({
                 type: "GET",
-                url: '/admin/mislicencias/horas-mensual/'+$('#fecha_de_uso').val()+'/'+permiso,
+                url: 'mislicencias/horas-mensual/'+$('#fecha_de_uso').val()+'/'+permiso,
                 beforeSend: function() {
                     $('#hora_mensual').val('Cargando...');
                     $('#hora_anual').val('Cargando...');
@@ -44,7 +95,7 @@ function obtenerHora() {
             
             $.ajax({
                 type: "GET",
-                url: '/admin/mislicencias/horas-anual/'+$('#fecha_de_uso').val()+'/'+permiso,
+                url: 'mislicencias/horas-anual/'+$('#fecha_de_uso').val()+'/'+permiso,
                 success: function(json) {
                     var json  =  JSON.parse(json);
                     anuales = json.anuales;
@@ -74,6 +125,7 @@ function obtenerHora() {
     }else{
         $('#hora_anual').val('Ilimitado');
         $('#hora_mensual').val('Ilimitado');
+        mensuales = anuales = hrs_m = hrs_a = min_m = min_a = min_t_a = min_t_m = 0;
     }
 }
 
@@ -81,10 +133,10 @@ function calcularHora() {
     var hora_inicio = $('#hora_inicio').val();
     var hora_final = $('#hora_final').val();
     
-    // ExpresiÃ³n regular para comprobar formato
+    // Expresión regular para comprobar formato
     var formatohora = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
     
-    // Si algÃºn valor no tiene formato correcto sale
+    // Si algún valor no tiene formato correcto sale
     if (!(hora_inicio.match(formatohora)
             && hora_final.match(formatohora))){
         return;
@@ -100,21 +152,25 @@ function calcularHora() {
     // Diferencia de minutos
     var diferencia = minutos_final - minutos_inicio;
 
-    // CÃ¡lculo de horas y minutos de la diferencia
+    // Cálculo de horas y minutos de la diferencia
     var horas = parseInt(Math.trunc(diferencia / 60));
     var minutos = parseInt((diferencia % 60));        
 
     $('#hora_actuales').val(horas+' hrs, '+minutos+' min');
+    if(($('#tipo_permiso').val() =='LC/GS' || $('#tipo_permiso').val() =='CITA MEDICA') && $('#fecha_de_uso').val().trim() != ""){
+        var horas = parseInt(Math.trunc((min_t_a-diferencia)/ 60));
+        var minutos = parseInt(((min_t_a-diferencia) % 60));
+        
+        $('#hora_anual').val(horas+' hrs, '+minutos+' min');
 
-    var horas = parseInt(Math.trunc((min_t_a-diferencia)/ 60));
-    var minutos = parseInt(((min_t_a-diferencia) % 60));
-    
-    $('#hora_anual').val(horas+' hrs, '+minutos+' min');
+        var horas = parseInt(Math.trunc((min_t_m-diferencia)/ 60));
+        var minutos = parseInt(((min_t_m-diferencia) % 60));
 
-    var horas = parseInt(Math.trunc((min_t_m-diferencia)/ 60));
-    var minutos = parseInt(((min_t_m-diferencia) % 60));
-
-    $('#hora_mensual').val(horas+' hrs, '+minutos+' min');
+        $('#hora_mensual').val(horas+' hrs, '+minutos+' min');
+    }else{
+        $('#hora_anual').val('Ilimitado');
+        $('#hora_mensual').val('Ilimitado');
+    }
 }
 
 $('#tipo_permiso').on('select2:select',obtenerHora);

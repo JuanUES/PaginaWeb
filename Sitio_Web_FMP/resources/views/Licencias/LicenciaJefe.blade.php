@@ -446,12 +446,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" id='observacionJF'>
+                            <div class="row" id="observaciones_jefatura">
                                 <div class="col-xl-12">
                                     <div class="form-group">
                                         <label for="observaciones">Observaciones Jefatura <code>*</code></label>
                                         <textarea value=" " class="form-control summernote-config"
-                                            name="observaciones_jefatura" rows="4"></textarea>
+                                            name="observaciones_jefatura"  rows="4"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -612,7 +612,7 @@
 
                                                         <button title="Aceptar Licencia"
                                                             class="btn btn-outline-success btn-sm"
-                                                            value="{{ $item->permiso }}" onclick="aceptar(this)">
+                                                            @if($item->estado==='Enviado a Jefatura') value="{{ $item->permiso }}" onclick="aceptar(this)" @else disabled @endif>
                                                             <i class="fa fa-check font-16 my-1" aria-hidden="true"></i>
                                                         </button>
 
@@ -912,9 +912,8 @@
                         $('#fecha_de_uso').val(json.fecha_uso).change();
                         $('#hora_inicio').val(json.hora_inicio);
                         $('#hora_final').val(json.hora_final);
+                        json.jf ? $('#observaciones_jefatura').show():$('#observaciones_jefatura').hide();
                         json.jf ? $('#guardar_registro_lic').show():$('#guardar_registro_lic').hide();
-                        json.jf ? $('#guardar_registro_lic').prop('disabled', !json.jf).show()
-                        :$('guardar_registro_lic').prop('disabled', !json.jf).hide();
                         $('#modalRegistro').modal();
                     },
                     complete: function(json) {

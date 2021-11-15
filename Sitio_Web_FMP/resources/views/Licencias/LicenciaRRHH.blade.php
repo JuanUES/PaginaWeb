@@ -488,7 +488,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                 <div class="col-lg-1 order-last">
                 </div>                
             </div>
-            <table  class="table" style="width: 100%">
+            <table  id="misLicenciasRRHHTable" class="table" style="width: 100%">
                 <thead>
                 <tr>
                     <th class="col-sm-2">Fecha de Uso</th>
@@ -501,117 +501,15 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                 </tr>
                 </thead>
                 <tbody>
-                    
-                    @foreach ($permisos as $item)
-                        <tr>
-                            <th class="align-middle ">{{Carbon\Carbon::parse($item->fecha_uso)->format('d/M/Y')}}</th>
-                            <td class="align-middle ">{{$item->nombre.' '.$item->apellido}}</td>
-                            <td class="align-middle "><span class="badge badge-primary">{{$item->tipo_permiso}}</span></td>
-                            @if ($item->olvido == 'Entrada')
-                                        <td class="align-middle ">{{ date('H:i', strtotime($item->hora_inicio)) }}</td>
-                                        <td class="align-middle ">{{ date('H:i', strtotime($item->hora_final)) }}</td>
-                                        <td class="align-middle ">{{ date('H:i', strtotime($item->hora_final)) }}</td>
-                                         <!--PARA LOS BOTONES-->
-                                         <td class="align-middle ">
-                                            <div class="row">
-                                                <div class="col text-center">
-
-                                                    <div class="btn-group" role="group">
-                                                        <button title="Ver Datos" class="btn btn-outline-primary btn-sm"
-                                                            value="{{ $item->permiso }}" onclick="observaciones(this)">
-                                                            <i class="fa fa-eye font-16 my-1" aria-hidden="true"></i>
-                                                        </button>
-
-                                                        <button title="Agregar Observacion"
-                                                            class="btn btn-outline-primary btn-sm"
-                                                            value="{{ $item->permiso }}" onclick="verDatosConst(this)">
-                                                            <i class="fa fa-file-alt font-16 my-1 mx-0"
-                                                                aria-hidden="true"></i>
-                                                        </button>
-
-                                                        <button title="Aceptar Const. olvido"
-                                                            class="btn btn-outline-success btn-sm"
-                                                            value="{{ $item->permiso }}" onclick="aceptarConst(this)">
-                                                            <i class="fa fa-check font-16 my-1" aria-hidden="true"></i>
-                                                        </button>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <!--FIN DE PARA LOS BOTONES-->
-                                    @elseif ($item->olvido =='Salida')
-                                        <td class="align-middle ">{{ date('H:i', strtotime($item->hora_final)) }}</td>
-                                        <td class="align-middle ">{{ date('H:i', strtotime($item->hora_inicio)) }}</td>
-                                        <td class="align-middle ">{{ date('H:i', strtotime($item->hora_final)) }}</td>
-                                        <!--PARA LOS BOTONES-->
-                                        <td class="align-middle ">
-                                            <div class="row">
-                                                <div class="col text-center">
-
-                                                    <div class="btn-group" role="group">
-                                                        <button title="Ver Datos" class="btn btn-outline-primary btn-sm"
-                                                            value="{{ $item->permiso }}" onclick="observaciones(this)">
-                                                            <i class="fa fa-eye font-16 my-1" aria-hidden="true"></i>
-                                                        </button>
-
-                                                        <button title="Agregar Observacion"
-                                                            class="btn btn-outline-primary btn-sm"
-                                                            value="{{ $item->permiso }}" onclick="verDatosConst(this)">
-                                                            <i class="fa fa-file-alt font-16 my-1 mx-0"
-                                                                aria-hidden="true"></i>
-                                                        </button>
-
-                                                        <button title="Aceptar Const. olvido"
-                                                            class="btn btn-outline-success btn-sm"
-                                                            value="{{ $item->permiso }}" onclick="aceptarConst(this)">
-                                                            <i class="fa fa-check font-16 my-1" aria-hidden="true"></i>
-                                                        </button>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <!--FIN DE PARA LOS BOTONES-->
-
-                                    @else
-                                        <td class="align-middle ">{{ date('H:i', strtotime($item->hora_inicio)) }}</td>
-                                        <td class="align-middle ">{{ date('H:i', strtotime($item->hora_final)) }}</td>
-                                        <td class="align-middle ">
-                                            {{                                             Carbon\Carbon::parse($item->fecha_uso . 'T' . $item->hora_inicio)->diffAsCarbonInterval(Carbon\Carbon::parse($item->fecha_uso . 'T' . $item->hora_final)) }}
-                                        </td>
-                                        <td class="align-middle ">
-                                            <div class="row">
-                                                <div class="col text-center">
-
-                                                    <div class="btn-group" role="group">
-                                                        <button title="Ver Datos" class="btn btn-outline-primary btn-sm"
-                                                            value="{{ $item->permiso }}" onclick="observaciones(this)">
-                                                            <i class="fa fa-eye font-16 my-1" aria-hidden="true"></i>
-                                                        </button>
-
-                                                        <button title="Agregar Observacion"
-                                                            class="btn btn-outline-primary btn-sm"
-                                                            value="{{ $item->permiso }}" onclick="verDatos(this)">
-                                                            <i class="fa fa-file-alt font-16 my-1 mx-0"
-                                                                aria-hidden="true"></i>
-                                                        </button>
-
-                                                        <button title="Aceptar Licencia"
-                                                            class="btn btn-outline-success btn-sm"
-                                                            value="{{ $item->permiso }}" onclick="aceptar(this)">
-                                                            <i class="fa fa-check font-16 my-1" aria-hidden="true"></i>
-                                                        </button>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    @endif
-                                                      
-                        
-                        </tr>
-                    @endforeach                   
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>                   
                 </tbody>
             </table>
 
@@ -650,10 +548,8 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
     <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-timepicker/bootstrap-timepicker.min.js') }}" ></script>
-    <script src="{{ asset('js/scripts/data-table.js') }}" ></script>
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('js/licencias/rrhh.js') }}"></script>
-
 @endsection

@@ -64,6 +64,66 @@ class LicenciasJefeRRHHController extends Controller
         }
     }
 
+    public function datableRRHHJson(){
+
+        $permisos = Permiso::selectRaw('md5(permisos.id::text) as permiso, 
+                tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,
+                observaciones,olvido,empleado.nombre,empleado.apellido')
+        ->join('empleado','empleado.id','=','permisos.empleado')
+        ->where(function($query)
+            {$query->where('permisos.estado','like','Enviado a RRHH')
+                ->orWhere('permisos.estado','like','Aceptado');}
+        )->get();
+
+        foreach ($permisos as $item) {
+            # code...
+            $col3 = $col4 = $col5 = null;
+            if ($item->olvido == 'Entrada' || $item->olvido =='Salida') {
+                $col3 = date('H:i', strtotime($item->olvido == 'Entrada'?$item->hora_inicio:$item->hora_final));
+                $col4 = date('H:i', strtotime(!$item->olvido == 'Entrada'?$item->hora_inicio:$item->hora_final));
+                $col5 = date('H:i', strtotime($item->hora_final));
+            }else{
+                $col3 = date('H:i', strtotime($item->hora_inicio));
+                $col4 = date('H:i', strtotime($item->hora_final)) ;
+                $col5 = ''.\Carbon\Carbon::parse($item->fecha_uso . 'T' . $item->hora_inicio)->diffAsCarbonInterval(\Carbon\Carbon::parse($item->fecha_uso . 'T' . $item->hora_final));
+            }
+
+            $botones = 
+            '<div class="row">
+                <div class="col text-center">
+                    <div class="btn-group" role="group">
+                        <button title="Ver Seguimiento" class="btn btn-outline-primary btn-sm"
+                            value="'.$item->permiso .'" onclick="observaciones(this)">
+                            <i class="fa fa-eye font-16 my-1" aria-hidden="true"></i>
+                        </button>
+                        <button title="Agregar Observacion"
+                            class="btn btn-outline-primary btn-sm"
+                            value="'.$item->permiso.'" onclick="'.($item->olvido == 'Entrada' || $item->olvido =='Salida' ?'verDatosConst(this)':'verDatos(this)').'">
+                            <i class="fa fa-file-alt font-16 my-1 mx-0"
+                                aria-hidden="true"></i>
+                        </button>
+                        <button title="Aceptar"
+                            class="btn btn-outline-success btn-sm"
+                            value="'.$item->permiso.'" onclick="'.($item->olvido == 'Entrada' || $item->olvido =='Salida' ?'aceptarConst(this)':'aceptar(this)').'">
+                            <i class="fa fa-check font-16 my-1" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>';
+
+            $data[] = array(
+                "col0" => \Carbon\Carbon::parse($item->fecha_uso)->format('d/M/Y'),
+                "col1" => $item->nombre.' '.$item->apellido,
+                "col2" => '<span class="badge badge-primary">'.$item->tipo_permiso.'</span>',
+                "col3" => $col3,
+                "col4" => $col4,
+                "col5" => $col5,
+                "col6" => $botones,
+            );
+        }
+        return isset($data)?response()->json($data,200,[]):response()->json([],200,[]);
+    }
+
     public function aceptarRRHH(Request $request){
         if (Auth::check() and (@Auth::user()->hasRole('Recurso-Humano') or @Auth::user()->hasRole('super-admin'))) {
             # code...        
@@ -86,7 +146,7 @@ class LicenciasJefeRRHHController extends Controller
     }
 
     public function aceptarJefatura(Request $request){
-        if (Auth::check() and ($this->isJefe() or @Auth::user()->hasRole('super-admin'))) {
+        if (Auth::check() && ($this->isJefe() || @Auth::user()->hasRole('super-admin'))) {
             # code...        
             $permiso = Permiso::select('estado','id')->whereRaw('md5(id::text) = ?',[$request->_id])->first();
             $permiso -> estado = 'Enviado a RRHH';

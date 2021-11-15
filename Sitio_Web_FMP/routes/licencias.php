@@ -14,7 +14,6 @@ use App\Models\Licencias\Licencia_con_gose;
 Route::group(['middleware' => ['auth']], function () {
 
     /*METODOS GET**/
-    Route::get('admin/mislicencias', [LicenciasController::class,'indexMisLicencias'])->name('indexLic');
     Route::get('admin/LicenciasAcuerdo', [LicenciasAcuerdoController::class,'index'])->name('AcuerdoLic');
     Route::get('admin/LicenciasAcuerdo/tabla', [LicenciasAcuerdoController::class,'Data']);
     Route::get('admin/LicenciasAcuerdo/edit/{id}', [LicenciasAcuerdoController::class,'cargaModal']);
@@ -28,6 +27,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('admin/ConstanciaOlvido/Report',[ConstReporteController::class,'downloadPDF'])->name('constR');
     Route::get('admin/Constancia/Reporte',[ConstReporteController::class,'indexConsResporte'])->name('reporteConst/vista');//para visualizar los datos en el blade
     
+    Route::get('admin/mislicencias', [LicenciasController::class,'indexMisLicencias'])->name('indexLic');
+
     Route::get('admin/mislicencias/horas-anual/{fecha}/{permiso}', [LicenciasController::class,'horas_anual']);
     Route::get('admin/mislicencias/horas-mensual/{fecha}/{permiso}', [LicenciasController::class,'horas_mensual']);
     Route::get('admin/mislicencias/permisos', [LicenciasController::class,'getPermisos']);
@@ -37,6 +38,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('admin/licencias/jefatura',[LicenciasJefeRRHHController::class,'indexJefe'])->name('indexJefatura');
     Route::get('admin/licencias/RRHH',[LicenciasJefeRRHHController::class,'indexRRHH'])->name('indexRRHH');
+    Route::get('admin/licencias/RRHH/datableJson',[LicenciasJefeRRHHController::class,'datableRRHHJson']);
 
     Route::get('admin/licencias/jefaturaRRHH/{permiso}',[LicenciasJefeRRHHController::class,'permiso']);
     
