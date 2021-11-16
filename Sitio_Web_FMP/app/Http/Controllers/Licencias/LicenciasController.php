@@ -218,10 +218,12 @@ class LicenciasController extends Controller
         if(Auth::check() and !empty($fecha)){
             $query = Permiso::join ('empleado','empleado.id','=','permisos.empleado')
             ->join ('tipo_jornada','tipo_jornada.id','=','empleado.id_tipo_jornada')
-            ->join ('licencia_con_goses','licencia_con_goses.id_tipo_jornada','=','tipo_jornada.id')
-            ->orWhere([
-                ['permisos.tipo_permiso','like','CITA MEDICA'],
-                ['permisos.tipo_permiso','like','LC/GS']]);
+            ->join ('licencia_con_goses','licencia_con_goses.id_tipo_jornada', '=','tipo_jornada.id')
+            ->where( function($query){
+                $query
+                ->where('permisos.tipo_permiso','like','CITA MEDICA')
+                ->orWhere('permisos.tipo_permiso','like','LC/GS');
+            })->where('permisos.estado','like','Aceptado');
             
             $queryEmp = Empleado::
                join ('tipo_jornada', 'tipo_jornada.id', '=', 'empleado.id_tipo_jornada')
@@ -290,7 +292,7 @@ class LicenciasController extends Controller
     public function permiso($permiso){
         if(Auth::check() and !is_null($permiso)){
             return Permiso::selectRaw('md5(id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
-                    fecha_presentacion,to_char(hora_inicio,\'HH24:MI\') as hora_inicio
+                    to_char(fecha_presentacion, \'DD/MM/YYYY\') as fecha_presentacion,to_char(hora_inicio,\'HH24:MI\') as hora_inicio
                     ,to_char(hora_final,\'HH24:MI\') as hora_final,justificacion,observaciones,
                     estado = \'Observaciones de Jefatura\' or estado = \'Observaciones de RRHH\' or estado = \'Guardado\'  as estado')
             ->whereRaw('empleado = ? and md5(permisos.id::text) = ?',[auth()->user()->empleado, $permiso])
