@@ -311,7 +311,8 @@ class LicenciasJefeRRHHController extends Controller
         ($this->isJefe() ||
         @Auth::user()->hasRole('super-admin') || 
         @Auth::user()->hasRole('Recurso-Humano') )){
-            return Permiso::selectRaw('md5(permisos.id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
+            return Permiso::selectRaw(
+                'md5(permisos.id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
                     fecha_presentacion,
                     olvido,
                     to_char(hora_inicio,\'HH24:MI\') as hora_inicio,

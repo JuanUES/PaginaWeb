@@ -219,20 +219,25 @@ class LicenciasController extends Controller
             $query = Permiso::join ('empleado','empleado.id','=','permisos.empleado')
             ->join ('tipo_jornada','tipo_jornada.id','=','empleado.id_tipo_jornada')
             ->join ('licencia_con_goses','licencia_con_goses.id_tipo_jornada','=','tipo_jornada.id')
-            ->where ('empleado.id','=',auth()->user()->empleado)
             ->orWhere([
                 ['permisos.tipo_permiso','like','CITA MEDICA'],
                 ['permisos.tipo_permiso','like','LC/GS']]);
             
-            if ($permiso != 'nuevo') {
-                # code...
-                $query = $query -> whereRaw('md5(permisos.id::text) != ?',[$permiso]);
-            }
-            
             $queryEmp = Empleado::
                join ('tipo_jornada', 'tipo_jornada.id', '=', 'empleado.id_tipo_jornada')
-            -> join ('licencia_con_goses', 'licencia_con_goses.id_tipo_jornada', '=' ,'tipo_jornada.id')
-            -> where ('empleado.id',auth()->user()->empleado);
+            -> join ('licencia_con_goses', 'licencia_con_goses.id_tipo_jornada', '=' ,'tipo_jornada.id');            
+            
+            if ($permiso != 'nuevo') {
+                # code...
+                $query = $query -> whereRaw('md5(permisos.id::text) != ?',[$permiso])
+                -> where('empleado.id',Permiso::whereRaw('md5(permisos.id::text) = ?',[$permiso])->first()->empleado);
+                $queryEmp -> where('empleado.id',Permiso::whereRaw('md5(permisos.id::text) = ?',[$permiso])->first()->empleado);
+            }else{
+
+                $query = $query -> where ('empleado.id','=',auth()->user()->empleado);
+                $queryEmp = $queryEmp -> where ('empleado.id',auth()->user()->empleado);
+            }            
+            
 
             if ($tipo==='anual') {
                 # code...            
