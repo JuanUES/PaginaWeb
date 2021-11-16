@@ -17,7 +17,7 @@ use Carbon\Carbon;
 
 class LicenciasController extends Controller
 {
-    /**ESTADOS: 'Enviado a Jefatura' , 'GUARDADO' */
+    /**ESTADOS: 'Enviado a Jefatura' , 'Guardado', Enviado a RRHH, Observaciones de RRHH, Observaciones de Jefatura,  */
 
     protected function obtenerDia($fecha){
         $dias = array('Lunes','Martes','Miércoles','Jueves','Viernes','Sabado','Domingo');
@@ -227,7 +227,7 @@ class LicenciasController extends Controller
                join ('tipo_jornada', 'tipo_jornada.id', '=', 'empleado.id_tipo_jornada')
             -> join ('licencia_con_goses', 'licencia_con_goses.id_tipo_jornada', '=' ,'tipo_jornada.id');            
             
-            if ($permiso != 'nuevo') {
+            if ($permiso != 'nuevo' && !is_null($permiso)) {
                 # code...
                 $query = $query -> whereRaw('md5(permisos.id::text) != ?',[$permiso])
                 -> where('empleado.id',Permiso::whereRaw('md5(permisos.id::text) = ?',[$permiso])->first()->empleado);
