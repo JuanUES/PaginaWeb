@@ -1,10 +1,10 @@
 //PARA CARGAR LOS DATOS DINAMICAMENTE EN LA TABLA
-var table;
+var table=null;
 $("#deptoR").change(function () {
    //alert($('#inicio').val());
     //alert($('#fin').val());
     if ($('#inicio').val() == '' && $('#fin').val()=='') {
-        $("#modalEnviar").modal();
+        $("#modalAlerta").modal();
     } else {
 
         table = $('#permisosReporte').DataTable({
@@ -63,3 +63,22 @@ $("#deptoR").change(function () {
 });
 
 //FIN PARA CARGAR LOS DATOS EN LA TABLA DINAMICAMENTE
+
+//BOTON PARA GENERAR EL REPORTE
+$( "#descargarLicencias" ).click(function() {
+
+    if ($('#inicio').val() == '' && $('#fin').val()=='') {
+        $("#modalAlerta").modal();
+    } else {
+        $('#inicioR').val($('#inicio').val());
+        $('#finR').val($('#fin').val());
+        $('#deptoR_R').val($('#deptoR').val());
+        $("#modalPDF").modal();
+    }//fin else de mostrar advertencia
+    
+  });
+//FIN BOTON PARA GENERAR EL REPORTE
+
+$("#si").click(function() {
+    $('#modalPDF').modal('toggle');
+});

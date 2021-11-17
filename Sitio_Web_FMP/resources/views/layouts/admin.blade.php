@@ -350,6 +350,12 @@
                                 </a>
                                 <ul class="nav-second-level" aria-expanded="false">
                                     <li>
+                                        <a href="{{route('reportesLicencias/vista')}}">Licencias</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{--{{route('reporteConst/vista')}}--}}">Licencias por Acuerdo</a>
+                                    </li>
+                                    <li>
                                         <a href="{{route('reporteConst/vista')}}">Constancia Olvido</a>
                                     </li>
                                     <li>

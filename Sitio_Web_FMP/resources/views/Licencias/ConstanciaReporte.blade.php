@@ -35,7 +35,7 @@
         <br>
 
     </h4>
-    <table id="const">
+    <table id="const" class="table">
         <thead>
             <tr>
             <th>Fecha</th>

@@ -9,7 +9,7 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Inicio</a></li>
-                    <li class="breadcrumb-item active">Const. Olvido de Marcaje</li>
+                    <li class="breadcrumb-item active">Reporte de Licencias</li>
                 </ol>
             </div>
             <h4 class="page-title">&nbsp;</h4>
@@ -121,7 +121,7 @@
             <div class="row py-2">
                 <div class="col order-first">
                     <h3>
-                        Constancia Olvido de Marcaje
+                        Reporte de Licencias
                     </h3>
                 </div>
                 <div class="col-lg-1 order-last">

@@ -3,7 +3,7 @@
 //use App\Http\Controllers\EmpleadoController;
 
 use App\Http\Controllers\Licencias\ConstanciaOlvidoController;
-use App\Http\Controllers\Licencias\ConstReporteController;
+use App\Http\Controllers\Licencias\ReporteController;
 use App\Http\Controllers\Licencias\LicenciasAcuerdoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Licencias\LicenciasController;
@@ -23,12 +23,16 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('admin/ConstanciaOlvido/Modal/{id}',[ConstanciaOlvidoController::class,'Modal']);
     Route::get('admin/ConstanciaOlvido/EntradaSalida/{fecha}',[ConstanciaOlvidoController::class,'SalidaEntrada']);
 
-    Route::get('admin/ConstanciaOlvido/Reporte',[ConstReporteController::class,'index'])->name('index/reporteConst');
+    Route::get('admin/ConstanciaOlvido/Reporte',[ReporteController::class,'index'])->name('index/reporteConst');
    
 
-    Route::get('admin/ConstanciaOlvido/Report',[ConstReporteController::class,'downloadPDF'])->name('constR');
-    Route::get('admin/Constancia/Reporte',[ConstReporteController::class,'indexConsResporte'])->name('reporteConst/vista');//para visualizar los datos en el blade
-    Route::get('admin/Licencias/Reporte/{f1}/{f2}/{d}',[ConstReporteController::class,'mostrarTabla']);
+    Route::get('admin/ConstanciaOlvido/Report',[ReporteController::class,'downloadPDF'])->name('constR');
+    Route::get('admin/Constancia/Reporte',[ReporteController::class,'indexConsResporte'])->name('reporteConst/vista');//para visualizar los datos en el blade
+    //para visualizar la vista
+    Route::get('admin/Licencias/Aceptadas',[ReporteController::class,'indexBladeLicencias'])->name('reportesLicencias/vista');//para visualizar los datos en el blade
+    //para mostrar el reporte en la tabla dinamica
+    Route::get('admin/Licencias/Reporte/{f1}/{f2}/{d}',[ReporteController::class,'mostrarTablaLicencias']);//PARA LA TABLA DE LA VISTA
+    
 
     Route::get('admin/mislicencias', [LicenciasController::class,'indexMisLicencias'])->name('indexLic');
 
@@ -71,6 +75,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('admin/licencias/rrhh/observacion',[LicenciasJefeRRHHController::class,'observacionRRHH'])->name('rrhh/observacion');
     Route::post('admin/licencias/rrhh/observacionConst',[LicenciasJefeRRHHController::class,'observacionRRHHconst'])->name('rrhh/observacionConst');
 
+    //ruta para generar el reporte
+    Route::post('admin/Licencias/Reporte/PDF',[ReporteController::class,'licenciasPDF'])->name('Reporte/licencias');
     /*END POST**/
 
 // Resportes
