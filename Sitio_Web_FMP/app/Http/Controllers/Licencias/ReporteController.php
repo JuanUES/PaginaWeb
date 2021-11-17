@@ -174,21 +174,40 @@ class ReporteController extends Controller
     public function licenciasPDF(Request $request)
     {
 
-        $permisoss = Empleado::selectRaw(' permisos.id, nombre, apellido, permisos.tipo_permiso,permisos.fecha_presentacion,
+        $permisoss = Empleado::selectRaw(' permisos.id, nombre, apellido, id_depto, permisos.tipo_permiso,permisos.fecha_presentacion,
         permisos.hora_inicio,permisos.hora_final, permisos.justificacion, permisos.updated_at, permisos.olvido, departamentos.nombre_departamento')
             ->join('departamentos', 'departamentos.id', '=', 'empleado.id_depto')
             ->join('permisos', 'permisos.empleado', '=', 'empleado.id');
 
         if ($request->deptoR_R == 'all') {
-            $permisos = $permisoss->where(
+            $permisos = $permisoss->Where(
+                function ($query) {
+                    $query->Where('tipo_permiso', 'like', 'LC/GS')
+                        ->orWhere('tipo_permiso', 'like', 'LS/GS')
+                        ->orWhere('tipo_permiso', 'like', 'T COMP')
+                        ->orWhere('tipo_permiso', 'like', 'INCAP')
+                        ->orWhere('tipo_permiso', 'like', 'L OFICIAL')
+                        ->orWhere('tipo_permiso', 'like', 'CITA MEDICA');
+                }
+            )->where(
                 [
                     ['permisos.estado', '=', 'Aceptado'],
                     ['permisos.fecha_presentacion', '>=', $request->inicioR],
                     ['permisos.fecha_presentacion', '<=', $request->finR]
                 ]
             )->get();
+            $departamentos=Departamento::all();
         } else {
-            $permisos = $permisoss->where(
+            $permisos = $permisoss->Where(
+                function ($query) {
+                    $query->Where('tipo_permiso', 'like', 'LC/GS')
+                        ->orWhere('tipo_permiso', 'like', 'LS/GS')
+                        ->orWhere('tipo_permiso', 'like', 'T COMP')
+                        ->orWhere('tipo_permiso', 'like', 'INCAP')
+                        ->orWhere('tipo_permiso', 'like', 'L OFICIAL')
+                        ->orWhere('tipo_permiso', 'like', 'CITA MEDICA');
+                }
+            )->where(
                 [
                     ['permisos.estado', '=', 'Aceptado'],
                     ['permisos.fecha_presentacion', '>=', $request->inicioR],
@@ -196,12 +215,12 @@ class ReporteController extends Controller
                     ['departamentos.id', '=', $request->deptoR_R]
                 ]
             )->get();
-            //$departamentos
+            $departamentos=Departamento::all();
         }
 
         // echo dd($permisos);
 
-        $pdf = PDF::loadView('Reportes.Constancias.ReporteLicencias', compact('permisos'));
+        $pdf = PDF::loadView('Reportes.LicenciasReportes.ReporteLicencias', compact('permisos','departamentos'));
         return $pdf->setPaper('A4', 'Landscape')->download('Licencias.pdf');
     }
     //FIN PARA GENERAR EL REPORTE
