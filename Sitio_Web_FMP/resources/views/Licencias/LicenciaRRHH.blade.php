@@ -132,7 +132,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
     </div><!-- /.modal-dialog -->
 </div>
 
-<div id="modalExcel" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" 
+<div id="modalExcel" class="modal fade bs-example-modal-sm" role="dialog" 
     aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -148,6 +148,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                             <div class="form-group">
                                 <label for="tipo">Tipo Contrato</label>
                                 <select name="tipo" class="form-control select2" id="" style="width: 100%">
+                                    <option value="todos" selected>Todos</option>
                                     @foreach ($tipo_contrato as $item)
                                         <option value="{{$item->id}}">{{$item->tipo}}</option>
                                     @endforeach

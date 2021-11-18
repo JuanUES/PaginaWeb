@@ -5,14 +5,15 @@ namespace App\Http\Controllers\Licencias;
 use App\Models\General\Empleado;
 use App\Models\Licencias\Permiso;
 use App\Models\Licencias\Permiso_seguimiento;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Exports\LicenciaExport;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Spatie\Permission\Models\Role;
 
 class LicenciasJefeRRHHController extends Controller
 {
