@@ -15,29 +15,6 @@ class ReporteController extends Controller
     //PARA MOSTRAR LA VISTA EN LICENCIAS
     public function indexBladeLicencias()
     {
-        $permisos = Empleado::selectRaw(' permisos.id, nombre, apellido, permisos.tipo_permiso,permisos.fecha_presentacion,
-        permisos.hora_inicio,permisos.hora_final, permisos.justificacion, permisos.updated_at, departamentos.nombre_departamento')
-            ->join('departamentos', 'departamentos.id', '=', 'empleado.id_depto')
-            ->join('permisos', 'permisos.empleado', '=', 'empleado.id')
-            ->Where(
-                function ($query) {
-                    $query->Where('tipo_permiso', 'like', 'LC/GS')
-                        ->orWhere('tipo_permiso', 'like', 'LS/GS')
-                        ->orWhere('tipo_permiso', 'like', 'T COMP')
-                        ->orWhere('tipo_permiso', 'like', 'INCAP')
-                        ->orWhere('tipo_permiso', 'like', 'L OFICIAL')
-                        ->orWhere('tipo_permiso', 'like', 'CITA MEDICA');
-                }
-            )
-            ->where(
-                [
-                    ['permisos.estado', '=', 'Aceptado'],
-                    ['permisos.fecha_presentacion', '>=', '2021-11-01'],
-                    ['permisos.fecha_presentacion', '<=', '2021-11-30']
-                ]
-            )->get();
-
-        //echo dd($permisos);
         $deptos = Departamento::all();
         // echo dd($deptos);
         return view('Reportes.LicenciasReportes.MostrarLicencias', compact('deptos'));
@@ -96,7 +73,7 @@ class ReporteController extends Controller
     public function mostrarTablaLicencias($fecha1, $fecha2, $dep)
     {
 
-        $permisoss = Empleado::selectRaw(' permisos.id, nombre, apellido, permisos.tipo_permiso,permisos.fecha_presentacion,
+        $permisoss = Empleado::selectRaw(' permisos.id, nombre, apellido, permisos.tipo_permiso,permisos.fecha_presentacion,permisos.fecha_uso,
         permisos.hora_inicio,permisos.hora_final,permisos.fecha_uso, permisos.justificacion, permisos.updated_at, permisos.olvido, departamentos.nombre_departamento')
             ->join('departamentos', 'departamentos.id', '=', 'empleado.id_depto')
             ->join('permisos', 'permisos.empleado', '=', 'empleado.id');
@@ -114,8 +91,8 @@ class ReporteController extends Controller
             )->where(
                 [
                     ['permisos.estado', '=', 'Aceptado'],
-                    ['permisos.fecha_presentacion', '>=', $fecha1],
-                    ['permisos.fecha_presentacion', '<=', $fecha2]
+                    ['permisos.fecha_uso', '>=', $fecha1],
+                    ['permisos.fecha_uso', '<=', $fecha2]
                 ]
             )->get();
         } else {
@@ -131,8 +108,8 @@ class ReporteController extends Controller
             )->where(
                 [
                     ['permisos.estado', '=', 'Aceptado'],
-                    ['permisos.fecha_presentacion', '>=', $fecha1],
-                    ['permisos.fecha_presentacion', '<=', $fecha2],
+                    ['permisos.fecha_uso', '>=', $fecha1],
+                    ['permisos.fecha_uso', '<=', $fecha2],
                     ['departamentos.id', '=', $dep]
                 ]
             )->get();
@@ -157,11 +134,12 @@ class ReporteController extends Controller
                 "row0" => $item->nombre . ' ' . $item->apellido,
                 "row1" => '<span class="badge badge-primary font-13">' . $item->tipo_permiso . '</span>',
                 "row2" => Carbon::parse($item->fecha_presentacion)->format('d/m/Y'),
-                "row3" => Carbon::parse($item->updated_at)->format('d/m/Y'),
-                "row4" => $col3,
-                "row5" => $col4,
-                "row6" => $col5,
-                "row7" => $item->justificacion,
+                "row3" => Carbon::parse($item->fecha_uso)->format('d/m/Y'),
+                "row4" => Carbon::parse($item->updated_at)->format('d/m/Y'),
+                "row5" => $col3,
+                "row6" => $col4,
+                "row7" => $col5,
+                "row8" => $item->justificacion,
 
             );
         }
@@ -174,7 +152,7 @@ class ReporteController extends Controller
     public function licenciasDeptosPDF(Request $request)
     {
 
-        $permisoss = Empleado::selectRaw(' permisos.id, nombre, apellido, id_depto, permisos.tipo_permiso,permisos.fecha_presentacion,
+        $permisoss = Empleado::selectRaw(' permisos.id, nombre, apellido, id_depto, permisos.tipo_permiso,permisos.fecha_presentacion, permisos.fecha_uso,
         permisos.hora_inicio,permisos.hora_final, permisos.justificacion, permisos.updated_at, permisos.olvido, departamentos.nombre_departamento')
             ->join('departamentos', 'departamentos.id', '=', 'empleado.id_depto')
             ->join('permisos', 'permisos.empleado', '=', 'empleado.id');
@@ -198,8 +176,7 @@ class ReporteController extends Controller
             )->get();
             $departamentos=Departamento::all();
             //para imprimir el reporte
-            $pdf = PDF::loadView('Reportes.LicenciasReportes.ReporteLicencias', compact('permisos','departamentos','request'));
-            return $pdf->setPaper('A4', 'Landscape')->download('Licencias.pdf');
+          
         } else {
             $permisos = $permisoss->Where(
                 function ($query) {
@@ -218,10 +195,12 @@ class ReporteController extends Controller
                     ['departamentos.id', '=', $request->deptoR_R]
                 ]
             )->get();
-            $departamentos=Departamento::all();
+            $departamentos=Departamento::where('id','=',$request->deptoR_R)->get();
         }
 
         // echo dd($permisos);
+        $pdf = PDF::loadView('Reportes.LicenciasReportes.ReporteLicencias', compact('permisos','departamentos','request'));
+        return $pdf->setPaper('A4', 'Landscape')->download('Licencias.pdf');
 
        
     }

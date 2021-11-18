@@ -1,9 +1,9 @@
 //PARA CARGAR LOS DATOS DINAMICAMENTE EN LA TABLA
 var table=null;
 $("#deptoR").change(function () {
-   //alert($('#inicio').val());
-    //alert($('#fin').val());
-    if ($('#inicio').val() == '' && $('#fin').val()=='') {
+  // alert($('#inicio').val());
+   // alert($('#fin').val());
+    if ($('#inicio').val() == '' ||  $('#fin').val()=='') {
         $("#modalAlerta").modal();
     } else {
 
@@ -44,6 +44,7 @@ $("#deptoR").change(function () {
                 "url": "/admin/Licencias/Reporte/" + $('#inicio').val() + "/" + $('#fin').val() + "/" + $('#deptoR').val(),
                 "method": "GET",
                 "dataSrc": function (json) {
+                   
                     return json;
                 }
             },
@@ -58,6 +59,7 @@ $("#deptoR").change(function () {
                 { className: "align-middle", data: "row7" }
             ]
         });
+
     }//fin else de mostrar advertencia
 
 });
@@ -67,7 +69,7 @@ $("#deptoR").change(function () {
 //BOTON PARA GENERAR EL REPORTE
 $( "#descargarLicencias" ).click(function() {
 
-    if ($('#inicio').val() == '' && $('#fin').val()=='') {
+    if ($('#inicio').val() == '' || $('#fin').val()=='') {
         $("#modalAlerta").modal();
     } else {
         $('#inicioR').val($('#inicio').val());

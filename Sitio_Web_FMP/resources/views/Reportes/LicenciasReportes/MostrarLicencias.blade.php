@@ -130,7 +130,6 @@
                     class="btn btn-success dripicons-document-remove" id="descargarLicencias"></button>
                 </div>      
             </div>
-            <form action="" method="get" id="frmFiltrar">
                 <div class="row">
                     {{--  <div class="col-12 col-sm-2 col-md-2">
                         <button class="btn btn btn-outline-info btn-block" title="Filtrar Contenido" type="submit"> <i class="fa fa-filter" aria-hidden="true"></i> </button>
@@ -171,7 +170,6 @@
                         </div>
                  
                 </div>
-            </form>
             <br/>
             <table  class="table" style="width: 100%" id='permisosReporte'>
                 <thead>
@@ -179,6 +177,7 @@
                     <th class="col-sm-2">Nombre</th>
                     <th class="col-xs-1">Tipo</th>
                     <th class="col-xs-1">Fecha Presentación</th>
+                    <th class="col-xs-1">Fecha uso</th>
                     <th class="col-xs-1">Fecha Aceptación</th>
                     <th class="col-xs-1">Hora Incio</th>
                     <th class="col-xs-1">Hora Final</th>
