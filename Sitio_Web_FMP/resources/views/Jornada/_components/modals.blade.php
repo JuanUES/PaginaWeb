@@ -95,7 +95,7 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="tip">Proceso <span class="text-danger">*</span> </label>
-                                <select class="form-group select2" data-live-search="true" data-style="btn-white" name="proceso" id="procesoSeguimiento">
+                                <select class="form-group select2" data-live-search="true" data-style="btn-white" name="proceso" id="procesoSeguimiento" style="width: 100%;">
                                 </select>
                             </div>
                         </div>

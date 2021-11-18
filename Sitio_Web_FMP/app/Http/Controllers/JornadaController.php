@@ -78,7 +78,7 @@ class JornadaController extends Controller{
 
         $depto = (isset($request->depto) && strcmp($request->depto, 'all')!=0) ? $request->depto : false;
 
-        
+
         //verificamos si existe un periodo regitrado
         $query = null;
         if(!is_null($periodo) && !is_null($empleado)){
@@ -97,14 +97,14 @@ class JornadaController extends Controller{
                 }
             } else if ($user->hasRole('Recurso-Humano')) {
                 $query->whereIn('jornada.procedimiento', [$estados[3]['value'], $estados[4]['value'], $estados[5]['value']]);
-            } 
+            }
 
 
             //PARA AGREGAR LA FILA DE LA JORNADA DEL JEFES Y DE RECURSO HUMANO
             $jornada = null;
             if($this->fnCheckAddCurrentData()){
-                if( 
-                    ($depto!=false && $depto==$empleado->id_depto) 
+                if(
+                    ($depto!=false && $depto==$empleado->id_depto)
                     || (isset($request->depto) && strcmp($request->depto, 'all') == 0)
                     || (!isset($request->depto))
                     ){
@@ -137,7 +137,7 @@ class JornadaController extends Controller{
                 $q = $this->filterDeptosEmpleado($deptos, $query);
                 $query = !is_null($q) ? $q : $query;
             }
-              
+
             $jornadas = $query->get();
 
             //filtrar periodos por tipo de usuarios
@@ -146,7 +146,7 @@ class JornadaController extends Controller{
 
             if (!$user->hasRole('super-admin') && !$user->hasRole('Recurso-Humano')) {
                 if (
-                    ($user->hasRole('Jefe-Administrativo') && $user->hasRole('Jefe-Academico')) 
+                    ($user->hasRole('Jefe-Administrativo') && $user->hasRole('Jefe-Academico'))
                     || ($user->hasRole('Jefe-Administrativo') && $user->hasRole('Docente'))
                     || ($user->hasRole('Jefe-Academico') && strcmp($empleado->tipo_empleado, 'Administrativo')==0)
                     ) {
@@ -386,7 +386,7 @@ class JornadaController extends Controller{
             }else {//cuando es docente
                 $query->where('empleado.id', $empleado->id);
             }
-            
+
         }else{
             $query->where('empleado.tipo_empleado', $periodo->tipo);
         }
@@ -476,9 +476,12 @@ class JornadaController extends Controller{
         if($user->empleado_rf->id == $jornada->empleado_rf->id){
             if ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano')) {
                 unset($estados[1], $estados[2], $estados[3], $estados[4]);
-            } else if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo')) {
+            } else if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo') && !$user->hasRole('Docente')) {
                 unset($estados[5], $estados[4], $estados[1], $estados[2]);
-            } else if ($user->hasRole('Docente')) {
+            } else if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo') && $user->hasRole('Docente')) {
+                unset($estados[5], $estados[4], $estados[2]);
+            }
+            else if ($user->hasRole('Docente')) {
                 unset($estados[2], $estados[3], $estados[4], $estados[5]);
             }
         }else{
@@ -550,7 +553,7 @@ class JornadaController extends Controller{
             $query->where('empleado.tipo_empleado', 'Académico');
         } else if ($user->hasRole('Jefe-Administrativo')) {
             $query->where('empleado.tipo_empleado', 'Administrativo');
-        } 
+        }
 
         $empleados = $query->get();
 
@@ -560,7 +563,7 @@ class JornadaController extends Controller{
             $q->where("name", "Recurso-Humano");
         })->get();
 
-        
+
         //enviado los correos
         foreach ($jefes as $key => $item) {
             if(!is_null($item->email) && !empty($item->email))
@@ -568,7 +571,7 @@ class JornadaController extends Controller{
         }
 
         //Mail::to('mr15058@ues.edu.sv')->send(new JornadaEmail($empleado, $periodo, $deptos, $empleados));
-        
+
         // return view('Mails.jornada', compact(['empleado', 'periodo', 'deptos', 'empleados']));
 
         return redirect()->back();
@@ -589,7 +592,7 @@ class JornadaController extends Controller{
                 || ($user->hasRole('Jefe-Administrativo') && (strcmp($empleado->tipo_empleado, 'Administrativo')==0))
             ) {
                 $add = true;
-            } 
+            }
 
             // if ($user->hasRole('Jefe-Administrativo') && $user->hasRole('Jefe-Academico')) {
             //     $add = true;
