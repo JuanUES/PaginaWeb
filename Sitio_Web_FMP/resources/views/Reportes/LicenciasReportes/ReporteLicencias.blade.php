@@ -37,7 +37,7 @@
                 <h4 align="center">
                     Universidad de El Salvador<br>
                     Facultad Multidisciplinaria Paracentral <br>
-                    Departamento: {{ $dep->nombre_departamento }}
+                    Departamento: {{ $dep->nombre_departamento }} {{$request->deptoR_R}}
 
                     <br>
 

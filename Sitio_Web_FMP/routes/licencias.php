@@ -76,7 +76,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('admin/licencias/rrhh/observacionConst',[LicenciasJefeRRHHController::class,'observacionRRHHconst'])->name('rrhh/observacionConst');
 
     //ruta para generar el reporte
-    Route::post('admin/Licencias/Reporte/PDF',[ReporteController::class,'licenciasPDF'])->name('Reporte/licencias');
+    Route::post('admin/Licencias/Reporte/PDF',[ReporteController::class,'licenciasDeptosPDF'])->name('Reporte/licencias');
     /*END POST**/
 
 // Resportes

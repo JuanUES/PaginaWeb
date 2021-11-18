@@ -171,7 +171,7 @@ class ReporteController extends Controller
     //FIN DE DIBUJAR LAS TABLA PARA LAS LICENCIAS
 
     //PARA GENERAR EL REPORTE
-    public function licenciasPDF(Request $request)
+    public function licenciasDeptosPDF(Request $request)
     {
 
         $permisoss = Empleado::selectRaw(' permisos.id, nombre, apellido, id_depto, permisos.tipo_permiso,permisos.fecha_presentacion,
@@ -197,6 +197,9 @@ class ReporteController extends Controller
                 ]
             )->get();
             $departamentos=Departamento::all();
+            //para imprimir el reporte
+            $pdf = PDF::loadView('Reportes.LicenciasReportes.ReporteLicencias', compact('permisos','departamentos','request'));
+            return $pdf->setPaper('A4', 'Landscape')->download('Licencias.pdf');
         } else {
             $permisos = $permisoss->Where(
                 function ($query) {
@@ -220,8 +223,7 @@ class ReporteController extends Controller
 
         // echo dd($permisos);
 
-        $pdf = PDF::loadView('Reportes.LicenciasReportes.ReporteLicencias', compact('permisos','departamentos'));
-        return $pdf->setPaper('A4', 'Landscape')->download('Licencias.pdf');
+       
     }
     //FIN PARA GENERAR EL REPORTE
 }

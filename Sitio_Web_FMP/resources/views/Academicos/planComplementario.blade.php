@@ -310,7 +310,7 @@
                 <div class="col-xl-4">
                     <div class="nav flex-column nav-pills nav-pills-tab" id="v-pills-tab2" role="tablist" aria-orientation="vertical">
                     <h4>Síguenos en Facebook</h4>
-                    <div class="fb-page" data-href="https://www.facebook.com/Licenciatura-en-Educaci%C3%B3n-Plan-complementario-UES-FMP-102012865071802" data-tabs="" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/Licenciatura-en-Educaci%C3%B3n-Plan-complementario-UES-FMP-102012865071802" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/Licenciatura-en-Educaci%C3%B3n-Plan-complementario-UES-FMP-102012865071802">Licenciatura en Educación, Plan complementario;  UES - FMP</a></blockquote></div>
+                    <div class="fb-page" data-href="https://www.facebook.com/PComplementrio.FMP" data-tabs="" data-width="" data-height="" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/PComplementrio.FMP" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/PComplementrio.FMP">Licenciatura en Educación, Plan complementario;  UES - FMP</a></blockquote></div>
                     @if (count($complementario)>0)
                     <h4>Licenciaturas</h4>
                     @endif
