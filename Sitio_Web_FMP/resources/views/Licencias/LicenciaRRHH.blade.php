@@ -132,6 +132,77 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
     </div><!-- /.modal-dialog -->
 </div>
 
+<div id="modalExcel" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" 
+    aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myCenterModalLabel">
+                    <i class="fa fa-file-excel mdi-36px" style="margin: 0px;"></i> Licencias Excel</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <form action="">           
+                <div class="modal-body">            
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label for="tipo">Tipo Contrato</label>
+                                <select name="tipo" class="form-control select2" id="" style="width: 100%">
+                                    @foreach ($tipo_contrato as $item)
+                                        <option value="{{$item->id}}">{{$item->tipo}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label for="año">Año</label>
+                                <select name="año" id="" class="form-control select2" style="width: 100%">
+                                    <option value="" selected>Seleccione</option>
+                                    @foreach ($años as $item)
+                                        <option value="{{$item->año}}">{{$item->año}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label for="mes">Mes</label>
+                                <select name="mes" id="" class="form-control select2" style="width: 100%">
+                                   <option value="" selected>Seleccione</option>
+                                   <option value="1">Enero</option>
+                                   <option value="2">Febrero</option>
+                                   <option value="3">Marzo</option>
+                                   <option value="4">Abril</option>
+                                   <option value="5">Mayo</option>
+                                   <option value="6">Junio</option>
+                                   <option value="7">Julio</option>
+                                   <option value="8">Agosto</option>
+                                   <option value="9">Septiembre</option>
+                                   <option value="10">Octubre</option>
+                                   <option value="11">Noviembre</option>
+                                   <option value="12">Diciembre</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary"
+                        data-dismiss="modal"><i class="fa fa-ban"
+                        aria-hidden="true"></i> Cerrar</button>
+                    <button type="button" class="btn btn-success" id="guardar_rrhh">
+                        <li class="fa fa-file-excel"></li> Generar</button>
+                </div>   
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
 <!-- inicio Modal de registro -->
 <div class="modal fade bs-example-modal-lg" 
     role="dialog" aria-labelledby="myLargeModalLabel" 
@@ -485,6 +556,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                     </h3>
                 </div>
                 <div class="col-lg-1 order-last">
+                    <button type="button" id="btnArchivoExcel" class="btn btn-success"><i class="fa fa-file-excel"></i></button>
                 </div>                
             </div>
             <table  id="misLicenciasRRHHTable" class="table" style="width: 100%">

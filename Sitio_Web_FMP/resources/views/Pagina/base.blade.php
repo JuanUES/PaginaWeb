@@ -166,11 +166,12 @@
                                     <div class="arrow-down"></div>
                                 </a>
                                 <ul class="submenu">
+                                    <li><a href="{{ url('/admin') }}"><i class="fa fa-book-open"></i> Administrar </a></li>
                                     <li>
                                         <form method="POST" action="{{ route('logout') }}">
                                             @csrf
                                             <a href="route('logout')" onclick="event.preventDefault();
-                                            this.closest('form').submit(); ">{{ __('Cerrar sesión') }}</a>
+                                            this.closest('form').submit(); "><i class="fa fa-door-closed"></i> {{ __('Cerrar sesión') }} </a>
                                         </form>
                                     </li>
                                 </ul>

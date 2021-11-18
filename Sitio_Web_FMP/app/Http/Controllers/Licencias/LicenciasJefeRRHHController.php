@@ -22,7 +22,7 @@ class LicenciasJefeRRHHController extends Controller
 
     public function indexJefe(){
         if(Auth::check() && ($this->isJefe() || @Auth::user()->hasRole('super-admin'))){
-
+          
             $permisos = Permiso::selectRaw('
                     md5(permisos.id::text) as permiso, 
                     permisos.tipo_permiso, 
@@ -52,6 +52,8 @@ class LicenciasJefeRRHHController extends Controller
 
     public function indexRRHH(){
         if(Auth::check() && (@Auth::user()->hasRole('Recurso-Humano')|| @Auth::user()->hasRole('super-admin'))){
+            $tipo_contrato = DB::table('tipo_contrato')->select('id','tipo')->get();
+            $años = Permiso::selectRaw('distinct to_char(permisos.fecha_uso, \'YYYY\') as año')->get();
             $permisos = Permiso::selectRaw('md5(permisos.id::text) as permiso, 
                 tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,
                 observaciones,olvido,empleado.nombre,empleado.apellido')
@@ -60,7 +62,7 @@ class LicenciasJefeRRHHController extends Controller
                     {$query->where('permisos.estado','like','Enviado a RRHH')
                         ->orWhere('permisos.estado','like','Aceptado');}
                 )->get();
-            return view('Licencias.LicenciaRRHH',compact('permisos'));
+            return view('Licencias.LicenciaRRHH',compact('permisos','años','tipo_contrato'));
         }else {
             return redirect()->route('index');
         }

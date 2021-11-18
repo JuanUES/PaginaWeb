@@ -66,6 +66,8 @@ $( function () {
                     { className: "align-middle text-center", data: "col6" }
                 ]               
             });  
+            
+            $('#btnArchivoExcel').click(function(){$('#modalExcel').modal();});
     }
 
 );
