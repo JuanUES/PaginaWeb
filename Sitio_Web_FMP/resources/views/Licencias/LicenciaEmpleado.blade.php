@@ -57,6 +57,7 @@
                                 <option value="LC/GS">L.C./G.S.</option>
                                 <option value="LS/GS">L.S./G.S.</option>
                                 <option value="INCAP">INCAP</option>
+                                <option value="DUELO O PATERNIDAD">DUELO O PATERNIDAD</option>
                                 <option value="L OFICIAL">L.OFICIAL</option>
                                 <option value="T COMP">T.COMP.</option>
                                 <option value="CITA MEDICA">CITA MEDICA</option>

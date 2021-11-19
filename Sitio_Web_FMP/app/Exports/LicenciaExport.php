@@ -2,17 +2,20 @@
 
 namespace App\Exports;
 
-use App\Models\Jornada\Jornada;
+use App\Models\Licencias\Permiso;
+use App\Models\General\Empleado;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 
 class LicenciaExport implements FromView{
-    public $periodo;
-    public $depto;
+    public $tipo_contrato;
+    public $anio;
+    public $mes;
 
-    public function __construct($periodo, $depto){
-        $this->periodo = $periodo;
-        $this->depto = $depto;
+    public function __construct($tipo_contrato, $anio, $mes){
+        $this->tipo_contrato = $periodo;
+        $this->anio = $anio;
+        $this->mes = $mes;
     }
     /**
     * @return \Illuminate\Support\Collection
@@ -23,19 +26,20 @@ class LicenciaExport implements FromView{
     // }
 
     public function view(): View{
-        $query = Jornada::select('jornada.*')
-                        ->where('id_periodo', $this->periodo)
-                        ->join('empleado', 'empleado.id', 'jornada.id_emp')
-                        // ->join('periodos as p', 'p.id', 'jornada.id_periodo')
-                        ->whereIn('jornada.procedimiento',['aceptado','enviado a recursos humanos'])
-                        ->whereIn('tipo_empleado', ['Académico','Administrativo'] );
+        $query = Empleado::select('*')
+            ->join('Permiso','Permiso.empleado','=','Empleado.id')
+            ->where('Permiso.estado','like','Aceptado');
 
-        if(!is_null($this->depto)){
-            $query->where('empleado.id_depto', $this->depto);
-        }
+        return view('Licencias.exports.licencias',compact(''));
+    }
 
-        $jornadas = $query->get();
-
-        return view();
+    public function subSelect($query){
+        
+       
+       
+               
+              to_char(fecha_uso,'YYYY')='2021') as hrs_lc_gs,
+        return $query->selectRaw('(select to_char(sum(hora_final-hora_inicio),\'HH24:MI\')
+        from permisos tipo_permiso like ?  where empleado=e.id and estado like 'Aceptado' and',[]);
     }
 }

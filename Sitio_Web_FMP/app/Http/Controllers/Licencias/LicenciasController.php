@@ -29,24 +29,11 @@ class LicenciasController extends Controller
         if(is_null(auth()->user()->empleado))
         {
             return view('Licencias.LicenciaEmpleado');
+
         }else{
 
             $empleado = Empleado::findOrFail(auth()->user()->empleado);  
-            $permisos = Permiso::selectRaw('md5(id::text) as permiso, tipo_representante, tipo_permiso, fecha_uso,
-                fecha_presentacion,hora_inicio,hora_final,justificacion,observaciones,estado')
-                ->Where( function($query){
-                        $query->Where('tipo_permiso','like','LC/GS')
-                        ->orWhere('tipo_permiso','like','LS/GS')
-                        ->orWhere('tipo_permiso','like','T COMP')
-                        ->orWhere('tipo_permiso','like','INCAP')
-                        ->orWhere('tipo_permiso','like','L OFICIAL')
-                        ->orWhere('tipo_permiso','like','CITA MEDICA');
-                    }
-                )->where( function($query){
-                    $query->Where('empleado','=',auth()->user()->empleado)
-                        ->Where('estado','not like','CANCELADO');
-                })->orderBy('fecha_presentacion')->get();  
-            return view('Licencias.LicenciaEmpleado',compact('empleado','permisos'));
+            return view('Licencias.LicenciaEmpleado',compact('empleado'));
         }
     }
 
@@ -59,14 +46,15 @@ class LicenciasController extends Controller
                 ->orWhere('tipo_permiso','like','T COMP')
                 ->orWhere('tipo_permiso','like','INCAP')
                 ->orWhere('tipo_permiso','like','L OFICIAL')
-                ->orWhere('tipo_permiso','like','CITA MEDICA');
+                ->orWhere('tipo_permiso','like','CITA MEDICA')
+                ->orWhere('tipo_permiso','like','DUELO O PATERNIDAD');
             }
         )->where('empleado','=',auth()->user()->empleado)->orderBy('fecha_presentacion')->get();
         
         foreach ($permisos as $item) {
             # code...
             $estado = null;
-            if($item->estado =='Guardado' ) 
+            if($item->estado =='Guardado') 
                 $estado = '<span class="badge badge-primary font-13">'.$item->estado.'</span>';
             
             if($item->estado =='Cancelado' or $item->estado =='Observaciones de RRHH' or $item->estado =='Observaciones de Jefatura') 
@@ -106,7 +94,7 @@ class LicenciasController extends Controller
             $data[] = array(
                 "row0" => Carbon::parse($item->fecha_presentacion)->format('d/m/Y'),
                 "row1" => Carbon::parse($item->fecha_uso)->format('d/m/Y'),
-                "row2" => '<span class="badge badge-primary font-13">'.$item->tipo_permiso.'</span>',
+                "row2" => '<span class="badge badge-primary">'.$item->tipo_permiso.'</span>',
                 "row3" => date('H:i', strtotime($item->hora_inicio)),
                 "row4" => date('H:i', strtotime($item->hora_final)),
                 "row5" => '<p class="text-break"> '.Carbon::parse($item->fecha_uso.'T'.$item->hora_inicio)->diffAsCarbonInterval(Carbon::parse($item->fecha_uso.'T'.$item->hora_final)).'</p>',

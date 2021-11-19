@@ -196,7 +196,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                     <button type="button" class="btn btn-secondary"
                         data-dismiss="modal"><i class="fa fa-ban"
                         aria-hidden="true"></i> Cerrar</button>
-                    <button type="button" class="btn btn-success" id="guardar_rrhh">
+                    <button type="button" class="btn btn-success" id="generarExcel">
                         <li class="fa fa-file-excel"></li> Generar</button>
                 </div>   
             </form>

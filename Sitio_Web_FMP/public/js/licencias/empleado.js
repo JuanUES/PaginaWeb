@@ -257,6 +257,7 @@ $('.modal').on('hidden.bs.modal',function(){
     $(".alert").hide();$("form").trigger("reset");
     $(".select2").val(null).trigger("change");
     $(".select2").select2();
+    $(".select2").prop("disabled", false);
     $('#idPermiso').val(null);
     enableform('registroForm');
     $('#observaciones').summernote('enable');
