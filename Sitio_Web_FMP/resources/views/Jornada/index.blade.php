@@ -261,19 +261,23 @@
 
     $("#id_periodo").on('change', function () {//para cargar los empleados dependiendo del periodo
         let id = $(this).val();
-        let is_edit =  $("#is_edit").val();
-        if(id!=='' && is_edit === 'false'){
+        let is_edited = $("#is_edited").val();
+        console.log(is_edited+ ' antes if');
+        if(id!=='' && is_edited == 'false'){
+            console.log(is_edited+ ' if');
             $("#jornada-div :input").prop("disabled", false);
+            is_edited =  $("#is_edited").val('false');
             fnUpdatePeriodoSelect(id);
         }else{
+            console.log(is_edited + ' else');
             $("#jornada-div :input").prop("disabled", true);
-            is_edit =  $("#is_edit").val('true');
+            //is_edited =  $("#is_edited").val('true');
         }
     });
 
     function fnUpdatePeriodoSelect(id, updateEmpleado = false, empleado = null, setPeriodo = false, periodo = null){
         let data = getData('GET', `{{ url('admin/jornada/periodoEmpleados') }}/`+id+'?updateEmpleado='+updateEmpleado,'#notificacion_jornada');
-        let is_edit = $("#is_edit").val('true');
+        let is_edited = $("#is_edited").val('true');
         data.then(function(response){
             $("#id_emp").val(null).trigger('change');
             $('#id_emp').empty();
@@ -282,21 +286,21 @@
                 $("#id_emp").append('<option value="'+element.id+'">'+element.apellido+', '+element.nombre+'</option>');
             });
 
-            if(setPeriodo && periodo!==null){
+            if(setPeriodo && periodo!==null  || is_edited == 'true'){
                 $("#id_periodo").val(periodo).trigger('change');
                 $("#id_periodo").selectpicker('refresh');
                 $("#id_periodo_text").prop('disabled', false);
                 $("#id_periodo_text").val($("#id_periodo").val());
                 $("#id_periodo").prop('disabled', true);
             }
-            if(updateEmpleado && empleado!==null || is_edit == 'true'){//para uctualizar el dato del empleado
+            if(updateEmpleado && empleado!==null || is_edited == 'true'){//para uctualizar el dato del empleado
                 $("#id_emp").val(empleado).trigger('change');
                 $("#_idaux").val(empleado).trigger('change');
                 $("#id_emp_text").prop('disabled', false);
                 $("#id_emp_text").val($("#id_emp").val());
                 $("#id_emp").prop('disabled', 'disabled');
             }
-
+            is_edited =  $("#is_edited").val('false');
             $('#id_emp').selectpicker('refresh');
         });
     }

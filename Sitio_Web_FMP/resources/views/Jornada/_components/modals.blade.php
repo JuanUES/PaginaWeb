@@ -198,7 +198,7 @@
                         <div class="row justify-content-between">
                             <div class="col-12 col-sm-12">
                                 <div class="form-group">
-                                    <input type="hidden" name="is_edit" id="is_edit" value="false" disabled>
+                                    <input type="hidden" name="is_edited" id="is_edited" value="false" disabled>
                                     <input type="hidden" name="id_periodo" id="id_periodo_text" disabled>
                                     <label for="periodo" class="control-label">{{ 'Periodo' }} <span class="text-danger">*</span> </label>
                                     <select class="form-group select2" data-live-search="true" style="width: 100%" data-style="btn-white" name="id_periodo" id="id_periodo">
