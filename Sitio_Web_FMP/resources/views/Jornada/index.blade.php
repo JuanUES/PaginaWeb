@@ -261,16 +261,19 @@
 
     $("#id_periodo").on('change', function () {//para cargar los empleados dependiendo del periodo
         let id = $(this).val();
-        if(id!==''){
+        let is_edit =  $("#is_edit").val();
+        if(id!=='' && is_edit === 'false'){
             $("#jornada-div :input").prop("disabled", false);
             fnUpdatePeriodoSelect(id);
         }else{
             $("#jornada-div :input").prop("disabled", true);
+            is_edit =  $("#is_edit").val('true');
         }
     });
 
     function fnUpdatePeriodoSelect(id, updateEmpleado = false, empleado = null, setPeriodo = false, periodo = null){
         let data = getData('GET', `{{ url('admin/jornada/periodoEmpleados') }}/`+id+'?updateEmpleado='+updateEmpleado,'#notificacion_jornada');
+        let is_edit = $("#is_edit").val('true');
         data.then(function(response){
             $("#id_emp").val(null).trigger('change');
             $('#id_emp').empty();
@@ -286,7 +289,7 @@
                 $("#id_periodo_text").val($("#id_periodo").val());
                 $("#id_periodo").prop('disabled', true);
             }
-            if(updateEmpleado && empleado!==null){//para uctualizar el dato del empleado
+            if(updateEmpleado && empleado!==null || is_edit == 'true'){//para uctualizar el dato del empleado
                 $("#id_emp").val(empleado).trigger('change');
                 $("#_idaux").val(empleado).trigger('change');
                 $("#id_emp_text").prop('disabled', false);
