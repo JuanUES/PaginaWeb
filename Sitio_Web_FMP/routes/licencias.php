@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('admin/Constancia/Tabla/Reporte/{f1}/{f2}/{d}',[ReporteController::class,'mostrarTablaConst']);//PARA LA TABLA DE LA VISTA
     //rutas para reportes de licencias por acuerdo
     Route::get('admin/LicenciasAcuerdo/Reporte',[ReporteController::class,'indexBladeAcuerdos'])->name('reporteAcuerdo/vista');//para visualizar los datos en el blade
+    Route::get('admin/LicenciasAcuerdo/Tabla/Reporte/{f1}/{f2}/{d}',[ReporteController::class,'mostrarTablaLicenciasAcuer']);//PARA LA TABLA DE LA VISTA
 
     //fin de rutas para reportes de licencias por acuerdo
     

@@ -194,6 +194,70 @@ class ReporteController extends Controller
     }
     //FIN DE DIBUJAR LAS TABLA PARA LAS LICENCIAS
 
+    //PARA MOSTRAR EN LA TABLA DE LA VISTA DE LICENCIAS POR ACUERDO
+    public function mostrarTablaLicenciasAcuer($fecha1, $fecha2, $dep)
+    {
+        $permisoss = Empleado::selectRaw(' permisos.id, nombre, apellido, permisos.tipo_permiso,permisos.fecha_presentacion,permisos.fecha_uso,
+        permisos.hora_inicio,permisos.hora_final,permisos.fecha_uso, permisos.justificacion, permisos.updated_at, permisos.olvido, departamentos.nombre_departamento')
+            ->join('departamentos', 'departamentos.id', '=', 'empleado.id_depto')
+            ->join('permisos', 'permisos.empleado', '=', 'empleado.id');
+
+        if ($dep == 'all') {
+            $permisos = $permisoss->Where(
+                function ($query) {
+                    $query->Where('tipo_permiso', 'like', 'INCAPACIDAD/A')
+                        ->orWhere('tipo_permiso', 'like', 'ESTUDIO')
+                        ->orWhere('tipo_permiso', 'like', 'FUMIGACIÓN')
+                        ->orWhere('tipo_permiso', 'like', 'L.OFICIAL/A')
+                        ->orWhere('tipo_permiso', 'like', 'OTROS')
+                        ->orWhere('tipo_permiso', 'like', 'CITA MEDICA');
+                }
+            )->where(
+                [
+                    ['permisos.estado', '=', 'Aceptado'],
+                    ['permisos.fecha_uso', '>=', $fecha1],
+                    ['permisos.fecha_presentacion', '<=', $fecha2]
+                ]
+            )->get();
+        } else {
+            $permisos = $permisoss->Where(
+                function ($query) {
+                    $query->Where('tipo_permiso', 'like', 'INCAPACIDAD/A')
+                    ->orWhere('tipo_permiso', 'like', 'ESTUDIO')
+                    ->orWhere('tipo_permiso', 'like', 'FUMIGACIÓN')
+                    ->orWhere('tipo_permiso', 'like', 'L.OFICIAL/A')
+                    ->orWhere('tipo_permiso', 'like', 'OTROS')
+                    ->orWhere('tipo_permiso', 'like', 'CITA MEDICA');
+                }
+            )->where(
+                [
+                    ['permisos.estado', '=', 'Aceptado'],
+                    ['permisos.fecha_uso', '>=', $fecha1],
+                    ['permisos.fecha_presentacion', '<=', $fecha2],
+                    ['departamentos.id', '=', $dep]
+                ]
+            )->get();
+        }
+        // echo dd($permisos);
+
+        foreach ($permisos as $item) {
+            # code...
+            
+            $data[] = array(
+                "row0" => $item->nombre . ' ' . $item->apellido,
+                "row1" => '<span class="badge badge-primary font-13">' . $item->tipo_permiso . '</span>',
+                "row2" => Carbon::parse($item->fecha_uso)->format('d/m/Y'),
+                "row3" => Carbon::parse($item->fecha_presentacion)->format('d/m/Y'),
+                "row4" => $item->justificacion,
+
+            );
+        }
+
+        return isset($data) ? response()->json($data, 200, []) : response()->json([], 200, []);
+    }
+
+    //FIN MOSTRAR EN LA TABLA DE LA VISTA DE LICENCIAS POR ACUERDO
+
     //PARA GENERAR EL REPORTE DE CONSTANCIAS EN PDF
     public function ConstDeptosPDF(Request $request)
     {
