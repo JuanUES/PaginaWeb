@@ -263,7 +263,7 @@
         let id = $(this).val();
         let is_edited = $("#is_edited").val();
         if(id!=='' && is_edited == 'false'){
-=            $("#jornada-div :input").prop("disabled", false);
+            $("#jornada-div :input").prop("disabled", false);
             is_edited =  $("#is_edited").val('false');
             fnUpdatePeriodoSelect(id);
         }else{
