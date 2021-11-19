@@ -373,9 +373,11 @@
                                         <li>
                                             <a href="{{ route('reportesLicencias/vista') }}">Licencias</a>
                                         </li>
+
                                         <li>
-                                            <a href="{{--{{route('reporteConst/vista')}}--}}">Licencias por Acuerdo</a>
+                                            <a href="{{route('reporteAcuerdo/vista')}}">Licencias Acuerdo</a>
                                         </li>
+                                       
                                         <li>
                                             <a href="{{ route('reporteConst/vista') }}">Constancia Olvido</a>
                                         </li>
@@ -388,6 +390,7 @@
                                     </ul>
                                 </li>
                                 <!--fin de para los horarios-->
+                               
 
                             @endif
 

@@ -24,11 +24,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('admin/ConstanciaOlvido/EntradaSalida/{fecha}',[ConstanciaOlvidoController::class,'SalidaEntrada']);
 
     Route::get('admin/ConstanciaOlvido/Reporte',[ReporteController::class,'index'])->name('index/reporteConst');
-   
 
     Route::get('admin/ConstanciaOlvido/Report',[ReporteController::class,'downloadPDF'])->name('constR');
     Route::get('admin/Constancia/Reporte',[ReporteController::class,'indexConsResporte'])->name('reporteConst/vista');//para visualizar los datos en el blade
     Route::get('admin/Constancia/Tabla/Reporte/{f1}/{f2}/{d}',[ReporteController::class,'mostrarTablaConst']);//PARA LA TABLA DE LA VISTA
+    //rutas para reportes de licencias por acuerdo
+    Route::get('admin/LicenciasAcuerdo/Reporte',[ReporteController::class,'indexBladeAcuerdos'])->name('reporteAcuerdo/vista');//para visualizar los datos en el blade
+
+    //fin de rutas para reportes de licencias por acuerdo
     
     //para visualizar la vista
     Route::get('admin/Licencias/Aceptadas',[ReporteController::class,'indexBladeLicencias'])->name('reportesLicencias/vista');//para visualizar los datos en el blade

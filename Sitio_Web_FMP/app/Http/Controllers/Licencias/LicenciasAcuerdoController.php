@@ -62,11 +62,11 @@ class LicenciasAcuerdoController extends Controller
         $data =  Permiso::selectRaw('permisos.id,permisos.empleado, CONCAT(empleado.nombre,\' \',empleado.apellido) e_nombre, to_char(permisos.fecha_uso, \'DD/MM/YYYY\') inicio,
         to_char(permisos.fecha_presentacion,\'DD/MM/YYYY\') fin, permisos.justificacion, permisos.tipo_permiso')
         ->join('empleado','empleado.id','=','permisos.empleado')
-        ->whereRaw('tipo_permiso=\'Incapacidad\' or
-                    tipo_permiso=\'Estudio\' or
-                    tipo_permiso=\'Fumigación\' or
-                    tipo_permiso=\'Misión Oficial\' or
-                    tipo_permiso=\'Otros\'')
+        ->whereRaw('tipo_permiso=\'INCAPACIDAD/A\' or
+                    tipo_permiso=\'ESTUDIO\' or
+                    tipo_permiso=\'FUMIGACIÓN\' or
+                    tipo_permiso=\'L.OFICIAL/A\' or
+                    tipo_permiso=\'OTROS\'')
         ->get()->toJson();
         return $data;
         //echo dd($data);

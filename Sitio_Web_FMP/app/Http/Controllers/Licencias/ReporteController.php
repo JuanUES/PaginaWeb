@@ -13,6 +13,15 @@ use PhpParser\Node\Expr\FuncCall;
 
 class ReporteController extends Controller
 {
+    //PARA MOSTRAR LA VISTA DE LICENCIAS POR ACUERDO
+    public function indexBladeAcuerdos(){
+        $deptos = Departamento::all();
+        // echo dd($deptos);
+        return view('Reportes.LicenciasAcuerdo.MostrarLicenciasAcuerdos', compact('deptos'));
+
+    }
+    //FIN DE MOSTRAR LAS LICENCIAS POR ACUERDO
+
     //PARA MOSTRAR LA VISTA EN LICENCIAS
     public function indexBladeLicencias()
     {
