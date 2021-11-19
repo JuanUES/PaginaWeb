@@ -386,7 +386,6 @@ class JornadaController extends Controller{
             }else {//cuando es docente
                 $query->where('empleado.id', $empleado->id);
             }
-
         }else{
             $query->where('empleado.tipo_empleado', $periodo->tipo);
         }
@@ -394,17 +393,14 @@ class JornadaController extends Controller{
 
         //verificar si existe la jornada ya registrada para el empleado
         $existe = Jornada::where('id_periodo', $periodo->id)->where('id_emp', $empleado->id)->where('estado', 'activo')->count();
-        $is_jefe = Empleado::where('jefe', $empleado->id)->where('estado', true)->count();
+        //$is_jefe = Empleado::where('jefe', $empleado->id)->where('estado', true)->count();
 
 
         //codigo para agregar el empleado jefe de los demas
-        if($existe<=0){
+        if($existe<=0 || $is_edit=='true'){
             if ($this->fnCheckAddCurrentData() && (strcmp($empleado->tipo_empleado, $periodo->tipo)==0)) {
-
-
                 if (!$empleados->contains($empleado))
                     $empleados->prepend($empleado);
-
             }
         }
 
@@ -583,8 +579,6 @@ class JornadaController extends Controller{
         $empleado = $user->empleado_rf;
         $add = false;
         if(!$user->hasRole('super-admin') && !$user->hasRole('Recurso-Humano')){
-
-
             if (
                 ($user->hasRole('Jefe-Administrativo') && $user->hasRole('Jefe-Academico'))
                 || ($user->hasRole('Jefe-Administrativo') && $user->hasRole('Docente'))
@@ -593,7 +587,6 @@ class JornadaController extends Controller{
             ) {
                 $add = true;
             }
-
             // if ($user->hasRole('Jefe-Administrativo') && $user->hasRole('Jefe-Academico')) {
             //     $add = true;
             // } else if ($user->hasRole('Jefe-Administrativo') && strcmp('Académico', $empleado->tipo_empleado)==0) {

@@ -77,7 +77,7 @@
                     <th class="text-center">Acciones</th>
                 </tr>
             </thead>
-            <tbody> 
+            <tbody>
                 @foreach($jornadas as $item)
                     <tr {!! ($item->empleado_rf->id == Auth::user()->empleado_rf->id) ? 'style="background-color: rgba(21, 174, 234, 0.1);"' : '' !!} >
                         <th  data-sort="{{ strtotime($item->created_at) }}">{{ date('d/m/Y H:m', strtotime($item -> created_at)) }}</th>
@@ -105,11 +105,11 @@
                         </td>
                         <td class="text-center">
                             <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalView" class="btn btn-outline-success btn-sm" onclick="fnDetalleJornada(this);" title="Detalle"><i class="fa fa-info-circle fa-fw" aria-hidden="true"></i></button>
-                           
+
                             {{-- @if(!($item->procedimiento=='aceptado'))
                                 <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)" title="Seguimiento"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
                             @endif --}}
-{{-- 
+{{--
                             @if (($item->empleado_rf->id == Auth::user()->empleado_rf->id))
                                 @if($item->procedimiento=='guardado' || $item->procedimiento=='recursos humanos lo ha regresado a jefatura')
                                     <button data-key="{{ ($item->id) }}" data-toggle="modal" data-target="#modalProcedimiento" class="btn btn-outline-info btn-sm" onclick="fnProcedimiento(this)" title="Seguimiento"><i class="fa fa-check-circle fa-fw" aria-hidden="true"></i></button>
@@ -280,13 +280,11 @@
             });
 
             if(setPeriodo && periodo!==null){
-                $("#id_periodo").val(periodo);
-                $('#id_periodo').selectpicker('refresh');
-
-
+                $("#id_periodo").val(periodo).trigger('change');
+                $("#id_periodo").selectpicker('refresh');
                 $("#id_periodo_text").prop('disabled', false);
                 $("#id_periodo_text").val($("#id_periodo").val());
-                $("#id_periodo").prop('disabled', 'disabled');
+                $("#id_periodo").prop('disabled', true);
             }
             if(updateEmpleado && empleado!==null){//para uctualizar el dato del empleado
                 $("#id_emp").val(empleado).trigger('change');
