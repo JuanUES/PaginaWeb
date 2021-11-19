@@ -262,16 +262,12 @@
     $("#id_periodo").on('change', function () {//para cargar los empleados dependiendo del periodo
         let id = $(this).val();
         let is_edited = $("#is_edited").val();
-        console.log(is_edited+ ' antes if');
         if(id!=='' && is_edited == 'false'){
-            console.log(is_edited+ ' if');
-            $("#jornada-div :input").prop("disabled", false);
+=            $("#jornada-div :input").prop("disabled", false);
             is_edited =  $("#is_edited").val('false');
             fnUpdatePeriodoSelect(id);
         }else{
-            console.log(is_edited + ' else');
             $("#jornada-div :input").prop("disabled", true);
-            //is_edited =  $("#is_edited").val('true');
         }
     });
 
@@ -378,7 +374,6 @@
                             </span>`;
 
             $('#fechaRegistroDetalle').html(fecha.toLocaleDateString("es-ES", options));
-            console.log(nota);
             if(nota != null){
                 $('#rrNota').html(contNota);
             }else{
