@@ -9,6 +9,7 @@ use App\Models\Licencias\Permiso;
 use PDF;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use PhpParser\Node\Expr\FuncCall;
 
 class ReporteController extends Controller
 {
@@ -24,19 +25,6 @@ class ReporteController extends Controller
     //TODAS LAS FUNCIONES PARA EL REPORTE CONSTANCIA DE OLVIDO
     public function indexConsResporte()
     {
-        $permisos = Empleado::selectRaw(' permisos.id, nombre, apellido, permisos.tipo_permiso,permisos.fecha_presentacion,
-        permisos.hora_inicio,permisos.hora_final, permisos.justificacion, permisos.updated_at, departamentos.nombre_departamento')
-            ->join('departamentos', 'departamentos.id', '=', 'empleado.id_depto')
-            ->join('permisos', 'permisos.empleado', '=', 'empleado.id')
-            ->where(
-                [
-                    ['permisos.estado', '=', 'Aceptado'],
-                    ['permisos.fecha_presentacion', '>=', '2021-11-01'],
-                    ['permisos.fecha_presentacion', '<=', '2021-11-30']
-                ]
-            )->get();
-
-        //echo dd($permisos);
         $deptos = Departamento::all();
         // echo dd($deptos);
         return view('Reportes.Constancias.MostrarConstancia', compact('deptos'));
@@ -69,6 +57,55 @@ class ReporteController extends Controller
         $pdf = PDF::loadView('Licencias.ConstanciaReporte', compact('data'));
         return $pdf->download('Constancia.pdf');
     }
+    //PARA MOSTRAR EN LA TABLA DE CONSTANCIA DE OLVIDO DE MARCAJE
+    public function mostrarTablaConst($fecha1, $fecha2, $dep)
+    {
+        $permisoss = Empleado::selectRaw(' permisos.id, nombre, apellido, permisos.tipo_permiso,permisos.fecha_presentacion,permisos.fecha_uso,
+        permisos.hora_inicio,permisos.fecha_uso, permisos.justificacion, permisos.updated_at, permisos.olvido, departamentos.nombre_departamento')
+            ->join('departamentos', 'departamentos.id', '=', 'empleado.id_depto')
+            ->join('permisos', 'permisos.empleado', '=', 'empleado.id');
+
+        if ($dep == 'all') {
+            $permisos = $permisoss->where(
+                [
+                    ['permisos.estado', '=', 'Aceptado'],
+                    ['permisos.tipo_permiso', '=', 'Const. olvido'],
+                    ['permisos.fecha_uso', '>=', $fecha1],
+                    ['permisos.fecha_uso', '<=', $fecha2]
+                ]
+            )->get();
+        } else {
+            $permisos = $permisoss->where(
+                [
+                    ['permisos.estado', '=', 'Aceptado'],
+                    ['permisos.tipo_permiso', '=', 'Const. olvido'],
+                    ['permisos.fecha_uso', '>=', $fecha1],
+                    ['permisos.fecha_uso', '<=', $fecha2],
+                    ['departamentos.id', '=', $dep]
+                ]
+            )->get();
+        }
+        // echo dd($permisos);
+
+        foreach ($permisos as $item) {
+            # CODIGO PARA MOSTRAR EN LA TABLA
+            $data[] = array(
+                "row0" => $item->nombre . ' ' . $item->apellido,
+                "row1" => '<span class="badge badge-primary font-13">' . $item->tipo_permiso . '</span>',
+                "row2" => $item->olvido,
+                "row3" => date('H:i', strtotime($item->hora_inicio)),
+                "row4" => Carbon::parse($item->fecha_uso)->format('d/m/Y'),
+                "row5" => Carbon::parse($item->fecha_presentacion)->format('d/m/Y'),
+                "row6" => Carbon::parse($item->updated_at)->format('d/m/Y'),
+                "row7" =>  $item->justificacion,
+
+            );
+        }
+
+        return isset($data) ? response()->json($data, 200, []) : response()->json([], 200, []);
+    }
+    //FIN DE MOSTRAR EN LA TABLA CONSTANCIA DE OLVIDO DE MARCAJE
+
     //PARA DIBUJAR LAS LA TABLA PARA LAS LICENCIAS
     public function mostrarTablaLicencias($fecha1, $fecha2, $dep)
     {
@@ -148,7 +185,60 @@ class ReporteController extends Controller
     }
     //FIN DE DIBUJAR LAS TABLA PARA LAS LICENCIAS
 
-    //PARA GENERAR EL REPORTE
+    //PARA GENERAR EL REPORTE DE CONSTANCIAS EN PDF
+    public function ConstDeptosPDF(Request $request)
+    {
+
+        $permisoss = Empleado::selectRaw(' permisos.id, nombre, apellido, id_depto, permisos.tipo_permiso,permisos.fecha_presentacion, permisos.fecha_uso,
+        permisos.hora_inicio,permisos.hora_final, permisos.justificacion, permisos.updated_at, permisos.olvido, departamentos.nombre_departamento')
+            ->join('departamentos', 'departamentos.id', '=', 'empleado.id_depto')
+            ->join('permisos', 'permisos.empleado', '=', 'empleado.id');
+
+        if ($request->deptoR_R == 'all') {
+            $permisos = $permisoss->where(
+                [
+                    ['permisos.estado', '=', 'Aceptado'],
+                    ['permisos.tipo_permiso', '=', 'Const. olvido'],
+                    ['permisos.fecha_uso', '>=', $request->inicioR],
+                    ['permisos.fecha_uso', '<=', $request->finR]
+                ]
+            )->get();
+            //para mostrar solo los departamentos que tienen permisos
+            $departamentos = Empleado::selectRaw(' DISTINCT id_depto,departamentos.nombre_departamento,departamentos.id')
+                ->join('departamentos', 'departamentos.id', '=', 'empleado.id_depto')
+                ->join('permisos', 'permisos.empleado', '=', 'empleado.id')
+                ->where(
+                    [
+                        ['permisos.estado', '=', 'Aceptado'],
+                        ['permisos.tipo_permiso', '=', 'Const. olvido'],
+                        ['permisos.fecha_uso', '>=', $request->inicioR],
+                        ['permisos.fecha_uso', '<=', $request->finR]
+                    ]
+                )->get();
+            //para imprimir el reporte
+
+        } else {
+            $permisos = $permisoss->where(
+                [
+                    ['permisos.estado', '=', 'Aceptado'],
+                    ['permisos.tipo_permiso', '=', 'Const. olvido'],
+                    ['permisos.fecha_uso', '>=', $request->inicioR],
+                    ['permisos.fecha_uso', '<=', $request->finR],
+                    ['departamentos.id', '=', $request->deptoR_R]
+                ]
+            )->get();
+
+            $departamentos = Departamento::where('id', '=', $request->deptoR_R)->get();
+        }
+
+        // echo dd($permisos);
+       
+        $pdf = PDF::loadView('Reportes.Constancias.ReporteConstancias', compact('permisos', 'departamentos', 'request'));
+        return $pdf->setPaper('A4', 'Landscape')->download('Constancias.pdf');
+    }
+    //FIN DE GENERAR EL REPORTE DE CONTANCIAS EN PDF
+
+    //PARA GENERAR EL REPORTE DE LICENCIAS EN PDF
     public function licenciasDeptosPDF(Request $request)
     {
 
@@ -170,13 +260,32 @@ class ReporteController extends Controller
             )->where(
                 [
                     ['permisos.estado', '=', 'Aceptado'],
-                    ['permisos.fecha_presentacion', '>=', $request->inicioR],
-                    ['permisos.fecha_presentacion', '<=', $request->finR]
+                    ['permisos.fecha_uso', '>=', $request->inicioR],
+                    ['permisos.fecha_uso', '<=', $request->finR]
                 ]
             )->get();
-            $departamentos=Departamento::all();
+            //para mostrar solo los departamentos que tienen permisos
+            $departamentos = Empleado::selectRaw(' DISTINCT id_depto,departamentos.nombre_departamento,departamentos.id')
+                ->join('departamentos', 'departamentos.id', '=', 'empleado.id_depto')
+                ->join('permisos', 'permisos.empleado', '=', 'empleado.id')
+                ->Where(
+                    function ($query) {
+                        $query->Where('tipo_permiso', 'like', 'LC/GS')
+                            ->orWhere('tipo_permiso', 'like', 'LS/GS')
+                            ->orWhere('tipo_permiso', 'like', 'T COMP')
+                            ->orWhere('tipo_permiso', 'like', 'INCAP')
+                            ->orWhere('tipo_permiso', 'like', 'L OFICIAL')
+                            ->orWhere('tipo_permiso', 'like', 'CITA MEDICA');
+                    }
+                )->where(
+                    [
+                        ['permisos.estado', '=', 'Aceptado'],
+                        ['permisos.fecha_uso', '>=', $request->inicioR],
+                        ['permisos.fecha_uso', '<=', $request->finR]
+                    ]
+                )->get();
             //para imprimir el reporte
-          
+
         } else {
             $permisos = $permisoss->Where(
                 function ($query) {
@@ -190,19 +299,18 @@ class ReporteController extends Controller
             )->where(
                 [
                     ['permisos.estado', '=', 'Aceptado'],
-                    ['permisos.fecha_presentacion', '>=', $request->inicioR],
-                    ['permisos.fecha_presentacion', '<=', $request->finR],
+                    ['permisos.fecha_uso', '>=', $request->inicioR],
+                    ['permisos.fecha_uso', '<=', $request->finR],
                     ['departamentos.id', '=', $request->deptoR_R]
                 ]
             )->get();
-            $departamentos=Departamento::where('id','=',$request->deptoR_R)->get();
+
+            $departamentos = Departamento::where('id', '=', $request->deptoR_R)->get();
         }
 
         // echo dd($permisos);
-        $pdf = PDF::loadView('Reportes.LicenciasReportes.ReporteLicencias', compact('permisos','departamentos','request'));
+        $pdf = PDF::loadView('Reportes.LicenciasReportes.ReporteLicencias', compact('permisos', 'departamentos', 'request'));
         return $pdf->setPaper('A4', 'Landscape')->download('Licencias.pdf');
-
-       
     }
-    //FIN PARA GENERAR EL REPORTE
+    //FIN PARA GENERAR EL REPORTE DE LICENCIAS EN PDF
 }

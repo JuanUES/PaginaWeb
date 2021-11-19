@@ -70,7 +70,7 @@
                     <i class="mdi mdi-pdf-box   mdi-20px" style="margin: 0px;"></i> Aviso</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            <form action="{{ route('Reporte/licencias') }}" method="POST">
+            <form action="{{ route('Reporte/cosntancias') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
@@ -130,7 +130,7 @@
                     class="btn btn-success dripicons-document-remove" id="descargarLicencias"></button>
                 </div>      
             </div>
-            <form action="" method="get" id="frmFiltrar">
+       
                 <div class="row">
                     {{--  <div class="col-12 col-sm-2 col-md-2">
                         <button class="btn btn btn-outline-info btn-block" title="Filtrar Contenido" type="submit"> <i class="fa fa-filter" aria-hidden="true"></i> </button>
@@ -171,18 +171,18 @@
                         </div>
                  
                 </div>
-            </form>
+      
             <br/>
-            <table  class="table" style="width: 100%" id='permisosReporte'>
+            <table  class="table" style="width: 100%" id='Constancias_table'>
                 <thead>
                 <tr>
                     <th class="col-sm-2">Nombre</th>
                     <th class="col-xs-1">Tipo</th>
+                    <th class="col-xs-1">Marcaje</th>
+                    <th class="col-xs-1">Hora</th>
+                    <th class="col-xs-1">Fecha uso</th>
                     <th class="col-xs-1">Fecha Presentación</th>
-                    <th class="col-xs-1">Fecha Aceptación</th>
-                    <th class="col-xs-1">Hora Incio</th>
-                    <th class="col-xs-1">Hora Final</th>
-                    <th class="col-xs-2">Tiempo Utilizar</th>
+                    <th class="col-xs-1">Fecha Aceptación</th>                  
                     <th class="col-sm-2">Justificación</th>
                 </tr>
                 </thead>
@@ -208,7 +208,7 @@
 <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
 <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
 <script src="{{ asset('js/licencias/http.js')}}"></script>
-<script src="{{ asset('js/ReportesJs/tablaLicencias.js')}}"></script>
+<script src="{{ asset('js/ReportesJs/tablaConstancias.js')}}"></script>
 <script>
     $(
     function () {

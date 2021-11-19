@@ -7,7 +7,7 @@ $("#deptoR").change(function () {
         $("#modalAlerta").modal();
     } else {
 
-        table = $('#permisosReporte').DataTable({
+        table = $('#Constancias_table').DataTable({
             "order": [[1, 'desc'], [0, 'asc']],
             "language": {
                 "decimal": ".",
@@ -41,7 +41,7 @@ $("#deptoR").change(function () {
             "autoWidth": true,
             "deferRender": true,
             "ajax": {
-                "url": "/admin/Licencias/Reporte/" + $('#inicio').val() + "/" + $('#fin').val() + "/" + $('#deptoR').val(),
+                "url": "/admin/Constancia/Tabla/Reporte/" + $('#inicio').val() + "/" + $('#fin').val() + "/" + $('#deptoR').val(),
                 "method": "GET",
                 "dataSrc": function (json) {
                    
@@ -56,8 +56,7 @@ $("#deptoR").change(function () {
                 { className: "align-middle", data: "row4" },
                 { className: "align-middle", data: "row5" },
                 { className: "align-middle", data: "row6" },
-                { className: "align-middle", data: "row7" },
-                { className: "align-middle", data: "row8" }
+                { className: "align-middle", data: "row7" }
             ]
         });
 

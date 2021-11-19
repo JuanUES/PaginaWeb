@@ -28,6 +28,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('admin/ConstanciaOlvido/Report',[ReporteController::class,'downloadPDF'])->name('constR');
     Route::get('admin/Constancia/Reporte',[ReporteController::class,'indexConsResporte'])->name('reporteConst/vista');//para visualizar los datos en el blade
+    Route::get('admin/Constancia/Tabla/Reporte/{f1}/{f2}/{d}',[ReporteController::class,'mostrarTablaConst']);//PARA LA TABLA DE LA VISTA
+    
     //para visualizar la vista
     Route::get('admin/Licencias/Aceptadas',[ReporteController::class,'indexBladeLicencias'])->name('reportesLicencias/vista');//para visualizar los datos en el blade
     //para mostrar el reporte en la tabla dinamica
@@ -77,6 +79,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     //ruta para generar el reporte
     Route::post('admin/Licencias/Reporte/PDF',[ReporteController::class,'licenciasDeptosPDF'])->name('Reporte/licencias');
+    Route::post('admin/Constancias/Reporte/PDF',[ReporteController::class,'ConstDeptosPDF'])->name('Reporte/cosntancias');
     /*END POST**/
 
 // Resportes

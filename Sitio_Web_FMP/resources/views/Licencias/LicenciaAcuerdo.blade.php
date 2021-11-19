@@ -66,11 +66,11 @@
                             <select name="tipo_de_permiso" class="form-control select2" style="width: 100%" data-live-search="true" 
                                 data-style="btn-white"   id="tipo_permiso" name="tipo_permiso">
                                 <option value="">Seleccione</option>
-                                <option value="Incapacidad">Incapacidad</option>
-                                <option value="Estudio">Estudio</option>
-                                <option value="Fumigación">Fumigación</option>
-                                <option value="Misión Oficial ">Misión Oficial</option>
-                                <option value="Otros">Otros</option>
+                                <option value="INCAPACIDAD/A">INCAPACIDAD/A</option>
+                                <option value="ESTUDIO">ESTUDIO</option>
+                                <option value="FUMIGACIÓN">FUMIGACIÓN</option>
+                                <option value="L.OFICIAL/A">L.OFICIAL/A</option>
+                                <option value="OTROS">OTROS</option>
                             </select>
                         </div>
                     </div>

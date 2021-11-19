@@ -44,7 +44,7 @@
         <h4 align="center">
             Universidad de El Salvador<br>
             Facultad Multidisciplinaria Paracentral <br>
-            Licencias del Departamento: {{ $dep->nombre_departamento }}{{ ' ' }}<br>
+            Constancia de Olvido del Departamento: {{ $dep->nombre_departamento }}{{ ' ' }}<br>
             Periodo de:
             {{ Carbon\Carbon::parse($request->inicioR)->format('d/M/Y') }}{{ ' al ' }}{{ Carbon\Carbon::parse($request->finR)->format('d/M/Y') }}
             <br>
@@ -56,12 +56,11 @@
                 <tr>
                     <th style="text-align: center; width: 20%;">Nombre</th>
                     <th style="text-align: center">Tipo</th>
-                    <th style="text-align: center">Fecha Presentación</th>
+                    <th style="text-align: center">Marcaje</th>
+                    <th style="text-align: center">Hora</th>
                     <th style="text-align: center">Fecha uso</th>
+                    <th style="text-align: center">Fecha Presentación</th>
                     <th style="text-align: center">Fecha Aceptación</th>
-                    <th style="text-align: center">Hora Incio</th>
-                    <th style="text-align: center">Hora Final</th>
-                    <th style="text-align: center">Tiempo Utilizar</th>
                     <th style="text-align: center; width:30%;">Justificación</th>
                 </tr>
             </thead>
@@ -72,13 +71,11 @@
                         <tr>
                             <td style="text-align: center;">{{ $item->nombre }}{{ ' ' }}{{ $item->apellido }}</td>
                             <td style="text-align: center;">{{ $item->tipo_permiso }}</td>
-                            <td style="text-align: center;">{{ Carbon\Carbon::parse($item->fecha_presentacion)->format('d/M/Y') }}</td>
-                            <td style="text-align: center;">{{ Carbon\Carbon::parse($item->fecha_uso)->format('d/M/Y') }}</td>
-                            <td style="text-align: center;">{{ Carbon\Carbon::parse($item->updated_at)->format('d/M/Y') }}</td>
+                            <td style="text-align: center;">{{ $item->olvido}}</td>
                             <td style="text-align: center;">{{ date('H:i', strtotime($item->hora_inicio)) }}</td>
-                            <td style="text-align: center;">{{ date('H:i', strtotime($item->hora_final)) }}</td>
-                            <td style="text-align: center;">{{ '' . \Carbon\Carbon::parse($item->fecha_uso . 'T' . $item->hora_inicio)->diffAsCarbonInterval(\Carbon\Carbon::parse($item->fecha_uso . 'T' . $item->hora_final)) }}</span>
-                            </td>
+                            <td style="text-align: center;">{{ Carbon\Carbon::parse($item->fecha_uso)->format('d/M/Y') }}</td>
+                            <td style="text-align: center;">{{ Carbon\Carbon::parse($item->fecha_presentacion)->format('d/M/Y') }}</td>
+                            <td style="text-align: center;">{{ Carbon\Carbon::parse($item->updated_at)->format('d/M/Y') }}</td>
                             <td style="text-align: center;">{{ rtrim(mb_strimwidth(strip_tags($item->justificacion), 0, 125, '', 'UTF-8')) }}
                             </td>
                         </tr>
