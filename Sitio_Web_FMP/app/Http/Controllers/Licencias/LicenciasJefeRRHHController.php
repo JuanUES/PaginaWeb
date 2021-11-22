@@ -433,6 +433,14 @@ class LicenciasJefeRRHHController extends Controller
     }
 
     public function exportExcel(Request $request){
+        
+        $validator = Validator::make($request->all(),[
+            'tipo' => 'required',
+            'anio' => 'required',
+            'mes' => 'required',
+            'depto' => 'required',
+        ]); 
+
         $depto = DB::table('departamentos')->select('nombre_departamento')->where('id',$request->depto)->first();
         $titulo = 'Licencias_'.$depto->nombre_departamento.'_'.$request->mes.'_'.$request->anio;
         return Excel::download(new LicenciaExport($request->tipo, $request->anio, 

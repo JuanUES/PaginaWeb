@@ -11,6 +11,8 @@
             <th colspan="18" style="text-align: left; vertical-align: middle;"></th>
             <th colspan="6" style="text-align: center; vertical-align: middle;">{{mb_strtoupper($comentario,'UTF-8')}}</th>
         </tr>
+    </thead>
+    <thead>        
         <tr>
             <th></th>
             <th style="text-align: center; vertical-align: middle;" rowspan="2">N</th>
@@ -33,8 +35,8 @@
         </tr>
     </thead>
     <tbody>
+        <tr></tr>
     @foreach($permisos_mensual as $index => $item)
-
         <tr>
             <td></td>
             <td style="text-align: center; vertical-align: middle; width:100%;">{{ ($index+1) }}</td>

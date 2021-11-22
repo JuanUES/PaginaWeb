@@ -152,6 +152,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                             <div class="form-group">
                                 <label for="tipo">Tipo Contrato</label>
                                 <select name="tipo" class="form-control select2" id="" style="width: 100%" required>
+                                   <option value="" selected>Seleccione</option>
                                     @foreach ($tipo_contrato as $item)
                                         <option value="{{$item->id}}">{{$item->tipo}}</option>
                                     @endforeach
@@ -164,6 +165,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                             <div class="form-group">
                                 <label for="depto">Departamento</label>
                                 <select name="depto" class="form-control select2" id="" style="width: 100%" required>
+                                   <option value="" selected>Seleccione</option>
                                     @foreach ($departamentos as $item)
                                         <option value="{{$item->id}}">{{$item->nombre_departamento}}</option>
                                     @endforeach
@@ -176,6 +178,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                             <div class="form-group">
                                 <label for="anio">Año</label>
                                 <select name="anio" id="" class="form-control select2" style="width: 100%" required>
+                                   <option value="" selected>Seleccione</option>
                                     @foreach ($años as $item)
                                         <option value="{{$item->año}}">{{$item->año}}</option>
                                     @endforeach
@@ -188,6 +191,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                             <div class="form-group">
                                 <label for="mes">Mes</label>
                                 <select name="mes" class="form-control select2" style="width: 100%" required>
+                                   <option value="" selected>Seleccione</option>
                                    <option value="1">Enero</option>
                                    <option value="2">Febrero</option>
                                    <option value="3">Marzo</option>
