@@ -1,7 +1,7 @@
-var table = null;
+//var table = null;
 $(
     function() {
-        table = $('#tableJefatura').DataTable({
+        /*table = $('#tableJefatura').DataTable({
             "order": [[ 1, 'desc' ], [ 0, 'asc' ]],
             "language": {
                 "decimal":        ".",
@@ -44,7 +44,7 @@ $(
                 { className: "align-middle", data: "col0" },
                 { className: "align-middle text-center", data: "col6" }
             ]               
-        });  
+        });  */
 
         $('.select2').select2();
 

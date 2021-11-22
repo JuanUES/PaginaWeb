@@ -132,9 +132,9 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
     </div><!-- /.modal-dialog -->
 </div>
 
-<div id="modalExcel" class="modal fade bs-example-modal-lg" role="dialog" 
+<div id="modalExcel" class="modal fade bs-example-modal-sm" role="dialog" 
     aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="myCenterModalLabel">
@@ -148,7 +148,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                         role="alert" style="display:none" id="notificacionExcel">
                     </div>           
                     <div class="row">
-                        <div class="col-xl-6">
+                        <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="tipo">Tipo Contrato</label>
                                 <select name="tipo" class="form-control select2" id="" style="width: 100%" required>
@@ -158,7 +158,9 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                                 </select>
                             </div>
                         </div>
-                        <div class="col-xl-6">
+                    </div>
+                    <div class="row"> 
+                        <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="depto">Departamento</label>
                                 <select name="depto" class="form-control select2" id="" style="width: 100%" required>
@@ -170,7 +172,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xl-6">
+                        <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="anio">Año</label>
                                 <select name="anio" id="" class="form-control select2" style="width: 100%" required>
@@ -180,7 +182,9 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                                 </select>
                             </div>
                         </div>
-                        <div class="col-xl-6">
+                    </div>
+                    <div class="row">                    
+                        <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="mes">Mes</label>
                                 <select name="mes" class="form-control select2" style="width: 100%" required>

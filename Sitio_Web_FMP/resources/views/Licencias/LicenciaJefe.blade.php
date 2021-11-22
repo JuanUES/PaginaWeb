@@ -668,7 +668,6 @@
     <script src="{{ asset('js/scripts/data-table.js') }}"></script>
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
-    <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}">
-    </script>
-   
+    <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{ asset('js/licencias/jefatura.js') }}"></script>
 @endsection
