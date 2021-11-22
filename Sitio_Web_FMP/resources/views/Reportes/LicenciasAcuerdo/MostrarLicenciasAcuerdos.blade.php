@@ -70,7 +70,7 @@
                     <i class="mdi mdi-pdf-box   mdi-20px" style="margin: 0px;"></i> Aviso</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            <form action="{{ route('Reporte/cosntancias') }}" method="POST">
+            <form action="{{ route('Reporte/Licencias/A') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
@@ -173,7 +173,7 @@
                 </div>
       
             <br/>
-            <table  class="table" style="width: 100%" id='Constancias_table'>
+            <table  class="table" style="width: 100%" id='Licencias_Acuerdo_table'>
                 <thead>
                 <tr>
                     <th class="col-sm-2">Nombre</th>
@@ -205,7 +205,7 @@
 <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
 <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
 <script src="{{ asset('js/licencias/http.js')}}"></script>
-<script src="{{ asset('js/ReportesJs/tablaConstancias.js')}}"></script>
+<script src="{{ asset('js/ReportesJs/tablaLicenciasAcuerdo.js')}}"></script>
 <script>
     $(
     function () {

@@ -7,7 +7,7 @@ $("#deptoR").change(function () {
         $("#modalAlerta").modal();
     } else {
 
-        table = $('#permisosReporte').DataTable({
+        table = $('#Licencias_Acuerdo_table').DataTable({
             "order": [[1, 'desc'], [0, 'asc']],
             "language": {
                 "decimal": ".",
@@ -53,11 +53,7 @@ $("#deptoR").change(function () {
                 { className: "align-middle", data: "row1" },
                 { className: "align-middle", data: "row2" },
                 { className: "align-middle", data: "row3" },
-                { className: "align-middle", data: "row4" },
-                { className: "align-middle", data: "row5" },
-                { className: "align-middle", data: "row6" },
-                { className: "align-middle", data: "row7" },
-                { className: "align-middle", data: "row8" }
+                { className: "align-middle", data: "row4" }
             ]
         });
 

@@ -386,4 +386,80 @@ class ReporteController extends Controller
         return $pdf->setPaper('A4', 'Landscape')->download('Licencias.pdf');
     }
     //FIN PARA GENERAR EL REPORTE DE LICENCIAS EN PDF
+
+    //PARA GENERAR EL REPORTE DE LICENCIAS POR ACUERDO
+    public function licenciasAcuerdoPDF(Request $request){
+        $permisoss = Empleado::selectRaw(' permisos.id, nombre, apellido, id_depto, permisos.tipo_permiso,permisos.fecha_presentacion, permisos.fecha_uso,
+        permisos.hora_inicio,permisos.hora_final, permisos.justificacion, permisos.updated_at, permisos.olvido, departamentos.nombre_departamento')
+            ->join('departamentos', 'departamentos.id', '=', 'empleado.id_depto')
+            ->join('permisos', 'permisos.empleado', '=', 'empleado.id');
+
+        if ($request->deptoR_R == 'all') {
+            $permisos = $permisoss->Where(
+                function ($query) {
+                    $query->Where('tipo_permiso', 'like', 'INCAPACIDAD/A')
+                    ->orWhere('tipo_permiso', 'like', 'ESTUDIO')
+                    ->orWhere('tipo_permiso', 'like', 'FUMIGACIÓN')
+                    ->orWhere('tipo_permiso', 'like', 'L.OFICIAL/A')
+                    ->orWhere('tipo_permiso', 'like', 'OTROS')
+                    ->orWhere('tipo_permiso', 'like', 'CITA MEDICA');
+                }
+            )->where(
+                [
+                    ['permisos.estado', '=', 'Aceptado'],
+                    ['permisos.fecha_uso', '>=', $request->inicioR],
+                    ['permisos.fecha_presentacion', '<=', $request->finR]
+                ]
+            )->get();
+            //para mostrar solo los departamentos que tienen permisos
+            $departamentos = Empleado::selectRaw(' DISTINCT id_depto,departamentos.nombre_departamento,departamentos.id')
+                ->join('departamentos', 'departamentos.id', '=', 'empleado.id_depto')
+                ->join('permisos', 'permisos.empleado', '=', 'empleado.id')
+                ->Where(
+                    function ($query) {
+                        $query->Where('tipo_permiso', 'like', 'INCAPACIDAD/A')
+                        ->orWhere('tipo_permiso', 'like', 'ESTUDIO')
+                        ->orWhere('tipo_permiso', 'like', 'FUMIGACIÓN')
+                        ->orWhere('tipo_permiso', 'like', 'L.OFICIAL/A')
+                        ->orWhere('tipo_permiso', 'like', 'OTROS')
+                        ->orWhere('tipo_permiso', 'like', 'CITA MEDICA');
+                    }
+                )->where(
+                    [
+                        ['permisos.estado', '=', 'Aceptado'],
+                        ['permisos.fecha_uso', '>=', $request->inicioR],
+                        ['permisos.fecha_presentacion', '<=', $request->finR]
+                    ]
+                )->get();
+            //para imprimir el reporte
+
+        } else {
+            $permisos = $permisoss->Where(
+                function ($query) {
+                    $query->Where('tipo_permiso', 'like', 'INCAPACIDAD/A')
+                    ->orWhere('tipo_permiso', 'like', 'ESTUDIO')
+                    ->orWhere('tipo_permiso', 'like', 'FUMIGACIÓN')
+                    ->orWhere('tipo_permiso', 'like', 'L.OFICIAL/A')
+                    ->orWhere('tipo_permiso', 'like', 'OTROS')
+                    ->orWhere('tipo_permiso', 'like', 'CITA MEDICA');
+                }
+            )->where(
+                [
+                    ['permisos.estado', '=', 'Aceptado'],
+                    ['permisos.fecha_uso', '>=', $request->inicioR],
+                    ['permisos.fecha_presentacion', '<=', $request->finR],
+                    ['departamentos.id', '=', $request->deptoR_R]
+                ]
+            )->get();
+
+            $departamentos = Departamento::where('id', '=', $request->deptoR_R)->get();
+        }
+
+        // echo dd($permisos);
+        $pdf = PDF::loadView('Reportes.LicenciasAcuerdo.ReporteLicenciasAcuerdos', compact('permisos', 'departamentos', 'request'));
+        return $pdf->setPaper('A4', 'Landscape')->download('LicenciasPorAcuerdos.pdf');
+
+    }
+
+    //FIN DE GENERAR REPORTE DE LICENCIAS POR ACUERDO
 }
