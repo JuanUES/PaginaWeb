@@ -43,8 +43,7 @@ $("#deptoR").change(function () {
             "ajax": {
                 "url": "/admin/Constancia/Tabla/Reporte/" + $('#inicio').val() + "/" + $('#fin').val() + "/" + $('#deptoR').val(),
                 "method": "GET",
-                "dataSrc": function (json) {
-                   
+                "dataSrc": function (json){                   
                     return json;
                 }
             },

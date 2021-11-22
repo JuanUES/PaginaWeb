@@ -51,7 +51,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('admin/licencias/jefatura',[LicenciasJefeRRHHController::class,'indexJefe'])->name('indexJefatura');
     Route::get('admin/licencias/RRHH',[LicenciasJefeRRHHController::class,'indexRRHH'])->name('indexRRHH');
-    Route::get('admin/licencias/RRHH/datableJson',[LicenciasJefeRRHHController::class,'datableRRHHJson']);
+    Route::get('admin/licencias/RRHH/datableJson/{depto}/{mes}/{anio}',[LicenciasJefeRRHHController::class,'datableRRHHJson']);
+    Route::get('admin/licencias/RRHH/datableJson/{tipo}/{departamento}/{anio}/{mes}',[LicenciasJefeRRHHController::class,'datableJson']);
 
     Route::get('admin/licencias/jefaturaRRHH/{permiso}',[LicenciasJefeRRHHController::class,'permiso']);
     
@@ -80,6 +81,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('admin/licencias/rrhh/aceptar',[LicenciasJefeRRHHController::class,'aceptarRRHH'])->name('rrhh/aceptar');
     Route::post('admin/licencias/rrhh/observacion',[LicenciasJefeRRHHController::class,'observacionRRHH'])->name('rrhh/observacion');
     Route::post('admin/licencias/rrhh/observacionConst',[LicenciasJefeRRHHController::class,'observacionRRHHconst'])->name('rrhh/observacionConst');
+    Route::post('admin/licencias/rrhh/excel/',[LicenciasJefeRRHHController::class,'exportExcel'])->name('rrhh/excel');
 
     //ruta para generar el reporte
     Route::post('admin/Licencias/Reporte/PDF',[ReporteController::class,'licenciasDeptosPDF'])->name('Reporte/licencias');

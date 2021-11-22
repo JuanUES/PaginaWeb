@@ -132,49 +132,58 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
     </div><!-- /.modal-dialog -->
 </div>
 
-<div id="modalExcel" class="modal fade bs-example-modal-sm" role="dialog" 
+<div id="modalExcel" class="modal fade bs-example-modal-lg" role="dialog" 
     aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-sm">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="myCenterModalLabel">
                     <i class="fa fa-file-excel mdi-36px" style="margin: 0px;"></i> Licencias Excel</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            <form action="">           
-                <div class="modal-body">            
+            <form action="{{ route('rrhh/excel') }}" method="POST" id="ExcelForm">    
+                @csrf       
+                <div class="modal-body"> 
+                    <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
+                        role="alert" style="display:none" id="notificacionExcel">
+                    </div>           
                     <div class="row">
-                        <div class="col-xl-12">
+                        <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="tipo">Tipo Contrato</label>
-                                <select name="tipo" class="form-control select2" id="" style="width: 100%">
-                                    <option value="todos" selected>Todos</option>
+                                <select name="tipo" class="form-control select2" id="" style="width: 100%" required>
                                     @foreach ($tipo_contrato as $item)
                                         <option value="{{$item->id}}">{{$item->tipo}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xl-12">
+                        <div class="col-xl-6">
                             <div class="form-group">
-                                <label for="año">Año</label>
-                                <select name="año" id="" class="form-control select2" style="width: 100%">
-                                    <option value="" selected>Seleccione</option>
-                                    @foreach ($años as $item)
-                                        <option value="{{$item->año}}">{{$item->año}}</option>
+                                <label for="depto">Departamento</label>
+                                <select name="depto" class="form-control select2" id="" style="width: 100%" required>
+                                    @foreach ($departamentos as $item)
+                                        <option value="{{$item->id}}">{{$item->nombre_departamento}}</option>
                                     @endforeach
                                 </select>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xl-12">
+                        <div class="col-xl-6">
+                            <div class="form-group">
+                                <label for="anio">Año</label>
+                                <select name="anio" id="" class="form-control select2" style="width: 100%" required>
+                                    @foreach ($años as $item)
+                                        <option value="{{$item->año}}">{{$item->año}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-xl-6">
                             <div class="form-group">
                                 <label for="mes">Mes</label>
-                                <select name="mes" id="" class="form-control select2" style="width: 100%">
-                                   <option value="" selected>Seleccione</option>
+                                <select name="mes" class="form-control select2" style="width: 100%" required>
                                    <option value="1">Enero</option>
                                    <option value="2">Febrero</option>
                                    <option value="3">Marzo</option>
@@ -191,12 +200,17 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="form-group">
+                                <label for="comentario">Comentario</label>
+                                <textarea name="comentario" class="form-control" rows="3" ></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary"
-                        data-dismiss="modal"><i class="fa fa-ban"
-                        aria-hidden="true"></i> Cerrar</button>
-                    <button type="button" class="btn btn-success" id="generarExcel">
+                    <button type="submit" class="btn p-1 btn-light waves-effect waves-light btn-block font-24 btn-block" id="generarExcel" > 
                         <li class="fa fa-file-excel"></li> Generar</button>
                 </div>   
             </form>
@@ -423,7 +437,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                         @csrf
 
                         <div class="modal-body">
-                            <input type="text" id="idPermisoC" name="_id" />
+                            <input type="hidden" id="idPermisoC" name="_id" />
                             <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
                                 role="alert" style="display:none" id="notificacionC">
                             </div>
@@ -538,7 +552,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Inicio</a></li>
-                    <li class="breadcrumb-item active">Jefe</li>
+                    <li class="breadcrumb-item active">Licencias Recursos Humanos</li>
                 </ol>
             </div>
             <h4 class="page-title">&nbsp;</h4>
@@ -555,10 +569,52 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                     <h3>
                         Licencias Recursos Humanos
                     </h3>
+                    <div class="row my-1">
+                        <div class="col-xl-4">
+                            <label for="depto">Departamento</label>
+                            <select id="rrhh_depto" class="form-control select2" style="width: 100%" required>
+                                <option value="todos">Todos</option>
+                                @foreach ($departamentos as $item)
+                                    <option value="{{$item->id}}">{{$item->nombre_departamento}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-xl-4">
+                            <label for="mes">Mes</label>
+                            <select id="rrhh_mes" class="form-control select2" style="width: 100%" required>
+                                <option value="todos">Todos</option>
+                               <option value="1">Enero</option>
+                               <option value="2">Febrero</option>
+                               <option value="3">Marzo</option>
+                               <option value="4">Abril</option>
+                               <option value="5">Mayo</option>
+                               <option value="6">Junio</option>
+                               <option value="7">Julio</option>
+                               <option value="8">Agosto</option>
+                               <option value="9">Septiembre</option>
+                               <option value="10">Octubre</option>
+                               <option value="11">Noviembre</option>
+                               <option value="12">Diciembre</option>
+                            </select>
+                        </div>
+                        <div class="col-xl-4">
+                            <label for="anio">Año</label>
+                            <select id="rrhh_anio" class="form-control select2" style="width: 100%" required>
+                                <option value="todos">Todos</option>
+                                @foreach ($años as $item)
+                                    <option value="{{$item->año}}">{{$item->año}}</option>
+                                @endforeach
+                            </select>
+                        </div>                        
+                    </div>                    
                 </div>
-                <div class="col-lg-1 order-last">
-                    <button type="button" id="btnArchivoExcel" class="btn btn-success"><i class="fa fa-file-excel"></i></button>
-                </div>                
+                <div class="col-lg-2 text-right order-last">
+                    <div class="btn-group" role="group">
+                        <button type="button" title="Actualizar Tabla" class="btn btn-success mx-1 fa fa-sync-alt"
+                            id="ActualizarTabla"></button>
+                        <button type="button" id="btnArchivoExcel" class="btn btn-success"><i class="fa fa-file-excel"></i></button>
+                    </div>  
+                </div>              
             </div>
             <table  id="misLicenciasRRHHTable" class="table" style="width: 100%">
                 <thead>
@@ -625,5 +681,4 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
     <script src="{{ asset('js/licencias/calcularHoras.js') }}"></script>
     <script src="{{ asset('js/licencias/rrhh.js') }}"></script>
-
 @endsection

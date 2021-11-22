@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
+use Maatwebsite\Excel\Facades\Excel;
+
 
 class LicenciasJefeRRHHController extends Controller
 {
@@ -23,29 +25,27 @@ class LicenciasJefeRRHHController extends Controller
 
     public function indexJefe(){
         if(Auth::check() && ($this->isJefe() || @Auth::user()->hasRole('super-admin'))){
-          
             $permisos = Permiso::selectRaw('
-                    md5(permisos.id::text) as permiso, 
-                    permisos.tipo_permiso, 
-                    permisos.fecha_uso,
-                    permisos.fecha_presentacion,
-                    permisos.hora_inicio,
-                    permisos.hora_final,
-                    permisos.justificacion,
-                    permisos.observaciones,
-                    empleado.nombre,
-                    permisos.estado,
-                    empleado.apellido')
-                ->join('empleado','empleado.id','=','permisos.empleado')
-                ->where('jefatura',auth()->user()->empleado)
-                ->where(
-                    function($query){
-                        $query->where('permisos.estado','like','Aceptado')
-                        ->orWhere('permisos.estado','like','Enviado a Jefatura')
-                        ->orWhere('permisos.estado','like','Enviado a RRHH');
-                })->where('olvido',null)->get();
-                
-            return view('Licencias.LicenciaJefe',compact('permisos'));
+            md5(permisos.id::text) as permiso, 
+            permisos.tipo_permiso, 
+            permisos.fecha_uso,
+            permisos.fecha_presentacion,
+            permisos.hora_inicio,
+            permisos.hora_final,
+            permisos.justificacion,
+            permisos.observaciones,
+            empleado.nombre,
+            permisos.estado,
+            empleado.apellido')
+            ->join('empleado','empleado.id','=','permisos.empleado')
+            ->where('jefatura',auth()->user()->empleado)
+            ->where(
+                function($query){
+                    $query->where('permisos.estado','like','Aceptado')
+                    ->orWhere('permisos.estado','like','Enviado a Jefatura')
+                    ->orWhere('permisos.estado','like','Enviado a RRHH');
+            })->where('olvido',null)->get();
+            return view('Licencias.LicenciaJefe', compact('permisos'));
         }else {
             return redirect()->route('index');
         }
@@ -55,21 +55,22 @@ class LicenciasJefeRRHHController extends Controller
         if(Auth::check() && (@Auth::user()->hasRole('Recurso-Humano')|| @Auth::user()->hasRole('super-admin'))){
             $tipo_contrato = DB::table('tipo_contrato')->select('id','tipo')->get();
             $años = Permiso::selectRaw('distinct to_char(permisos.fecha_uso, \'YYYY\') as año')->get();
-            $permisos = Permiso::selectRaw('md5(permisos.id::text) as permiso, 
+            $departamentos = DB::table('departamentos')->select('id','nombre_departamento')->get();
+            /*$permisos = Permiso::selectRaw('md5(permisos.id::text) as permiso, 
                 tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,
                 observaciones,olvido,empleado.nombre,empleado.apellido')
                 ->join('empleado','empleado.id','=','permisos.empleado')
                 ->where(function($query)
                     {$query->where('permisos.estado','like','Enviado a RRHH')
                         ->orWhere('permisos.estado','like','Aceptado');}
-                )->get();
-            return view('Licencias.LicenciaRRHH',compact('permisos','años','tipo_contrato'));
+                )->get();*/
+            return view('Licencias.LicenciaRRHH',compact('años','tipo_contrato','departamentos'));
         }else {
             return redirect()->route('index');
         }
     }
 
-    public function datableRRHHJson(){
+    public function datableRRHHJson($depto, $mes, $anio){
 
         $permisos = Permiso::selectRaw('md5(permisos.id::text) as permiso, 
                 tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,permisos.estado,
@@ -78,7 +79,21 @@ class LicenciasJefeRRHHController extends Controller
         ->where(function($query)
             {$query->where('permisos.estado','like','Enviado a RRHH')
                 ->orWhere('permisos.estado','like','Aceptado');}
-        )->get();
+        );
+
+        if($depto!='todos'){
+            $permisos = $permisos->where('empleado.id_depto',$depto);
+        }
+
+        if($anio!='todos'){
+            $permisos = $permisos->whereRaw('to_char(permisos.fecha_uso,\'YYYY\')::int='.$anio);
+        }
+
+        if($mes!='todos'){
+            $permisos = $permisos->whereRaw('to_char(permisos.fecha_uso,\'MM\')::int='.$mes);
+        }
+
+        $permisos = $permisos->get();
 
         foreach ($permisos as $item) {
             # code...
@@ -110,6 +125,89 @@ class LicenciasJefeRRHHController extends Controller
                         <button title="Aceptar"
                             class="btn btn-outline-success btn-sm"
                             '.($item->estado==='Enviado a RRHH' ? 'value="'. $item->permiso.'"
+                                 onclick="'.($item->olvido == 'Entrada' || $item->olvido =='Salida' ?'aceptarConst(this)':'aceptar(this)'): 'disabled').' ">
+                            <i class="fa fa-check font-16 my-1" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>';
+
+            $data[] = array(
+                "col0" => \Carbon\Carbon::parse($item->fecha_uso)->format('d/M/Y'),
+                "col1" => $item->nombre.' '.$item->apellido,
+                "col2" => '<span class="badge badge-primary">'.$item->tipo_permiso.'</span>',
+                "col3" => $col3,
+                "col4" => $col4,
+                "col5" => $col5,
+                "col6" => $botones,
+            );
+        }
+        return isset($data)?response()->json($data,200,[]):response()->json([],200,[]);
+    }
+
+    /**En construccion query */
+    public function datableJson($tipo,$departamento,$anio,$mes){
+        $query = $tipo=='Jefatura' ? Permiso::selectRaw('
+            md5(permisos.id::text) as permiso, 
+            permisos.tipo_permiso, 
+            permisos.fecha_uso,
+            permisos.fecha_presentacion,
+            permisos.hora_inicio,
+            permisos.hora_final,
+            permisos.justificacion,
+            permisos.observaciones,
+            empleado.nombre,
+            permisos.estado,
+            empleado.apellido')
+            ->join('empleado','empleado.id','=','permisos.empleado')
+            ->where('jefatura',auth()->user()->empleado)
+            ->where(
+                function($query){
+                    $query->where('permisos.estado','like','Aceptado')
+                    ->orWhere('permisos.estado','like','Enviado a Jefatura')
+                    ->orWhere('permisos.estado','like','Enviado a RRHH');
+            })->where('olvido',null):
+        Permiso::selectRaw('md5(permisos.id::text) as permiso, 
+                tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,permisos.estado,
+                observaciones,olvido,empleado.nombre,empleado.apellido')
+            ->join('empleado','empleado.id','=','permisos.empleado')
+            ->where(function($query)
+                {$query->where('permisos.estado','like','Enviado a RRHH')
+                ->orWhere('permisos.estado','like','Aceptado');
+            });
+
+        $permisos = $query ->get();
+
+        foreach ($permisos as $item) {
+            # code...
+            $col3 = $col4 = $col5 = null;
+            if ($item->olvido == 'Entrada' || $item->olvido =='Salida') {
+                $col3 = date('H:i', strtotime($item->olvido == 'Entrada'?$item->hora_inicio:$item->hora_final));
+                $col4 = date('H:i', strtotime(!$item->olvido == 'Entrada'?$item->hora_inicio:$item->hora_final));
+                $col5 = date('H:i', strtotime($item->hora_final));
+            }else{
+                $col3 = date('H:i', strtotime($item->hora_inicio));
+                $col4 = date('H:i', strtotime($item->hora_final)) ;
+                $col5 = ''.\Carbon\Carbon::parse($item->fecha_uso . 'T' . $item->hora_inicio)->diffAsCarbonInterval(\Carbon\Carbon::parse($item->fecha_uso . 'T' . $item->hora_final));
+            }
+
+            $botones = 
+            '<div class="row">
+                <div class="col text-center">
+                    <div class="btn-group" role="group">
+                        <button title="Ver Seguimiento" class="btn btn-outline-primary btn-sm"
+                            value="'.$item->permiso .'" onclick="observaciones(this)">
+                            <i class="fa fa-eye font-16 my-1" aria-hidden="true"></i>
+                        </button>
+                        <button title="Agregar Observacion"
+                            class="btn btn-outline-primary btn-sm"
+                            value="'.$item->permiso.'" onclick="'.($item->olvido == 'Entrada' || $item->olvido =='Salida' ?'verDatosConst(this)':'verDatos(this)').'">
+                            <i class="fa fa-file-alt font-16 my-1 mx-0"
+                                aria-hidden="true"></i>
+                        </button>
+                        <button title="Aceptar"
+                            class="btn btn-outline-success btn-sm"
+                            '.($item->estado===('Enviado a '.$tipo) ? 'value="'. $item->permiso.'"
                                  onclick="'.($item->olvido == 'Entrada' || $item->olvido =='Salida' ?'aceptarConst(this)':'aceptar(this)'): 'disabled').' ">
                             <i class="fa fa-check font-16 my-1" aria-hidden="true"></i>
                         </button>
@@ -332,6 +430,13 @@ class LicenciasJefeRRHHController extends Controller
         }else {
             return redirect()->route('index');
         }
+    }
+
+    public function exportExcel(Request $request){
+        $depto = DB::table('departamentos')->select('nombre_departamento')->where('id',$request->depto)->first();
+        $titulo = 'Licencias_'.$depto->nombre_departamento.'_'.$request->mes.'_'.$request->anio;
+        return Excel::download(new LicenciaExport($request->tipo, $request->anio, 
+        $request->mes, $request->depto,$request->comentario),$titulo.'.xlsx');
     }
 
 }
