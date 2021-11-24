@@ -392,22 +392,35 @@ $("#frmJornada").validate({
         }).appendTo('#frmJornada');
 
         let libres = $("#_horas").val();
+
+        let hourLibres = 0;
+        let minuteLibres = 0;
+
+        let fieldCell = libres.split(':');
+        let HourCell = isNaN(parseFloat(fieldCell[0])) ? 0 : parseFloat(fieldCell[0]); let MinuteCell = isNaN(parseFloat(fieldCell[1])) ? 0 : parseFloat(fieldCell[1]);
+        var horas_Cell = HourCell * 3600; var minutos_Cell = MinuteCell * 60; var segundosC = minutos_Cell + horas_Cell;
+        var hoursCe = Math.floor( segundosC / 3600 ); var minutesCe = Math.floor( (segundosC % 3600) / 60 );
+
+        //Anteponiendo un 0 a los minutos y horas si son menos de 10
+        minutesCe = minutesCe < 10 ? '0' + minutesCe : minutesCe;
+        hoursCe = hoursCe < 10 ? '0' + hoursCe : hoursCe;
+
+        hourLibres += parseInt(hoursCe);
+        minuteLibres += parseInt(minutesCe);
+        hourLibres =  isNaN(hourLibres) ? 0 : parseInt(hourLibres);
+        minuteLibres =  isNaN(minuteLibres) ? 0 : parseInt(minuteLibres);
+
+        let timeT = hourLibres + ':' + minuteLibres;
+
         let horas = $("#auxJornada").val();
         horas = parseFloat(horas);
         libres = parseFloat(libres);
-        // console.log(libres);
+        console.log(timeT);
         let extra_valid = true;
-        if (libres>0){
+        if (hourLibres>0 || minuteLibres>0){
             alert = `<div class="alert alert-danger mt-3" role="alert">
                             <div class="alert-message">
                                 <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Complete las <strong>${  horas }</strong> horas de la jornada
-                            </div>
-                        </div>`;
-            extra_valid = false;
-        }else if(libres<0){
-            alert = `<div class="alert alert-danger mt-3" role="alert">
-                            <div class="alert-message">
-                                <strong> <i class="fa fa-info-circle"></i> Información!</strong>  Ha excedido las <strong>${horas}</strong> horas de la jornada
                             </div>
                         </div>`;
             extra_valid = false;

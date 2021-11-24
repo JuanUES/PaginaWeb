@@ -197,9 +197,12 @@ class JornadaController extends Controller{
                 $procedimiento = 'guardado';
                 if ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano')) {
                     $procedimiento = 'enviado a recursos humanos';
-                } else if ($user->hasRole('Jefe-Administrativo') || $user->hasRole('Jefe-Academico')) {
+                } else if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo') && !$user->hasRole('Docente')) {
                     $procedimiento = 'enviado a jefatura';
+                } else if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo') && $user->hasRole('Docente')) {
+                    $procedimiento = 'guardado';
                 }
+
                 $requestData['procedimiento'] = $procedimiento;
 
 
