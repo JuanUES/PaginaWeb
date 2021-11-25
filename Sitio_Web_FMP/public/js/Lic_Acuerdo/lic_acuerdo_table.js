@@ -72,7 +72,7 @@ $(
             "autoWidth": true,
             "deferRender": true,
             "ajax": {
-                "url": "/admin/LicenciasAcuerdo/tabla",
+                "url": URL_SERVIDOR+"/admin/LicenciasAcuerdo/tabla",
                 "method": "GET",
                 "dataSrc": function (json) {
                   //  console.log(json);
