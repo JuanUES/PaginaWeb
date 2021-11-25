@@ -207,6 +207,7 @@
 <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-select/bootstrap-select.min.js') }}" ></script>
 <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
 <script src="{{ asset('js/licencias/http.js')}}"></script>
+<script src="{{ asset('js/scripts/configuracion.js')}}"></script>
 <script src="{{ asset('js/ReportesJs/tablaLicencias.js')}}"></script>
 <script>
     $(

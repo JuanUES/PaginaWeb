@@ -41,7 +41,7 @@ $("#deptoR").change(function () {
             "autoWidth": true,
             "deferRender": true,
             "ajax": {
-                "url": "/admin/Constancia/Tabla/Reporte/" + $('#inicio').val() + "/" + $('#fin').val() + "/" + $('#deptoR').val(),
+                "url": URL_SERVIDOR+"/admin/Constancia/Tabla/Reporte/" + $('#inicio').val() + "/" + $('#fin').val() + "/" + $('#deptoR').val(),
                 "method": "GET",
                 "dataSrc": function (json){                   
                     return json;
