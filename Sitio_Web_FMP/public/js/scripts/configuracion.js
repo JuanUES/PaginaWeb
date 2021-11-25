@@ -1,2 +1,0 @@
-const URL_SERVIDOR = "";
-
