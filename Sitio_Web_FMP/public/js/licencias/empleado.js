@@ -43,7 +43,7 @@
                 "autoWidth": true,                
                 "deferRender": true,
                 "ajax":{
-                    "url": "/admin/mislicencias/permisos",
+                    "url":  URL_SERVIDOR+"/admin/mislicencias/permisos",
                     "method": "GET",
                     "dataSrc": function (json) {
                         return json;
