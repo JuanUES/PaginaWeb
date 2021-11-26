@@ -6,7 +6,7 @@ let mensuales, anuales, hrs_m, hrs_a, min_m, min_a, min_t_a, min_t_m;
                 var permiso = $('#idPermiso').val().trim()==''?'nuevo':$('#idPermiso').val();
                 $.ajax({
                     type: "GET",
-                    url: '/admin/mislicencias/horas-mensual/'+$('#fecha_de_uso').val()+'/'+permiso,
+                    url: URL_SERVIDOR+'/admin/mislicencias/horas-mensual/'+$('#fecha_de_uso').val()+'/'+permiso,
                     beforeSend: function() {
                         $('#hora_mensual').val('Cargando...');
                         $('#hora_anual').val('Cargando...');
@@ -21,7 +21,7 @@ let mensuales, anuales, hrs_m, hrs_a, min_m, min_a, min_t_a, min_t_m;
                 
                 $.ajax({
                     type: "GET",
-                    url: '/admin/mislicencias/horas-anual/'+$('#fecha_de_uso').val()+'/'+permiso,
+                    url: URL_SERVIDOR+'/admin/mislicencias/horas-anual/'+$('#fecha_de_uso').val()+'/'+permiso,
                     success: function(json) {
                         var json  =  JSON.parse(json);
                         anuales = json.anuales;
