@@ -373,6 +373,7 @@
                 </tr>
                 </thead>           
                 <tbody>
+                <tr></tr>
                 </tbody>     
             </table>
         </div> <!-- end card-box -->
