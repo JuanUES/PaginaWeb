@@ -6,7 +6,7 @@ let mensuales, anuales, hrs_m, hrs_a, min_m, min_a, min_t_a, min_t_m;
                 var permiso = $('#idPermiso').val().trim()==''?'nuevo':$('#idPermiso').val();
                 $.ajax({
                     type: "GET",
-                    url: URL_SERVIDOR+'/admin/mislicencias/horas-mensual/'+$('#fecha_de_uso').val()+'/'+permiso,
+                    url: 'mislicencias/horas-mensual/'+$('#fecha_de_uso').val()+'/'+permiso,
                     beforeSend: function() {
                         $('#hora_mensual').val('Cargando...');
                         $('#hora_anual').val('Cargando...');
