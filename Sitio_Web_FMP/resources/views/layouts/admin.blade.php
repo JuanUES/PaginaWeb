@@ -362,7 +362,8 @@
                                         </li>
                                     </ul>
                                 </li>
-
+                            
+                                @endif
                                 <li>
                                     <a href="javascript: void(0);">
                                         <i class="font-18 dripicons-folder-open"></i>
@@ -370,6 +371,7 @@
                                         <span class="menu-arrow"></span>
                                     </a>
                                     <ul class="nav-second-level" aria-expanded="false">
+                                        @hasanyrole('super-admin|Recurso-Humano')
                                         <li>
                                             <a href="{{ route('reportesLicencias/vista') }}">Licencias</a>
                                         </li>
@@ -384,15 +386,16 @@
                                         <li>
                                             <a href="{{ route('descargarPDF') }}">Revisión mensual</a>
                                         </li>
+                                        @endhasrole
+                                        @hasanyrole('super-admin|Jefe-Administrativo|Jefe-Academico')
                                         <li>
-                                            <a href=".">Asignar Carga</a>
+                                            <a href=".">Permisos Mensuales</a>
                                         </li>
-                                    </ul>
+                                        @endhasrole                                    </ul>
                                 </li>
                                 <!--fin de para los horarios-->
                                
 
-                            @endif
 
                         </ul>
                     </div>
