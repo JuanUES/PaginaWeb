@@ -410,7 +410,7 @@
     <script src="{{ asset('js/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js') }}"></script>
     <script src="{{ asset('template-admin/dist/assets/libs/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
-   
+    <script src="{{ asset('js/scripts/configuracion.js') }}" ></script>
     <script src="{{ asset('js/constancia/constaciaOlvido.js') }}" ></script>
     <script src="{{ asset('js/constancia/constanciaTable.js')}}"></script>
  

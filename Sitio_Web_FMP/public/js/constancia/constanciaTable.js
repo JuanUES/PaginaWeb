@@ -95,7 +95,7 @@ $( "#marcaje" ).change(function() {
             
              $.ajax({
                  type: "GET",
-                 url: '/admin/ConstanciaOlvido/Modal/'+$(boton).val(),
+                 url: 'admin/ConstanciaOlvido/Modal/'+$(boton).val(),
                  beforeSend: function() {
                      $(boton).prop('disabled', true).html(''
                          +'<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
