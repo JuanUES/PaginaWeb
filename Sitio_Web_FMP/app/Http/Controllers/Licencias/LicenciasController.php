@@ -179,6 +179,25 @@ class LicenciasController extends Controller
                     return response()->json(['error'=>['Las horas exceden el límite establecido mensual.']]); 
                 }
             }
+
+            //select * from permisos
+            //where hora_inicio<='13:00:00' and hora_final>='13:00:00' and fecha_uso = '2021-11-10'
+            $query = Permiso::where( function($query){
+                    $query->Where('tipo_permiso','like','LC/GS')
+                    ->orWhere('tipo_permiso','like','LS/GS')
+                    ->orWhere('tipo_permiso','like','T COMP')
+                    ->orWhere('tipo_permiso','like','INCAP')
+                    ->orWhere('tipo_permiso','like','L OFICIAL')
+                    ->orWhere('tipo_permiso','like','CITA MEDICA')
+                    ->orWhere('tipo_permiso','like','DUELO O PATERNIDAD');
+                }
+            )->where('empleado','=',auth()->user()->empleado)->where('fecha_uso','=',$request->fecha_de_uso);
+
+            if($query->where([['hora_inicio','<=',$request->hora_inicio],['hora_final','>=',$request->hora_inicio]])->exists())
+            {return response()->json(['error'=>['El campo hora inicio: Ya existe un permiso registrado dentro de este rango de hora.']]);}
+
+            if($query->where([['hora_inicio','<=',$request->hora_final],['hora_final','>=',$request->hora_final]])->exists())
+            {return response()->json(['error'=>['El campo hora final: Ya existe un permiso registrado dentro de este rango de hora.']]);}
             
             $p = $request->_id == null ? new Permiso():Permiso::whereRaw('md5(id::text) = ?',[$request->_id])->first();
             $p -> tipo_representante = $request-> representante;
@@ -336,10 +355,12 @@ class LicenciasController extends Controller
                     $seguimiento -> estado = false;
 
                     if($permiso -> estado === 'Guardado'){
+
                         $permiso -> estado =  $enviado_jf;
                         $permiso -> fecha_presentacion = date('Y-m-d');
                         $seguimiento -> proceso =  $enviado_jf;
-                    }else {
+
+                    }else{
 
                         if($permiso -> estado == $observacion_rrhh ||
                          $permiso -> estado == $observacion_jf){
