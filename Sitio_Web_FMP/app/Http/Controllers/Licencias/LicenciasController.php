@@ -194,7 +194,7 @@ class LicenciasController extends Controller
             )->where('empleado','=',auth()->user()->empleado)->where('fecha_uso','=',$request->fecha_de_uso);
 
             if($query->where([['hora_inicio','<=',$request->hora_inicio],['hora_final','>=',$request->hora_inicio]])->exists())
-            {return response()->json(['error'=>['El campo hora inicio: Ya existe un permiso registrado dentro de este rango de hora.']]);}
+            {return response()->json(['error'=>['El campo hora inicio: Ya existe un permiso registrado  git config --global user.namedentro de este rango de hora.']]);}
 
             if($query->where([['hora_inicio','<=',$request->hora_final],['hora_final','>=',$request->hora_final]])->exists())
             {return response()->json(['error'=>['El campo hora final: Ya existe un permiso registrado dentro de este rango de hora.']]);}
