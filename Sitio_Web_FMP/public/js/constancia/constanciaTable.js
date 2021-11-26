@@ -103,7 +103,7 @@ $( "#marcaje" ).change(function() {
                  },
                  success: function(json) {   
                      var json = JSON.parse(json);  
-                    console.log(json);
+                    //console.log(json);
                     $('#idPermiso').val(json.permiso);
                     $('#fecha').val(json.fecha_presentacion);
                     $('#marcaje').val(json.olvido).trigger("change");

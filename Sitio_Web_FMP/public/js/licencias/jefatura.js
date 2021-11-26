@@ -88,7 +88,7 @@ function observaciones(boton) {
     if ($(boton).val() != null) {
         $.ajax({
             type: "GET",
-            url: '/admin/mislicencias/procesos/' + $(boton).val(),
+            url: URL_SERVIDOR+'/admin/mislicencias/procesos/' + $(boton).val(),
             beforeSend: function() {
                 $(boton).prop('disabled', true).html('' +
                     '<i class="fa fa-edit font-16 py-1" aria-hidden="true"></i>'
@@ -130,7 +130,7 @@ function verDatosConst(boton) {
     if ($(boton).val() != null) {
         $.ajax({
             type: "GET",
-            url: '/admin/licencias/jefaturaRRHH/' + $(boton).val(),
+            url: URL_SERVIDOR+'/admin/licencias/jefaturaRRHH/' + $(boton).val(),
             beforeSend: function() {
                 $(boton).prop('disabled', true).html('' +
                     '<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
@@ -166,7 +166,7 @@ function verDatos(boton) {
     if ($(boton).val() != null) {
         $.ajax({
             type: "GET",
-            url: '/admin/licencias/jefaturaRRHH/' + $(boton).val(),
+            url: URL_SERVIDOR+'/admin/licencias/jefaturaRRHH/' + $(boton).val(),
             beforeSend: function() {
                 $(boton).prop('disabled', true).html('' +
                     '<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
