@@ -32,7 +32,7 @@ table = $('#misLicenciasRRHHTable').DataTable({
     "autoWidth": true,                
     "deferRender": true,
     "ajax":{
-        "url":"RRHH/datableJson/"+$('#rrhh_depto').val()+'/'+$('#rrhh_mes').val()+'/'+$('#rrhh_anio').val(),
+        "url": URL_SERVIDOR+"/admin/licencias/RRHH/datableJson/"+$('#rrhh_depto').val()+'/'+$('#rrhh_mes').val()+'/'+$('#rrhh_anio').val(),
         //"url":"/admin/licencias/RRHH/datableJson/tipo/depto/anio/mes",
         "method": "GET",
         "dataSrc": function (json) {
@@ -50,7 +50,7 @@ table = $('#misLicenciasRRHHTable').DataTable({
     ]               
 });  
 function refrescarTable(){
-    table.ajax.url("RRHH/datableJson/"+$('#rrhh_depto').val()+'/'+$('#rrhh_mes').val()+'/'+$('#rrhh_anio').val()).load();
+    table.ajax.url(URL_SERVIDOR+"/admin/licencias/RRHH/datableJson/"+$('#rrhh_depto').val()+'/'+$('#rrhh_mes').val()+'/'+$('#rrhh_anio').val()).load();
 }
 
 $('#rrhh_depto').on('select2:select',refrescarTable);
@@ -100,7 +100,7 @@ function observaciones(boton){
     if($(boton).val()!=null){
             $.ajax({
                 type: "GET",
-                url: '/admin/mislicencias/procesos/'+$(boton).val(),
+                url: URL_SERVIDOR+'/admin/mislicencias/procesos/'+$(boton).val(),
                 beforeSend: function() {
                     $(boton).prop('disabled', true).html(''
                         +'<i class="fa fa-edit font-16 py-1" aria-hidden="true"></i>'
@@ -141,7 +141,7 @@ function verDatosConst(boton) {
     if ($(boton).val() != null) {
         $.ajax({
             type: "GET",
-            url: '/admin/licencias/jefaturaRRHH/' + $(boton).val(),
+            url: URL_SERVIDOR+'/admin/licencias/jefaturaRRHH/' + $(boton).val(),
             beforeSend: function() {
                 $(boton).prop('disabled', true).html('' +
                     '<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
@@ -174,7 +174,7 @@ function verDatos(boton) {
     if($(boton).val()!=null){
         $.ajax({
             type: "GET",
-            url: '/admin/licencias/jefaturaRRHH/'+$(boton).val(),
+            url: URL_SERVIDOR+'/admin/licencias/jefaturaRRHH/'+$(boton).val(),
             beforeSend: function() {
                 $(boton).prop('disabled', true).html(''
                     +'<div class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></div>'
