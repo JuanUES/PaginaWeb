@@ -38,7 +38,7 @@ class AsignacionCargaController extends Controller
         ->get();
         //fin de marcar los usuarios ya registrados
 
-      //echo dd($asig);
+          // echo dd($tablaA);
         return view('Admin.horarios.asignarCarga',compact('empleados','ciclos','tablaA','asig'));
       }else{
         return response()->json(['error'=>['ACCESO DENEGADO']]);

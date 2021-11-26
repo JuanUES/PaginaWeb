@@ -407,7 +407,7 @@
     <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
     <script src="{{ asset('js/summernote-bs4.min.js')}}"></script>
     <script src="{{ asset('vendor/summernote/lang/summernote-es-ES.js')}}"></script>
-    <script src="{{ asset('js/licencias/empleado.js')}}"></script>
     <script src="{{ asset('js/scripts/configuracion.js')}}"></script>
+    <script src="{{ asset('js/licencias/empleado.js')}}"></script>
     <script src="{{ asset('js/licencias/http.js')}}"></script>
 @endsection

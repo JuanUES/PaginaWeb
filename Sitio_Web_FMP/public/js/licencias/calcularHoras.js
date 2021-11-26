@@ -21,7 +21,7 @@ let mensuales, anuales, hrs_m, hrs_a, min_m, min_a, min_t_a, min_t_m;
                 
                 $.ajax({
                     type: "GET",
-                    url: URL_SERVIDOR+'/admin/mislicencias/horas-anual/'+$('#fecha_de_uso').val()+'/'+permiso,
+                    url: 'mislicencias/horas-anual/'+$('#fecha_de_uso').val()+'/'+permiso,
                     success: function(json) {
                         var json  =  JSON.parse(json);
                         anuales = json.anuales;
