@@ -32,7 +32,7 @@ table = $('#misLicenciasRRHHTable').DataTable({
     "autoWidth": true,                
     "deferRender": true,
     "ajax":{
-        "url":"licencias/RRHH/datableJson/"+$('#rrhh_depto').val()+'/'+$('#rrhh_mes').val()+'/'+$('#rrhh_anio').val(),
+        "url":"RRHH/datableJson/"+$('#rrhh_depto').val()+'/'+$('#rrhh_mes').val()+'/'+$('#rrhh_anio').val(),
         //"url":"/admin/licencias/RRHH/datableJson/tipo/depto/anio/mes",
         "method": "GET",
         "dataSrc": function (json) {
