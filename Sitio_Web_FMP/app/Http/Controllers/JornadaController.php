@@ -197,9 +197,9 @@ class JornadaController extends Controller{
                 $procedimiento = 'guardado';
                 if ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano')) {
                     $procedimiento = 'enviado a recursos humanos';
-                } else if ($user->hasRole('Jefe-Academico') && !$user->hasRole('Docente') || $user->hasRole('Jefe-Administrativo') && !$user->hasRole('Docente')) {
+                } else if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo') && !$user->hasRole('Docente')) {
                     $procedimiento = 'enviado a jefatura';
-                } else if ($user->hasRole('Jefe-Academico') && $user->hasRole('Docente') || $user->hasRole('Jefe-Administrativo') && $user->hasRole('Docente')) {
+                } else if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo') && $user->hasRole('Docente')) {
                     $procedimiento = 'guardado';
                 }
 
@@ -475,9 +475,9 @@ class JornadaController extends Controller{
         if($user->empleado_rf->id == $jornada->empleado_rf->id){
             if ($user->hasRole('super-admin') || $user->hasRole('Recurso-Humano')) {
                 unset($estados[1], $estados[2], $estados[3], $estados[4]);
-            } else if ($user->hasRole('Jefe-Academico') && !$user->hasRole('Docente') || $user->hasRole('Jefe-Administrativo') && !$user->hasRole('Docente')) {
+            } else if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo') && !$user->hasRole('Docente')) {
                 unset($estados[5], $estados[4], $estados[1], $estados[2]);
-            } else if ($user->hasRole('Jefe-Academico') && $user->hasRole('Docente') || $user->hasRole('Jefe-Administrativo') && $user->hasRole('Docente')) {
+            } else if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo') && $user->hasRole('Docente')) {
                 unset($estados[5], $estados[4], $estados[2]);
             }
             else if ($user->hasRole('Docente')) {
