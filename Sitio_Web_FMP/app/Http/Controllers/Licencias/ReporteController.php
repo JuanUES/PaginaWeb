@@ -13,6 +13,14 @@ use PhpParser\Node\Expr\FuncCall;
 
 class ReporteController extends Controller
 {
+    //PARA MOSTRAR LA VISTA DE LICENCIAS POR MES PARA LOS JEFES
+    public function indexBladeJefes(){
+
+        $años = Permiso::selectRaw('distinct to_char(permisos.fecha_uso, \'YYYY\') as año')->get();
+        return view('Reportes.Jefes.MostrarMensuales',compact('años'));
+
+    }
+    //FIN DE MOSTRAR LA VISTA DE DE LICENCIAS POR MES PARA LOS JEFES
     //PARA MOSTRAR LA VISTA DE LICENCIAS POR ACUERDO
     public function indexBladeAcuerdos(){
         $deptos = Departamento::all();
@@ -255,8 +263,53 @@ class ReporteController extends Controller
 
         return isset($data) ? response()->json($data, 200, []) : response()->json([], 200, []);
     }
-
     //FIN MOSTRAR EN LA TABLA DE LA VISTA DE LICENCIAS POR ACUERDO
+
+    //PARA MOSTRAR EN LA TABLA DE LA VISTA DE REVISION MENSUALE A JEFES
+    public function mostrarTablaJefes($mes, $anio){
+
+        $permisos = Permiso::selectRaw('tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,permisos.estado,
+                observaciones,olvido,empleado.nombre,empleado.apellido')
+        ->join('empleado','empleado.id','=','permisos.empleado')
+        ->where(function($query)
+            {$query->where([['permisos.estado','like','Aceptado'],
+                ['permisos.jefatura','=',auth()->user()->empleado]]);}
+        );
+
+      
+        if($anio!='todos'){
+            $permisos = $permisos->whereRaw('to_char(permisos.fecha_uso,\'YYYY\')::int='.$anio);
+        }
+
+        if($mes!='todos'){
+            $permisos = $permisos->whereRaw('to_char(permisos.fecha_uso,\'MM\')::int='.$mes);
+        }
+
+        $permisos = $permisos->get();
+
+        foreach ($permisos as $item) {
+            # code...
+            $col3 = null;
+            if ($item->olvido == 'Entrada' || $item->olvido =='Salida') {
+                $col3 = $item->olvido;
+              
+            }else{
+                $col3= ''.\Carbon\Carbon::parse($item->fecha_uso . 'T' . $item->hora_inicio)->diffAsCarbonInterval(\Carbon\Carbon::parse($item->fecha_uso . 'T' . $item->hora_final));
+            }
+
+            
+
+            $data[] = array(
+                "col0" => $item->nombre.' '.$item->apellido,
+                "col1" => \Carbon\Carbon::parse($item->fecha_uso)->format('d/M/Y'),
+                "col2" => '<span class="badge badge-primary">'.$item->tipo_permiso.'</span>',
+                "col3" => $col3,
+            );
+        }
+        return isset($data)?response()->json($data,200,[]):response()->json([],200,[]);
+    }
+
+    //FIN DE MOSTRAR EN LA TABLA DE LA VISTA DE REVISION MENSUALE A JEFES
 
     //PARA GENERAR EL REPORTE DE CONSTANCIAS EN PDF
     public function ConstDeptosPDF(Request $request)
@@ -460,6 +513,46 @@ class ReporteController extends Controller
         return $pdf->setPaper('A4', 'Landscape')->download('LicenciasPorAcuerdos.pdf');
 
     }
-
     //FIN DE GENERAR REPORTE DE LICENCIAS POR ACUERDO
+
+    //PARA GENERAR EL PDF DE REPORTE MENSUAL JEFE
+    public function mensualJefePDF(Request $request){
+        $permisos = Permiso::selectRaw('tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,permisos.estado,
+                observaciones,olvido,empleado.nombre,empleado.apellido')
+        ->join('empleado','empleado.id','=','permisos.empleado')
+        ->where(function($query)
+            {$query->where([['permisos.estado','like','Aceptado'],
+                ['permisos.jefatura','=',auth()->user()->empleado]]);}
+        );
+
+        $departamentos = Empleado::selectRaw(' DISTINCT id_depto,departamentos.nombre_departamento,departamentos.id')
+        ->join('departamentos', 'departamentos.id', '=', 'empleado.id_depto')
+        ->join('permisos', 'permisos.jefe', '=', 'empleado.id')
+        ->Where(
+            function ($query) {
+                $query->Where([['tipo_permiso', 'like', 'Aceptado'],'permisos.jefatura','=',auth()->user()->empleado]);
+            }
+        );
+
+      
+        if($request->anio!='todos'){
+            $permisos = $permisos->whereRaw('to_char(permisos.fecha_uso,\'YYYY\')::int='.$request->anio);
+        }
+
+        if($request->mes!='todos'){
+            $permisos = $permisos->whereRaw('to_char(permisos.fecha_uso,\'MM\')::int='.$request->mes);
+        }
+
+        $permisos = $permisos->get();
+       
+  
+        
+
+        // echo dd($permisos);
+        $pdf = PDF::loadView('Reportes.Jefes.ReporteMensuales', compact('permisos', 'departamentos', 'request'));
+        return $pdf->setPaper('A4', 'Landscape')->download('Reporte de '.$request->mes.'.pdf');
+
+    }
+
+    //FIN GENERAR EL REPORTE MENSUAL JEFE
 }

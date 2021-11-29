@@ -389,7 +389,7 @@
                                         @endhasrole
                                         @hasanyrole('super-admin|Jefe-Administrativo|Jefe-Academico')
                                         <li>
-                                            <a href=".">Permisos Mensuales</a>
+                                            <a href="{{route('reporteMensualesJefes/vista')}}">Permisos Mensuales</a>
                                         </li>
                                         @endhasrole                                    </ul>
                                 </li>

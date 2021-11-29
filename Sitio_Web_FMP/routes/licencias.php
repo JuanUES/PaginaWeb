@@ -39,6 +39,10 @@ Route::group(['middleware' => ['auth']], function () {
     //para mostrar el reporte en la tabla dinamica
     Route::get('admin/Licencias/Reporte/{f1}/{f2}/{d}',[ReporteController::class,'mostrarTablaLicencias']);//PARA LA TABLA DE LA VISTA
     
+    //PARA LOS REPORTES MENSUALES PARA LOS JEFES
+    Route::get('admin/ReporteMensual/Licencias',[ReporteController::class,'indexBladeJefes'])->name('reporteMensualesJefes/vista');
+    Route::get('admin/ReporteMensual/Reporte/{m}/{a}',[ReporteController::class,'mostrarTablaJefes']);//PARA LA TABLA DE LA VISTA
+    //FIN DE REPORTES MENSUALES PARA LOS JEFES
 
     Route::get('admin/mislicencias', [LicenciasController::class,'indexMisLicencias'])->name('indexLic');
 
