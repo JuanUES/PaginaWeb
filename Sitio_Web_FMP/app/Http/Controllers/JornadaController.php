@@ -37,6 +37,14 @@ class JornadaController extends Controller{
         'items.array' => 'La Jornada no puede ir vacia'
     ];
 
+    public $rulesMod = [
+        'observaciones' => 'required|String',
+    ];
+
+    public $messagesMod = [
+        'observaciones.required' => 'La nota es obligatoria',
+    ];
+
     public $estado_procedimiento = [
         0 => ['value' => 'guardado', 'text' => 'Guardado'],
         1 => ['value' => 'enviado a jefatura', 'text' => 'Enviar a Jefatura'],
@@ -219,6 +227,12 @@ class JornadaController extends Controller{
                 }
                 Utilidades::fnSaveBitacora('Nueva Jornada #: ' . $jornada->id. ' Ciclo: '. $jornada->periodo_rf->ciclo_rf->nombre, 'Registro', $this->modulo);
             } else {
+
+                $validator = Validator::make($request->all(), $this->rulesMod, $this->messagesMod);
+                if ($validator->fails()) {
+                    return response()->json(['error' => $validator->errors()->all()]);
+                }
+
                 $id = $request->_id;
                 $jornada = Jornada::findOrFail($id);
                 $msg = 'Modificación exitosa.';
@@ -478,7 +492,7 @@ class JornadaController extends Controller{
             } else if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo') && !$user->hasRole('Docente')) {
                 unset($estados[5], $estados[4], $estados[1], $estados[2]);
             } else if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo') && $user->hasRole('Docente')) {
-                unset($estados[5], $estados[4], $estados[2]);
+                unset($estados[5], $estados[4], $estados[2], $estados[3]);
             }
             else if ($user->hasRole('Docente')) {
                 unset($estados[2], $estados[3], $estados[4], $estados[5]);

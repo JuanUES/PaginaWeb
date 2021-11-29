@@ -312,7 +312,7 @@
             $("#_id").val(id);
             fnUpdatePeriodoSelect(response.jornada.id_periodo, true, response.jornada.id_emp, true, response.jornada.id_periodo);
             table.replaceData(response.items);
-            $("#frmJornada #nota").val(response.jornada.observaciones);
+            $("#frmJornada #observaciones").val(response.jornada.observaciones);
         });
     }
 
