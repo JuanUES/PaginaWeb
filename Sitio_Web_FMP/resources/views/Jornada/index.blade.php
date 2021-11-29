@@ -149,7 +149,7 @@
                                             {!! $buttons !!}
                                         @endif
                                     @elseif((@Auth::user()->hasRole('Docente') && @Auth::user()->hasRole('Jefe-Administrativo')))
-                                        @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
+                                        @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas' || $item->procedimiento == 'enviado a jefatura')
                                             {!! $buttons !!}
                                         @endif
                                     @elseif(@Auth::user()->hasRole('Jefe-Academico') || @Auth::user()->hasRole('Jefe-Administrativo'))
@@ -170,7 +170,7 @@
                                         {!! $buttons !!}
                                     @endif
                                 @elseif((@Auth::user()->hasRole('Docente') && @Auth::user()->hasRole('Jefe-Administrativo')))
-                                    @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas')
+                                    @if($item->procedimiento=='guardado' || $item->procedimiento=='la jefatura lo ha regresado por problemas' || $item->procedimiento == 'enviado a jefatura')
                                         {!! $buttons !!}
                                     @endif
                                 @elseif(@Auth::user()->hasRole('Jefe-Academico') || @Auth::user()->hasRole('Jefe-Administrativo'))

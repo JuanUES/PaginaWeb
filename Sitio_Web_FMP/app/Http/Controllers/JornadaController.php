@@ -189,6 +189,7 @@ class JornadaController extends Controller{
      */
     public function store(Request $request){
         $user = Auth::user();
+        $id_log = Auth::user()->empleado;
         try {
             $validator = Validator::make($request->all(), $this->rules, $this->messages);
             if ($validator->fails()) {
@@ -200,6 +201,8 @@ class JornadaController extends Controller{
 
             if (strcmp(trim($request->_id), '') == 0 ) {
                 $msg = 'Registro exitoso.';
+                // $id_log;
+                // $request->id_emp
 
                 //para determinar el estado del proceso dependiendo del usuario que hace el registro
                 $procedimiento = 'guardado';
@@ -207,9 +210,11 @@ class JornadaController extends Controller{
                     $procedimiento = 'enviado a recursos humanos';
                 } else if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo') && !$user->hasRole('Docente')) {
                     $procedimiento = 'enviado a jefatura';
-                } else if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo') && $user->hasRole('Docente')) {
+                }else if ($user->hasRole('Jefe-Administrativo') && $user->hasRole('Docente') && $request->id_emp != $id_log) {
+                    $procedimiento = 'enviado a jefatura';    
+                } else if ($user->hasRole('Jefe-Academico') || $user->hasRole('Jefe-Administrativo') && $user->hasRole('Docente') && $request->id_emp === $id_log) {
                     $procedimiento = 'guardado';
-                }
+                } 
 
                 $requestData['procedimiento'] = $procedimiento;
 
@@ -229,14 +234,13 @@ class JornadaController extends Controller{
             } else {
 
                 $validator = Validator::make($request->all(), $this->rulesMod, $this->messagesMod);
-                if ($validator->fails()) {
+                if ($user->hasRole('Recurso-Humano') && $validator->fails()) {
                     return response()->json(['error' => $validator->errors()->all()]);
                 }
-
+                
                 $id = $request->_id;
                 $jornada = Jornada::findOrFail($id);
                 $msg = 'Modificación exitosa.';
-
 
                 $jornada->update($requestData);
                 $jornada->items()->delete();
@@ -252,7 +256,7 @@ class JornadaController extends Controller{
                 }
                 Utilidades::fnSaveBitacora('Jornada #: ' . $jornada->id . ' Ciclo: ' . $jornada->periodo_rf->ciclo_rf->nombre, 'Modificación', $this->modulo);
             }
-            return response()->json(['mensaje' => $msg]);
+            return response()->json(['mensaje' => $msg . $id_log . $request->id_emp]);
         } catch (Exception $e) {
             return response()->json(['error' => $e->getMessage()]);
         }
