@@ -23,6 +23,7 @@ class ReporteController extends Controller
     //FIN DE MOSTRAR LA VISTA DE DE LICENCIAS POR MES PARA LOS JEFES
     //PARA MOSTRAR LA VISTA DE LICENCIAS POR ACUERDO
     public function indexBladeAcuerdos(){
+        
         $deptos = Departamento::all();
         // echo dd($deptos);
         return view('Reportes.LicenciasAcuerdo.MostrarLicenciasAcuerdos', compact('deptos'));
@@ -301,8 +302,8 @@ class ReporteController extends Controller
 
             $data[] = array(
                 "col0" => $item->nombre.' '.$item->apellido,
-                "col1" => \Carbon\Carbon::parse($item->fecha_uso)->format('d/M/Y'),
-                "col2" => '<span class="badge badge-primary">'.$item->tipo_permiso.'</span>',
+                "col1" => '<span class="badge badge-primary">'.$item->tipo_permiso.'</span>',
+                "col2" => \Carbon\Carbon::parse($item->fecha_uso)->format('d/M/Y'),
                 "col3" => $col3,
             );
         }
@@ -527,12 +528,12 @@ class ReporteController extends Controller
 
         $departamentos = Empleado::selectRaw(' DISTINCT id_depto,departamentos.nombre_departamento,departamentos.id')
         ->join('departamentos', 'departamentos.id', '=', 'empleado.id_depto')
-        ->join('permisos', 'permisos.jefe', '=', 'empleado.id')
+        ->join('permisos', 'permisos.empleado', '=', 'empleado.id')
         ->Where(
             function ($query) {
-                $query->Where([['tipo_permiso', 'like', 'Aceptado'],'permisos.jefatura','=',auth()->user()->empleado]);
+                $query->Where([['permisos.estado', 'like', 'Aceptado'],['permisos.jefatura','=',auth()->user()->empleado]]);
             }
-        );
+        )->get();
 
       
         if($request->anio!='todos'){
@@ -550,7 +551,7 @@ class ReporteController extends Controller
 
         // echo dd($permisos);
         $pdf = PDF::loadView('Reportes.Jefes.ReporteMensuales', compact('permisos', 'departamentos', 'request'));
-        return $pdf->setPaper('A4', 'Landscape')->download('Reporte de '.$request->mes.'.pdf');
+        return $pdf->download('Reporte de licencias '.$request->mes.'.pdf');
 
     }
 

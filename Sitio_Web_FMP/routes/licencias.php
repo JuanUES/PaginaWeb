@@ -91,6 +91,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('admin/Licencias/Reporte/PDF',[ReporteController::class,'licenciasDeptosPDF'])->name('Reporte/licencias');
     Route::post('admin/Constancias/Reporte/PDF',[ReporteController::class,'ConstDeptosPDF'])->name('Reporte/cosntancias');
     Route::post('admin/LicenciasAcuerdo/Reporte/PDF',[ReporteController::class,'licenciasAcuerdoPDF'])->name('Reporte/Licencias/A');
+    Route::post('admin/ReporteMensual/Reporte/PDF',[ReporteController::class,'mensualJefePDF'])->name('Reporte/Licencias/jefes');
+
     /*END POST**/
 
 // Resportes

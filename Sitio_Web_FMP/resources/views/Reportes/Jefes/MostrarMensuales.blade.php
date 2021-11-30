@@ -70,15 +70,16 @@
                     <i class="mdi mdi-pdf-box   mdi-20px" style="margin: 0px;"></i> Aviso</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            <form action="{{ route('Reporte/cosntancias') }}" method="POST">
+            <form action="{{ route('Reporte/Licencias/jefes') }}" method="POST">
                 @csrf
                 <div class="modal-body">
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
                         role="alert" style="display:none" id="notificacionEnviar">
                     </div>
-                    <input type="hidden" name="deptoR_R" id="deptoR_R">
-                    <input type="hidden" name="inicioR" id="inicioR" >
-                    <input type="hidden" name="finR" id="finR" >
+                  
+                    <input type="hidden" name="mes" id="mes" >
+                    <input type="hidden" name="mesR" id="mesR" >
+                    <input type="hidden" name="anio" id="anio" >
                     <div class="row py-3 align-center">
                         <div class="col-xl-2 dripicons-information text-info fa-4x mr-1"></div>
                         <div class="col-xl-9 text-black"> 

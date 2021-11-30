@@ -61,3 +61,20 @@ function refrescarTable(){
 
 $('#rrhh_mes').on('select2:select',refrescarTable);
 $('#rrhh_anio').on('select2:select',refrescarTable);
+
+//BOTON PARA GENERAR EL REPORTE
+$( "#descargarLicencias" ).click(function() {
+
+    if ($('#rrhh_mes').val() == '' || $('#rrhh_anio').val()=='') {
+        $("#modalAlerta").modal();
+    } else {
+        var combo = document.getElementById("rrhh_mes");
+        var selected = combo.options[combo.selectedIndex].text;
+        $('#mesR').val(selected);
+        $('#mes').val($('#rrhh_mes').val());
+        $('#anio').val($('#rrhh_anio').val());        
+        $("#modalPDF").modal();
+    }//fin else de mostrar advertencia
+    
+  });
+//FIN BOTON PARA GENERAR EL REPORTE
