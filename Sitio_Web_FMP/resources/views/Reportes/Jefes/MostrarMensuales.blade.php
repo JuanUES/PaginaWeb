@@ -176,9 +176,9 @@
                 <thead>
                 <tr>
                     <th class="col-xs-2">Nombre</th>
-                    <th class="col-xs-1">Tipo</th>
-                    <th class="col-xs-1">Fecha uso</th>
-                    <th class="col-xs-1">Horas a utilizar</th>
+                    <th class="col-sm-2">Tipo</th>
+                    <th class="col-sm-2">Fecha uso</th>
+                    <th class="col-sm-2">Horas a utilizar</th>
                 </tr>
                 </thead>
                 <tbody>
