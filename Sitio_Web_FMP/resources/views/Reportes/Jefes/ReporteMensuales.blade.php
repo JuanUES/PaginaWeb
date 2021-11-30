@@ -44,8 +44,8 @@
         <h4 align="center">
             Universidad de El Salvador<br>
             Facultad Multidisciplinaria Paracentral <br>
-            Licencias del Departamento: {{ $dep->nombre_departamento }}{{ ' ' }}<br>
-            Del mes de: {{$request->mesR}} del {{$request->anio}}
+            {{ $dep->nombre_departamento }}{{ ' ' }}<br>
+            {{$request->mesR}} del {{$request->anio}}
           
             <br>
 
