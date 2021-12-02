@@ -333,34 +333,35 @@ class ReporteController extends Controller
                     ]);
                 }
             );
-
-
-        if ($anio != 'todos') {
+            if($mes !=null && $anio !=null){
             $permisos = $permisos->whereRaw('to_char(permisos.fecha_uso,\'YYYY\')::int=' . $anio);
-        }
-
-        if ($mes != 'todos') {
+        
             $permisos = $permisos->whereRaw('to_char(permisos.fecha_uso,\'MM\')::int=' . $mes);
-        }
+            }
 
-        $permisos = $permisos->get();
+              $permisos = $permisos->get();
 
         foreach ($permisos as $item) {
             # code...
-            $col3 = null;
-            if ($item->olvido == 'Entrada' || $item->olvido == 'Salida') {
-                $col3 = $item->olvido;
-            } else {
-                $col3 = '' . \Carbon\Carbon::parse($item->fecha_uso . 'T' . $item->hora_inicio)->diffAsCarbonInterval(\Carbon\Carbon::parse($item->fecha_uso . 'T' . $item->hora_final));
+            $col3 = $col4 = $col5 = null;
+            if ($item->olvido == 'Entrada' || $item->olvido =='Salida') {
+                $col3 = date('H:i', strtotime($item->olvido == 'Entrada'?$item->hora_inicio:$item->hora_final));
+                $col4 = date('H:i', strtotime($item->olvido == 'Salida'?$item->hora_inicio:$item->hora_final));
+                $col5 = date('H:i', strtotime($item->hora_final));
+            }else{
+                $col3 = date('H:i', strtotime($item->hora_inicio));
+                $col4 = date('H:i', strtotime($item->hora_final)) ;
+                $col5 = ''.\Carbon\Carbon::parse($item->fecha_uso . 'T' . $item->hora_inicio)->diffAsCarbonInterval(\Carbon\Carbon::parse($item->fecha_uso . 'T' . $item->hora_final));
             }
-
-
-
             $data[] = array(
-                "col0" => $item->nombre . ' ' . $item->apellido,
-                "col1" => '<span class="badge badge-primary">' . $item->tipo_permiso . '</span>',
-                "col2" => \Carbon\Carbon::parse($item->fecha_uso)->format('d/M/Y'),
+                "col0" => '<span class="badge badge-primary">'.$item->tipo_permiso.'</span>',
+                "col1" => \Carbon\Carbon::parse($item->fecha_presentacion)->format('d/M/Y'),
+                "col2" => \Carbon\Carbon::parse($item->fecha_uso)->format('d/M/Y'),  
                 "col3" => $col3,
+                "col4" => $col4,
+                "col5" => $col5,
+                "col6" => $item->justificacion,
+                
             );
         }
         return isset($data) ? response()->json($data, 200, []) : response()->json([], 200, []);

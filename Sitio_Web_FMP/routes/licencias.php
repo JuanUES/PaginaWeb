@@ -41,8 +41,9 @@ Route::group(['middleware' => ['auth']], function () {
     
     //PARA LOS REPORTES DE LAS LICENCIAS DE LOS EMPLEADOS
     Route::get('admin/Historial/Empleado',[ReporteController::class,'indexEmpleadoLicencias'])->name('historial/vista');//para visualizar los datos en el blade
-
+    Route::get('admin/Historial/Reporte/{m}/{a}',[ReporteController::class,'mostrarTablaEmpleado']);//PARA LA TABLA DE LA VISTA
     //FIN DE PARA LOS REPORTES DE LOS EMPLEADOS
+
     //PARA LOS REPORTES MENSUALES PARA LOS JEFES
     Route::get('admin/ReporteMensual/Licencias',[ReporteController::class,'indexBladeJefes'])->name('reporteMensualesJefes/vista');
     Route::get('admin/ReporteMensual/Reporte/{m}/{a}',[ReporteController::class,'mostrarTablaJefes']);//PARA LA TABLA DE LA VISTA

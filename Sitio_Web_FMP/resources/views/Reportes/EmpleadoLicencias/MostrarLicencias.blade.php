@@ -172,15 +172,15 @@
      </div>
       
             <br/>
-            <table  class="table" style="width: 100%" id='Mensuales_table'>
+            <table  class="table" style="width: 100%" id='Historial_table'>
                 <thead>
                 <tr>
                     <th class="col-sm-2">Tipo</th>
                     <th class="col-sm-2">Fecha Presentación</th>
                     <th class="col-sm-2">Fecha Uso</th>
-                    <th class="col-sm-2">Horas Inicio</th>
-                    <th class="col-sm-2">Hora Final</th>
-                    <th class="col-sm-2">Tiempo Utilizar</th>
+                    <th class="col-sm-1">Horas Inicio</th>
+                    <th class="col-sm-1">Hora Final</th>
+                    <th class="col-sm-1">Tiempo Utilizar</th>
                     <th class="col-xs-2">Justificación</th>
                 </tr>
                 </thead>
@@ -207,7 +207,7 @@
 <script src="{{ asset('template-admin/dist/assets/libs/select2/select2.min.js') }}" ></script>
 <script src="{{ asset('js/licencias/http.js')}}"></script>
 <script src="{{ asset('js/scripts/configuracion.js')}}"></script>
-<script src="{{ asset('js/ReportesJs/tablaMensual.js')}}"></script>
+<script src="{{ asset('js/ReportesJs/tablaEmpleado.js')}}"></script>
 <script>
     $(
     function () {
