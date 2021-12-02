@@ -194,7 +194,7 @@
                         @endhasrole
                         <li class="menu-title">Licencias</li>
                         <li>
-                            <a href="{{ route('indexLic') }}"><i class="icon-notebook font-18"></i><span>Mis
+                            <a href="{{ route('indexLic') }}"><i class="icon-notebook font-18"></i><span> Mis
                                     Licencias</span></a>
                         </li>
                         <li>
@@ -389,9 +389,14 @@
                                         @endhasrole
                                         @hasanyrole('super-admin|Jefe-Administrativo|Jefe-Academico')
                                         <li>
-                                            <a href="{{route('reporteMensualesJefes/vista')}}">Permisos Mensuales</a>
+                                            <a href="{{route('reporteMensualesJefes/vista')}}">Remisión Mensuales</a>
                                         </li>
-                                        @endhasrole                                    </ul>
+                                        @endhasrole
+                                        <li>
+                                            <a href="{{route('historial/vista')}}">Resumen de permisos</a>
+                                        </li>
+                                       
+                                     </ul>
                                 </li>
                                 <!--fin de para los horarios-->
                                

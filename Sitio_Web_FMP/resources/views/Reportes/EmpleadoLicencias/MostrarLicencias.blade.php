@@ -9,7 +9,7 @@
             <div class="page-title-right">
                 <ol class="breadcrumb m-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">Inicio</a></li>
-                    <li class="breadcrumb-item active">Const. Olvido de Marcaje</li>
+                    <li class="breadcrumb-item active">Historial de Licencias</li>
                 </ol>
             </div>
             <h4 class="page-title">&nbsp;</h4>
@@ -122,7 +122,7 @@
             <div class="row py-2">
                 <div class="col order-first">
                     <h3>
-                       Reporte Remisión Mensual de Licencia
+                       Reporte Historial de Licencias
                     </h3>
                 </div>
                 <div class="col-lg-1 order-last">
@@ -175,10 +175,13 @@
             <table  class="table" style="width: 100%" id='Mensuales_table'>
                 <thead>
                 <tr>
-                    <th class="col-xs-2">Nombre</th>
                     <th class="col-sm-2">Tipo</th>
-                    <th class="col-sm-2">Fecha uso</th>
-                    <th class="col-sm-2">Horas a utilizar</th>
+                    <th class="col-sm-2">Fecha Presentación</th>
+                    <th class="col-sm-2">Fecha Uso</th>
+                    <th class="col-sm-2">Horas Inicio</th>
+                    <th class="col-sm-2">Hora Final</th>
+                    <th class="col-sm-2">Tiempo Utilizar</th>
+                    <th class="col-xs-2">Justificación</th>
                 </tr>
                 </thead>
                 <tbody>

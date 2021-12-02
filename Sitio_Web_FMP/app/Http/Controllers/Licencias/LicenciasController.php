@@ -230,7 +230,7 @@ class LicenciasController extends Controller
                 $query
                 ->where('permisos.tipo_permiso','like','CITA MEDICA')
                 ->orWhere('permisos.tipo_permiso','like','LC/GS');
-            })->where('permisos.estado','like','Aceptado');
+            });
             
             $queryEmp = Empleado::
                join ('tipo_jornada', 'tipo_jornada.id', '=', 'empleado.id_tipo_jornada')
