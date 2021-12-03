@@ -321,7 +321,7 @@ class ReporteController extends Controller
     //FIN DE MOSTRAR EN LA TABLA DE LA VISTA DE REVISION MENSUALE A JEFES
     public function mostrarTablaEmpleado($mes, $anio)
     {
-
+            //echo dd($mes);
         $permisos = Permiso::selectRaw('tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,permisos.estado,
                 observaciones,olvido,empleado.nombre,empleado.apellido')
             ->join('empleado', 'empleado.id', '=', 'permisos.empleado')
@@ -333,11 +333,11 @@ class ReporteController extends Controller
                     ]);
                 }
             );
-            if($mes !=null && $anio !=null){
+           
             $permisos = $permisos->whereRaw('to_char(permisos.fecha_uso,\'YYYY\')::int=' . $anio);
         
             $permisos = $permisos->whereRaw('to_char(permisos.fecha_uso,\'MM\')::int=' . $mes);
-            }
+            
 
               $permisos = $permisos->get();
 
@@ -617,6 +617,37 @@ class ReporteController extends Controller
         $pdf = PDF::loadView('Reportes.Jefes.ReporteMensuales', compact('permisos', 'departamentos', 'request'));
         return $pdf->download('Reporte de licencias ' . $request->mes . '.pdf');
     }
+    //FIN GENERAR EL REPORTE MENSUAL JEFE   
 
-    //FIN GENERAR EL REPORTE MENSUAL JEFE
+    //PARA GENERAR EL PDF DEL EMPLEADO
+    public function mensualEmpleadoPDF(Request $request)
+    {
+
+        $permisos = Permiso::selectRaw('tipo_permiso, fecha_uso,fecha_presentacion,hora_inicio,hora_final,justificacion,permisos.estado,
+                observaciones,olvido,empleado.nombre,empleado.apellido')
+            ->join('empleado', 'empleado.id', '=', 'permisos.empleado')
+            ->where(
+                function ($query) {
+                    $query->where([
+                        ['permisos.estado', 'like', 'Aceptado'],
+                        ['permisos.empleado', '=', auth()->user()->empleado]
+                    ]);
+                }
+            );
+           
+            $permisos = $permisos->whereRaw('to_char(permisos.fecha_uso,\'YYYY\')::int=' . $request->anio);
+        
+            $permisos = $permisos->whereRaw('to_char(permisos.fecha_uso,\'MM\')::int=' . $request->mes);
+            
+
+              $permisos = $permisos->get();
+              $empleado = Empleado::select('*')->where('id','=',auth()->user()->empleado)->get();
+
+
+        // echo dd($permisos);
+        $pdf = PDF::loadView('Reportes.EmpleadoLicencias.ReporteLicenciasEmpleado', compact('permisos','empleado','request'));
+        return $pdf->download('Reporte de licencias ' . $request->mes . '.pdf');
+    }
+
+    //FIN DE GENERAR EL PDF PARA EL EMPLEADO
 }
