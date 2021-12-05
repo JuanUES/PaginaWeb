@@ -179,9 +179,7 @@ class LicenciasController extends Controller
                     return response()->json(['error'=>['Las horas exceden el límite establecido mensual.']]); 
                 }
             }
-
-            //select * from permisos
-            //where hora_inicio<='13:00:00' and hora_final>='13:00:00' and fecha_uso = '2021-11-10'
+        
             $query = Permiso::where( function($query){
                     $query->Where('tipo_permiso','like','LC/GS')
                     ->orWhere('tipo_permiso','like','LS/GS')
@@ -192,6 +190,9 @@ class LicenciasController extends Controller
                     ->orWhere('tipo_permiso','like','DUELO O PATERNIDAD');
                 }
             )->where('empleado','=',auth()->user()->empleado)->where('fecha_uso','=',$request->fecha_de_uso);
+
+            if($request->_id != null)
+            {$query = $query->whereRaw('md5(id::text) != ?',[$request->_id]);}
 
             if($query->where([['hora_inicio','<=',$request->hora_inicio],['hora_final','>=',$request->hora_inicio]])->exists())
             {return response()->json(['error'=>['El campo hora inicio: Ya existe un permiso registrado en este rango de hora.']]);}
