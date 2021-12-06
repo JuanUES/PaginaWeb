@@ -13,11 +13,13 @@ use PhpParser\Node\Expr\FuncCall;
 
 class ReporteController extends Controller
 {
+    //PARA MOSTRAR LA VISTA A LOS EMPLEADOS
     public function indexEmpleadoLicencias()
     {
         $años = Permiso::selectRaw('distinct to_char(permisos.fecha_uso, \'YYYY\') as año')->get();
         return view('Reportes.EmpleadoLicencias.MostrarLicencias', compact('años'));
     }
+    //FIN DE MOSTRAR LA VISTA A LOS EMPLEADOS
     //PARA MOSTRAR LA VISTA DE LICENCIAS POR MES PARA LOS JEFES
     public function indexBladeJefes()
     {
@@ -223,14 +225,13 @@ class ReporteController extends Controller
                         ->orWhere('tipo_permiso', 'like', 'ESTUDIO')
                         ->orWhere('tipo_permiso', 'like', 'FUMIGACIÓN')
                         ->orWhere('tipo_permiso', 'like', 'L.OFICIAL/A')
-                        ->orWhere('tipo_permiso', 'like', 'OTROS')
-                        ->orWhere('tipo_permiso', 'like', 'CITA MEDICA');
+                        ->orWhere('tipo_permiso', 'like', 'OTROS');
                 }
             )->where(
                 [
                     ['permisos.estado', '=', 'Aceptado'],
                     ['permisos.fecha_uso', '>=', $fecha1],
-                    ['permisos.fecha_presentacion', '<=', $fecha2]
+                    ['permisos.fecha_uso', '<=', $fecha2]
                 ]
             )->get();
         } else {
@@ -240,14 +241,13 @@ class ReporteController extends Controller
                         ->orWhere('tipo_permiso', 'like', 'ESTUDIO')
                         ->orWhere('tipo_permiso', 'like', 'FUMIGACIÓN')
                         ->orWhere('tipo_permiso', 'like', 'L.OFICIAL/A')
-                        ->orWhere('tipo_permiso', 'like', 'OTROS')
-                        ->orWhere('tipo_permiso', 'like', 'CITA MEDICA');
+                        ->orWhere('tipo_permiso', 'like', 'OTROS');
                 }
             )->where(
                 [
                     ['permisos.estado', '=', 'Aceptado'],
                     ['permisos.fecha_uso', '>=', $fecha1],
-                    ['permisos.fecha_presentacion', '<=', $fecha2],
+                    ['permisos.fecha_uso', '<=', $fecha2],
                     ['departamentos.id', '=', $dep]
                 ]
             )->get();
