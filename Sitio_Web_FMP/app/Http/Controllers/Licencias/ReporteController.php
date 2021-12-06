@@ -515,14 +515,13 @@ class ReporteController extends Controller
                         ->orWhere('tipo_permiso', 'like', 'ESTUDIO')
                         ->orWhere('tipo_permiso', 'like', 'FUMIGACIÓN')
                         ->orWhere('tipo_permiso', 'like', 'L.OFICIAL/A')
-                        ->orWhere('tipo_permiso', 'like', 'OTROS')
-                        ->orWhere('tipo_permiso', 'like', 'CITA MEDICA');
+                        ->orWhere('tipo_permiso', 'like', 'OTROS');
                 }
             )->where(
                 [
                     ['permisos.estado', '=', 'Aceptado'],
                     ['permisos.fecha_uso', '>=', $request->inicioR],
-                    ['permisos.fecha_presentacion', '<=', $request->finR]
+                    ['permisos.fecha_uso', '<=', $request->finR]
                 ]
             )->get();
             //para mostrar solo los departamentos que tienen permisos
@@ -542,7 +541,7 @@ class ReporteController extends Controller
                     [
                         ['permisos.estado', '=', 'Aceptado'],
                         ['permisos.fecha_uso', '>=', $request->inicioR],
-                        ['permisos.fecha_presentacion', '<=', $request->finR]
+                        ['permisos.fecha_uso', '<=', $request->finR]
                     ]
                 )->get();
             //para imprimir el reporte
@@ -554,14 +553,13 @@ class ReporteController extends Controller
                         ->orWhere('tipo_permiso', 'like', 'ESTUDIO')
                         ->orWhere('tipo_permiso', 'like', 'FUMIGACIÓN')
                         ->orWhere('tipo_permiso', 'like', 'L.OFICIAL/A')
-                        ->orWhere('tipo_permiso', 'like', 'OTROS')
-                        ->orWhere('tipo_permiso', 'like', 'CITA MEDICA');
+                        ->orWhere('tipo_permiso', 'like', 'OTROS');
                 }
             )->where(
                 [
                     ['permisos.estado', '=', 'Aceptado'],
                     ['permisos.fecha_uso', '>=', $request->inicioR],
-                    ['permisos.fecha_presentacion', '<=', $request->finR],
+                    ['permisos.fecha_uso', '<=', $request->finR],
                     ['departamentos.id', '=', $request->deptoR_R]
                 ]
             )->get();
