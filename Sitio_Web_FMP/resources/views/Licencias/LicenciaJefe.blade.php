@@ -577,7 +577,8 @@
 
                                                         <button title="Aceptar Const. olvido"
                                                             class="btn btn-outline-success btn-sm"
-                                                            value="{{ $item->permiso }}" onclick="aceptarConst(this)">
+                                                            @if($item->estado==='Enviado a Jefatura')
+                                                            value="{{ $item->permiso }}" onclick="aceptarConst(this)" @else disabled @endif>
                                                             <i class="fa fa-check font-16 my-1" aria-hidden="true"></i>
                                                         </button>
 

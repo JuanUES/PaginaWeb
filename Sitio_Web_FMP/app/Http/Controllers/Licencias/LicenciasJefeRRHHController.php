@@ -44,7 +44,7 @@ class LicenciasJefeRRHHController extends Controller
                     $query->where('permisos.estado','like','Aceptado')
                     ->orWhere('permisos.estado','like','Enviado a Jefatura')
                     ->orWhere('permisos.estado','like','Enviado a RRHH');
-            })->where('olvido',null)->get();
+            })->get();
             return view('Licencias.LicenciaJefe', compact('permisos'));
         }else {
             return redirect()->route('index');
@@ -172,8 +172,10 @@ class LicenciasJefeRRHHController extends Controller
                 observaciones,olvido,empleado.nombre,empleado.apellido')
             ->join('empleado','empleado.id','=','permisos.empleado')
             ->where(function($query)
-                {$query->where('permisos.estado','like','Enviado a RRHH')
-                ->orWhere('permisos.estado','like','Aceptado');
+                {
+                    $query->where('permisos.estado','like','Aceptado')
+                    ->orWhere('permisos.estado','like','Enviado a Jefatura')
+                    ->orWhere('permisos.estado','like','Enviado a RRHH');
             });
 
         $permisos = $query ->get();
@@ -183,7 +185,7 @@ class LicenciasJefeRRHHController extends Controller
             $col3 = $col4 = $col5 = null;
             if ($item->olvido == 'Entrada' || $item->olvido =='Salida') {
                 $col3 = date('H:i', strtotime($item->olvido == 'Entrada'?$item->hora_inicio:$item->hora_final));
-                $col4 = date('H:i', strtotime(!$item->olvido == 'Entrada'?$item->hora_inicio:$item->hora_final));
+                $col4 = date('H:i', strtotime($item->olvido == 'Salida'?$item->hora_inicio:$item->hora_final));
                 $col5 = date('H:i', strtotime($item->hora_final));
             }else{
                 $col3 = date('H:i', strtotime($item->hora_inicio));
