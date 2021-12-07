@@ -234,7 +234,7 @@
                                     </div>
                                 </div>
                             </div>
-                           <div class="row">
+                           <div class="row" id="observaciones_jefatura_ocultar">
                                <div class="col-xl-12">
                                 <div class="form-group">
                                     <label for="observacionesConst">Observaciones </label>
@@ -248,7 +248,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban"
                                     aria-hidden="true"></i> Cerrar</button>
-                            <button type="button" class="btn btn-primary" id='guardar_registro'
+                            <button type="button" class="btn btn-primary" id='guardar_registro_constancia'
                                 onClick="submitForm('#registroFormC','#notificacionC')">
                                 <li class="fa fa-save"></li> Guardar
                             </button>
@@ -544,7 +544,8 @@
 
                                                         <button title="Aceptar Const. olvido"
                                                             class="btn btn-outline-success btn-sm"
-                                                            value="{{ $item->permiso }}" onclick="aceptarConst(this)">
+                                                            @if($item->estado==='Enviado a Jefatura')
+                                                            value="{{ $item->permiso }}" onclick="aceptarConst(this)" @else disabled @endif>
                                                             <i class="fa fa-check font-16 my-1" aria-hidden="true"></i>
                                                         </button>
 
@@ -570,7 +571,7 @@
 
                                                         <button title="Agregar Observacion"
                                                             class="btn btn-outline-primary btn-sm"
-                                                            value="{{ $item->permiso }}" onclick="verDatosConst(this)">
+                                                            value="{{ $item->permiso }}" onclick=" verDatosConst(this)">
                                                             <i class="fa fa-file-alt font-16 my-1 mx-0"
                                                                 aria-hidden="true"></i>
                                                         </button>

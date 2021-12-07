@@ -139,18 +139,21 @@ function verDatosConst(boton) {
             success: function(json) {
 
                 var json = JSON.parse(json);
+                console.log(json);
                 $('#idPermisoC').val(json.permiso);
                 $('#nombreC').val(json.nombre);
                 $('#apellidoC').val(json.apellido);
                 $('#justificacionConst').summernote("code", json.justificacion);
-                $('#observacionJF').prop('disabled', !json.jf);
-                $('#guardar_registrar').prop('disabled', !json.jf);
-                json.jf?$('#guardar_registrar').show():$('#guardar_registrar').hide();
+                
                 $('#marcaje').val(json.olvido).trigger("change");
                 $('#fecha').val(json.fecha_uso).change();
                 $('#hora').val(json.hora_inicio);
-                $('#observacionesConst').summernote("code", json.observaciones);
+                json.jf ? $('#observaciones_jefatura_ocultar').show():$('#observaciones_jefatura_ocultar').hide();
+                json.jf ? $('#guardar_registro_constancia').show():$('#guardar_registro_constancia').hide();
                 
+                $('#observacionesConst').summernote("code", json.observaciones);
+
+               
                 $('#modalConstancia').modal();
             },
             complete: function(json) {
@@ -175,7 +178,7 @@ function verDatos(boton) {
             success: function(json) {
 
                 var json = JSON.parse(json);
-
+              console.log(json);
                 $('#idPermiso').val(json.permiso);
                 $('#nombre').val(json.nombre);
                 $('#apellido').val(json.apellido);

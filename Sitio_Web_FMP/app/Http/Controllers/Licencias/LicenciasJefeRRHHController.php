@@ -34,6 +34,7 @@ class LicenciasJefeRRHHController extends Controller
             permisos.hora_final,
             permisos.justificacion,
             permisos.observaciones,
+            permisos.olvido,
             empleado.nombre,
             permisos.estado,
             empleado.apellido')
@@ -45,6 +46,7 @@ class LicenciasJefeRRHHController extends Controller
                     ->orWhere('permisos.estado','like','Enviado a Jefatura')
                     ->orWhere('permisos.estado','like','Enviado a RRHH');
             })->get();
+            //echo dd($permisos);
             return view('Licencias.LicenciaJefe', compact('permisos'));
         }else {
             return redirect()->route('index');
