@@ -527,7 +527,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                                     </div>
                                 </div>
                             </div>
-                           <div class="row">
+                           <div class="row" id="constancia_rrhh">
                                <div class="col-xl-12">
                                 <div class="form-group">
                                     <label for="observacionesConst">Observaciones </label>
@@ -540,7 +540,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-ban"
                                     aria-hidden="true"></i> Cerrar</button>
-                            <button type="button" class="btn btn-primary" id="guardar_registro"
+                            <button type="button" class="btn btn-primary" id="guardar_registro_constancia"
                                 onClick="submitForm('#registroFormC','#notificacionC')">
                                 <li class="fa fa-save"></li> Guardar
                             </button>

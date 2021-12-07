@@ -157,7 +157,10 @@ function verDatosConst(boton) {
                 $('#marcaje').val(json.olvido).trigger("change");
                 $('#fecha').val(json.fecha_uso).change();
                 $('#hora').val(json.hora_inicio);
-                $('#observacionesConst').summernote("code", json.observaciones);                  
+                $('#observacionesConst').summernote("code", json.observaciones);
+                json.rrhh?$('#guardar_registro_constancia').show():$('#guardar_registro_constancia').hide();
+                !json.rrhh?$('#constancia_rrhh').hide():$('#constancia_rrhh').show();
+                                 
                 $('#modalConstancia').modal();
             },
             complete: function(json) {
