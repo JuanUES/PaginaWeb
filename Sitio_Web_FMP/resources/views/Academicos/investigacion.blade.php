@@ -336,7 +336,7 @@
                             <div class="row my-2">
                                 <div class="col order-first"></div>
                                 <div class="col-lg-3 order-last">
-                                    <button style="float: righ;" class="btn btn-block btn-info tex-righ"
+                                    <button style="float: righ;" class="btn btn-block btn-info text-right"
                                     data-toggle="modal" data-target="#sondeo-modal">
                                         <i class=" mdi dripicons-document"> Nuevo sondeo</i>
                                     </button>
@@ -345,11 +345,11 @@
                             @endif
                            
                             <table cellspacing="0" width="100%">
-<thead></thead>
-<tbody>
+                            <thead></thead>
+                            <tbody>
                             @foreach ($sondeos as $item)
-<tr>
-    <td>
+                            <tr>
+                            <td>
                             <div class="border m-1 rounded p-2">
                                 <p class="mb-1 font-weight-bold py-2">Desarrollo del sondeo:</p>
                                 <span data-toggle="modal" data-target="#myModalNoticia">
@@ -434,11 +434,10 @@
                             </a>
                             <h2 class="header-title py-2">Centro de Investigación Ambiental</h2> 
                             <?php
-                            $variableNoTocar = 'localizacion';
-                            $localizacion ='centroInvestigacionAmbiental';
-                            $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
-                        
-                        ?>
+                                $variableNoTocar = 'localizacion';
+                                $localizacion ='centroInvestigacionAmbiental';
+                                $contenido = App\Models\Pagina\ContenidoHtml::where($variableNoTocar,$localizacion)->first();
+                            ?>
                         @auth
                         @if (@Auth::user()->hasRole('super-admin|Pagina-Admin|Pagina-Depto-CA'))
                         <!-- Esto va en el content-->
@@ -474,18 +473,14 @@
                             </div>  
                         @endif   
                         @endauth 
-                        
-                        @if(auth()->guest()|| !auth()->guest()) 
-                        <div class="col-xl-12 py-2">
-                        @if ($contenido!=null)
-                            {!!$contenido->contenido!!}
+                        @if(auth()->guest()) 
+                            <div class="col-xl-12 py-2">
+                                @if ($contenido!=null)
+                                    {!!$contenido->contenido!!}
+                                @endif
+                            </div>      
                         @endif
-                        </div>      
-                        @endif
-                        
                         <!--pegar aqui-->
-                        
-
                         <div class="col-xl-12 row">
 
                             <div class="col order-first">
@@ -525,11 +520,7 @@
                         </div> 
                            
                         @if(@Auth::guest()?@Auth::guest():!@Auth::user()->hasRole('Pagina-UnidadInvestigacion|Pagina-Admin|super-admin'))  
-                                <div class="col-xl-12 py-2">
-                                    @if ($contenido!=null)
-                                        {!!$contenido->contenido!!}
-                                    @endif
-                                </div>      
+                                   
                                 @endif
                                 <div class="col-xl-12 py-3">
                                     <?php
