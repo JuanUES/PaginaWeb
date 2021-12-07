@@ -147,7 +147,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                     <div class="alert alert-primary alert-dismissible bg-primary text-white border-0 fade show"
                         role="alert" style="display:none" id="notificacionExcel">
                     </div>           
-                    <div class="row">
+                   <!--<div class="row">
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="tipo">Tipo Contrato</label>
@@ -159,7 +159,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                                 </select>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                     <div class="row"> 
                         <div class="col-xl-12">
                             <div class="form-group">
