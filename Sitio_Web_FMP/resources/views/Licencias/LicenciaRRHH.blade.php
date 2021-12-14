@@ -164,7 +164,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="depto">Departamento</label>
-                                <select name="depto" class="form-control select2 excel_select" id="" style="width: 100%" required>
+                                <select name="depto" class="form-control select2 excel_select" style="width: 100%" required>
                                    <option value="" selected>Seleccione</option>
                                     @foreach ($departamentos as $item)
                                         <option value="{{$item->id}}">{{$item->nombre_departamento}}</option>
@@ -177,7 +177,7 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="anio">Año</label>
-                                <select name="anio" id="" class="form-control select2 excel_select" style="width: 100%" required>
+                                <select name="anio" class="form-control select2 excel_select" style="width: 100%" required>
                                    <option value="" selected>Seleccione</option>
                                     @foreach ($años as $item)
                                         <option value="{{$item->año}}">{{$item->año}}</option>
@@ -212,14 +212,23 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                         <div class="col-xl-12">
                             <div class="form-group">
                                 <label for="comentario">Comentario</label>
-                                <textarea name="comentario" class="form-control" rows="3" ></textarea>
+                                <textarea name="comentario" class="form-control" rows="3" value=""></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" onclick="$('#modalExcel')[0].reset();$('.excel_select').val(null);" class="btn p-1 btn-light waves-effect waves-light btn-block font-24 btn-block" id="generarExcel" > 
-                        <li class="fa fa-file-excel"></li> Generar</button>
+                    <button type="submit" class="btn p-1 btn-light waves-effect waves-light btn-block font-24 btn-block" id="generarExcel" > 
+                        <li class="fa fa-file-excel"></li> Generar
+                    </button>
+                    <script>
+                        $('#generarExcel').click(
+                            function () {
+                                $('.excel_select').value(null).trigger("change").select2();
+                                $('#ExcelForm').submit();
+                            }
+                        );
+                    </script>
                 </div>   
             </form>
         </div><!-- /.modal-content -->

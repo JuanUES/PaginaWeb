@@ -55,7 +55,7 @@
             <td colspan="2" style="text-align: center; vertical-align: middle;">{{ $item->hrs_lc_gs_ant==null?'00:00':$item->hrs_lc_gs_ant }}</td>
             <td colspan="2" style="text-align: center; vertical-align: middle;">{{ $item->hrs_lc_gs_acu==null?'00:00':$item->hrs_lc_gs_acu }}</td>
             <td colspan="2" style="text-align: center; vertical-align: middle;">{{ $item->hrs_lc_gs_anuales==null?'00:00':$item->hrs_lc_gs_anuales }}</td>
-            <td colspan="2" style="text-align: center; vertical-align: middle;">{{ $item->hrs_disp==null?'00:00':$item->hrs_disp}}</td>
+            <td colspan="2" style="text-align: center; vertical-align: middle;">{{ $item->hrs_disp}}</td>
         </tr>
     @endforeach
     </tbody>

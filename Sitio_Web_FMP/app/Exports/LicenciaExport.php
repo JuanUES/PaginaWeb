@@ -94,15 +94,16 @@ class LicenciaExport implements FromView{
         
         lcg.anuales||':00' hrs_lc_gs_anuales,
 
-        CASE WHEN ((select to_char(sum(hora_final-hora_inicio),'HH24:MI') hrs_lc_gs_acu
+        CASE WHEN ((select to_char(sum(hora_final-hora_inicio),'HH24:MI')
             from permisos  where empleado = e.id  and permisos.estado like '%Aceptado%' and
             tipo_permiso like '%LC/GS%' and to_char(fecha_uso,'YYYY')::int=". $this->anio ." and
-            to_char(fecha_uso,'MM')::int<=". $this->mes .")::text not like '%00:00%') THEN
-                lcg.anuales||':00'
+            to_char(fecha_uso,'MM')::int<=". $this->mes .")::text is null) THEN
+                (select lcg.anuales||':00' hrs_disp)
             ELSE 
                 (select (lcg.anuales::int-to_char(sum(hora_final-hora_inicio),'HH24')::int)||':'||to_char(sum(hora_final-hora_inicio),'MI')::int
-                    hrs_disp from permisos where empleado = e.id and permisos.estado like 'Aceptado' and
-                tipo_permiso like '%LC/GS%' and to_char(fecha_uso,'YYYY')::int=". $this->anio ." and to_char(fecha_uso,'MM')::int<=". $this->mes .")
+                hrs_disp from permisos where empleado = e.id and permisos.estado like 'Aceptado' and
+                tipo_permiso like '%LC/GS%' and to_char(fecha_uso,'YYYY')::int=". $this->anio ." 
+                and to_char(fecha_uso,'MM')::int<=". $this->mes .")
         END
         
         from empleado e
