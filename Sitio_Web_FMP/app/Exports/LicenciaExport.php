@@ -96,7 +96,7 @@ class LicenciaExport implements FromView{
         
         (select (lcg.anuales::int-to_char(sum(hora_final-hora_inicio),'HH24')::int)||':'||to_char(sum(hora_final-hora_inicio),'MI')::int
             hrs_disp from permisos where empleado = e.id and permisos.estado like 'Aceptado' and
-        tipo_permiso like '%LC/GS%' and to_char(fecha_uso,'YYYY')::int=". $this->anio ." group by lcg.anuales)
+        tipo_permiso like '%LC/GS%' and to_char(fecha_uso,'YYYY')::int=". $this->anio ." and to_char(fecha_uso,'MM')::int<=". $this->mes .")
         
         from empleado e
         
