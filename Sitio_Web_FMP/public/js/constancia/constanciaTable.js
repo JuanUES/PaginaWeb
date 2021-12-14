@@ -109,7 +109,7 @@ $( "#marcaje" ).change(function() {
                     $('#marcaje').val(json.olvido).trigger("change");
                     $('#hora').val(json.hora_incio);          
                     $('#justificacion').summernote("code",json.justificacion);
-                                              
+                    $('#estadoConstancia').val(json.estado);                                              
                    
                      $("#modalRegistro").modal();
                  },
