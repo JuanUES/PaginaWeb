@@ -21,7 +21,7 @@ class ConstanciaOlvidoController extends Controller
         ->where('empleado.id',auth()->user()->empleado)
         ->whereRaw('tipo_permiso=\'Const. olvido\'')
         ->get();
-      //  echo dd($data);
+      //echo dd($data);
         $logueado= Empleado::findOrFail(auth()->user()->empleado);
         return view('Licencias.ConstanciaOlvido', compact('logueado','data'));
     }
@@ -66,7 +66,7 @@ class ConstanciaOlvidoController extends Controller
             $p -> hora_final = '00:00:00';//va en este formato por que para estas constancia solo se ocupa una fecha
             $p -> justificacion = $request-> justificación;
             $p -> empleado = $p -> empleado = auth()->user()->empleado;
-            $p -> estado = 'Guardado';
+            $p -> estado = $request->estadoConstancia;
             $p -> olvido = $request->marcaje;
 
             $p ->save();      

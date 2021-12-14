@@ -96,6 +96,7 @@
                             <label for="exampleInputNombre">Justificación<code>*</code></label>
                             <textarea value=" " class="form-control summernote-config" 
                                 name="justificación" id="justificacion" rows="6"></textarea>
+                                <input type="hidden" value="Guardado" name="estadoConstancia" id="estadoConstancia">
                         </div> 
                     </div>
                 </div>
