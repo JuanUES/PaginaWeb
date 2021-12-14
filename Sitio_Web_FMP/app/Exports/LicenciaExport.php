@@ -87,14 +87,17 @@ class LicenciaExport implements FromView{
             (select '00:00' hrs_lc_gs_ant)
         END,
         
-        (select to_char(sum(hora_final-hora_inicio),'HH24:MI') 
+        (select to_char(sum(hora_final-hora_inicio),'HH24:MI') hrs_lc_gs_acu
             from permisos  where empleado = e.id  and permisos.estado like '%Aceptado%' and
             tipo_permiso like '%LC/GS%' and to_char(fecha_uso,'YYYY')::int=". $this->anio ." and
-            to_char(fecha_uso,'MM')::int<=". $this->mes .") hrs_lc_gs_acu,
+            to_char(fecha_uso,'MM')::int<=". $this->mes ."),
         
         lcg.anuales||':00' hrs_lc_gs_anuales,
 
-        CASE WHEN (hrs_lc_gs_acu::text like '%00:00%') THEN
+        CASE WHEN ((select to_char(sum(hora_final-hora_inicio),'HH24:MI') hrs_lc_gs_acu
+            from permisos  where empleado = e.id  and permisos.estado like '%Aceptado%' and
+            tipo_permiso like '%LC/GS%' and to_char(fecha_uso,'YYYY')::int=". $this->anio ." and
+            to_char(fecha_uso,'MM')::int<=". $this->mes .")::text like '%00:00%') THEN
             (select (lcg.anuales::int-to_char(sum(hora_final-hora_inicio),'HH24')::int)||':'||to_char(sum(hora_final-hora_inicio),'MI')::int
                 hrs_disp from permisos where empleado = e.id and permisos.estado like 'Aceptado' and
             tipo_permiso like '%LC/GS%' and to_char(fecha_uso,'YYYY')::int=". $this->anio ." and to_char(fecha_uso,'MM')::int<=". $this->mes .")
