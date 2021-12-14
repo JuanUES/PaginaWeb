@@ -87,10 +87,10 @@ class LicenciaExport implements FromView{
             (select '00:00' hrs_lc_gs_ant)
         END,
         
-        (select to_char(sum(hora_final-hora_inicio),'HH24:MI') hrs_lc_gs_acu
+        (select to_char(sum(hora_final-hora_inicio),'HH24:MI') 
             from permisos  where empleado = e.id  and permisos.estado like '%Aceptado%' and
             tipo_permiso like '%LC/GS%' and to_char(fecha_uso,'YYYY')::int=". $this->anio ." and
-            to_char(fecha_uso,'MM')::int<=". $this->mes ."),
+            to_char(fecha_uso,'MM')::int<=". $this->mes .") hrs_lc_gs_acu,
         
         lcg.anuales||':00' hrs_lc_gs_anuales,
 
