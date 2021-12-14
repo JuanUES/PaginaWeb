@@ -218,16 +218,15 @@ aria-labelledby="myCenterModalLabel" aria-hidden="true" style="display: none;">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn p-1 btn-light waves-effect waves-light btn-block font-24 btn-block" id="generarExcel" > 
+                    <button type="button" class="btn p-1 btn-light waves-effect waves-light btn-block font-24 btn-block" onclick="excelSubmit()" id="generarExcel" > 
                         <li class="fa fa-file-excel"></li> Generar
                     </button>
                     <script>
-                        $('#generarExcel').click(
-                            function () {
-                                $('.excel_select').value(null).trigger("change").select2();
-                                $('#ExcelForm').submit();
+                            function excelSubmit () {
+                                $("#ExcelForm").submit();
+                                $(".excel_select").val(null).trigger("change").select2();
+                                $("#ExcelForm")[0].reset();
                             }
-                        );
                     </script>
                 </div>   
             </form>
