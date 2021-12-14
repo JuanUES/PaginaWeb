@@ -102,7 +102,7 @@ class LicenciaExport implements FromView{
                 hrs_disp from permisos where empleado = e.id and permisos.estado like 'Aceptado' and
             tipo_permiso like '%LC/GS%' and to_char(fecha_uso,'YYYY')::int=". $this->anio ." and to_char(fecha_uso,'MM')::int<=". $this->mes .")
             ELSE 
-            hrs_lc_gs_anuales
+            lcg.anuales||':00'
         END
         
         from empleado e
