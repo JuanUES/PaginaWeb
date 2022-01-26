@@ -556,6 +556,9 @@
                                 <a href="https://campus.ues.edu.sv/" target="_blank"
                                     class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i>
                                     Campus Virtual Central</a>
+                                <a href="https://sites.google.com/ues.edu.sv/multimedia-fmp" target="_blank" class="btn btn-danger btn-block mt-3 text-left">
+                                    <i class=" mdi mdi-earth  font-18"></i>  Recursos Audiovisuales LMS</a>
+                                <a href="#" target="_blank" class="btn btn-danger btn-block mt-3 text-left" style="display: none"><i class=" mdi mdi-book-open-variant font-18"></i> Campus Virtual FMP</a>
                                 <a href="https://eel.ues.edu.sv/" target="_blank"
                                     class="btn btn-danger btn-block mt-3 text-left"><i class="mdi mdi-earth font-18"></i>
                                     Expediente en Línea</a>
@@ -569,8 +572,7 @@
                                 <a href="http://biblio.fmp.ues.edu.sv/biblioteca/" target="_blank"
                                     class="btn btn-danger btn-block mt-3 text-left"><i
                                         class=" mdi mdi-book-open-variant font-18"></i> Biblioteca</a>
-                                <!-- <a href="#" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-book-open-variant font-18"></i> Recurso LMS-FMP</a>-->
-                                <!-- <a href="#" target="_blank" class="btn btn-danger btn-block mt-3 text-left"><i class=" mdi mdi-book-open-variant font-18"></i> Campus Virtual FMP</a>-->
+                                
                             </div> <!-- end card-box-->
                         </div> <!-- end col-->
                     </div>
